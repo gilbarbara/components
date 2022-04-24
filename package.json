@@ -104,8 +104,6 @@
     "validate": "npm run lint && npm run typecheck && npm run test:coverage && npm run build && npm run size",
     "storybook:dev": "start-storybook -p 4000",
     "storybook:build": "build-storybook -o components",
-    "storybook:deploy": "deploy-aws-s3-cloudfront --bucket components.gilbarbara.dev --distribution E2A0K9FPJ9AK9Q --source components --non-interactive --invalidation-path \"/*\" --cache-control index.html:no-cache iframe.html:no-cache --soft-delete --expiration 30",
-    "storybook:publish": "npm run storybook:build && npm run storybook:deploy",
     "prepare": "husky install"
   },
   "eslintConfig": {
