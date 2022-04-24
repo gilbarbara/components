@@ -1,0 +1,130 @@
+import { Meta } from '@storybook/addon-docs';
+import { capitalize } from '@gilbarbara/helpers';
+import { hex2hsl, textColor } from 'colorizr';
+
+import { Box, FlexCenter, Grid, H2, H3, Jumbo, Paragraph, Text } from '../../src';
+import { colors, grayScale, variants } from '../../src/modules/theme';
+
+<Meta title="Intro/Colors" />
+
+<Jumbo>Colors and shades</Jumbo>
+
+<H2>Base colors</H2>
+
+<Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+  {Object.entries(colors)
+    .map(([key, value]) => {
+      const { h, s, l } = hex2hsl(value);
+      return (
+        <Box key={key} mb="lg">
+          <Box>
+            <FlexCenter
+              height={128}
+              radius="circular"
+              shade="mid"
+              variant={key}
+              width={128}
+            >
+              {key}
+            </FlexCenter>
+            <Paragraph align="center" size="small" mt="xs">HEX: {value}</Paragraph>
+            <Paragraph align="center" size="small">
+              H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
+            </Paragraph>
+          </Box>
+        </Box>
+      );
+    })}
+</Grid>
+
+<H2>Variants</H2>
+
+<div>
+  {Object.entries(variants)
+    .map(([variant, color]) => (
+      <Box key={variant} mb="lg">
+        <H3>{capitalize(variant)}</H3>
+        <Grid gap={32} justifyContent="start" templateColumns="repeat(7, auto)">
+          {Object.entries(color)
+            .map(([shade, value]) => {
+              const { h, s, l } = hex2hsl(value.bg);
+              return (
+                <Box key={shade}>
+                  <FlexCenter
+                    height={128}
+                    radius="circular"
+                    shade={shade}
+                    variant={variant}
+                    width={128}
+                  >
+                    {shade}
+                  </FlexCenter>
+                  <Paragraph align="center" size="small" mt="xs">HEX: {value.bg}</Paragraph>
+                  <Paragraph align="center" size="small">
+                    H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
+                  </Paragraph>
+                </Box>
+              );
+            })}
+        </Grid>
+      </Box>
+    ))}
+</div>
+
+
+<H2>Shades</H2>
+
+<div>
+  {Object.keys(variants.primary)
+    .map((shade) => (
+      <Box key={shade} mb="lg">
+        <H3>{capitalize(shade)}</H3>
+        <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+          {Object.keys(variants)
+            .map((name) => {
+              const variant = variants[name][shade].bg;
+              const { h, s, l } = hex2hsl(variant);
+              return (
+                <Box key={name}>
+                  <FlexCenter
+                    height={128}
+                    radius="circular"
+                    shade={shade}
+                    variant={name}
+                    width={128}
+                  >
+                    {name}
+                  </FlexCenter>
+                  <Paragraph align="center" size="small" mt="xs">HEX: {variant}</Paragraph>
+                  <Paragraph align="center" size="small">
+                    H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
+                  </Paragraph>
+                </Box>
+              );
+            })}
+        </Grid>
+      </Box>
+    ))}
+</div>
+
+<H2>Grayscale</H2>
+<div>
+
+  <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+    {Object.entries(grayScale)
+      .map(([key, color]) => (
+        <Box key={color}>
+          <FlexCenter
+            height={128}
+            radius="circular"
+            width={128}
+            style={{ backgroundColor: color }}
+          >
+            <Text style={{ color: textColor(color) }}>{color}</Text>
+          </FlexCenter>
+          <Paragraph align="center" size="small" mt="xs">{key}</Paragraph>
+        </Box>
+      ))}
+  </Grid>
+</div>
+

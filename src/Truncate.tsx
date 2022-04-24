@@ -1,0 +1,48 @@
+import * as React from 'react';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+
+import { px } from './modules/helpers';
+
+export interface TruncateProps {
+  children: React.ReactNode;
+  /** @default 2 */
+  lines?: number;
+  maxWidth?: string | number;
+}
+
+const StyledTruncate = styled.span<TruncateProps>(props => {
+  const { lines, maxWidth } = props;
+
+  if (maxWidth) {
+    return css`
+      display: inline-block;
+      max-width: ${px(maxWidth)};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    `;
+  }
+
+  return css`
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: ${lines || 2};
+  `;
+});
+
+export function Truncate(props: TruncateProps): JSX.Element {
+  const { children, ...rest } = props;
+
+  return (
+    <StyledTruncate data-component-name="Truncate" {...rest}>
+      {children}
+    </StyledTruncate>
+  );
+}
+
+Truncate.defaultProps = {
+  lines: 2,
+};
