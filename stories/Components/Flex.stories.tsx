@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Flex, FlexCenter } from '../../src';
+import { Flex, FlexCenter, FlexInline, Icon, Text } from '../../src';
 import { flexContent, flexItems, hideProps } from '../__helpers__';
 
 export default {
@@ -10,31 +10,26 @@ export default {
     ...hideProps('textAlign'),
     alignContent: {
       control: 'select',
-      name: 'Align Content',
       options: ['', ...flexContent],
       defaultValue: 'center',
     },
     alignItems: {
       control: 'select',
-      name: 'Align Items',
       options: ['', ...flexItems],
       defaultValue: 'stretch',
     },
     flexDirection: {
       control: 'select',
-      name: 'Flex Direction',
       options: ['row', 'row-reverse', 'column', 'column-reverse'],
       defaultValue: 'row',
     },
     flexWrap: {
       control: 'select',
-      name: 'Flex Wrap',
       options: ['nowrap', 'wrap', 'wrap-reverse'],
       defaultValue: 'wrap',
     },
     justifyContent: {
       control: 'select',
-      name: 'Justify Content',
       options: ['', ...flexContent],
       defaultValue: 'flex-start',
     },
@@ -63,3 +58,20 @@ export const Basic = (props: any) => (
     </FlexCenter>
   </Flex>
 );
+
+export const Center = (props: any) => (
+  <FlexCenter minHeight={400} width={400} {...props}>
+    This is a centered Flex
+  </FlexCenter>
+);
+
+export const Inline = (props: any) => (
+  <FlexInline alignItems="center" width={400} {...props}>
+    <Icon mr="xs" name="stories" />
+    <Text>This is a inline Flex</Text>
+  </FlexInline>
+);
+
+Inline.argTypes = {
+  alignItems: { defaultValue: 'center' },
+};
