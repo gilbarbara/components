@@ -60,7 +60,7 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>((props, ref) =>
 
   if (name) {
     const urlPrefix = iconsCustom.includes(name as typeof iconsCustom[number])
-      ? 'https://files.wabisabi.cx/icons/'
+      ? 'https://files.gilbarbara.dev/icons/'
       : 'https://cdn.jsdelivr.net/npm/css.gg/icons/svg/';
 
     iconURL = `${urlPrefix}${name}.svg`;

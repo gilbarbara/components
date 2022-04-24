@@ -39,17 +39,7 @@ const StyledRadioGroup = styled(
 });
 
 export function RadioGroup(props: RadioGroupProps) {
-  const {
-    defaultValue,
-    disabled,
-    inline,
-    name,
-    onChange,
-    options,
-    size = 'md',
-    value,
-    ...rest
-  } = props;
+  const { defaultValue, disabled, inline, name, onChange, options, size, value, ...rest } = props;
   const [selectedValue, setSelectedValue] = React.useState(value ?? defaultValue);
   const previousProps = usePrevious(props);
 
@@ -80,7 +70,7 @@ export function RadioGroup(props: RadioGroupProps) {
     return null;
   }
 
-  const currentValue = !!value && value !== selectedValue ? value ?? defaultValue : selectedValue;
+  const currentValue = !!value && value !== selectedValue ? value : selectedValue;
 
   return (
     <StyledRadioGroup inline={inline} {...rest} data-component-name="RadioGroup" role="radiogroup">

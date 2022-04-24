@@ -101,8 +101,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>((props, ref) => 
     disabled,
     icon = <Icon name="more-vertical-o" size={24} title={null} />,
     onToggle,
-    positionX = 'right',
-    positionY = 'bottom',
+    positionX,
+    positionY,
     shade,
     variant,
   } = props;

@@ -55,7 +55,6 @@
     "@gilbarbara/prettier-config": "^0.1.0",
     "@gilbarbara/tsconfig": "^0.1.0",
     "@gilbarbara/types": "^0.1.1",
-    "@saber2pr/types-github-api": "^0.0.7",
     "@size-limit/preset-big-lib": "^7.0.8",
     "@storybook/addon-a11y": "^6.4.22",
     "@storybook/addon-actions": "^6.4.22",
@@ -105,7 +104,7 @@
     "validate": "npm run lint && npm run typecheck && npm run test:coverage && npm run build && npm run size",
     "storybook:dev": "start-storybook -p 4000",
     "storybook:build": "build-storybook -o components",
-    "storybook:deploy": "deploy-aws-s3-cloudfront --bucket components.gilbarbara.dev --distribution E2A0K9FPJ9AK9Q --source components --invalidation-path /* --cache-control index.html:no-cache iframe.html:no-cache --soft-delete --expiration 30",
+    "storybook:deploy": "deploy-aws-s3-cloudfront --bucket components.gilbarbara.dev --distribution E2A0K9FPJ9AK9Q --source components --non-interactive --invalidation-path \"/*\" --cache-control index.html:no-cache iframe.html:no-cache --soft-delete --expiration 30",
     "storybook:publish": "npm run storybook:build && npm run storybook:deploy",
     "prepare": "husky install"
   },
@@ -129,12 +128,12 @@
     {
       "name": "lib",
       "path": "./lib/*.js",
-      "limit": "180 KB"
+      "limit": "140 KB"
     },
     {
       "name": "esm",
       "path": "./esm/**/*.js",
-      "limit": "130 KB"
+      "limit": "100 KB"
     }
   ]
 }

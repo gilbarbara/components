@@ -63,7 +63,7 @@ const StyledModalContent = styled(
 export function Modal(props: ModalProps) {
   const {
     children,
-    closeOnEsc = true,
+    closeOnEsc,
     hideCloseButton,
     isActive,
     maxHeight = '80vh',

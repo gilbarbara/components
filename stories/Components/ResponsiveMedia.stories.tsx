@@ -1,6 +1,5 @@
 import * as React from 'react';
 import SVG from 'react-inlinesvg';
-import { useTheme } from '@emotion/react';
 import { ComponentMeta } from '@storybook/react';
 
 import { ResponsiveMedia } from '../../src';
@@ -12,7 +11,7 @@ export default {
   component: ResponsiveMedia,
   argTypes: {
     ...hideProps(),
-    height: { defaultValue: 279 },
+    height: { defaultValue: 103 },
     width: { defaultValue: 512 },
     maxWidth: { defaultValue: 400 },
   },
@@ -20,7 +19,6 @@ export default {
 
 export const Basic = (props: any) => {
   const [showMedia, setShowMedia] = React.useState(false);
-  const { darkMode } = useTheme() as { darkMode: boolean };
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -31,7 +29,7 @@ export const Basic = (props: any) => {
   return (
     <ResponsiveMedia {...props} style={{ border: `1px dashed ${grayMid}` }}>
       {showMedia ? (
-        <SVG src={`https://cdn.byintera.com/inhire/404-${darkMode ? 'light' : 'dark'}.svg`} />
+        <SVG src="https://cdn.svgporn.com/logos/storybook.svg" />
       ) : (
         <span>Loading...</span>
       )}

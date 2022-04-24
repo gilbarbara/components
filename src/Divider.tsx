@@ -28,7 +28,7 @@ const StyledDivider = styled(
   'div',
   styledOptions,
 )<DividerProps>(props => {
-  const { size = 'sm', type = 'solid', width = '100%' } = props;
+  const { size = 'sm', type, width = '100%' } = props;
   const { grayLighter } = getTheme(props);
   const selectedSize = sizes[size];
 

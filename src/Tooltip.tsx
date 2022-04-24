@@ -233,7 +233,7 @@ function TooltipBody(
 }
 
 export function Tooltip(props: TooltipProps): JSX.Element {
-  const { children, content, open, shade = 'dark', variant = 'gray' } = props;
+  const { children, content, open, shade, variant = 'gray' } = props;
   const isMounted = React.useRef(false);
   const [isActive, setActive] = React.useState(open || false);
   const [width, setWidth] = React.useState<number>(0);

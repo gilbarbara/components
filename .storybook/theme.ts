@@ -14,5 +14,5 @@ export default create({
 
   brandTitle: 'components',
   brandUrl: 'https://github.com/gilbarbara/components',
-  brandImage: 'https://files.wabisabi.cx/logos/components.svg',
+  brandImage: 'https://files.gilbarbara.dev/logos/components.svg',
 });

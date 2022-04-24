@@ -76,7 +76,7 @@ export function animateIcon(
     iconClone.classList.add(icon.className, 'will-animate');
     iconClone.setAttribute(
       'style',
-      `color: ${getColor(color)}; position: absolute; top: ${icon?.offsetTop}px; left: ${
+      `color: ${getColor(color)}; position: absolute; top: ${icon.offsetTop}px; left: ${
         icon.offsetLeft
       }px`,
     );
