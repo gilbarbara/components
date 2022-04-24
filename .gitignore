@@ -1,0 +1,7 @@
+.env
+
+coverage
+design-system
+esm
+lib
+node_modules/

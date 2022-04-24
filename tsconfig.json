@@ -1,0 +1,11 @@
+{
+  "extends": "@gilbarbara/tsconfig",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "outDir": "./lib",
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*", "stories/**/*", "*.d.ts"]
+}

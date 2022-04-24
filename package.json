@@ -1,0 +1,141 @@
+{
+  "name": "@gilbarbara/components",
+  "version": "0.0.0",
+  "description": "A collection of imperfect React components",
+  "author": "Gil Barbara <gilbarbara@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gilbarbara/components"
+  },
+  "bugs": {
+    "url": "https://github.com/gilbarbara/components/issues"
+  },
+  "homepage": "https://github.com/gilbarbara/components",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "esm/index.js",
+  "types": "./lib",
+  "files": [
+    "esm",
+    "lib",
+    "emotion.d.ts",
+    "src"
+  ],
+  "sideEffects": false,
+  "keywords": [],
+  "peerDependencies": {
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "dependencies": {
+    "@emotion/is-prop-valid": "^1.1.2",
+    "@gilbarbara/helpers": "^0.6.2",
+    "@gilbarbara/react-dropdown": "^0.0.3",
+    "colorizr": "^2.0.0",
+    "deepmerge": "^4.2.2",
+    "is-lite": "^0.8.1",
+    "polished": "^4.2.2",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-day-picker": "^7.4.9",
+    "react-hook-form": "^7.30.0",
+    "react-inlinesvg": "^3.0.0",
+    "react-innertext": "^1.1.5",
+    "react-merge-refs": "^1.1.0",
+    "react-use": "^17.3.2",
+    "scroll": "^3.0.1",
+    "scrollparent": "^2.0.1"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@gilbarbara/eslint-config": "^0.2.1",
+    "@gilbarbara/hooks": "^0.3.2",
+    "@gilbarbara/prettier-config": "^0.1.0",
+    "@gilbarbara/tsconfig": "^0.1.0",
+    "@gilbarbara/types": "^0.1.1",
+    "@saber2pr/types-github-api": "^0.0.7",
+    "@size-limit/preset-big-lib": "^7.0.8",
+    "@storybook/addon-a11y": "^6.4.22",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-docs": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/addons": "^6.4.22",
+    "@storybook/builder-webpack5": "^6.4.22",
+    "@storybook/client-api": "^6.4.22",
+    "@storybook/manager-webpack5": "^6.4.22",
+    "@storybook/react": "^6.4.22",
+    "@storybook/theming": "^6.4.22",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.25",
+    "@types/react": "^17.0.43",
+    "@types/react-copy-to-clipboard": "^5.0.2",
+    "@types/react-dom": "^17.0.14",
+    "@types/scroll": "^3.0.1",
+    "@types/scrollparent": "^2.0.1",
+    "chromatic": "^6.5.4",
+    "csstype": "^3.0.11",
+    "del-cli": "^4.0.1",
+    "deploy-aws-s3-cloudfront": "^3.6.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "jest-watch-typeahead": "^1.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "repo-tools": "^0.2.2",
+    "size-limit": "^7.0.8",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "type-fest": "^2.12.2",
+    "typescript": "^4.6.3"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc",
+    "build:esm": "tsc -m es6 --outDir esm",
+    "clean": "del lib/* && del esm/*",
+    "lint": "eslint --ext .js,.ts,.tsx src stories",
+    "test": "jest",
+    "test:watch": "jest --watchAll --verbose",
+    "test:coverage": "jest --bail --coverage --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "size": "size-limit",
+    "validate": "npm run lint && npm run typecheck && npm run test:coverage && npm run build && npm run size",
+    "storybook:dev": "start-storybook -p 4000",
+    "storybook:build": "build-storybook -o design-system",
+    "storybook:deploy": "deploy-aws-s3-cloudfront --bucket wabisabi.cx --distribution E2JFC8NDU9OERF --source design-system --invalidation-path /* --cache-control index.html:no-cache iframe.html:no-cache --soft-delete --expiration 30",
+    "storybook:publish": "npm run storybook:build && npm run storybook:deploy",
+    "storybook:test": "chromatic --project-token=97a27e585524 -b storybook:build --exit-zero-on-changes --exit-once-uploaded",
+    "prepare": "husky install"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@gilbarbara/eslint-config"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "stories/**/*"
+        ],
+        "rules": {
+          "react/function-component-definition": "off"
+        }
+      }
+    ]
+  },
+  "prettier": "@gilbarbara/prettier-config",
+  "size-limit": [
+    {
+      "name": "lib",
+      "path": "./lib/*.js",
+      "limit": "180 KB"
+    },
+    {
+      "name": "esm",
+      "path": "./esm/**/*.js",
+      "limit": "130 KB"
+    }
+  ]
+}
