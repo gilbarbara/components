@@ -104,10 +104,9 @@
     "size": "size-limit",
     "validate": "npm run lint && npm run typecheck && npm run test:coverage && npm run build && npm run size",
     "storybook:dev": "start-storybook -p 4000",
-    "storybook:build": "build-storybook -o design-system",
-    "storybook:deploy": "deploy-aws-s3-cloudfront --bucket wabisabi.cx --distribution E2JFC8NDU9OERF --source design-system --invalidation-path /* --cache-control index.html:no-cache iframe.html:no-cache --soft-delete --expiration 30",
+    "storybook:build": "build-storybook -o components",
+    "storybook:deploy": "deploy-aws-s3-cloudfront --bucket components.gilbarbara.dev --distribution E2A0K9FPJ9AK9Q --source components --invalidation-path /* --cache-control index.html:no-cache iframe.html:no-cache --soft-delete --expiration 30",
     "storybook:publish": "npm run storybook:build && npm run storybook:deploy",
-    "storybook:test": "chromatic --project-token=97a27e585524 -b storybook:build --exit-zero-on-changes --exit-once-uploaded",
     "prepare": "husky install"
   },
   "eslintConfig": {
