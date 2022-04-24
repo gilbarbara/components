@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from '@emotion/react';
 import { omit } from '@gilbarbara/helpers';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
-import * as deepmerge from 'deepmerge';
+import { deepmergeCustom, DeepMergeLeafURI } from 'deepmerge-ts';
 import is from 'is-lite';
 import { PartialDeep } from 'type-fest';
 
@@ -27,6 +27,12 @@ interface RecursiveElementFindOptions {
 }
 
 const { black, breakpoints, white } = theme;
+
+const deepmerge = deepmergeCustom<{
+  DeepMergeArraysURI: DeepMergeLeafURI; // <-- Needed for correct output type.
+}>({
+  mergeArrays: false,
+});
 
 export function clearNumber(value = '') {
   return value.replace(/\D+/g, '');
@@ -90,9 +96,7 @@ export function isCSSUnit(value: unknown): value is string {
 }
 
 export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
-  const nextTheme = deepmerge(theme, customTheme, {
-    arrayMerge: (destination: any[], source: any[]) => source,
-  }) as Theme;
+  const nextTheme = deepmerge({ ...theme }, customTheme) as Theme;
 
   const { gray, grayDark, grayDarker, grayDarkest, grayLight, grayLighter, grayLightest } =
     nextTheme;
