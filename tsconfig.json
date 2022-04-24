@@ -7,5 +7,5 @@
     "outDir": "./lib",
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "stories/**/*", "*.d.ts"]
+  "include": ["src/**/*", "*.d.ts"]
 }

@@ -17,14 +17,14 @@ export interface AlertKnownProps extends StyledProps, WithMargin, WithInvert {
 
 export type AlertProps = ComponentProps<HTMLDivElement, AlertKnownProps>;
 
-function getOptions(type: AlertProps['type'], colors: Theme['colors']) {
+function getOptions(type: AlertProps['type'], colors: Theme['colors'], darkMode: boolean) {
   const options = {
     success: {
       color: colors.green,
       icon: 'check-o',
     },
     warning: {
-      color: colors.yellow,
+      color: darkMode ? colors.orange : colors.yellow,
       icon: 'danger',
     },
     error: {
@@ -36,8 +36,8 @@ function getOptions(type: AlertProps['type'], colors: Theme['colors']) {
       icon: 'info',
     },
     neutral: {
-      color: colors.purple,
-      icon: 'loadbar-alt',
+      color: darkMode ? '#000' : '#fff',
+      icon: 'data',
     },
   } as const;
 
@@ -79,10 +79,10 @@ export const StyledAlert = styled(
 });
 
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
-  const { children, icon, type } = props;
-  const { colors } = getTheme({ theme: useTheme() });
+  const { children, icon, invert, type } = props;
+  const { colors, darkMode } = getTheme({ theme: useTheme() });
 
-  const selected = getOptions(type, colors);
+  const selected = getOptions(type, colors, !!darkMode || !!invert);
 
   return (
     <StyledAlert ref={ref} data-component-name="Alert" {...props}>

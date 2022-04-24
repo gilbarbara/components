@@ -18,7 +18,7 @@ export const StyledDropdown = styled(
     isFilled: boolean;
   }
 >(props => {
-  const { colors, grayDark, grayDarker, grayLightest, grayMid, inputHeight, radius, spacing } =
+  const { colors, grayDark, grayDarker, grayMid, inputHeight, radius, spacing, white } =
     getTheme(props);
 
   const darkMode = isDarkMode(props);
@@ -37,7 +37,7 @@ export const StyledDropdown = styled(
         padding: ${spacing.xxs} 0 !important;
       `
     : css`
-        background-color: ${darkMode ? grayDarker : grayLightest};
+        background-color: ${darkMode ? grayDarker : white};
         border: 1px solid ${borderColor};
         border-radius: ${radius.xs};
         padding: ${spacing.xxs} ${spacing.md} !important;
@@ -143,7 +143,6 @@ export function Dropdown<T extends DropdownOption>(props: DropdownProps<T>) {
         color={colors.primary}
         contentRenderer={Content}
         create={!!createFn}
-        createNewLabel="+ Add {search}"
         dropdownGap={0}
         dropdownHeight="256px"
         dropdownPosition="auto"
@@ -160,6 +159,7 @@ export function Dropdown<T extends DropdownOption>(props: DropdownProps<T>) {
 Dropdown.defaultProps = {
   bigger: false,
   borderless: false,
+  createNewLabel: '+ Add {search}',
   placeholder: 'Select an option',
   showCreateAlways: false,
   width: 260,

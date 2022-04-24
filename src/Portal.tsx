@@ -127,13 +127,13 @@ const StyledPortal = styled.div<Pick<PortalProps, 'isActive' | 'zIndex'>>(props 
 export function Portal(props: PortalProps) {
   const {
     children,
-    closeOnClickOverlay = true,
-    closeOnEsc = true,
-    hideOverlay = false,
-    isActive = false,
+    closeOnClickOverlay,
+    closeOnEsc,
+    hideOverlay,
+    isActive,
     onClose,
     onOpen,
-    showCloseButton = false,
+    showCloseButton,
     zIndex = 1000,
   } = props;
   const [isReady, setReady] = useState(false);

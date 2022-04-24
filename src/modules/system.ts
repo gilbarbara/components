@@ -1,5 +1,5 @@
 import isPropValid from '@emotion/is-prop-valid';
-import { css, CSSObject, SerializedStyles } from '@emotion/react';
+import { css, CSSObject } from '@emotion/react';
 import is from 'is-lite';
 import { rgba } from 'polished';
 
@@ -116,8 +116,7 @@ export function inputStyles<T extends WithTheme & { borderless?: boolean; multip
   } = getTheme(props);
 
   const isSelect = is.boolean(multiple);
-  let styles: SerializedStyles;
-  let placeholderColor = grayMid;
+  const placeholderColor = grayMid;
 
   const disabled = css`
     ${!borderless && `background-color: ${darkMode ? grayDark : grayLightest}`};
@@ -126,20 +125,17 @@ export function inputStyles<T extends WithTheme & { borderless?: boolean; multip
     cursor: not-allowed;
   `;
 
-  if (borderless) {
-    styles = css`
-      background-color: transparent;
-      border: 0;
-      border-bottom: 1px solid ${darkMode ? grayDark : grayMid};
-    `;
-    placeholderColor = grayMid;
-  } else {
-    styles = css`
-      background-color: ${darkMode ? grayDarker : white};
-      border: 1px solid ${darkMode ? grayDark : grayMid};
-      border-radius: ${radius.xs};
-    `;
-  }
+  const styles = borderless
+    ? css`
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid ${darkMode ? grayDark : grayMid};
+      `
+    : css`
+        background-color: ${darkMode ? grayDarker : white};
+        border: 1px solid ${darkMode ? grayDark : grayMid};
+        border-radius: ${radius.xs};
+      `;
 
   return css`
     color: ${darkMode ? lightColor : darkColor};

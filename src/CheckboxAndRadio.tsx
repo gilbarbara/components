@@ -203,18 +203,8 @@ function handleKeyDown(event: React.KeyboardEvent<HTMLSpanElement>) {
 }
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const {
-    checked,
-    children,
-    defaultChecked,
-    id,
-    inline,
-    label,
-    name,
-    size = 'md',
-    style,
-    ...rest
-  } = props;
+  const { checked, children, defaultChecked, id, inline, label, name, size, style, ...rest } =
+    props;
   const inputId = id || name;
 
   return (
@@ -246,6 +236,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>((props
 
 Checkbox.defaultProps = {
   inline: false,
+  size: 'md',
 };
 Checkbox.displayName = 'Checkbox';
 
@@ -254,18 +245,8 @@ Checkbox.displayName = 'Checkbox';
  * RadioGroup accepts an `options` prop that render this component in a group and is responsible for managing state and interactions.
  */
 export const Radio = React.forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const {
-    checked,
-    children,
-    defaultChecked,
-    id,
-    inline,
-    label,
-    name,
-    size = 'md',
-    style,
-    ...rest
-  } = props;
+  const { checked, children, defaultChecked, id, inline, label, name, size, style, ...rest } =
+    props;
 
   return (
     <StyledLabel category="radio" data-component-name="Radio" htmlFor={id} inline={inline}>
@@ -296,5 +277,6 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>((props, ref)
 
 Radio.defaultProps = {
   inline: false,
+  size: 'md',
 };
 Radio.displayName = 'Radio';

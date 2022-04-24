@@ -54,9 +54,9 @@ const StyledDialog = styled(
 
 export function Dialog(props: DialogProps) {
   const {
-    buttonCancelText = 'Cancelar',
-    buttonConfirmText = 'Confirmar',
-    buttonOrder = 'ltr',
+    buttonCancelText,
+    buttonConfirmText,
+    buttonOrder,
     closeOnEsc = true,
     content,
     isActive,
@@ -122,8 +122,8 @@ export function Dialog(props: DialogProps) {
 }
 
 Dialog.defaultProps = {
-  buttonCancelText: 'Cancelar',
-  buttonConfirmText: 'Confirmar',
+  buttonCancelText: 'Cancel',
+  buttonConfirmText: 'Confirm',
   buttonOrder: 'ltr',
   closeOnEsc: true,
   textAlign: 'left',

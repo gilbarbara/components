@@ -241,7 +241,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
 
 DataTable.defaultProps = {
   breakpoint: 768,
-  loading: true,
+  loading: false,
   maxRows: 10,
   pagination: true,
   responsive: false,
