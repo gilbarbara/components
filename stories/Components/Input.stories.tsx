@@ -9,14 +9,16 @@ export default {
   component: Input,
   argTypes: {
     ...hideProps(),
-    name: { control: 'text', defaultValue: 'name' },
-    placeholder: { control: 'text', defaultValue: 'Your name here...' },
     bigger: { defaultValue: false },
     borderless: { defaultValue: false },
     disabled: { control: 'boolean', defaultValue: false },
+    endSpacing: { defaultValue: false },
+    name: { control: 'text', defaultValue: 'name' },
+    placeholder: { control: 'text', defaultValue: 'Your name here...' },
     readOnly: { control: 'boolean', defaultValue: false },
+    startSpacing: { defaultValue: false },
     type: { defaultValue: 'text' },
-    width: { control: 'text' },
+    width: { control: 'text', defaultValue: '100%' },
   },
 } as ComponentMeta<typeof Input>;
 

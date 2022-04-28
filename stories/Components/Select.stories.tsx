@@ -9,12 +9,14 @@ export default {
   component: Select,
   argTypes: {
     ...hideProps(),
-    name: { control: 'text', defaultValue: 'name' },
     bigger: { defaultValue: false },
     borderless: { defaultValue: false },
-    multiple: { control: 'boolean', defaultValue: false },
-    size: { control: 'number', defaultValue: 1 },
     disabled: { control: 'boolean', defaultValue: false },
+    endSpacing: { defaultValue: false },
+    multiple: { control: 'boolean', defaultValue: false },
+    name: { control: 'text', defaultValue: 'name' },
+    size: { control: 'number', defaultValue: 1 },
+    startSpacing: { defaultValue: false },
   },
 } as ComponentMeta<typeof Select>;
 

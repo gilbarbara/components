@@ -9,11 +9,14 @@ export default {
   component: Textarea,
   argTypes: {
     ...hideProps(),
-    name: { control: 'text', defaultValue: 'name' },
-    placeholder: { control: 'text', defaultValue: 'Your name here...' },
     borderless: { defaultValue: false },
     disabled: { control: 'boolean', defaultValue: false },
+    endSpacing: { defaultValue: false },
+    name: { control: 'text', defaultValue: 'name' },
+    placeholder: { control: 'text', defaultValue: 'Tell us something about yourself...' },
     readOnly: { control: 'boolean', defaultValue: false },
+    startSpacing: { defaultValue: false },
+    width: { control: 'text', defaultValue: '100%' },
   },
 } as ComponentMeta<typeof Textarea>;
 

@@ -13,11 +13,10 @@ import {
   isDarkMode,
   styledOptions,
 } from './modules/system';
-import { ComponentProps, StyledProps } from './types';
+import { ComponentProps, StyledProps, WithFormElements } from './types';
 
-export interface SelectKnownProps extends StyledProps {
+export interface SelectKnownProps extends StyledProps, WithFormElements {
   bigger?: boolean;
-  borderless?: boolean;
   children: React.ReactNode;
 }
 
@@ -27,11 +26,21 @@ export const StyledSelect = styled(
   'select',
   styledOptions,
 )<SelectProps & { filled: boolean }>(props => {
-  const { bigger, borderless, filled, multiple } = props;
+  const { bigger, borderless, endSpacing, filled, multiple, startSpacing } = props;
   const { colors, darkColor, grayMid, inputHeight, spacing, white } = getTheme(props);
 
-  const paddingX = bigger ? '16px' : '12px';
   let color = isDarkMode(props) ? white : darkColor;
+  const paddingX = bigger ? spacing.md : spacing.sm;
+  let paddingLeft = borderless ? 0 : spacing.md;
+  let paddingRight = borderless ? 0 : spacing.lg;
+
+  if (endSpacing) {
+    paddingRight = spacing.xxl;
+  }
+
+  if (startSpacing) {
+    paddingLeft = spacing.xxl;
+  }
 
   if (borderless) {
     color = filled ? white : grayMid;
@@ -52,7 +61,7 @@ export const StyledSelect = styled(
     background-repeat: no-repeat;
     background-position: right 8px center;
     color: ${filled ? color : grayMid};
-    padding: ${paddingX} ${spacing.md} ${paddingX} ${borderless ? 0 : spacing.md};
+    padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
     ${!multiple ? `height: ${bigger ? inputHeight.md : inputHeight.sm}` : ''};
     white-space: nowrap;
     width: 100%;

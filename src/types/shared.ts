@@ -1,3 +1,4 @@
+import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
 import { Sizes, TextSizes } from './common';
@@ -9,6 +10,11 @@ export interface WithAlign {
    * @default left
    */
   align?: 'left' | 'center' | 'right';
+}
+
+export interface WithBorderless {
+  /** @default false */
+  borderless?: boolean;
 }
 
 export interface WithColor {
@@ -35,6 +41,15 @@ export interface WithFilled {
    * @default false
    */
   filled?: boolean;
+}
+
+export interface WithFormElements extends WithBorderless {
+  /** @default false */
+  endSpacing?: boolean;
+  /** @default false */
+  startSpacing?: boolean;
+  /** @default 100% */
+  width?: StringOrNumber;
 }
 
 export interface WithInline {
