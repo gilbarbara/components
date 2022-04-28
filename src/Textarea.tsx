@@ -2,27 +2,38 @@ import * as React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { getTheme } from './modules/helpers';
+import { getTheme, px } from './modules/helpers';
 import { baseStyles, inputStyles, styledOptions } from './modules/system';
-import { ComponentProps, StyledProps } from './types';
+import { ComponentProps, StyledProps, WithFormElements } from './types';
 
-export interface TextareaProps extends ComponentProps<HTMLTextAreaElement, StyledProps> {
-  borderless?: boolean;
-}
+export interface TextareaKnownProps extends StyledProps, WithFormElements {}
+
+export type TextareaProps = ComponentProps<HTMLTextAreaElement, TextareaKnownProps>;
 
 export const StyledTextarea = styled(
   'textarea',
   styledOptions,
 )<TextareaProps>(props => {
-  const { borderless } = props;
+  const { borderless, endSpacing, startSpacing, width } = props;
   const { spacing } = getTheme(props);
+
+  const paddingX = spacing.md;
+  let paddingLeft = borderless ? 0 : spacing.md;
+  let paddingRight = borderless ? 0 : spacing.md;
+
+  if (endSpacing) {
+    paddingRight = spacing.xxl;
+  }
+
+  if (startSpacing) {
+    paddingLeft = spacing.xxl;
+  }
 
   return css`
     ${baseStyles(props)};
     ${inputStyles(props)};
-    margin: 0;
-    padding: ${spacing.md} ${spacing.xxl} ${spacing.md} ${borderless ? 0 : spacing.md};
-    width: 100%;
+    padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
+    width: ${width ? px(width) : '100%'};
   `;
 });
 
