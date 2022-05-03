@@ -74,7 +74,7 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((props, ref)
       data-component-name="Avatar"
       height={selectedSize.size}
       overflow="hidden"
-      radius="circular"
+      radius="round"
       width={selectedSize.size}
       {...rest}
     >

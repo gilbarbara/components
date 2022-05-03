@@ -17,13 +17,6 @@ export const breakpoints = {
   xxxl: '1680px',
 };
 
-export const borderWidth = {
-  hairline: '1px',
-  thin: '2px',
-  thick: '2px',
-  heavy: '2px',
-};
-
 export const easing = 'cubic-bezier(0.35, 0.01, 0.77, 0.34);';
 
 export const inputHeight = {
@@ -46,13 +39,13 @@ export const radius = {
   md: '16px',
   lg: '24px',
   xl: '32px',
-  circular: '50%',
+  round: '50%',
 };
 
 export const shadow = {
-  low: '0 8px 16px rgba(148, 148, 148, 0.16)',
-  mid: '0 8px 16px rgba(148, 148, 148, 0.24)',
-  high: '0 8px 32px rgba(148, 148, 148, 0.24)',
+  low: '0 4px 16px rgba(148, 148, 148, 0.24)',
+  mid: '0 4px 16px rgba(148, 148, 148, 0.24)',
+  high: '0 4px 32px rgba(148, 148, 148, 0.24)',
 };
 
 export const spacing = {
