@@ -1,6 +1,9 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { omit } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { FieldProps, RegisterOptionsProps } from './types';
 
 import { clearNumber } from '../modules/helpers';
 import {
@@ -9,7 +12,6 @@ import {
   validatePassword,
   validatePhoneBR,
 } from '../modules/validations';
-import { FieldProps, RegisterOptionsProps } from '../types';
 
 export function getError(name: string, errors: AnyObject) {
   const { message, type } = errors[name] || {};
@@ -21,10 +23,38 @@ export function getError(name: string, errors: AnyObject) {
   return [null];
 }
 
+export function getInputParameters(props: FieldProps, ...extra: any[]) {
+  return omit(
+    props,
+    'assistiveText',
+    'children',
+    'clearError',
+    'debug',
+    'dropdownProps',
+    'formatter',
+    'hideAssistiveText',
+    'label',
+    'maxLength',
+    'minLength',
+    'onBlur',
+    'onChange',
+    'onFocus',
+    'options',
+    'required',
+    'setValueAs',
+    'skipValidation',
+    'type',
+    'validations',
+    'value',
+    ...extra,
+  );
+}
+
 export function getRegisterOptions(
   props: RegisterOptionsProps,
 ): Partial<UseFormRegister<FieldValues>> {
   const {
+    getValues,
     maxLength,
     minLength,
     required,
@@ -47,18 +77,18 @@ export function getRegisterOptions(
   if (minLength) {
     registerOptions.minLength = {
       value: minLength,
-      message: `Min. Caracters: ${minLength}`,
+      message: `Min. Characters: ${minLength}`,
     };
   }
 
   if (maxLength) {
     registerOptions.maxLength = {
       value: maxLength,
-      message: `Max. Caracters: ${maxLength}`,
+      message: `Max. Characters: ${maxLength}`,
     };
   }
 
-  if (['moneyBR', 'number', 'phoneBR'].includes(formatter)) {
+  if (['money', 'number', 'phoneBR'].includes(formatter)) {
     registerOptions.setValueAs = (v: string | number) => {
       if (!v) {
         return undefined;
@@ -113,7 +143,7 @@ export function getRegisterOptions(
         if (is.function(validation)) {
           response = validation(input);
         } else if (validation.field && is.function(validation.fn)) {
-          const actualValues = props.getValues();
+          const actualValues = getValues();
 
           response = validation.fn(`${actualValues[validation.field]}`, input);
         }
@@ -129,7 +159,9 @@ export function getRegisterOptions(
 }
 
 export function getDefaultValue(value: any, type: FieldProps['type']) {
-  if (type === 'toggle') {
+  if (type === 'checkbox') {
+    return value || [];
+  } else if (type === 'toggle') {
     return value || false;
   }
 
