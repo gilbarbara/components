@@ -29,4 +29,5 @@ exclude_patterns:
   - esm/**/*
   - lib/**/*
   - node_modules/**/*
+  - stories/**/*
   - test/**/*
