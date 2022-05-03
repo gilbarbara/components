@@ -5,7 +5,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
 
-import { getTheme } from './modules/helpers';
+import { getTheme, px } from './modules/helpers';
 import {
   appearanceStyles,
   baseStyles,
@@ -26,7 +26,7 @@ export const StyledSelect = styled(
   'select',
   styledOptions,
 )<SelectProps & { filled: boolean }>(props => {
-  const { bigger, borderless, endSpacing, filled, multiple, startSpacing } = props;
+  const { bigger, borderless, endSpacing, filled, multiple, startSpacing, width } = props;
   const { colors, darkColor, grayMid, inputHeight, spacing, white } = getTheme(props);
 
   let color = isDarkMode(props) ? white : darkColor;
@@ -64,7 +64,7 @@ export const StyledSelect = styled(
     padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
     ${!multiple ? `height: ${bigger ? inputHeight.md : inputHeight.sm}` : ''};
     white-space: nowrap;
-    width: 100%;
+    width: ${width ? px(width) : '100%'};
 
     ${filled &&
     css`
@@ -93,7 +93,7 @@ export const StyledSelect = styled(
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
   const { defaultValue, name, onChange, value } = props;
-  const localRef = React.useRef<HTMLSelectElement>();
+  const localRef = React.useRef<HTMLSelectElement>(null);
   const [isFilled, setFilled] = React.useState(!!defaultValue || !!value);
 
   useMount(() => {
@@ -115,9 +115,9 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
     <StyledSelect
       ref={mergeRefs([localRef, ref])}
       data-component-name="Select"
+      filled={isFilled}
       id={name}
       {...props}
-      filled={isFilled}
       onChange={handleChange}
     />
   );

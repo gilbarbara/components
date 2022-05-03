@@ -175,7 +175,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
     if (isEmpty) {
       return (
         <FlexCenter padding="md" radius="sm" variant="white" width="100%">
-          {noResults || <Text bold>Nada encontrado</Text>}
+          {noResults || <Text bold>Nothing found</Text>}
         </FlexCenter>
       );
     }
