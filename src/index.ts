@@ -16,7 +16,7 @@ export * from './DatePicker';
 export { Divider } from './Divider';
 export { Dropdown } from './Dropdown';
 export { Emoji } from './Emoji';
-export { Field, FieldCheckboxGroup } from './Field';
+export { Field } from './Field';
 export { Flex, FlexCenter, FlexInline, FlexProps } from './Flex';
 export { FormGroup } from './FormGroup';
 export { FormWrapper } from './FormWrapper';
