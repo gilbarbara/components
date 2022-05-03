@@ -116,7 +116,7 @@ const StyledElement = styled(
     ${baseStyles(props)};
     background-color: ${darkMode ? grayDarker : white};
     border: 2px solid ${grayDark};
-    border-radius: ${category === 'checkbox' ? radius.xxs : radius.circular};
+    border-radius: ${category === 'checkbox' ? radius.xxs : radius.round};
     display: inline-flex;
     flex-shrink: 0;
     height: ${px(dimensions)};
