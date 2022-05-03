@@ -73,7 +73,7 @@ const AssistiveContent = styled(
     color: ${isDarkMode(props) ? grayLight : grayMid};
     display: flex;
     font-size: ${typography.mid.fontSize};
-    line-height: 1.3;
+    line-height: 16px;
     margin-top: ${spacing.xxs};
     min-height: ${spacing.md};
     text-align: left;
@@ -91,6 +91,8 @@ const Error = styled.div(props => {
 });
 
 const InputWrapper = styled('div', styledOptions)`
+  display: flex;
+  flex-direction: column;
   position: relative;
 
   > [data-component-name='Icon'] {

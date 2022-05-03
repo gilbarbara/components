@@ -129,7 +129,7 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>((props, re
     variant,
     ...rest
   } = props;
-  const inputRef = React.useRef<HTMLInputElement>();
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const [isActive, setActive] = React.useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
 

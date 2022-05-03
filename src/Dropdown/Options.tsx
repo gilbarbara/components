@@ -227,7 +227,7 @@ function DropdownOptions<T extends DropdownOption = DropdownOption>({
   }
 
   if (!children && !availableOptions.length) {
-    output.options = <Empty>Nada encontrado</Empty>;
+    output.options = <Empty>Nothing found</Empty>;
   }
 
   return (

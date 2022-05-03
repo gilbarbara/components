@@ -18,7 +18,7 @@ const DISPLAY = {
 
 export function ClickOutside(props: Props) {
   const { active, children, display = DISPLAY.BLOCK, onClick, ...rest } = props;
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const isTouch = React.useRef(false);
 
   const handleClick = React.useRef((event: MouseEvent | TouchEvent) => {
