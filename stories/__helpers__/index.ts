@@ -23,33 +23,6 @@ export function hideProps(...props: string[]) {
   const fields: AnyObject = {
     as: hideTable(),
     theme: hideTable(),
-    // layout
-    bottom: hideTable(),
-    height: hideTable(),
-    left: hideTable(),
-    maxHeight: hideTable(),
-    maxWidth: hideTable(),
-    minHeight: hideTable(),
-    minWidth: hideTable(),
-    overflow: hideTable(),
-    position: hideTable(),
-    right: hideTable(),
-    top: hideTable(),
-    width: hideTable(),
-    // margin
-    mx: hideTable(),
-    my: hideTable(),
-    mb: hideTable(),
-    ml: hideTable(),
-    mr: hideTable(),
-    mt: hideTable(),
-    // padding
-    px: hideTable(),
-    py: hideTable(),
-    pb: hideTable(),
-    pl: hideTable(),
-    pr: hideTable(),
-    pt: hideTable(),
   };
 
   props.forEach(d => {
