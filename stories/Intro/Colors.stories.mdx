@@ -3,7 +3,8 @@ import { capitalize } from '@gilbarbara/helpers';
 import { hex2hsl, textColor } from 'colorizr';
 
 import { Box, FlexCenter, Grid, H2, H3, Jumbo, Paragraph, Text } from '../../src';
-import { colors, grayScale, variants } from '../../src/modules/theme';
+import { colors, grayScale, variants as themeVariants } from '../../src/modules/theme';
+import { shades, variants } from '../__helpers__';
 
 <Meta title="Intro/Colors" />
 
@@ -40,7 +41,7 @@ import { colors, grayScale, variants } from '../../src/modules/theme';
 <H2>Variants</H2>
 
 <div>
-  {Object.entries(variants)
+  {Object.entries(themeVariants)
     .map(([variant, color]) => (
       <Box key={variant} mb="lg">
         <H3>{capitalize(variant)}</H3>
@@ -75,27 +76,27 @@ import { colors, grayScale, variants } from '../../src/modules/theme';
 <H2>Shades</H2>
 
 <div>
-  {Object.keys(variants.primary)
+  {shades
     .map((shade) => (
       <Box key={shade} mb="lg">
         <H3>{capitalize(shade)}</H3>
         <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
-          {Object.keys(variants)
-            .map((name) => {
-              const variant = variants[name][shade].bg;
-              const { h, s, l } = hex2hsl(variant);
+          {variants
+            .map((variant) => {
+              const { bg } = themeVariants[variant][shade];
+              const { h, s, l } = hex2hsl(bg);
               return (
-                <Box key={name}>
+                <Box key={variant}>
                   <FlexCenter
                     height={128}
                     radius="round"
                     shade={shade}
-                    variant={name}
+                    variant={variant}
                     width={128}
                   >
-                    {name}
+                    {variant}
                   </FlexCenter>
-                  <Paragraph align="center" size="small" mt="xs">HEX: {variant}</Paragraph>
+                  <Paragraph align="center" size="small" mt="xs">HEX: {bg}</Paragraph>
                   <Paragraph align="center" size="small">
                     H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
                   </Paragraph>

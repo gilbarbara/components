@@ -1,0 +1,65 @@
+import { Meta } from '@storybook/addon-docs';
+import { Box, Group, Jumbo, H1, H2, H3, Paragraph } from '../../src';
+import { typography } from '../../src/modules/theme';
+
+<Meta title='Intro/Typography' />
+
+<Jumbo>Typography</Jumbo>
+
+<Box>
+  <Group mb="xl">
+    <Box width={128}>
+      <Paragraph>Jumbo ({typography.jumboBigger.fontSize})</Paragraph>
+      <Paragraph size="mid" variant="gray">(bigger)</Paragraph>
+    </Box>
+    <Jumbo bigger mb={0}>AaBbCc</Jumbo>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      Jumbo ({typography.jumbo.fontSize})
+    </Box>
+    <Jumbo mb={0}>AaBbCc</Jumbo>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      H1 ({typography.title1.fontSize})
+    </Box>
+    <H1 mb={0}>AaBbCc</H1>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      H2 ({typography.title2.fontSize})
+    </Box>
+    <H2 mb={0}>AaBbCc</H2>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      H3 ({typography.title3.fontSize})
+    </Box>
+    <H3 mb={0}>AaBbCc</H3>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      Large ({typography.large.fontSize})
+    </Box>
+    <Paragraph size="large">AaBbCc</Paragraph>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      Regular ({typography.regular.fontSize})
+    </Box>
+    <Paragraph>AaBbCc</Paragraph>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      Mid ({typography.mid.fontSize})
+    </Box>
+    <Paragraph size="mid">AaBbCc</Paragraph>
+  </Group>
+  <Group mb="xl">
+    <Box width={128}>
+      Small ({typography.small.fontSize})
+    </Box>
+    <Paragraph size="small">AaBbCc</Paragraph>
+  </Group>
+</Box>
