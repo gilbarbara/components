@@ -61,9 +61,9 @@ export interface DropdownProps<T extends DropdownOption>
   extends StyledProps,
     WithMargin,
     SetOptional<SelectProps<T>, 'onChange' | 'values'> {
-  bigger?: boolean;
   borderless?: boolean;
   createFn?: (props: DropdownCreateProps<T>) => JSX.Element;
+  large?: boolean;
   showCreateAlways?: boolean;
   /** @default 260 */
   width?: StringOrNumber;

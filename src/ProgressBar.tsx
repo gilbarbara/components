@@ -10,7 +10,7 @@ import { Paragraph } from './Paragraph';
 import { ComponentProps, StyledProps, WithMargin } from './types';
 
 export interface ProgressKnownProps extends StyledProps, WithMargin {
-  bigger?: boolean;
+  large?: boolean;
   showProgression?: boolean;
   step: number;
   steps: number;
@@ -40,14 +40,14 @@ const StyledProgressTrack = styled(
   'div',
   styledOptions,
 )<ProgressProps>(props => {
-  const { bigger } = props;
+  const { large } = props;
   const { colors, grayLight, radius } = getTheme(props);
 
-  const height = bigger ? '8px' : '4px';
+  const height = large ? '8px' : '4px';
 
   return css`
     background-color: ${grayLight};
-    border-radius: ${bigger ? radius.xs : radius.xxs};
+    border-radius: ${large ? radius.xs : radius.xxs};
     line-height: 1;
     height: ${height};
     overflow: hidden;

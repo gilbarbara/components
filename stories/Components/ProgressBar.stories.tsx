@@ -9,10 +9,10 @@ export default {
   component: ProgressBar,
   argTypes: {
     ...hideProps(),
+    large: { defaultValue: false },
     step: { defaultValue: 1 },
     steps: { defaultValue: 4 },
     showProgression: { defaultValue: true },
-    bigger: { defaultValue: false },
     width: { control: 'text', defaultValue: '400px' },
   },
 } as ComponentMeta<typeof ProgressBar>;

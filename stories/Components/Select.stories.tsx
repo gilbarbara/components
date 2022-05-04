@@ -9,10 +9,10 @@ export default {
   component: Select,
   argTypes: {
     ...hideProps(),
-    bigger: { defaultValue: false },
     borderless: { defaultValue: false },
     disabled: { control: 'boolean', defaultValue: false },
     endSpacing: { defaultValue: false },
+    large: { defaultValue: false },
     multiple: { control: 'boolean', defaultValue: false },
     name: { control: 'text', defaultValue: 'name' },
     size: { control: 'number', defaultValue: 1 },

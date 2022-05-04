@@ -24,8 +24,8 @@ import {
 } from '../types';
 
 interface DatePickerInputProps extends DatePickerProps<DatePickerClickHandler> {
-  bigger?: boolean;
   borderless?: boolean;
+  large?: boolean;
   open?: boolean;
   placeholder?: string;
   separator?: string;
@@ -43,11 +43,11 @@ const StyledButton = styled(
   'div',
   styledOptions,
 )<
-  Pick<DatePickerInputProps, 'bigger' | 'borderless' | 'theme' | 'variant' | 'width'> & {
+  Pick<DatePickerInputProps, 'large' | 'borderless' | 'theme' | 'variant' | 'width'> & {
     isFilled: boolean;
   }
 >(props => {
-  const { bigger, borderless, isFilled, variant = 'primary', width } = props;
+  const { borderless, isFilled, large, variant = 'primary', width } = props;
   const {
     darkColor,
     grayDark,
@@ -91,7 +91,7 @@ const StyledButton = styled(
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    min-height: ${bigger ? inputHeight.large : inputHeight.normal};
+    min-height: ${large ? inputHeight.large : inputHeight.normal};
     min-width: ${px(width || 240)};
     width: ${width ? px(width) : 'auto'};
     ${styles};
@@ -133,8 +133,8 @@ const StyledContent = styled(
 
 export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
   const {
-    bigger,
     borderless,
+    large,
     onClick,
     open,
     placeholder,
@@ -227,8 +227,8 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
 }
 
 DatePickerInput.defaultProps = {
-  bigger: false,
   borderless: false,
+  large: false,
   showRange: false,
   variant: 'primary',
 };

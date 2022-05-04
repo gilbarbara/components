@@ -97,7 +97,7 @@ export const typography = {
     lineHeight: '44px',
     weight: 700,
   },
-  jumboBigger: {
+  jumboLarge: {
     fontSize: '48px',
     lineHeight: '52px',
     weight: 700,

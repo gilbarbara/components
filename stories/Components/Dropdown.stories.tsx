@@ -51,9 +51,9 @@ export default {
   argTypes: {
     ...hideProps('additionalProps', 'createFn'),
     borderless: { defaultValue: false },
+    large: { defaultValue: false },
     showCreateAlways: { defaultValue: false },
     showCreateButton: { control: 'boolean', defaultValue: true },
-    bigger: { defaultValue: false },
     multi: { control: 'boolean', defaultValue: false },
     onDropdownCloseRequest: { disabled: true },
   },
