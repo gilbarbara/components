@@ -378,13 +378,12 @@ export function textStyles<T extends WithTextOptions & WithTheme>(props: T): CSS
   const { bold = false, size = 'regular' } = props;
   const { typography } = getTheme(props);
 
-  const { fontSize, letterSpacing, lineHeight, weight } = typography[size];
+  const { fontSize, lineHeight, weight } = typography[size];
   const fontWeight = bold ? weight[1] : undefined;
 
   return {
     fontSize,
     fontWeight,
-    letterSpacing,
     lineHeight,
   };
 }

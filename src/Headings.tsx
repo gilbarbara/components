@@ -27,7 +27,6 @@ function getStyles(selected: TypographyItem, props: HeadingProps) {
     font-family: ${fontFamily};
     font-size: ${selected.fontSize};
     font-weight: ${light ? 400 : selected.weight};
-    letter-spacing: ${selected.letterSpacing};
     line-height: ${selected.lineHeight};
     margin-top: 0;
     ${marginStyles(props)};

@@ -28,7 +28,6 @@ export type TextSizes = 'small' | 'mid' | 'regular' | 'large';
 
 export interface TypographyItem {
   fontSize: string | number;
-  letterSpacing: string | number;
   lineHeight: string;
   weight: number | number[];
 }

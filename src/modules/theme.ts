@@ -3,9 +3,6 @@ import { getColorScale, getGrayScale } from './colors';
 export const fontFamily = 'inherit';
 export const fontMonospace = 'Courier, monospace';
 
-export const letterSpacing = '-0.018em';
-export const lineHeight = 1.4;
-
 export const breakpoints = {
   xxs: '320px',
   xs: '375px',
@@ -63,55 +60,46 @@ export const spacing = {
 export const typography = {
   small: {
     fontSize: '12px',
-    letterSpacing,
     lineHeight: '16px',
     weight: [400, 700],
   },
   mid: {
     fontSize: '14px',
-    letterSpacing,
     lineHeight: '18px',
     weight: [400, 700],
   },
   regular: {
     fontSize: '16px',
-    letterSpacing,
     lineHeight: '21px',
     weight: [400, 700],
   },
   large: {
     fontSize: '18px',
-    letterSpacing,
     lineHeight: '24px',
     weight: [400, 700],
   },
   title3: {
     fontSize: '20px',
-    letterSpacing: '-0.02em',
     lineHeight: '26px',
     weight: 700,
   },
   title2: {
     fontSize: '24px',
-    letterSpacing: '-0.02em',
     lineHeight: '30px',
     weight: 700,
   },
   title1: {
     fontSize: '28px',
-    letterSpacing: 0,
     lineHeight: '32px',
     weight: 700,
   },
   jumbo: {
     fontSize: '40px',
-    letterSpacing: '-0.04em',
     lineHeight: '44px',
     weight: 700,
   },
   jumboBigger: {
     fontSize: '48px',
-    letterSpacing: '-0.04em',
     lineHeight: '52px',
     weight: 700,
   },
