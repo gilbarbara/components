@@ -49,12 +49,8 @@ export function Basic(props: any) {
           <Textarea name="description" placeholder="Tell us about yourself" />
         </FormGroup>
         <Group distribution="flex-end">
-          <Button invert size="sm">
-            Cancel
-          </Button>
-          <Button size="sm" type="submit">
-            Enviar
-          </Button>
+          <Button invert>Cancel</Button>
+          <Button type="submit">Enviar</Button>
         </Group>
       </Modal>
     </div>

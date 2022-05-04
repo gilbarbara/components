@@ -6,7 +6,6 @@ import { AnyObject } from '@gilbarbara/types';
 import { ButtonBase } from './ButtonBase';
 import { Icon } from './Icon';
 import { Menu, MenuProps } from './Menu';
-import { button } from './modules/components';
 import { getTheme } from './modules/helpers';
 import { backgroundStyles, styledOptions } from './modules/system';
 import { WithComponentSize, WithInvert } from './types';
@@ -34,9 +33,9 @@ export const StyledButtonSplit = styled(
   styledOptions,
 )<Omit<ButtonSplitProps, 'label' | 'onClick'>>(props => {
   const { block, disabled, invert, size = 'md' } = props;
-  const { grayLight, grayMid, spacing } = getTheme(props);
+  const { button, grayLight, grayMid, spacing } = getTheme(props);
 
-  const { borderRadius, dimension, fontSize, fontWeight, lineHeight, padding } = button;
+  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
   const buttonPadding = `${padding[size][0]} ${padding[size][1]}`;
   const styles = backgroundStyles(props);
 
@@ -48,8 +47,8 @@ export const StyledButtonSplit = styled(
 
   return css`
     display: inline-flex;
-    min-height: ${dimension[size]};
-    min-width: ${dimension[size]};
+    min-height: ${height[size]};
+    min-width: ${height[size]};
     width: ${block ? '100%' : 'auto'};
 
     > [data-component-name='ButtonBase'] {

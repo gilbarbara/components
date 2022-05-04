@@ -33,7 +33,7 @@ const Item = styled(
       margin-bottom: ${spacing.xxs};
       margin-right: ${spacing.xxs};
       margin-top: ${spacing.xxs};
-      padding: ${spacing.xxs};
+      padding: 2px;
     `;
   }
 
@@ -65,6 +65,7 @@ const Content = styled(
   const { spacing } = getTheme(props);
 
   return css`
+    display: inline-flex;
     margin-right: ${spacing.xxs};
   `;
 });
@@ -102,7 +103,7 @@ function DropdownContent<T extends DropdownOption>(props: SelectRenderer<T>) {
           const { content, label } = value || {};
 
           return (
-            <Item key={label} color={color} multi={multi}>
+            <Item key={label} color={color} data-component-name="ContentItem" multi={multi}>
               {!!content && <Content>{content}</Content>}
               <span>{label || value}</span>
               {multi && (

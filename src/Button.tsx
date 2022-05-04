@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 
 import { Icon } from './Icon';
-import { button } from './modules/components';
 import { getColorVariant, getTheme, px } from './modules/helpers';
 import {
   appearanceStyles,
@@ -66,8 +65,8 @@ export const StyledButton = styled(
   styledOptions,
 )<ButtonProps>(props => {
   const { block, busy, shade, size = 'md', square, transparent, variant = 'primary', wide } = props;
-  const { grayLighter, grayMid, spacing, variants } = getTheme(props);
-  const { borderRadius, dimension, fontSize, fontWeight, lineHeight, padding } = button;
+  const { button, grayLighter, grayMid, spacing, variants } = getTheme(props);
+  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
   let buttonPadding = `${padding[size][0]} ${
     wide ? px(parseInt(padding[size][1], 10) * 2) : padding[size][1]
   }`;
@@ -87,8 +86,8 @@ export const StyledButton = styled(
     display: inline-flex;
     font-size: ${fontSize[size]};
     font-weight: ${fontWeight};
-    min-height: ${dimension[size]};
-    min-width: ${dimension[size]};
+    min-height: ${height[size]};
+    min-width: ${height[size]};
     justify-content: center;
     line-height: ${lineHeight[size]};
     overflow: hidden;
@@ -118,7 +117,10 @@ export const StyledButton = styled(
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { busy, children, size = 'md', square } = props;
-  const { fontSize } = button;
+  const {
+    button: { fontSize },
+  } = getTheme(props);
+
   const content: AnyObject = {
     children,
     icon: !!busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />,

@@ -51,7 +51,7 @@ export const StyledDropdown = styled(
     .react-dropdown-select {
       ${styles};
       box-shadow: none !important;
-      min-height: ${bigger ? inputHeight.md : inputHeight.sm};
+      min-height: ${bigger ? inputHeight.large : inputHeight.normal};
 
       &[disabled] {
         opacity: 1 !important;

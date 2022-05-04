@@ -17,7 +17,7 @@ export default {
     placeholder: { control: 'text', defaultValue: 'Your name here...' },
     readOnly: { control: 'boolean', defaultValue: false },
     startSpacing: { defaultValue: false },
-    type: { defaultValue: 'text' },
+    type: { control: 'text', defaultValue: 'text' },
     width: { control: 'text', defaultValue: '100%' },
   },
 } as ComponentMeta<typeof Input>;

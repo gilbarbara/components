@@ -13,7 +13,7 @@ export interface InputKnownProps extends StyledProps, WithFormElements {
   type?: InputTypes;
 }
 
-export type InputProps = ComponentProps<HTMLInputElement, InputKnownProps>;
+export type InputProps = ComponentProps<HTMLInputElement, InputKnownProps, 'type'>;
 
 export const StyledInput = styled(
   'input',
@@ -38,7 +38,7 @@ export const StyledInput = styled(
     ${baseStyles(props)};
     ${inputStyles(props)};
     padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
-    height: ${bigger ? inputHeight.md : inputHeight.sm};
+    height: ${bigger ? inputHeight.large : inputHeight.normal};
     width: ${width ? px(width) : '100%'};
   `;
 });
