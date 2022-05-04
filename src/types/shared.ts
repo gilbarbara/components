@@ -35,6 +35,10 @@ export interface WithComponentSize {
   size?: Sizes;
 }
 
+export interface WithDisplay {
+  display?: StandardLonghandProperties['display'];
+}
+
 export interface WithFilled {
   /**
    * Display as an inline element
@@ -68,7 +72,7 @@ export interface WithInvert {
   invert?: boolean;
 }
 
-export interface WithLayout {
+export interface WithLayout extends WithDisplay {
   bottom?: StandardLonghandProperties['bottom'] | number;
   height?: StandardLonghandProperties['height'] | number;
   left?: StandardLonghandProperties['left'] | number;

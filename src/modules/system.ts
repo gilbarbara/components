@@ -8,6 +8,7 @@ import { getColorVariant, getTheme, px } from './helpers';
 import {
   WithAlign,
   WithColor,
+  WithDisplay,
   WithInvert,
   WithLayout,
   WithMargin,
@@ -95,6 +96,12 @@ export function colorStyles<T extends WithColor & WithTheme>(props: T): CSSObjec
   return {};
 }
 
+export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
+  const { display } = props;
+
+  return { display };
+}
+
 export function inputStyles<T extends WithTheme & { borderless?: boolean; multiple?: boolean }>(
   props: T,
 ) {
@@ -175,6 +182,7 @@ export function inputStyles<T extends WithTheme & { borderless?: boolean; multip
 export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
   const {
     bottom,
+    display,
     height,
     left,
     maxHeight,
@@ -209,6 +217,10 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
 
   if (!is.nullOrUndefined(bottom)) {
     output.bottom = px(bottom);
+  }
+
+  if (!is.nullOrUndefined(display)) {
+    output.display = display;
   }
 
   if (!is.nullOrUndefined(height)) {
