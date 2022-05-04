@@ -1,6 +1,6 @@
 .env
 
-components
+build
 coverage
 esm
 lib
