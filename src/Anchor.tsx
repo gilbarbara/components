@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { RequireAtLeastOne } from 'type-fest';
 
 import { Icon } from './Icon';
 import {
   appearanceStyles,
   baseStyles,
   colorStyles,
+  displayStyles,
   marginStyles,
   paddingStyles,
   styledOptions,
@@ -19,6 +19,7 @@ import {
   Icons,
   StyledProps,
   WithColor,
+  WithDisplay,
   WithMargin,
   WithPadding,
   WithTextOptions,
@@ -27,6 +28,7 @@ import {
 export interface AnchorKnownProps
   extends StyledProps,
     WithColor,
+    WithDisplay,
     WithMargin,
     WithPadding,
     WithTextOptions {
@@ -38,10 +40,7 @@ export interface AnchorKnownProps
   name?: string;
 }
 
-export type AnchorProps = RequireAtLeastOne<
-  ComponentProps<HTMLAnchorElement, AnchorKnownProps>,
-  'href' | 'name'
->;
+export type AnchorProps = ComponentProps<HTMLAnchorElement, AnchorKnownProps>;
 
 export const StyledAnchor = styled(
   'a',
@@ -61,6 +60,7 @@ export const StyledAnchor = styled(
     padding: 0;
     text-decoration: none;
     ${colorStyles(props)};
+    ${displayStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};
     ${textStyles(props)};
