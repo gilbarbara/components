@@ -96,21 +96,33 @@ export interface WithLayout extends WithDisplay {
 
 export interface WithMargin {
   margin?: Spacing | 0;
+  /** margin-bottom */
   mb?: Spacing | 0;
+  /** margin-left */
   ml?: Spacing | 0 | 'auto';
+  /** margin-right */
   mr?: Spacing | 0 | 'auto';
+  /** margin-top */
   mt?: Spacing | 0;
+  /** margin horizontal axis */
   mx?: Spacing | 0 | 'auto';
+  /** margin vertical axis */
   my?: Spacing | 0;
 }
 
 export interface WithPadding {
   padding?: Spacing;
+  /** padding-bottom */
   pb?: Spacing;
+  /** padding-left */
   pl?: Spacing;
+  /** padding-right */
   pr?: Spacing;
+  /** padding-top */
   pt?: Spacing;
+  /** padding horizontal axis */
   px?: Spacing;
+  /** padding vertical axis */
   py?: Spacing;
 }
 
