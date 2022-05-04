@@ -19,7 +19,7 @@ export type HeadingBiggerProps = ComponentProps<
 
 function getStyles(selected: TypographyItem, props: HeadingProps) {
   const { light } = props;
-  const { fontFamily, spacing } = getTheme(props);
+  const { fontFamily } = getTheme(props);
 
   return css`
     ${baseStyles(props)};
@@ -29,12 +29,8 @@ function getStyles(selected: TypographyItem, props: HeadingProps) {
     font-weight: ${light ? 400 : selected.weight};
     letter-spacing: ${selected.letterSpacing};
     line-height: ${selected.lineHeight};
-    margin-top: ${spacing.sm};
+    margin-top: 0;
     ${marginStyles(props)};
-
-    &:first-of-type {
-      margin-top: 0;
-    }
   `;
 }
 
