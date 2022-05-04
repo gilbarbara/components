@@ -13,6 +13,30 @@ export const shades = Object.keys(themeVariants.primary) as Shades[];
 export const textSizes: TextSizes[] = ['small', 'mid', 'regular', 'large'];
 export const variants = Object.keys(themeVariants) as Variants[];
 
+export function layoutParameters(options?: { display: string }) {
+  const { display = 'block' } = options || {};
+
+  return {
+    bottom: { control: 'text' },
+    display: { control: 'text', defaultValue: display },
+    height: { control: 'text' },
+    left: { control: 'text' },
+    maxHeight: { control: 'text' },
+    maxWidth: { control: 'text' },
+    minHeight: { control: 'text' },
+    minWidth: { control: 'text' },
+    opacity: { control: 'number' },
+    overflow: { control: 'text' },
+    right: { control: 'text' },
+    top: { control: 'text' },
+    transform: { control: 'text' },
+    transformOrigin: { control: 'text' },
+    transition: { control: 'text' },
+    width: { control: 'text' },
+    zIndex: { control: 'number' },
+  };
+}
+
 export function hideTable() {
   return {
     table: { disable: true },

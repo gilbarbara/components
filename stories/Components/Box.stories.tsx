@@ -2,13 +2,14 @@ import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import { Box, H3, Paragraph } from '../../src';
-import { hideProps } from '../__helpers__';
+import { hideProps, layoutParameters } from '../__helpers__';
 
 export default {
   title: 'Components/Box',
   component: Box,
   argTypes: {
     ...hideProps(),
+    ...layoutParameters(),
     margin: { control: 'select' },
     padding: { control: 'select', defaultValue: 'xl' },
     radius: { control: 'select', defaultValue: 'lg' },
