@@ -2,13 +2,14 @@ import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import { FormGroup, Input, Select, Textarea } from '../../src';
-import { hideProps, hideTable } from '../__helpers__';
+import { hideProps, hideTable, layoutParameters } from '../__helpers__';
 
 export default {
   title: 'Components/FormGroup',
   component: FormGroup,
   argTypes: {
     ...hideProps(),
+    ...layoutParameters(),
     label: {
       defaultValue: 'Name',
     },

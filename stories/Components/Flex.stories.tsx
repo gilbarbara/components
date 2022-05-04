@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 import { Flex, FlexCenter, FlexInline, Icon, Text } from '../../src';
-import { flexContent, flexItems, hideProps } from '../__helpers__';
+import { flexContent, flexItems, hideProps, layoutParameters } from '../__helpers__';
 
 export default {
   title: 'Components/Flex',
   component: Flex,
   argTypes: {
     ...hideProps('textAlign'),
+    ...layoutParameters({ display: 'flex' }),
     alignContent: {
       control: 'select',
       options: ['', ...flexContent],
@@ -33,12 +34,8 @@ export default {
       options: ['', ...flexContent],
       defaultValue: 'flex-start',
     },
-    margin: { control: 'select' },
-    padding: { control: 'select' },
-    radius: { control: 'select' },
-    shade: { table: { disable: true } },
     shadow: { control: 'select', defaultValue: 'high' },
-    variant: { table: { disable: true }, defaultValue: 'white' },
+    variant: { defaultValue: 'white' },
   },
 };
 
@@ -74,4 +71,5 @@ export const Inline = (props: any) => (
 
 Inline.argTypes = {
   alignItems: { defaultValue: 'center' },
+  display: { defaultValue: 'inline-flex' },
 };
