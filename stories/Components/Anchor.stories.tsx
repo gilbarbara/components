@@ -12,6 +12,7 @@ export default {
     ...hideProps(),
     href: { control: 'text', defaultValue: 'https://github.com/facebook/react' },
     children: { control: 'text', defaultValue: 'Open in GitHub' },
+    display: { control: 'text', defaultValue: 'inline-flex' },
     target: { control: 'text', defaultValue: '_blank' },
     iconBefore: { defaultValue: 'github' },
     bold: { defaultValue: false },
