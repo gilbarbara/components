@@ -30,7 +30,7 @@ export const StyledSelect = styled(
   const { colors, darkColor, grayMid, inputHeight, spacing, white } = getTheme(props);
 
   let color = isDarkMode(props) ? white : darkColor;
-  const paddingX = bigger ? spacing.md : spacing.sm;
+  const paddingX = bigger ? spacing.sm : spacing.xs;
   let paddingLeft = borderless ? 0 : spacing.md;
   let paddingRight = borderless ? 0 : spacing.lg;
 
@@ -62,7 +62,7 @@ export const StyledSelect = styled(
     background-position: right 8px center;
     color: ${filled ? color : grayMid};
     padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
-    ${!multiple ? `height: ${bigger ? inputHeight.md : inputHeight.sm}` : ''};
+    ${!multiple ? `height: ${bigger ? inputHeight.large : inputHeight.normal}` : ''};
     white-space: nowrap;
     width: ${width ? px(width) : '100%'};
 

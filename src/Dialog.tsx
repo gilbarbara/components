@@ -77,12 +77,12 @@ export function Dialog(props: DialogProps) {
   }, [onClickCancel, onClose]);
 
   const actionButton = (
-    <Button data-test-id="confirm" onClick={onClickConfirmation} size="sm">
+    <Button data-test-id="confirm" onClick={onClickConfirmation}>
       {buttonConfirmText}
     </Button>
   );
   const cancelButton = (
-    <Button data-test-id="cancel" invert onClick={onClickCancel} size="sm">
+    <Button data-test-id="cancel" invert onClick={onClickCancel}>
       {buttonCancelText}
     </Button>
   );

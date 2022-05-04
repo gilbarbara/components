@@ -1,5 +1,9 @@
 import { getColorScale, getGrayScale } from './colors';
 
+/**
+ * Basics
+ */
+
 export const fontFamily = 'inherit';
 export const fontMonospace = 'Courier, monospace';
 
@@ -15,11 +19,6 @@ export const breakpoints = {
 };
 
 export const easing = 'cubic-bezier(0.35, 0.01, 0.77, 0.34);';
-
-export const inputHeight = {
-  sm: '48px',
-  md: '56px',
-};
 
 export const opacity = {
   semiOpaque: 0.72,
@@ -108,6 +107,7 @@ export const typography = {
 /**
  * Colors
  */
+
 export const black = '#000';
 export const white = '#fff';
 export const darkColor = '#101010';
@@ -173,4 +173,42 @@ export const variants = {
   purple: getColorScale(colors.purple),
   red: getColorScale(colors.red),
   yellow: getColorScale(colors.yellow),
+};
+
+/**
+ * Components
+ */
+
+export const button = {
+  borderRadius: {
+    sm: '8px',
+    md: '8px',
+    lg: '8px',
+  },
+  fontSize: {
+    sm: '14px',
+    md: '16px',
+    lg: '18px',
+  },
+  fontWeight: 700,
+  height: {
+    sm: '32px',
+    md: '40px',
+    lg: '48px',
+  },
+  lineHeight: {
+    sm: 1.2,
+    md: 1.3,
+    lg: 1.4,
+  },
+  padding: {
+    sm: ['6px', '12px'],
+    md: ['8px', '16px'],
+    lg: ['10px', '20px'],
+  },
+};
+
+export const inputHeight = {
+  normal: '40px',
+  large: '48px',
 };

@@ -17,7 +17,7 @@ export const StyledTextarea = styled(
   const { borderless, endSpacing, startSpacing, width } = props;
   const { spacing } = getTheme(props);
 
-  const paddingX = spacing.md;
+  const paddingX = spacing.xs;
   let paddingLeft = borderless ? 0 : spacing.md;
   let paddingRight = borderless ? 0 : spacing.md;
 

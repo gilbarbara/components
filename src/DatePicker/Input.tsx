@@ -91,7 +91,7 @@ const StyledButton = styled(
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    min-height: ${bigger ? inputHeight.md : inputHeight.sm};
+    min-height: ${bigger ? inputHeight.large : inputHeight.normal};
     min-width: ${px(width || 240)};
     width: ${width ? px(width) : 'auto'};
     ${styles};

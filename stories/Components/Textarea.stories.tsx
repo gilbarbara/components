@@ -15,6 +15,7 @@ export default {
     name: { control: 'text', defaultValue: 'name' },
     placeholder: { control: 'text', defaultValue: 'Tell us something about yourself...' },
     readOnly: { control: 'boolean', defaultValue: false },
+    rows: { control: 'number', defaultValue: 3 },
     startSpacing: { defaultValue: false },
     width: { control: 'text', defaultValue: '100%' },
   },
