@@ -22,7 +22,7 @@ export const StyledDropdown = styled(
     getTheme(props);
 
   const darkMode = isDarkMode(props);
-  const { bigger, borderless, isFilled, width } = props;
+  const { borderless, isFilled, large, width } = props;
   let borderColor = darkMode ? grayDark : grayMid;
 
   if (isFilled) {
@@ -51,7 +51,7 @@ export const StyledDropdown = styled(
     .react-dropdown-select {
       ${styles};
       box-shadow: none !important;
-      min-height: ${bigger ? inputHeight.large : inputHeight.normal};
+      min-height: ${large ? inputHeight.large : inputHeight.normal};
 
       &[disabled] {
         opacity: 1 !important;
@@ -157,9 +157,9 @@ export function Dropdown<T extends DropdownOption>(props: DropdownProps<T>) {
 }
 
 Dropdown.defaultProps = {
-  bigger: false,
   borderless: false,
   createNewLabel: '+ Add {search}',
+  large: false,
   placeholder: 'Select an option',
   showCreateAlways: false,
   width: 260,

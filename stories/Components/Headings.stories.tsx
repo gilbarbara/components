@@ -10,20 +10,16 @@ export default {
   component: Jumbo,
   argTypes: {
     ...hideProps('margin'),
-    light: {
-      table: { disable: true },
-    },
-    bigger: {
-      table: { disable: true },
-    },
+    large: { table: { disable: true } },
+    light: { table: { disable: true } },
   },
 } as ComponentMeta<typeof Jumbo>;
 
 export const Jumbo_ = (props: any) => {
   return (
     <div>
-      <Jumbo bigger {...props}>
-        Jumbo title (bigger)
+      <Jumbo large {...props}>
+        Jumbo title (large)
       </Jumbo>
       <Jumbo {...props}>Jumbo title</Jumbo>
       <Jumbo light {...props}>

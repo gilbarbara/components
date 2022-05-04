@@ -9,10 +9,10 @@ export default {
   component: Input,
   argTypes: {
     ...hideProps(),
-    bigger: { defaultValue: false },
     borderless: { defaultValue: false },
     disabled: { control: 'boolean', defaultValue: false },
     endSpacing: { defaultValue: false },
+    large: { defaultValue: false },
     name: { control: 'text', defaultValue: 'name' },
     placeholder: { control: 'text', defaultValue: 'Your name here...' },
     readOnly: { control: 'boolean', defaultValue: false },

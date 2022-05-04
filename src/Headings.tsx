@@ -12,9 +12,9 @@ export interface HeadingKnownProps extends StyledProps, WithAlign, WithMargin {
 }
 
 export type HeadingProps = ComponentProps<HTMLHeadingElement, HeadingKnownProps>;
-export type HeadingBiggerProps = ComponentProps<
+export type HeadingLargeProps = ComponentProps<
   HTMLHeadingElement,
-  HeadingKnownProps & { bigger?: boolean }
+  HeadingKnownProps & { large?: boolean }
 >;
 
 function getStyles(selected: TypographyItem, props: HeadingProps) {
@@ -36,17 +36,17 @@ function getStyles(selected: TypographyItem, props: HeadingProps) {
 export const StyledJumbo = styled(
   'h1',
   styledOptions,
-)<HeadingBiggerProps>(props => {
-  const { bigger } = props;
+)<HeadingLargeProps>(props => {
+  const { large } = props;
   const { typography } = getTheme(props);
 
-  return getStyles(typography[bigger ? 'jumboBigger' : 'jumbo'], props);
+  return getStyles(typography[large ? 'jumboLarge' : 'jumbo'], props);
 });
 
 export const StyledH1 = styled(
   'h1',
   styledOptions,
-)<HeadingBiggerProps>(props => {
+)<HeadingLargeProps>(props => {
   const { typography } = getTheme(props);
 
   return getStyles(typography.title1, props);
@@ -70,7 +70,7 @@ export const StyledH3 = styled(
   return getStyles(typography.title3, props);
 });
 
-export const Jumbo = React.forwardRef<HTMLHeadingElement, HeadingBiggerProps>((props, ref) => (
+export const Jumbo = React.forwardRef<HTMLHeadingElement, HeadingLargeProps>((props, ref) => (
   <StyledJumbo ref={ref} data-component-name="Jumbo" {...props} />
 ));
 

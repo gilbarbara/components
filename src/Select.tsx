@@ -16,8 +16,8 @@ import {
 import { ComponentProps, StyledProps, WithFormElements } from './types';
 
 export interface SelectKnownProps extends StyledProps, WithFormElements {
-  bigger?: boolean;
   children: React.ReactNode;
+  large?: boolean;
 }
 
 export type SelectProps = ComponentProps<HTMLSelectElement, SelectKnownProps>;
@@ -26,11 +26,11 @@ export const StyledSelect = styled(
   'select',
   styledOptions,
 )<SelectProps & { filled: boolean }>(props => {
-  const { bigger, borderless, endSpacing, filled, multiple, startSpacing, width } = props;
+  const { borderless, endSpacing, filled, large, multiple, startSpacing, width } = props;
   const { colors, darkColor, grayMid, inputHeight, spacing, white } = getTheme(props);
 
   let color = isDarkMode(props) ? white : darkColor;
-  const paddingX = bigger ? spacing.sm : spacing.xs;
+  const paddingX = large ? spacing.sm : spacing.xs;
   let paddingLeft = borderless ? 0 : spacing.md;
   let paddingRight = borderless ? 0 : spacing.lg;
 
@@ -62,7 +62,7 @@ export const StyledSelect = styled(
     background-position: right 8px center;
     color: ${filled ? color : grayMid};
     padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
-    ${!multiple ? `height: ${bigger ? inputHeight.large : inputHeight.normal}` : ''};
+    ${!multiple ? `height: ${large ? inputHeight.large : inputHeight.normal}` : ''};
     white-space: nowrap;
     width: ${width ? px(width) : '100%'};
 
@@ -124,7 +124,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
 });
 
 Select.defaultProps = {
+  large: false,
   multiple: false,
-  bigger: false,
 };
 Select.displayName = 'Select';

@@ -8,7 +8,7 @@ import { ComponentProps, InputTypes, StyledProps, WithFormElements } from './typ
 
 export interface InputKnownProps extends StyledProps, WithFormElements {
   /** @default false */
-  bigger?: boolean;
+  large?: boolean;
   /** @default text */
   type?: InputTypes;
 }
@@ -19,10 +19,10 @@ export const StyledInput = styled(
   'input',
   styledOptions,
 )<InputProps>(props => {
-  const { bigger, borderless, endSpacing, startSpacing, width } = props;
+  const { borderless, endSpacing, large, startSpacing, width } = props;
   const { inputHeight, spacing } = getTheme(props);
 
-  const paddingX = bigger ? spacing.md : spacing.sm;
+  const paddingX = large ? spacing.md : spacing.sm;
   let paddingLeft = borderless ? 0 : spacing.md;
   let paddingRight = borderless ? 0 : spacing.md;
 
@@ -38,7 +38,7 @@ export const StyledInput = styled(
     ${baseStyles(props)};
     ${inputStyles(props)};
     padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
-    height: ${bigger ? inputHeight.large : inputHeight.normal};
+    height: ${large ? inputHeight.large : inputHeight.normal};
     width: ${width ? px(width) : '100%'};
   `;
 });
@@ -50,9 +50,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
 });
 
 Input.defaultProps = {
-  bigger: false,
   borderless: false,
   endSpacing: false,
+  large: false,
   startSpacing: false,
   type: 'text',
   width: '100%',
