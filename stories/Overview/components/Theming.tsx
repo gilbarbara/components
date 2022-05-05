@@ -4,7 +4,7 @@ import CodeBlock from './CodeBlock';
 
 import { Box, Paragraph } from '../../../src';
 
-function IntroTheming(): JSX.Element {
+function OverviewTheming(): JSX.Element {
   return (
     <Box>
       <Paragraph>You can customize the theme in your app.</Paragraph>
@@ -37,4 +37,4 @@ function App() {
   );
 }
 
-export default IntroTheming;
+export default OverviewTheming;
