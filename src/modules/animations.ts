@@ -10,34 +10,6 @@ interface ScrollToOptions {
   scrollDuration?: number;
 }
 
-export function scrollDocument(): HTMLElement {
-  return (document.scrollingElement as HTMLElement) || document.createElement('body');
-}
-
-export function scrollTo(value: number, options: ScrollToOptions = {}): Promise<void> {
-  const { element = scrollDocument(), scrollDuration = 400 } = options;
-
-  return new Promise((resolve, reject) => {
-    const { scrollTop } = element;
-
-    const nextValue = scrollDocument().scrollTop + value;
-    const limit = nextValue > scrollTop ? nextValue - scrollTop : scrollTop - nextValue;
-
-    scroll.top(
-      element,
-      nextValue,
-      { duration: limit < 100 ? 50 : scrollDuration },
-      (error: any) => {
-        if (error && error.message !== 'Element already at target scroll position') {
-          return reject(error);
-        }
-
-        return resolve();
-      },
-    );
-  });
-}
-
 export function animateIcon(
   target: HTMLElement,
   color: Variants = 'primary',
@@ -134,3 +106,31 @@ export const rotate = keyframes`
     transform: rotate(360deg);
   }
 `;
+
+export function scrollDocument(): HTMLElement {
+  return (document.scrollingElement as HTMLElement) || document.createElement('body');
+}
+
+export function scrollTo(value: number, options: ScrollToOptions = {}): Promise<void> {
+  const { element = scrollDocument(), scrollDuration = 400 } = options;
+
+  return new Promise((resolve, reject) => {
+    const { scrollTop } = element;
+
+    const nextValue = scrollDocument().scrollTop + value;
+    const limit = nextValue > scrollTop ? nextValue - scrollTop : scrollTop - nextValue;
+
+    scroll.top(
+      element,
+      nextValue,
+      { duration: limit < 100 ? 50 : scrollDuration },
+      (error: any) => {
+        if (error && error.message !== 'Element already at target scroll position') {
+          return reject(error);
+        }
+
+        return resolve();
+      },
+    );
+  });
+}
