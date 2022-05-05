@@ -48,7 +48,7 @@ export { Toggle } from './Toggle';
 export { Tooltip } from './Tooltip';
 export { Truncate } from './Truncate';
 
-export * from './modules/animations';
+export { animateIcon, fadeIn, fadeOut, fadeInOut, rotate } from './modules/animations';
 export { mergeTheme, px, responsive } from './modules/helpers';
 export * as theme from './modules/theme';
 export * as Types from './types';
