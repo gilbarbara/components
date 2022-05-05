@@ -3,16 +3,13 @@ import { SubmitHandler } from 'react-hook-form';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
 
-import { Box, Button, Divider, Field, FormWrapper, Grid, Group, H2, H3 } from '../../src';
-import { FormWrapperProps } from '../../src/types';
-import { hideProps } from '../__helpers__';
+import { Box, Button, Divider, Field, Form, FormProps, Grid, Group, H2, H3 } from '../../src';
 
 export default {
-  title: 'Components/Field',
-  argTypes: {
-    ...hideProps('onBlur', 'onFocus', 'onChange'),
-  },
-} as ComponentMeta<typeof Field>;
+  title: 'Components/Form',
+  component: Form,
+  subcomponents: { Field },
+} as ComponentMeta<typeof Form>;
 
 export interface FormData {
   area: string;
@@ -88,9 +85,30 @@ const seniorities = [
   { label: 'Leadership', value: 'leadership' },
 ];
 
-function BaseForm<T extends FormWrapperProps<FormData>>(props: T): JSX.Element {
-  const { formMethods } = props;
+const defaultValues: FormData = {
+  area: 'engineering',
+  availability: true,
+  contractType: ['full-time'],
+  email: 'test-user@example.com',
+  experience: 8,
+  frameworks: ['react', 'svelte'],
+  housingAssistance: true,
+  languages: ['nodejs', 'typescript'],
+  locationCity: 'São Paulo',
+  locationRequired: true,
+  locationState: 'SP',
+  name: 'Test user',
+  password: 'MzY2NGFkYjd!',
+  passwordConfirmation: 'MzY2NGFkYjd!',
+  phone: 11988776655,
+  resume: '',
+  salaryMax: 20000,
+  salaryMin: 10000,
+  seniority: 'specialist',
+  specialization: 'front-end',
+};
 
+function EditForm({ formMethods }: FormProps<FormData>) {
   const {
     formState: { isDirty },
     handleSubmit,
@@ -257,40 +275,13 @@ function BaseForm<T extends FormWrapperProps<FormData>>(props: T): JSX.Element {
 
       <Group distribution="flex-end">
         <Button disabled={!isDirty} type="submit">
-          Salvar
+          Send
         </Button>
       </Group>
     </Box>
   );
 }
 
-export const Form = () => {
-  const defaultValues: FormData = {
-    area: 'engineering',
-    availability: true,
-    contractType: ['full-time'],
-    email: 'test-user@example.com',
-    experience: 8,
-    frameworks: ['react', 'svelte'],
-    housingAssistance: true,
-    languages: ['nodejs', 'typescript'],
-    locationCity: 'São Paulo',
-    locationRequired: true,
-    locationState: 'SP',
-    name: 'Test user',
-    password: 'MzY2NGFkYjd!',
-    passwordConfirmation: 'MzY2NGFkYjd!',
-    phone: 11988776655,
-    resume: '',
-    salaryMax: 20000,
-    salaryMin: 10000,
-    seniority: 'specialist',
-    specialization: 'front-end',
-  };
-
-  return (
-    <FormWrapper<FormData> defaultValues={defaultValues}>
-      {formProps => <BaseForm {...formProps} />}
-    </FormWrapper>
-  );
-};
+export function Basic(): JSX.Element {
+  return <Form<FormData> defaultValues={defaultValues}>{EditForm}</Form>;
+}

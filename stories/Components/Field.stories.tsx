@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import { Field, FormWrapper } from '../../src';
+import { Field, Form } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
@@ -20,5 +20,5 @@ export default {
 } as ComponentMeta<typeof Field>;
 
 export function Basic(props: any) {
-  return <FormWrapper>{() => <Field {...props} />}</FormWrapper>;
+  return <Form>{() => <Field {...props} />}</Form>;
 }

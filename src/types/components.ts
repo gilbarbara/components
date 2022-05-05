@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { DayPickerProps } from 'react-day-picker';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { SelectProps } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetOptional } from 'type-fest';
@@ -67,10 +66,6 @@ export interface DropdownProps<T extends DropdownOption>
   showCreateAlways?: boolean;
   /** @default 260 */
   width?: StringOrNumber;
-}
-
-export interface FormWrapperProps<T = FieldValues> {
-  formMethods: UseFormReturn<T>;
 }
 
 export interface IconProps extends Omit<React.SVGProps<SVGElement>, 'ref'> {
