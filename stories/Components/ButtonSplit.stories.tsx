@@ -1,51 +1,41 @@
 import * as React from 'react';
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
+import { ComponentMeta } from '@storybook/react';
 
-import { ButtonBase, ButtonSplit, ButtonSplitDivider, ButtonSplitItem, Icon } from '../../src';
+import { ButtonBase, Icon } from '../../src';
+import {
+  ButtonSplit,
+  ButtonSplitDivider,
+  ButtonSplitItem,
+  ButtonSplitProps,
+} from '../../src/ButtonSplit';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonSplit',
   component: ButtonSplit,
+  subcomponents: { ButtonSplitItem, ButtonSplitDivider },
   argTypes: {
     ...hideProps(),
     block: { defaultValue: false },
     busy: { defaultValue: false },
     disabled: { control: 'boolean', defaultValue: false },
-    label: {
-      defaultValue: 'Send',
-      control: 'text',
-    },
+    label: { defaultValue: 'Send', control: 'text' },
+    onClick: { action: 'onClick' },
+    onToggle: { action: 'onToggle' },
+    positionX: { defaultValue: 'right', control: 'inline-radio', options: ['left', 'right'] },
+    positionY: { defaultValue: 'bottom', control: 'inline-radio', options: ['top', 'bottom'] },
+    shade: { defaultValue: 'mid' },
     size: { defaultValue: 'md' },
-    positionX: {
-      defaultValue: 'right',
-      control: 'inline-radio',
-      options: ['left', 'right'],
-    },
-    positionY: {
-      defaultValue: 'bottom',
-      control: 'inline-radio',
-      options: ['top', 'bottom'],
-    },
-    shade: {
-      defaultValue: 'mid',
-    },
-    variant: {
-      defaultValue: 'primary',
-      control: 'select',
-    },
-    onClick: {
-      table: { disable: true },
-    },
-    onToggle: {
-      action: 'onToggle',
-      table: { disable: true },
-    },
+    variant: { defaultValue: 'primary', control: 'select' },
   },
-};
+  parameters: {
+    minHeight: 250,
+  },
+} as ComponentMeta<typeof ButtonSplit>;
 
-export function Basic(props: any) {
+export function Basic(props: ButtonSplitProps) {
   const [actionName, setActionName] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
@@ -73,7 +63,7 @@ export function Basic(props: any) {
   };
 
   return (
-    <ButtonSplit {...props} data-id={1092} onClick={handleClick}>
+    <ButtonSplit {...props} onClick={handleClick}>
       <ButtonSplitItem>
         <ButtonBase disabled variant="primary">
           <Icon mr="xxs" name="add" />
