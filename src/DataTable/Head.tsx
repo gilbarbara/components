@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { memo, MouseEventHandler, ReactNode } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -8,19 +8,19 @@ import { ButtonBase } from '../ButtonBase';
 import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
-import { styledOptions } from '../modules/system';
+import { getStyledOptions } from '../modules/system';
 
 interface Props extends Pick<DataTableProps, 'columns'> {
   isDisabled: boolean;
   isResponsive: boolean;
-  onClick: React.MouseEventHandler;
+  onClick: MouseEventHandler;
   sortBy: string;
   sortDirection: string;
 }
 
 const Title = styled(
   ButtonBase,
-  styledOptions,
+  getStyledOptions(),
 )<{ disableSort?: boolean; isDisabled: boolean }>(props => {
   const { disableSort, isDisabled } = props;
 
@@ -42,7 +42,7 @@ function DataTableHead(props: Props): JSX.Element | null {
   return (
     <Flex data-component-name="DataTableHead">
       {columns.map(({ disableSort, key, max, min, size, title }) => {
-        let icon: React.ReactNode;
+        let icon: ReactNode;
 
         if (!disableSort) {
           icon = <Icon ml="xxs" name="sort" />;
@@ -86,4 +86,4 @@ function DataTableHead(props: Props): JSX.Element | null {
   );
 }
 
-export default React.memo(DataTableHead);
+export default memo(DataTableHead);

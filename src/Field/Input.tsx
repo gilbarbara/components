@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -69,8 +69,8 @@ function FieldInput(props: Props): JSX.Element {
     type,
   } = props;
 
-  const handleBlur = React.useCallback(
-    (event: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
       setStatus({ isActive: false, isDirty });
 
       registration.onBlur(event);
@@ -82,8 +82,8 @@ function FieldInput(props: Props): JSX.Element {
     [isDirty, onBlur, registration, setStatus],
   );
 
-  const handleFocus = React.useCallback(
-    (event: React.FocusEvent<HTMLInputElement>) => {
+  const handleFocus = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
       setStatus({ isActive: true });
 
       if (onFocus) {
@@ -93,8 +93,8 @@ function FieldInput(props: Props): JSX.Element {
     [onFocus, setStatus],
   );
 
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
       if (formatter === 'phoneBR') {
         event.target.value = clearNumber(event.target.value).slice(0, 11);
       } else if (formatter) {

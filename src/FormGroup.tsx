@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
@@ -10,22 +10,22 @@ import { Label } from './Label';
 import { getTheme } from './modules/helpers';
 import {
   baseStyles,
+  getStyledOptions,
   isDarkMode,
   layoutStyles,
   marginStyles,
-  styledOptions,
 } from './modules/system';
 import { ComponentProps, StyledProps, WithInline, WithLayout, WithMargin } from './types';
 
 export interface FormGroupKnownProps extends StyledProps, WithInline, WithLayout, WithMargin {
-  assistiveText?: React.ReactNode;
-  children: React.ReactNode;
-  error?: React.ReactNode;
+  assistiveText?: ReactNode;
+  children: ReactNode;
+  error?: ReactNode;
   hideAssistiveText?: boolean;
-  label?: React.ReactNode;
+  label?: ReactNode;
   labelId?: string;
-  labelInfo?: React.ReactNode;
-  labelStyles?: React.CSSProperties;
+  labelInfo?: ReactNode;
+  labelStyles?: CSSProperties;
   skipIcon?: boolean;
   valid?: boolean;
 }
@@ -34,7 +34,7 @@ export type FormGroupProps = ComponentProps<HTMLElement, FormGroupKnownProps>;
 
 export const StyledFormGroup = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Partial<FormGroupProps>>(props => {
   const { spacing } = getTheme(props);
 
@@ -64,7 +64,7 @@ export const StyledFormGroup = styled(
 
 const AssistiveContent = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Partial<FormGroupProps>>(props => {
   const { grayLight, grayMid, spacing, typography } = getTheme(props);
 
@@ -90,7 +90,7 @@ const Error = styled.div(props => {
   `;
 });
 
-const InputWrapper = styled('div', styledOptions)`
+const InputWrapper = styled('div', getStyledOptions())`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -104,7 +104,7 @@ const InputWrapper = styled('div', styledOptions)`
   }
 `;
 
-export const FormGroup = React.forwardRef<HTMLDivElement, FormGroupProps>((props, ref) => {
+export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref) => {
   const {
     assistiveText,
     children,

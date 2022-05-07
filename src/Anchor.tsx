@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -8,9 +8,9 @@ import {
   baseStyles,
   colorStyles,
   displayStyles,
+  getStyledOptions,
   marginStyles,
   paddingStyles,
-  styledOptions,
   textStyles,
 } from './modules/system';
 import {
@@ -31,7 +31,7 @@ export interface AnchorKnownProps
     WithMargin,
     WithPadding,
     WithTextOptions {
-  children: React.ReactNode;
+  children: ReactNode;
   external?: boolean;
   hideDecoration?: boolean;
   href: string;
@@ -44,7 +44,7 @@ export type AnchorProps = ComponentProps<HTMLAnchorElement, AnchorKnownProps>;
 
 export const StyledAnchor = styled(
   'a',
-  styledOptions,
+  getStyledOptions(),
 )<AnchorProps>(props => {
   const { hideDecoration } = props;
 
@@ -67,7 +67,7 @@ export const StyledAnchor = styled(
   `;
 });
 
-export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
+export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
   const { children, external, iconAfter, iconBefore } = props;
   const { fontSize } = textStyles(props);
   let iconSize;

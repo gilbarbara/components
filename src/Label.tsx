@@ -1,25 +1,25 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
 
 import { getTheme } from './modules/helpers';
-import { baseStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions } from './modules/system';
 import { Text } from './Text';
 import { ComponentProps, StyledProps, WithInline } from './types';
 
 export interface LabelKnownProps extends StyledProps, WithInline {
-  children: React.ReactNode;
+  children: ReactNode;
   /** For the htmlFor attribute */
   labelId?: string;
-  labelInfo?: React.ReactNode;
+  labelInfo?: ReactNode;
 }
 
 export type LabelProps = ComponentProps<HTMLLabelElement, LabelKnownProps>;
 
 export const StyledLabel = styled(
   'label',
-  styledOptions,
+  getStyledOptions(),
 )<LabelProps>(props => {
   const { inline } = props;
   const { spacing, typography } = getTheme(props);
@@ -44,7 +44,7 @@ export const StyledLabel = styled(
   `;
 });
 
-export const Label = React.forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
+export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
   const { children, labelId, labelInfo } = props;
 
   let info;

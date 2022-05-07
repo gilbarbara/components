@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme, px } from './modules/helpers';
-import { marginStyles, styledOptions } from './modules/system';
+import { getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, StyledProps, WithMargin } from './types';
 
 export interface DividerKnownProps extends StyledProps, WithMargin {
@@ -26,7 +25,7 @@ const sizes = {
 
 const StyledDivider = styled(
   'div',
-  styledOptions,
+  getStyledOptions('type'),
 )<DividerProps>(props => {
   const { size = 'sm', type, width = '100%' } = props;
   const { grayLighter } = getTheme(props);

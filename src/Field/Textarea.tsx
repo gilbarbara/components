@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { FieldTextareaProps } from './types';
@@ -15,8 +15,8 @@ interface Props extends FieldTextareaProps {
 function FieldTextarea(props: Props): JSX.Element {
   const { id, isDirty, name, onBlur, onChange, onFocus, registration, setStatus, skipValidation } =
     props;
-  const handleBlur = React.useCallback(
-    (event: React.FocusEvent<HTMLTextAreaElement>) => {
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLTextAreaElement>) => {
       setStatus({ isActive: false, isDirty });
 
       registration.onBlur(event);
@@ -28,8 +28,8 @@ function FieldTextarea(props: Props): JSX.Element {
     [isDirty, onBlur, registration, setStatus],
   );
 
-  const handleFocus = React.useCallback(
-    (event: React.FocusEvent<HTMLTextAreaElement>) => {
+  const handleFocus = useCallback(
+    (event: FocusEvent<HTMLTextAreaElement>) => {
       setStatus({ isActive: true });
 
       if (onFocus) {
@@ -39,8 +39,8 @@ function FieldTextarea(props: Props): JSX.Element {
     [onFocus, setStatus],
   );
 
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
       registration.onChange(event);
 
       if (onChange) {

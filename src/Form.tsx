@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FieldValues, FormProvider, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
 import { AnyObject } from '@gilbarbara/types';
 

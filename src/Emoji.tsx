@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { px } from './modules/helpers';
-import { baseStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions } from './modules/system';
 import { ComponentProps, StyledProps } from './types';
 
 export interface EmojiKnownProps extends StyledProps {
@@ -16,7 +16,7 @@ export type EmojiProps = ComponentProps<HTMLSpanElement, EmojiKnownProps>;
 
 export const StyledEmoji = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )<{ size?: number }>(props => {
   const { size } = props;
 
@@ -34,7 +34,7 @@ export const StyledEmoji = styled(
   `;
 });
 
-export const Emoji = React.forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
+export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
   const { label, size, symbol } = props;
 
   return (

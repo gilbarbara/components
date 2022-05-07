@@ -1,14 +1,14 @@
-import * as React from 'react';
+import { MouseEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SelectRenderer } from '@gilbarbara/react-dropdown';
 
 import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { DropdownOption } from '../types';
 
-export const StyledContent = styled('div', styledOptions)`
+export const StyledContent = styled('div', getStyledOptions())`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -17,7 +17,7 @@ export const StyledContent = styled('div', styledOptions)`
 
 const Item = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<{ multi?: boolean }>(props => {
   const { color, multi } = props;
   const { grayDark, radius, spacing, white } = getTheme(props);
@@ -47,7 +47,7 @@ const Item = styled(
 
 const ItemClose = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { spacing } = getTheme(props);
 
@@ -60,7 +60,7 @@ const ItemClose = styled(
 
 const Content = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { spacing } = getTheme(props);
 
@@ -72,7 +72,7 @@ const Content = styled(
 
 const Placeholder = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { grayMid } = getTheme(props);
 
@@ -89,7 +89,7 @@ function DropdownContent<T extends DropdownOption>(props: SelectRenderer<T>) {
   } = props;
 
   const handleClickRemove = (value: T) => {
-    return (event: React.MouseEvent) => {
+    return (event: MouseEvent) => {
       event.stopPropagation();
 
       removeItem(null, value, true);

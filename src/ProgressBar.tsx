@@ -1,15 +1,15 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { rangeLimit, round } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme, px } from './modules/helpers';
-import { baseStyles, isDarkMode, marginStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from './modules/system';
 import { Paragraph } from './Paragraph';
 import { ComponentProps, StyledProps, WithMargin } from './types';
 
-export interface ProgressKnownProps extends StyledProps, WithMargin {
+export interface ProgressBarKnownProps extends StyledProps, WithMargin {
   large?: boolean;
   showProgression?: boolean;
   step: number;
@@ -18,12 +18,12 @@ export interface ProgressKnownProps extends StyledProps, WithMargin {
   width?: StringOrNumber;
 }
 
-export type ProgressProps = ComponentProps<HTMLDivElement, ProgressKnownProps>;
+export type ProgressBarProps = ComponentProps<HTMLDivElement, ProgressBarKnownProps>;
 
 export const StyledProgressBar = styled(
   'div',
-  styledOptions,
-)<ProgressProps>(props => {
+  getStyledOptions(),
+)<ProgressBarProps>(props => {
   const { width = '100%' } = props;
 
   const { grayLight } = getTheme(props);
@@ -38,8 +38,8 @@ export const StyledProgressBar = styled(
 
 const StyledProgressTrack = styled(
   'div',
-  styledOptions,
-)<ProgressProps>(props => {
+  getStyledOptions(),
+)<ProgressBarProps>(props => {
   const { large } = props;
   const { colors, grayLight, radius } = getTheme(props);
 
@@ -61,7 +61,7 @@ const StyledProgressTrack = styled(
   `;
 });
 
-export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressProps>((props, ref) => {
+export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>((props, ref) => {
   const { showProgression, step, steps } = props;
   const percentage = round(rangeLimit((step / steps) * 100));
   const stepLimit = rangeLimit(step, 0, steps);

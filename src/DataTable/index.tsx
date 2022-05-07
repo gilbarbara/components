@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, MouseEvent, ReactNode, useMemo, useRef } from 'react';
 import innerText from 'react-innertext';
 import { useSetState, useUpdateEffect } from 'react-use';
 import { useTheme } from '@emotion/react';
@@ -22,7 +22,7 @@ export interface DataTableColumn<T = string> {
   max?: StringOrNumber;
   min?: StringOrNumber;
   size?: StringOrNumber;
-  title: React.ReactNode;
+  title: ReactNode;
 }
 
 export interface DataTableProps extends Omit<BoxProps, 'data'> {
@@ -41,7 +41,7 @@ export interface DataTableProps extends Omit<BoxProps, 'data'> {
   loading?: boolean;
   /** @default 10 */
   maxRows?: number;
-  noResults?: React.ReactNode;
+  noResults?: ReactNode;
   onClickPage?: (page: number, totalPages: number) => void;
   onClickSort?: (sortBy: string, sortDirection: string) => void;
   pagination?: boolean;
@@ -54,7 +54,7 @@ export interface DataTableProps extends Omit<BoxProps, 'data'> {
   scrollDuration?: number;
   scrollElement?: HTMLElement | null;
   scrollMargin?: number;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   /** @default window.innerWidth */
   width?: string | number;
 }
@@ -102,7 +102,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
     ...rest
   } = props;
   const { darkMode = false } = useTheme();
-  const element = React.useRef<HTMLDivElement>(null);
+  const element = useRef<HTMLDivElement>(null);
 
   const sortByDefault = defaultColumn || columns?.[0].key;
 
@@ -123,7 +123,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
   const isResponsive = responsive && (width ?? window.innerWidth) < breakpoint;
   const totalPages = Math.ceil(data.length / maxRows);
 
-  const handleClickPage = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickPage = (event: MouseEvent<HTMLButtonElement>) => {
     const { page } = event.currentTarget.dataset;
     const pageNumber = Number(page);
     const scrollTarget = scrollElement || element.current;
@@ -143,7 +143,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
     setState({ currentPage: pageNumber });
   };
 
-  const handleClickSort = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickSort = (event: MouseEvent<HTMLButtonElement>) => {
     const { direction, name = '' } = event.currentTarget.dataset;
     const reverseDirection = direction === 'asc' ? 'desc' : 'asc';
     const nextDirection = sortBy === name ? reverseDirection : 'asc';
@@ -167,11 +167,11 @@ export function DataTable(props: DataTableProps): JSX.Element {
   };
 
   const isEmpty = !loading && !data.length;
-  const rows = React.useMemo(() => {
+  const rows = useMemo(() => {
     return paginationServer ? data : sortData(data, sortBy, sortDirection);
   }, [data, paginationServer, sortBy, sortDirection]);
 
-  const body = React.useMemo(() => {
+  const body = useMemo(() => {
     if (isEmpty) {
       return (
         <FlexCenter padding="md" radius="sm" variant="white" width="100%">

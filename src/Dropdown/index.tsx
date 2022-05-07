@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import ReactDropdown, { SelectRenderer } from '@gilbarbara/react-dropdown';
@@ -7,12 +7,12 @@ import Content from './Content';
 import Options from './Options';
 
 import { getTheme, px } from '../modules/helpers';
-import { isDarkMode, marginStyles, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
 import { DropdownOption, DropdownProps } from '../types';
 
 export const StyledDropdown = styled(
   'div',
-  styledOptions,
+  getStyledOptions('placeholder'),
 )<
   Omit<DropdownProps<any>, 'onChange' | 'options' | 'values'> & {
     isFilled: boolean;
@@ -120,7 +120,7 @@ function getDropdownRenderer<T extends DropdownOption>({
 
 export function Dropdown<T extends DropdownOption>(props: DropdownProps<T>) {
   const { createFn, clearable, onChange, showCreateAlways, values = [], ...rest } = props;
-  const [isFilled, setFilled] = React.useState(!!values.length);
+  const [isFilled, setFilled] = useState(!!values.length);
 
   const { colors } = getTheme({ theme: useTheme() });
 

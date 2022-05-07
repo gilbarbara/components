@@ -1,15 +1,15 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { Icon } from './Icon';
 import { getTheme } from './modules/helpers';
-import { baseStyles, isDarkMode, marginStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from './modules/system';
 import { Text } from './Text';
 import { ComponentProps, Icons, StyledProps, Theme, WithInvert, WithMargin } from './types';
 
 export interface AlertKnownProps extends StyledProps, WithMargin, WithInvert {
-  children: React.ReactNode;
+  children: ReactNode;
   icon?: Icons;
   /** @default success */
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
@@ -46,7 +46,7 @@ function getOptions(type: AlertProps['type'], colors: Theme['colors'], darkMode:
 
 export const StyledAlert = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<AlertProps>(props => {
   const { invert } = props;
   const { grayDark, lightColor, radius, spacing, white } = getTheme(props);
@@ -78,7 +78,7 @@ export const StyledAlert = styled(
   `;
 });
 
-export const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   const { children, icon, invert, type } = props;
   const { colors, darkMode } = getTheme({ theme: useTheme() });
 

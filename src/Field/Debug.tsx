@@ -1,4 +1,3 @@
-import * as React from 'react';
 import is from 'is-lite';
 
 interface Props {

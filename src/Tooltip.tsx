@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import innerText from 'react-innertext';
 import { useMount, useUnmount } from 'react-use';
@@ -8,7 +8,7 @@ import is from 'is-lite';
 
 import { fadeIn } from './modules/animations';
 import { getColorVariant, getTheme, px } from './modules/helpers';
-import { baseStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions } from './modules/system';
 import { Text } from './Text';
 import { WithColor, WithTextOptions } from './types';
 
@@ -27,16 +27,16 @@ interface ColorProps {
 }
 
 export interface TooltipProps extends Partial<SharedProps>, WithColor, WithTextOptions {
-  children: React.ReactNode;
-  content: React.ReactNode;
+  children: ReactNode;
+  content: ReactNode;
   open?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 const arrowSize = 12;
 const distance = -5;
 
-const StyledTooltip = styled('span', styledOptions)`
+const StyledTooltip = styled('span', getStyledOptions())`
   ${baseStyles};
   display: inline-flex;
   line-height: 1;
@@ -45,7 +45,7 @@ const StyledTooltip = styled('span', styledOptions)`
 
 const Body = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )<SharedProps & ColorProps & { width: string | number }>(props => {
   const { align, bg, color, position, width } = props;
   const { radius, spacing } = getTheme(props);
@@ -234,9 +234,9 @@ function TooltipBody(
 
 export function Tooltip(props: TooltipProps): JSX.Element {
   const { children, content, open, shade, variant = 'gray' } = props;
-  const isMounted = React.useRef(false);
-  const [isActive, setActive] = React.useState(open || false);
-  const [width, setWidth] = React.useState<number>(0);
+  const isMounted = useRef(false);
+  const [isActive, setActive] = useState(open || false);
+  const [width, setWidth] = useState<number>(0);
 
   const { variants } = getTheme({ theme: useTheme() });
 
@@ -252,7 +252,7 @@ export function Tooltip(props: TooltipProps): JSX.Element {
     isMounted.current = false;
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const element = document.createElement('div');
 
     element.id = 'tooltip-sizing';

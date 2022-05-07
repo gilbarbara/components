@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { ReactNode, useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from 'react-use';
 import { css, keyframes, useTheme } from '@emotion/react';
@@ -11,7 +10,7 @@ import { baseStyles, buttonStyles } from './modules/system';
 import { black } from './modules/theme';
 
 export interface PortalProps {
-  children: React.ReactNode;
+  children: ReactNode;
   /** @default true */
   closeOnClickOverlay?: boolean;
   /** @default true */
@@ -137,17 +136,17 @@ export function Portal(props: PortalProps) {
     zIndex = 1000,
   } = props;
   const [isReady, setReady] = useState(false);
-  const portal = React.useRef<Element | null>(null);
+  const portal = useRef<Element | null>(null);
   const { darkMode = false } = useTheme();
 
-  const closePortal = React.useRef(() => {
+  const closePortal = useRef(() => {
     destroyPortal.current();
 
     if (is.function(onClose)) {
       onClose();
     }
   });
-  const destroyPortal = React.useRef(() => {
+  const destroyPortal = useRef(() => {
     if (closeOnEsc) {
       document.removeEventListener('keydown', handleKeyDown);
     }
@@ -156,7 +155,7 @@ export function Portal(props: PortalProps) {
   const previousIsActive = usePrevious(isActive);
   const previousCloseOnEsc = usePrevious(closeOnEsc);
 
-  const handleKeyDown = React.useCallback(event => {
+  const handleKeyDown = useCallback(event => {
     if (event.keyCode === 27) {
       event.stopPropagation();
       closePortal.current();
@@ -183,7 +182,7 @@ export function Portal(props: PortalProps) {
     destroyPortal.current();
   });
 
-  const openPortal = React.useCallback(() => {
+  const openPortal = useCallback(() => {
     if (is.function(onOpen)) {
       onOpen();
     }
@@ -219,7 +218,7 @@ export function Portal(props: PortalProps) {
     previousCloseOnEsc,
   ]);
 
-  const handleClickClose = React.useCallback(() => {
+  const handleClickClose = useCallback(() => {
     if (!closeOnClickOverlay) {
       return;
     }

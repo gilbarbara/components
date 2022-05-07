@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SelectRenderer } from '@gilbarbara/react-dropdown';
@@ -9,10 +9,8 @@ import Add from './Add';
 
 import { FlexInline } from '../Flex';
 import { getTheme } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { DropdownOption, DropdownProps, Theme } from '../types';
-
-const { useEffect, useRef } = React;
 
 interface DropdownOptionsProps<T extends DropdownOption>
   extends SelectRenderer<T>,
@@ -27,7 +25,7 @@ const getSharedStyles = (spacing: Theme['spacing']) => css`
 
 const Centered = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<{ withBorder: boolean }>(props => {
   const { withBorder } = props;
   const { grayLight, spacing } = getTheme(props);
@@ -42,7 +40,7 @@ const Centered = styled(
 
 const Empty = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { spacing } = getTheme(props);
 
@@ -54,7 +52,7 @@ const Empty = styled(
 
 const Input = styled(
   'input',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { colors, radius } = getTheme(props);
 
@@ -69,7 +67,7 @@ const Input = styled(
 
 const Item = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<{ disabled?: boolean; selected: boolean }>(props => {
   const { color, disabled, selected } = props;
   const { grayDark, grayDarker, grayLight, grayMid, grayScale, spacing, white } = getTheme(props);
@@ -107,7 +105,7 @@ const Item = styled(
 
 const List = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<{ maxHeight?: StringOrNumber }>(props => {
   const { maxHeight } = props;
   const { grayDark, grayDarker, grayLight, white } = getTheme(props);
@@ -124,7 +122,7 @@ const List = styled(
 
 const Options = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { grayDark, grayDarker, grayLight, white } = getTheme(props);
   const darkMode = isDarkMode(props);
@@ -137,7 +135,7 @@ const Options = styled(
 
 const Search = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { darkColor, grayDarker, grayLight, grayMid, lightColor, spacing, typography, white } =
     getTheme(props);

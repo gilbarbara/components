@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useSetState, useUnmount } from 'react-use';
 import { AnyObject } from '@gilbarbara/types';
@@ -51,7 +51,7 @@ export function Field<T extends FieldProps>(props: T) {
     setValue,
     unregister,
   } = useFormContext();
-  const registerOptions = React.useMemo(
+  const registerOptions = useMemo(
     () => getRegisterOptions({ ...props, getValues }),
     [getValues, props],
   );
@@ -181,3 +181,5 @@ export function Field<T extends FieldProps>(props: T) {
 Field.defaultProps = {
   label: '',
 };
+
+export { FieldProps } from './types';

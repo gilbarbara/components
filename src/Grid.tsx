@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
@@ -71,7 +71,7 @@ export const StyledGrid = styled(Box)<GridProps>(props => {
   `;
 });
 
-export const Grid = React.forwardRef<HTMLDivElement, GridProps>((props, ref) => (
+export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => (
   <StyledGrid ref={ref} data-component-name="Grid" {...props} />
 ));
 

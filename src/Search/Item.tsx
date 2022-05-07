@@ -1,19 +1,19 @@
-import * as React from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 
 export interface SearchItemProps {
-  children: React.ReactNode;
-  onClick: React.MouseEventHandler;
+  children: ReactNode;
+  onClick: MouseEventHandler;
   value: string;
 }
 
 export const StyledSearchItem = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { grayDark, spacing, typography, variants, white } = getTheme(props);
   const darkMode = isDarkMode(props);

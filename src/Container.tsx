@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
@@ -6,26 +6,26 @@ import { StringOrNumber } from '@gilbarbara/types';
 import { getTheme, px, responsive } from './modules/helpers';
 import {
   baseStyles,
+  getStyledOptions,
   marginStyles,
   paddingStyles,
   shadowStyles,
-  styledOptions,
 } from './modules/system';
 import { WithMargin, WithPadding } from './types';
 
 export interface ContainerProps extends WithMargin, WithPadding {
   centered?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   fullScreen?: boolean;
   fullScreenOffset?: StringOrNumber;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   verticalAlign?: 'around' | 'between' | 'bottom' | 'center' | 'evenly' | 'top';
   verticalSpacing?: boolean;
 }
 
 export const StyledContainer = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<ContainerProps>(props => {
   const { centered, fullScreen, fullScreenOffset, verticalAlign, verticalSpacing } = props;
   const { spacing } = getTheme(props);
@@ -94,7 +94,7 @@ export const StyledContainer = styled(
   `;
 });
 
-export const Container = React.forwardRef<HTMLDivElement, ContainerProps>((props, ref) => {
+export const Container = forwardRef<HTMLDivElement, ContainerProps>((props, ref) => {
   return <StyledContainer ref={ref} data-component-name="Container" {...props} />;
 });
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 import Picker, { DayModifiers } from 'react-day-picker';
 import styled from '@emotion/styled';
@@ -9,13 +8,13 @@ import is from 'is-lite';
 import { DatePickerBaseProps, DatePickerSingleClickHandler } from './types';
 import { getStyles, locales } from './utils';
 
-import { styledOptions } from '../modules/system';
+import { getStyledOptions } from '../modules/system';
 
 export type DatePickerProps = DatePickerBaseProps<DatePickerSingleClickHandler>;
 
 const StyledDatePicker = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<DatePickerProps>(props => {
   return getStyles(props);
 });

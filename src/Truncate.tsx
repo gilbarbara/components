@@ -1,17 +1,21 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { px } from './modules/helpers';
+import { getStyledOptions } from './modules/system';
 
 export interface TruncateProps {
-  children: React.ReactNode;
+  children: ReactNode;
   /** @default 2 */
   lines?: number;
   maxWidth?: string | number;
 }
 
-const StyledTruncate = styled.span<TruncateProps>(props => {
+const StyledTruncate = styled(
+  'span',
+  getStyledOptions(),
+)<TruncateProps>(props => {
   const { lines, maxWidth } = props;
 
   if (maxWidth) {

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { DateUtils, DayModifiers, RangeModifier } from 'react-day-picker';
 import { useSetState } from 'react-use';
 import { css, useTheme } from '@emotion/react';
@@ -13,7 +12,7 @@ import { Button } from '../Button';
 import { Flex } from '../Flex';
 import { Group } from '../Group';
 import { getColorVariant, getTheme } from '../modules/helpers';
-import { styledOptions } from '../modules/system';
+import { getStyledOptions } from '../modules/system';
 import { Paragraph } from '../Paragraph';
 import { Text } from '../Text';
 
@@ -21,7 +20,7 @@ export type DatePickerRangerProps = DatePickerBaseProps<DatePickerRangeClickHand
 
 const StyledDatePicker = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Pick<DatePickerRangerProps, 'variant'>>(props => {
   const { variant = 'primary' } = props;
   const { variants } = getTheme(props);

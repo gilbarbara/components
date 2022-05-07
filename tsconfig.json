@@ -1,11 +1,8 @@
 {
   "extends": "@gilbarbara/tsconfig",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "outDir": "./lib",
-    "skipLibCheck": true
+    "baseUrl": ".",
+    "outDir": "./lib"
   },
   "include": ["src/**/*", "*.d.ts"]
 }

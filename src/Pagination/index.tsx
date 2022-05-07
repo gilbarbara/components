@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
 
 import PaginationButton from './Button';
 
 import { Icon } from '../Icon';
-import { marginStyles, styledOptions } from '../modules/system';
+import { getStyledOptions, marginStyles } from '../modules/system';
 import { WithMargin } from '../types';
 
 export interface PaginationProps extends WithMargin {
@@ -13,18 +13,18 @@ export interface PaginationProps extends WithMargin {
   /** @default 3 */
   edgeNavigationLimit?: number;
   hideEdgeNavigation?: boolean;
-  onClick: React.MouseEventHandler;
+  onClick: MouseEventHandler;
   totalPages: number;
 }
 
 interface Item {
-  content?: React.ReactNode;
+  content?: ReactNode;
   disabled?: boolean;
   key?: string;
   page?: number;
 }
 
-const StyledPagination = styled('div', styledOptions)`
+const StyledPagination = styled('div', getStyledOptions())`
   align-items: center;
   display: flex;
   justify-content: flex-end;

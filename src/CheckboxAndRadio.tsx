@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { forwardRef, KeyboardEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme, px } from './modules/helpers';
-import { baseStyles, isDarkMode, outlineStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, isDarkMode, outlineStyles } from './modules/system';
 import {
   CheckboxOption,
   ComponentProps,
@@ -30,7 +30,7 @@ interface InnerProps
   category?: 'checkbox' | 'radio';
 }
 
-const StyledCheckboxRadioInput = styled('input', styledOptions)`
+const StyledCheckboxRadioInput = styled('input', getStyledOptions())`
   left: 0;
   opacity: 0;
   position: absolute;
@@ -40,7 +40,7 @@ const StyledCheckboxRadioInput = styled('input', styledOptions)`
 
 const StyledText = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )<InnerProps>(props => {
   const { size } = props;
   const { typography } = getTheme(props);
@@ -54,7 +54,7 @@ const StyledText = styled(
 
 const StyledElement = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )<InnerProps>(props => {
   const { category = 'checkbox', size } = props;
   const { colors, grayDark, grayDarker, grayLighter, radius, white } = getTheme(props);
@@ -161,7 +161,7 @@ const StyledElement = styled(
 
 const StyledLabel = styled(
   'label',
-  styledOptions,
+  getStyledOptions(),
 )<InnerProps>(props => {
   const { disabled, inline } = props;
 
@@ -191,7 +191,7 @@ const StyledLabel = styled(
   `;
 });
 
-function handleKeyDown(event: React.KeyboardEvent<HTMLSpanElement>) {
+function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
   const target = event.target as HTMLSpanElement;
   const input = target.previousElementSibling as HTMLInputElement;
 
@@ -202,7 +202,7 @@ function handleKeyDown(event: React.KeyboardEvent<HTMLSpanElement>) {
   input.checked = !input.checked;
 }
 
-export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const { checked, children, defaultChecked, id, inline, label, name, size, style, ...rest } =
     props;
   const inputId = id || name;
@@ -244,7 +244,7 @@ Checkbox.displayName = 'Checkbox';
  * Use the RadioGroup component instead of this.
  * RadioGroup accepts an `options` prop that render this component in a group and is responsible for managing state and interactions.
  */
-export const Radio = React.forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
+export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const { checked, children, defaultChecked, id, inline, label, name, size, style, ...rest } =
     props;
 

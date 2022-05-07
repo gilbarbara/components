@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getColorVariant, getTheme, px } from './modules/helpers';
-import { marginStyles, styledOptions } from './modules/system';
+import { getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, StyledProps, WithColor, WithMargin } from './types';
 
 interface StatusIndicatorKnownProps extends StyledProps, WithMargin, WithColor {
@@ -15,7 +14,7 @@ export type StatusIndicatorProps = ComponentProps<HTMLDivElement, StatusIndicato
 
 const StyledStatusIndicator = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<StatusIndicatorProps>(props => {
   const { ratio = 0.7, shade, size = 24, variant = 'green' } = props;
   const { variants } = getTheme(props);

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { memo, ReactNode, useEffect, useRef } from 'react';
 import { ValueOf } from 'type-fest';
 
 interface Props {
   active: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   display?: ValueOf<typeof DISPLAY>;
   onClick: () => void;
 }
@@ -18,10 +18,10 @@ const DISPLAY = {
 
 export function ClickOutside(props: Props) {
   const { active, children, display = DISPLAY.BLOCK, onClick, ...rest } = props;
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const isTouch = React.useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isTouch = useRef(false);
 
-  const handleClick = React.useRef((event: MouseEvent | TouchEvent) => {
+  const handleClick = useRef((event: MouseEvent | TouchEvent) => {
     const container = containerRef.current;
 
     if (event.type === 'touchend') {
@@ -37,7 +37,7 @@ export function ClickOutside(props: Props) {
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const { current } = handleClick;
 
     if (active) {
@@ -66,4 +66,4 @@ export function ClickOutside(props: Props) {
   );
 }
 
-export const ClickOutsideMemo = React.memo(ClickOutside);
+export const ClickOutsideMemo = memo(ClickOutside);

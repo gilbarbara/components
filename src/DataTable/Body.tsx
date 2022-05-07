@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { memo } from 'react';
 
 import type { DataTableProps } from './index';
 
@@ -81,4 +81,4 @@ function DataTableBody(props: Props): JSX.Element {
   );
 }
 
-export default React.memo(DataTableBody);
+export default memo(DataTableBody);
