@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { DayPickerProps } from 'react-day-picker';
 import { SelectProps } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetOptional } from 'type-fest';
 
 import { WithColor, WithMargin } from './shared';
-import { ColorVariants, Theme } from './theme';
+import { Theme } from './theme';
 
 export interface BaseProps {
   [hey: string]: any;
@@ -23,24 +22,6 @@ export interface CheckboxOption extends Omit<Option, 'value'> {
 
 export type ComponentProps<T, P, E extends string = never> = P &
   Omit<React.HTMLProps<T>, 'size' | 'ref' | keyof P | E>;
-
-export type DatePickerRangeParameter = [string | undefined, string | undefined];
-
-export type DatePickerClickHandler = (isoString: string | DatePickerRangeParameter) => void;
-export type DatePickerRangeClickHandler = (isoString: DatePickerRangeParameter) => void;
-export type DatePickerSingleClickHandler = (isoString: string) => void;
-
-export interface DatePickerProps<T = DatePickerSingleClickHandler>
-  extends StyledProps,
-    DayPickerProps {
-  finalDate?: string | Date;
-  initialDate?: string | Date;
-  /** @default en */
-  locale?: 'en' | 'pt';
-  onClick?: T;
-  /** @default primary */
-  variant?: ColorVariants;
-}
 
 export interface DropdownCreateProps<T extends DropdownOption = DropdownOption> {
   close: () => void;

@@ -7,6 +7,13 @@ import is from 'is-lite';
 
 import { DatePicker } from './Base';
 import { DatePickerRange } from './Range';
+import {
+  DatePickerBaseProps,
+  DatePickerClickHandler,
+  DatePickerRangeClickHandler,
+  DatePickerRangeParameter,
+  DatePickerSingleClickHandler,
+} from './types';
 import { getNumberOfMonths } from './utils';
 
 import { Box } from '../Box';
@@ -15,15 +22,8 @@ import { Icon } from '../Icon';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { isDarkMode, styledOptions } from '../modules/system';
 import { Text } from '../Text';
-import {
-  DatePickerClickHandler,
-  DatePickerProps,
-  DatePickerRangeClickHandler,
-  DatePickerRangeParameter,
-  DatePickerSingleClickHandler,
-} from '../types';
 
-interface DatePickerInputProps extends DatePickerProps<DatePickerClickHandler> {
+export interface DatePickerInputProps extends DatePickerBaseProps<DatePickerClickHandler> {
   borderless?: boolean;
   large?: boolean;
   open?: boolean;
