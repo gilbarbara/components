@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ChangeEvent, forwardRef, ReactNode, useCallback, useRef, useState } from 'react';
 import mergeRefs from 'react-merge-refs';
 import { useMount } from 'react-use';
 import { css } from '@emotion/react';
@@ -9,14 +9,14 @@ import { getTheme, px } from './modules/helpers';
 import {
   appearanceStyles,
   baseStyles,
+  getStyledOptions,
   inputStyles,
   isDarkMode,
-  styledOptions,
 } from './modules/system';
 import { ComponentProps, StyledProps, WithFormElements } from './types';
 
 export interface SelectKnownProps extends StyledProps, WithFormElements {
-  children: React.ReactNode;
+  children: ReactNode;
   large?: boolean;
 }
 
@@ -24,7 +24,7 @@ export type SelectProps = ComponentProps<HTMLSelectElement, SelectKnownProps>;
 
 export const StyledSelect = styled(
   'select',
-  styledOptions,
+  getStyledOptions(),
 )<SelectProps & { filled: boolean }>(props => {
   const { borderless, endSpacing, filled, large, multiple, startSpacing, width } = props;
   const { colors, darkColor, grayMid, inputHeight, spacing, white } = getTheme(props);
@@ -91,17 +91,17 @@ export const StyledSelect = styled(
   `;
 });
 
-export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
+export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
   const { defaultValue, name, onChange, value } = props;
-  const localRef = React.useRef<HTMLSelectElement>(null);
-  const [isFilled, setFilled] = React.useState(!!defaultValue || !!value);
+  const localRef = useRef<HTMLSelectElement>(null);
+  const [isFilled, setFilled] = useState(!!defaultValue || !!value);
 
   useMount(() => {
     setFilled(!!localRef.current?.value);
   });
 
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
       setFilled(!!event.target.value);
 
       if (is.function(onChange)) {

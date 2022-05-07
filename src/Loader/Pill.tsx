@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { rgba } from 'polished';
 
 import { getColorVariant, getTheme, px } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { LoaderProps } from '../types';
 
 const animation = keyframes`
@@ -23,7 +22,7 @@ const animation = keyframes`
 
 export const StyledLoaderPill = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Omit<LoaderProps, 'type'>>(props => {
   const { block, color, shade, size = 128, variant } = props;
   const { darkColor, grayDark, grayLighter, lightColor, spacing, variants } = getTheme(props);

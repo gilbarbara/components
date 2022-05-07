@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import { omit } from '@gilbarbara/helpers';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
@@ -131,13 +131,13 @@ export function px(value: StringOrNumber): string {
 }
 
 export function recursiveElementFind(
-  element: React.ReactElement,
+  element: ReactElement,
   options: RecursiveElementFindOptions,
 ): string | null {
   const { children } = element.props;
   const { property, type } = options;
 
-  const getValue = (input: React.ReactElement) => {
+  const getValue = (input: ReactElement) => {
     const props = input.props as any;
 
     if (input.type === type) {
@@ -165,7 +165,7 @@ export function recursiveElementFind(
         return recursiveElementFind(child, options);
       }
     }
-  } else if (React.isValidElement(children)) {
+  } else if (isValidElement(children)) {
     return getValue(children);
   }
 
@@ -173,14 +173,14 @@ export function recursiveElementFind(
 }
 
 export function recursiveChildrenMap(
-  children: React.ReactNode,
+  children: ReactNode,
   props: AnyObject,
   options: RecursiveChildrenMapOptions = {},
-): React.ReactNode {
+): ReactNode {
   const { filter, overrideProps } = options;
 
-  return React.Children.map(children, child => {
-    if (!React.isValidElement(child)) {
+  return Children.map(children, child => {
+    if (!isValidElement(child)) {
       return child;
     }
 
@@ -197,14 +197,14 @@ export function recursiveChildrenMap(
         childProps = { ...childProps, ...nextProps };
       }
 
-      return React.cloneElement(child, childProps);
+      return cloneElement(child, childProps);
     }
 
     if (filter && child.type !== filter) {
       return child;
     }
 
-    return React.cloneElement(child, nextProps);
+    return cloneElement(child, nextProps);
   });
 }
 

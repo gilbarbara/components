@@ -12,9 +12,25 @@ export interface WithAlign {
   align?: 'left' | 'center' | 'right';
 }
 
+export interface WithBlock {
+  /**
+   * Use the parent full width
+   * @default false
+   */
+  block?: boolean;
+}
+
 export interface WithBorderless {
   /** @default false */
   borderless?: boolean;
+}
+
+export interface WithBusy {
+  /**
+   * Add an animated icon
+   * @default false
+   */
+  busy?: boolean;
 }
 
 export interface WithColor {
@@ -95,6 +111,7 @@ export interface WithLayout extends WithDisplay {
 }
 
 export interface WithMargin {
+  /** Also accepts the shortcuts: mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical) */
   margin?: Spacing | 0;
   /** margin-bottom */
   mb?: Spacing | 0;
@@ -111,6 +128,7 @@ export interface WithMargin {
 }
 
 export interface WithPadding {
+  /** Also accepts the shortcuts: pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
   padding?: Spacing;
   /** padding-bottom */
   pb?: Spacing;

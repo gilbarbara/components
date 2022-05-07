@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, forwardRef, ReactNode } from 'react';
 import SVG from 'react-inlinesvg';
 import innerText from 'react-innertext';
 import { css, keyframes } from '@emotion/react';
@@ -8,7 +8,7 @@ import { RequireExactlyOne, SetRequired } from 'type-fest';
 
 import { px } from './modules/helpers';
 import { iconsCustom } from './modules/icons';
-import { baseStyles, marginStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { Icons, StyledProps, WithMargin } from './types';
 
 export interface IconKnownProps extends StyledProps, WithMargin {
@@ -17,8 +17,8 @@ export interface IconKnownProps extends StyledProps, WithMargin {
   /** @default 16 */
   size?: number;
   spin?: boolean;
-  style?: React.CSSProperties;
-  title?: React.ReactNode;
+  style?: CSSProperties;
+  title?: ReactNode;
   url: string;
 }
 
@@ -32,7 +32,7 @@ const rotate = keyframes`
 
 export const StyledIcon = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )<SetRequired<Omit<IconProps, 'name'>, 'size'>>(props => {
   const { color = 'inherit', size, spin } = props;
 
@@ -54,7 +54,7 @@ export const StyledIcon = styled(
   `;
 });
 
-export const Icon = React.forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
+export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
   const { name, size = 16, title, url, ...rest } = props;
   let iconURL = '';
 

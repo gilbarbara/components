@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { FieldValues, SetFieldValue } from 'react-hook-form';
 import { useUpdateEffect } from 'react-use';
 
@@ -14,7 +14,7 @@ interface Props extends FieldCheckboxProps {
 
 function FieldCheckbox(props: Props) {
   const { currentValue, name = 'CheckboxGroup', options = [], setValue } = props;
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useUpdateEffect(() => {
     currentValue.forEach(d => {
@@ -26,7 +26,7 @@ function FieldCheckbox(props: Props) {
     });
   }, [currentValue]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
 
     const nextValue = target.checked

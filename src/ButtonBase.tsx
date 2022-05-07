@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -7,14 +7,15 @@ import {
   appearanceStyles,
   baseStyles,
   colorStyles,
+  getStyledOptions,
   marginStyles,
   paddingStyles,
-  styledOptions,
   textStyles,
 } from './modules/system';
 import {
   ComponentProps,
   StyledProps,
+  WithBusy,
   WithColor,
   WithMargin,
   WithPadding,
@@ -23,24 +24,20 @@ import {
 
 export interface ButtonBaseKnownProps
   extends StyledProps,
+    WithBusy,
     WithColor,
     WithMargin,
     WithPadding,
     WithTextOptions {
-  /**
-   * Add an animation icon
-   * @default false
-   */
-  busy?: boolean;
-  children: React.ReactNode;
-  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  children: ReactNode;
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
 export type ButtonBaseProps = ComponentProps<HTMLButtonElement, ButtonBaseKnownProps>;
 
 export const StyledButtonBase = styled(
   'button',
-  styledOptions,
+  getStyledOptions(),
 )<ButtonBaseProps>(props => {
   const { busy } = props;
 
@@ -73,7 +70,7 @@ export const StyledButtonBase = styled(
   `;
 });
 
-export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>((props, ref) => {
+export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>((props, ref) => {
   const { busy, children } = props;
   const { fontSize = '16px' } = textStyles(props);
 

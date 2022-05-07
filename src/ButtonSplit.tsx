@@ -1,36 +1,35 @@
-import * as React from 'react';
+import { MouseEventHandler, ReactNode, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 
 import { ButtonBase } from './ButtonBase';
 import { Icon } from './Icon';
-import { Menu, MenuProps } from './Menu';
+import { Menu } from './Menu';
 import { getTheme } from './modules/helpers';
-import { backgroundStyles, styledOptions } from './modules/system';
-import { WithComponentSize, WithInvert } from './types';
+import { backgroundStyles, getStyledOptions } from './modules/system';
+import { WithBlock, WithBusy, WithColor, WithComponentSize, WithInvert } from './types';
 
 export interface ButtonSplitProps
-  extends Omit<MenuProps, 'icon' | 'label' | 'onClick'>,
+  extends WithBlock,
+    WithBusy,
+    WithColor,
     WithComponentSize,
     WithInvert {
-  /**
-   * Use the container full width
-   * @default false
-   */
-  block?: boolean;
-  /**
-   * Add an animation to the background
-   * @default false
-   */
-  busy?: boolean;
-  label: React.ReactNode;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  children: ReactNode;
+  disabled?: boolean;
+  label: ReactNode;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  onToggle?: (status: boolean) => void;
+  /** @default right */
+  positionX?: 'left' | 'right';
+  /** @default bottom */
+  positionY?: 'bottom' | 'top';
 }
 
 export const StyledButtonSplit = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Omit<ButtonSplitProps, 'label' | 'onClick'>>(props => {
   const { block, disabled, invert, size = 'md' } = props;
   const { button, grayLight, grayMid, spacing } = getTheme(props);
@@ -87,7 +86,7 @@ export const StyledButtonSplit = styled(
 export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
   const { busy, children, label, onClick, onToggle, positionX, positionY, ...rest } = props;
   const { disabled, shade, variant } = rest;
-  const [active, setActive] = React.useState(false);
+  const [active, setActive] = useState(false);
 
   const handleToggle = (status: boolean) => {
     setActive(status);

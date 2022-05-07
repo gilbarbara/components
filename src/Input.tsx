@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme, px } from './modules/helpers';
-import { baseStyles, inputStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, inputStyles } from './modules/system';
 import { ComponentProps, InputTypes, StyledProps, WithFormElements } from './types';
 
 export interface InputKnownProps extends StyledProps, WithFormElements {
@@ -17,7 +17,7 @@ export type InputProps = ComponentProps<HTMLInputElement, InputKnownProps, 'type
 
 export const StyledInput = styled(
   'input',
-  styledOptions,
+  getStyledOptions(),
 )<InputProps>(props => {
   const { borderless, endSpacing, large, startSpacing, width } = props;
   const { inputHeight, spacing } = getTheme(props);
@@ -43,7 +43,7 @@ export const StyledInput = styled(
   `;
 });
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { name } = props;
 
   return <StyledInput ref={ref} data-component-name="Input" id={name} {...props} />;

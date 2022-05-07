@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { pick } from '@gilbarbara/helpers';
@@ -9,7 +9,7 @@ import { Flex } from './Flex';
 import { H3 } from './Headings';
 import { Icon } from './Icon';
 import { getTheme, px } from './modules/helpers';
-import { isDarkMode, styledOptions } from './modules/system';
+import { getStyledOptions, isDarkMode } from './modules/system';
 import { Portal, PortalProps } from './Portal';
 
 export interface ModalProps
@@ -17,19 +17,19 @@ export interface ModalProps
     PortalProps,
     'closeOnClickOverlay' | 'closeOnEsc' | 'hideOverlay' | 'onClose' | 'onOpen' | 'zIndex'
   > {
-  children: React.ReactNode;
+  children: ReactNode;
   hideCloseButton?: boolean;
   isActive: boolean;
   maxHeight?: StandardLonghandProperties['maxHeight'] | number;
   maxWidth?: StandardLonghandProperties['maxWidth'] | number;
-  style?: React.CSSProperties;
-  title?: React.ReactNode;
+  style?: CSSProperties;
+  title?: ReactNode;
   width?: string | number;
 }
 
 const StyledModal = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Omit<ModalProps, 'content' | 'onClose' | 'onOpen' | 'title'>>(props => {
   const { maxWidth, width } = props;
   const { black, darkColor, radius, shadow, spacing, white } = getTheme(props);
@@ -48,7 +48,7 @@ const StyledModal = styled(
 
 const StyledModalContent = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Required<Pick<ModalProps, 'maxHeight'>>>(props => {
   const { maxHeight } = props;
   const { spacing } = getTheme(props);
@@ -74,7 +74,7 @@ export function Modal(props: ModalProps) {
   } = props;
   const { black, darkMode, white } = getTheme({ theme: useTheme() });
 
-  const handlePortalClose = React.useCallback(() => {
+  const handlePortalClose = useCallback(() => {
     if (onClose) {
       onClose();
     }

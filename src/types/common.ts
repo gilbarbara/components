@@ -1,5 +1,4 @@
-import { CSSProperties } from 'react';
-import * as React from 'react';
+import { CSSProperties, JSXElementConstructor } from 'react';
 import { SerializedStyles } from '@emotion/react';
 
 import { Breakpoints } from './theme';
@@ -44,7 +43,7 @@ export interface MediaQueries {
 }
 
 export interface RecursiveChildrenMapOptions {
-  filter?: React.JSXElementConstructor<any>;
+  filter?: JSXElementConstructor<any>;
   overrideProps?: boolean;
 }
 

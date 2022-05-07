@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, CSSProperties, isValidElement, MouseEvent, ReactNode, useEffect } from 'react';
 import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -12,19 +12,19 @@ import { Tab, TabProps } from './Tab';
 import { ButtonBase } from '../ButtonBase';
 import { Loader } from '../Loader';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
-import { isDarkMode, marginStyles, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
 import { NonIdealState } from '../NonIdealState';
 import { StyledProps, WithColor, WithMargin } from '../types';
 
 export interface TabsProps extends StyledProps, WithColor, WithMargin {
-  children: React.ReactNode;
+  children: ReactNode;
   initialId?: string;
-  loader?: React.ReactNode;
+  loader?: ReactNode;
   maxHeight?: number | StandardLonghandProperties['maxHeight'];
   minHeight?: number | StandardLonghandProperties['minHeight'];
-  noContent?: React.ReactNode;
+  noContent?: ReactNode;
   onClick?: (id: string) => void;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 interface State {
@@ -36,7 +36,7 @@ interface State {
 
 const StyledTabs = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<TabsProps>(props => {
   return css`
     ${marginStyles(props)}
@@ -93,7 +93,7 @@ const StyledHeaderItem = styled(ButtonBase)<
 
 const StyledContent = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Pick<TabsProps, 'maxHeight' | 'minHeight'>>(props => {
   const { maxHeight, minHeight } = props;
 
@@ -123,11 +123,11 @@ export function Tabs(props: TabsProps) {
     tabs: [],
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const nextState: SetOptional<State, 'activeId'> = { error: false, isReady: true, tabs: [] };
 
-    React.Children.forEach(children, (child, index) => {
-      if (!React.isValidElement(child)) {
+    Children.forEach(children, (child, index) => {
+      if (!isValidElement(child)) {
         return;
       }
 
@@ -147,7 +147,7 @@ export function Tabs(props: TabsProps) {
     setState(nextState);
   }, [activeId, children, setState]);
 
-  const handleClickItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickItem = (event: MouseEvent<HTMLButtonElement>) => {
     const { disabled, id = '' } = event.currentTarget.dataset;
 
     if (activeId === id || disabled === 'true') {
@@ -190,9 +190,7 @@ export function Tabs(props: TabsProps) {
 
       content.main = (
         <StyledContent maxHeight={maxHeight}>
-          {React.Children.toArray(children).filter(
-            d => React.isValidElement(d) && d.props.id === activeId,
-          )}
+          {Children.toArray(children).filter(d => isValidElement(d) && d.props.id === activeId)}
         </StyledContent>
       );
     } else {

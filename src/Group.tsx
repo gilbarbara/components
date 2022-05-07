@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from './modules/helpers';
-import { baseStyles, marginStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, Spacing, StyledProps, WithMargin } from './types';
 
 export interface GroupKnownProps extends StyledProps, WithMargin {
-  children: React.ReactNode;
+  children: ReactNode;
   distribution?:
     | 'center'
     | 'flex-end'
@@ -23,7 +23,7 @@ export type GroupProps = ComponentProps<HTMLDivElement, GroupKnownProps>;
 
 export const StyledGroup = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<GroupProps>(props => {
   const { distribution, gap = 'sm' } = props;
   const { spacing } = getTheme(props);
@@ -56,7 +56,7 @@ export const StyledGroup = styled(
   `;
 });
 
-export const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, ref) => (
+export const Group = forwardRef<HTMLDivElement, GroupProps>((props, ref) => (
   <StyledGroup ref={ref} data-component-name="Group" {...props} />
 ));
 

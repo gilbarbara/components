@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
 import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -20,7 +20,7 @@ import { Box } from '../Box';
 import { ClickOutside } from '../ClickOutside';
 import { Icon } from '../Icon';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { Text } from '../Text';
 
 export interface DatePickerInputProps extends DatePickerBaseProps<DatePickerClickHandler> {
@@ -41,7 +41,7 @@ interface State {
 
 const StyledButton = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<
   Pick<DatePickerInputProps, 'large' | 'borderless' | 'theme' | 'variant' | 'width'> & {
     isFilled: boolean;
@@ -100,7 +100,7 @@ const StyledButton = styled(
 
 const StyledContent = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<{ isActive: boolean; wide: boolean }>(props => {
   const { isActive, wide } = props;
   const { grayDarker, radius, shadow, spacing, white } = getTheme(props);
@@ -178,7 +178,7 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
     <DatePicker {...rest} onClick={handleClickDay as DatePickerSingleClickHandler} />
   );
 
-  let title: React.ReactNode = showRange ? 'Select a date range' : 'Select a date';
+  let title: ReactNode = showRange ? 'Select a date range' : 'Select a date';
 
   if (placeholder) {
     title = placeholder;

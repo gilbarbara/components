@@ -1,19 +1,19 @@
-import * as React from 'react';
+import { Children, cloneElement, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { baseStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions } from './modules/system';
 import { ComponentProps, StyledProps, WithColor, WithComponentSize } from './types';
 
 export interface ButtonGroupKnownProps extends StyledProps, WithColor, WithComponentSize {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
 
 export const StyledButtonGroup = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Partial<ButtonGroupProps>>(
   props => css`
     ${baseStyles(props)};
@@ -41,23 +41,20 @@ export const StyledButtonGroup = styled(
   `,
 );
 
-export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
-  ({ children, shade, size, variant, ...rest }, ref) => {
-    const buttonProps = {
-      shade,
-      size,
-      variant,
-    };
+export function ButtonGroup(props: ButtonGroupProps) {
+  const { children, shade, size, variant, ...rest } = props;
+  const buttonProps = {
+    shade,
+    size,
+    variant,
+  };
 
-    return (
-      <StyledButtonGroup ref={ref} data-component-name="ButtonGroup" {...rest}>
-        {React.Children.map(children, child =>
-          React.cloneElement(child as React.ReactElement, { ...buttonProps }),
-        )}
-      </StyledButtonGroup>
-    );
-  },
-);
+  return (
+    <StyledButtonGroup data-component-name="ButtonGroup" {...rest}>
+      {Children.map(children, child => cloneElement(child as ReactElement, { ...buttonProps }))}
+    </StyledButtonGroup>
+  );
+}
 
 ButtonGroup.defaultProps = {
   shade: 'mid',

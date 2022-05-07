@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme, px } from './modules/helpers';
-import { baseStyles, inputStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, inputStyles } from './modules/system';
 import { ComponentProps, StyledProps, WithFormElements } from './types';
 
 export interface TextareaKnownProps extends StyledProps, WithFormElements {}
@@ -12,7 +12,7 @@ export type TextareaProps = ComponentProps<HTMLTextAreaElement, TextareaKnownPro
 
 export const StyledTextarea = styled(
   'textarea',
-  styledOptions,
+  getStyledOptions(),
 )<TextareaProps>(props => {
   const { borderless, endSpacing, startSpacing, width } = props;
   const { spacing } = getTheme(props);
@@ -37,7 +37,7 @@ export const StyledTextarea = styled(
   `;
 });
 
-export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
   const { name } = props;
 
   return <StyledTextarea ref={ref} data-component-name="Textarea" id={name} {...props} />;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
@@ -8,7 +8,7 @@ import { Box, BoxProps } from './Box';
 export interface FlexProps extends BoxProps {
   alignContent?: StandardLonghandProperties['alignContent'];
   alignItems?: StandardLonghandProperties['alignItems'];
-  children?: React.ReactNode;
+  children?: ReactNode;
   display?: 'flex' | 'inline-flex';
   flex?: StandardShorthandProperties['flex'];
   flexBasis?: StandardLonghandProperties['flexBasis'];
@@ -50,7 +50,7 @@ export const StyledFlex = styled(Box)<FlexProps>(props => {
   `;
 });
 
-export const Flex = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
+export const Flex = forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
   <StyledFlex ref={ref} data-component-name="Flex" {...props} />
 ));
 
@@ -59,7 +59,7 @@ Flex.defaultProps = {
 };
 Flex.displayName = 'Flex';
 
-export const FlexCenter = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
+export const FlexCenter = forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
   <StyledFlex
     ref={ref}
     data-component-name="FlexCenter"
@@ -78,7 +78,7 @@ FlexCenter.defaultProps = {
 };
 FlexCenter.displayName = 'FlexCenter';
 
-export const FlexInline = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
+export const FlexInline = forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
   <StyledFlex
     ref={ref}
     alignItems="center"

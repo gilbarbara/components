@@ -1,14 +1,14 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ceil } from '@gilbarbara/helpers';
 
 import { px } from './modules/helpers';
-import { baseStyles, marginStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, StyledProps, WithMargin } from './types';
 
 export interface BoxKnownProps extends StyledProps, WithMargin {
-  children?: React.ReactNode;
+  children?: ReactNode;
   height: number;
   maxWidth?: number;
   width: number;
@@ -18,7 +18,7 @@ export type ResponsiveMediaProps = ComponentProps<HTMLDivElement, BoxKnownProps>
 
 export const StyledResponsiveMedia = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<ResponsiveMediaProps>(props => {
   const { height, maxWidth, width } = props;
 
@@ -45,16 +45,14 @@ export const StyledResponsiveMedia = styled(
   `;
 });
 
-export const ResponsiveMedia = React.forwardRef<HTMLDivElement, ResponsiveMediaProps>(
-  (props, ref) => {
-    const { children, ...rest } = props;
+export const ResponsiveMedia = forwardRef<HTMLDivElement, ResponsiveMediaProps>((props, ref) => {
+  const { children, ...rest } = props;
 
-    return (
-      <StyledResponsiveMedia ref={ref} data-component-name="ResponsiveMedia" {...rest}>
-        <div>{children}</div>
-      </StyledResponsiveMedia>
-    );
-  },
-);
+  return (
+    <StyledResponsiveMedia ref={ref} data-component-name="ResponsiveMedia" {...rest}>
+      <div>{children}</div>
+    </StyledResponsiveMedia>
+  );
+});
 
 ResponsiveMedia.displayName = 'ResponsiveMedia';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { Controller, FieldValues, UseFormSetValue } from 'react-hook-form';
 import is from 'is-lite';
 
@@ -13,7 +13,7 @@ interface Props extends FieldToggleProps {
 function FieldToggle(props: Props): JSX.Element {
   const { disabled, name, onChange, required, setValue } = props;
 
-  const handleClickToggle = React.useCallback(
+  const handleClickToggle = useCallback(
     (status: boolean) => {
       const nextValue = !status;
 

@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { Children, isValidElement, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { GenericFunction } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getColorVariant, getTheme } from '../modules/helpers';
-import { isDarkMode } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { Paragraph } from '../Paragraph';
 import { WithColor } from '../types';
 
@@ -14,11 +14,14 @@ interface ChildProps {
 }
 
 export interface MenuItemProps extends ChildProps, WithColor {
-  children: ((props: Required<ChildProps>) => React.ReactNode) | React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  children: ((props: Required<ChildProps>) => ReactNode) | ReactNode;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export const StyledMenuItem = styled.div<MenuItemProps>(props => {
+export const StyledMenuItem = styled(
+  'div',
+  getStyledOptions(),
+)<MenuItemProps>(props => {
   const { shade, variant = 'primary' } = props;
   const { grayDarker, grayScale, spacing, typography, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
@@ -58,7 +61,7 @@ export const StyledMenuItem = styled.div<MenuItemProps>(props => {
 });
 
 export function MenuItem({ children, closeMenu, onClick, ...rest }: MenuItemProps): JSX.Element {
-  const handleClick = React.useCallback(
+  const handleClick = useCallback(
     event => {
       if (!is.function(children) && closeMenu) {
         closeMenu();
@@ -75,7 +78,7 @@ export function MenuItem({ children, closeMenu, onClick, ...rest }: MenuItemProp
 
   if (is.function(children) && closeMenu) {
     content = children({ closeMenu });
-  } else if (!React.Children.toArray(children).every(d => React.isValidElement(d))) {
+  } else if (!Children.toArray(children).every(d => isValidElement(d))) {
     content = <Paragraph>{children}</Paragraph>;
   }
 

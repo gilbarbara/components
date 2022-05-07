@@ -20,12 +20,26 @@ import {
   WithTransparent,
 } from '../types';
 
-export const styledOptions = {
-  shouldForwardProp: (prop: string) =>
-    isPropValid(prop) &&
-    !['color', 'loading', 'margin', 'padding', 'radius', 'shadow', 'width'].includes(prop) &&
-    !['onClear', 'onCreate', 'onDropdown', 'onSelect'].some(d => prop.startsWith(d)),
-};
+export function getStyledOptions(...exclude: string[]) {
+  return {
+    shouldForwardProp: (prop: string) =>
+      isPropValid(prop) &&
+      ![
+        'color',
+        'display',
+        'height',
+        'loading',
+        'margin',
+        'padding',
+        'radius',
+        'shadow',
+        'size',
+        'width',
+        ...exclude,
+      ].includes(prop) &&
+      !['onClear', 'onCreate', 'onDropdown', 'onOpen', 'onSelect'].some(d => prop.startsWith(d)),
+  };
+}
 
 export function isDarkMode(props: WithTheme) {
   return !!props?.theme?.darkMode;
@@ -375,15 +389,19 @@ export function shadowStyles<T extends WithShadow & WithTheme>(props: T): CSSObj
 }
 
 export function textStyles<T extends WithTextOptions & WithTheme>(props: T): CSSObject {
-  const { bold = false, size = 'regular' } = props;
+  const { bold = false, size } = props;
   const { typography } = getTheme(props);
 
-  const { fontSize, lineHeight, weight } = typography[size];
-  const fontWeight = bold ? weight[1] : undefined;
+  if (size) {
+    const { fontSize, lineHeight, weight } = typography[size];
+    const fontWeight = bold ? weight[1] : undefined;
 
-  return {
-    fontSize,
-    fontWeight,
-    lineHeight,
-  };
+    return {
+      fontSize,
+      fontWeight,
+      lineHeight,
+    };
+  }
+
+  return {};
 }

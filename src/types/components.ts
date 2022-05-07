@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { ElementType, HTMLProps, ReactNode, SVGProps } from 'react';
 import { SelectProps } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetOptional } from 'type-fest';
 
-import { WithColor, WithMargin } from './shared';
+import { WithBlock, WithColor, WithMargin } from './shared';
 import { Theme } from './theme';
 
 export interface BaseProps {
@@ -12,7 +12,7 @@ export interface BaseProps {
 }
 
 export interface StyledProps {
-  as?: React.ElementType;
+  as?: ElementType;
   theme?: Theme;
 }
 
@@ -21,7 +21,7 @@ export interface CheckboxOption extends Omit<Option, 'value'> {
 }
 
 export type ComponentProps<T, P, E extends string = never> = P &
-  Omit<React.HTMLProps<T>, 'size' | 'ref' | keyof P | E>;
+  Omit<HTMLProps<T>, 'size' | 'ref' | keyof P | E>;
 
 export interface DropdownCreateProps<T extends DropdownOption = DropdownOption> {
   close: () => void;
@@ -30,14 +30,14 @@ export interface DropdownCreateProps<T extends DropdownOption = DropdownOption> 
 }
 
 export interface DropdownOption {
-  content?: React.ReactNode;
+  content?: ReactNode;
   disabled?: boolean;
   label: string | number;
   type?: string;
   value: string | number;
 }
 
-export interface DropdownProps<T extends DropdownOption>
+export interface DropdownProps<T extends DropdownOption = DropdownOption>
   extends StyledProps,
     WithMargin,
     SetOptional<SelectProps<T>, 'onChange' | 'values'> {
@@ -49,14 +49,14 @@ export interface DropdownProps<T extends DropdownOption>
   width?: StringOrNumber;
 }
 
-export interface IconProps extends Omit<React.SVGProps<SVGElement>, 'ref'> {
+export interface IconProps extends Omit<SVGProps<SVGElement>, 'ref'> {
   color?: string;
   size?: number;
   title?: string;
 }
 
-export interface LoaderProps extends ComponentProps<HTMLDivElement, StyledProps & WithColor> {
-  block?: boolean;
+export interface LoaderProps
+  extends ComponentProps<HTMLDivElement, StyledProps & WithBlock & WithColor> {
   color?: string;
   size?: number;
   /** @default pill */
@@ -65,7 +65,7 @@ export interface LoaderProps extends ComponentProps<HTMLDivElement, StyledProps 
 
 export interface Option {
   disabled?: boolean;
-  label: React.ReactNode;
+  label: ReactNode;
   value: number | string;
 }
 
@@ -75,13 +75,13 @@ export interface SearchCreateProps {
 }
 
 export interface SearchMessages {
-  error?: React.ReactNode;
-  loading?: React.ReactNode;
-  noResults?: React.ReactNode;
+  error?: ReactNode;
+  loading?: ReactNode;
+  noResults?: ReactNode;
 }
 
 export interface SearchOption {
-  label?: React.ReactNode;
+  label?: ReactNode;
   value: string;
 }
 

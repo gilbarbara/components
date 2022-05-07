@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ChangeEvent, forwardRef, KeyboardEvent, ReactNode, useRef, useState } from 'react';
 import mergeRefs from 'react-merge-refs';
 import { usePrevious, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
@@ -8,19 +8,19 @@ import is from 'is-lite';
 
 import { Label } from './Label';
 import { getColorVariant, getTheme } from './modules/helpers';
-import { baseStyles, isDarkMode } from './modules/system';
+import { baseStyles, getStyledOptions, isDarkMode } from './modules/system';
 import { ComponentProps, StyledProps, WithColor } from './types';
 
 export interface ToggleKnownProps extends StyledProps, WithColor {
-  /** Status (controlled mode) */
-  checked?: boolean;
   /**
    * Initial status (uncontrolled mode)
    * @default false
    */
+  /** Status (controlled mode) */
+  checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
-  label?: React.ReactNode;
+  label?: ReactNode;
   name: string;
   onChange?: (value: boolean) => void;
   onClick?: (value: boolean) => void;
@@ -48,7 +48,10 @@ const StyledInput = styled('input')`
   top: 0;
 `;
 
-const StyledTrack = styled('span')<InnerProps>(props => {
+const StyledTrack = styled(
+  'span',
+  getStyledOptions(),
+)<InnerProps>(props => {
   const { isActive, shade, variant = 'primary' } = props;
   const { grayDark, grayLighter, radius, variants } = getTheme(props);
 
@@ -71,7 +74,10 @@ const StyledTrack = styled('span')<InnerProps>(props => {
   `;
 });
 
-const StyledButton = styled('span')<InnerProps>(props => {
+const StyledButton = styled(
+  'span',
+  getStyledOptions(),
+)<InnerProps>(props => {
   const { disabled, isActive, variant } = props;
   const { grayMid, variants, white } = getTheme(props);
 
@@ -94,7 +100,7 @@ const StyledButton = styled('span')<InnerProps>(props => {
   `;
 });
 
-export const StyledToggle = styled('div')<Pick<ToggleProps, 'disabled' | 'label'>>(props => {
+export const StyledToggle = styled('div')<ToggleProps>(props => {
   const { disabled, label } = props;
   const { colors } = getTheme(props);
 
@@ -116,7 +122,7 @@ export const StyledToggle = styled('div')<Pick<ToggleProps, 'disabled' | 'label'
   `;
 });
 
-export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>((props, ref) => {
+export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => {
   const {
     checked,
     defaultChecked = false,
@@ -129,8 +135,8 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>((props, re
     variant,
     ...rest
   } = props;
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const [isActive, setActive] = React.useState(is.boolean(checked) ? checked : defaultChecked);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [isActive, setActive] = useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
 
   useUpdateEffect(() => {
@@ -139,7 +145,7 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>((props, re
     }
   }, [checked, previousChecked]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
 
     setActive(target.checked);
@@ -156,7 +162,7 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>((props, re
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLSpanElement>) => {
     if (disabled || !inputRef.current || ![' ', 'Enter'].includes(event.key)) {
       return;
     }
@@ -193,6 +199,7 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>((props, re
       <StyledToggle
         disabled={disabled}
         label={label}
+        name={name}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         tabIndex={0}

@@ -1,9 +1,15 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from './modules/helpers';
-import { baseStyles, colorStyles, marginStyles, styledOptions, textStyles } from './modules/system';
+import {
+  baseStyles,
+  colorStyles,
+  getStyledOptions,
+  marginStyles,
+  textStyles,
+} from './modules/system';
 import {
   ComponentProps,
   Spacing,
@@ -14,7 +20,7 @@ import {
 } from './types';
 
 export interface LineThroughKnownProps extends StyledProps, WithColor, WithMargin, WithTextOptions {
-  children: React.ReactNode;
+  children: ReactNode;
   /** @default xs */
   gap?: Spacing;
   /** @default 1 */
@@ -25,7 +31,7 @@ export type LineThroughProps = ComponentProps<HTMLSpanElement, LineThroughKnownP
 
 export const StyledLineThrough = styled(
   'p',
-  styledOptions,
+  getStyledOptions(),
 )<LineThroughProps>(props => {
   const { gap = 'xs', line = 1 } = props;
   const { spacing } = getTheme(props);
@@ -61,9 +67,9 @@ export const StyledLineThrough = styled(
   `;
 });
 
-export const LineThrough = React.forwardRef<HTMLParagraphElement, LineThroughProps>(
-  (props, ref) => <StyledLineThrough ref={ref} data-component-name="LineThrough" {...props} />,
-);
+export const LineThrough = forwardRef<HTMLParagraphElement, LineThroughProps>((props, ref) => (
+  <StyledLineThrough ref={ref} data-component-name="LineThrough" {...props} />
+));
 
 LineThrough.defaultProps = {
   gap: 'xs',

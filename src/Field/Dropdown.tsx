@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { FieldValues, SetFieldValue, UseFormRegisterReturn } from 'react-hook-form';
 import is from 'is-lite';
 
@@ -17,7 +17,7 @@ interface Props extends FieldDropdownProps {
 function FieldDropdown(props: Props): JSX.Element {
   const { currentValue, dropdownProps = {}, name, onChange, options = [], setValue } = props;
 
-  const handleChangeDropdown = React.useCallback(
+  const handleChangeDropdown = useCallback(
     (data: DropdownOption[]) => {
       const { multi } = dropdownProps;
       const setValueOptions = { shouldDirty: true, shouldValidate: true };

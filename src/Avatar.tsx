@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { CSSProperties, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { getInitials } from '@gilbarbara/helpers';
 
 import { FlexCenter } from './Flex';
 import { getColorVariant, getTheme } from './modules/helpers';
-import { styledOptions } from './modules/system';
+import { getStyledOptions } from './modules/system';
 import { StyledProps, WithColor } from './types';
 
 export interface AvatarProps extends StyledProps, WithColor {
@@ -13,7 +13,7 @@ export interface AvatarProps extends StyledProps, WithColor {
   name: string;
   /** @default md */
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'jumbo';
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 const sizes = {
@@ -45,7 +45,7 @@ const sizes = {
 
 const Circle = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Required<Pick<AvatarProps, 'shade' | 'size' | 'variant'>>>(props => {
   const { shade, size, variant } = props;
   const { variants } = getTheme(props);
@@ -63,7 +63,7 @@ const Circle = styled(
   `;
 });
 
-export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
+export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
   const { image, name, shade = 'mid', size = 'md', variant = 'primary', ...rest } = props;
 
   const selectedSize = sizes[size];

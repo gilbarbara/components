@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
@@ -7,7 +7,7 @@ import { Button } from './Button';
 import { Group } from './Group';
 import { H3 } from './Headings';
 import { getTheme, px } from './modules/helpers';
-import { isDarkMode, styledOptions } from './modules/system';
+import { getStyledOptions, isDarkMode } from './modules/system';
 import { Paragraph } from './Paragraph';
 import { Portal, PortalProps } from './Portal';
 
@@ -20,21 +20,21 @@ export interface DialogProps
   buttonConfirmText?: string;
   /** @default ltr */
   buttonOrder?: 'ltr' | 'rtl';
-  content: React.ReactNode;
+  content: ReactNode;
   isActive: boolean;
   onClickCancel: () => void;
   onClickConfirmation: () => void;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   /** @default left */
   textAlign?: 'left' | 'center' | 'right';
-  title: React.ReactNode;
+  title: ReactNode;
   /** @default 380 */
   width?: string | number;
 }
 
 const StyledDialog = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Omit<DialogProps, 'content' | 'onClickCancel' | 'onClickConfirmation' | 'title'>>(props => {
   const { textAlign = 'left', width = 380 } = props;
   const { black, darkColor, radius, shadow, spacing, white } = getTheme(props);
@@ -68,7 +68,7 @@ export function Dialog(props: DialogProps) {
     ...portalProps
   } = props;
 
-  const handlePortalClose = React.useCallback(() => {
+  const handlePortalClose = useCallback(() => {
     onClickCancel();
 
     if (onClose) {

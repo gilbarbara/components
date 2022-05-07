@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -7,8 +7,8 @@ import {
   alignStyles,
   baseStyles,
   colorStyles,
+  getStyledOptions,
   marginStyles,
-  styledOptions,
 } from './modules/system';
 import { Text } from './Text';
 import {
@@ -26,14 +26,14 @@ export interface ParagraphKnownProps
     WithColor,
     WithMargin,
     WithTextOptions {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export type ParagraphProps = ComponentProps<HTMLParagraphElement, ParagraphKnownProps>;
 
 export const StyledParagraph = styled(
   'p',
-  styledOptions,
+  getStyledOptions(),
 )<ParagraphProps>(props => {
   const { spacing } = getTheme(props);
 
@@ -51,12 +51,12 @@ export const StyledParagraph = styled(
   `;
 });
 
-export const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
+export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
   const { children, ...rest } = props;
 
   return (
     <StyledParagraph ref={ref} data-component-name="Paragraph" {...props}>
-      {React.isValidElement(children) ? children : <Text {...rest}>{children}</Text>}
+      {isValidElement(children) ? children : <Text {...rest}>{children}</Text>}
     </StyledParagraph>
   );
 });

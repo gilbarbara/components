@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePrevious } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { Radio, RadioProps } from './CheckboxAndRadio';
 import { getTheme } from './modules/helpers';
-import { styledOptions } from './modules/system';
+import { getStyledOptions } from './modules/system';
 import { Option, WithComponentSize } from './types';
 
 export interface RadioGroupProps
@@ -18,7 +18,7 @@ export interface RadioGroupProps
 
 const StyledRadioGroup = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<Pick<RadioGroupProps, 'inline'>>(props => {
   const { inline } = props;
   const { spacing } = getTheme(props);
@@ -40,16 +40,16 @@ const StyledRadioGroup = styled(
 
 export function RadioGroup(props: RadioGroupProps) {
   const { defaultValue, disabled, inline, name, onChange, options, size, value, ...rest } = props;
-  const [selectedValue, setSelectedValue] = React.useState(value ?? defaultValue);
+  const [selectedValue, setSelectedValue] = useState(value ?? defaultValue);
   const previousProps = usePrevious(props);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (previousProps && value && previousProps.value !== value) {
       setSelectedValue(value);
     }
   }, [previousProps, value]);
 
-  const handleChange = React.useCallback(
+  const handleChange = useCallback(
     ({ target }) => {
       const numericValue = Number(target.value);
       const currentValue = !Number.isNaN(numericValue) ? numericValue : target.value;

@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { rotate } from '../modules/animations';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { LoaderProps } from '../types';
 
 const dash = keyframes`
@@ -26,7 +25,7 @@ const dash = keyframes`
 
 const StyledLoaderRotate = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<LoaderProps>(props => {
   const { block } = props;
   const { spacing } = getTheme(props);
@@ -40,7 +39,7 @@ const StyledLoaderRotate = styled(
 
 const StyledLoaderRotateSVG = styled(
   'svg',
-  styledOptions,
+  getStyledOptions(),
 )<{ size: number }>(props => {
   const { size } = props;
 
@@ -53,7 +52,7 @@ const StyledLoaderRotateSVG = styled(
   `;
 });
 
-const StyledLoaderRotateCircle = styled('circle', styledOptions)<{ color: string }>`
+const StyledLoaderRotateCircle = styled('circle', getStyledOptions())<{ color: string }>`
   animation: ${dash} 1.5s infinite ease-in-out;
   stroke: ${props => props.color};
   stroke-dasharray: 1, 200;

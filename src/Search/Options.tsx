@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { MouseEventHandler, ReactElement, useEffect, useRef } from 'react';
 import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -9,7 +9,7 @@ import is from 'is-lite';
 import Item from './Item';
 
 import { getTheme, px } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import {
   SearchMessages,
   SearchOption,
@@ -20,10 +20,10 @@ import {
 
 interface SearchOptionsProps {
   active: boolean;
-  createComponent?: React.ReactElement;
+  createComponent?: ReactElement;
   height: StringOrNumber;
   messages: Required<SearchMessages>;
-  onSelect: React.MouseEventHandler;
+  onSelect: MouseEventHandler;
   options: SearchOptionsType;
   search: string;
   setSearching: (input: boolean) => void;
@@ -38,7 +38,7 @@ interface State {
 
 const StyledSearchOptions = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<{ active: boolean; height: StringOrNumber }>(props => {
   const { active, height } = props;
   const { grayDarker, radius, shadow, spacing, white } = getTheme(props);
@@ -77,7 +77,7 @@ function getSharedStyles(spacing: Theme['spacing']) {
 
 const Empty = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )(props => {
   const { spacing } = getTheme(props);
 
@@ -89,7 +89,7 @@ const Empty = styled(
 
 const Centered = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<{ withBorder: boolean }>(props => {
   const { withBorder } = props;
   const { grayLight, spacing } = getTheme(props);
@@ -114,7 +114,7 @@ export default function SearchOptions(props: SearchOptionsProps): JSX.Element {
     setSearching,
     showCreateAlways,
   } = props;
-  const isActive = React.useRef(false);
+  const isActive = useRef(false);
 
   const [{ items, message, status }, setState] = useSetState<State>({
     items: [],
@@ -122,7 +122,7 @@ export default function SearchOptions(props: SearchOptionsProps): JSX.Element {
     status: ASYNC_STATUS.IDLE,
   });
 
-  const getItems = React.useRef(async (fn: SearchOptionCallback, value: string) => {
+  const getItems = useRef(async (fn: SearchOptionCallback, value: string) => {
     isActive.current && setState({ status: ASYNC_STATUS.PENDING });
     setSearching(true);
 
@@ -137,7 +137,7 @@ export default function SearchOptions(props: SearchOptionsProps): JSX.Element {
     setSearching(false);
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     isActive.current = true;
 
     return () => {
@@ -145,7 +145,7 @@ export default function SearchOptions(props: SearchOptionsProps): JSX.Element {
     };
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (is.function(options)) {
       getItems.current(options, search);
     } else {

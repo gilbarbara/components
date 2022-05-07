@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { CSSProperties, forwardRef, MouseEvent, ReactNode } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
@@ -9,8 +9,8 @@ import { getColorVariant, getTheme } from './modules/helpers';
 import {
   backgroundStyles,
   baseStyles,
+  getStyledOptions,
   marginStyles,
-  styledOptions,
   textStyles,
 } from './modules/system';
 import {
@@ -24,20 +24,20 @@ import {
 } from './types';
 
 export interface TagProps extends StyledProps, WithColor, WithMargin, WithTextOptions {
-  children: React.ReactNode;
+  children: ReactNode;
   color?: Variants;
   colorShade?: Shades;
   iconAfter?: Icons;
   iconBefore?: Icons;
   invert?: boolean;
-  onClickAfter?: (event: React.MouseEvent) => void;
-  onClickBefore?: (event: React.MouseEvent) => void;
-  style?: React.CSSProperties;
+  onClickAfter?: (event: MouseEvent) => void;
+  onClickBefore?: (event: MouseEvent) => void;
+  style?: CSSProperties;
 }
 
 export const StyledTag = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )<TagProps>(props => {
   const { color, colorShade, variant } = props;
   const { radius, variants } = getTheme(props);
@@ -64,7 +64,7 @@ export const StyledTag = styled(
   `;
 });
 
-export const Tag = React.forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
+export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
   const {
     children,
     colorShade,

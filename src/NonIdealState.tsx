@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
@@ -12,11 +12,11 @@ import { Paragraph } from './Paragraph';
 import { Icons } from './types';
 
 export interface NonIdealStateProps extends Omit<BoxProps, 'title'> {
-  children?: React.ReactNode;
-  description?: React.ReactNode;
+  children?: ReactNode;
+  description?: ReactNode;
   icon?: Icons;
   small?: boolean;
-  title?: React.ReactNode;
+  title?: ReactNode;
   type?: 'error' | 'offline';
 }
 

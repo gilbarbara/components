@@ -1,22 +1,22 @@
-import * as React from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { ButtonBase } from '../ButtonBase';
 import { getTheme } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 
 interface PaginationButtonProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   currentPage: number;
   disabled: boolean;
-  onClick: React.MouseEventHandler;
+  onClick: MouseEventHandler;
   page: number;
 }
 
 const StyledPaginationButton = styled(
   ButtonBase,
-  styledOptions,
+  getStyledOptions(),
 )<{ current: boolean; disabled: boolean }>(props => {
   const { current } = props;
   const { black, spacing, typography, variants, white } = getTheme(props);

@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from './modules/helpers';
-import { alignStyles, baseStyles, marginStyles, styledOptions } from './modules/system';
+import { alignStyles, baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, StyledProps, TypographyItem, WithAlign, WithMargin } from './types';
 
 export interface HeadingKnownProps extends StyledProps, WithAlign, WithMargin {
-  children: React.ReactNode;
+  children: ReactNode;
   light?: boolean;
 }
 
@@ -35,7 +35,7 @@ function getStyles(selected: TypographyItem, props: HeadingProps) {
 
 export const StyledJumbo = styled(
   'h1',
-  styledOptions,
+  getStyledOptions(),
 )<HeadingLargeProps>(props => {
   const { large } = props;
   const { typography } = getTheme(props);
@@ -45,7 +45,7 @@ export const StyledJumbo = styled(
 
 export const StyledH1 = styled(
   'h1',
-  styledOptions,
+  getStyledOptions(),
 )<HeadingLargeProps>(props => {
   const { typography } = getTheme(props);
 
@@ -54,7 +54,7 @@ export const StyledH1 = styled(
 
 export const StyledH2 = styled(
   'h2',
-  styledOptions,
+  getStyledOptions(),
 )<HeadingProps>(props => {
   const { typography } = getTheme(props);
 
@@ -63,32 +63,32 @@ export const StyledH2 = styled(
 
 export const StyledH3 = styled(
   'h3',
-  styledOptions,
+  getStyledOptions(),
 )<HeadingProps>(props => {
   const { typography } = getTheme(props);
 
   return getStyles(typography.title3, props);
 });
 
-export const Jumbo = React.forwardRef<HTMLHeadingElement, HeadingLargeProps>((props, ref) => (
+export const Jumbo = forwardRef<HTMLHeadingElement, HeadingLargeProps>((props, ref) => (
   <StyledJumbo ref={ref} data-component-name="Jumbo" {...props} />
 ));
 
 Jumbo.displayName = 'Jumbo';
 
-export const H1 = React.forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
+export const H1 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
   <StyledH1 ref={ref} data-component-name="H1" {...props} />
 ));
 
 H1.displayName = 'H1';
 
-export const H2 = React.forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
+export const H2 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
   <StyledH2 ref={ref} data-component-name="H2" {...props} />
 ));
 
 H2.displayName = 'H2';
 
-export const H3 = React.forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
+export const H3 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
   <StyledH3 ref={ref} data-component-name="H3" {...props} />
 ));
 

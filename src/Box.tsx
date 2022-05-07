@@ -1,16 +1,16 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import {
   backgroundStyles,
   baseStyles,
+  getStyledOptions,
   layoutStyles,
   marginStyles,
   paddingStyles,
   radiusStyles,
   shadowStyles,
-  styledOptions,
 } from './modules/system';
 import {
   ComponentProps,
@@ -31,14 +31,14 @@ export interface BoxKnownProps
     WithPadding,
     WithRadius,
     WithShadow {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export type BoxProps = ComponentProps<HTMLDivElement, BoxKnownProps>;
 
 export const StyledBox = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<BoxProps>(props => {
   return css`
     ${baseStyles(props)};
@@ -51,7 +51,7 @@ export const StyledBox = styled(
   `;
 });
 
-export const Box = React.forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
+export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
   const { children, ...rest } = props;
 
   return (

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
@@ -9,13 +9,15 @@ import {
   appearanceStyles,
   backgroundStyles,
   baseStyles,
+  getStyledOptions,
   paddingStyles,
-  styledOptions,
 } from './modules/system';
 import {
   ButtonTypes,
   ComponentProps,
   StyledProps,
+  WithBlock,
+  WithBusy,
   WithColor,
   WithComponentSize,
   WithInvert,
@@ -25,22 +27,14 @@ import {
 
 export interface ButtonKnownProps
   extends StyledProps,
+    WithBlock,
+    WithBusy,
     WithColor,
     WithComponentSize,
     WithInvert,
     WithPadding,
     WithTransparent {
-  /**
-   * Use the container full width
-   * @default false
-   */
-  block?: boolean;
-  /**
-   * Add an animation to the background
-   * @default false
-   */
-  busy?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * Use equal padding on all sides
    * @default false
@@ -62,7 +56,7 @@ export type ButtonProps = ComponentProps<HTMLButtonElement, ButtonKnownProps>;
 
 export const StyledButton = styled(
   'button',
-  styledOptions,
+  getStyledOptions(),
 )<ButtonProps>(props => {
   const { block, busy, shade, size = 'md', square, transparent, variant = 'primary', wide } = props;
   const { button, grayLighter, grayMid, spacing, variants } = getTheme(props);
@@ -115,7 +109,7 @@ export const StyledButton = styled(
   `;
 });
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { busy, children, size = 'md', square } = props;
   const {
     button: { fontSize },

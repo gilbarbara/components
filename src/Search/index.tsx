@@ -1,4 +1,12 @@
-import * as React from 'react';
+import {
+  ChangeEvent,
+  CSSProperties,
+  FocusEvent,
+  FocusEventHandler,
+  MouseEvent,
+  useEffect,
+  useRef,
+} from 'react';
 import { useSetState } from 'react-use';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -11,7 +19,7 @@ import { ClickOutside } from '../ClickOutside';
 import { Icon } from '../Icon';
 import { Input } from '../Input';
 import { getTheme, px } from '../modules/helpers';
-import { marginStyles, styledOptions } from '../modules/system';
+import { getStyledOptions, marginStyles } from '../modules/system';
 import {
   Icons,
   SearchCreateProps,
@@ -29,8 +37,8 @@ export interface SearchProps extends StyledProps, WithMargin {
   /** @default search */
   icon?: Icons;
   messages?: SearchMessages;
-  onBlur?: React.FocusEventHandler;
-  onFocus?: React.FocusEventHandler;
+  onBlur?: FocusEventHandler;
+  onFocus?: FocusEventHandler;
   onSearch?: (value: string) => void;
   onSelect?: (value: string) => void;
   onType?: (value: string) => void;
@@ -43,13 +51,13 @@ export interface SearchProps extends StyledProps, WithMargin {
    * It has no effect without the "createFn" prop.
    * @default false */
   showCreateAlways?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   width?: StringOrNumber;
 }
 
 export const StyledSearch = styled(
   Box,
-  styledOptions,
+  getStyledOptions(),
 )<Omit<SearchProps, 'onChange' | 'onType' | 'options'>>(props => {
   const { width } = props;
 
@@ -60,7 +68,7 @@ export const StyledSearch = styled(
   `;
 });
 
-const SearchInput = styled('div', styledOptions)`
+const SearchInput = styled('div', getStyledOptions())`
   position: relative;
 
   [data-component-name='Icon'] {
@@ -106,7 +114,7 @@ export function Search(props: SearchProps): JSX.Element {
     ...rest
   } = props;
 
-  const isActive = React.useRef(false);
+  const isActive = useRef(false);
   const [{ active, focus, search, searching, typing, value }, setState] = useSetState({
     active: false,
     focus: false,
@@ -115,10 +123,10 @@ export function Search(props: SearchProps): JSX.Element {
     typing: false,
     value: '',
   });
-  const timeout = React.useRef(0);
+  const timeout = useRef(0);
   const { colors } = getTheme({ theme: useTheme() });
 
-  React.useEffect(() => {
+  useEffect(() => {
     isActive.current = true;
 
     return () => {
@@ -132,7 +140,7 @@ export function Search(props: SearchProps): JSX.Element {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
     if (onType) {
@@ -157,7 +165,7 @@ export function Search(props: SearchProps): JSX.Element {
     setStateIfActive({ active: false });
   };
 
-  const handleBlur = (event: React.FocusEvent) => {
+  const handleBlur = (event: FocusEvent) => {
     setStateIfActive({ focus: false });
 
     if (onBlur) {
@@ -169,7 +177,7 @@ export function Search(props: SearchProps): JSX.Element {
     setStateIfActive({ active: !!value, focus: true });
   };
 
-  const handleSelect = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleSelect = (event: MouseEvent<HTMLDivElement>) => {
     setStateIfActive({ active: false, value: '' });
 
     if (onSelect) {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ChangeEventHandler, CSSProperties, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
 import { GenericFunction } from '@gilbarbara/types';
 
@@ -23,20 +23,20 @@ export type FieldValidations = 'email' | `equalsTo:${string}` | 'password' | 'ph
 export interface FieldInputHandlers<
   T extends HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
 > {
-  onBlur?: React.FocusEventHandler<T>;
-  onChange?: React.ChangeEventHandler<T>;
-  onFocus?: React.FocusEventHandler<T>;
+  onBlur?: FocusEventHandler<T>;
+  onChange?: ChangeEventHandler<T>;
+  onFocus?: FocusEventHandler<T>;
 }
 
 export interface FieldBaseProps {
-  assistiveText?: React.ReactNode;
+  assistiveText?: ReactNode;
   autoComplete?: string;
   clearError?: GenericFunction;
   debug?: boolean;
   disabled?: boolean;
   hideAssistiveText?: boolean;
   id?: string;
-  label?: React.ReactNode;
+  label?: ReactNode;
   maxLength?: number;
   minLength?: number;
   name: string;
@@ -46,7 +46,7 @@ export interface FieldBaseProps {
   rows?: number;
   setValueAs?: (value: any) => any;
   skipValidation?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   type: FieldTypes;
   validations?: FieldValidations[];
   value?: any;
@@ -62,7 +62,7 @@ export interface FieldCheckboxProps extends FieldBaseProps, FieldInputHandlers<H
 export interface FieldDropdownProps extends FieldBaseProps {
   children?: never;
   dropdownProps?: Omit<
-    DropdownProps<DropdownOption>,
+    DropdownProps,
     'disabled' | 'name' | 'onChange' | 'options' | 'placeholder' | 'width'
   >;
   onBlur?: never;
@@ -88,7 +88,7 @@ export interface FieldRadioProps extends FieldBaseProps, FieldInputHandlers<HTML
 }
 
 export interface FieldSelectProps extends FieldBaseProps, FieldInputHandlers<HTMLSelectElement> {
-  children: React.ReactNode[];
+  children: ReactNode[];
   dropdownProps?: never;
   options?: never;
   type: 'select';

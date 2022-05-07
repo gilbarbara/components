@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getColorVariant, getTheme, px } from '../modules/helpers';
-import { isDarkMode, styledOptions } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { LoaderProps } from '../types';
 
 const pulse = ({ size = 32 }: LoaderProps) => keyframes`
@@ -26,7 +25,7 @@ const pulse = ({ size = 32 }: LoaderProps) => keyframes`
 
 const StyledLoaderPulse = styled(
   'div',
-  styledOptions,
+  getStyledOptions(),
 )<LoaderProps>(props => {
   const { block, color, shade, size = 32, variant } = props;
   const { darkColor, lightColor, spacing, variants } = getTheme(props);

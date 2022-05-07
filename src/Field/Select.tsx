@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { FieldSelectProps } from './types';
@@ -14,8 +14,8 @@ interface Props extends FieldSelectProps {
 
 function FieldSelect(props: Props): JSX.Element {
   const { children, id, isDirty, name, onBlur, onChange, onFocus, registration, setStatus } = props;
-  const handleBlur = React.useCallback(
-    (event: React.FocusEvent<HTMLSelectElement>) => {
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLSelectElement>) => {
       setStatus({ isActive: false, isDirty });
 
       registration.onBlur(event);
@@ -27,8 +27,8 @@ function FieldSelect(props: Props): JSX.Element {
     [isDirty, onBlur, registration, setStatus],
   );
 
-  const handleFocus = React.useCallback(
-    (event: React.FocusEvent<HTMLSelectElement>) => {
+  const handleFocus = useCallback(
+    (event: FocusEvent<HTMLSelectElement>) => {
       setStatus({ isActive: true });
 
       if (onFocus) {
@@ -38,8 +38,8 @@ function FieldSelect(props: Props): JSX.Element {
     [onFocus, setStatus],
   );
 
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
       registration.onChange(event);
 
       if (onChange) {

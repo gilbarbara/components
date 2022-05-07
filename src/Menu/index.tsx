@@ -1,4 +1,12 @@
-import * as React from 'react';
+import {
+  forwardRef,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import mergeRefs from 'react-merge-refs';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -8,14 +16,14 @@ import { MenuItem } from './Item';
 import { ButtonBase } from '../ButtonBase';
 import { Icon } from '../Icon';
 import { getTheme, recursiveChildrenMap } from '../modules/helpers';
-import { isDarkMode } from '../modules/system';
+import { getStyledOptions, isDarkMode } from '../modules/system';
 import { ComponentProps, StyledProps, WithColor } from '../types';
 
 export interface MenuKnownProps extends StyledProps, WithColor {
-  children: React.ReactNode;
+  children: ReactNode;
   disabled?: boolean;
   /** @default Icon with more-vertical-o */
-  icon?: React.ReactElement;
+  icon?: ReactElement;
   onToggle?: (status: boolean) => void;
   /** @default right */
   positionX?: 'left' | 'right';
@@ -35,7 +43,10 @@ const StyledMenu = styled.div`
   vertical-align: middle;
 `;
 
-const StyledMenuItems = styled('div')<MenuItemsProps>(props => {
+const StyledMenuItems = styled(
+  'div',
+  getStyledOptions(),
+)<MenuItemsProps>(props => {
   const { active, positionX, positionY } = props;
   const { grayDarker, grayScale, radius, shadow, spacing, white } = getTheme(props);
   const darkMode = isDarkMode(props);
@@ -95,7 +106,7 @@ const StyledMenuButton = styled(ButtonBase)(props => {
   `;
 });
 
-export const Menu = React.forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
+export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
   const {
     children,
     disabled,
@@ -106,10 +117,10 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>((props, ref) => 
     shade,
     variant,
   } = props;
-  const [active, setActive] = React.useState(false);
-  const localRef = React.useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+  const localRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = React.useCallback(
+  const handleClickOutside = useCallback(
     ({ target }) => {
       if (localRef.current?.contains(target) || !active) {
         return;
@@ -122,7 +133,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>((props, ref) => 
     [active],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (active) {
       document.addEventListener('click', handleClickOutside);
     }
@@ -136,7 +147,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>((props, ref) => 
     };
   }, [active, handleClickOutside, onToggle]);
 
-  const handleClickMenu = React.useCallback(() => {
+  const handleClickMenu = useCallback(() => {
     setActive(a => !a);
   }, []);
 

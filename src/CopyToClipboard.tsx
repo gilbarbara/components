@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, MouseEvent } from 'react';
 import * as ReactCopyToClipboard from 'react-copy-to-clipboard';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { Icon } from './Icon';
 import { animateIcon, fadeInOut } from './modules/animations';
 import { getTheme } from './modules/helpers';
-import { baseStyles, marginStyles, styledOptions } from './modules/system';
+import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { Tooltip } from './Tooltip';
 import { Icons, WithMargin } from './types';
 
@@ -24,7 +24,7 @@ export interface CopyToClipboardProps extends WithMargin {
 
 const StyledCopyToClipboard = styled(
   'span',
-  styledOptions,
+  getStyledOptions(),
 )<Omit<CopyToClipboardProps, 'text'>>(props => {
   return css`
     ${baseStyles(props)};
@@ -48,36 +48,34 @@ const StyledIcon = styled(Icon)`
   }
 `;
 
-export const CopyToClipboard = React.forwardRef<HTMLSpanElement, CopyToClipboardProps>(
-  (props, ref) => {
-    const {
-      disableAnimation = false,
-      hoverText = 'Copy',
-      icon = 'copy',
-      onCopy,
-      size = 16,
-      text,
-      ...rest
-    } = props;
-    const theme = getTheme({ theme: useTheme() });
+export const CopyToClipboard = forwardRef<HTMLSpanElement, CopyToClipboardProps>((props, ref) => {
+  const {
+    disableAnimation = false,
+    hoverText = 'Copy',
+    icon = 'copy',
+    onCopy,
+    size = 16,
+    text,
+    ...rest
+  } = props;
+  const theme = getTheme({ theme: useTheme() });
 
-    const handleClick = (event: React.MouseEvent<HTMLSpanElement>) => {
-      if (!disableAnimation) {
-        animateIcon(event.currentTarget, 'primary', theme);
-      }
-    };
+  const handleClick = (event: MouseEvent<HTMLSpanElement>) => {
+    if (!disableAnimation) {
+      animateIcon(event.currentTarget, 'primary', theme);
+    }
+  };
 
-    return (
-      <StyledCopyToClipboard ref={ref} onClick={handleClick} {...rest}>
-        <Tooltip content={hoverText}>
-          <ReactCopyToClipboard onCopy={onCopy} text={text}>
-            <StyledIcon name={icon} size={size} title={null} />
-          </ReactCopyToClipboard>
-        </Tooltip>
-      </StyledCopyToClipboard>
-    );
-  },
-);
+  return (
+    <StyledCopyToClipboard ref={ref} onClick={handleClick} {...rest}>
+      <Tooltip content={hoverText}>
+        <ReactCopyToClipboard onCopy={onCopy} text={text}>
+          <StyledIcon name={icon} size={size} title={null} />
+        </ReactCopyToClipboard>
+      </Tooltip>
+    </StyledCopyToClipboard>
+  );
+});
 
 CopyToClipboard.defaultProps = {
   hoverText: 'Copy',
