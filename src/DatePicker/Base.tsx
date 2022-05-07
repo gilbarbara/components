@@ -6,10 +6,12 @@ import { omit } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
+import { DatePickerBaseProps, DatePickerSingleClickHandler } from './types';
 import { getStyles, locales } from './utils';
 
 import { styledOptions } from '../modules/system';
-import { DatePickerProps } from '../types';
+
+export type DatePickerProps = DatePickerBaseProps<DatePickerSingleClickHandler>;
 
 const StyledDatePicker = styled(
   'div',

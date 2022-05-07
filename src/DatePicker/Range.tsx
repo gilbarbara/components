@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { formatDateLocale } from '@gilbarbara/helpers';
 
 import { DatePicker } from './Base';
+import { DatePickerBaseProps, DatePickerRangeClickHandler } from './types';
 import { getNumberOfMonths } from './utils';
 
 import { Button } from '../Button';
@@ -15,12 +16,13 @@ import { getColorVariant, getTheme } from '../modules/helpers';
 import { styledOptions } from '../modules/system';
 import { Paragraph } from '../Paragraph';
 import { Text } from '../Text';
-import { DatePickerProps, DatePickerRangeClickHandler } from '../types';
+
+export type DatePickerRangerProps = DatePickerBaseProps<DatePickerRangeClickHandler>;
 
 const StyledDatePicker = styled(
   'div',
   styledOptions,
-)<Pick<DatePickerProps, 'variant'>>(props => {
+)<Pick<DatePickerRangerProps, 'variant'>>(props => {
   const { variant = 'primary' } = props;
   const { variants } = getTheme(props);
 
@@ -49,7 +51,7 @@ const StyledDatePicker = styled(
   `;
 });
 
-export function DatePickerRange(props: DatePickerProps<DatePickerRangeClickHandler>): JSX.Element {
+export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
   const { onClick, ...rest } = props;
   const [{ from, to }, setState] = useSetState<RangeModifier>({ from: undefined, to: undefined });
   const { radius, spacing } = getTheme({ theme: useTheme() });

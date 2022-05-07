@@ -3,9 +3,10 @@ import { css } from '@emotion/react';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
+import { DatePickerBaseProps, DatePickerSingleClickHandler } from './types';
+
 import { getTheme } from '../modules/helpers';
 import { isDarkMode } from '../modules/system';
-import { DatePickerProps } from '../types';
 
 const firstDayOfWeek = 1;
 const months = [
@@ -48,7 +49,7 @@ export function getFirstDayOfWeek() {
 export function getNumberOfMonths({
   finalDate,
   initialDate,
-}: Pick<DatePickerProps, 'initialDate' | 'finalDate'>): number {
+}: Pick<DatePickerBaseProps<DatePickerSingleClickHandler>, 'initialDate' | 'finalDate'>): number {
   if (initialDate && finalDate) {
     const day1 = is.date(initialDate) ? initialDate : new Date(initialDate);
     const day2 = is.date(finalDate) ? finalDate : new Date(finalDate);
@@ -59,7 +60,7 @@ export function getNumberOfMonths({
   return 2;
 }
 
-export function getStyles(props: DatePickerProps) {
+export function getStyles(props: DatePickerBaseProps<DatePickerSingleClickHandler>) {
   const { variant = 'primary' } = props;
   const { grayLight, grayMid, spacing, typography, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
