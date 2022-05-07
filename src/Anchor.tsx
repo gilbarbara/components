@@ -13,7 +13,6 @@ import {
   styledOptions,
   textStyles,
 } from './modules/system';
-import { Text } from './Text';
 import {
   ComponentProps,
   Icons,
@@ -34,6 +33,7 @@ export interface AnchorKnownProps
     WithTextOptions {
   children: React.ReactNode;
   external?: boolean;
+  hideDecoration?: boolean;
   href: string;
   iconAfter?: Icons;
   iconBefore?: Icons;
@@ -46,7 +46,7 @@ export const StyledAnchor = styled(
   'a',
   styledOptions,
 )<AnchorProps>(props => {
-  const { color } = colorStyles(props);
+  const { hideDecoration } = props;
 
   return css`
     ${appearanceStyles};
@@ -58,23 +58,23 @@ export const StyledAnchor = styled(
     font-family: inherit;
     line-height: 1;
     padding: 0;
-    text-decoration: none;
+    text-decoration: ${hideDecoration ? 'none' : 'underline'};
     ${colorStyles(props)};
     ${displayStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};
     ${textStyles(props)};
-
-    [data-component-name='Text'] {
-      border-bottom: 1px solid ${color};
-      line-height: 1;
-    }
   `;
 });
 
 export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
-  const { children, external, iconAfter, iconBefore, size } = props;
-  const { fontSize = '16px' } = textStyles(props);
+  const { children, external, iconAfter, iconBefore } = props;
+  const { fontSize } = textStyles(props);
+  let iconSize;
+
+  if (fontSize) {
+    iconSize = parseInt(`${fontSize}`, 10);
+  }
 
   const addtionalProps: any = {};
 
@@ -85,16 +85,16 @@ export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, r
 
   return (
     <StyledAnchor ref={ref} data-component-name="Anchor" {...addtionalProps} {...props}>
-      {iconBefore && <Icon mr="xxs" name={iconBefore} size={parseInt(`${fontSize}`, 10)} />}
-      <Text size={size}>{children}</Text>
-      {iconAfter && <Icon ml="xxs" name={iconAfter} size={parseInt(`${fontSize}`, 10)} />}
+      {iconBefore && <Icon mr="xxs" name={iconBefore} size={iconSize} />}
+      <span>{children}</span>
+      {iconAfter && <Icon ml="xxs" name={iconAfter} size={iconSize} />}
     </StyledAnchor>
   );
 });
 
 Anchor.defaultProps = {
   external: false,
-  size: 'regular',
+  hideDecoration: false,
   variant: 'primary',
 };
 Anchor.displayName = 'Anchor';

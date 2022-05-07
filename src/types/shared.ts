@@ -137,7 +137,6 @@ export interface WithShadow {
 export interface WithTextSize {
   /**
    * Text size
-   * @default regular
    */
   size?: TextSizes;
 }
