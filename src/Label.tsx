@@ -30,7 +30,7 @@ export const StyledLabel = styled(
     cursor: pointer;
     display: ${inline ? 'inline-flex' : 'flex'};
     font-family: inherit;
-    font-size: ${typography.mid.fontSize};
+    font-size: ${typography.regular.fontSize};
     font-weight: 700;
     line-height: 1;
     ${!inline ? `margin-bottom: ${spacing.sm}` : ''};
@@ -51,7 +51,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
 
   if (labelInfo) {
     info = is.string(labelInfo) ? (
-      <Text size="small" variant="gray">
+      <Text size="mid" variant="gray">
         {labelInfo}
       </Text>
     ) : (
