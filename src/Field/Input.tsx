@@ -1,7 +1,5 @@
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { formatMoney, formatPhoneBR } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 
@@ -12,8 +10,8 @@ import { Button } from '../Button';
 import { FlexInline } from '../Flex';
 import { Group } from '../Group';
 import { Input } from '../Input';
-import { clearNumber, getTheme } from '../modules/helpers';
-import { Text } from '../Text';
+import { InputColor } from '../InputColor';
+import { clearNumber } from '../modules/helpers';
 import { Truncate } from '../Truncate';
 
 interface Props extends FieldInputProps {
@@ -22,36 +20,6 @@ interface Props extends FieldInputProps {
   registration: UseFormRegisterReturn;
   setStatus: (status: { isActive?: boolean; isDirty?: boolean }) => void;
 }
-
-const StyledColorGroup = styled.div(props => {
-  const { shadow, spacing } = getTheme(props);
-
-  return css`
-    align-items: center;
-    display: flex;
-
-    > div {
-      box-shadow: ${shadow.high};
-      overflow: hidden;
-      margin-right: ${spacing.xs};
-      height: ${spacing.xl};
-      width: ${spacing.xl};
-    }
-
-    input {
-      appearance: none;
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      background: none;
-      border: 0;
-      cursor: pointer;
-      height: ${spacing.xxxl};
-      margin: -8px;
-      padding: 0;
-      width: ${spacing.xxxl};
-    }
-  `;
-});
 
 function FieldInput(props: Props): JSX.Element {
   const {
@@ -122,14 +90,7 @@ function FieldInput(props: Props): JSX.Element {
 
   switch (type) {
     case 'color': {
-      content = (
-        <StyledColorGroup>
-          <div>
-            <input type="color" {...registration} {...input} />
-          </div>
-          {!!currentValue && <Text>{currentValue}</Text>}
-        </StyledColorGroup>
-      );
+      content = <InputColor {...registration} {...input} value={currentValue} />;
       break;
     }
     case 'file': {
