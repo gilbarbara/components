@@ -6,13 +6,10 @@ import { AnyObject } from '@gilbarbara/types';
 import { FieldInputProps } from './types';
 import { getInputParameters } from './utils';
 
-import { Button } from '../Button';
-import { FlexInline } from '../Flex';
-import { Group } from '../Group';
 import { Input } from '../Input';
 import { InputColor } from '../InputColor';
+import { InputFile } from '../InputFile';
 import { clearNumber } from '../modules/helpers';
-import { Truncate } from '../Truncate';
 
 interface Props extends FieldInputProps {
   currentValue: any;
@@ -95,26 +92,11 @@ function FieldInput(props: Props): JSX.Element {
     }
     case 'file': {
       content = (
-        <Group gap="xs">
-          <FlexInline overflow="hidden" position="relative">
-            <Button invert>Upload a file</Button>
-            <input
-              {...registration}
-              {...getInputParameters(props, 'currentValue', 'isDirty', 'registration', 'setStatus')}
-              id={input.id}
-              style={{
-                fontSize: '48px',
-                left: 0,
-                opacity: 0,
-                position: 'absolute',
-                top: 0,
-                zIndex: 1,
-              }}
-              type="file"
-            />
-          </FlexInline>
-          {!!currentValue?.length && <Truncate maxWidth="70%">{currentValue[0].name}</Truncate>}
-        </Group>
+        <InputFile
+          {...registration}
+          {...input}
+          value={currentValue?.length ? currentValue[0].name : ''}
+        />
       );
       break;
     }

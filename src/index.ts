@@ -26,6 +26,7 @@ export { Jumbo, H1, H2, H3 } from './Headings';
 export { Icon } from './Icon';
 export { Input } from './Input';
 export { InputColor } from './InputColor';
+export { InputFile } from './InputFile';
 export { Label } from './Label';
 export { LineThrough } from './LineThrough';
 export { Loader } from './Loader';
