@@ -737,3 +737,20 @@ export const iconsCustom = [
 ] as const;
 
 export const icons = [...iconsCustom, ...iconsPack].sort(sortByLocaleCompare());
+
+export const inputTypes = [
+  'color',
+  'date',
+  'email',
+  'file',
+  'hidden',
+  'number',
+  'password',
+  'search',
+  'tel',
+  'text',
+] as const;
+
+export const sizes = ['sm', 'md', 'lg'] as const;
+
+export const textSizes = ['small', 'mid', 'regular', 'large'] as const;

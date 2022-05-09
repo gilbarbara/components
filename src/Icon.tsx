@@ -7,7 +7,7 @@ import is from 'is-lite';
 import { RequireExactlyOne, SetRequired } from 'type-fest';
 
 import { px } from './modules/helpers';
-import { iconsCustom } from './modules/icons';
+import { iconsCustom } from './modules/options';
 import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { Icons, StyledProps, WithMargin } from './types';
 

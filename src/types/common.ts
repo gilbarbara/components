@@ -3,27 +3,17 @@ import { SerializedStyles } from '@emotion/react';
 
 import { Breakpoints } from './theme';
 
-import { icons } from '../modules/icons';
+import { icons, inputTypes, sizes, textSizes } from '../modules/options';
 
 export type ButtonTypes = 'button' | 'submit' | 'reset';
 
 export type Icons = typeof icons[number];
 
-export type InputTypes =
-  | 'color'
-  | 'date'
-  | 'email'
-  | 'file'
-  | 'hidden'
-  | 'number'
-  | 'password'
-  | 'search'
-  | 'tel'
-  | 'text';
+export type InputTypes = typeof inputTypes[number];
 
-export type Sizes = 'sm' | 'md' | 'lg';
+export type Sizes = typeof sizes[number];
 
-export type TextSizes = 'small' | 'mid' | 'regular' | 'large';
+export type TextSizes = typeof textSizes[number];
 
 export interface TypographyItem {
   fontSize: string | number;
