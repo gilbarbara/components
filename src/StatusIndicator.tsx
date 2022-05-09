@@ -53,4 +53,5 @@ export function StatusIndicator(props: StatusIndicatorProps) {
 StatusIndicator.defaultProps = {
   ratio: 0.7,
   size: 24,
+  variant: 'green',
 };
