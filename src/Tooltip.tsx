@@ -309,6 +309,10 @@ export function Tooltip(props: TooltipProps): JSX.Element {
 }
 
 Tooltip.defaultProps = {
+  align: 'middle',
+  maxWidth: 320,
+  position: 'right',
   shade: 'dark',
+  size: 'mid',
   variant: 'gray',
 };
