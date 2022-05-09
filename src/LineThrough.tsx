@@ -24,7 +24,7 @@ export interface LineThroughKnownProps extends StyledProps, WithColor, WithMargi
   /** @default xs */
   gap?: Spacing;
   /** @default 1 */
-  line?: number;
+  lineHeight?: number;
 }
 
 export type LineThroughProps = ComponentProps<HTMLSpanElement, LineThroughKnownProps>;
@@ -33,7 +33,7 @@ export const StyledLineThrough = styled(
   'p',
   getStyledOptions(),
 )<LineThroughProps>(props => {
-  const { gap = 'xs', line = 1 } = props;
+  const { gap = 'xs', lineHeight = 1 } = props;
   const { spacing } = getTheme(props);
 
   const { color } = colorStyles(props);
@@ -53,7 +53,7 @@ export const StyledLineThrough = styled(
     &:after {
       content: '';
       flex: 1 1;
-      border-bottom: ${line}px solid;
+      border-bottom: ${lineHeight}px solid;
       margin: auto;
     }
 
@@ -73,7 +73,7 @@ export const LineThrough = forwardRef<HTMLParagraphElement, LineThroughProps>((p
 
 LineThrough.defaultProps = {
   gap: 'xs',
-  line: 1,
+  lineHeight: 1,
   size: 'regular',
 };
 LineThrough.displayName = 'LineThrough';
