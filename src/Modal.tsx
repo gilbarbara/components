@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { pick } from '@gilbarbara/helpers';
 import { StandardLonghandProperties } from 'csstype';
 
-import { Button } from './Button';
+import { ButtonBase } from './ButtonBase';
 import { Flex } from './Flex';
 import { H3 } from './Headings';
 import { Icon } from './Icon';
@@ -93,9 +93,9 @@ export function Modal(props: ModalProps) {
       >
         {title && <H3 style={{ marginBottom: 0 }}>{title}</H3>}
         {!hideCloseButton && (
-          <Button onClick={onClose} size="sm" square transparent variant="black">
-            <Icon color={darkMode ? white : black} name="close" size={24} />
-          </Button>
+          <ButtonBase onClick={onClose}>
+            <Icon color={darkMode ? white : black} name="close" size={26} />
+          </ButtonBase>
         )}
       </Flex>
     );
