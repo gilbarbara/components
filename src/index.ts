@@ -22,7 +22,7 @@ export { Form, FormProps } from './Form';
 export { FormGroup } from './FormGroup';
 export { Grid, GridProps } from './Grid';
 export { Group } from './Group';
-export { Jumbo, H1, H2, H3 } from './Headings';
+export * from './Headings';
 export { Icon } from './Icon';
 export { Input } from './Input';
 export { InputColor } from './InputColor';

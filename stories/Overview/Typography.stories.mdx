@@ -1,65 +1,88 @@
 import { Meta } from '@storybook/addon-docs';
-import { Box, Group, Jumbo, H1, H2, H3, Paragraph } from 'src';
+import { Box, Group, Jumbo, H1, H2, H3, Paragraph, H4, H5, H6 } from 'src';
 import { typography } from 'src/modules/theme';
 
 <Meta title='Overview/Typography' />
 
 <Jumbo>Typography</Jumbo>
 
+<H2>Headings</H2>
+
+<Box mb="xl">
+  <Box mb="xs">
+    <Paragraph>Jumbo ({typography.jumboLarge.fontSize})</Paragraph>
+    <Paragraph size="mid" variant="gray">(large)</Paragraph>
+  </Box>
+  <Jumbo large mb={0}>The quick brown fox jumps over the lazy dog</Jumbo>
+</Box>
+<Box mb="xl">
+  <Box mb="xs">
+    Jumbo ({typography.jumbo.fontSize})
+  </Box>
+  <Jumbo mb={0}>The quick brown fox jumps over the lazy dog</Jumbo>
+</Box>
+<Box mb="xl">
+  <Box mb="xs">
+    H1 ({typography.h1.fontSize})
+  </Box>
+  <H1 mb={0}>The quick brown fox jumps over the lazy dog</H1>
+</Box>
+<Box mb="xl">
+  <Box mb="xs">
+    H2 ({typography.h2.fontSize})
+  </Box>
+  <H2 mb={0}>The quick brown fox jumps over the lazy dog</H2>
+</Box>
+<Box mb="xl">
+  <Box mb="xs">
+    H3 ({typography.h3.fontSize})
+  </Box>
+  <H3 mb={0}>The quick brown fox jumps over the lazy dog</H3>
+</Box>
+<Box mb="xl">
+  <Box mb="xs">
+    H4 ({typography.h4.fontSize})
+  </Box>
+  <H4 mb={0}>The quick brown fox jumps over the lazy dog</H4>
+</Box>
+<Box mb="xl">
+  <Box mb="xs">
+    H5 ({typography.h5.fontSize})
+  </Box>
+  <H5 mb={0}>The quick brown fox jumps over the lazy dog</H5>
+</Box>
+<Box mb="xl">
+  <Box mb="xs">
+    H6 ({typography.h6.fontSize})
+  </Box>
+  <H6 mb={0}>The quick brown fox jumps over the lazy dog</H6>
+</Box>
+
+<H2>Text</H2>
+
 <Box>
-  <Group mb="xl">
-    <Box width={128}>
-      <Paragraph>Jumbo ({typography.jumboLarge.fontSize})</Paragraph>
-      <Paragraph size="mid" variant="gray">(large)</Paragraph>
-    </Box>
-    <Jumbo large mb={0}>AaBbCc</Jumbo>
-  </Group>
-  <Group mb="xl">
-    <Box width={128}>
-      Jumbo ({typography.jumbo.fontSize})
-    </Box>
-    <Jumbo mb={0}>AaBbCc</Jumbo>
-  </Group>
-  <Group mb="xl">
-    <Box width={128}>
-      H1 ({typography.title1.fontSize})
-    </Box>
-    <H1 mb={0}>AaBbCc</H1>
-  </Group>
-  <Group mb="xl">
-    <Box width={128}>
-      H2 ({typography.title2.fontSize})
-    </Box>
-    <H2 mb={0}>AaBbCc</H2>
-  </Group>
-  <Group mb="xl">
-    <Box width={128}>
-      H3 ({typography.title3.fontSize})
-    </Box>
-    <H3 mb={0}>AaBbCc</H3>
-  </Group>
   <Group mb="xl">
     <Box width={128}>
       Large ({typography.large.fontSize})
     </Box>
-    <Paragraph size="large">AaBbCc</Paragraph>
+    <Paragraph size="large">The quick brown fox jumps over the lazy dog</Paragraph>
   </Group>
   <Group mb="xl">
     <Box width={128}>
       Regular ({typography.regular.fontSize})
     </Box>
-    <Paragraph>AaBbCc</Paragraph>
+    <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
   </Group>
   <Group mb="xl">
     <Box width={128}>
       Mid ({typography.mid.fontSize})
     </Box>
-    <Paragraph size="mid">AaBbCc</Paragraph>
+    <Paragraph size="mid">The quick brown fox jumps over the lazy dog</Paragraph>
   </Group>
   <Group mb="xl">
     <Box width={128}>
       Small ({typography.small.fontSize})
     </Box>
-    <Paragraph size="small">AaBbCc</Paragraph>
+    <Paragraph size="small">The quick brown fox jumps over the lazy dog</Paragraph>
   </Group>
 </Box>

@@ -1,5 +1,6 @@
 import { ComponentMeta } from '@storybook/react';
-import { HeadingLargeProps, Jumbo } from 'src/Headings';
+import { Jumbo } from 'src/Headings';
+import { HeadingLargeProps } from 'src/Headings/utils';
 
 import { hideProps } from '../../__helpers__';
 
@@ -7,7 +8,8 @@ export default {
   title: 'Components/Headings',
   component: Jumbo,
   args: {
-    align: 'left',
+    align: 'center',
+    children: 'The quick brown fox jumps over the lazy dog',
     large: false,
     light: false,
   },
@@ -15,7 +17,7 @@ export default {
 } as ComponentMeta<typeof Jumbo>;
 
 export const BasicJumbo = (props: HeadingLargeProps) => {
-  return <Jumbo {...props}>Jumbo title</Jumbo>;
+  return <Jumbo {...props} />;
 };
 
 BasicJumbo.storyName = 'Jumbo';

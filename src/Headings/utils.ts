@@ -1,0 +1,34 @@
+import { ReactNode } from 'react';
+import { css } from '@emotion/react';
+
+import { getTheme } from '../modules/helpers';
+import { alignStyles, baseStyles, marginStyles } from '../modules/system';
+import { ComponentProps, StyledProps, Typography, WithAlign, WithMargin } from '../types';
+
+export interface HeadingKnownProps extends StyledProps, WithAlign, WithMargin {
+  children: ReactNode;
+  light?: boolean;
+}
+
+export type HeadingProps = ComponentProps<HTMLHeadingElement, HeadingKnownProps>;
+export type HeadingLargeProps = ComponentProps<
+  HTMLHeadingElement,
+  HeadingKnownProps & { large?: boolean }
+>;
+
+export function getStyles(key: Typography, props: HeadingProps) {
+  const { light } = props;
+  const { fontFamily, typography } = getTheme(props);
+  const selected = typography[key];
+
+  return css`
+    ${baseStyles(props)};
+    ${alignStyles(props)};
+    font-family: ${fontFamily};
+    font-size: ${selected.fontSize};
+    font-weight: ${light ? 400 : selected.weight};
+    line-height: ${selected.lineHeight};
+    margin-top: 0;
+    ${marginStyles(props)};
+  `;
+}
