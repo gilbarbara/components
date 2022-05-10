@@ -10,10 +10,10 @@ import { getNumberOfMonths } from './utils';
 
 import { Button } from '../Button';
 import { Flex } from '../Flex';
-import { Group } from '../Group';
 import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions } from '../modules/system';
 import { Paragraph } from '../Paragraph';
+import { Spacer } from '../Spacer';
 import { Text } from '../Text';
 
 export type DatePickerRangerProps = DatePickerBaseProps<DatePickerRangeClickHandler>;
@@ -86,7 +86,7 @@ export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
 
   if (from && to) {
     content = (
-      <Group distribution="center">
+      <Spacer distribution="center">
         <Text>
           From {formatDateLocale(from.toISOString())} to {formatDateLocale(to.toISOString())}
         </Text>
@@ -103,7 +103,7 @@ export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
         >
           Reset
         </Button>
-      </Group>
+      </Spacer>
     );
   } else if (from) {
     content = <Paragraph>Select the final date</Paragraph>;

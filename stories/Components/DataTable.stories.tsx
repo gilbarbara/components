@@ -9,11 +9,11 @@ import {
   ButtonBase,
   Dialog,
   Dropdown,
-  Group,
   H1,
   Icon,
   Input,
   NonIdealState,
+  Spacer,
   Tag,
   Text,
 } from 'src';
@@ -105,7 +105,7 @@ const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Elemen
   };
 
   return (
-    <Group ref={ref} data-component-name="JobTalentsHeader" mb="lg">
+    <Spacer ref={ref} data-component-name="JobTalentsHeader" mb="lg">
       <Box position="relative" style={{ flex: 1 }}>
         <Input
           name="name"
@@ -136,7 +136,7 @@ const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Elemen
         values={statuses.filter(d => d.value === status)}
         width={180}
       />
-    </Group>
+    </Spacer>
   );
 });
 

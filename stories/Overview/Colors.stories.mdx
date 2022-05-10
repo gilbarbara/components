@@ -12,27 +12,25 @@ import { shades, variants } from '../__helpers__';
 
 <H2>Base colors</H2>
 
-<Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+<Grid gap={32} mb="xxl" justifyContent="start" templateColumns="repeat(5, auto)">
   {Object.entries(colors)
     .map(([key, value]) => {
       const { h, s, l } = hex2hsl(value);
       return (
-        <Box key={key} mb="lg">
-          <Box>
-            <FlexCenter
-              height={128}
-              radius="round"
-              shade="mid"
-              variant={key}
-              width={128}
-            >
-              {key}
-            </FlexCenter>
-            <Paragraph align="center" size="small" mt="xs">HEX: {value}</Paragraph>
-            <Paragraph align="center" size="small">
-              H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
-            </Paragraph>
-          </Box>
+        <Box key={key}>
+          <FlexCenter
+            height={128}
+            radius="round"
+            shade="mid"
+            variant={key}
+            width={128}
+          >
+            {key}
+          </FlexCenter>
+          <Paragraph align="center" size="small" mt="xs">HEX: {value}</Paragraph>
+          <Paragraph align="center" size="small">
+            H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
+          </Paragraph>
         </Box>
       );
     })}
@@ -40,11 +38,11 @@ import { shades, variants } from '../__helpers__';
 
 <H2>Variants</H2>
 
-<div>
+<Box mb="xxl">
   {Object.entries(themeVariants)
     .map(([variant, color]) => (
       <Box key={variant} mb="lg">
-        <H3>{capitalize(variant)}</H3>
+        <H3 light>{capitalize(variant)}</H3>
         <Grid gap={32} justifyContent="start" templateColumns="repeat(7, auto)">
           {Object.entries(color)
             .map(([shade, value]) => {
@@ -70,16 +68,16 @@ import { shades, variants } from '../__helpers__';
         </Grid>
       </Box>
     ))}
-</div>
+</Box>
 
 
 <H2>Shades</H2>
 
-<div>
+<Box mb="xxl">
   {shades
     .map((shade) => (
       <Box key={shade} mb="lg">
-        <H3>{capitalize(shade)}</H3>
+        <H3 light>{capitalize(shade)}</H3>
         <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
           {variants
             .map((variant) => {
@@ -106,26 +104,24 @@ import { shades, variants } from '../__helpers__';
         </Grid>
       </Box>
     ))}
-</div>
+</Box>
 
 <H2>Grayscale</H2>
-<div>
 
-  <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
-    {Object.entries(grayScale)
-      .map(([key, color]) => (
-        <Box key={color}>
-          <FlexCenter
-            height={128}
-            radius="round"
-            width={128}
-            style={{ backgroundColor: color }}
-          >
-            <Text style={{ color: textColor(color) }}>{color}</Text>
-          </FlexCenter>
-          <Paragraph align="center" size="small" mt="xs">{key}</Paragraph>
-        </Box>
-      ))}
-  </Grid>
-</div>
+<Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+  {Object.entries(grayScale)
+    .map(([key, color]) => (
+      <Box key={color}>
+        <FlexCenter
+          height={128}
+          radius="round"
+          width={128}
+          style={{ backgroundColor: color }}
+        >
+          <Text style={{ color: textColor(color) }}>{color}</Text>
+        </FlexCenter>
+        <Paragraph align="center" size="small" mt="xs">{key}</Paragraph>
+      </Box>
+    ))}
+</Grid>
 

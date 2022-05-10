@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 
 import { Button } from './Button';
 import { FlexInline } from './Flex';
-import { Group } from './Group';
 import { getStyledOptions } from './modules/system';
+import { Spacer } from './Spacer';
 import { Truncate } from './Truncate';
 import { ComponentProps, StyledProps, WithInvert } from './types';
 
@@ -40,7 +40,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
   };
 
   return (
-    <Group gap="xs">
+    <Spacer gap="xs">
       <FlexInline overflow="hidden" position="relative">
         <Button invert={invert} size={large ? 'lg' : 'md'}>
           {placeholder}
@@ -55,7 +55,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
         />
       </FlexInline>
       <Truncate maxWidth="70%">{value || localValue}</Truncate>
-    </Group>
+    </Spacer>
   );
 });
 

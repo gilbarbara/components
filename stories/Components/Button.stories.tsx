@@ -1,7 +1,7 @@
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
-import { Grid, Group, Icon } from 'src';
+import { Grid, Icon, Spacer } from 'src';
 import { Button, ButtonProps } from 'src/Button';
 
 import { sizes } from 'src/modules/options';
@@ -39,13 +39,13 @@ export function Basic(props: ButtonProps) {
 
 export function Sizes(props: ButtonProps) {
   return (
-    <Group>
+    <Spacer>
       {['sm', 'md', 'lg'].map(d => (
         <Button key={d} onClick={action('clicked')} {...props} size={d as Types.Sizes}>
           Button {capitalize(d)}
         </Button>
       ))}
-    </Group>
+    </Spacer>
   );
 }
 

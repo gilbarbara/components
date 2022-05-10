@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldRadioProps } from './types';
 
 import { Radio } from '../CheckboxAndRadio';
-import { Group } from '../Group';
+import { Spacer } from '../Spacer';
 import { Option } from '../types';
 
 interface Props extends FieldRadioProps {
@@ -14,11 +14,11 @@ function FieldRadio(props: Props): JSX.Element {
   const { options = [], registration } = props;
 
   return (
-    <Group mb="xs">
+    <Spacer mb="xs">
       {options.map((d: Option) => (
         <Radio key={d.value} {...d} {...registration} size="sm" />
       ))}
-    </Group>
+    </Spacer>
   );
 }
 

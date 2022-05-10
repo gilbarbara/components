@@ -1,5 +1,5 @@
 import SVG from 'react-inlinesvg';
-import { Box, Group, H2, H3, Jumbo, Paragraph } from 'src';
+import { Box, H2, H3, Jumbo, Paragraph, Spacer } from 'src';
 
 import CodeBlock from './CodeBlock';
 
@@ -24,7 +24,7 @@ function OverviewAbout(): JSX.Element {
         system.
       </Paragraph>
 
-      <Group gap="xs" mb="xl" mt="md">
+      <Spacer gap="xs" mb="xl" mt="md">
         <a href="https://github.com/gilbarbara/components" rel="noreferrer" target="_blank">
           <SVG height={24} src="https://cdn.svgporn.com/logos/github-icon.svg" width={32} />
         </a>
@@ -38,7 +38,7 @@ function OverviewAbout(): JSX.Element {
         <H3 light mb={0}>
           Version: {packageJson.version}
         </H3>
-      </Group>
+      </Spacer>
 
       <H2>Installation</H2>
 
