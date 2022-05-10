@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 
 import { Button } from './Button';
-import { Group } from './Group';
 import { H3 } from './Headings';
 import { getTheme, px } from './modules/helpers';
 import { getStyledOptions, isDarkMode } from './modules/system';
 import { Paragraph } from './Paragraph';
 import { Portal, PortalProps } from './Portal';
+import { Spacer } from './Spacer';
 
 export interface DialogProps
   extends Pick<
@@ -103,7 +103,7 @@ export function Dialog(props: DialogProps) {
 
         <Paragraph mb="xl">{content}</Paragraph>
 
-        <Group distribution="space-between">
+        <Spacer distribution="space-between">
           {buttonOrder === 'ltr' ? (
             <>
               {cancelButton}
@@ -115,7 +115,7 @@ export function Dialog(props: DialogProps) {
               {cancelButton}
             </>
           )}
-        </Group>
+        </Spacer>
       </StyledDialog>
     </Portal>
   );

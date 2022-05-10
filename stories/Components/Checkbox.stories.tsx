@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { FormGroup, Group } from 'src';
+import { FormGroup, Spacer } from 'src';
 import { Checkbox, CheckboxProps } from 'src/CheckboxAndRadio';
 
 import { hideProps } from '../__helpers__';
@@ -26,11 +26,11 @@ export const Basic = (props: CheckboxProps) => {
 export const Multiple = (props: CheckboxProps) => {
   return (
     <FormGroup label="Options">
-      <Group>
+      <Spacer>
         <Checkbox {...props} label="Show e-mail" name="showEmail" />
         <Checkbox {...props} label="Show picture" name="showPicture" />
         <Checkbox {...props} label="Show location" name="showLocation" />
-      </Group>
+      </Spacer>
     </FormGroup>
   );
 };

@@ -5,7 +5,7 @@ import { useUpdateEffect } from 'react-use';
 import { FieldCheckboxProps } from './types';
 
 import { Checkbox } from '../CheckboxAndRadio';
-import { Group } from '../Group';
+import { Spacer } from '../Spacer';
 
 interface Props extends FieldCheckboxProps {
   currentValue: string[];
@@ -37,7 +37,7 @@ function FieldCheckbox(props: Props) {
   };
 
   return (
-    <Group mb="xs">
+    <Spacer mb="xs">
       {options.map(d => (
         <Checkbox
           key={d.name}
@@ -48,7 +48,7 @@ function FieldCheckbox(props: Props) {
           size="sm"
         />
       ))}
-    </Group>
+    </Spacer>
   );
 }
 

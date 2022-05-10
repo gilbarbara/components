@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { Group } from './Group';
 import { Icon } from './Icon';
 import { Label } from './Label';
 import { getTheme } from './modules/helpers';
@@ -15,6 +14,7 @@ import {
   layoutStyles,
   marginStyles,
 } from './modules/system';
+import { Spacer } from './Spacer';
 import { ComponentProps, StyledProps, WithInline, WithLayout, WithMargin } from './types';
 
 export interface FormGroupKnownProps extends StyledProps, WithInline, WithLayout, WithMargin {
@@ -45,7 +45,7 @@ export const StyledFormGroup = styled(
     ${marginStyles(props)}
     width: 100%;
 
-    [data-component-name='Group'] {
+    [data-component-name='Spacer'] {
       input,
       label,
       [data-component-name='AssistiveContent'] {
@@ -160,7 +160,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   );
 
   if (inline) {
-    content.main = <Group>{content.main}</Group>;
+    content.main = <Spacer>{content.main}</Spacer>;
   }
 
   return (

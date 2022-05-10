@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import { capitalize } from '@gilbarbara/helpers';
 import { ComponentMeta } from '@storybook/react';
-import { Grid, Group } from 'src';
+import { Grid, Spacer } from 'src';
 import { Tag, TagProps } from 'src/Tag';
 
 import { getTheme } from 'src/modules/helpers';
@@ -59,13 +59,13 @@ export function Shades(props: TagProps) {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
-    <Group>
+    <Spacer>
       {(Object.keys(variants.primary) as Types.Shades[]).map(d => (
         <Tag key={d} {...props} color={d.startsWith('light') ? 'primary' : 'white'} shade={d}>
           {capitalize(d)}
         </Tag>
       ))}
-    </Group>
+    </Spacer>
   );
 }
 
@@ -76,13 +76,13 @@ Shades.argTypes = {
 
 export function Sizes(props: TagProps) {
   return (
-    <Group>
+    <Spacer>
       {textSizes.map(d => (
         <Tag key={d} {...props} size={d}>
           {capitalize(d)}
         </Tag>
       ))}
-    </Group>
+    </Spacer>
   );
 }
 

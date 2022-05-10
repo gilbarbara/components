@@ -1,7 +1,7 @@
 import { SubmitHandler } from 'react-hook-form';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
-import { Box, Button, Divider, Field, Grid, Group, H2, H3 } from 'src';
+import { Box, Button, Divider, Field, Grid, H2, H3, Spacer } from 'src';
 import { Form, FormProps } from 'src/Form';
 
 import { hideNoControlsWarning } from '../__helpers__';
@@ -282,11 +282,11 @@ function EditForm({ formMethods }: FormProps<FormData>) {
         type="textarea"
       />
 
-      <Group distribution="flex-end">
+      <Spacer distribution="end">
         <Button disabled={!isDirty} type="submit">
           Send
         </Button>
-      </Group>
+      </Spacer>
     </Box>
   );
 }

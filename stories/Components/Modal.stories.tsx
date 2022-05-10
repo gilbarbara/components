@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, FormGroup, Group, Input, Textarea } from 'src';
+import { Button, FormGroup, Input, Spacer, Textarea } from 'src';
 import { Modal, ModalProps } from 'src/Modal';
 
 import { disableControl, hideProps } from '../__helpers__';
@@ -41,10 +41,10 @@ export function Basic(props: ModalProps) {
         <FormGroup label="Description">
           <Textarea name="description" placeholder="Tell us about yourself" />
         </FormGroup>
-        <Group distribution="flex-end">
+        <Spacer distribution="end">
           <Button invert>Cancel</Button>
           <Button type="submit">Enviar</Button>
-        </Group>
+        </Spacer>
       </Modal>
     </div>
   );
