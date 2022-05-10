@@ -59,47 +59,62 @@ export const spacing = {
 export const typography = {
   small: {
     fontSize: '12px',
-    lineHeight: '16px',
+    lineHeight: 1.2,
     weight: [400, 700],
   },
   mid: {
     fontSize: '14px',
-    lineHeight: '18px',
+    lineHeight: 1.2,
     weight: [400, 700],
   },
   regular: {
     fontSize: '16px',
-    lineHeight: '21px',
+    lineHeight: 1.2,
     weight: [400, 700],
   },
   large: {
     fontSize: '18px',
-    lineHeight: '24px',
+    lineHeight: 1.2,
     weight: [400, 700],
   },
-  title3: {
+  h6: {
+    fontSize: '16px',
+    lineHeight: 1.2,
+    weight: 700,
+  },
+  h5: {
+    fontSize: '18px',
+    lineHeight: 1.2,
+    weight: 700,
+  },
+  h4: {
     fontSize: '20px',
-    lineHeight: '26px',
+    lineHeight: 1.2,
     weight: 700,
   },
-  title2: {
+  h3: {
     fontSize: '24px',
-    lineHeight: '30px',
+    lineHeight: 1.2,
     weight: 700,
   },
-  title1: {
+  h2: {
     fontSize: '28px',
-    lineHeight: '32px',
+    lineHeight: 1.2,
+    weight: 700,
+  },
+  h1: {
+    fontSize: '32px',
+    lineHeight: 1.2,
     weight: 700,
   },
   jumbo: {
-    fontSize: '40px',
-    lineHeight: '44px',
+    fontSize: '48px',
+    lineHeight: 1.2,
     weight: 700,
   },
   jumboLarge: {
-    fontSize: '48px',
-    lineHeight: '52px',
+    fontSize: '64px',
+    lineHeight: 1.2,
     weight: 700,
   },
 };

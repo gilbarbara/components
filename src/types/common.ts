@@ -15,12 +15,6 @@ export type Sizes = typeof sizes[number];
 
 export type TextSizes = typeof textSizes[number];
 
-export interface TypographyItem {
-  fontSize: string | number;
-  lineHeight: string;
-  weight: number | number[];
-}
-
 // Responsive
 export interface MediaQueries {
   [key: string]: any;

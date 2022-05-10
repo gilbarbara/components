@@ -394,7 +394,7 @@ export function textStyles<T extends WithTextOptions & WithTheme>(props: T): CSS
 
   if (size) {
     const { fontSize, lineHeight, weight } = typography[size];
-    const fontWeight = bold ? weight[1] : undefined;
+    const fontWeight = bold ? weight[1] : weight[0];
 
     return {
       fontSize,
