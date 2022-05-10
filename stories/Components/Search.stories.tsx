@@ -1,10 +1,30 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { sleep } from '@gilbarbara/helpers';
 import { ComponentMeta, forceReRender } from '@storybook/react';
+import { Button } from 'src';
+import { Search, SearchProps } from 'src/Search';
 
-import { Button, Search } from '../../src';
-import { SearchCreateProps, SearchOption } from '../../src/types';
-import { hideProps } from '../__helpers__';
+import { SearchCreateProps, SearchOption } from 'src/types';
+
+import { disableControl, hideProps } from '../__helpers__';
+
+export default {
+  title: 'Components/Search',
+  component: Search,
+  args: {
+    debounce: 400,
+    icon: 'search',
+    placeholder: 'Search for...',
+    showCreateAlways: false,
+    showCreateButton: true,
+    width: 300,
+  },
+  argTypes: {
+    ...hideProps(),
+    options: disableControl(),
+    showCreateButton: { control: 'boolean', description: 'Storybook only' },
+  },
+} as ComponentMeta<typeof Search>;
 
 const options: SearchOption[] = [
   { value: 'hey' },
@@ -19,7 +39,7 @@ const options: SearchOption[] = [
 
 function CreateButton(props: SearchCreateProps) {
   const { close, value } = props;
-  const [busy, setBusy] = React.useState(false);
+  const [busy, setBusy] = useState(false);
 
   const handleClick = () => {
     setBusy(true);
@@ -34,7 +54,7 @@ function CreateButton(props: SearchCreateProps) {
 
   return (
     <Button busy={busy} onClick={handleClick} transparent>
-      + Novo Item
+      + New Item
     </Button>
   );
 }
@@ -45,30 +65,13 @@ async function getOptions(value: string) {
   return options.filter(d => d.value.includes(value));
 }
 
-export default {
-  title: 'Components/Search',
-  component: Search,
-  args: {
-    debounce: 400,
-    icon: 'search',
-    placeholder: 'Search for...',
-    showCreateAlways: false,
-    showCreateButton: true,
-    width: 300,
-  },
-  argTypes: {
-    ...hideProps('busy', 'createFn', 'messages', 'onBlur', 'onFocus', 'onType', 'options', 'style'),
-    showCreateButton: { control: 'boolean' },
-  },
-} as ComponentMeta<typeof Search>;
-
-export const Basic = (props: any) => {
+export const Basic = (props: SearchProps & { showCreateButton: boolean }) => {
   const { showCreateButton } = props;
 
   return (
     <Search
       {...props}
-      createFn={showCreateButton && CreateButton}
+      createFn={showCreateButton ? CreateButton : undefined}
       onBlur={undefined}
       options={getOptions}
     />

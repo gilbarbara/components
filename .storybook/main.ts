@@ -1,5 +1,6 @@
 import { dirname, join, parse } from 'path';
 import { existsSync } from 'fs';
+import TsConfigPathsWebpackPlugin from 'tsconfig-paths-webpack-plugin';
 
 function getPackageDir(filepath: any) {
   let currDir = dirname(require.resolve(filepath));
@@ -37,6 +38,7 @@ module.exports = {
   webpackFinal: async (config: any) => {
     config.resolve.alias['@emotion/core'] = getPackageDir('@emotion/react');
     config.resolve.alias['@emotion/styled'] = getPackageDir('@emotion/styled');
+    config.resolve.plugins = [new TsConfigPathsWebpackPlugin()];
 
     return config;
   },

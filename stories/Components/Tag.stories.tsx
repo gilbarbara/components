@@ -1,48 +1,49 @@
-import * as React from 'react';
 import { useTheme } from '@emotion/react';
 import { capitalize } from '@gilbarbara/helpers';
-import { ComponentMeta, Story } from '@storybook/react';
+import { ComponentMeta } from '@storybook/react';
+import { Grid, Group } from 'src';
+import { Tag, TagProps } from 'src/Tag';
 
-import { Grid, Group, Tag } from '../../src';
-import { getTheme } from '../../src/modules/helpers';
-import { TagProps } from '../../src/Tag';
-import * as Types from '../../src/types';
-import { hideProps, hideTable, textSizes } from '../__helpers__';
+import { getTheme } from 'src/modules/helpers';
+import { textSizes } from 'src/modules/options';
+
+import * as Types from 'src/types';
+
+import { hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Tag',
   component: Tag,
+  args: {
+    bold: false,
+    invert: false,
+    size: 'small',
+    variant: 'primary',
+  },
   argTypes: {
-    ...hideProps('style'),
+    ...hideProps(),
     children: { control: 'text' },
-    color: { control: 'select' },
-    colorShade: { control: 'select' },
-    invert: { control: 'boolean', defaultValue: false },
-    size: { control: 'select', defaultValue: 'small' },
-    variant: { control: 'select' },
-    shade: { control: 'select' },
+    size: { control: 'select' },
   },
 } as ComponentMeta<typeof Tag>;
 
-const Template: Story<TagProps> = (props: any) => {
+export function Basic(props: TagProps) {
   return <Tag {...props} />;
-};
-
-export const Basic = Template.bind({});
+}
 
 Basic.args = {
   children: 'Tag',
 };
 
-export function Colors(props: any) {
+export function Colors(props: TagProps) {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
     <Grid gap={30} justifyItems="center" templateColumns="repeat(3, 1fr)">
-      {[...Object.keys(variants), 'black', 'white'].map(d => (
-        <div key={d}>
-          <Tag {...props} variant={d as Types.Colors}>
-            {capitalize(d)}
+      {[...Object.keys(variants), 'black', 'white'].map(color => (
+        <div key={color}>
+          <Tag {...props} variant={color as Types.Colors}>
+            {capitalize(color)}
           </Tag>
         </div>
       ))}
@@ -54,18 +55,13 @@ Colors.argTypes = {
   variant: hideTable(),
 };
 
-export function Shades(props: any) {
+export function Shades(props: TagProps) {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
     <Group>
-      {Object.keys(variants.primary).map(d => (
-        <Tag
-          key={d}
-          {...props}
-          color={d.startsWith('light') ? 'primary' : 'white'}
-          shade={d as keyof Types.Shades}
-        >
+      {(Object.keys(variants.primary) as Types.Shades[]).map(d => (
+        <Tag key={d} {...props} color={d.startsWith('light') ? 'primary' : 'white'} shade={d}>
           {capitalize(d)}
         </Tag>
       ))}
@@ -78,7 +74,7 @@ Shades.argTypes = {
   shade: hideTable(),
 };
 
-export function Sizes(props: any) {
+export function Sizes(props: TagProps) {
   return (
     <Group>
       {textSizes.map(d => (
@@ -94,7 +90,7 @@ Sizes.argTypes = {
   size: hideTable(),
 };
 
-export function WithIcons(props: any) {
+export function WithIcons(props: TagProps) {
   return (
     <Grid gap={20} templateColumns="repeat(4, 1fr)">
       <div>

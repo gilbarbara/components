@@ -1,26 +1,26 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { H3, Paragraph } from 'src';
+import { Box, BoxProps } from 'src/Box';
 
-import { Box, H3, Paragraph } from '../../src';
 import { hideProps, layoutParameters } from '../__helpers__';
 
 export default {
   title: 'Components/Box',
   component: Box,
+  args: {
+    padding: 'xl',
+    radius: 'lg',
+    shadow: 'high',
+    variant: 'primary',
+    width: 400,
+  },
   argTypes: {
     ...hideProps(),
     ...layoutParameters(),
-    margin: { control: 'select' },
-    padding: { control: 'select', defaultValue: 'xl' },
-    radius: { control: 'select', defaultValue: 'lg' },
-    shadow: { control: 'select', defaultValue: 'high' },
-    variant: { control: 'select', defaultValue: 'primary' },
-    shade: { control: 'select' },
-    width: { control: 'number', defaultValue: 400 },
   },
 } as ComponentMeta<typeof Box>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: BoxProps) => {
   return (
     <Box {...props}>
       <H3 mb="lg">Hello, I'm the Box!</H3>

@@ -1,46 +1,32 @@
-import * as React from 'react';
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
+import { Avatar, ButtonBase } from 'src';
+import { Menu, MenuDivider, MenuItem, MenuProps } from 'src/Menu';
 
-import { Avatar, ButtonBase, Menu, MenuDivider, MenuItem } from '../../src';
+import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Menu',
   component: Menu,
+  subcomponents: { MenuItem, MenuDivider },
+  args: {
+    disabled: false,
+    icon: 'icon',
+    positionX: 'right',
+    positionY: 'bottom',
+  },
   argTypes: {
-    icon: {
-      control: 'select',
-      defaultValue: 'icon',
-      options: ['icon', 'avatar'],
-    },
-    disabled: {
-      control: 'boolean',
-      defaultValue: false,
-    },
-    onToggle: {
-      table: { disable: true },
-    },
-    positionX: {
-      defaultValue: 'right',
-      control: 'inline-radio',
-      options: ['left', 'right'],
-    },
-    positionY: {
-      defaultValue: 'bottom',
-      control: 'inline-radio',
-      options: ['top', 'bottom'],
-    },
-    shade: {
-      defaultValue: 'mid',
-    },
-    variant: {
-      control: 'select',
-      defaultValue: 'primary',
-    },
+    ...hideProps(),
+    icon: { control: 'select', options: ['icon', 'avatar'] },
+    positionX: { control: 'inline-radio' },
+    positionY: { control: 'inline-radio' },
+  },
+  parameters: {
+    minHeight: 200,
   },
 };
 
-export function Basic({ icon, ...props }: any) {
+export function Basic({ icon, ...props }: MenuProps & { icon: string }) {
   const Component =
     icon === 'avatar' ? <Avatar name="Test User" variant={props.variant} /> : undefined;
 

@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs';
-import { Box, Grid, Group, Jumbo, Paragraph } from '../../src';
-import { spacing } from '../../src/modules/theme';
+import { Box, Grid, Group, Jumbo, Paragraph } from 'src';
+import { spacing } from 'src/modules/theme';
 
 <Meta title='Overview/Spacing' />
 
@@ -8,7 +8,7 @@ import { spacing } from '../../src/modules/theme';
 
 <Grid display="inline-grid" gap={spacing.xl} templateColumns="repeat(3, 1fr)">
   {Object.keys(spacing).map(d => (
-    <Group>
+    <Group key={d}>
       <Box width={spacing.xxl}>
         <Paragraph>{d}</Paragraph>
         <Paragraph mt={0} size="mid" variant="gray">{spacing[d]}</Paragraph>

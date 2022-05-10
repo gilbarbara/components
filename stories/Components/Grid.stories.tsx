@@ -1,53 +1,47 @@
-import * as React from 'react';
+import { Box } from 'src';
+import { Grid, GridProps } from 'src/Grid';
 
-import { Box, Grid } from '../../src';
 import { flexContent, flexItems, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Grid',
   component: Grid,
+  args: {
+    alignContent: 'space-evenly',
+    alignItems: 'center',
+    display: 'grid',
+    gap: 16,
+    itemHeight: 100,
+    itemWidth: 100,
+    justifyContent: 'space-evenly',
+    justifyItems: 'center',
+    templateColumns: 'repeat(3, 120px)',
+  },
   argTypes: {
-    ...hideProps('textAlign'),
-    alignContent: {
-      control: 'select',
-      options: flexContent,
-      defaultValue: 'space-evenly',
-    },
-    alignItems: {
-      control: 'select',
-      options: flexItems,
-      defaultValue: 'center',
-    },
+    ...hideProps(),
+    alignContent: { options: flexContent },
+    alignItems: { options: flexItems },
     autoColumns: { control: 'text' },
     autoFlow: { control: 'text' },
     autoRows: { control: 'text' },
     columnGap: { control: 'text' },
-    display: { control: 'radio', options: ['grid', 'inline-grid'], defaultValue: 'grid' },
+    display: { control: 'radio', options: ['grid', 'inline-grid'] },
     gap: { control: 'text' },
     grid: { control: 'text' },
-    justifyContent: {
-      control: 'select',
-      options: flexContent,
-      defaultValue: 'space-evenly',
-    },
-    justifyItems: {
-      control: 'select',
-      options: flexItems,
-      defaultValue: 'center',
-    },
+    itemHeight: { control: 'number', description: 'Storybook only' },
+    itemWidth: { control: 'number', description: 'Storybook only' },
+    justifyContent: { options: flexContent },
+    justifyItems: { options: flexItems },
     placeContent: { control: 'text' },
     placeItems: { control: 'text' },
     rowGap: { control: 'text' },
     template: { control: 'text' },
     templateAreas: { control: 'text' },
-    templateColumns: { control: 'text', defaultValue: 'repeat(3, 120px)' },
     templateRows: { control: 'text' },
-    itemHeight: { control: 'number', defaultValue: 100 },
-    itemWidth: { control: 'number', defaultValue: 100 },
   },
 };
 
-export const Basic = (props: any) => {
+export const Basic = (props: GridProps & { itemHeight: number; itemWidth: number }) => {
   const { itemHeight, itemWidth, ...rest } = props;
 
   return (

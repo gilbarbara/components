@@ -1,23 +1,22 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Truncate, TruncateProps } from 'src/Truncate';
 
-import { Truncate } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Truncate',
   component: Truncate,
+  args: {
+    children:
+      'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.',
+    lines: 2,
+  },
   argTypes: {
     ...hideProps(),
-    children: {
-      control: 'text',
-      defaultValue:
-        'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.',
-    },
-    maxWidth: { control: 'number' },
+    maxWidth: { control: 'text' },
   },
 } as ComponentMeta<typeof Truncate>;
 
-export function Basic(props: any) {
+export function Basic(props: TruncateProps) {
   return <Truncate {...props} />;
 }

@@ -6,13 +6,14 @@ import { hideProps } from '../__helpers__';
 export default {
   title: 'Components/InputFile',
   component: InputFile,
-  argTypes: {
-    ...hideProps(),
-    disabled: { control: 'boolean', defaultValue: false },
-    name: { control: 'text', defaultValue: 'name' },
-    readOnly: { control: 'boolean', defaultValue: false },
-    width: { control: 'text' },
+  args: {
+    disabled: false,
+    invert: true,
+    large: false,
+    name: 'file',
+    readOnly: false,
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof InputFile>;
 
 export function Basic(props: InputFileProps) {

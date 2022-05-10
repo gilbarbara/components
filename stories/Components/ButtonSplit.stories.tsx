@@ -1,34 +1,39 @@
-import * as React from 'react';
+import { MouseEvent, useState } from 'react';
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
-
-import { ButtonBase, Icon } from '../../src';
+import { ButtonBase, Icon } from 'src';
 import {
   ButtonSplit,
   ButtonSplitDivider,
   ButtonSplitItem,
   ButtonSplitProps,
-} from '../../src/ButtonSplit';
-import { hideProps } from '../__helpers__';
+} from 'src/ButtonSplit';
+
+import { disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonSplit',
   component: ButtonSplit,
   subcomponents: { ButtonSplitItem, ButtonSplitDivider },
+  args: {
+    block: false,
+    busy: false,
+    disabled: false,
+    invert: false,
+    label: 'Send',
+    positionX: 'right',
+    positionY: 'bottom',
+    shade: 'mid',
+    size: 'md',
+    variant: 'primary',
+  },
   argTypes: {
     ...hideProps(),
-    block: { defaultValue: false },
-    busy: { defaultValue: false },
-    disabled: { control: 'boolean', defaultValue: false },
-    label: { defaultValue: 'Send', control: 'text' },
-    onClick: { action: 'onClick' },
+    onClick: { action: 'onClick', ...disableControl() },
     onToggle: { action: 'onToggle' },
-    positionX: { defaultValue: 'right', control: 'inline-radio', options: ['left', 'right'] },
-    positionY: { defaultValue: 'bottom', control: 'inline-radio', options: ['top', 'bottom'] },
-    shade: { defaultValue: 'mid' },
-    size: { defaultValue: 'md' },
-    variant: { defaultValue: 'primary', control: 'select' },
+    positionX: { control: 'inline-radio', options: ['left', 'right'] },
+    positionY: { control: 'inline-radio', options: ['top', 'bottom'] },
   },
   parameters: {
     minHeight: 250,
@@ -36,10 +41,11 @@ export default {
 } as ComponentMeta<typeof ButtonSplit>;
 
 export function Basic(props: ButtonSplitProps) {
-  const [actionName, setActionName] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
+  const [actionName, setActionName] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  // eslint-disable-next-line unicorn/consistent-function-scoping
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     const { id } = event.currentTarget.dataset;
 
     action('onClick')(id);

@@ -1,16 +1,20 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { DatePickerInput, DatePickerInputProps } from 'src/DatePicker/Input';
 
-import { DatePickerInput, DatePickerInputProps } from '../../src/DatePicker/Input';
-import { hideProps } from '../__helpers__';
+import { disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/DatePickerInput',
   component: DatePickerInput,
+  args: {
+    borderless: false,
+    large: false,
+    locale: 'en',
+    showRange: false,
+  },
   argTypes: {
     ...hideProps(),
-    locale: { control: 'text' },
-    onClick: { action: 'onClick' },
+    onClick: disableControl(),
   },
   parameters: {
     minHeight: 350,

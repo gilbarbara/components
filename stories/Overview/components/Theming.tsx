@@ -1,8 +1,6 @@
-import React from 'react';
+import { Box, Paragraph } from 'src';
 
 import CodeBlock from './CodeBlock';
-
-import { Box, Paragraph } from '../../../src';
 
 function OverviewTheming(): JSX.Element {
   return (

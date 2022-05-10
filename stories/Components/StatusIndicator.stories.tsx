@@ -1,25 +1,26 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Box, Grid, Paragraph } from 'src';
+import { StatusIndicator, StatusIndicatorProps } from 'src/StatusIndicator';
 
-import { Box, Grid, Paragraph, StatusIndicator } from '../../src';
 import { hideProps, hideTable, variants } from '../__helpers__';
 
 export default {
   title: 'Components/StatusIndicator',
   component: StatusIndicator,
-  argTypes: {
-    ...hideProps(),
-    ratio: { defaultValue: 0.7 },
-    size: { defaultValue: 24 },
-    status: { control: 'select', defaultValue: 'active' },
+  args: {
+    ratio: 0.7,
+    size: 24,
+    shade: 'mid',
+    variant: 'green',
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof StatusIndicator>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: StatusIndicatorProps) => {
   return <StatusIndicator {...props} />;
 };
 
-export const Variants = (props: any) => {
+export const Variants = (props: StatusIndicatorProps) => {
   return (
     <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
       {variants.map(d => (

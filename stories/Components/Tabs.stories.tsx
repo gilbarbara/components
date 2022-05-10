@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Flex, Icon, Paragraph } from 'src';
+import { Tab, Tabs, TabsProps } from 'src/Tabs';
 
-import { Flex, Icon, Paragraph, Tab, Tabs } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
@@ -14,7 +14,7 @@ export default {
   },
 } as ComponentMeta<typeof Tabs>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: TabsProps) => {
   return (
     <Tabs {...props}>
       <Tab

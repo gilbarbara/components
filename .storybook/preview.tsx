@@ -7,7 +7,7 @@ import { styled } from '@storybook/theming';
 import { colors as themeColors } from '../src/modules/theme';
 import { Theme } from '../src/types';
 
-import { FlexCenter } from '../src';
+import { Box, FlexCenter } from '../src';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -92,6 +92,7 @@ const ThemeBlock = styled.div(
 function Story(StoryFn: React.FC, context: any) {
   const {
     globals: { appearance, baseColor },
+    parameters: { minHeight },
     viewMode,
   } = context;
 
@@ -101,7 +102,11 @@ function Story(StoryFn: React.FC, context: any) {
   const isSideBySide = appearance === 'side-by-side';
 
   if (viewMode === 'docs') {
-    return <StoryFn />;
+    return (
+      <Box minHeight={minHeight}>
+        <StoryFn />
+      </Box>
+    );
   }
 
   if (!isSideBySide && previousAppearance !== appearance) {
@@ -109,52 +114,52 @@ function Story(StoryFn: React.FC, context: any) {
   }
 
   if (isSideBySide) {
-      return (
-        <>
-          <ThemeProvider
-            theme={{
-              colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
-              darkMode: false,
-            }}
-          >
-            <ThemeBlock data-side="left" side="left">
-              <FlexCenter minHeight="100vh" maxWidth={1024} width="100%">
-                <StoryFn />
-              </FlexCenter>
-            </ThemeBlock>
-          </ThemeProvider>
-          <ThemeProvider
-            theme={{
-              colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
-              darkMode: true,
-            }}
-          >
-            <ThemeBlock data-side="right" side="right">
-              <FlexCenter minHeight="100vh" maxWidth={1024} width="100%">
-                <StoryFn />
-              </FlexCenter>
-            </ThemeBlock>
-          </ThemeProvider>
-        </>
-      );
-    }
-
     return (
-      <ThemeProvider
-        theme={{
-          darkMode: isDarkMode,
-          colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
-        }}
-      >
-        <FlexCenter
-          maxWidth={1024}
-          style={{ color: isDarkMode ? '#fff' : '#101010' }}
-          width="100%"
+      <>
+        <ThemeProvider
+          theme={{
+            colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
+            darkMode: false,
+          }}
         >
-          <StoryFn />
-        </FlexCenter>
-      </ThemeProvider>
+          <ThemeBlock data-side="left" side="left">
+            <FlexCenter minHeight="100vh" maxWidth={1024} width="100%">
+              <StoryFn />
+            </FlexCenter>
+          </ThemeBlock>
+        </ThemeProvider>
+        <ThemeProvider
+          theme={{
+            colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
+            darkMode: true,
+          }}
+        >
+          <ThemeBlock data-side="right" side="right">
+            <FlexCenter minHeight="100vh" maxWidth={1024} width="100%">
+              <StoryFn />
+            </FlexCenter>
+          </ThemeBlock>
+        </ThemeProvider>
+      </>
     );
+  }
+
+  return (
+    <ThemeProvider
+      theme={{
+        darkMode: isDarkMode,
+        colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
+      }}
+    >
+      <FlexCenter
+        maxWidth={1024}
+        style={{ color: isDarkMode ? '#fff' : '#101010' }}
+        width="100%"
+      >
+        <StoryFn />
+      </FlexCenter>
+    </ThemeProvider>
+  );
 }
 
 export const decorators = [Story];

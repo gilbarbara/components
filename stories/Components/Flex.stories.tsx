@@ -1,45 +1,35 @@
-import * as React from 'react';
+import { Icon, Text } from 'src';
+import { Flex, FlexCenter, FlexInline, FlexProps } from 'src/Flex';
 
-import { Flex, FlexCenter, FlexInline, Icon, Text } from '../../src';
 import { flexContent, flexItems, hideProps, layoutParameters } from '../__helpers__';
 
 export default {
   title: 'Components/Flex',
   component: Flex,
+  args: {
+    alignContent: 'center',
+    alignItems: 'stretch',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    shadow: 'high',
+    variant: 'white',
+  },
   argTypes: {
-    ...hideProps('textAlign'),
+    ...hideProps(),
     ...layoutParameters({ display: 'flex' }),
-    alignContent: {
-      control: 'select',
-      options: ['', ...flexContent],
-      defaultValue: 'center',
-    },
-    alignItems: {
-      control: 'select',
-      options: ['', ...flexItems],
-      defaultValue: 'stretch',
-    },
+    alignContent: { control: 'select', options: ['', ...flexContent] },
+    alignItems: { control: 'select', options: ['', ...flexItems] },
     flexDirection: {
       control: 'select',
       options: ['row', 'row-reverse', 'column', 'column-reverse'],
-      defaultValue: 'row',
     },
-    flexWrap: {
-      control: 'select',
-      options: ['nowrap', 'wrap', 'wrap-reverse'],
-      defaultValue: 'wrap',
-    },
-    justifyContent: {
-      control: 'select',
-      options: ['', ...flexContent],
-      defaultValue: 'flex-start',
-    },
-    shadow: { control: 'select', defaultValue: 'high' },
-    variant: { defaultValue: 'white' },
+    flexWrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
+    justifyContent: { control: 'select', options: ['', ...flexContent] },
   },
 };
 
-export const Basic = (props: any) => (
+export const Basic = (props: FlexProps) => (
   <Flex alignItems="" {...props} minHeight={300} width={400}>
     <FlexCenter padding="lg" variant="blue" width="40%">
       Box 40%
@@ -56,20 +46,25 @@ export const Basic = (props: any) => (
   </Flex>
 );
 
-export const Center = (props: any) => (
+export const Center = (props: FlexProps) => (
   <FlexCenter minHeight={400} width={400} {...props}>
     This is a centered Flex
   </FlexCenter>
 );
 
-export const Inline = (props: any) => (
+Center.args = {
+  alignItems: 'center',
+  justifyContent: 'center',
+};
+
+export const Inline = (props: FlexProps) => (
   <FlexInline alignItems="center" width={400} {...props}>
     <Icon mr="xs" name="stories" />
     <Text>This is a inline Flex</Text>
   </FlexInline>
 );
 
-Inline.argTypes = {
-  alignItems: { defaultValue: 'center' },
-  display: { defaultValue: 'inline-flex' },
+Inline.args = {
+  alignItems: 'center',
+  display: 'inline-flex',
 };

@@ -1,19 +1,16 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Loader } from 'src/Loader';
 
-import { Loader } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Loader',
   component: Loader,
-  argTypes: {
-    ...hideProps(),
-    size: { defaultValue: 128 },
-    type: { defaultValue: 'pill' },
-    variant: { control: 'select' },
-    shade: { control: 'select' },
+  args: {
+    size: 128,
+    type: 'pill',
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof Loader>;
 
 export const Basic = (props: any) => {

@@ -1,22 +1,21 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { ProgressBar, ProgressBarProps } from 'src/ProgressBar';
 
-import { ProgressBar } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ProgressBar',
   component: ProgressBar,
-  argTypes: {
-    ...hideProps(),
-    large: { defaultValue: false },
-    step: { defaultValue: 1 },
-    steps: { defaultValue: 4 },
-    showProgression: { defaultValue: true },
-    width: { control: 'text', defaultValue: '400px' },
+  args: {
+    large: false,
+    showProgression: true,
+    step: 1,
+    steps: 4,
+    width: 400,
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof ProgressBar>;
 
-export function Basic(props: any) {
+export function Basic(props: ProgressBarProps) {
   return <ProgressBar {...props} />;
 }

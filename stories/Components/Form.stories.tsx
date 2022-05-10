@@ -1,19 +1,24 @@
-import * as React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
+import { Box, Button, Divider, Field, Grid, Group, H2, H3 } from 'src';
+import { Form, FormProps } from 'src/Form';
 
-import { Box, Button, Divider, Field, Form, FormProps, Grid, Group, H2, H3 } from '../../src';
+import { hideNoControlsWarning } from '../__helpers__';
 
 export default {
   title: 'Components/Form',
   component: Form,
   subcomponents: { Field },
+  parameters: {
+    controls: hideNoControlsWarning(),
+  },
 } as ComponentMeta<typeof Form>;
 
 export interface FormData {
   area: string;
   availability: boolean;
+  color?: string;
   contractType: string[];
   email: string;
   experience: number;
@@ -88,6 +93,7 @@ const seniorities = [
 const defaultValues: FormData = {
   area: 'engineering',
   availability: true,
+  color: '#d00000',
   contractType: ['full-time'],
   email: 'test-user@example.com',
   experience: 8,
@@ -202,7 +208,10 @@ function EditForm({ formMethods }: FormProps<FormData>) {
         />
       </Grid>
 
-      <Field label="Picture" name="picture" type="file" />
+      <Grid gap={20} templateColumns="repeat(2, 1fr)">
+        <Field label="Picture" name="picture" type="file" />
+        <Field label="Profile color" name="color" type="color" />
+      </Grid>
 
       <Divider mb="xl" mt="md" />
 
@@ -282,6 +291,6 @@ function EditForm({ formMethods }: FormProps<FormData>) {
   );
 }
 
-export function Basic(): JSX.Element {
+export function Basic() {
   return <Form<FormData> defaultValues={defaultValues}>{EditForm}</Form>;
 }

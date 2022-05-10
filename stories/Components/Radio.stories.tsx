@@ -1,26 +1,21 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Radio, RadioProps } from 'src/CheckboxAndRadio';
 
-import { Radio } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Radio',
   component: Radio,
+  args: {
+    label: 'Skip Packaging',
+    name: 'radio',
+  },
   argTypes: {
     ...hideProps(),
-    label: { control: 'text', defaultValue: 'Skip Packaging' },
-    name: { defaultValue: 'check' },
-    onChange: {
-      action: 'onChange',
-      table: { disable: true },
-    },
-    checked: {
-      table: { disable: true },
-    },
+    onChange: { action: 'onChange' },
   },
 } as ComponentMeta<typeof Radio>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: RadioProps) => {
   return <Radio {...props} />;
 };

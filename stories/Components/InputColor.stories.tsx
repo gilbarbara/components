@@ -6,12 +6,14 @@ import { hideProps } from '../__helpers__';
 export default {
   title: 'Components/InputColor',
   component: InputColor,
+  args: {
+    disabled: false,
+    name: 'color',
+    readOnly: false,
+  },
   argTypes: {
     ...hideProps(),
-    disabled: { control: 'boolean', defaultValue: false },
     height: { control: 'text' },
-    name: { control: 'text', defaultValue: 'name' },
-    readOnly: { control: 'boolean', defaultValue: false },
     width: { control: 'text' },
   },
 } as ComponentMeta<typeof InputColor>;
