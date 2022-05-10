@@ -1,32 +1,21 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { CopyToClipboard, CopyToClipboardProps } from 'src/CopyToClipboard';
 
-import { CopyToClipboard } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/CopyToClipboard',
   component: CopyToClipboard,
-  argTypes: {
-    ...hideProps(),
-    text: {
-      defaultValue: 'test-user@example.com',
-    },
-    disableAnimation: {
-      defaultValue: false,
-    },
-    hoverText: {
-      defaultValue: 'Copy',
-    },
-    icon: {
-      defaultValue: 'copy',
-    },
-    size: {
-      defaultValue: 16,
-    },
+  args: {
+    disableAnimation: false,
+    hoverText: 'Copy',
+    icon: 'copy',
+    size: 16,
+    text: 'test-user@example.com',
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof CopyToClipboard>;
 
-export function Basic(props: any) {
+export function Basic(props: CopyToClipboardProps) {
   return <CopyToClipboard {...props} />;
 }

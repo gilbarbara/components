@@ -1,61 +1,44 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Alert, AlertProps } from 'src/Alert';
 
-import { Alert, Box } from '../../src';
-import { hideProps } from '../__helpers__';
+import { hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Alert',
   component: Alert,
+  args: {
+    children: 'Registration completed!',
+    invert: false,
+    type: 'success',
+  },
   argTypes: {
     ...hideProps(),
-    children: { control: 'text', defaultValue: 'Registration completed!' },
-    invert: { defaultValue: false },
-    type: { control: 'select', defaultValue: 'success' },
+    type: { control: 'select' },
   },
 } as ComponentMeta<typeof Alert>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: AlertProps) => {
   return <Alert {...props} />;
 };
 
-export function Types(props: any) {
+export function Types(props: AlertProps) {
   return (
-    <div>
+    <>
       {[
-        {
-          text: 'Registration completed!',
-          type: 'success',
-        },
-        {
-          text: 'Please fill in all the fields before proceeding.',
-          type: 'warning',
-        },
-        {
-          text: 'Oops, your information could not be saved.',
-          type: 'error',
-        },
-        {
-          text: 'Please wait, loading...',
-          type: 'info',
-        },
-        {
-          text: 'Nothing too important, just letting you know.',
-          type: 'neutral',
-        },
+        { text: 'Registration completed!', type: 'success' as const },
+        { text: 'Please fill in all the fields before proceeding.', type: 'warning' as const },
+        { text: 'Oops, your information could not be saved.', type: 'error' as const },
+        { text: 'Please wait, loading...', type: 'info' as const },
+        { text: 'Nothing too important, just letting you know.', type: 'neutral' as const },
       ].map(d => (
-        <Box key={d.type} mb="md">
-          <Alert {...props} type={d.type}>
-            {d.text}
-          </Alert>
-        </Box>
+        <Alert key={d.type} mb="md" {...props} type={d.type}>
+          {d.text}
+        </Alert>
       ))}
-    </div>
+    </>
   );
 }
 
 Types.argTypes = {
-  type: {
-    table: { disable: true },
-  },
+  type: hideTable(),
 };

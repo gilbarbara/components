@@ -1,32 +1,36 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Input, InputProps } from 'src/Input';
 
-import { Input } from '../../src';
+import { inputTypes } from 'src/modules/options';
+
 import { hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Input',
   component: Input,
+  args: {
+    borderless: false,
+    disabled: false,
+    endSpacing: false,
+    large: false,
+    name: 'name',
+    placeholder: 'Your name here...',
+    readOnly: false,
+    startSpacing: false,
+    type: 'text',
+    width: '100%',
+  },
   argTypes: {
     ...hideProps(),
-    borderless: { defaultValue: false },
-    disabled: { control: 'boolean', defaultValue: false },
-    endSpacing: { defaultValue: false },
-    large: { defaultValue: false },
-    name: { control: 'text', defaultValue: 'name' },
-    placeholder: { control: 'text', defaultValue: 'Your name here...' },
-    readOnly: { control: 'boolean', defaultValue: false },
-    startSpacing: { defaultValue: false },
-    type: { control: 'text', defaultValue: 'text' },
-    width: { control: 'text', defaultValue: '100%' },
+    type: { control: 'select', options: inputTypes },
   },
 } as ComponentMeta<typeof Input>;
 
-export function Basic(props: any) {
+export function Basic(props: InputProps) {
   return <Input {...props} />;
 }
 
-export function Variants(props: any) {
+export function Variants(props: InputProps) {
   return (
     <>
       <Input {...props} name="normal" />

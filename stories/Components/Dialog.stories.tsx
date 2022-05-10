@@ -1,49 +1,30 @@
-import * as React from 'react';
+import { useState } from 'react';
+import { Button } from 'src';
+import { Dialog, DialogProps } from 'src/Dialog';
 
-import { Button, Dialog } from '../../src';
+import { disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Dialog',
   component: Dialog,
-  subcomponents: { Button },
+  args: {
+    buttonOrder: 'ltr',
+    closeOnClickOverlay: false,
+    closeOnEsc: true,
+    content: 'You are adding a partner',
+    hideOverlay: false,
+    textAlign: 'left',
+    title: 'Do you really want to add it?',
+    width: 400,
+  },
   argTypes: {
-    content: {
-      control: 'text',
-      defaultValue: 'You are adding a partner',
-    },
-    isActive: {
-      table: { disable: true },
-    },
-    onClickCancel: {
-      table: { disable: true },
-    },
-    onClickConfirmation: {
-      table: { disable: true },
-    },
-    onClose: {
-      table: { disable: true },
-    },
-    onOpen: {
-      table: { disable: true },
-    },
-    title: {
-      control: 'text',
-      defaultValue: 'Do you really want to add it?',
-    },
-    width: {
-      control: 'number',
-      defaultValue: 400,
-    },
-    buttonOrder: { defaultValue: 'ltr' },
-    textAlign: { defaultValue: 'left' },
-    closeOnEsc: { defaultValue: true },
-    closeOnClickOverlay: { defaultValue: false },
-    hideOverlay: { defaultValue: false },
+    ...hideProps(),
+    isActive: disableControl(),
   },
 };
 
-export function Basic({ inline, ...rest }: any) {
-  const [isActive, setActive] = React.useState(true);
+export function Basic(props: DialogProps) {
+  const [isActive, setActive] = useState(false);
 
   const handleClicks = () => {
     setActive(v => !v);
@@ -51,11 +32,11 @@ export function Basic({ inline, ...rest }: any) {
 
   return (
     <div className="flex-center">
-      {!inline && <Button onClick={handleClicks}>Open Dialog</Button>}
+      <Button onClick={handleClicks}>Open Dialog</Button>
 
       <Dialog
-        {...rest}
-        isActive={inline || isActive}
+        {...props}
+        isActive={isActive}
         onClickCancel={handleClicks}
         onClickConfirmation={handleClicks}
       />

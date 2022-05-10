@@ -1,10 +1,9 @@
-import React from 'react';
 import SVG from 'react-inlinesvg';
+import { Box, Group, H2, H3, Jumbo, Paragraph } from 'src';
 
 import CodeBlock from './CodeBlock';
 
 import packageJson from '../../../package.json';
-import { Box, Group, H2, H3, Jumbo, Paragraph } from '../../../src';
 
 function OverviewAbout(): JSX.Element {
   return (

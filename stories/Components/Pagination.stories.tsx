@@ -1,24 +1,27 @@
-import * as React from 'react';
+import { MouseEvent, useState } from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Pagination, PaginationProps } from 'src/Pagination';
 
-import { Pagination } from '../../src';
-import { hideProps } from '../__helpers__';
+import { disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Pagination',
   component: Pagination,
+  args: {
+    edgeNavigationLimit: 3,
+    hideEdgeNavigation: false,
+    totalPages: 10,
+  },
   argTypes: {
-    ...hideProps('currentPage', 'onClick'),
-    totalPages: { defaultValue: 10 },
-    edgeNavigationLimit: { defaultValue: 3 },
-    hideEdgeNavigation: { defaultValue: false },
+    ...hideProps(),
+    onClick: disableControl(),
   },
 } as ComponentMeta<typeof Pagination>;
 
-export function Basic(props: any) {
-  const [currentPage, setCurrentPage] = React.useState(1);
+export function Basic(props: PaginationProps) {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     const { page = '' } = event.currentTarget.dataset;
 
     setCurrentPage(parseInt(page, 10));

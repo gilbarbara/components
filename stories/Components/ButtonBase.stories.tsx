@@ -1,30 +1,29 @@
-import * as React from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { ComponentMeta } from '@storybook/react';
+import { ButtonBase, ButtonBaseProps } from 'src/ButtonBase';
 
-import { ButtonBase } from '../../src';
-import { ButtonBaseProps } from '../../src/ButtonBase';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonBase',
   component: ButtonBase,
-  argTypes: {
-    ...hideProps(),
-    children: { control: 'text', defaultValue: 'Button' },
-    busy: { defaultValue: false },
-    disabled: { control: 'boolean', defaultValue: false },
-    bold: { defaultValue: false },
-    size: { defaultValue: 'regular' },
-    variant: { control: 'select' },
-    shade: { control: 'select' },
-    type: {
-      table: { disable: true },
+  args: {
+    bold: false,
+    busy: false,
+    children: 'Button',
+    disabled: false,
+    size: 'regular',
+    type: 'button',
+  },
+  argTypes: hideProps(),
+  parameters: {
+    docs: {
+      description: {
+        component: `A button without styling`,
+      },
     },
   },
 } as ComponentMeta<typeof ButtonBase>;
 
-const Template: Story<ButtonBaseProps> = props => {
+export function Basic(props: ButtonBaseProps) {
   return <ButtonBase {...props} />;
-};
-
-export const Basic = Template.bind({});
+}

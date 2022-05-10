@@ -1,48 +1,58 @@
-import * as React from 'react';
 import { useTheme } from '@emotion/react';
 import { ComponentMeta } from '@storybook/react';
+import { Grid } from 'src';
+import { Toggle, ToggleProps } from 'src/Toggle';
 
-import { Grid, Toggle } from '../../src';
-import { getTheme } from '../../src/modules/helpers';
-import * as Types from '../../src/types';
-import { hideProps } from '../__helpers__';
+import { getTheme } from 'src/modules/helpers';
+
+import * as Types from 'src/types';
+
+import { hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Toggle',
   component: Toggle,
+  args: {
+    defaultChecked: false,
+    disabled: false,
+    label: 'Toggle',
+    name: 'toggle',
+    variant: 'primary',
+    shade: 'mid',
+  },
   argTypes: {
-    ...hideProps('defaultChecked', 'onChange', 'onClick'),
-    label: { control: 'text', defaultValue: 'Toggle' },
-    name: { defaultValue: 'toggle' },
-    variant: { control: 'select', defaultValue: 'primary' },
-    shade: { control: 'select', defaultValue: 'mid' },
+    ...hideProps(),
+    label: { control: 'text' },
+    shade: { control: 'select' },
+    variant: { control: 'select' },
   },
 } as ComponentMeta<typeof Toggle>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: ToggleProps) => {
   return <Toggle {...props} />;
 };
 
-export function Colors(props: any) {
+export function Colors(props: ToggleProps) {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
       {[...Object.keys(variants), 'black', 'white'].map(color => (
-        <Toggle key={color} name={color} {...props} defaultChecked label={color} variant={color} />
+        <Toggle
+          key={color}
+          {...props}
+          defaultChecked
+          label={color}
+          name={color}
+          variant={color as Types.Variants}
+        />
       ))}
     </Grid>
   );
 }
 
 Colors.argTypes = {
-  label: {
-    table: { disable: true },
-  },
-  name: {
-    table: { disable: true },
-  },
-  variant: {
-    table: { disable: true },
-  },
+  label: hideTable(),
+  name: hideTable(),
+  variant: hideTable(),
 };

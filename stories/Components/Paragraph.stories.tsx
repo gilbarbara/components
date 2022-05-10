@@ -1,22 +1,20 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Text } from 'src';
+import { Paragraph, ParagraphProps } from 'src/Paragraph';
 
-import { Paragraph, Text } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Paragraph',
   component: Paragraph,
-  argTypes: {
-    ...hideProps('children'),
-    size: { control: 'select', defaultValue: 'regular' },
-    bold: { defaultValue: false },
-    variant: { control: 'select' },
-    shade: { control: 'select' },
+  args: {
+    bold: false,
+    size: 'regular',
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof Paragraph>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: ParagraphProps) => {
   return (
     <div>
       <Paragraph {...props}>

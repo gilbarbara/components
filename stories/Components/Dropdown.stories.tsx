@@ -1,9 +1,34 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Button, Icon } from 'src';
+import { Dropdown } from 'src/Dropdown';
 
-import { Button, Dropdown, Icon } from '../../src';
-import { DropdownCreateProps, DropdownOption } from '../../src/types';
-import { hideProps } from '../__helpers__';
+import { DropdownCreateProps, DropdownOption, DropdownProps } from 'src/types';
+
+import { disableControl, hideProps } from '../__helpers__';
+
+export default {
+  title: 'Components/Dropdown',
+  component: Dropdown,
+  args: {
+    borderless: false,
+    large: false,
+    multi: false,
+    showCreateAlways: false,
+    showCreateButton: true,
+  },
+  argTypes: {
+    ...hideProps(),
+    options: disableControl(),
+    showCreateButton: { description: 'Storybook only' },
+  },
+  parameters: {
+    actions: {
+      argTypesRegex: '(?!^onDropdownCloseRequest)^on[A-Z].*',
+    },
+    minHeight: 350,
+  },
+} as ComponentMeta<typeof Dropdown>;
 
 const options: DropdownOption[] = [
   { value: 1, label: 'One', content: <Icon name="abstract" /> },
@@ -16,7 +41,7 @@ const options: DropdownOption[] = [
 
 function CreateButton(props: DropdownCreateProps) {
   const { close, select, value } = props;
-  const [busy, setBusy] = React.useState(false);
+  const [busy, setBusy] = useState(false);
 
   const handleClick = () => {
     setBusy(true);
@@ -40,27 +65,10 @@ function CreateButton(props: DropdownCreateProps) {
   );
 }
 
-export default {
-  title: 'Components/Dropdown',
-  component: Dropdown,
-  parameters: {
-    actions: {
-      argTypesRegex: '(?!^onDropdownCloseRequest)^on[A-Z].*',
-    },
-  },
-  argTypes: {
-    ...hideProps('additionalProps', 'createFn'),
-    borderless: { defaultValue: false },
-    large: { defaultValue: false },
-    showCreateAlways: { defaultValue: false },
-    showCreateButton: { control: 'boolean', defaultValue: true },
-    multi: { control: 'boolean', defaultValue: false },
-    onDropdownCloseRequest: { disabled: true },
-  },
-} as ComponentMeta<typeof Dropdown>;
-
-export const Basic = (props: any) => {
+export const Basic = (props: DropdownProps & { showCreateButton: boolean }) => {
   const { showCreateButton } = props;
 
-  return <Dropdown createFn={showCreateButton && CreateButton} options={options} {...props} />;
+  return (
+    <Dropdown createFn={showCreateButton ? CreateButton : undefined} {...props} options={options} />
+  );
 };

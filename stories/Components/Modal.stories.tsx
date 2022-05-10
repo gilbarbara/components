@@ -1,37 +1,30 @@
-import * as React from 'react';
+import { useState } from 'react';
+import { Button, FormGroup, Group, Input, Textarea } from 'src';
+import { Modal, ModalProps } from 'src/Modal';
 
-import { Button, FormGroup, Group, Input, Modal, Textarea } from '../../src';
-import { hideProps } from '../__helpers__';
+import { disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Modal',
   component: Modal,
-  subcomponents: { Button },
+  args: {
+    closeOnClickOverlay: true,
+    closeOnEsc: true,
+    hideCloseButton: false,
+    hideOverlay: false,
+    maxHeight: '80vh',
+    title: 'Add User',
+    width: 600,
+  },
   argTypes: {
-    ...hideProps('content', 'isActive', 'onClose', 'onOpen'),
-    title: {
-      control: 'text',
-      defaultValue: 'Add User',
-    },
-    maxHeight: {
-      control: 'text',
-      defaultValue: '80vh',
-    },
-    maxWidth: {
-      control: 'text',
-    },
-    width: {
-      control: 'number',
-      defaultValue: 600,
-    },
-    closeOnEsc: { defaultValue: true },
-    closeOnClickOverlay: { defaultValue: false },
-    hideOverlay: { defaultValue: false },
+    ...hideProps(),
+    isActive: disableControl(),
+    maxWidth: { control: 'text' },
   },
 };
 
-export function Basic(props: any) {
-  const [isActive, setActive] = React.useState(false);
+export function Basic(props: ModalProps) {
+  const [isActive, setActive] = useState(false);
 
   const handleClick = () => {
     setActive(v => !v);

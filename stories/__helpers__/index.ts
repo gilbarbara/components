@@ -1,7 +1,8 @@
 import { AnyObject } from '@gilbarbara/types';
 
-import { variants as themeVariants } from '../../src/modules/theme';
-import { Shades, TextSizes, Variants } from '../../src/types';
+import { variants as themeVariants } from 'src/modules/theme';
+
+import { Shades, Variants } from 'src/types';
 
 const base = ['normal', 'stretch'];
 const contentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];
@@ -10,8 +11,11 @@ const contentPosition = ['center', 'end', 'flex-end', 'flex-start', 'start'];
 export const flexItems = ['baseline', ...base, ...contentPosition];
 export const flexContent = [...base, ...contentDistribution, ...contentPosition];
 export const shades = Object.keys(themeVariants.primary) as Shades[];
-export const textSizes: TextSizes[] = ['small', 'mid', 'regular', 'large'];
 export const variants = Object.keys(themeVariants) as Variants[];
+
+export function disableControl() {
+  return { control: false };
+}
 
 export function layoutParameters(options?: { display: string }) {
   const { display = 'block' } = options || {};
@@ -37,9 +41,9 @@ export function layoutParameters(options?: { display: string }) {
   };
 }
 
-export function hideTable() {
+export function hideNoControlsWarning() {
   return {
-    table: { disable: true },
+    hideNoControlsWarning: true,
   };
 }
 
@@ -47,6 +51,20 @@ export function hideProps(...props: string[]) {
   const fields: AnyObject = {
     as: hideTable(),
     theme: hideTable(),
+    // margin shortcuts
+    ml: hideTable(),
+    mb: hideTable(),
+    mr: hideTable(),
+    mt: hideTable(),
+    mx: hideTable(),
+    my: hideTable(),
+    // padding shortcuts
+    pl: hideTable(),
+    pb: hideTable(),
+    pr: hideTable(),
+    pt: hideTable(),
+    px: hideTable(),
+    py: hideTable(),
   };
 
   props.forEach(d => {
@@ -54,4 +72,10 @@ export function hideProps(...props: string[]) {
   });
 
   return fields;
+}
+
+export function hideTable() {
+  return {
+    table: { disable: true },
+  };
 }

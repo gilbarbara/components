@@ -1,20 +1,19 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Emoji, EmojiProps } from 'src/Emoji';
 
-import { Emoji } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Emoji',
   component: Emoji,
-  argTypes: {
-    ...hideProps(),
-    label: { defaultValue: 'Unicorn' },
-    symbol: { defaultValue: '🦄' },
-    size: { defaultValue: 64 },
+  args: {
+    label: 'Unicorn',
+    size: 64,
+    symbol: '🦄',
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof Emoji>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: EmojiProps) => {
   return <Emoji {...props} />;
 };

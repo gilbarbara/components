@@ -1,27 +1,30 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Icon } from 'src';
+import { Tooltip, TooltipProps } from 'src/Tooltip';
 
-import { Icon, Tooltip } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Tooltip',
   component: Tooltip,
+  args: {
+    align: 'middle',
+    bold: false,
+    content: 'Long and complete with additional information and some other data',
+    maxWidth: 320,
+    position: 'right',
+    shade: 'dark',
+    size: 'mid',
+    variant: 'gray',
+  },
   argTypes: {
-    ...hideProps('children'),
-    content: {
-      control: 'text',
-      defaultValue: 'Long and complete with additional information and some other data',
-    },
-    position: { defaultValue: 'right' },
-    align: { defaultValue: 'middle' },
-    variant: { defaultValue: 'gray' },
-    shade: { defaultValue: 'dark' },
-    size: { defaultValue: 'mid' },
+    ...hideProps(),
+    content: { control: 'text' },
+    size: { control: 'select' },
   },
 } as ComponentMeta<typeof Tooltip>;
 
-export function Basic(props: any) {
+export function Basic(props: TooltipProps) {
   const icon = <Icon name="info" size={24} title={null} />;
 
   return <Tooltip {...props}>{icon}</Tooltip>;

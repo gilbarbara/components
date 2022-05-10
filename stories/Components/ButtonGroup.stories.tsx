@@ -1,23 +1,24 @@
-import * as React from 'react';
+import { MouseEvent, useState } from 'react';
+import { Button } from 'src';
+import { ButtonGroup, ButtonGroupProps } from 'src/ButtonGroup';
 
-import { Button, ButtonGroup } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonGroup',
   component: ButtonGroup,
-  argTypes: {
-    ...hideProps(),
-    variant: { control: 'select', defaultValue: 'primary' },
-    shade: { control: 'select', defaultValue: 'mid' },
-    size: { control: 'select', defaultValue: 'md' },
+  args: {
+    shade: 'mid',
+    size: 'md',
+    variant: 'primary',
   },
+  argTypes: hideProps(),
 };
 
-export function Basic(props: any) {
-  const [active, setActive] = React.useState('two');
+export function Basic(props: ButtonGroupProps) {
+  const [active, setActive] = useState('two');
 
-  const handleClick = ({ target }: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {
     if (target instanceof HTMLButtonElement) {
       setActive(target.dataset.name || '');
     }

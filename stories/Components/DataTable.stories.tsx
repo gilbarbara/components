@@ -1,15 +1,12 @@
-import * as React from 'react';
+import { ChangeEvent, forwardRef, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { useSetState } from 'react-use';
 import { removeAccents } from '@gilbarbara/helpers';
 import { ComponentMeta } from '@storybook/react';
-
 import {
   Anchor,
   Box,
   Button,
   ButtonBase,
-  DataTable,
-  DataTableColumn,
   Dialog,
   Dropdown,
   Group,
@@ -19,22 +16,20 @@ import {
   NonIdealState,
   Tag,
   Text,
-} from '../../src';
-import { DropdownOption } from '../../src/types';
+} from 'src';
+import { DataTable, DataTableColumn } from 'src/DataTable';
+
+import { DropdownOption } from 'src/types';
+
 import { members } from '../__assets__/data';
-import { hideProps } from '../__helpers__';
+import { hideNoControlsWarning, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/DataTable',
   component: DataTable,
-  argTypes: {
-    ...hideProps('columns', 'data', 'style'),
-    clean: { defaultValue: false },
-    defaultColumn: { defaultValue: 'email' },
-    loading: { defaultValue: true },
-    noResults: { control: 'text' },
-    responsive: { defaultValue: true },
-    width: { defaultValue: '100%' },
+  argTypes: hideProps(),
+  parameters: {
+    controls: hideNoControlsWarning(),
   },
 } as ComponentMeta<typeof DataTable>;
 
@@ -78,12 +73,12 @@ const statuses = [
   { label: 'Users', value: 'users' },
 ];
 
-const TalentsHeader = React.forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element => {
+const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element => {
   const { setState, status, team } = props;
-  const [searchValue, setSearchValue] = React.useState('');
-  const debounceTimeout = React.useRef<number>();
+  const [searchValue, setSearchValue] = useState('');
+  const debounceTimeout = useRef<number>();
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
     clearTimeout(debounceTimeout.current);
@@ -148,13 +143,13 @@ const TalentsHeader = React.forwardRef<HTMLDivElement, Props>((props, ref): JSX.
 export function Basic() {
   const [{ loading, search, showDialog, status, team }, setState] =
     useSetState<BaseState>(baseState);
-  const headerRef = React.useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
-  const handleClickReset = React.useCallback(() => {
+  const handleClickReset = useCallback(() => {
     setState({ search: '', searchValue: '', status: '' });
   }, [setState]);
 
-  const handleClickDelete = React.useCallback(() => {
+  const handleClickDelete = useCallback(() => {
     setState({ showDialog: true });
   }, [setState]);
 
@@ -166,7 +161,7 @@ export function Basic() {
     setState({ showDialog: false });
   };
 
-  const columns = React.useMemo<DataTableColumn<Columns>[]>(() => {
+  const columns = useMemo<DataTableColumn<Columns>[]>(() => {
     return [
       { key: 'email', title: 'Nome / E-mail', size: 250 },
       { key: 'team', title: 'Team', min: 150 },
@@ -180,7 +175,7 @@ export function Basic() {
     ];
   }, []);
 
-  const data = React.useMemo<Record<Columns, React.ReactNode>[]>(() => {
+  const data = useMemo<Record<Columns, ReactNode>[]>(() => {
     return members
       .filter(d => {
         const nameOrEmail = removeAccents(d.name || d.email).toLowerCase();
@@ -226,7 +221,7 @@ export function Basic() {
       }));
   }, [handleClickDelete, search, status, team]);
 
-  const noResults = React.useMemo(() => {
+  const noResults = useMemo(() => {
     if (!members.length) {
       return (
         <NonIdealState icon="info" small title="Você ainda não adicionou candidatos na vaga" />

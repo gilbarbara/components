@@ -1,33 +1,32 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Jumbo, Paragraph, Text } from 'src';
+import { Container, ContainerProps } from 'src/Container';
 
-import { Container, Jumbo, Paragraph, Text } from '../../src';
-import { hideProps, hideTable } from '../__helpers__';
+import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Container',
   component: Container,
+  args: {
+    centered: false,
+    fullScreen: false,
+    verticalSpacing: false,
+  },
   argTypes: {
     ...hideProps(),
-    verticalSpacing: { defaultValue: false },
-    centered: { defaultValue: false },
-    fullScreen: { defaultValue: false },
     fullScreenOffset: { control: 'text' },
     verticalAlign: { control: 'select' },
-    margin: hideTable(),
-    padding: hideTable(),
-    radius: hideTable(),
-    shadow: hideTable(),
-    variant: hideTable(),
-    shade: hideTable(),
+  },
+  parameters: {
+    minHeight: 400,
   },
 } as ComponentMeta<typeof Container>;
 
-export const Basic = (props: any) => {
+export const Basic = (props: ContainerProps) => {
   return (
     <Container {...props} style={{ border: '1px solid #ccc' }}>
       <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
-      <Paragraph>I'm a wrapper that holds all other components in a route.</Paragraph>
+      <Paragraph>I'm a wrapper that holds all other components.</Paragraph>
       <Text size="small" variant="gray">
         *The border is just for visualization...
       </Text>

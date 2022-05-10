@@ -1,15 +1,17 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { DatePicker, DatePickerProps } from 'src/DatePicker/Base';
 
-import { DatePicker, DatePickerProps } from '../../src/DatePicker/Base';
-import { hideProps } from '../__helpers__';
+import { disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/DatePicker',
   component: DatePicker,
+  args: {
+    locale: 'en',
+  },
   argTypes: {
     ...hideProps(),
-    onClick: { action: 'onClick' },
+    onClick: disableControl(),
     open: { control: 'boolean' },
   },
 } as ComponentMeta<typeof DatePicker>;

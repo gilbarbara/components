@@ -1,24 +1,24 @@
-import * as React from 'react';
 import { ComponentMeta } from '@storybook/react';
+import { Form } from 'src';
+import { Field, FieldProps } from 'src/Field';
 
-import { Field, Form } from '../../src';
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Field',
   component: Field,
-  argTypes: {
-    ...hideProps(),
-    assistiveText: { control: 'text', defaultValue: 'Make sure to fill out your full name' },
-    disabled: { control: 'boolean', defaultValue: false },
-    label: { control: 'text', defaultValue: 'Name' },
-    name: { control: 'text', defaultValue: 'name' },
-    placeholder: { control: 'text', defaultValue: 'Your name here...' },
-    type: { defaultValue: 'text' },
-    width: { control: 'text', defaultValue: '100%' },
+  args: {
+    assistiveText: 'Make sure to fill out your full name',
+    disabled: false,
+    label: 'Name',
+    name: 'name',
+    placeholder: 'Your name here...',
+    type: 'text',
+    width: '100%',
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof Field>;
 
-export function Basic(props: any) {
+export function Basic(props: FieldProps) {
   return <Form>{() => <Field {...props} />}</Form>;
 }

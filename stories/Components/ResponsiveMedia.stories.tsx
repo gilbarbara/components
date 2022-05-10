@@ -1,26 +1,27 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { ComponentMeta } from '@storybook/react';
+import { ResponsiveMedia, ResponsiveMediaProps } from 'src/ResponsiveMedia';
 
-import { ResponsiveMedia } from '../../src';
-import { grayMid } from '../../src/modules/theme';
+import { grayMid } from 'src/modules/theme';
+
 import { hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ResponsiveMedia',
   component: ResponsiveMedia,
-  argTypes: {
-    ...hideProps(),
-    height: { defaultValue: 103 },
-    width: { defaultValue: 512 },
-    maxWidth: { defaultValue: 400 },
+  args: {
+    height: 103,
+    maxWidth: 400,
+    width: 512,
   },
+  argTypes: hideProps(),
 } as ComponentMeta<typeof ResponsiveMedia>;
 
-export const Basic = (props: any) => {
-  const [showMedia, setShowMedia] = React.useState(false);
+export const Basic = (props: ResponsiveMediaProps) => {
+  const [showMedia, setShowMedia] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
       setShowMedia(true);
     }, 2000);
