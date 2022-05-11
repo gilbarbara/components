@@ -27,7 +27,6 @@ export { Input } from './Input';
 export { InputColor } from './InputColor';
 export { InputFile } from './InputFile';
 export { Label } from './Label';
-export { LineThrough } from './LineThrough';
 export { Loader } from './Loader';
 export { Modal } from './Modal';
 export { Menu, MenuDivider, MenuItem } from './Menu';
