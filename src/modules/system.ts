@@ -13,6 +13,7 @@ import {
   WithLayout,
   WithMargin,
   WithPadding,
+  WithPositioning,
   WithRadius,
   WithShadow,
   WithTextOptions,
@@ -196,10 +197,8 @@ export function inputStyles<T extends WithTheme & { borderless?: boolean; multip
 
 export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
   const {
-    bottom,
     display,
     height,
-    left,
     maxHeight,
     maxWidth,
     minHeight,
@@ -207,32 +206,22 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
     opacity,
     overflow,
     pointerEvents,
-    position,
-    right,
     textAlign,
-    top,
     transform,
     transformOrigin,
     transition,
     width,
-    zIndex,
   } = props;
 
   const output: CSSObject = {
     opacity,
     overflow,
     pointerEvents,
-    position,
     textAlign,
     transition,
     transform,
     transformOrigin,
-    zIndex,
   };
-
-  if (!is.nullOrUndefined(bottom)) {
-    output.bottom = px(bottom);
-  }
 
   if (!is.nullOrUndefined(display)) {
     output.display = display;
@@ -240,10 +229,6 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
 
   if (!is.nullOrUndefined(height)) {
     output.height = px(height);
-  }
-
-  if (!is.nullOrUndefined(left)) {
-    output.left = px(left);
   }
 
   if (!is.nullOrUndefined(maxHeight)) {
@@ -260,14 +245,6 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
 
   if (!is.nullOrUndefined(minWidth)) {
     output.minWidth = px(minWidth);
-  }
-
-  if (!is.nullOrUndefined(right)) {
-    output.right = px(right);
-  }
-
-  if (!is.nullOrUndefined(top)) {
-    output.top = px(top);
   }
 
   if (!is.nullOrUndefined(width)) {
@@ -358,6 +335,33 @@ export function paddingStyles<T extends WithPadding>(props: T): CSSObject {
     if (pr) {
       output.paddingRight = spacing[pr];
     }
+  }
+
+  return output;
+}
+
+export function positioningStyles<T extends WithPositioning>(props: T): CSSObject {
+  const { bottom, left, position, right, top, zIndex } = props;
+
+  const output: CSSObject = {
+    position,
+    zIndex,
+  };
+
+  if (!is.nullOrUndefined(bottom)) {
+    output.bottom = px(bottom);
+  }
+
+  if (!is.nullOrUndefined(left)) {
+    output.left = px(left);
+  }
+
+  if (!is.nullOrUndefined(right)) {
+    output.right = px(right);
+  }
+
+  if (!is.nullOrUndefined(top)) {
+    output.top = px(top);
   }
 
   return output;
