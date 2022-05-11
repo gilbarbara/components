@@ -35,6 +35,7 @@ export function getStyledOptions(...exclude: string[]) {
         'shadow',
         'size',
         'width',
+        'wrap',
         ...exclude,
       ].includes(prop) &&
       !['onClear', 'onCreate', 'onDropdown', 'onOpen', 'onSelect'].some(d => prop.startsWith(d)),
