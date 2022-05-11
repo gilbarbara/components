@@ -9,7 +9,7 @@ import { textSizes } from 'src/modules/options';
 
 import * as Types from 'src/types';
 
-import { hideProps, hideTable } from '../__helpers__';
+import { colorProps, hideProps, hideTable, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Tag',
@@ -22,6 +22,8 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
+    ...marginProps(),
     children: { control: 'text' },
     size: { control: 'select' },
   },

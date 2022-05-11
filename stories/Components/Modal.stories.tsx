@@ -15,6 +15,7 @@ export default {
     maxHeight: '80vh',
     title: 'Add User',
     width: 600,
+    zIndex: 1000,
   },
   argTypes: {
     ...hideProps(),

@@ -7,7 +7,7 @@ import { getTheme } from 'src/modules/helpers';
 
 import * as Types from 'src/types';
 
-import { hideProps, hideTable } from '../__helpers__';
+import { colorProps, hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Toggle',
@@ -22,9 +22,8 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     label: { control: 'text' },
-    shade: { control: 'select' },
-    variant: { control: 'select' },
   },
 } as ComponentMeta<typeof Toggle>;
 

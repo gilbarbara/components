@@ -5,7 +5,7 @@ import { ResponsiveMedia, ResponsiveMediaProps } from 'src/ResponsiveMedia';
 
 import { grayMid } from 'src/modules/theme';
 
-import { hideProps } from '../__helpers__';
+import { hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/ResponsiveMedia',
@@ -15,7 +15,10 @@ export default {
     maxWidth: 400,
     width: 512,
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...marginProps(),
+  },
 } as ComponentMeta<typeof ResponsiveMedia>;
 
 export const Basic = (props: ResponsiveMediaProps) => {

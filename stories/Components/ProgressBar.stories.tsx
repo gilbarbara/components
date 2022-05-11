@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { ProgressBar, ProgressBarProps } from 'src/ProgressBar';
 
-import { hideProps } from '../__helpers__';
+import { hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/ProgressBar',
@@ -13,7 +13,10 @@ export default {
     steps: 4,
     width: 400,
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...marginProps(),
+  },
 } as ComponentMeta<typeof ProgressBar>;
 
 export function Basic(props: ProgressBarProps) {

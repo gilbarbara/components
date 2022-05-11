@@ -2,7 +2,7 @@ import { MouseEvent, useState } from 'react';
 import { Button } from 'src';
 import { ButtonGroup, ButtonGroupProps } from 'src/ButtonGroup';
 
-import { hideProps } from '../__helpers__';
+import { colorProps, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonGroup',
@@ -12,7 +12,10 @@ export default {
     size: 'md',
     variant: 'primary',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...colorProps(),
+  },
 };
 
 export function Basic(props: ButtonGroupProps) {

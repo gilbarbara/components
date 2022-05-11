@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { H1 } from 'src';
 import { Anchor, AnchorProps } from 'src/Anchor';
 
-import { hideProps } from '../__helpers__';
+import { colorProps, hideProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Anchor',
@@ -17,7 +17,11 @@ export default {
     shade: 'mid',
     variant: 'primary',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...colorProps(),
+    ...spacingProps(),
+  },
 } as ComponentMeta<typeof Anchor>;
 
 export function Basic(props: AnchorProps) {

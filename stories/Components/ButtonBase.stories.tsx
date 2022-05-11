@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { ButtonBase, ButtonBaseProps } from 'src/ButtonBase';
 
-import { hideProps } from '../__helpers__';
+import { colorProps, hideProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonBase',
@@ -14,7 +14,11 @@ export default {
     size: 'regular',
     type: 'button',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...colorProps(),
+    ...spacingProps(),
+  },
   parameters: {
     docs: {
       description: {

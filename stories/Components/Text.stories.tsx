@@ -6,7 +6,7 @@ import { Text, TextProps } from 'src/Text';
 
 import { textSizes } from 'src/modules/options';
 
-import { hideProps, hideTable } from '../__helpers__';
+import { colorProps, hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Text',
@@ -19,6 +19,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     children: { control: 'text' },
     size: { control: 'select' },
   },

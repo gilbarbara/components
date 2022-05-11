@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Jumbo, Paragraph, Text } from 'src';
 import { Container, ContainerProps } from 'src/Container';
 
-import { hideProps } from '../__helpers__';
+import { hideProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Container',
@@ -14,6 +14,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...spacingProps(),
     fullScreenOffset: { control: 'text' },
     verticalAlign: { control: 'select' },
   },

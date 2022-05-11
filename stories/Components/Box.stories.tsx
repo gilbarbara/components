@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { H3, Paragraph } from 'src';
 import { Box, BoxProps } from 'src/Box';
 
-import { hideProps, layoutParameters } from '../__helpers__';
+import { colorProps, hideProps, layoutProps, positioningProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Box',
@@ -16,7 +16,10 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...layoutParameters(),
+    ...colorProps(),
+    ...layoutProps(),
+    ...positioningProps(),
+    ...spacingProps(),
   },
 } as ComponentMeta<typeof Box>;
 

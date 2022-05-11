@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { Divider, DividerProps } from 'src/Divider';
 
-import { hideProps } from '../__helpers__';
+import { colorProps, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Divider',
@@ -17,6 +17,8 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
+    ...marginProps(),
     children: { control: 'text' },
     length: { control: 'text' },
   },

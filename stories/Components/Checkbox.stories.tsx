@@ -25,7 +25,7 @@ export const Basic = (props: CheckboxProps) => {
 
 export const Multiple = (props: CheckboxProps) => {
   return (
-    <FormGroup label="Options">
+    <FormGroup label="Options" width={480}>
       <Spacer>
         <Checkbox {...props} label="Show e-mail" name="showEmail" />
         <Checkbox {...props} label="Show picture" name="showPicture" />

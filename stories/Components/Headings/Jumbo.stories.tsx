@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Jumbo } from 'src/Headings';
 import { HeadingLargeProps } from 'src/Headings/utils';
 
-import { hideProps } from '../../__helpers__';
+import { hideProps, marginProps } from '../../__helpers__';
 
 export default {
   title: 'Components/Headings',
@@ -13,7 +13,10 @@ export default {
     large: false,
     light: false,
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...marginProps(),
+  },
 } as ComponentMeta<typeof Jumbo>;
 
 export const BasicJumbo = (props: HeadingLargeProps) => {

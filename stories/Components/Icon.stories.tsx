@@ -3,7 +3,7 @@ import { Icon, IconProps } from 'src/Icon';
 
 import { icons } from 'src/modules/options';
 
-import { hideProps } from '../__helpers__';
+import { hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Icon',
@@ -15,6 +15,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...marginProps(),
     name: { control: 'select', options: icons },
     title: { control: 'text' },
   },

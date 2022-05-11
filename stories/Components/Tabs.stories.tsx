@@ -2,13 +2,20 @@ import { ComponentMeta } from '@storybook/react';
 import { Flex, Icon, Paragraph } from 'src';
 import { Tab, Tabs, TabsProps } from 'src/Tabs';
 
-import { hideProps } from '../__helpers__';
+import { colorProps, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Tabs',
   component: Tabs,
+  args: {
+    initialId: 'one',
+    shade: 'mid',
+    variant: 'primary',
+  },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
+    ...marginProps(),
     maxHeight: { control: 'text' },
     minHeight: { control: 'text' },
   },

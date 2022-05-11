@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Box, Grid, Paragraph } from 'src';
 import { StatusIndicator, StatusIndicatorProps } from 'src/StatusIndicator';
 
-import { hideProps, hideTable, variants } from '../__helpers__';
+import { colorProps, hideProps, hideTable, marginProps, variants } from '../__helpers__';
 
 export default {
   title: 'Components/StatusIndicator',
@@ -13,7 +13,11 @@ export default {
     shade: 'mid',
     variant: 'green',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...colorProps(),
+    ...marginProps(),
+  },
 } as ComponentMeta<typeof StatusIndicator>;
 
 export const Basic = (props: StatusIndicatorProps) => {
