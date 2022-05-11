@@ -10,7 +10,7 @@ export default {
   args: {
     centered: false,
     fullScreen: false,
-    verticalSpacing: false,
+    verticalPadding: false,
   },
   argTypes: {
     ...hideProps(),

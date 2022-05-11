@@ -20,14 +20,14 @@ export interface ContainerProps extends WithMargin, WithPadding {
   fullScreenOffset?: StringOrNumber;
   style?: CSSProperties;
   verticalAlign?: 'around' | 'between' | 'bottom' | 'center' | 'evenly' | 'top';
-  verticalSpacing?: boolean;
+  verticalPadding?: boolean;
 }
 
 export const StyledContainer = styled(
   'div',
   getStyledOptions(),
 )<ContainerProps>(props => {
-  const { centered, fullScreen, fullScreenOffset, verticalAlign, verticalSpacing } = props;
+  const { centered, fullScreen, fullScreenOffset, verticalAlign, verticalPadding } = props;
   const { spacing } = getTheme(props);
 
   const justifyContentMap = {
@@ -38,22 +38,7 @@ export const StyledContainer = styled(
     evenly: 'space-evenly',
     top: 'flex-start',
   };
-  let verticalSpacingStyles;
   let centeredStyles;
-
-  if (verticalSpacing) {
-    verticalSpacingStyles = css`
-      padding-bottom: ${spacing.md};
-      padding-top: ${spacing.md};
-
-      ${responsive({
-        lg: {
-          paddingBottom: spacing.xl,
-          paddingTop: spacing.xl,
-        },
-      })};
-    `;
-  }
 
   if (centered || verticalAlign) {
     centeredStyles = css`
@@ -67,8 +52,27 @@ export const StyledContainer = styled(
     ${baseStyles(props)};
     margin-left: auto;
     margin-right: auto;
-    padding-left: ${spacing.md};
-    padding-right: ${spacing.md};
+    ${responsive({
+      _: {
+        paddingLeft: spacing.md,
+        paddingRight: spacing.md,
+      },
+      lg: {
+        paddingLeft: spacing.xl,
+        paddingRight: spacing.xl,
+      },
+    })};
+    ${verticalPadding &&
+    responsive({
+      _: {
+        paddingBottom: spacing.md,
+        paddingTop: spacing.md,
+      },
+      lg: {
+        paddingBottom: spacing.xl,
+        paddingTop: spacing.xl,
+      },
+    })}
     position: relative;
     width: 100%;
     ${centeredStyles};
@@ -80,14 +84,6 @@ export const StyledContainer = styled(
     css`
       justify-content: ${justifyContentMap[verticalAlign]};
     `};
-    ${verticalSpacingStyles};
-
-    ${responsive({
-      lg: {
-        paddingLeft: spacing.xl,
-        paddingRight: spacing.xl,
-      },
-    })};
     ${marginStyles(props)};
     ${paddingStyles(props)};
     ${shadowStyles(props)};
