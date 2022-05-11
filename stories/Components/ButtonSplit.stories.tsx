@@ -10,7 +10,7 @@ import {
   ButtonSplitProps,
 } from 'src/ButtonSplit';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { colorProps, disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonSplit',
@@ -30,6 +30,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     onClick: { action: 'onClick', ...disableControl() },
     onToggle: { action: 'onToggle' },
     positionX: { control: 'inline-radio', options: ['left', 'right'] },

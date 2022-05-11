@@ -6,7 +6,7 @@ import { Search, SearchProps } from 'src/Search';
 
 import { SearchCreateProps, SearchOption } from 'src/types';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { disableControl, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Search',
@@ -21,6 +21,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...marginProps(),
     options: disableControl(),
     showCreateButton: { control: 'boolean', description: 'Storybook only' },
   },

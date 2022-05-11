@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { CopyToClipboard, CopyToClipboardProps } from 'src/CopyToClipboard';
 
-import { hideProps } from '../__helpers__';
+import { hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/CopyToClipboard',
@@ -13,7 +13,10 @@ export default {
     size: 16,
     text: 'test-user@example.com',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...marginProps(),
+  },
 } as ComponentMeta<typeof CopyToClipboard>;
 
 export function Basic(props: CopyToClipboardProps) {

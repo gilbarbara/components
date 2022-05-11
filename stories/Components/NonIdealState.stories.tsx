@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { NonIdealState, NonIdealStateProps } from 'src/NonIdealState';
 
-import { hideProps } from '../__helpers__';
+import { hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/NonIdealState',
@@ -12,6 +12,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...marginProps(),
     children: { control: 'text' },
     description: { control: 'text' },
     title: { control: 'text' },

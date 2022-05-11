@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { Avatar, ButtonBase } from 'src';
 import { Menu, MenuDivider, MenuItem, MenuProps } from 'src/Menu';
 
-import { hideProps } from '../__helpers__';
+import { colorProps, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Menu',
@@ -17,6 +17,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     icon: { control: 'select', options: ['icon', 'avatar'] },
     positionX: { control: 'inline-radio' },
     positionY: { control: 'inline-radio' },

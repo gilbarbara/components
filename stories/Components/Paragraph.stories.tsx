@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Text } from 'src';
 import { Paragraph, ParagraphProps } from 'src/Paragraph';
 
-import { hideProps } from '../__helpers__';
+import { colorProps, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Paragraph',
@@ -11,7 +11,11 @@ export default {
     bold: false,
     size: 'regular',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...colorProps(),
+    ...marginProps(),
+  },
 } as ComponentMeta<typeof Paragraph>;
 
 export const Basic = (props: ParagraphProps) => {

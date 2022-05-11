@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { FlexCenter, Grid, Paragraph } from 'src';
 import { Avatar, AvatarProps } from 'src/Avatar';
 
-import { hideProps, hideTable } from '../__helpers__';
+import { colorProps, hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Avatar',
@@ -14,7 +14,10 @@ export default {
     size: 'md',
     variant: 'primary',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...colorProps(),
+  },
 } as ComponentMeta<typeof Avatar>;
 
 export const Basic = (props: AvatarProps) => {

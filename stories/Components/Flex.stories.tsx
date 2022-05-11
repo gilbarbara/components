@@ -1,7 +1,15 @@
 import { Icon, Text } from 'src';
 import { Flex, FlexCenter, FlexInline, FlexProps } from 'src/Flex';
 
-import { flexContent, flexItems, hideProps, layoutParameters } from '../__helpers__';
+import {
+  colorProps,
+  flexContent,
+  flexItems,
+  hideProps,
+  layoutProps,
+  positioningProps,
+  spacingProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/Flex',
@@ -17,7 +25,10 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...layoutParameters({ display: 'flex' }),
+    ...colorProps(),
+    ...layoutProps({ display: 'flex' }),
+    ...positioningProps(),
+    ...spacingProps(),
     alignContent: { control: 'select', options: ['', ...flexContent] },
     alignItems: { control: 'select', options: ['', ...flexItems] },
     flexDirection: {

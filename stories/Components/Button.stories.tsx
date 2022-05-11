@@ -8,7 +8,7 @@ import { sizes } from 'src/modules/options';
 
 import * as Types from 'src/types';
 
-import { hideProps, hideTable, shades, variants } from '../__helpers__';
+import { colorProps, hideProps, hideTable, paddingProps, shades, variants } from '../__helpers__';
 
 export default {
   title: 'Components/Button',
@@ -29,6 +29,8 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
+    ...paddingProps(),
     size: { control: 'radio', options: sizes },
   },
 } as ComponentMeta<typeof Button>;

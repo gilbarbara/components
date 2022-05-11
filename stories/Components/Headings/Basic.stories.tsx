@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { H1, H2, H3, H4, H5, H6 } from 'src/Headings';
 import { HeadingProps } from 'src/Headings/utils';
 
-import { hideProps } from '../../__helpers__';
+import { hideProps, marginProps } from '../../__helpers__';
 
 export default {
   title: 'Components/Headings',
@@ -12,7 +12,10 @@ export default {
     children: 'The quick brown fox jumps over the lazy dog',
     light: false,
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...marginProps(),
+  },
 } as ComponentMeta<typeof H1>;
 
 export const BasicH1 = (props: HeadingProps) => {

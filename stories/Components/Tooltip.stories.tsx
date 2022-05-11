@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Button, Flex, Icon, Paragraph, Spacer } from 'src';
 import { Tooltip, TooltipProps } from 'src/Tooltip';
 
-import { hideNoControlsWarning, hideProps } from '../__helpers__';
+import { colorProps, hideNoControlsWarning, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Tooltip',
@@ -18,6 +18,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     content: { control: 'text' },
     size: { control: 'select' },
   },

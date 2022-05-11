@@ -1,7 +1,15 @@
 import { Box } from 'src';
 import { Grid, GridProps } from 'src/Grid';
 
-import { flexContent, flexItems, hideProps } from '../__helpers__';
+import {
+  colorProps,
+  flexContent,
+  flexItems,
+  hideProps,
+  layoutProps,
+  positioningProps,
+  spacingProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/Grid',
@@ -19,6 +27,10 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
+    ...layoutProps({ display: 'grid' }),
+    ...positioningProps(),
+    ...spacingProps(),
     alignContent: { options: flexContent },
     alignItems: { options: flexItems },
     autoColumns: { control: 'text' },

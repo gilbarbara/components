@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { Alert, AlertProps } from 'src/Alert';
 
-import { hideProps, hideTable } from '../__helpers__';
+import { hideProps, hideTable, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Alert',
@@ -13,6 +13,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...marginProps(),
     type: { control: 'select' },
   },
 } as ComponentMeta<typeof Alert>;

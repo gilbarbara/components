@@ -22,12 +22,16 @@ import { DataTable, DataTableColumn } from 'src/DataTable';
 import { DropdownOption } from 'src/types';
 
 import { members } from '../__assets__/data';
-import { hideNoControlsWarning, hideProps } from '../__helpers__';
+import { hideNoControlsWarning, hideProps, layoutProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/DataTable',
   component: DataTable,
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...layoutProps(),
+    ...marginProps(),
+  },
   parameters: {
     controls: hideNoControlsWarning(),
   },

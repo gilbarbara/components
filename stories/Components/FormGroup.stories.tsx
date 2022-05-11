@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Input, Select, Textarea } from 'src';
 import { FormGroup, FormGroupProps } from 'src/FormGroup';
 
-import { hideProps, hideTable, layoutParameters } from '../__helpers__';
+import { hideProps, hideTable, layoutProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/FormGroup',
@@ -15,7 +15,8 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...layoutParameters(),
+    ...layoutProps(),
+    ...marginProps(),
     error: { control: 'text' },
     labelId: { control: 'text' },
   },
