@@ -1,7 +1,5 @@
-import { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { CSSProperties, isValidElement, ReactNode, useEffect, useRef, useState } from 'react';
 import innerText from 'react-innertext';
-import { useMount, useUnmount } from 'react-use';
 import { css, useTheme } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import is from 'is-lite';
@@ -10,15 +8,15 @@ import { fadeIn } from './modules/animations';
 import { getColorVariant, getTheme, px } from './modules/helpers';
 import { baseStyles, getStyledOptions } from './modules/system';
 import { Text } from './Text';
-import { WithColor, WithTextOptions } from './types';
+import { Sizes, WithColor, WithTextOptions, WithTextSize } from './types';
 
 interface SharedProps {
   /** @default middle */
   align: 'start' | 'middle' | 'end';
-  /** @default 320 */
-  maxWidth?: number;
-  /** @default right */
+  /** @default bottom */
   position: 'bottom' | 'left' | 'right' | 'top';
+  /** Content wrapping */
+  wrap?: Sizes;
 }
 
 interface ColorProps {
@@ -33,8 +31,9 @@ export interface TooltipProps extends Partial<SharedProps>, WithColor, WithTextO
   style?: CSSProperties;
 }
 
-const arrowSize = 12;
-const distance = -5;
+const arrowDistance = -3;
+const arrowSize = 10;
+const arrowSpacing = arrowSize + 2;
 
 const StyledTooltip = styled('span', getStyledOptions())`
   ${baseStyles};
@@ -43,110 +42,35 @@ const StyledTooltip = styled('span', getStyledOptions())`
   position: relative;
 `;
 
-const Body = styled(
-  'span',
-  getStyledOptions(),
-)<SharedProps & ColorProps & { width: string | number }>(props => {
-  const { align, bg, color, position, width } = props;
-  const { radius, spacing } = getTheme(props);
-  const space = '14px';
-
-  const styles: CSSObject = {};
-
-  if (align === 'start') {
-    if (['left', 'right'].includes(position)) {
-      styles.top = px(distance);
-    } else {
-      styles.left = px(distance);
-    }
-  } else if (align === 'middle') {
-    if (['left', 'right'].includes(position)) {
-      styles.top = '50%';
-      styles.transform = 'translateY(-50%)';
-    } else {
-      styles.left = '50%';
-      styles.transform = 'translateX(-50%)';
-    }
-  } else if (['left', 'right'].includes(position)) {
-    styles.bottom = px(distance);
-  } else {
-    styles.right = px(distance);
-  }
-
-  switch (position) {
-    case 'bottom': {
-      styles.marginTop = space;
-      styles.top = '100%';
-
-      break;
-    }
-    case 'left': {
-      styles.right = '100%';
-      styles.marginRight = space;
-
-      break;
-    }
-    case 'right': {
-      styles.left = '100%';
-      styles.marginLeft = space;
-
-      break;
-    }
-    case 'top': {
-      styles.bottom = '100%';
-      styles.marginBottom = space;
-
-      break;
-    }
-    // No default
-  }
-
-  return css`
-    animation: ${fadeIn} 0.2s forwards;
-    background-color: ${bg};
-    border-radius: ${radius.xxs};
-    color: ${color};
-    max-width: 320px;
-    padding: ${spacing.xs} ${spacing.md};
-    position: absolute;
-    width: ${px(width)};
-    z-index: 1000;
-    ${styles};
-  `;
-});
-
-const Content = styled(Text)`
-  position: relative;
-  z-index: 10;
-`;
-
-const Arrow = styled.span<SharedProps & ColorProps>(props => {
+const StyledArrow = styled.span<SharedProps & ColorProps>(props => {
   const { align, bg, position } = props;
 
   const styles: CSSObject = {};
+  const distance = '10px';
+  const offset = '-7px';
   let arrowTranslate = '';
 
   switch (position) {
     case 'bottom': {
-      styles.top = '-8px';
+      styles.top = offset;
       arrowTranslate = 'translate(-2px, 2px)';
 
       break;
     }
     case 'left': {
-      styles.right = '-8px';
+      styles.right = offset;
       arrowTranslate = 'translate(-2px, -2px)';
 
       break;
     }
     case 'right': {
-      styles.left = '-8px';
+      styles.left = offset;
       arrowTranslate = 'translate(2px, 2px)';
 
       break;
     }
     case 'top': {
-      styles.bottom = '-8px';
+      styles.bottom = offset;
       arrowTranslate = 'translate(2px, -2px)';
 
       break;
@@ -156,21 +80,21 @@ const Arrow = styled.span<SharedProps & ColorProps>(props => {
 
   if (['bottom', 'top'].includes(position)) {
     if (align === 'start') {
-      styles.left = '10px';
+      styles.left = distance;
     } else if (align === 'middle') {
       styles.left = '50%';
       styles.transform = 'translateX(-50%)';
     } else {
-      styles.right = '10px';
+      styles.right = distance;
     }
   } else if (['left', 'right'].includes(position)) {
     if (align === 'start') {
-      styles.top = '10px';
+      styles.top = distance;
     } else if (align === 'middle') {
       styles.top = '50%';
       styles.transform = 'translateY(-50%)';
     } else {
-      styles.bottom = '10px';
+      styles.bottom = distance;
     }
   }
 
@@ -184,7 +108,7 @@ const Arrow = styled.span<SharedProps & ColorProps>(props => {
 
     &:before {
       background-color: ${bg};
-      border-radius: 2px;
+      border-radius: 1px;
       content: '';
       display: block;
       height: ${px(arrowSize)};
@@ -195,48 +119,155 @@ const Arrow = styled.span<SharedProps & ColorProps>(props => {
   `;
 });
 
-function TooltipBody(
-  props: Omit<TooltipProps, 'children' | 'open'> &
-    ColorProps & {
-      width: string | number;
-    },
-) {
+const StyledBody = styled(
+  'span',
+  getStyledOptions(),
+)<SharedProps & ColorProps & WithTextSize>(props => {
+  const { align, bg, color, position, size, wrap } = props;
+  const { radius, spacing } = getTheme(props);
+
+  const styles: CSSObject = {};
+
+  if (align === 'start') {
+    if (['left', 'right'].includes(position)) {
+      styles.top = px(arrowDistance);
+    } else {
+      styles.left = px(arrowDistance);
+    }
+  } else if (align === 'middle') {
+    if (['left', 'right'].includes(position)) {
+      styles.top = '50%';
+      styles.transform = 'translateY(-50%)';
+    } else {
+      styles.left = '50%';
+      styles.transform = 'translateX(-50%)';
+    }
+  } else if (['left', 'right'].includes(position)) {
+    styles.bottom = px(arrowDistance);
+  } else {
+    styles.right = px(arrowDistance);
+  }
+
+  switch (position) {
+    case 'bottom': {
+      styles.marginTop = arrowSpacing;
+      styles.top = '100%';
+
+      break;
+    }
+    case 'left': {
+      styles.right = '100%';
+      styles.marginRight = arrowSpacing;
+
+      break;
+    }
+    case 'right': {
+      styles.left = '100%';
+      styles.marginLeft = arrowSpacing;
+
+      break;
+    }
+    case 'top': {
+      styles.bottom = '100%';
+      styles.marginBottom = arrowSpacing;
+
+      break;
+    }
+  }
+
+  switch (size) {
+    case 'small':
+    case 'mid': {
+      styles.padding = `${spacing.xxs} ${spacing.xs}`;
+      break;
+    }
+    default: {
+      styles.padding = `${spacing.xs} ${spacing.sm}`;
+      break;
+    }
+  }
+
+  let width;
+
+  switch (wrap) {
+    case 'sm': {
+      width = '100px';
+      break;
+    }
+    case 'md': {
+      width = '200px';
+      break;
+    }
+    case 'lg': {
+      width = '320px';
+      break;
+    }
+  }
+
+  return css`
+    animation: ${fadeIn} 0.2s forwards;
+    background-color: ${bg};
+    border-radius: ${radius.xxs};
+    color: ${color};
+    position: absolute;
+    text-align: center;
+    white-space: ${wrap ? 'initial' : 'nowrap'};
+    width: ${width};
+    ${styles};
+  `;
+});
+
+const StyledContent = styled(Text)`
+  position: relative;
+  z-index: 10;
+`;
+
+function TooltipBody(props: Omit<TooltipProps, 'children' | 'open'> & ColorProps) {
   const {
     align = 'middle',
     bg,
     bold,
     color,
     content,
-    maxWidth = 320,
     position = 'right',
     size = 'mid',
     style,
-    width,
+    wrap,
   } = props;
 
   return (
-    <Body
+    <StyledBody
       align={align}
       bg={bg}
       color={color}
-      maxWidth={maxWidth}
+      data-component-name="TooltipBody"
       position={position}
+      size={size}
       style={style}
-      width={width}
+      wrap={wrap}
     >
-      <Content bold={bold} size={size}>
-        {content}
-      </Content>
-      <Arrow align={align} bg={bg} color={color} position={position} />
-    </Body>
+      {isValidElement(content) ? (
+        content
+      ) : (
+        <StyledContent bold={bold} data-component-name="TooltipContent" size={size}>
+          {content}
+        </StyledContent>
+      )}
+      <StyledArrow
+        align={align}
+        bg={bg}
+        color={color}
+        data-component-name="TooltipArrow"
+        position={position}
+      />
+    </StyledBody>
   );
 }
 
 export function Tooltip(props: TooltipProps): JSX.Element {
   const { children, content, open, shade, variant = 'gray' } = props;
-  const isMounted = useRef(false);
-  const [isActive, setActive] = useState(open || false);
-  const [width, setWidth] = useState<number>(0);
+  const isActive = useRef(false);
+  const [isOpen, setOpen] = useState(open || false);
 
   const { variants } = getTheme({ theme: useTheme() });
 
@@ -244,54 +275,23 @@ export function Tooltip(props: TooltipProps): JSX.Element {
 
   const { bg, color } = getColorVariant(variant, shade, variants);
 
-  useMount(() => {
-    isMounted.current = true;
-  });
-
-  useUnmount(() => {
-    isMounted.current = false;
-  });
-
   useEffect(() => {
-    const element = document.createElement('div');
+    isActive.current = true;
 
-    element.id = 'tooltip-sizing';
-    element.style.position = 'absolute';
-    element.style.top = '-9999px';
-    element.style.left = '-9999px';
-    document.body.appendChild(element);
-
-    render(
-      <TooltipBody
-        {...props}
-        bg="#000"
-        color="#fff"
-        style={{ position: 'static', whiteSpace: 'nowrap' }}
-        width="auto"
-      />,
-      element,
-      () => {
-        const rect = element.getBoundingClientRect();
-
-        if (isMounted.current) {
-          setWidth(Math.ceil(rect.width - arrowSize));
-        }
-
-        unmountComponentAtNode(element);
-        document.body.removeChild(element);
-      },
-    );
-  }, [props, width]);
+    return () => {
+      isActive.current = false;
+    };
+  }, []);
 
   const handleMouseEnter = () => {
     if (!is.boolean(open)) {
-      setActive(true);
+      setOpen(true);
     }
   };
 
   const handleMouseLeave = () => {
     if (!is.boolean(open)) {
-      setActive(false);
+      setOpen(false);
     }
   };
 
@@ -301,17 +301,17 @@ export function Tooltip(props: TooltipProps): JSX.Element {
       data-component-name="Tooltip"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      role="tooltip"
     >
       {children}
-      {isActive && <TooltipBody {...props} bg={bg} color={color} width={width} />}
+      {isOpen && <TooltipBody {...props} bg={bg} color={color} />}
     </StyledTooltip>
   );
 }
 
 Tooltip.defaultProps = {
   align: 'middle',
-  maxWidth: 320,
-  position: 'right',
+  position: 'bottom',
   shade: 'dark',
   size: 'mid',
   variant: 'gray',
