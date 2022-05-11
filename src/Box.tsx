@@ -9,6 +9,7 @@ import {
   layoutStyles,
   marginStyles,
   paddingStyles,
+  positioningStyles,
   radiusStyles,
   shadowStyles,
 } from './modules/system';
@@ -19,6 +20,7 @@ import {
   WithLayout,
   WithMargin,
   WithPadding,
+  WithPositioning,
   WithRadius,
   WithShadow,
 } from './types';
@@ -29,6 +31,7 @@ export interface BoxKnownProps
     WithLayout,
     WithMargin,
     WithPadding,
+    WithPositioning,
     WithRadius,
     WithShadow {
   children?: ReactNode;
@@ -46,6 +49,7 @@ export const StyledBox = styled(
     ${layoutStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};
+    ${positioningStyles(props)};
     ${radiusStyles(props)};
     ${shadowStyles(props)};
   `;

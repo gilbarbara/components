@@ -89,9 +89,7 @@ export interface WithInvert {
 }
 
 export interface WithLayout extends WithDisplay {
-  bottom?: StandardLonghandProperties['bottom'] | number;
   height?: StandardLonghandProperties['height'] | number;
-  left?: StandardLonghandProperties['left'] | number;
   maxHeight?: StandardLonghandProperties['maxHeight'] | number;
   maxWidth?: StandardLonghandProperties['maxWidth'] | number;
   minHeight?: StandardLonghandProperties['minHeight'] | number;
@@ -99,15 +97,11 @@ export interface WithLayout extends WithDisplay {
   opacity?: StandardLonghandProperties['opacity'] | number;
   overflow?: StandardShorthandProperties['overflow'];
   pointerEvents?: StandardLonghandProperties['pointerEvents'];
-  position?: StandardLonghandProperties['position'];
-  right?: StandardLonghandProperties['right'] | number;
   textAlign?: StandardLonghandProperties['textAlign'];
-  top?: StandardLonghandProperties['top'] | number;
   transform?: StandardLonghandProperties['transform'];
   transformOrigin?: StandardLonghandProperties['transformOrigin'];
   transition?: StandardShorthandProperties['transition'];
   width?: StandardLonghandProperties['width'] | number;
-  zIndex?: StandardLonghandProperties['zIndex'] | number;
 }
 
 export interface WithMargin {
@@ -142,6 +136,16 @@ export interface WithPadding {
   px?: Spacing;
   /** padding vertical axis */
   py?: Spacing;
+}
+
+export interface WithPositioning {
+  bottom?: StandardLonghandProperties['bottom'] | number;
+  left?: StandardLonghandProperties['left'] | number;
+  position?: StandardLonghandProperties['position'];
+  right?: StandardLonghandProperties['right'] | number;
+  top?: StandardLonghandProperties['top'] | number;
+  transform?: StandardLonghandProperties['transform'];
+  zIndex?: StandardLonghandProperties['zIndex'] | number;
 }
 
 export interface WithRadius {
