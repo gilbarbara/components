@@ -1,4 +1,4 @@
-import { ComponentMeta, StoryContext } from '@storybook/react';
+import { ComponentMeta } from '@storybook/react';
 import { Divider, DividerProps } from 'src/Divider';
 
 import { hideProps } from '../__helpers__';
@@ -7,12 +7,38 @@ export default {
   title: 'Components/Divider',
   component: Divider,
   args: {
-    size: 'md',
-    type: 'solid',
+    borderStyle: 'solid',
+    dimension: 'sm',
+    direction: 'horizontal',
+    gap: 'xs',
+    shade: 'light',
+    size: 'mid',
+    variant: 'gray',
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    children: { control: 'text' },
+    length: { control: 'text' },
+  },
 } as ComponentMeta<typeof Divider>;
 
-export const Basic = ({ width, ...props }: DividerProps, { viewMode }: StoryContext) => {
-  return <Divider width={viewMode === 'docs' ? width || 320 : '100%'} {...props} />;
+export const Basic = (props: DividerProps) => {
+  return <Divider {...props} />;
+};
+
+export const Vertical = (props: DividerProps) => {
+  return <Divider {...props} />;
+};
+
+Vertical.args = {
+  direction: 'vertical',
+  length: 100,
+};
+
+export const WithText = (props: DividerProps) => {
+  return <Divider {...props} />;
+};
+
+WithText.args = {
+  children: 'or',
 };

@@ -1,23 +1,38 @@
+import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { getTheme, px } from './modules/helpers';
-import { getStyledOptions, marginStyles } from './modules/system';
-import { ComponentProps, StyledProps, WithMargin } from './types';
+import { getColorVariant, getTheme, px } from './modules/helpers';
+import { baseStyles, getStyledOptions, marginStyles, textStyles } from './modules/system';
+import {
+  ComponentProps,
+  Sizes,
+  Spacing,
+  StyledProps,
+  WithColor,
+  WithMargin,
+  WithTextSize,
+} from './types';
 
-export interface DividerKnownProps extends StyledProps, WithMargin {
-  /** @default sm */
-  size?: 'sm' | 'md' | 'lg';
+export interface DividerKnownProps extends StyledProps, WithColor, WithMargin, WithTextSize {
   /** @default solid */
-  type?: 'solid' | 'dashed' | 'dotted';
+  borderStyle?: 'solid' | 'dashed' | 'dotted';
+  /** Optional text */
+  children?: ReactNode;
+  /** @default sm */
+  dimension?: Sizes;
+  /** @default horizontal */
+  direction?: 'horizontal' | 'vertical';
+  /** @default xs */
+  gap?: Spacing;
   /** @default 100% */
-  width?: StringOrNumber;
+  length?: StringOrNumber;
 }
 
 export type DividerProps = ComponentProps<HTMLDivElement, DividerKnownProps>;
 
-const sizes = {
+const dimensions = {
   sm: '1px',
   md: '2px',
   lg: '4px',
@@ -27,23 +42,85 @@ const StyledDivider = styled(
   'div',
   getStyledOptions('type'),
 )<DividerProps>(props => {
-  const { size = 'sm', type, width = '100%' } = props;
-  const { grayLighter } = getTheme(props);
-  const selectedSize = sizes[size];
+  const {
+    borderStyle,
+    children,
+    dimension = 'sm',
+    direction,
+    gap = 'xs',
+    length = '100%',
+    shade,
+    variant = 'gray',
+  } = props;
+  const { spacing, variants } = getTheme(props);
+  const isHorizontal = direction === 'horizontal';
+
+  const { bg } = getColorVariant(variant, shade, variants);
+
+  const selectedDimension = dimensions[dimension];
+  const margin = isHorizontal
+    ? css`
+        margin-bottom: ${spacing.md};
+        margin-top: ${spacing.md};
+      `
+    : css`
+        margin-left: ${spacing.md};
+        margin-right: ${spacing.md};
+      `;
+
+  if (isHorizontal && children) {
+    return css`
+      ${baseStyles(props)};
+      ${textStyles(props)};
+      align-items: center;
+      color: ${bg};
+      display: flex;
+      flex-direction: row;
+      line-height: 1;
+      ${margin};
+      ${marginStyles(props)};
+      width: ${px(isHorizontal ? length : selectedDimension)};
+
+      &:before,
+      &:after {
+        content: '';
+        flex: 1 1;
+        border-bottom: ${dimensions[dimension]} ${borderStyle} ${bg};
+        margin: auto;
+      }
+
+      &:before {
+        margin-right: ${spacing[gap]};
+      }
+
+      &:after {
+        margin-left: ${spacing[gap]};
+      }
+    `;
+  }
 
   return css`
-    border-bottom: ${selectedSize} ${type} ${grayLighter};
+    border-bottom: ${isHorizontal ? `${selectedDimension} ${borderStyle} ${bg}` : undefined};
+    border-left: ${isHorizontal ? undefined : `${selectedDimension} ${borderStyle} ${bg}`};
+    height: ${isHorizontal ? undefined : px(length)};
+    ${margin};
     ${marginStyles(props)};
-    width: ${px(width)};
+    text-indent: -9999px;
+    width: ${px(isHorizontal ? length : selectedDimension)};
   `;
 });
 
 export function Divider(props: DividerProps): JSX.Element {
-  return <StyledDivider data-component-name="Divider" {...props} />;
+  return <StyledDivider data-component-name="Divider" role="separator" {...props} />;
 }
 
 Divider.defaultProps = {
-  size: 'sm',
-  type: 'solid',
-  width: '100%',
+  borderStyle: 'solid',
+  dimension: 'sm',
+  direction: 'horizontal',
+  gap: 'xs',
+  length: '100%',
+  shade: 'light',
+  size: 'mid',
+  variant: 'gray',
 };
