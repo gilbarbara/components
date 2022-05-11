@@ -7,7 +7,8 @@ import { styled } from '@storybook/theming';
 import { colors as themeColors } from '../src/modules/theme';
 import { Theme } from '../src/types';
 
-import { Box, FlexCenter } from '../src';
+import { Flex, FlexCenter } from '../src';
+import { useEffect, useRef } from "react";
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -89,23 +90,32 @@ const ThemeBlock = styled.div(
       },
 );
 
-function Story(StoryFn: React.FC, context: any) {
+function Preview(StoryFn: React.FC, context: any) {
   const {
     globals: { appearance, baseColor },
     parameters: { minHeight },
     viewMode,
   } = context;
 
+  const docsRef = useRef<HTMLDivElement>(null)
   const previousAppearance = usePrevious(appearance);
   const [, updateGlobals] = useGlobals();
   const isDarkMode = appearance === 'dark';
   const isSideBySide = appearance === 'side-by-side';
 
+  useEffect(() => {
+    const target = docsRef.current?.closest('.docs-story')?.querySelector('[scale="1"]') as HTMLDivElement;
+
+    if (target) {
+      target.style.width = '100%';
+    }
+  }, []);
+
   if (viewMode === 'docs') {
     return (
-      <Box minHeight={minHeight}>
+      <Flex ref={docsRef} alignItems="flex-start" justifyContent="center" minHeight={minHeight}>
         <StoryFn />
-      </Box>
+      </Flex>
     );
   }
 
@@ -162,4 +172,4 @@ function Story(StoryFn: React.FC, context: any) {
   );
 }
 
-export const decorators = [Story];
+export const decorators = [Preview];
