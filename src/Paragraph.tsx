@@ -39,10 +39,10 @@ export const StyledParagraph = styled(
 
   return css`
     ${baseStyles(props)};
-    ${alignStyles(props)};
-    ${colorStyles(props)};
     margin-bottom: 0;
     margin-top: 0;
+    ${alignStyles(props)};
+    ${colorStyles(props)};
     ${marginStyles(props)};
 
     & + & {

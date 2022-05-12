@@ -49,9 +49,9 @@ export const StyledSpacer = styled(
     display: flex;
     flex-direction: ${direction === 'vertical' ? 'column' : 'row'};
     flex-wrap: ${wrap ? 'wrap' : 'nowrap'};
+    ${distributionStyles};
     ${layoutStyles(props)};
     ${marginStyles(props)};
-    ${distributionStyles};
 
     > [data-component-name='SpacerItem'] {
       width: ${!isHorizontal && grow ? '100%' : 'auto'};

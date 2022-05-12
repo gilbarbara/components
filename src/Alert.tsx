@@ -60,7 +60,6 @@ export const StyledAlert = styled(
 
   return css`
     ${baseStyles(props)};
-    ${marginStyles(props)};
     align-items: center;
     background-color: ${backgroundColor};
     border-radius: ${radius.xs};
@@ -71,6 +70,7 @@ export const StyledAlert = styled(
     position: relative;
     max-width: 380px;
     width: 100%;
+    ${marginStyles(props)};
 
     [data-component-name='Text'] {
       margin-left: ${spacing.xs};

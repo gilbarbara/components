@@ -40,10 +40,10 @@ export const StyledFormGroup = styled(
 
   return css`
     ${baseStyles(props)};
-    ${layoutStyles(props)}
     margin-bottom: ${spacing.md};
-    ${marginStyles(props)}
     width: 100%;
+    ${layoutStyles(props)};
+    ${marginStyles(props)};
 
     [data-component-name='Spacer'] {
       input,

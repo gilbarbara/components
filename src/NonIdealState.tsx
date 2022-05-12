@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 
-import { Box, BoxProps } from './Box';
+import { Box } from './Box';
 import { H2 } from './Headings';
 import { Icon } from './Icon';
 import { getTheme, responsive } from './modules/helpers';
 import { Paragraph } from './Paragraph';
-import { Icons } from './types';
+import { ComponentProps, Icons, StyledProps, WithMargin } from './types';
 
-export interface NonIdealStateProps extends Omit<BoxProps, 'title'> {
+export interface NonIdealStateKnownProps extends StyledProps, WithMargin {
   children?: ReactNode;
   description?: ReactNode;
   icon?: Icons;
@@ -19,6 +19,8 @@ export interface NonIdealStateProps extends Omit<BoxProps, 'title'> {
   title?: ReactNode;
   type?: 'error' | 'offline';
 }
+
+export type NonIdealStateProps = ComponentProps<HTMLDivElement, NonIdealStateKnownProps>;
 
 export const StyledNonIdealState = styled(Box)<NonIdealStateProps>(props => {
   const { small } = props;

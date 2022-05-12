@@ -7,12 +7,13 @@ import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 import Body from './Body';
 import Head from './Head';
 
-import { Box, BoxProps } from '../Box';
+import { Box } from '../Box';
 import { FlexCenter } from '../Flex';
 import { scrollTo } from '../modules/animations';
 import { recursiveElementFind } from '../modules/helpers';
 import { Pagination } from '../Pagination';
 import { Text } from '../Text';
+import { ComponentProps, StyledProps, WithLayout, WithMargin } from '../types';
 
 export interface DataTableColumn<T = string> {
   disableSort?: boolean;
@@ -25,7 +26,7 @@ export interface DataTableColumn<T = string> {
   title: ReactNode;
 }
 
-export interface DataTableProps extends Omit<BoxProps, 'data'> {
+export interface DataTableKnownProps extends StyledProps, WithLayout, WithMargin {
   /** @default 768 */
   breakpoint?: number;
   /**
@@ -56,8 +57,10 @@ export interface DataTableProps extends Omit<BoxProps, 'data'> {
   scrollMargin?: number;
   style?: CSSProperties;
   /** @default window.innerWidth */
-  width?: string | number;
+  width?: StringOrNumber;
 }
+
+export type DataTableProps = ComponentProps<HTMLDivElement, DataTableKnownProps, 'data'>;
 
 function sortData(data: any[], sortBy: string, sortDirection: string) {
   return [...data].sort((a, b) => {

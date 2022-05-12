@@ -24,7 +24,6 @@ const StyledStatusIndicator = styled(
   const innerSize = size * ratio < size ? size * ratio : size;
 
   return css`
-    ${marginStyles(props)};
     align-items: center;
     background-color: ${bg};
     border-radius: 50%;
@@ -33,6 +32,7 @@ const StyledStatusIndicator = styled(
     justify-content: center;
     line-height: 1;
     width: ${px(size)};
+    ${marginStyles(props)};
 
     &:before {
       background-color: ${bgLightest};

@@ -17,10 +17,10 @@ export const StyledText = styled(
 )<TextProps>(props => {
   return css`
     ${baseStyles(props)};
-    ${colorStyles(props)};
-    ${textStyles(props)};
     display: inline-block;
     text-decoration: inherit;
+    ${colorStyles(props)};
+    ${textStyles(props)};
   `;
 });
 

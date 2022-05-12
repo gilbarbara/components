@@ -44,9 +44,9 @@ export const StyledDropdown = styled(
       `;
 
   return css`
-    ${marginStyles(props)}
     min-width: ${px(width || 260)};
     width: ${width ? px(width) : 'auto'};
+    ${marginStyles(props)};
 
     .react-dropdown-select {
       ${styles};

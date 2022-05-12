@@ -71,15 +71,15 @@ const StyledDivider = styled(
   if (isHorizontal && children) {
     return css`
       ${baseStyles(props)};
-      ${textStyles(props)};
       align-items: center;
       color: ${bg};
       display: flex;
       flex-direction: row;
       line-height: 1;
       ${margin};
-      ${marginStyles(props)};
       width: ${px(isHorizontal ? length : selectedDimension)};
+      ${marginStyles(props)};
+      ${textStyles(props)};
 
       &:before,
       &:after {
@@ -104,9 +104,9 @@ const StyledDivider = styled(
     border-left: ${isHorizontal ? undefined : `${selectedDimension} ${borderStyle} ${bg}`};
     height: ${isHorizontal ? undefined : px(length)};
     ${margin};
-    ${marginStyles(props)};
     text-indent: -9999px;
     width: ${px(isHorizontal ? length : selectedDimension)};
+    ${marginStyles(props)};
   `;
 });
 

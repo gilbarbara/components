@@ -26,15 +26,15 @@ export type ComponentProps<T, P, E extends string = never> = P &
 export interface DropdownCreateProps<T extends DropdownOption = DropdownOption> {
   close: () => void;
   select: (item: T) => void;
-  value: string | number;
+  value: StringOrNumber;
 }
 
 export interface DropdownOption {
   content?: ReactNode;
   disabled?: boolean;
-  label: string | number;
+  label: string;
   type?: string;
-  value: string | number;
+  value: StringOrNumber;
 }
 
 export interface DropdownProps<T extends DropdownOption = DropdownOption>

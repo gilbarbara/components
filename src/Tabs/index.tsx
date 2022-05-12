@@ -39,7 +39,7 @@ const StyledTabs = styled(
   getStyledOptions(),
 )<TabsProps>(props => {
   return css`
-    ${marginStyles(props)}
+    ${marginStyles(props)};
   `;
 });
 
