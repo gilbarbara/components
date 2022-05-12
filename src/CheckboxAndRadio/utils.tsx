@@ -1,28 +1,18 @@
-import { forwardRef, KeyboardEvent } from 'react';
+import { ChangeEventHandler, KeyboardEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { getTheme, px } from './modules/helpers';
-import { baseStyles, getStyledOptions, isDarkMode, outlineStyles } from './modules/system';
-import {
-  CheckboxOption,
-  ComponentProps,
-  Option,
-  StyledProps,
-  WithComponentSize,
-  WithInline,
-} from './types';
+import { getTheme, px } from '../modules/helpers';
+import { baseStyles, getStyledOptions, isDarkMode, outlineStyles } from '../modules/system';
+import { CheckboxOption, ComponentProps, Option, StyledProps, WithComponentSize } from '../types';
 
-export interface SharedProps extends StyledProps, WithComponentSize, WithInline {
+export interface SharedProps extends StyledProps, WithComponentSize {
   name: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export interface CheckboxKnownProps extends SharedProps, CheckboxOption {}
-export interface RadioKnownProps extends SharedProps, Option {}
-
-export type CheckboxProps = ComponentProps<HTMLInputElement, CheckboxKnownProps>;
-
-export type RadioProps = ComponentProps<HTMLInputElement, RadioKnownProps>;
+export type CheckboxProps = ComponentProps<HTMLInputElement, SharedProps & CheckboxOption>;
+export type RadioProps = ComponentProps<HTMLInputElement, SharedProps & Option>;
 
 interface InnerProps
   extends Omit<CheckboxProps, 'label' | 'name' | 'value'>,
@@ -30,7 +20,7 @@ interface InnerProps
   category?: 'checkbox' | 'radio';
 }
 
-const StyledCheckboxRadioInput = styled('input', getStyledOptions())`
+export const StyledCheckboxRadioInput = styled('input', getStyledOptions())`
   left: 0;
   opacity: 0;
   position: absolute;
@@ -38,7 +28,7 @@ const StyledCheckboxRadioInput = styled('input', getStyledOptions())`
   z-index: -1;
 `;
 
-const StyledText = styled(
+export const StyledText = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
@@ -52,7 +42,7 @@ const StyledText = styled(
   `;
 });
 
-const StyledElement = styled(
+export const StyledElement = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
@@ -159,19 +149,18 @@ const StyledElement = styled(
   `;
 });
 
-const StyledLabel = styled(
+export const StyledLabel = styled(
   'label',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { disabled, inline } = props;
+  const { disabled } = props;
 
   return css`
     align-items: center;
     cursor: ${disabled ? 'default' : 'pointer'};
-    display: ${inline ? 'inline-flex' : 'flex'};
+    display: flex;
     margin-bottom: 8px;
     position: relative;
-    margin-right: ${inline && '12px'};
 
     &:focus,
     &:hover {
@@ -191,7 +180,7 @@ const StyledLabel = styled(
   `;
 });
 
-function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
+export function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
   const target = event.target as HTMLSpanElement;
   const input = target.previousElementSibling as HTMLInputElement;
 
@@ -201,82 +190,3 @@ function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
 
   input.checked = !input.checked;
 }
-
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const { checked, children, defaultChecked, id, inline, label, name, size, style, ...rest } =
-    props;
-  const inputId = id || name;
-
-  return (
-    <StyledLabel data-component-name="Checkbox" htmlFor={inputId} inline={inline} size={size}>
-      <StyledCheckboxRadioInput
-        ref={ref}
-        aria-checked={checked || defaultChecked}
-        checked={checked}
-        defaultChecked={defaultChecked}
-        id={inputId}
-        name={name}
-        role="checkbox"
-        type="checkbox"
-        {...rest}
-      />
-      <StyledElement
-        category="checkbox"
-        onKeyDown={handleKeyDown}
-        size={size}
-        style={style}
-        tabIndex={props.disabled ? -1 : 0}
-      />
-      <StyledText category="checkbox" size={size}>
-        {children || label}
-      </StyledText>
-    </StyledLabel>
-  );
-});
-
-Checkbox.defaultProps = {
-  inline: false,
-  size: 'md',
-};
-Checkbox.displayName = 'Checkbox';
-
-/**
- * Use the RadioGroup component instead of this.
- * RadioGroup accepts an `options` prop that render this component in a group and is responsible for managing state and interactions.
- */
-export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const { checked, children, defaultChecked, id, inline, label, name, size, style, ...rest } =
-    props;
-
-  return (
-    <StyledLabel category="radio" data-component-name="Radio" htmlFor={id} inline={inline}>
-      <StyledCheckboxRadioInput
-        ref={ref}
-        aria-checked={!!(checked || defaultChecked)}
-        checked={checked}
-        defaultChecked={defaultChecked}
-        id={id}
-        name={name}
-        role="radio"
-        type="radio"
-        {...rest}
-      />
-      <StyledElement
-        category="radio"
-        onKeyDown={handleKeyDown}
-        size={size}
-        style={style}
-        tabIndex={props.disabled ? -1 : 0}
-      />
-      <StyledText category="radio" size={size}>
-        {children || label}
-      </StyledText>
-    </StyledLabel>
-  );
-});
-
-Radio.defaultProps = {
-  inline: false,
-  size: 'md',
-};
-Radio.displayName = 'Radio';

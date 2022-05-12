@@ -8,6 +8,9 @@ export default {
   title: 'Components/RadioGroup',
   component: RadioGroup,
   args: {
+    defaultValue: 2,
+    disabled: false,
+    inline: false,
     name: 'position',
     options: [
       { label: 'First', value: 1 },
@@ -23,11 +26,13 @@ export default {
         value: 4,
       },
     ],
+    size: 'md',
   },
   argTypes: {
     ...hideProps(),
+    defaultValue: { control: 'number' },
+    onChange: { action: 'onChange', ...disableControl() },
     options: disableControl(),
-    onChange: { action: 'onChange' },
   },
 } as ComponentMeta<typeof RadioGroup>;
 
