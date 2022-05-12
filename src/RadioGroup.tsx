@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePrevious } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { StringOrNumber } from '@gilbarbara/types';
 
 import { Radio, RadioProps } from './CheckboxAndRadio';
 import { getTheme } from './modules/helpers';
@@ -9,9 +10,9 @@ import { getStyledOptions } from './modules/system';
 import { Option, WithComponentSize } from './types';
 
 export interface RadioGroupProps
-  extends Omit<RadioProps, 'checked' | 'defaultChecked' | 'inline' | 'label'>,
-    WithComponentSize {
-  defaultValue?: number | string;
+  extends WithComponentSize,
+    Omit<RadioProps, 'checked' | 'defaultChecked' | 'label'> {
+  defaultValue?: StringOrNumber;
   inline?: boolean;
   options: Option[];
 }
@@ -92,5 +93,7 @@ export function RadioGroup(props: RadioGroupProps) {
 }
 
 RadioGroup.defaultProps = {
+  disabled: false,
+  inline: false,
   size: 'md',
 };
