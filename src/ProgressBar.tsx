@@ -30,9 +30,9 @@ export const StyledProgressBar = styled(
 
   return css`
     ${baseStyles(props)};
-    ${marginStyles(props)};
     color: ${isDarkMode(props) && grayLight};
     width: ${px(width)};
+    ${marginStyles(props)};
   `;
 });
 

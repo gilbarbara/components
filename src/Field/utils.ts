@@ -1,6 +1,6 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { omit } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { FieldProps, RegisterOptionsProps } from './types';
@@ -89,7 +89,7 @@ export function getRegisterOptions(
   }
 
   if (['money', 'number', 'phoneBR'].includes(formatter)) {
-    registerOptions.setValueAs = (v: string | number) => {
+    registerOptions.setValueAs = (v: StringOrNumber) => {
       if (!v) {
         return undefined;
       }

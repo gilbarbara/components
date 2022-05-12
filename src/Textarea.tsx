@@ -31,9 +31,9 @@ export const StyledTextarea = styled(
 
   return css`
     ${baseStyles(props)};
-    ${inputStyles(props)};
     padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
     width: ${width ? px(width) : '100%'};
+    ${inputStyles(props)};
   `;
 });
 

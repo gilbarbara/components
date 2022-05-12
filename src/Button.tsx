@@ -72,7 +72,6 @@ export const StyledButton = styled(
   return css`
     ${appearanceStyles};
     ${baseStyles(props)};
-    ${backgroundStyles(props)};
     align-items: center;
     border-radius: ${transparent ? 0 : borderRadius[size]};
     box-shadow: none;
@@ -86,10 +85,11 @@ export const StyledButton = styled(
     line-height: ${lineHeight[size]};
     overflow: hidden;
     padding: ${buttonPadding};
-    ${paddingStyles(props)}
     position: relative;
     transition: background-color 0.6s, border-color 0.6s;
     width: ${block ? '100%' : 'auto'};
+    ${backgroundStyles(props)};
+    ${paddingStyles(props)}
 
     &:disabled {
       background-color: ${grayLighter};

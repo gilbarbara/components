@@ -24,10 +24,10 @@ export const StyledResponsiveMedia = styled(
 
   return css`
     ${baseStyles(props)};
-    ${marginStyles(props)};
     max-width: ${maxWidth ? px(maxWidth) : px(width)};
     overflow: hidden;
     width: 100%;
+    ${marginStyles(props)};
 
     > div {
       padding-bottom: calc(${ceil(height / width)} * 100%);

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
 import { Box, BoxProps } from './Box';
@@ -12,15 +13,15 @@ export interface GridProps extends BoxProps {
   autoColumns?: StandardLonghandProperties['gridAutoColumns'];
   autoFlow?: StandardLonghandProperties['gridAutoFlow'];
   autoRows?: StandardLonghandProperties['gridAutoRows'];
-  columnGap?: string | number;
+  columnGap?: StringOrNumber;
   display?: 'grid' | 'inline-grid';
-  gap?: string | number;
+  gap?: StringOrNumber;
   grid?: StandardShorthandProperties['grid'];
   justifyContent?: StandardLonghandProperties['justifyContent'];
   justifyItems?: StandardLonghandProperties['justifyItems'];
   placeContent?: StandardLonghandProperties['placeContent'];
   placeItems?: StandardShorthandProperties['placeItems'];
-  rowGap?: string | number;
+  rowGap?: StringOrNumber;
   template?: StandardShorthandProperties['gridTemplate'];
   templateAreas?: StandardLonghandProperties['gridTemplateAreas'];
   templateColumns?: StandardLonghandProperties['gridTemplateColumns'];

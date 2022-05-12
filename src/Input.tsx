@@ -36,10 +36,10 @@ export const StyledInput = styled(
 
   return css`
     ${baseStyles(props)};
-    ${inputStyles(props)};
     padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
     height: ${large ? inputHeight.large : inputHeight.normal};
     width: ${width ? px(width) : '100%'};
+    ${inputStyles(props)};
   `;
 });
 

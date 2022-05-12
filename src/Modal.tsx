@@ -2,6 +2,7 @@ import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { pick } from '@gilbarbara/helpers';
+import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 
 import { ButtonBase } from './ButtonBase';
@@ -24,7 +25,7 @@ export interface ModalProps
   maxWidth?: StandardLonghandProperties['maxWidth'] | number;
   style?: CSSProperties;
   title?: ReactNode;
-  width?: string | number;
+  width?: StringOrNumber;
 }
 
 const StyledModal = styled(

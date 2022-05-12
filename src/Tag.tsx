@@ -40,7 +40,7 @@ export const StyledTag = styled(
   getStyledOptions(),
 )<TagProps>(props => {
   const { color, colorShade, variant } = props;
-  const { radius, variants } = getTheme(props);
+  const { radius, spacing, variants } = getTheme(props);
 
   const selectedColor =
     color || (variant && !['black', 'white'].includes(variant) ? variant : undefined);
@@ -52,15 +52,15 @@ export const StyledTag = styled(
 
   return css`
     ${baseStyles(props)};
-    ${backgroundStyles(props)};
-    ${marginStyles(props)};
-    ${textStyles(props)};
     align-items: center;
     border-radius: ${radius.xs};
     color: ${colorProp};
     display: inline-flex;
     line-height: 1;
-    padding: 4px 12px;
+    padding: ${spacing.xxs} ${spacing.sm};
+    ${backgroundStyles(props)};
+    ${marginStyles(props)};
+    ${textStyles(props)};
   `;
 });
 

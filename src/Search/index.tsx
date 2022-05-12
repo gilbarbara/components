@@ -62,9 +62,9 @@ export const StyledSearch = styled(
   const { width } = props;
 
   return css`
-    ${marginStyles(props)}
     position: relative;
     width: ${width ? px(width) : '100%'};
+    ${marginStyles(props)};
   `;
 });
 

@@ -30,11 +30,11 @@ const StyledCopyToClipboard = styled(
 )<Omit<CopyToClipboardProps, 'text'>>(props => {
   return css`
     ${baseStyles(props)};
-    ${marginStyles(props)};
     cursor: pointer;
     display: inline-flex;
     line-height: 1;
     position: relative;
+    ${marginStyles(props)};
   `;
 });
 

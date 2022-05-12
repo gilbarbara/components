@@ -51,9 +51,8 @@ export const StyledSelect = styled(
   }
 
   return css`
-    ${baseStyles(props)};
     ${appearanceStyles};
-    ${inputStyles(props)}
+    ${baseStyles(props)};
     background-image: url('${`data:image/svg+xml,%3Csvg width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg"%3E%3Cpolygon fill="${color.replace(
       '#',
       '%23',
@@ -65,6 +64,7 @@ export const StyledSelect = styled(
     ${!multiple ? `height: ${large ? inputHeight.large : inputHeight.normal}` : ''};
     white-space: nowrap;
     width: ${width ? px(width) : '100%'};
+    ${inputStyles(props)};
 
     ${filled &&
     css`

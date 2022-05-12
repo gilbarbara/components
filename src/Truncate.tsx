@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { StringOrNumber } from '@gilbarbara/types';
 
 import { px } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
@@ -9,7 +10,7 @@ export interface TruncateProps {
   children: ReactNode;
   /** @default 2 */
   lines?: number;
-  maxWidth?: string | number;
+  maxWidth?: StringOrNumber;
 }
 
 const StyledTruncate = styled(

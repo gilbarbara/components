@@ -2,6 +2,7 @@ import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
+import { StringOrNumber } from '@gilbarbara/types';
 
 import { Button } from './Button';
 import { H3 } from './Headings';
@@ -29,7 +30,7 @@ export interface DialogProps
   textAlign?: 'left' | 'center' | 'right';
   title: ReactNode;
   /** @default 380 */
-  width?: string | number;
+  width?: StringOrNumber;
 }
 
 const StyledDialog = styled(

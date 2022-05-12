@@ -38,12 +38,12 @@ export const StyledIcon = styled(
 
   return css`
     ${baseStyles(props)};
-    ${marginStyles(props)};
     color: ${color};
     display: inline-flex;
     line-height: 1;
     height: ${px(size)};
     width: ${px(size)};
+    ${marginStyles(props)};
 
     > * {
       ${!!spin &&
