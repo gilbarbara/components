@@ -5,7 +5,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
 
-import { getTheme, px } from './modules/helpers';
+import { getTheme } from './modules/helpers';
 import {
   appearanceStyles,
   baseStyles,
@@ -13,9 +13,19 @@ import {
   inputStyles,
   isDarkMode,
 } from './modules/system';
-import { ComponentProps, StyledProps, WithFormElements } from './types';
+import {
+  ComponentProps,
+  StyledProps,
+  WithBorderless,
+  WithElementSpacing,
+  WithFormElements,
+} from './types';
 
-export interface SelectKnownProps extends StyledProps, WithFormElements {
+export interface SelectKnownProps
+  extends StyledProps,
+    WithBorderless,
+    Omit<WithElementSpacing, 'suffixSpacing'>,
+    WithFormElements {
   children: ReactNode;
   large?: boolean;
 }
@@ -26,21 +36,11 @@ export const StyledSelect = styled(
   'select',
   getStyledOptions(),
 )<SelectProps & { filled: boolean }>(props => {
-  const { borderless, endSpacing, filled, large, multiple, startSpacing, width } = props;
-  const { colors, darkColor, grayMid, inputHeight, spacing, white } = getTheme(props);
+  const { borderless, filled, large, multiple } = props;
+  const { colors, darkColor, grayMid, spacing, white } = getTheme(props);
 
   let color = isDarkMode(props) ? white : darkColor;
-  const paddingX = large ? spacing.sm : spacing.xs;
-  let paddingLeft = borderless ? 0 : spacing.md;
-  let paddingRight = borderless ? 0 : spacing.lg;
-
-  if (endSpacing) {
-    paddingRight = spacing.xxl;
-  }
-
-  if (startSpacing) {
-    paddingLeft = spacing.xxl;
-  }
+  const paddingY = large ? spacing.sm : spacing.xs;
 
   if (borderless) {
     color = filled ? white : grayMid;
@@ -59,12 +59,8 @@ export const StyledSelect = styled(
     )}" points="-8.8817842e-16 0 10 0 4.9980424 6"%3E%3C/polygon%3E%3C/svg%3E`}');
     background-repeat: no-repeat;
     background-position: right 8px center;
+    ${inputStyles(props, 'select')};
     color: ${filled ? color : grayMid};
-    padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
-    ${!multiple ? `height: ${large ? inputHeight.large : inputHeight.normal}` : ''};
-    white-space: nowrap;
-    width: ${width ? px(width) : '100%'};
-    ${inputStyles(props)};
 
     ${filled &&
     css`
@@ -75,7 +71,7 @@ export const StyledSelect = styled(
       padding: 0;
 
       > option {
-        padding: ${paddingX} ${spacing.md};
+        padding: ${paddingY} ${spacing.md};
 
         &:not(:checked) {
           background: ${`${white} linear-gradient(0deg, ${white} 0%, ${white} 100%)`};

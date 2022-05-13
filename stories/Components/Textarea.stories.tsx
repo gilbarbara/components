@@ -9,12 +9,12 @@ export default {
   args: {
     borderless: false,
     disabled: false,
-    endSpacing: false,
     name: 'description',
     placeholder: 'Tell us something about yourself...',
+    prefixSpacing: false,
     readOnly: false,
     rows: 3,
-    startSpacing: false,
+    suffixSpacing: false,
     width: '100%',
   },
   argTypes: {

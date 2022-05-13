@@ -3,7 +3,7 @@ import { Input, InputProps } from 'src/Input';
 
 import { inputTypes } from 'src/modules/options';
 
-import { hideProps, hideTable } from '../__helpers__';
+import { disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Input',
@@ -11,18 +11,19 @@ export default {
   args: {
     borderless: false,
     disabled: false,
-    endSpacing: false,
     large: false,
     name: 'name',
     placeholder: 'Your name here...',
+    prefixSpacing: false,
     readOnly: false,
-    startSpacing: false,
+    suffixSpacing: false,
     type: 'text',
     width: '100%',
   },
   argTypes: {
     ...hideProps(),
     type: { control: 'select', options: inputTypes },
+    width: { control: 'text' },
   },
 } as ComponentMeta<typeof Input>;
 
@@ -33,20 +34,30 @@ export function Basic(props: InputProps) {
 export function Variants(props: InputProps) {
   return (
     <>
-      <Input {...props} name="normal" />
+      <Input {...props} name="normal" placeholder="normal" />
       <br />
-      <Input {...props} disabled name="normal-disabled" />
+      <Input {...props} disabled name="normal-disabled" placeholder="normal (disabled)" />
       <br />
-      <Input {...props} borderless name="borderless" />
+      <Input {...props} borderless name="borderless" placeholder="borderless" />
       <br />
-      <Input {...props} borderless disabled name="borderless-disabled" />
+      <Input
+        {...props}
+        borderless
+        disabled
+        name="borderless-disabled"
+        placeholder="borderless (disabled)"
+      />
       <br />
     </>
   );
 }
 
+Variants.args = {
+  placeholder: '',
+};
+
 Variants.argTypes = {
-  borderless: hideTable(),
-  disabled: hideTable(),
-  name: hideTable(),
+  borderless: disableControl(),
+  disabled: disableControl(),
+  name: disableControl(),
 };

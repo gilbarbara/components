@@ -58,7 +58,7 @@ function FieldTextarea(props: Props): JSX.Element {
     onFocus: handleFocus,
   };
 
-  return <Textarea endSpacing={!skipValidation} {...registration} {...input} />;
+  return <Textarea {...registration} {...input} suffixSpacing={!skipValidation} />;
 }
 
 export default FieldTextarea;
