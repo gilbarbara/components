@@ -24,19 +24,20 @@ import {
 import { getDefaultValue, getError, getRegisterOptions } from './utils';
 
 import { FormGroup } from '../FormGroup';
-import { Text } from '../Text';
 
 export function Field<T extends FieldProps>(props: T) {
   const {
     assistiveText,
     hideAssistiveText,
     id,
+    inline,
     label,
     name,
     required,
     skipValidation,
     style,
     type = 'text',
+    validations,
     value,
   } = props;
   const [{ isActive, isDirty }, setStatus] = useSetState({
@@ -68,9 +69,17 @@ export function Field<T extends FieldProps>(props: T) {
   });
 
   const showError = !!error && errorType !== 'revalidate' && (!isActive || isDirty);
-  const isValid = !!currentValue && !error;
+  const isValid = !!currentValue && !error && (required || validations?.length);
 
-  const groupProps: AnyObject = {};
+  const groupProps: AnyObject = {
+    assistiveText,
+    hideAssistiveText,
+    inline,
+    label,
+    labelId: id || name,
+    required,
+    style,
+  };
   const output: AnyObject = { error };
 
   /* istanbul ignore else */
@@ -161,17 +170,7 @@ export function Field<T extends FieldProps>(props: T) {
   }
 
   return (
-    <FormGroup
-      assistiveText={assistiveText}
-      data-component-name="Field"
-      hideAssistiveText={hideAssistiveText}
-      label={label}
-      labelId={id || name}
-      labelInfo={required && <Text variant="primary">*</Text>}
-      labelStyles={{ alignItems: 'flex-start' }}
-      style={style}
-      {...groupProps}
-    >
+    <FormGroup data-component-name="Field" {...groupProps}>
       {output.content}
       <FieldDebug {...props} />
     </FormGroup>
