@@ -6,12 +6,12 @@ import styled from '@emotion/styled';
 import is from 'is-lite';
 import { RequireExactlyOne, SetRequired } from 'type-fest';
 
-import { px } from './modules/helpers';
+import { getColorVariant, getTheme, px } from './modules/helpers';
 import { iconsCustom } from './modules/options';
 import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
-import { Icons, StyledProps, WithMargin } from './types';
+import { Icons, StyledProps, WithColor, WithMargin } from './types';
 
-export interface IconKnownProps extends StyledProps, WithMargin {
+export interface IconKnownProps extends StyledProps, WithColor, WithMargin {
   color?: string;
   name: Icons;
   /** @default 16 */
@@ -34,11 +34,19 @@ export const StyledIcon = styled(
   'span',
   getStyledOptions(),
 )<SetRequired<Omit<IconProps, 'name'>, 'size'>>(props => {
-  const { color = 'inherit', size, spin } = props;
+  const { color, shade, size, spin, variant } = props;
+  const { variants } = getTheme(props);
+  let iconColor = color || 'inherit';
+
+  if (!color && variant) {
+    const { bg } = getColorVariant(variant, shade, variants);
+
+    iconColor = bg;
+  }
 
   return css`
     ${baseStyles(props)};
-    color: ${color};
+    color: ${iconColor};
     display: inline-flex;
     line-height: 1;
     height: ${px(size)};
