@@ -9,13 +9,12 @@ export default {
   args: {
     borderless: false,
     disabled: false,
-    endSpacing: false,
-    filled: false,
     large: false,
     multiple: false,
     name: 'gender',
+    prefixSpacing: false,
     size: 1,
-    startSpacing: false,
+    suffixSpacing: false,
     width: '100%',
   },
   argTypes: {

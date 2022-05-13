@@ -120,7 +120,7 @@ function FieldInput(props: Props): JSX.Element {
           {...registration}
           {...input}
           {...parameters}
-          endSpacing={!skipValidation}
+          suffixSpacing={!skipValidation}
           type={type}
         />
       );

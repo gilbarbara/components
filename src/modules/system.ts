@@ -1,5 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid';
 import { css, CSSObject } from '@emotion/react';
+import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 import { rgba } from 'polished';
 
@@ -7,8 +8,10 @@ import { getColorVariant, getTheme, px } from './helpers';
 
 import {
   WithAlign,
+  WithBorderless,
   WithColor,
   WithDisplay,
+  WithElementSpacing,
   WithInvert,
   WithLayout,
   WithMargin,
@@ -118,10 +121,12 @@ export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
   return { display };
 }
 
-export function inputStyles<T extends WithTheme & { borderless?: boolean; multiple?: boolean }>(
-  props: T,
-) {
-  const { borderless, multiple } = props;
+export function inputStyles<
+  T extends WithTheme &
+    WithBorderless &
+    WithElementSpacing & { large?: boolean; multiple?: boolean; width?: StringOrNumber },
+>(props: T, type: 'input' | 'select' | 'textarea') {
+  const { borderless, large, multiple, prefixSpacing, suffixSpacing, width } = props;
   const darkMode = isDarkMode(props);
   const {
     colors,
@@ -132,14 +137,42 @@ export function inputStyles<T extends WithTheme & { borderless?: boolean; multip
     grayLighter,
     grayLightest,
     grayMid,
+    inputHeight,
     lightColor,
     radius,
+    spacing,
     typography,
     white,
   } = getTheme(props);
 
   const isSelect = is.boolean(multiple);
   const placeholderColor = grayMid;
+
+  let height;
+  let paddingY = large ? spacing.md : spacing.sm;
+  let paddingLeft = borderless ? 0 : spacing.md;
+  let paddingRight = borderless ? 0 : spacing.md;
+
+  if (type === 'textarea') {
+    paddingY = spacing.xs;
+  }
+
+  if (type !== 'textarea' && !multiple) {
+    height = large ? inputHeight.large : inputHeight.normal;
+  }
+
+  if (isSelect) {
+    paddingY = large ? spacing.sm : spacing.xs;
+    paddingRight = spacing.lg;
+  }
+
+  if (suffixSpacing) {
+    paddingRight = '40px';
+  }
+
+  if (prefixSpacing) {
+    paddingLeft = '40px';
+  }
 
   const disabled = css`
     ${!borderless && `background-color: ${darkMode ? grayDark : grayLightest}`};
@@ -165,7 +198,10 @@ export function inputStyles<T extends WithTheme & { borderless?: boolean; multip
     display: block;
     font-family: ${fontFamily};
     font-size: ${typography.regular.fontSize};
+    height: ${height};
     line-height: 1.4;
+    padding: ${paddingY} ${paddingRight} ${paddingY} ${paddingLeft};
+    width: ${width ? px(width) : '100%'};
     ${styles};
 
     &:focus {

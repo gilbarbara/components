@@ -55,6 +55,13 @@ export interface WithDisplay {
   display?: StandardLonghandProperties['display'];
 }
 
+export interface WithElementSpacing {
+  /** @default false */
+  prefixSpacing?: boolean;
+  /** @default false */
+  suffixSpacing?: boolean;
+}
+
 export interface WithFilled {
   /**
    * Display as an inline element
@@ -63,12 +70,12 @@ export interface WithFilled {
   filled?: boolean;
 }
 
-export interface WithFormElements extends WithBorderless {
+export interface WithFormElements {
   /** @default false */
-  endSpacing?: boolean;
+  disabled?: boolean;
+  name: string;
   /** @default false */
-  startSpacing?: boolean;
-  /** @default 100% */
+  readOnly?: boolean;
   width?: StringOrNumber;
 }
 

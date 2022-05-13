@@ -2,44 +2,41 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { getTheme, px } from './modules/helpers';
 import { baseStyles, getStyledOptions, inputStyles } from './modules/system';
-import { ComponentProps, InputTypes, StyledProps, WithFormElements } from './types';
+import {
+  ComponentProps,
+  InputTypes,
+  StyledProps,
+  WithBorderless,
+  WithElementSpacing,
+  WithFormElements,
+} from './types';
 
-export interface InputKnownProps extends StyledProps, WithFormElements {
+export interface InputKnownProps
+  extends StyledProps,
+    WithBorderless,
+    WithElementSpacing,
+    WithFormElements {
   /** @default false */
   large?: boolean;
+  placeholder?: string;
   /** @default text */
   type?: InputTypes;
 }
 
-export type InputProps = ComponentProps<HTMLInputElement, InputKnownProps, 'type'>;
+export type InputProps = ComponentProps<
+  HTMLInputElement,
+  InputKnownProps,
+  'name' | 'type' | 'width'
+>;
 
 export const StyledInput = styled(
   'input',
   getStyledOptions(),
 )<InputProps>(props => {
-  const { borderless, endSpacing, large, startSpacing, width } = props;
-  const { inputHeight, spacing } = getTheme(props);
-
-  const paddingX = large ? spacing.md : spacing.sm;
-  let paddingLeft = borderless ? 0 : spacing.md;
-  let paddingRight = borderless ? 0 : spacing.md;
-
-  if (endSpacing) {
-    paddingRight = spacing.xxl;
-  }
-
-  if (startSpacing) {
-    paddingLeft = spacing.xxl;
-  }
-
   return css`
     ${baseStyles(props)};
-    padding: ${paddingX} ${paddingRight} ${paddingX} ${paddingLeft};
-    height: ${large ? inputHeight.large : inputHeight.normal};
-    width: ${width ? px(width) : '100%'};
-    ${inputStyles(props)};
+    ${inputStyles(props, 'input')};
   `;
 });
 
@@ -51,9 +48,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
 Input.defaultProps = {
   borderless: false,
-  endSpacing: false,
+  disabled: false,
+  suffixSpacing: false,
   large: false,
-  startSpacing: false,
+  readOnly: false,
+  prefixSpacing: false,
   type: 'text',
   width: '100%',
 };
