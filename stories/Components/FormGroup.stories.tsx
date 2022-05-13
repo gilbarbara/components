@@ -2,29 +2,33 @@ import { ComponentMeta } from '@storybook/react';
 import { Input, Select, Textarea } from 'src';
 import { FormGroup, FormGroupProps } from 'src/FormGroup';
 
-import { hideProps, hideTable, layoutProps, marginProps } from '../__helpers__';
+import { disableControl, hideProps, layoutProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/FormGroup',
   component: FormGroup,
   args: {
     assistiveText: 'Required',
+    hideAssistiveText: false,
     inline: false,
     label: 'Name',
-    labelInfo: '*',
+    maxWidth: 640,
+    required: false,
   },
   argTypes: {
     ...hideProps(),
     ...layoutProps(),
     ...marginProps(),
+    assistiveText: { control: 'text' },
     error: { control: 'text' },
-    labelId: { control: 'text' },
+    label: { control: 'text' },
+    labelInfo: { control: 'text' },
   },
 } as ComponentMeta<typeof FormGroup>;
 
 export const Basic = (props: FormGroupProps) => {
   return (
-    <FormGroup {...props}>
+    <FormGroup {...props} required>
       <Input name="name" placeholder="User Name" />
     </FormGroup>
   );
@@ -33,8 +37,8 @@ export const Basic = (props: FormGroupProps) => {
 export const Elements = (props: FormGroupProps) => {
   return (
     <>
-      <FormGroup {...props} assistiveText="">
-        <Input name="name" placeholder="Name" />
+      <FormGroup {...props} assistiveText="The name is required..." required valid>
+        <Input defaultValue="Test User" name="name" placeholder="Name" />
       </FormGroup>
       <FormGroup {...props} label="Gender">
         <Select name="gender">
@@ -51,9 +55,15 @@ export const Elements = (props: FormGroupProps) => {
   );
 };
 
+Elements.args = {
+  assistiveText: '',
+};
+
 Elements.argTypes = {
-  label: hideTable(),
-  labelId: hideTable(),
-  labelInfo: hideTable(),
-  assistiveText: hideTable(),
+  assistiveText: disableControl(),
+  label: disableControl(),
+  labelId: disableControl(),
+  labelInfo: disableControl(),
+  required: disableControl(),
+  valid: disableControl(),
 };

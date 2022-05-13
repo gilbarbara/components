@@ -4,7 +4,9 @@ import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
+import { Flex } from './Flex';
 import { Icon } from './Icon';
+import { IconWrapper } from './IconWrapper';
 import { Label } from './Label';
 import { getTheme } from './modules/helpers';
 import {
@@ -14,7 +16,6 @@ import {
   layoutStyles,
   marginStyles,
 } from './modules/system';
-import { Spacer } from './Spacer';
 import { ComponentProps, StyledProps, WithInline, WithLayout, WithMargin } from './types';
 
 export interface FormGroupKnownProps extends StyledProps, WithInline, WithLayout, WithMargin {
@@ -26,6 +27,7 @@ export interface FormGroupKnownProps extends StyledProps, WithInline, WithLayout
   labelId?: string;
   labelInfo?: ReactNode;
   labelStyles?: CSSProperties;
+  required?: boolean;
   skipIcon?: boolean;
   valid?: boolean;
 }
@@ -45,18 +47,26 @@ export const StyledFormGroup = styled(
     ${layoutStyles(props)};
     ${marginStyles(props)};
 
-    [data-component-name='Spacer'] {
-      input,
-      label,
-      [data-component-name='AssistiveContent'] {
+    [data-component-name='Flex'] {
+      > * {
         margin-bottom: 0;
         margin-top: 0;
       }
 
-      input {
+      [data-component-name='Label'] {
+        margin-right: ${spacing.xs};
+      }
+
+      [data-component-name='FormGroupContent'] {
         flex: 1;
-        max-width: 320px;
-        width: auto;
+      }
+
+      [data-component-name='AssistiveContent'] {
+        margin-left: ${spacing.xs};
+
+        &:empty {
+          display: none;
+        }
       }
     }
   `;
@@ -90,20 +100,6 @@ const Error = styled.div(props => {
   `;
 });
 
-const InputWrapper = styled('div', getStyledOptions())`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-
-  > [data-component-name='Icon'] {
-    line-height: 1;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 16px;
-  }
-`;
-
 export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref) => {
   const {
     assistiveText,
@@ -115,7 +111,8 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     labelId,
     labelInfo,
     labelStyles,
-    skipIcon = false,
+    required,
+    skipIcon,
     valid,
     ...rest
   } = props;
@@ -132,13 +129,27 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     );
   }
 
-  if (is.boolean(valid) && valid && !skipIcon) {
-    content.icon = <Icon name="check-o" size={18} title="Valid" />;
-  }
+  content.children =
+    is.boolean(valid) && valid && !skipIcon ? (
+      <IconWrapper
+        suffixIcon={{
+          name: 'check-o',
+          title: 'Valid',
+        }}
+      >
+        {children}
+      </IconWrapper>
+    ) : (
+      children
+    );
 
   if (label) {
     content.label = (
-      <Label labelId={labelId} labelInfo={labelInfo} style={labelStyles}>
+      <Label
+        labelId={labelId}
+        labelInfo={labelInfo || (required && <Icon name="asterisk" variant="red" />)}
+        style={labelStyles}
+      >
         {label}
       </Label>
     );
@@ -147,10 +158,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   content.main = (
     <>
       {content.label}
-      <InputWrapper>
-        {children}
-        {content.icon}
-      </InputWrapper>
+      {content.children}
       {!hideAssistiveText && (
         <AssistiveContent data-component-name="AssistiveContent">
           {content.assistiveText}
@@ -160,7 +168,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   );
 
   if (inline) {
-    content.main = <Spacer>{content.main}</Spacer>;
+    content.main = <Flex>{content.main}</Flex>;
   }
 
   return (
@@ -170,4 +178,9 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   );
 });
 
+FormGroup.defaultProps = {
+  hideAssistiveText: false,
+  required: false,
+  skipIcon: false,
+};
 FormGroup.displayName = 'FormGroup';

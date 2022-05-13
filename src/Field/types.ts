@@ -1,7 +1,8 @@
-import { ChangeEventHandler, CSSProperties, FocusEventHandler, ReactNode } from 'react';
+import { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
 import { GenericFunction } from '@gilbarbara/types';
 
+import { FormGroupProps } from '../FormGroup';
 import { CheckboxOption, DropdownOption, DropdownProps, InputTypes, Option } from '../types';
 
 export interface RegisterOptionsProps extends FieldBaseProps {
@@ -28,25 +29,23 @@ export interface FieldInputHandlers<
   onFocus?: FocusEventHandler<T>;
 }
 
-export interface FieldBaseProps {
-  assistiveText?: ReactNode;
+export interface FieldBaseProps
+  extends Pick<
+    FormGroupProps,
+    'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
+  > {
   autoComplete?: string;
   clearError?: GenericFunction;
   debug?: boolean;
   disabled?: boolean;
-  hideAssistiveText?: boolean;
   id?: string;
-  label?: ReactNode;
   maxLength?: number;
   minLength?: number;
   name: string;
   placeholder?: string;
   readOnly?: boolean;
-  required?: boolean;
-  rows?: number;
   setValueAs?: (value: any) => any;
   skipValidation?: boolean;
-  style?: CSSProperties;
   type: FieldTypes;
   validations?: FieldValidations[];
   value?: any;
@@ -100,6 +99,7 @@ export interface FieldTextareaProps
   children?: never;
   dropdownProps?: never;
   options?: never;
+  rows?: number;
   type: 'textarea';
 }
 
