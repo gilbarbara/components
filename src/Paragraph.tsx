@@ -60,5 +60,3 @@ export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props
     </StyledParagraph>
   );
 });
-
-Paragraph.displayName = 'Paragraph';

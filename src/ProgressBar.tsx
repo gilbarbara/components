@@ -89,4 +89,3 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>((props, 
 ProgressBar.defaultProps = {
   width: '100%',
 };
-ProgressBar.displayName = 'ProgressBar';

@@ -56,4 +56,3 @@ Input.defaultProps = {
   type: 'text',
   width: '100%',
 };
-Input.displayName = 'Input';

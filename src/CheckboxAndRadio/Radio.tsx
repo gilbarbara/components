@@ -47,4 +47,3 @@ Radio.defaultProps = {
   disabled: false,
   size: 'md',
 };
-Radio.displayName = 'Radio';

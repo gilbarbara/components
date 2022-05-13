@@ -184,7 +184,6 @@ Menu.defaultProps = {
   positionX: 'right',
   positionY: 'bottom',
 };
-Menu.displayName = 'Menu';
 
 export { MenuDivider } from './Divider';
 export { MenuItem } from './Item';

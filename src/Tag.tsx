@@ -121,4 +121,3 @@ Tag.defaultProps = {
   size: 'small',
   variant: 'primary',
 };
-Tag.displayName = 'Tag';

@@ -86,4 +86,3 @@ ButtonBase.defaultProps = {
   size: 'regular',
   type: 'button',
 };
-ButtonBase.displayName = 'ButtonBase';

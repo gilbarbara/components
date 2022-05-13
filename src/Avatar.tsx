@@ -94,4 +94,3 @@ Avatar.defaultProps = {
   size: 'md',
   variant: 'primary',
 };
-Avatar.displayName = 'Avatar';

@@ -95,4 +95,3 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
 Alert.defaultProps = {
   type: 'success',
 };
-Alert.displayName = 'Alert';

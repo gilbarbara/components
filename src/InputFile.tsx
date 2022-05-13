@@ -64,4 +64,3 @@ InputFile.defaultProps = {
   large: false,
   placeholder: 'Upload a file',
 };
-InputFile.displayName = 'InputFile';

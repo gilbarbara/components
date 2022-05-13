@@ -97,4 +97,3 @@ Anchor.defaultProps = {
   hideDecoration: false,
   variant: 'primary',
 };
-Anchor.displayName = 'Anchor';

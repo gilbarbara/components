@@ -32,4 +32,3 @@ Text.defaultProps = {
   bold: false,
   size: 'regular',
 };
-Text.displayName = 'Text';

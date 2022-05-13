@@ -38,4 +38,3 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
 Textarea.defaultProps = {
   rows: 3,
 };
-Textarea.displayName = 'Textarea';

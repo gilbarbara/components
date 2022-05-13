@@ -54,5 +54,3 @@ export const ResponsiveMedia = forwardRef<HTMLDivElement, ResponsiveMediaProps>(
     </StyledResponsiveMedia>
   );
 });
-
-ResponsiveMedia.displayName = 'ResponsiveMedia';

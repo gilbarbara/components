@@ -78,4 +78,3 @@ InputColor.defaultProps = {
   height: '32px',
   width: '32px',
 };
-InputColor.displayName = 'InputColor';

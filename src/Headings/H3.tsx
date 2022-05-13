@@ -15,5 +15,3 @@ export const StyledH3 = styled(
 export const H3 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
   <StyledH3 ref={ref} data-component-name="H3" {...props} />
 ));
-
-H3.displayName = 'H3';

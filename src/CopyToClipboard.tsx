@@ -109,4 +109,3 @@ CopyToClipboard.defaultProps = {
   tooltipText: 'Copy',
   tooltipCopiedText: 'Copied!',
 };
-CopyToClipboard.displayName = 'CopyToClipboard';

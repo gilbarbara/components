@@ -49,5 +49,3 @@ export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
     </StyledEmoji>
   );
 });
-
-Emoji.displayName = 'Emoji';

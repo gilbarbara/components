@@ -44,4 +44,3 @@ Checkbox.defaultProps = {
   disabled: false,
   size: 'md',
 };
-Checkbox.displayName = 'Checkbox';

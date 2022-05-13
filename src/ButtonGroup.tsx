@@ -61,4 +61,3 @@ ButtonGroup.defaultProps = {
   size: 'md',
   variant: 'primary',
 };
-ButtonGroup.displayName = 'ButtonGroup';

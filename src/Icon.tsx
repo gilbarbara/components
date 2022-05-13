@@ -92,4 +92,3 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
 Icon.defaultProps = {
   size: 16,
 };
-Icon.displayName = 'Icon';

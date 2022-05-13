@@ -90,4 +90,3 @@ IconWrapper.defaultProps = {
   size: 40,
   width: '100%',
 };
-IconWrapper.displayName = 'IconWrapper';
