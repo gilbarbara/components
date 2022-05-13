@@ -183,4 +183,3 @@ FormGroup.defaultProps = {
   required: false,
   skipIcon: false,
 };
-FormGroup.displayName = 'FormGroup';

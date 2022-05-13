@@ -139,4 +139,3 @@ Button.defaultProps = {
   type: 'button',
   variant: 'primary',
 };
-Button.displayName = 'Button';

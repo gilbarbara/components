@@ -17,5 +17,3 @@ export const StyledJumbo = styled(
 export const Jumbo = forwardRef<HTMLHeadingElement, HeadingLargeProps>((props, ref) => (
   <StyledJumbo ref={ref} data-component-name="Jumbo" {...props} />
 ));
-
-Jumbo.displayName = 'Jumbo';

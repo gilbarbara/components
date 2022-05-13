@@ -123,4 +123,3 @@ Select.defaultProps = {
   large: false,
   multiple: false,
 };
-Select.displayName = 'Select';

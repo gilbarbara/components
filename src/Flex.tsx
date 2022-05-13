@@ -57,7 +57,6 @@ export const Flex = forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
 Flex.defaultProps = {
   display: 'flex',
 };
-Flex.displayName = 'Flex';
 
 export const FlexCenter = forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
   <StyledFlex
@@ -76,7 +75,6 @@ FlexCenter.defaultProps = {
   flexDirection: 'column',
   justifyContent: 'center',
 };
-FlexCenter.displayName = 'FlexCenter';
 
 export const FlexInline = forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
   <StyledFlex
@@ -93,4 +91,3 @@ FlexInline.defaultProps = {
   alignItems: 'center',
   display: 'inline-flex',
 };
-FlexInline.displayName = 'FlexInline';

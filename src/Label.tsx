@@ -70,4 +70,3 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
 Label.defaultProps = {
   inline: false,
 };
-Label.displayName = 'Label';

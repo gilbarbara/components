@@ -219,4 +219,3 @@ Toggle.defaultProps = {
   shade: 'mid',
   variant: 'primary',
 };
-Toggle.displayName = 'Toggle';

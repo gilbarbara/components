@@ -92,4 +92,3 @@ Spacer.defaultProps = {
   grow: false,
   wrap: true,
 };
-Spacer.displayName = 'Spacer';
