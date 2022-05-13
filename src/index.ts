@@ -23,6 +23,7 @@ export { FormGroup } from './FormGroup';
 export { Grid, GridProps } from './Grid';
 export * from './Headings';
 export { Icon } from './Icon';
+export { IconWrapper } from './IconWrapper';
 export { Input } from './Input';
 export { InputColor } from './InputColor';
 export { InputFile } from './InputFile';
