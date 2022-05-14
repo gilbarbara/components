@@ -8,7 +8,7 @@ import { fadeIn } from './modules/animations';
 import { getColorVariant, getTheme, px } from './modules/helpers';
 import { baseStyles, getStyledOptions } from './modules/system';
 import { Text } from './Text';
-import { Sizes, WithColor, WithTextOptions, WithTextSize } from './types';
+import { Sizes, WithChildren, WithColor, WithTextOptions, WithTextSize } from './types';
 
 interface SharedProps {
   /** @default middle */
@@ -24,8 +24,11 @@ interface ColorProps {
   color: string;
 }
 
-export interface TooltipProps extends Partial<SharedProps>, WithColor, WithTextOptions {
-  children: ReactNode;
+export interface TooltipProps
+  extends Partial<SharedProps>,
+    WithChildren,
+    WithColor,
+    WithTextOptions {
   content: ReactNode;
   open?: boolean;
   style?: CSSProperties;

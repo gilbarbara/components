@@ -1,12 +1,12 @@
-import { MouseEventHandler, ReactNode } from 'react';
+import { MouseEventHandler } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
+import { WithChildren } from '../types';
 
-export interface SearchItemProps {
-  children: ReactNode;
+export interface SearchItemProps extends WithChildren {
   onClick: MouseEventHandler;
   value: string;
 }

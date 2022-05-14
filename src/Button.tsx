@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
@@ -18,6 +18,7 @@ import {
   StyledProps,
   WithBlock,
   WithBusy,
+  WithChildren,
   WithColor,
   WithComponentSize,
   WithInvert,
@@ -29,12 +30,12 @@ export interface ButtonKnownProps
   extends StyledProps,
     WithBlock,
     WithBusy,
+    WithChildren,
     WithColor,
     WithComponentSize,
     WithInvert,
     WithPadding,
     WithTransparent {
-  children: ReactNode;
   /**
    * Use equal padding on all sides
    * @default false

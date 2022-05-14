@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
@@ -8,7 +8,6 @@ import { Box, BoxProps } from './Box';
 export interface FlexProps extends BoxProps {
   alignContent?: StandardLonghandProperties['alignContent'];
   alignItems?: StandardLonghandProperties['alignItems'];
-  children?: ReactNode;
   display?: 'flex' | 'inline-flex';
   flex?: StandardShorthandProperties['flex'];
   flexBasis?: StandardLonghandProperties['flexBasis'];

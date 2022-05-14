@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, ReactNode } from 'react';
+import { CSSProperties, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
@@ -11,11 +11,10 @@ import {
   paddingStyles,
   shadowStyles,
 } from './modules/system';
-import { WithMargin, WithPadding } from './types';
+import { WithChildren, WithMargin, WithPadding } from './types';
 
-export interface ContainerProps extends WithMargin, WithPadding {
+export interface ContainerProps extends WithChildren, WithMargin, WithPadding {
   centered?: boolean;
-  children: ReactNode;
   fullScreen?: boolean;
   fullScreenOffset?: StringOrNumber;
   style?: CSSProperties;

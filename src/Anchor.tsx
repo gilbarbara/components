@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -17,6 +17,7 @@ import {
   ComponentProps,
   Icons,
   StyledProps,
+  WithChildren,
   WithColor,
   WithDisplay,
   WithMargin,
@@ -26,12 +27,12 @@ import {
 
 export interface AnchorKnownProps
   extends StyledProps,
+    WithChildren,
     WithColor,
     WithDisplay,
     WithMargin,
     WithPadding,
     WithTextOptions {
-  children: ReactNode;
   external?: boolean;
   hideDecoration?: boolean;
   href: string;

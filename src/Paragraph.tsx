@@ -1,4 +1,4 @@
-import { forwardRef, isValidElement, ReactNode } from 'react';
+import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -15,6 +15,7 @@ import {
   ComponentProps,
   StyledProps,
   WithAlign,
+  WithChildren,
   WithColor,
   WithMargin,
   WithTextOptions,
@@ -23,11 +24,10 @@ import {
 export interface ParagraphKnownProps
   extends StyledProps,
     WithAlign,
+    WithChildren,
     WithColor,
     WithMargin,
-    WithTextOptions {
-  children: ReactNode;
-}
+    WithTextOptions {}
 
 export type ParagraphProps = ComponentProps<HTMLParagraphElement, ParagraphKnownProps>;
 

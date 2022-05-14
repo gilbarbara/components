@@ -14,10 +14,9 @@ import { Loader } from '../Loader';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
 import { NonIdealState } from '../NonIdealState';
-import { StyledProps, WithColor, WithMargin } from '../types';
+import { StyledProps, WithChildren, WithColor, WithMargin } from '../types';
 
-export interface TabsProps extends StyledProps, WithColor, WithMargin {
-  children: ReactNode;
+export interface TabsProps extends StyledProps, WithChildren, WithColor, WithMargin {
   initialId?: string;
   loader?: ReactNode;
   maxHeight?: number | StandardLonghandProperties['maxHeight'];

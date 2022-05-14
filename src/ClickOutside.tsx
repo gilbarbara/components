@@ -1,9 +1,10 @@
-import { memo, ReactNode, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { ValueOf } from 'type-fest';
 
-interface Props {
+import { WithChildren } from './types';
+
+export interface ClickOutsideProps extends WithChildren {
   active: boolean;
-  children: ReactNode;
   display?: ValueOf<typeof DISPLAY>;
   onClick: () => void;
 }
@@ -16,7 +17,7 @@ const DISPLAY = {
   CONTENTS: 'contents',
 } as const;
 
-export function ClickOutside(props: Props) {
+export function ClickOutside(props: ClickOutsideProps) {
   const { active, children, display = DISPLAY.BLOCK, onClick, ...rest } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const isTouch = useRef(false);

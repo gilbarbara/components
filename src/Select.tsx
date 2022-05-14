@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, ReactNode, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, forwardRef, useCallback, useRef, useState } from 'react';
 import mergeRefs from 'react-merge-refs';
 import { useMount } from 'react-use';
 import { css } from '@emotion/react';
@@ -17,6 +17,7 @@ import {
   ComponentProps,
   StyledProps,
   WithBorderless,
+  WithChildren,
   WithElementSpacing,
   WithFormElements,
 } from './types';
@@ -24,9 +25,9 @@ import {
 export interface SelectKnownProps
   extends StyledProps,
     WithBorderless,
+    WithChildren,
     Omit<WithElementSpacing, 'suffixSpacing'>,
     WithFormElements {
-  children: ReactNode;
   large?: boolean;
 }
 

@@ -1,13 +1,11 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { baseStyles, colorStyles, getStyledOptions, textStyles } from './modules/system';
-import { ComponentProps, StyledProps, WithColor, WithTextOptions } from './types';
+import { ComponentProps, StyledProps, WithChildren, WithColor, WithTextOptions } from './types';
 
-export interface TextKnownProps extends StyledProps, WithColor, WithTextOptions {
-  children: ReactNode;
-}
+export interface TextKnownProps extends StyledProps, WithChildren, WithColor, WithTextOptions {}
 
 export type TextProps = ComponentProps<HTMLSpanElement, TextKnownProps>;
 

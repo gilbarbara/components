@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -6,10 +6,17 @@ import { Icon } from './Icon';
 import { getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from './modules/system';
 import { Text } from './Text';
-import { ComponentProps, Icons, StyledProps, Theme, WithInvert, WithMargin } from './types';
+import {
+  ComponentProps,
+  Icons,
+  StyledProps,
+  Theme,
+  WithChildren,
+  WithInvert,
+  WithMargin,
+} from './types';
 
-export interface AlertKnownProps extends StyledProps, WithMargin, WithInvert {
-  children: ReactNode;
+export interface AlertKnownProps extends StyledProps, WithChildren, WithMargin, WithInvert {
   icon?: Icons;
   /** @default success */
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';

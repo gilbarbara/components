@@ -6,10 +6,9 @@ import is from 'is-lite';
 import { getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions } from './modules/system';
 import { Text } from './Text';
-import { ComponentProps, StyledProps, WithInline } from './types';
+import { ComponentProps, StyledProps, WithChildren, WithInline } from './types';
 
-export interface LabelKnownProps extends StyledProps, WithInline {
-  children: ReactNode;
+export interface LabelKnownProps extends StyledProps, WithChildren, WithInline {
   /** For the htmlFor attribute */
   labelId?: string;
   labelInfo?: ReactNode;

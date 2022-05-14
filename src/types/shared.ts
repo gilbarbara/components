@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
@@ -31,6 +32,16 @@ export interface WithBusy {
    * @default false
    */
   busy?: boolean;
+}
+
+export interface WithChildren {
+  /** Required */
+  children: ReactNode;
+}
+
+export interface WithChildrenOptional {
+  /** Optional */
+  children?: ReactNode;
 }
 
 export interface WithColor {

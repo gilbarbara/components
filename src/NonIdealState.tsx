@@ -9,10 +9,9 @@ import { H2 } from './Headings';
 import { Icon } from './Icon';
 import { getTheme, responsive } from './modules/helpers';
 import { Paragraph } from './Paragraph';
-import { ComponentProps, Icons, StyledProps, WithMargin } from './types';
+import { ComponentProps, Icons, StyledProps, WithChildrenOptional, WithMargin } from './types';
 
-export interface NonIdealStateKnownProps extends StyledProps, WithMargin {
-  children?: ReactNode;
+export interface NonIdealStateKnownProps extends StyledProps, WithChildrenOptional, WithMargin {
   description?: ReactNode;
   icon?: Icons;
   small?: boolean;

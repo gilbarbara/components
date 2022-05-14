@@ -16,9 +16,14 @@ import { Portal, PortalProps } from './Portal';
 export interface ModalProps
   extends Pick<
     PortalProps,
-    'closeOnClickOverlay' | 'closeOnEsc' | 'hideOverlay' | 'onClose' | 'onOpen' | 'zIndex'
+    | 'children'
+    | 'closeOnClickOverlay'
+    | 'closeOnEsc'
+    | 'hideOverlay'
+    | 'onClose'
+    | 'onOpen'
+    | 'zIndex'
   > {
-  children: ReactNode;
   hideCloseButton?: boolean;
   isActive: boolean;
   maxHeight?: StandardLonghandProperties['maxHeight'] | number;

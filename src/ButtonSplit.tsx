@@ -8,15 +8,22 @@ import { Icon } from './Icon';
 import { Menu } from './Menu';
 import { getTheme } from './modules/helpers';
 import { backgroundStyles, getStyledOptions } from './modules/system';
-import { WithBlock, WithBusy, WithColor, WithComponentSize, WithInvert } from './types';
+import {
+  WithBlock,
+  WithBusy,
+  WithChildren,
+  WithColor,
+  WithComponentSize,
+  WithInvert,
+} from './types';
 
 export interface ButtonSplitProps
   extends WithBlock,
     WithBusy,
+    WithChildren,
     WithColor,
     WithComponentSize,
     WithInvert {
-  children: ReactNode;
   disabled?: boolean;
   label: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
