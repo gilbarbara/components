@@ -2,19 +2,22 @@ import { ComponentMeta } from '@storybook/react';
 import { Jumbo, Paragraph, Text } from 'src';
 import { Container, ContainerProps } from 'src/Container';
 
-import { hideProps, spacingProps } from '../__helpers__';
+import { disableControl, hideProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Container',
   component: Container,
   args: {
-    centered: false,
+    align: 'stretch',
     fullScreen: false,
+    textAlign: 'left',
+    verticalAlign: 'start',
     verticalPadding: false,
   },
   argTypes: {
     ...hideProps(),
     ...spacingProps(),
+    children: disableControl(),
     fullScreenOffset: { control: 'text' },
     verticalAlign: { control: 'select' },
   },
@@ -23,14 +26,15 @@ export default {
   },
 } as ComponentMeta<typeof Container>;
 
-export const Basic = (props: ContainerProps) => {
-  return (
-    <Container {...props} style={{ border: '1px solid #ccc' }}>
-      <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
-      <Paragraph>I'm a wrapper that holds all other components.</Paragraph>
-      <Text size="small" variant="gray">
-        *The border is just for visualization...
-      </Text>
-    </Container>
-  );
-};
+export const Basic = (props: ContainerProps) => (
+  <Container {...props} style={{ border: '1px solid #ccc' }}>
+    <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
+    <Paragraph>
+      I'm a wrapper that holds any type of component with a pre-defined horizontal padding and an
+      optional vertical padding
+    </Paragraph>
+    <Text size="small" variant="gray">
+      *The border is just for visualization...
+    </Text>
+  </Container>
+);
