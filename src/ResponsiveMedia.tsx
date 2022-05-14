@@ -1,20 +1,19 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ceil } from '@gilbarbara/helpers';
 
 import { px } from './modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
-import { ComponentProps, StyledProps, WithMargin } from './types';
+import { ComponentProps, StyledProps, WithChildren, WithMargin } from './types';
 
-export interface BoxKnownProps extends StyledProps, WithMargin {
-  children?: ReactNode;
+export interface ResponsiveMediaKnownProps extends StyledProps, WithChildren, WithMargin {
   height: number;
   maxWidth?: number;
   width: number;
 }
 
-export type ResponsiveMediaProps = ComponentProps<HTMLDivElement, BoxKnownProps>;
+export type ResponsiveMediaProps = ComponentProps<HTMLDivElement, ResponsiveMediaKnownProps>;
 
 export const StyledResponsiveMedia = styled(
   'div',

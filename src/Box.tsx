@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -16,6 +16,7 @@ import {
 import {
   ComponentProps,
   StyledProps,
+  WithChildrenOptional,
   WithColor,
   WithLayout,
   WithMargin,
@@ -27,15 +28,14 @@ import {
 
 export interface BoxKnownProps
   extends StyledProps,
+    WithChildrenOptional,
     WithColor,
     WithLayout,
     WithMargin,
     WithPadding,
     WithPositioning,
     WithRadius,
-    WithShadow {
-  children?: ReactNode;
-}
+    WithShadow {}
 
 export type BoxProps = ComponentProps<HTMLDivElement, BoxKnownProps>;
 

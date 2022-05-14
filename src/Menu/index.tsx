@@ -1,12 +1,4 @@
-import {
-  forwardRef,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import mergeRefs from 'react-merge-refs';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -17,10 +9,9 @@ import { ButtonBase } from '../ButtonBase';
 import { Icon } from '../Icon';
 import { getTheme, recursiveChildrenMap } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
-import { ComponentProps, StyledProps, WithColor } from '../types';
+import { ComponentProps, StyledProps, WithChildren, WithColor } from '../types';
 
-export interface MenuKnownProps extends StyledProps, WithColor {
-  children: ReactNode;
+export interface MenuKnownProps extends StyledProps, WithChildren, WithColor {
   disabled?: boolean;
   /** @default Icon with more-vertical-o */
   icon?: ReactElement;

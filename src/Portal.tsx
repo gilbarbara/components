@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from 'react-use';
 import { css, keyframes, useTheme } from '@emotion/react';
@@ -8,9 +8,9 @@ import is from 'is-lite';
 import { Icon } from './Icon';
 import { baseStyles, buttonStyles } from './modules/system';
 import { black } from './modules/theme';
+import { StyledProps, WithChildren } from './types';
 
-export interface PortalProps {
-  children: ReactNode;
+export interface PortalProps extends StyledProps, WithChildren {
   /** @default true */
   closeOnClickOverlay?: boolean;
   /** @default true */

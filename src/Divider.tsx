@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
@@ -10,16 +9,20 @@ import {
   Sizes,
   Spacing,
   StyledProps,
+  WithChildrenOptional,
   WithColor,
   WithMargin,
   WithTextSize,
 } from './types';
 
-export interface DividerKnownProps extends StyledProps, WithColor, WithMargin, WithTextSize {
+export interface DividerKnownProps
+  extends StyledProps,
+    WithChildrenOptional,
+    WithColor,
+    WithMargin,
+    WithTextSize {
   /** @default solid */
   borderStyle?: 'solid' | 'dashed' | 'dotted';
-  /** Optional text */
-  children?: ReactNode;
   /** @default sm */
   dimension?: Sizes;
   /** @default horizontal */

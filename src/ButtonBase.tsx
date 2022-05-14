@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -16,6 +16,7 @@ import {
   ComponentProps,
   StyledProps,
   WithBusy,
+  WithChildren,
   WithColor,
   WithMargin,
   WithPadding,
@@ -25,11 +26,11 @@ import {
 export interface ButtonBaseKnownProps
   extends StyledProps,
     WithBusy,
+    WithChildren,
     WithColor,
     WithMargin,
     WithPadding,
     WithTextOptions {
-  children: ReactNode;
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 

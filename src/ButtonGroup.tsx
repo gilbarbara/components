@@ -1,13 +1,15 @@
-import { Children, cloneElement, ReactElement, ReactNode } from 'react';
+import { Children, cloneElement, ReactElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { baseStyles, getStyledOptions } from './modules/system';
-import { ComponentProps, StyledProps, WithColor, WithComponentSize } from './types';
+import { ComponentProps, StyledProps, WithChildren, WithColor, WithComponentSize } from './types';
 
-export interface ButtonGroupKnownProps extends StyledProps, WithColor, WithComponentSize {
-  children: ReactNode;
-}
+export interface ButtonGroupKnownProps
+  extends StyledProps,
+    WithChildren,
+    WithColor,
+    WithComponentSize {}
 
 export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
 

@@ -1,12 +1,17 @@
-import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 
 import { getTheme } from '../modules/helpers';
 import { alignStyles, baseStyles, marginStyles } from '../modules/system';
-import { ComponentProps, StyledProps, Typography, WithAlign, WithMargin } from '../types';
+import {
+  ComponentProps,
+  StyledProps,
+  Typography,
+  WithAlign,
+  WithChildren,
+  WithMargin,
+} from '../types';
 
-export interface HeadingKnownProps extends StyledProps, WithAlign, WithMargin {
-  children: ReactNode;
+export interface HeadingKnownProps extends StyledProps, WithAlign, WithChildren, WithMargin {
   light?: boolean;
 }
 

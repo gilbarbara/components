@@ -16,11 +16,22 @@ import {
   layoutStyles,
   marginStyles,
 } from './modules/system';
-import { ComponentProps, StyledProps, WithInline, WithLayout, WithMargin } from './types';
+import {
+  ComponentProps,
+  StyledProps,
+  WithChildren,
+  WithInline,
+  WithLayout,
+  WithMargin,
+} from './types';
 
-export interface FormGroupKnownProps extends StyledProps, WithInline, WithLayout, WithMargin {
+export interface FormGroupKnownProps
+  extends StyledProps,
+    WithChildren,
+    WithInline,
+    WithLayout,
+    WithMargin {
   assistiveText?: ReactNode;
-  children: ReactNode;
   error?: ReactNode;
   hideAssistiveText?: boolean;
   label?: ReactNode;

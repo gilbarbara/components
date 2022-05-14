@@ -1,13 +1,12 @@
-import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 
 import { px } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
+import { StyledProps, WithChildren } from './types';
 
-export interface TruncateProps {
-  children: ReactNode;
+export interface TruncateProps extends StyledProps, WithChildren {
   /** @default 2 */
   lines?: number;
   maxWidth?: StringOrNumber;

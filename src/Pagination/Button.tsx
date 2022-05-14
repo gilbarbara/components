@@ -1,13 +1,13 @@
-import { MouseEventHandler, ReactNode } from 'react';
+import { MouseEventHandler } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { ButtonBase } from '../ButtonBase';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
+import { WithChildrenOptional } from '../types';
 
-interface PaginationButtonProps {
-  children?: ReactNode;
+interface PaginationButtonProps extends WithChildrenOptional {
   currentPage: number;
   disabled: boolean;
   onClick: MouseEventHandler;

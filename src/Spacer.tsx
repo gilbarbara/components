@@ -1,15 +1,21 @@
-import { Children, forwardRef, ReactNode } from 'react';
+import { Children, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions, layoutStyles, marginStyles } from './modules/system';
-import { ComponentProps, Spacing, StyledProps, WithLayout, WithMargin } from './types';
+import {
+  ComponentProps,
+  Spacing,
+  StyledProps,
+  WithChildren,
+  WithLayout,
+  WithMargin,
+} from './types';
 
-export interface SpacerKnownProps extends StyledProps, WithLayout, WithMargin {
+export interface SpacerKnownProps extends StyledProps, WithChildren, WithLayout, WithMargin {
   /** @default center */
   align?: 'baseline' | 'center' | 'end' | 'start';
-  children: ReactNode;
   /** @default horizontal */
   direction?: 'horizontal' | 'vertical';
   /** @default start */

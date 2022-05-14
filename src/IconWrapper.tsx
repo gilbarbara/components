@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, ReactNode } from 'react';
+import { CSSProperties, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
@@ -9,10 +9,9 @@ import { FlexCenter } from './Flex';
 import { Icon, IconProps } from './Icon';
 import { px } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
-import { Icons, WithMargin } from './types';
+import { Icons, StyledProps, WithChildren, WithMargin } from './types';
 
-export interface IconWrapperKnownProps extends WithMargin {
-  children: ReactNode;
+export interface IconWrapperKnownProps extends StyledProps, WithChildren, WithMargin {
   prefixIcon?: Icons | IconProps;
   /** @default 32 */
   size?: StringOrNumber;
@@ -43,7 +42,7 @@ const StyledIconWrapper = styled(
 export const IconWrapper = forwardRef<HTMLDivElement, IconWrapperProps>((props, ref) => {
   const { children, prefixIcon, size, suffixIcon } = props;
 
-  const content: AnyObject<ReactNode> = {};
+  const content: AnyObject = {};
 
   if (prefixIcon) {
     let iconProps: IconProps = {} as IconProps;

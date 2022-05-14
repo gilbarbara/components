@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, MouseEvent, ReactNode } from 'react';
+import { CSSProperties, forwardRef, MouseEvent } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
@@ -18,13 +18,18 @@ import {
   Shades,
   StyledProps,
   Variants,
+  WithChildren,
   WithColor,
   WithMargin,
   WithTextOptions,
 } from './types';
 
-export interface TagProps extends StyledProps, WithColor, WithMargin, WithTextOptions {
-  children: ReactNode;
+export interface TagProps
+  extends StyledProps,
+    WithChildren,
+    WithColor,
+    WithMargin,
+    WithTextOptions {
   color?: Variants;
   colorShade?: Shades;
   iconAfter?: Icons;
