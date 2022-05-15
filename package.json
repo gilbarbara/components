@@ -105,9 +105,10 @@
     "test:coverage": "jest --bail --coverage --passWithNoTests",
     "typecheck": "tsc --noEmit",
     "size": "size-limit",
-    "validate": "npm run lint && npm run typecheck && npm run test:coverage && npm run build && npm run size",
+    "validate": "npm run lint && npm run typecheck && npm run build && npm run size",
     "storybook:dev": "start-storybook -p 4000",
     "storybook:build": "build-storybook -o build",
+    "prepublishOnly": "npm run validate",
     "prepare": "husky install"
   },
   "eslintConfig": {

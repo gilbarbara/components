@@ -51,6 +51,7 @@ jobs:
         timeout-minutes: 3
 
       - name: Validate and Build
+        if: "!startsWith(github.ref, 'refs/tags/')"
         run: npm run validate
         timeout-minutes: 3
 
