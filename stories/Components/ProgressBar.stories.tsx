@@ -1,20 +1,24 @@
 import { ComponentMeta } from '@storybook/react';
 import { ProgressBar, ProgressBarProps } from 'src/ProgressBar';
 
-import { hideProps, marginProps } from '../__helpers__';
+import { colorProps, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/ProgressBar',
   component: ProgressBar,
   args: {
+    backgroundShade: 'light',
     large: false,
-    showProgression: true,
+    hideText: false,
+    shade: 'mid',
     step: 1,
     steps: 4,
+    variant: 'primary',
     width: 400,
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     ...marginProps(),
   },
 } as ComponentMeta<typeof ProgressBar>;
