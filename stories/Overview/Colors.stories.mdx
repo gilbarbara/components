@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs';
 import { capitalize } from '@gilbarbara/helpers';
-import { hex2hsl, textColor } from 'colorizr';
+import { compare, hex2hsl, textColor } from 'colorizr';
 
-import { Box, FlexCenter, Grid, H2, H3, Jumbo, Paragraph, Text } from 'src';
+import { Box, FlexCenter, Grid, H2, H3, Icon, Jumbo, Paragraph, Spacer, Text } from 'src';
 import { colors, grayScale, variants as themeVariants } from 'src/modules/theme';
 import { shades, variants } from '../__helpers__';
 
@@ -10,38 +10,101 @@ import { shades, variants } from '../__helpers__';
 
 <Jumbo>Colors and shades</Jumbo>
 
-<H2>Base colors</H2>
+<H2>Colors</H2>
 
-<Grid gap={32} mb="xxl" justifyContent="start" templateColumns="repeat(5, auto)">
-  {Object.entries(colors)
-    .map(([key, value]) => {
-      const { h, s, l } = hex2hsl(value);
-      return (
-        <Box key={key}>
-          <FlexCenter
-            height={128}
-            radius="round"
-            shade="mid"
-            variant={key}
-            width={128}
-          >
-            {key}
-          </FlexCenter>
-          <Paragraph align="center" size="small" mt="xs">HEX: {value}</Paragraph>
-          <Paragraph align="center" size="small">
-            H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
+<Spacer direction="vertical" grow maxWidth={900} gap="xl" mb="xxl">
+  {Object.entries(colors).map(([key, value]) => {
+    const {
+      contrast,
+      largeAA,
+      largeAAA,
+      normalAA,
+      normalAAA
+    } = compare(value, textColor(value));
+    return (
+      <Box key={key}>
+        <H3 light>{capitalize(key)} ({value})</H3>
+        <FlexCenter padding="xl" variant={key}>
+          <Paragraph>
+            The quick brown fox jumps over the lazy dog
           </Paragraph>
-        </Box>
-      );
-    })}
-</Grid>
+          <Paragraph size="large">
+            The quick brown fox jumps over the lazy dog
+          </Paragraph>
+        </FlexCenter>
+        <Grid
+          templateColumns="repeat(5, 1fr)"
+          style={{ border: '1px solid #000' }}
+        >
+          <FlexCenter
+            padding="xs"
+            style={{ borderRight: "1px solid #000" }}
+          >
+            Contrast: {contrast}
+          </FlexCenter>
+          <FlexCenter
+            padding="xs"
+            style={{ borderRight: "1px solid #000" }}
+          >
+            <Spacer gap="xxs">
+              <Text>normal AA:</Text>
+              <Icon
+                color={normalAA ? colors.green : colors.red}
+                name={normalAA ? "check-o" : "close-o"}
+                size={24}
+              />
+            </Spacer>
+          </FlexCenter>
+          <FlexCenter
+            padding="xs"
+            style={{ borderRight: "1px solid #000" }}
+          >
+            <Spacer gap="xxs">
+              <Text>normal AAA:</Text>
+              <Icon
+                color={normalAAA ? colors.green : colors.red}
+                name={normalAAA ? "check-o" : "close-o"}
+                size={24}
+              />
+            </Spacer>
+          </FlexCenter>
+          <FlexCenter
+            padding="xs"
+            style={{ borderRight: "1px solid #000" }}
+          >
+            <Spacer gap="xxs">
+              <Text>large AA:</Text>
+              <Icon
+                color={largeAA ? colors.green : colors.red}
+                name={largeAA ? "check-o" : "close-o"}
+                size={24}
+              />
+            </Spacer>
+          </FlexCenter>
+          <FlexCenter
+            padding="xs"
+          >
+            <Spacer gap="xxs">
+              <Text>large AAA:</Text>
+              <Icon
+                color={largeAAA ? colors.green : colors.red}
+                name={largeAAA ? "check-o" : "close-o"}
+                size={24}
+              />
+            </Spacer>
+          </FlexCenter>
+        </Grid>
+      </Box>
+    );
+  })}
+</Spacer>
 
 <H2>Variants</H2>
 
-<Box mb="xxl">
+<Spacer direction="vertical" grow maxWidth={900} gap="xl" mb="xxl">
   {Object.entries(themeVariants)
     .map(([variant, color]) => (
-      <Box key={variant} mb="lg">
+      <Box key={variant}>
         <H3 light>{capitalize(variant)}</H3>
         <Grid gap={32} justifyContent="start" templateColumns="repeat(7, auto)">
           {Object.entries(color)
@@ -50,17 +113,17 @@ import { shades, variants } from '../__helpers__';
               return (
                 <Box key={shade}>
                   <FlexCenter
-                    height={128}
+                    height={100}
                     radius="round"
                     shade={shade}
                     variant={variant}
-                    width={128}
+                    width={100}
                   >
                     {shade}
                   </FlexCenter>
                   <Paragraph align="center" size="small" mt="xs">HEX: {value.bg}</Paragraph>
                   <Paragraph align="center" size="small">
-                    H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
+                    HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
                   </Paragraph>
                 </Box>
               );
@@ -68,15 +131,15 @@ import { shades, variants } from '../__helpers__';
         </Grid>
       </Box>
     ))}
-</Box>
+</Spacer>
 
 
 <H2>Shades</H2>
 
-<Box mb="xxl">
+<Spacer direction="vertical" grow maxWidth={768} gap="xl" mb="xxl">
   {shades
     .map((shade) => (
-      <Box key={shade} mb="lg">
+      <Box key={shade}>
         <H3 light>{capitalize(shade)}</H3>
         <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
           {variants
@@ -86,17 +149,17 @@ import { shades, variants } from '../__helpers__';
               return (
                 <Box key={variant}>
                   <FlexCenter
-                    height={128}
+                    height={100}
                     radius="round"
                     shade={shade}
                     variant={variant}
-                    width={128}
+                    width={100}
                   >
                     {variant}
                   </FlexCenter>
                   <Paragraph align="center" size="small" mt="xs">HEX: {bg}</Paragraph>
                   <Paragraph align="center" size="small">
-                    H: {Math.round(h)} / S: {Math.round(s)} / L: {Math.round(l)}
+                    HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
                   </Paragraph>
                 </Box>
               );
@@ -104,7 +167,7 @@ import { shades, variants } from '../__helpers__';
         </Grid>
       </Box>
     ))}
-</Box>
+</Spacer>
 
 <H2>Grayscale</H2>
 
@@ -113,9 +176,9 @@ import { shades, variants } from '../__helpers__';
     .map(([key, color]) => (
       <Box key={color}>
         <FlexCenter
-          height={128}
+          height={100}
           radius="round"
-          width={128}
+          width={100}
           style={{ backgroundColor: color }}
         >
           <Text style={{ color: textColor(color) }}>{color}</Text>
