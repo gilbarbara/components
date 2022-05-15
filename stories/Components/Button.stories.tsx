@@ -8,7 +8,14 @@ import { sizes } from 'src/modules/options';
 
 import * as Types from 'src/types';
 
-import { colorProps, hideProps, hideTable, paddingProps, shades, variants } from '../__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  paddingProps,
+  shades,
+  variants,
+} from '../__helpers__';
 
 export default {
   title: 'Components/Button',
@@ -21,7 +28,6 @@ export default {
     invert: false,
     shade: 'mid',
     size: 'md',
-    square: false,
     transparent: false,
     type: 'button',
     variant: 'primary',
@@ -31,80 +37,76 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...paddingProps(),
+    children: { control: 'text' },
+    onClick: { action: 'onClick' },
     size: { control: 'radio', options: sizes },
   },
 } as ComponentMeta<typeof Button>;
 
-export function Basic(props: ButtonProps) {
-  return <Button {...props} />;
-}
+export const Basic = (props: ButtonProps) => <Button {...props} />;
 
-export function Sizes(props: ButtonProps) {
-  return (
-    <Spacer>
-      {['sm', 'md', 'lg'].map(d => (
-        <Button key={d} onClick={action('clicked')} {...props} size={d as Types.Sizes}>
-          Button {capitalize(d)}
-        </Button>
-      ))}
-    </Spacer>
-  );
-}
+export const Sizes = (props: ButtonProps) => (
+  <Spacer>
+    {['sm', 'md', 'lg'].map(d => (
+      <Button key={d} {...props} size={d as Types.Sizes}>
+        Button {capitalize(d)}
+      </Button>
+    ))}
+  </Spacer>
+);
 
 Sizes.argTypes = {
-  size: hideTable(),
+  size: disableControl(),
 };
 
-export function Colors(props: ButtonProps) {
-  return (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {variants.map(d => (
-        <Button key={d} onClick={action('clicked')} {...props} variant={d}>
-          Button {capitalize(d)}
-        </Button>
-      ))}
-      <Button onClick={action('clicked')} {...props} variant="black">
-        Button Black
+export const Colors = (props: ButtonProps) => (
+  <Grid gap={30} templateColumns="repeat(3, 1fr)">
+    {variants.map(d => (
+      <Button key={d} {...props} variant={d}>
+        Button {capitalize(d)}
       </Button>
-      <Button onClick={action('clicked')} {...props} variant="white">
-        Button White
-      </Button>
-    </Grid>
-  );
-}
+    ))}
+    <Button onClick={action('clicked')} {...props} variant="black">
+      Button Black
+    </Button>
+    <Button onClick={action('clicked')} {...props} variant="white">
+      Button White
+    </Button>
+  </Grid>
+);
 
 Colors.argTypes = {
-  variant: hideTable(),
+  variant: disableControl(),
 };
 
-export function Shades(props: ButtonProps) {
-  return (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {shades.map(d => (
-        <Button key={d} onClick={action('clicked')} {...props} shade={d}>
-          Button {capitalize(d)}
-        </Button>
-      ))}
-    </Grid>
-  );
-}
+export const Shades = (props: ButtonProps) => (
+  <Grid gap={30} templateColumns="repeat(3, 1fr)">
+    {shades.map(d => (
+      <Button key={d} {...props} shade={d}>
+        Button {capitalize(d)}
+      </Button>
+    ))}
+  </Grid>
+);
 
 Shades.argTypes = {
-  shade: hideTable(),
+  shade: disableControl(),
 };
 
-export function WithIcons(props: ButtonProps) {
-  return (
-    <Grid gap={20} templateColumns="repeat(4, 1fr)">
-      {['arrow-left', 'arrow-up', 'arrow-down', 'arrow-right'].map(d => (
-        <Button key={d} onClick={action('clicked')} {...props} square>
-          <Icon name={d as Types.Icons} size={18} />
-        </Button>
-      ))}
-    </Grid>
-  );
-}
+export const Shapes = (props: ButtonProps) => (
+  <Grid gap={20} templateColumns="repeat(3, 1fr)">
+    <Button {...props} shape="round">
+      <Icon name="arrow-down" size={18} />
+    </Button>
+    <Button {...props} shape="circle">
+      <Icon name="check" size={28} />
+    </Button>
+    <Button {...props} shape="square">
+      <Icon name="trash" size={18} />
+    </Button>
+  </Grid>
+);
 
-WithIcons.argTypes = {
-  square: hideTable(),
+Shapes.argTypes = {
+  shape: disableControl(),
 };
