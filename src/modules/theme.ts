@@ -158,14 +158,14 @@ export const grayScale = {
 };
 
 export const colors = {
-  primary: '#4747eb',
-  secondary: '#14a1b8',
-  blue: '#4D96FF',
+  primary: '#3030e8',
+  secondary: '#2A5D65',
+  blue: '#66a5ff',
   green: '#58d063',
-  orange: '#e97c3e',
+  orange: '#ff995d',
   pink: '#ee63ab',
-  purple: '#a475f0',
-  red: '#ff5252',
+  purple: '#ad7bff',
+  red: '#ff5e5e',
   yellow: '#ffe166',
 };
 
