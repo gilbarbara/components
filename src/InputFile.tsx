@@ -1,22 +1,51 @@
 import { ChangeEvent, forwardRef, useState } from 'react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { Button } from './Button';
 import { FlexInline } from './Flex';
-import { getStyledOptions } from './modules/system';
-import { Spacer } from './Spacer';
+import { getTheme, px } from './modules/helpers';
+import { baseStyles, getStyledOptions } from './modules/system';
 import { Truncate } from './Truncate';
-import { ComponentProps, StyledProps, WithInvert } from './types';
+import { ComponentProps, StyledProps, WithFormElements, WithInvert } from './types';
 
-export interface InputFileKnownProps extends StyledProps, WithInvert {
+export interface InputFileKnownProps extends StyledProps, WithFormElements, WithInvert {
   /** @default false */
   large?: boolean;
   value?: string;
 }
 
-export type InputFileProps = ComponentProps<HTMLInputElement, InputFileKnownProps, 'type'>;
+export type InputFileProps = ComponentProps<
+  HTMLInputElement,
+  InputFileKnownProps,
+  'name' | 'type' | 'width'
+>;
 
-export const StyledInputFile = styled('input', getStyledOptions())`
+export const StyledFileInput = styled(
+  'div',
+  getStyledOptions(),
+)<Partial<InputFileProps>>(props => {
+  const { width = '100%' } = props;
+  const { spacing } = getTheme(props);
+
+  return css`
+    ${baseStyles(props)};
+    align-items: center;
+    display: flex;
+    width: ${px(width)};
+
+    [data-component-name='Truncate'] {
+      flex: 1;
+      margin-left: ${spacing.xs};
+
+      &:empty {
+        display: none;
+      }
+    }
+  `;
+});
+
+export const StyledInput = styled('input', getStyledOptions())`
   font-size: 48px;
   left: 0;
   opacity: 0;
@@ -40,27 +69,23 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
   };
 
   return (
-    <Spacer gap="xs">
+    <StyledFileInput data-component-name="InputFile" {...rest}>
       <FlexInline overflow="hidden" position="relative">
         <Button invert={invert} size={large ? 'lg' : 'md'}>
           {placeholder}
         </Button>
-        <StyledInputFile
-          ref={ref}
-          id={name}
-          name={name}
-          onChange={handleChange}
-          type="file"
-          {...rest}
-        />
+        <StyledInput ref={ref} id={name} name={name} onChange={handleChange} type="file" />
       </FlexInline>
-      <Truncate maxWidth="70%">{value || localValue}</Truncate>
-    </Spacer>
+      <Truncate maxWidth="100%">{value || localValue}</Truncate>
+    </StyledFileInput>
   );
 });
 
 InputFile.defaultProps = {
+  disabled: false,
   invert: true,
   large: false,
   placeholder: 'Upload a file',
+  readOnly: false,
+  width: '100%',
 };
