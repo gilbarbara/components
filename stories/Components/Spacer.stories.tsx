@@ -8,11 +8,11 @@ export default {
   title: 'Components/Spacer',
   component: Spacer,
   args: {
-    align: 'center',
     direction: 'horizontal',
     distribution: 'start',
     gap: 'sm',
     grow: false,
+    verticalAlign: 'center',
     wrap: true,
   },
   argTypes: {
@@ -23,7 +23,7 @@ export default {
 } as ComponentMeta<typeof Spacer>;
 
 export const Basic = (props: SpacerProps) => (
-  <Box padding="xl" radius="md" shadow="high" width={600}>
+  <Box padding="xl" shadow="high" width={600}>
     <Spacer {...props}>
       <Button size="sm">Yes, add it</Button>
       <Button invert size="sm">
@@ -34,7 +34,7 @@ export const Basic = (props: SpacerProps) => (
 );
 
 export const WithDifferentHeights = (props: SpacerProps) => (
-  <Box padding="xl" radius="md" shadow="high" width={600}>
+  <Box padding="xl" shadow="high" width={600}>
     <Spacer {...props}>
       <H2 mb={0}>My Big Title</H2>
       <Box width={320}>
@@ -47,7 +47,7 @@ export const WithDifferentHeights = (props: SpacerProps) => (
 );
 
 export const WithInput = (props: SpacerProps) => (
-  <Box padding="xl" radius="md" shadow="high" width={600}>
+  <Box padding="xl" shadow="high" width={600}>
     <Spacer {...props}>
       <Input name="name" placeholder="Type your name" width={200} />
       <Button shape="round">
