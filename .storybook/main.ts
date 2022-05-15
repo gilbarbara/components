@@ -34,6 +34,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    '@storybook/addon-storysource',
   ],
   webpackFinal: async (config: any) => {
     config.resolve.alias['@emotion/core'] = getPackageDir('@emotion/react');
