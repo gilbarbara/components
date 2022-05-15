@@ -19,8 +19,6 @@ export default {
   },
 } as ComponentMeta<typeof Jumbo>;
 
-export const BasicJumbo = (props: HeadingLargeProps) => {
-  return <Jumbo {...props} />;
-};
+export const BasicJumbo = (props: HeadingLargeProps) => <Jumbo {...props} />;
 
 BasicJumbo.storyName = 'Jumbo';

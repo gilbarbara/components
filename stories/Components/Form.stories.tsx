@@ -291,6 +291,4 @@ function EditForm({ formMethods }: FormProps<FormData>) {
   );
 }
 
-export function Basic() {
-  return <Form<FormData> defaultValues={defaultValues}>{EditForm}</Form>;
-}
+export const Basic = () => <Form<FormData> defaultValues={defaultValues}>{EditForm}</Form>;

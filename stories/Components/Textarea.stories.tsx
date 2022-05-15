@@ -23,6 +23,4 @@ export default {
   },
 } as ComponentMeta<typeof Textarea>;
 
-export function Basic(props: TextareaProps) {
-  return <Textarea {...props} />;
-}
+export const Basic = (props: TextareaProps) => <Textarea {...props} />;

@@ -7,8 +7,10 @@ export default {
   title: 'Components/Loader',
   component: Loader,
   args: {
+    shade: 'mid',
     size: 128,
     type: 'pill',
+    variant: 'primary',
   },
   argTypes: {
     ...hideProps(),
@@ -16,6 +18,4 @@ export default {
   },
 } as ComponentMeta<typeof Loader>;
 
-export const Basic = (props: any) => {
-  return <Loader {...props} />;
-};
+export const Basic = (props: any) => <Loader {...props} />;

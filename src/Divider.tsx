@@ -80,7 +80,7 @@ const StyledDivider = styled(
       flex-direction: row;
       line-height: 1;
       ${margin};
-      width: ${px(isHorizontal ? length : selectedDimension)};
+      width: ${px(length)};
       ${marginStyles(props)};
       ${textStyles(props)};
 

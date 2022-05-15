@@ -23,6 +23,4 @@ export default {
   },
 } as ComponentMeta<typeof Icon>;
 
-export const Basic = (props: IconProps) => {
-  return <Icon {...props} />;
-};
+export const Basic = (props: IconProps) => <Icon {...props} />;

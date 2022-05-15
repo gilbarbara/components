@@ -36,6 +36,4 @@ export default {
   },
 } as ComponentMeta<typeof RadioGroup>;
 
-export const Basic = (props: RadioGroupProps) => {
-  return <RadioGroup defaultValue={4} {...props} />;
-};
+export const Basic = (props: RadioGroupProps) => <RadioGroup defaultValue={4} {...props} />;

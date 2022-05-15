@@ -15,41 +15,30 @@ export default {
   argTypes: {
     ...hideProps(),
     ...marginProps(),
+    children: { control: 'text' },
   },
 } as ComponentMeta<typeof H1>;
 
-export const BasicH1 = (props: HeadingProps) => {
-  return <H1 {...props} />;
-};
+export const BasicH1 = (props: HeadingProps) => <H1 {...props} />;
 
 BasicH1.storyName = 'H1';
 
-export const BasicH2 = (props: HeadingProps) => {
-  return <H2 {...props} />;
-};
+export const BasicH2 = (props: HeadingProps) => <H2 {...props} />;
 
 BasicH2.storyName = 'H2';
 
-export const BasicH3 = (props: HeadingProps) => {
-  return <H3 {...props} />;
-};
+export const BasicH3 = (props: HeadingProps) => <H3 {...props} />;
 
 BasicH3.storyName = 'H3';
 
-export const BasicH4 = (props: HeadingProps) => {
-  return <H4 {...props} />;
-};
+export const BasicH4 = (props: HeadingProps) => <H4 {...props} />;
 
 BasicH4.storyName = 'H4';
 
-export const BasicH5 = (props: HeadingProps) => {
-  return <H5 {...props} />;
-};
+export const BasicH5 = (props: HeadingProps) => <H5 {...props} />;
 
 BasicH5.storyName = 'H5';
 
-export const BasicH6 = (props: HeadingProps) => {
-  return <H6 {...props} />;
-};
+export const BasicH6 = (props: HeadingProps) => <H6 {...props} />;
 
 BasicH6.storyName = 'H6';

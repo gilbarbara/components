@@ -18,6 +18,7 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...spacingProps(),
+    children: { control: 'text' },
   },
   parameters: {
     docs: {
@@ -28,6 +29,4 @@ export default {
   },
 } as ComponentMeta<typeof ButtonBase>;
 
-export function Basic(props: ButtonBaseProps) {
-  return <ButtonBase {...props} />;
-}
+export const Basic = (props: ButtonBaseProps) => <ButtonBase {...props} />;

@@ -23,6 +23,4 @@ export default {
   },
 } as ComponentMeta<typeof ProgressBar>;
 
-export function Basic(props: ProgressBarProps) {
-  return <ProgressBar {...props} />;
-}
+export const Basic = (props: ProgressBarProps) => <ProgressBar {...props} />;

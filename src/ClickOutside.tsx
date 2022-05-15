@@ -55,6 +55,7 @@ export function ClickOutside(props: ClickOutsideProps) {
   return (
     <div
       ref={containerRef}
+      data-component-name="ClickOutside"
       style={
         display !== DISPLAY.BLOCK && Object.values(DISPLAY).includes(display)
           ? { display }

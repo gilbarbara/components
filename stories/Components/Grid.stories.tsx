@@ -3,6 +3,7 @@ import { Grid, GridProps } from 'src/Grid';
 
 import {
   colorProps,
+  disableControl,
   flexContent,
   flexItems,
   hideProps,
@@ -37,8 +38,9 @@ export default {
     autoFlow: { control: 'text' },
     autoRows: { control: 'text' },
     columnGap: { control: 'text' },
+    children: disableControl(),
     display: { control: 'radio', options: ['grid', 'inline-grid'] },
-    gap: { control: 'text' },
+    gap: { control: 'number' },
     grid: { control: 'text' },
     itemHeight: { control: 'number', description: 'Storybook only' },
     itemWidth: { control: 'number', description: 'Storybook only' },

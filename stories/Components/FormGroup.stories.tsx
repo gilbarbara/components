@@ -26,34 +26,30 @@ export default {
   },
 } as ComponentMeta<typeof FormGroup>;
 
-export const Basic = (props: FormGroupProps) => {
-  return (
-    <FormGroup {...props} required>
-      <Input name="name" placeholder="User Name" />
-    </FormGroup>
-  );
-};
+export const Basic = (props: FormGroupProps) => (
+  <FormGroup {...props} required>
+    <Input name="name" placeholder="User Name" />
+  </FormGroup>
+);
 
-export const Elements = (props: FormGroupProps) => {
-  return (
-    <>
-      <FormGroup {...props} assistiveText="The name is required..." required valid>
-        <Input defaultValue="Test User" name="name" placeholder="Name" />
-      </FormGroup>
-      <FormGroup {...props} label="Gender">
-        <Select name="gender">
-          <option value="">Select your gender...</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </Select>
-      </FormGroup>
-      <FormGroup {...props} label="Description">
-        <Textarea name="description" placeholder="Tell us about yourself" />
-      </FormGroup>
-    </>
-  );
-};
+export const Elements = (props: FormGroupProps) => (
+  <>
+    <FormGroup {...props} assistiveText="The name is required..." required valid>
+      <Input defaultValue="Test User" name="name" placeholder="Name" />
+    </FormGroup>
+    <FormGroup {...props} label="Gender">
+      <Select name="gender">
+        <option value="">Select your gender...</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </Select>
+    </FormGroup>
+    <FormGroup {...props} label="Description">
+      <Textarea name="description" placeholder="Tell us about yourself" />
+    </FormGroup>
+  </>
+);
 
 Elements.args = {
   assistiveText: '',

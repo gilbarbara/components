@@ -144,7 +144,7 @@ const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Elemen
   );
 });
 
-export function Basic() {
+export const Basic = () => {
   const [{ loading, search, showDialog, status, team }, setState] =
     useSetState<BaseState>(baseState);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -271,4 +271,4 @@ export function Basic() {
       />
     </Box>
   );
-}
+};

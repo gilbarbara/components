@@ -16,6 +16,4 @@ export default {
   },
 } as ComponentMeta<typeof DatePicker>;
 
-export const Basic = (props: DatePickerProps) => {
-  return <DatePicker {...props} />;
-};
+export const Basic = (props: DatePickerProps) => <DatePicker {...props} />;

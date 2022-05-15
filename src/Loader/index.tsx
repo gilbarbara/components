@@ -32,4 +32,5 @@ export function Loader(props: LoaderProps) {
 
 Loader.defaultProps = {
   type: 'pill',
+  variant: 'primary',
 };

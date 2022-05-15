@@ -17,6 +17,4 @@ export default {
   argTypes: hideProps(),
 } as ComponentMeta<typeof InputFile>;
 
-export function Basic(props: InputFileProps) {
-  return <InputFile {...props} />;
-}
+export const Basic = (props: InputFileProps) => <InputFile {...props} />;

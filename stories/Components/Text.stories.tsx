@@ -6,7 +6,7 @@ import { Text, TextProps } from 'src/Text';
 
 import { textSizes } from 'src/modules/options';
 
-import { colorProps, hideProps, hideTable } from '../__helpers__';
+import { colorProps, disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Text',
@@ -25,26 +25,22 @@ export default {
   },
 } as ComponentMeta<typeof Text>;
 
-export function Basic(props: TextProps) {
-  return <Text {...props} />;
-}
+export const Basic = (props: TextProps) => <Text {...props} />;
 
-export function Sizes(props: TextProps) {
-  return (
-    <div>
-      {textSizes.map(size => (
-        <Paragraph key={size}>
-          <Text onClick={action('clicked')} {...props} size={size}>
-            {capitalize(size)} mountains, far from the countries Vokalia and Consonantia, there live
-            the blind texts.
-          </Text>
-        </Paragraph>
-      ))}
-    </div>
-  );
-}
+export const Sizes = (props: TextProps) => (
+  <div>
+    {textSizes.map(size => (
+      <Paragraph key={size}>
+        <Text onClick={action('clicked')} {...props} size={size}>
+          {capitalize(size)} mountains, far from the countries Vokalia and Consonantia, there live
+          the blind texts.
+        </Text>
+      </Paragraph>
+    ))}
+  </div>
+);
 
 Sizes.argTypes = {
-  children: hideTable(),
-  size: hideTable(),
+  children: disableControl(),
+  size: disableControl(),
 };

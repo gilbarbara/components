@@ -14,6 +14,4 @@ export default {
   argTypes: hideProps(),
 } as ComponentMeta<typeof Emoji>;
 
-export const Basic = (props: EmojiProps) => {
-  return <Emoji {...props} />;
-};
+export const Basic = (props: EmojiProps) => <Emoji {...props} />;

@@ -8,6 +8,7 @@ import { Box } from './Box';
 import { H2 } from './Headings';
 import { Icon } from './Icon';
 import { getTheme, responsive } from './modules/helpers';
+import { getStyledOptions } from './modules/system';
 import { Paragraph } from './Paragraph';
 import { ComponentProps, Icons, StyledProps, WithChildrenOptional, WithMargin } from './types';
 
@@ -21,7 +22,10 @@ export interface NonIdealStateKnownProps extends StyledProps, WithChildrenOption
 
 export type NonIdealStateProps = ComponentProps<HTMLDivElement, NonIdealStateKnownProps>;
 
-export const StyledNonIdealState = styled(Box)<NonIdealStateProps>(props => {
+export const StyledNonIdealState = styled(
+  Box,
+  getStyledOptions('type'),
+)<NonIdealStateProps>(props => {
   const { small } = props;
   const { spacing } = getTheme(props);
 

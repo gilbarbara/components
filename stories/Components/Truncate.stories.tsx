@@ -17,6 +17,4 @@ export default {
   },
 } as ComponentMeta<typeof Truncate>;
 
-export function Basic(props: TruncateProps) {
-  return <Truncate {...props} />;
-}
+export const Basic = (props: TruncateProps) => <Truncate {...props} />;

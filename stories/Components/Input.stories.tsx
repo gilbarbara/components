@@ -27,30 +27,26 @@ export default {
   },
 } as ComponentMeta<typeof Input>;
 
-export function Basic(props: InputProps) {
-  return <Input {...props} />;
-}
+export const Basic = (props: InputProps) => <Input {...props} />;
 
-export function Variants(props: InputProps) {
-  return (
-    <>
-      <Input {...props} name="normal" placeholder="normal" />
-      <br />
-      <Input {...props} disabled name="normal-disabled" placeholder="normal (disabled)" />
-      <br />
-      <Input {...props} borderless name="borderless" placeholder="borderless" />
-      <br />
-      <Input
-        {...props}
-        borderless
-        disabled
-        name="borderless-disabled"
-        placeholder="borderless (disabled)"
-      />
-      <br />
-    </>
-  );
-}
+export const Variants = (props: InputProps) => (
+  <>
+    <Input {...props} name="normal" placeholder="normal" />
+    <br />
+    <Input {...props} disabled name="normal-disabled" placeholder="normal (disabled)" />
+    <br />
+    <Input {...props} borderless name="borderless" placeholder="borderless" />
+    <br />
+    <Input
+      {...props}
+      borderless
+      disabled
+      name="borderless-disabled"
+      placeholder="borderless (disabled)"
+    />
+    <br />
+  </>
+);
 
 Variants.args = {
   placeholder: '',

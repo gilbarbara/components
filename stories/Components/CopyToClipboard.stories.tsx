@@ -19,6 +19,4 @@ export default {
   },
 } as ComponentMeta<typeof CopyToClipboard>;
 
-export function Basic(props: CopyToClipboardProps) {
-  return <CopyToClipboard {...props} />;
-}
+export const Basic = (props: CopyToClipboardProps) => <CopyToClipboard {...props} />;

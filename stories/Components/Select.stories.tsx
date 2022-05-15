@@ -23,13 +23,11 @@ export default {
   },
 } as ComponentMeta<typeof Select>;
 
-export function Basic(props: SelectProps) {
-  return (
-    <Select {...props}>
-      <option value="">Select your gender...</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>
-    </Select>
-  );
-}
+export const Basic = (props: SelectProps) => (
+  <Select {...props}>
+    <option value="">Select your gender...</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </Select>
+);

@@ -3,26 +3,28 @@ import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
-import { SetRequired } from 'type-fest';
 
 import { Box } from './Box';
 import { getTheme, px } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
 import { Text } from './Text';
-import { ComponentProps, StyledProps } from './types';
+import { ComponentProps, StyledProps, WithFormElements } from './types';
 
-export interface InputColorKnownProps extends StyledProps {
+export interface InputColorKnownProps extends StyledProps, WithFormElements {
   height?: StringOrNumber;
   value?: string;
-  width?: StringOrNumber;
 }
 
-export type InputColorProps = ComponentProps<HTMLInputElement, InputColorKnownProps, 'type'>;
+export type InputColorProps = ComponentProps<
+  HTMLInputElement,
+  InputColorKnownProps,
+  'name' | 'type' | 'width'
+>;
 
 const StyledColorGroup = styled(
   'div',
   getStyledOptions(),
-)<SetRequired<InputColorProps, 'height' | 'width'>>(props => {
+)<Required<Pick<InputColorProps, 'height' | 'width'>>>(props => {
   const { height, width } = props;
 
   const innerHeight = (is.string(height) ? parseInt(height, 10) : height) + 16;
@@ -75,6 +77,8 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
 });
 
 InputColor.defaultProps = {
+  disabled: false,
   height: '32px',
+  readOnly: false,
   width: '32px',
 };

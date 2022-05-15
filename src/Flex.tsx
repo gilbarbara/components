@@ -4,8 +4,9 @@ import styled from '@emotion/styled';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
 import { Box, BoxProps } from './Box';
+import { WithChildren } from './types';
 
-export interface FlexProps extends BoxProps {
+export interface FlexProps extends Omit<BoxProps, 'children'>, WithChildren {
   alignContent?: StandardLonghandProperties['alignContent'];
   alignItems?: StandardLonghandProperties['alignItems'];
   display?: 'flex' | 'inline-flex';
@@ -60,11 +61,11 @@ Flex.defaultProps = {
 export const FlexCenter = forwardRef<HTMLDivElement, FlexProps>((props, ref) => (
   <StyledFlex
     ref={ref}
-    data-component-name="FlexCenter"
-    {...props}
     alignItems="center"
+    data-component-name="FlexCenter"
     flexDirection="column"
     justifyContent="center"
+    {...props}
   />
 ));
 

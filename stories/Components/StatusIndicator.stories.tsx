@@ -21,22 +21,18 @@ export default {
   },
 } as ComponentMeta<typeof StatusIndicator>;
 
-export const Basic = (props: StatusIndicatorProps) => {
-  return <StatusIndicator {...props} />;
-};
+export const Basic = (props: StatusIndicatorProps) => <StatusIndicator {...props} />;
 
-export const Variants = (props: StatusIndicatorProps) => {
-  return (
-    <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
-      {variants.map(d => (
-        <Box key={d} textAlign="center">
-          <StatusIndicator key={d} {...props} variant={d} />
-          <Paragraph>{d}</Paragraph>
-        </Box>
-      ))}
-    </Grid>
-  );
-};
+export const Variants = (props: StatusIndicatorProps) => (
+  <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
+    {variants.map(d => (
+      <Box key={d} textAlign="center">
+        <StatusIndicator key={d} {...props} variant={d} />
+        <Paragraph>{d}</Paragraph>
+      </Box>
+    ))}
+  </Grid>
+);
 
 Variants.argTypes = {
   variant: disableControl(),

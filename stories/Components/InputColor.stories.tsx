@@ -18,6 +18,4 @@ export default {
   },
 } as ComponentMeta<typeof InputColor>;
 
-export function Basic(props: InputColorProps) {
-  return <InputColor {...props} />;
-}
+export const Basic = (props: InputColorProps) => <InputColor {...props} />;

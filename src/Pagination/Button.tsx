@@ -10,7 +10,7 @@ import { WithChildrenOptional } from '../types';
 interface PaginationButtonProps extends WithChildrenOptional {
   currentPage: number;
   disabled: boolean;
-  onClick: MouseEventHandler;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   page: number;
 }
 

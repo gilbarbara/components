@@ -24,22 +24,16 @@ export default {
   },
 } as ComponentMeta<typeof Divider>;
 
-export const Basic = (props: DividerProps) => {
-  return <Divider {...props} />;
-};
+export const Basic = (props: DividerProps) => <Divider {...props} />;
 
-export const Vertical = (props: DividerProps) => {
-  return <Divider {...props} />;
-};
+export const Vertical = (props: DividerProps) => <Divider {...props} />;
 
 Vertical.args = {
   direction: 'vertical',
   length: 100,
 };
 
-export const WithText = (props: DividerProps) => {
-  return <Divider {...props} />;
-};
+export const WithText = (props: DividerProps) => <Divider {...props} />;
 
 WithText.args = {
   children: 'or',
