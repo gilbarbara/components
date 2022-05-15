@@ -3,9 +3,11 @@ import styled from '@emotion/styled';
 
 import { getColorVariant, getTheme, px } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
-import { ComponentProps, StyledProps, WithColor, WithMargin } from './types';
+import { ComponentProps, Shades, StyledProps, WithColor, WithMargin } from './types';
 
-interface StatusIndicatorKnownProps extends StyledProps, WithMargin, WithColor {
+interface StatusIndicatorKnownProps extends StyledProps, WithColor, WithMargin {
+  /** @default lighter */
+  centerShade?: Shades;
   ratio?: number;
   size?: number;
 }
@@ -16,10 +18,10 @@ const StyledStatusIndicator = styled(
   'div',
   getStyledOptions(),
 )<StatusIndicatorProps>(props => {
-  const { ratio = 0.7, shade, size = 24, variant = 'green' } = props;
+  const { centerShade = 'lighter', ratio = 0.7, shade, size = 24, variant = 'green' } = props;
   const { variants } = getTheme(props);
   const { bg } = getColorVariant(variant, shade, variants);
-  const { bg: bgLightest } = getColorVariant(variant, 'lightest', variants);
+  const { bg: centerBg } = getColorVariant(variant, centerShade, variants);
 
   const innerSize = size * ratio < size ? size * ratio : size;
 
@@ -35,7 +37,7 @@ const StyledStatusIndicator = styled(
     ${marginStyles(props)};
 
     &:before {
-      background-color: ${bgLightest};
+      background-color: ${centerBg};
       border-radius: 50%;
       content: '';
       display: block;
@@ -51,6 +53,7 @@ export function StatusIndicator(props: StatusIndicatorProps) {
 }
 
 StatusIndicator.defaultProps = {
+  centerShade: 'lighter',
   ratio: 0.7,
   size: 24,
   variant: 'green',

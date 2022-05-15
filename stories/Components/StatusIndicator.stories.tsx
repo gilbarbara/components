@@ -2,12 +2,13 @@ import { ComponentMeta } from '@storybook/react';
 import { Box, Grid, Paragraph } from 'src';
 import { StatusIndicator, StatusIndicatorProps } from 'src/StatusIndicator';
 
-import { colorProps, hideProps, hideTable, marginProps, variants } from '../__helpers__';
+import { colorProps, disableControl, hideProps, marginProps, variants } from '../__helpers__';
 
 export default {
   title: 'Components/StatusIndicator',
   component: StatusIndicator,
   args: {
+    centerShade: 'lighter',
     ratio: 0.7,
     size: 24,
     shade: 'mid',
@@ -29,7 +30,7 @@ export const Variants = (props: StatusIndicatorProps) => {
     <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
       {variants.map(d => (
         <Box key={d} textAlign="center">
-          <StatusIndicator key={d} variant={d} {...props} />
+          <StatusIndicator key={d} {...props} variant={d} />
           <Paragraph>{d}</Paragraph>
         </Box>
       ))}
@@ -38,5 +39,5 @@ export const Variants = (props: StatusIndicatorProps) => {
 };
 
 Variants.argTypes = {
-  variant: hideTable(),
+  variant: disableControl(),
 };
