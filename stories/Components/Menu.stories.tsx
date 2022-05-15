@@ -14,11 +14,14 @@ export default {
     icon: 'icon',
     positionX: 'right',
     positionY: 'bottom',
+    shade: 'mid',
+    variant: 'primary',
   },
   argTypes: {
     ...hideProps(),
     ...colorProps(),
     icon: { control: 'select', options: ['icon', 'avatar'] },
+    onToggle: { action: 'onToggle' },
     positionX: { control: 'inline-radio' },
     positionY: { control: 'inline-radio' },
   },
@@ -27,7 +30,7 @@ export default {
   },
 };
 
-export function Basic({ icon, ...props }: MenuProps & { icon: string }) {
+export const Basic = ({ icon, ...props }: MenuProps & { icon: string }) => {
   const Component =
     icon === 'avatar' ? <Avatar name="Test User" variant={props.variant} /> : undefined;
 
@@ -42,7 +45,7 @@ export function Basic({ icon, ...props }: MenuProps & { icon: string }) {
   };
 
   return (
-    <Menu {...props} icon={Component} onToggle={action('onToggle')}>
+    <Menu {...props} icon={Component}>
       <>
         <MenuItem>Profile</MenuItem>
         <MenuItem onClick={action('Configuration')}>
@@ -62,4 +65,4 @@ export function Basic({ icon, ...props }: MenuProps & { icon: string }) {
       </MenuItem>
     </Menu>
   );
-}
+};

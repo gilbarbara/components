@@ -60,7 +60,7 @@ const StyledLoaderRotateCircle = styled('circle', getStyledOptions())<{ color: s
   stroke-linecap: round;
 `;
 
-export default function LoaderGrow(props: LoaderProps) {
+export default function LoaderRotate(props: LoaderProps) {
   const { color, shade, size = 32, variant } = props;
   const { darkColor, lightColor, variants } = getTheme(props);
   const darkMode = isDarkMode(props);

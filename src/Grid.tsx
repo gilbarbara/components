@@ -6,8 +6,9 @@ import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype
 
 import { Box, BoxProps } from './Box';
 import { px } from './modules/helpers';
+import { WithChildren } from './types';
 
-export interface GridProps extends BoxProps {
+export interface GridProps extends Omit<BoxProps, 'children'>, WithChildren {
   alignContent?: StandardLonghandProperties['alignContent'];
   alignItems?: StandardLonghandProperties['alignItems'];
   autoColumns?: StandardLonghandProperties['gridAutoColumns'];

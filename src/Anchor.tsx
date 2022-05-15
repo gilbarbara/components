@@ -94,6 +94,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =>
 });
 
 Anchor.defaultProps = {
+  display: 'inline-flex',
   external: false,
   hideDecoration: false,
   variant: 'primary',

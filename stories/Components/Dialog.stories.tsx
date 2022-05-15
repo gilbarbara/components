@@ -23,7 +23,7 @@ export default {
   },
 };
 
-export function Basic(props: DialogProps) {
+export const Basic = (props: DialogProps) => {
   const [isActive, setActive] = useState(false);
 
   const handleClicks = () => {
@@ -42,4 +42,4 @@ export function Basic(props: DialogProps) {
       />
     </div>
   );
-}
+};

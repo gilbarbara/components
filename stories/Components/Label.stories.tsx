@@ -16,8 +16,6 @@ export default {
   },
 } as ComponentMeta<typeof Label>;
 
-export function Basic(props: LabelProps) {
-  return (
-    <Label {...props}>Far far away, behind the word mountains there live the blind texts.</Label>
-  );
-}
+export const Basic = (props: LabelProps) => (
+  <Label {...props}>Far far away, behind the word mountains there live the blind texts.</Label>
+);

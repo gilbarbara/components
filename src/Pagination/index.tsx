@@ -10,10 +10,17 @@ import { WithMargin } from '../types';
 
 export interface PaginationProps extends WithMargin {
   currentPage: number;
-  /** @default 3 */
+  /**
+   * Hide First/Last links
+   * @default false
+   */
+  disableEdgeNavigation?: boolean;
+  /**
+   * Limit to show the First/Last buttons
+   * @default 3
+   */
   edgeNavigationLimit?: number;
-  hideEdgeNavigation?: boolean;
-  onClick: MouseEventHandler;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   totalPages: number;
 }
 
@@ -34,8 +41,8 @@ const StyledPagination = styled('div', getStyledOptions())`
 export function Pagination(props: PaginationProps): JSX.Element | null {
   const {
     currentPage,
+    disableEdgeNavigation,
     edgeNavigationLimit = 3,
-    hideEdgeNavigation,
     onClick,
     totalPages,
     ...rest
@@ -46,7 +53,7 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
     return null;
   }
 
-  if (!hideEdgeNavigation && totalPages > edgeNavigationLimit) {
+  if (!disableEdgeNavigation && totalPages > edgeNavigationLimit) {
     items.push({
       key: 'first',
       disabled: currentPage === 1,
@@ -62,7 +69,7 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
     content: <Icon name="chevron-left" size={24} />,
   });
 
-  if (hideEdgeNavigation && totalPages > 6) {
+  if (disableEdgeNavigation && totalPages > 6) {
     items.push({ key: 'back', page: 1 });
 
     if (currentPage > 3) {
@@ -116,7 +123,7 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
     content: <Icon name="chevron-right" size={24} />,
   });
 
-  if (!hideEdgeNavigation && totalPages > edgeNavigationLimit) {
+  if (!disableEdgeNavigation && totalPages > edgeNavigationLimit) {
     items.push({
       key: 'last',
       disabled: currentPage === totalPages,
@@ -145,3 +152,8 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
     </StyledPagination>
   );
 }
+
+Pagination.defaultProps = {
+  disableEdgeNavigation: false,
+  edgeNavigationLimit: 3,
+};

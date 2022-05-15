@@ -3,6 +3,7 @@ import { Flex, FlexCenter, FlexInline, FlexProps } from 'src/Flex';
 
 import {
   colorProps,
+  disableControl,
   flexContent,
   flexItems,
   hideProps,
@@ -31,12 +32,17 @@ export default {
     ...spacingProps(),
     alignContent: { control: 'select', options: ['', ...flexContent] },
     alignItems: { control: 'select', options: ['', ...flexItems] },
+    flex: { control: 'text' },
+    flexBasis: { control: 'text' },
     flexDirection: {
       control: 'select',
       options: ['row', 'row-reverse', 'column', 'column-reverse'],
     },
+    flexGrow: { control: 'text' },
+    flexShrink: { control: 'text' },
     flexWrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
     justifyContent: { control: 'select', options: ['', ...flexContent] },
+    order: { control: 'text' },
   },
 };
 
@@ -57,15 +63,19 @@ export const Basic = (props: FlexProps) => (
   </Flex>
 );
 
-export const Center = (props: FlexProps) => (
-  <FlexCenter minHeight={400} width={400} {...props}>
-    This is a centered Flex
-  </FlexCenter>
-);
+Basic.argTypes = {
+  children: disableControl(),
+};
+
+export const Center = (props: FlexProps) => <FlexCenter minHeight={400} width={400} {...props} />;
 
 Center.args = {
   alignItems: 'center',
+  children: 'This is a centered Flex',
   justifyContent: 'center',
+};
+Center.argTypes = {
+  children: { control: 'text' },
 };
 
 export const Inline = (props: FlexProps) => (
@@ -78,4 +88,7 @@ export const Inline = (props: FlexProps) => (
 Inline.args = {
   alignItems: 'center',
   display: 'inline-flex',
+};
+Inline.argTypes = {
+  children: disableControl(),
 };

@@ -9,18 +9,19 @@ export default {
   title: 'Components/Pagination',
   component: Pagination,
   args: {
+    disableEdgeNavigation: false,
     edgeNavigationLimit: 3,
-    hideEdgeNavigation: false,
     totalPages: 10,
   },
   argTypes: {
     ...hideProps(),
     ...marginProps(),
+    currentPage: disableControl(),
     onClick: disableControl(),
   },
 } as ComponentMeta<typeof Pagination>;
 
-export function Basic(props: PaginationProps) {
+export const Basic = (props: PaginationProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -32,4 +33,4 @@ export function Basic(props: PaginationProps) {
   };
 
   return <Pagination {...props} currentPage={currentPage} onClick={handleClick} />;
-}
+};

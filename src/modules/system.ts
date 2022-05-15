@@ -34,10 +34,14 @@ export function getStyledOptions(...exclude: string[]) {
         'height',
         'loading',
         'margin',
+        'opacity',
+        'overflow',
         'padding',
+        'pointerEvents',
         'radius',
         'shadow',
         'size',
+        'transform',
         'width',
         'wrap',
         ...exclude,
@@ -118,7 +122,11 @@ export function colorStyles<T extends WithColor & WithTheme>(props: T): CSSObjec
 export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
   const { display } = props;
 
-  return { display };
+  if (display) {
+    return { display };
+  }
+
+  return {};
 }
 
 export function inputStyles<

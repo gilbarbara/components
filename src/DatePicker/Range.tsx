@@ -110,7 +110,7 @@ export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
   }
 
   return (
-    <StyledDatePicker variant={rest.variant}>
+    <StyledDatePicker data-component-name="DatePickerRange" variant={rest.variant}>
       <Flex alignItems="center" justifyContent="center" mb="md" minHeight={30}>
         {content}
       </Flex>

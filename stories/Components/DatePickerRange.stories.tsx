@@ -13,6 +13,4 @@ export default {
   },
 } as ComponentMeta<typeof DatePickerRange>;
 
-export const Basic = (props: DatePickerRangerProps) => {
-  return <DatePickerRange {...props} />;
-};
+export const Basic = (props: DatePickerRangerProps) => <DatePickerRange {...props} />;

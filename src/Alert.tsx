@@ -53,7 +53,7 @@ function getOptions(type: AlertProps['type'], colors: Theme['colors'], darkMode:
 
 export const StyledAlert = styled(
   'div',
-  getStyledOptions(),
+  getStyledOptions('type'),
 )<AlertProps>(props => {
   const { invert } = props;
   const { grayDark, lightColor, radius, spacing, white } = getTheme(props);

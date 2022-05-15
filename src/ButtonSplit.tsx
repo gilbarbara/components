@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, useState } from 'react';
+import { MouseEventHandler, ReactNode, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
@@ -95,13 +95,16 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
   const { disabled, shade, variant } = rest;
   const [active, setActive] = useState(false);
 
-  const handleToggle = (status: boolean) => {
-    setActive(status);
+  const handleToggle = useCallback(
+    (status: boolean) => {
+      setActive(status);
 
-    if (onToggle) {
-      onToggle(status);
-    }
-  };
+      if (onToggle) {
+        onToggle(status);
+      }
+    },
+    [onToggle],
+  );
 
   const buttonProps: AnyObject = {};
   const wrapperProps: AnyObject = {};

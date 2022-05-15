@@ -1,9 +1,9 @@
-import { ElementType, HTMLProps, ReactNode, SVGProps } from 'react';
+import { ElementType, HTMLProps, ReactNode } from 'react';
 import { SelectProps } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetOptional } from 'type-fest';
 
-import { WithBlock, WithColor, WithMargin } from './shared';
+import { WithBlock, WithBorderless, WithColor, WithMargin } from './shared';
 import { Theme } from './theme';
 
 export interface BaseProps {
@@ -21,7 +21,7 @@ export interface CheckboxOption extends Omit<Option, 'value'> {
 }
 
 export type ComponentProps<T, P, E extends string = never> = P &
-  Omit<HTMLProps<T>, 'size' | 'ref' | keyof P | E>;
+  Omit<HTMLProps<T>, 'ref' | 'size' | keyof P | E>;
 
 export interface DropdownCreateProps<T extends DropdownOption = DropdownOption> {
   close: () => void;
@@ -39,20 +39,14 @@ export interface DropdownOption {
 
 export interface DropdownProps<T extends DropdownOption = DropdownOption>
   extends StyledProps,
+    WithBorderless,
     WithMargin,
     SetOptional<SelectProps<T>, 'onChange' | 'values'> {
-  borderless?: boolean;
   createFn?: (props: DropdownCreateProps<T>) => JSX.Element;
   large?: boolean;
   showCreateAlways?: boolean;
   /** @default 260 */
   width?: StringOrNumber;
-}
-
-export interface IconProps extends Omit<SVGProps<SVGElement>, 'ref'> {
-  color?: string;
-  size?: number;
-  title?: string;
 }
 
 export interface LoaderProps
@@ -66,7 +60,7 @@ export interface LoaderProps
 export interface Option {
   disabled?: boolean;
   label: ReactNode;
-  value: number | string;
+  value: StringOrNumber;
 }
 
 export interface SearchCreateProps {

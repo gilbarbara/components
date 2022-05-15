@@ -2,7 +2,7 @@ import { MouseEvent, useState } from 'react';
 import { Button } from 'src';
 import { ButtonGroup, ButtonGroupProps } from 'src/ButtonGroup';
 
-import { colorProps, hideProps } from '../__helpers__';
+import { colorProps, disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/ButtonGroup',
@@ -15,10 +15,11 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    children: disableControl(),
   },
 };
 
-export function Basic(props: ButtonGroupProps) {
+export const Basic = (props: ButtonGroupProps) => {
   const [active, setActive] = useState('two');
 
   const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {
@@ -43,4 +44,4 @@ export function Basic(props: ButtonGroupProps) {
       </Button>
     </ButtonGroup>
   );
-}
+};

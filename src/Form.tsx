@@ -16,7 +16,7 @@ interface Props<T> extends UseFormProps<T> {
 
  ```tsx
  import { SubmitHandler } from 'react-hook-form';
- import { Box, Button, Field, Form, FormProps, Spacer } from '@gilbarbara/components';
+ import { Box, Button, Field, Form, FormProps } from '@gilbarbara/components';
 
  interface FormData {
    name: string;
@@ -33,11 +33,9 @@ interface Props<T> extends UseFormProps<T> {
      <Box as="form" method="POST" onSubmit={handleSubmit(handleFormSubmit)}>
        <Field label="Name" name="name" placeholder="Your name" required type="text" />
 
-       <Spacer distribution="flex-end">
-        <Button disabled={!isDirty} type="submit">
-          Send
-        </Button>
-      </Spacer>
+       <Button disabled={!isDirty} type="submit">
+         Send
+       </Button>
      </Box>
    );
  }
@@ -56,5 +54,9 @@ export function Form<T extends AnyObject = AnyObject>({
     ...props,
   });
 
-  return <FormProvider {...formMethods}>{children({ formMethods })}</FormProvider>;
+  return (
+    <FormProvider data-component-name="Form" {...formMethods}>
+      {children({ formMethods })}
+    </FormProvider>
+  );
 }

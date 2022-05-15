@@ -19,6 +19,4 @@ export default {
   },
 } as ComponentMeta<typeof Radio>;
 
-export const Basic = (props: RadioProps) => {
-  return <Radio {...props} />;
-};
+export const Basic = (props: RadioProps) => <Radio {...props} />;

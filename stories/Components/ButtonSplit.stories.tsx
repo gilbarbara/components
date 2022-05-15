@@ -31,6 +31,8 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    children: disableControl(),
+    label: { control: 'text' },
     onClick: { action: 'onClick', ...disableControl() },
     onToggle: { action: 'onToggle' },
     positionX: { control: 'inline-radio', options: ['left', 'right'] },
@@ -41,7 +43,7 @@ export default {
   },
 } as ComponentMeta<typeof ButtonSplit>;
 
-export function Basic(props: ButtonSplitProps) {
+export const Basic = (props: ButtonSplitProps) => {
   const [actionName, setActionName] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -121,4 +123,4 @@ export function Basic(props: ButtonSplitProps) {
       </ButtonSplitItem>
     </ButtonSplit>
   );
-}
+};

@@ -19,6 +19,4 @@ export default {
   argTypes: hideProps(),
 } as ComponentMeta<typeof Field>;
 
-export function Basic(props: FieldProps) {
-  return <Form>{() => <Field {...props} />}</Form>;
-}
+export const Basic = (props: FieldProps) => <Form>{() => <Field {...props} />}</Form>;

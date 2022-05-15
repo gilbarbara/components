@@ -7,7 +7,7 @@ import { getTheme } from 'src/modules/helpers';
 
 import * as Types from 'src/types';
 
-import { colorProps, hideProps, hideTable } from '../__helpers__';
+import { colorProps, disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Toggle',
@@ -27,11 +27,9 @@ export default {
   },
 } as ComponentMeta<typeof Toggle>;
 
-export const Basic = (props: ToggleProps) => {
-  return <Toggle {...props} />;
-};
+export const Basic = (props: ToggleProps) => <Toggle {...props} />;
 
-export function Colors(props: ToggleProps) {
+export const Colors = (props: ToggleProps) => {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
@@ -48,10 +46,10 @@ export function Colors(props: ToggleProps) {
       ))}
     </Grid>
   );
-}
+};
 
 Colors.argTypes = {
-  label: hideTable(),
-  name: hideTable(),
-  variant: hideTable(),
+  label: disableControl(),
+  name: disableControl(),
+  variant: disableControl(),
 };

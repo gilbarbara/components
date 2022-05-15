@@ -1,5 +1,6 @@
-import { forwardRef, ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, ReactElement, useCallback, useRef, useState } from 'react';
 import mergeRefs from 'react-merge-refs';
+import { useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -124,7 +125,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
     [active],
   );
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (active) {
       document.addEventListener('click', handleClickOutside);
     }
@@ -174,6 +175,7 @@ Menu.defaultProps = {
   disabled: false,
   positionX: 'right',
   positionY: 'bottom',
+  variant: 'primary',
 };
 
 export { MenuDivider } from './Divider';

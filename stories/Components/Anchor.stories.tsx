@@ -21,20 +21,18 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...spacingProps(),
+    children: { control: 'text' },
+    display: { control: 'text' },
   },
 } as ComponentMeta<typeof Anchor>;
 
-export function Basic(props: AnchorProps) {
-  return <Anchor {...props} />;
-}
+export const Basic = (props: AnchorProps) => <Anchor {...props} />;
 
-export function WithH1(props: AnchorProps) {
-  return (
-    <H1>
-      <Anchor {...props} />
-    </H1>
-  );
-}
+export const WithH1 = (props: AnchorProps) => (
+  <H1>
+    <Anchor {...props} />
+  </H1>
+);
 
 WithH1.args = {
   children: 'Check our docs',

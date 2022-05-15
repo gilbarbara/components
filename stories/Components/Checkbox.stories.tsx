@@ -20,21 +20,17 @@ export default {
   },
 } as ComponentMeta<typeof Checkbox>;
 
-export const Basic = (props: CheckboxProps) => {
-  return <Checkbox {...props} />;
-};
+export const Basic = (props: CheckboxProps) => <Checkbox {...props} />;
 
-export const Multiple = (props: CheckboxProps) => {
-  return (
-    <FormGroup label="Options" width={480}>
-      <Spacer>
-        <Checkbox {...props} label="Hide e-mail" name="hideEmail" />
-        <Checkbox {...props} label="Hide picture" name="hidePicture" />
-        <Checkbox {...props} label="Hide location" name="hideLocation" />
-      </Spacer>
-    </FormGroup>
-  );
-};
+export const Multiple = (props: CheckboxProps) => (
+  <FormGroup label="Options" width={480}>
+    <Spacer>
+      <Checkbox {...props} label="Hide e-mail" name="hideEmail" />
+      <Checkbox {...props} label="Hide picture" name="hidePicture" />
+      <Checkbox {...props} label="Hide location" name="hideLocation" />
+    </Spacer>
+  </FormGroup>
+);
 
 Multiple.args = {
   label: '',

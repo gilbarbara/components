@@ -20,6 +20,4 @@ export default {
   },
 } as ComponentMeta<typeof NonIdealState>;
 
-export const Basic = (props: NonIdealStateProps) => {
-  return <NonIdealState {...props} />;
-};
+export const Basic = (props: NonIdealStateProps) => <NonIdealState {...props} />;

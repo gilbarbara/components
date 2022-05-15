@@ -9,7 +9,7 @@ import { textSizes } from 'src/modules/options';
 
 import * as Types from 'src/types';
 
-import { colorProps, hideProps, hideTable, marginProps } from '../__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Tag',
@@ -29,15 +29,13 @@ export default {
   },
 } as ComponentMeta<typeof Tag>;
 
-export function Basic(props: TagProps) {
-  return <Tag {...props} />;
-}
+export const Basic = (props: TagProps) => <Tag {...props} />;
 
 Basic.args = {
   children: 'Tag',
 };
 
-export function Colors(props: TagProps) {
+export const Colors = (props: TagProps) => {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
@@ -51,13 +49,13 @@ export function Colors(props: TagProps) {
       ))}
     </Grid>
   );
-}
-
-Colors.argTypes = {
-  variant: hideTable(),
 };
 
-export function Shades(props: TagProps) {
+Colors.argTypes = {
+  variant: disableControl(),
+};
+
+export const Shades = (props: TagProps) => {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
@@ -69,59 +67,55 @@ export function Shades(props: TagProps) {
       ))}
     </Spacer>
   );
-}
+};
 
 Shades.argTypes = {
-  color: hideTable(),
-  shade: hideTable(),
+  color: disableControl(),
+  shade: disableControl(),
 };
 
-export function Sizes(props: TagProps) {
-  return (
-    <Spacer>
-      {textSizes.map(d => (
-        <Tag key={d} {...props} size={d}>
-          {capitalize(d)}
-        </Tag>
-      ))}
-    </Spacer>
-  );
-}
+export const Sizes = (props: TagProps) => (
+  <Spacer>
+    {textSizes.map(d => (
+      <Tag key={d} {...props} size={d}>
+        {capitalize(d)}
+      </Tag>
+    ))}
+  </Spacer>
+);
 
 Sizes.argTypes = {
-  size: hideTable(),
+  size: disableControl(),
 };
 
-export function WithIcons(props: TagProps) {
-  return (
-    <Grid gap={20} templateColumns="repeat(4, 1fr)">
-      <div>
-        <Tag {...props} iconBefore="assign" variant="secondary">
-          add
-        </Tag>
-      </div>
-      <div>
-        <Tag {...props} iconBefore="math-plus">
-          add
-        </Tag>
-      </div>
-      <div>
-        <Tag {...props} colorShade="mid" iconAfter="close" invert variant="blue">
-          remove
-        </Tag>
-      </div>
-      <div>
-        <Tag
-          {...props}
-          color="white"
-          iconAfter="chevron-right"
-          shade="dark"
-          size="regular"
-          variant="red"
-        >
-          continue
-        </Tag>
-      </div>
-    </Grid>
-  );
-}
+export const WithIcons = (props: TagProps) => (
+  <Grid gap={20} templateColumns="repeat(4, 1fr)">
+    <div>
+      <Tag {...props} iconBefore="assign" variant="secondary">
+        add
+      </Tag>
+    </div>
+    <div>
+      <Tag {...props} iconBefore="math-plus">
+        add
+      </Tag>
+    </div>
+    <div>
+      <Tag {...props} colorShade="mid" iconAfter="close" invert variant="blue">
+        remove
+      </Tag>
+    </div>
+    <div>
+      <Tag
+        {...props}
+        color="white"
+        iconAfter="chevron-right"
+        shade="dark"
+        size="regular"
+        variant="red"
+      >
+        continue
+      </Tag>
+    </div>
+  </Grid>
+);
