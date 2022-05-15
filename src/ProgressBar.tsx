@@ -4,14 +4,18 @@ import styled from '@emotion/styled';
 import { rangeLimit, round } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme, px } from './modules/helpers';
 import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from './modules/system';
 import { Paragraph } from './Paragraph';
-import { ComponentProps, StyledProps, WithMargin } from './types';
+import { ComponentProps, Shades, StyledProps, WithColor, WithMargin } from './types';
 
-export interface ProgressBarKnownProps extends StyledProps, WithMargin {
+export interface ProgressBarKnownProps extends StyledProps, WithColor, WithMargin {
+  /** @default light */
+  backgroundShade?: Shades;
+  /** @default false */
+  hideText?: boolean;
+  /** @default false */
   large?: boolean;
-  showProgression?: boolean;
   step: number;
   steps: number;
   /** @default 100% */
@@ -40,20 +44,21 @@ const StyledProgressTrack = styled(
   'div',
   getStyledOptions(),
 )<ProgressBarProps>(props => {
-  const { large } = props;
-  const { colors, grayLight, radius } = getTheme(props);
+  const { backgroundShade = 'light', large, shade, variant = 'primary' } = props;
+  const { radius, variants } = getTheme(props);
+  const { bg } = getColorVariant(variant, shade, variants);
 
   const height = large ? '8px' : '4px';
 
   return css`
-    background-color: ${grayLight};
+    background-color: ${variants.gray[backgroundShade].bg};
     border-radius: ${large ? radius.xs : radius.xxs};
     line-height: 1;
     height: ${height};
     overflow: hidden;
 
     > div {
-      background-color: ${colors.primary};
+      background-color: ${bg};
       height: ${height};
       transition: width 0.4s;
       width: 0;
@@ -62,7 +67,7 @@ const StyledProgressTrack = styled(
 });
 
 export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>((props, ref) => {
-  const { showProgression, step, steps } = props;
+  const { hideText, step, steps } = props;
   const percentage = round(rangeLimit((step / steps) * 100));
   const stepLimit = rangeLimit(step, 0, steps);
 
@@ -76,9 +81,7 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>((props, 
       data-component-name="ProgressBar"
       role="progressbar"
     >
-      {showProgression && (
-        <Paragraph mb="xs" size="large">{`Step ${stepLimit} of ${steps}`}</Paragraph>
-      )}
+      {!hideText && <Paragraph mb="xs" size="large">{`Step ${stepLimit} of ${steps}`}</Paragraph>}
       <StyledProgressTrack {...props}>
         <div style={{ width: `${percentage}%` }} />
       </StyledProgressTrack>
@@ -87,5 +90,9 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>((props, 
 });
 
 ProgressBar.defaultProps = {
+  backgroundShade: 'light',
+  hideText: false,
+  large: false,
+  variant: 'primary',
   width: '100%',
 };
