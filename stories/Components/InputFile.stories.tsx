@@ -12,6 +12,7 @@ export default {
     large: false,
     name: 'file',
     readOnly: false,
+    width: 480,
   },
   argTypes: hideProps(),
 } as ComponentMeta<typeof InputFile>;
