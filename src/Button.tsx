@@ -37,10 +37,9 @@ export interface ButtonKnownProps
     WithPadding,
     WithTransparent {
   /**
-   * Use equal padding on all sides
-   * @default false
+   * A shaped button with equal padding on all sides
    */
-  square?: boolean;
+  shape?: 'circle' | 'round' | 'square';
   /**
    * The button type
    * @default button
@@ -59,22 +58,34 @@ export const StyledButton = styled(
   'button',
   getStyledOptions(),
 )<ButtonProps>(props => {
-  const { block, busy, shade, size = 'md', square, transparent, variant = 'primary', wide } = props;
-  const { button, grayLighter, grayMid, spacing, variants } = getTheme(props);
+  const { block, busy, shade, shape, size = 'md', variant = 'primary', wide } = props;
+  const { button, grayLighter, grayMid, radius, spacing, variants } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
   let buttonPadding = `${padding[size][0]} ${
     wide ? px(parseInt(padding[size][1], 10) * 2) : padding[size][1]
   }`;
+  let selectedRadius = borderRadius[size];
 
-  if (square) {
+  if (shape) {
     buttonPadding = spacing.xxs;
+
+    switch (shape) {
+      case 'square': {
+        selectedRadius = `0`;
+        break;
+      }
+      case 'circle': {
+        selectedRadius = radius.round;
+        break;
+      }
+    }
   }
 
   return css`
     ${appearanceStyles};
     ${baseStyles(props)};
     align-items: center;
-    border-radius: ${transparent ? 0 : borderRadius[size]};
+    border-radius: ${selectedRadius};
     box-shadow: none;
     cursor: pointer;
     display: inline-flex;
@@ -111,7 +122,7 @@ export const StyledButton = styled(
 });
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { busy, children, size = 'md', square } = props;
+  const { busy, children, shape, size = 'md' } = props;
   const {
     button: { fontSize },
   } = getTheme(props);
@@ -121,7 +132,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     icon: !!busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />,
   };
 
-  if (square && busy) {
+  if (shape && busy) {
     content.children = <Icon name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />;
     content.icon = '';
   }
