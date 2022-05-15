@@ -58,7 +58,7 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
       key: 'first',
       disabled: currentPage === 1,
       page: 1,
-      content: <Icon name="chevron-left-double" size={24} />,
+      content: <Icon name="chevron-double-left" size={24} />,
     });
   }
 
@@ -128,7 +128,7 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
       key: 'last',
       disabled: currentPage === totalPages,
       page: totalPages,
-      content: <Icon name="chevron-right-double" size={24} />,
+      content: <Icon name="chevron-double-right" size={24} />,
     });
   }
 
