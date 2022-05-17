@@ -68,9 +68,9 @@ export interface WithDisplay {
 
 export interface WithElementSpacing {
   /** @default false */
-  prefixSpacing?: boolean;
+  prefixSpacing?: boolean | StringOrNumber;
   /** @default false */
-  suffixSpacing?: boolean;
+  suffixSpacing?: boolean | StringOrNumber;
 }
 
 export interface WithFilled {
