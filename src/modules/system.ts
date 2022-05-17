@@ -174,12 +174,12 @@ export function inputStyles<
     paddingRight = spacing.lg;
   }
 
-  if (suffixSpacing) {
-    paddingRight = '40px';
+  if (prefixSpacing) {
+    paddingLeft = is.boolean(prefixSpacing) ? '40px' : px(prefixSpacing);
   }
 
-  if (prefixSpacing) {
-    paddingLeft = '40px';
+  if (suffixSpacing) {
+    paddingRight = is.boolean(suffixSpacing) ? '40px' : px(suffixSpacing);
   }
 
   const disabled = css`
