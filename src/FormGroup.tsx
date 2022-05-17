@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
+import { ComponentWrapper } from './ComponentWrapper';
 import { Flex } from './Flex';
 import { Icon } from './Icon';
-import { IconWrapper } from './IconWrapper';
 import { Label } from './Label';
 import { getTheme } from './modules/helpers';
 import {
@@ -142,14 +142,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
 
   content.children =
     is.boolean(valid) && valid && !skipIcon ? (
-      <IconWrapper
-        suffixIcon={{
-          name: 'check-o',
-          title: 'Valid',
-        }}
-      >
-        {children}
-      </IconWrapper>
+      <ComponentWrapper suffix={<Icon name="check-o" title="valid" />}>{children}</ComponentWrapper>
     ) : (
       children
     );
