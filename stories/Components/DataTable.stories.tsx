@@ -111,7 +111,7 @@ const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Elemen
 
   return (
     <Spacer ref={ref} data-component-name="JobTalentsHeader" mb="lg">
-      <ComponentWrapper prefix={<Icon name="search" size={24} />}>
+      <ComponentWrapper data-flex="1" prefix={<Icon name="search" size={24} />}>
         <Input
           name="name"
           onChange={handleChangeInput}
