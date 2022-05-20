@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Box, Button, H2, Icon, Input } from 'src';
 import { Spacer, SpacerProps } from 'src/Spacer';
 
-import { hideProps, layoutProps, marginProps } from '../__helpers__';
+import { disableControl, hideProps, layoutProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Spacer',
@@ -19,6 +19,7 @@ export default {
     ...hideProps(),
     ...layoutProps({ display: 'flex' }),
     ...marginProps(),
+    children: disableControl(),
   },
 } as ComponentMeta<typeof Spacer>;
 
@@ -33,11 +34,30 @@ export const Basic = (props: SpacerProps) => (
   </Box>
 );
 
+export const Vertical = (props: SpacerProps) => (
+  <Box padding="xl" shadow="high" width={600}>
+    <Spacer {...props} direction="vertical" gap="xl">
+      <Button size="sm">Yes, add it</Button>
+      <Button size="sm" variant="orange">
+        Maybe?
+      </Button>
+      <Button invert size="sm" variant="red">
+        No, cancel
+      </Button>
+    </Spacer>
+  </Box>
+);
+
+Vertical.argTypes = {
+  direction: disableControl(),
+  gap: disableControl(),
+};
+
 export const WithDifferentHeights = (props: SpacerProps) => (
   <Box padding="xl" shadow="high" width={600}>
     <Spacer {...props}>
       <H2 mb={0}>My Big Title</H2>
-      <Box width={320}>
+      <Box data-flex="1">
         Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
         there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the
         Semantics, a large language ocean.

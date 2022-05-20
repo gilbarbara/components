@@ -1,6 +1,7 @@
-import { Children, forwardRef } from 'react';
+import { Children, forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { StandardShorthandProperties } from 'csstype';
 
 import { getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions, layoutStyles, marginStyles } from './modules/system';
@@ -25,7 +26,9 @@ export interface SpacerKnownProps extends StyledProps, WithChildren, WithLayout,
    * @default false
    */
   grow?: boolean;
-  /** @default center */
+  /**
+   * Horizontal only
+   * @default center */
   verticalAlign?: 'center' | 'end' | 'start';
   /** @default true */
   wrap?: boolean;
@@ -60,13 +63,16 @@ export const StyledSpacer = styled(
   `;
 });
 
-const StyledSpacerItem = styled.div<Partial<SpacerProps>>(props => {
-  const { direction, gap = 'sm', grow } = props;
+const StyledSpacerItem = styled.div<
+  Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }
+>(props => {
+  const { direction, flex, gap = 'sm', grow } = props;
   const { spacing } = getTheme(props);
   const isHorizontal = direction === 'horizontal';
 
   return css`
     display: ${isHorizontal ? 'flex' : 'block'};
+    flex: ${flex};
     width: ${!isHorizontal && grow ? '100%' : 'auto'};
 
     &:not(:last-of-type) {
@@ -76,14 +82,18 @@ const StyledSpacerItem = styled.div<Partial<SpacerProps>>(props => {
   `;
 });
 
+/**
+ * You can use a "data-flex" property on the children to grow or shrink to fit the space available.
+ */
 export const Spacer = forwardRef<HTMLDivElement, SpacerProps>((props, ref) => {
   const { children, ...rest } = props;
 
   const nodes = Children.toArray(children).map((child, index) => {
     const key = `SpacerItem-${index}`;
+    const flex = isValidElement(child) ? child.props['data-flex'] : undefined;
 
     return (
-      <StyledSpacerItem key={key} data-component-name="SpacerItem" {...rest}>
+      <StyledSpacerItem key={key} flex={flex} {...rest} data-component-name="SpacerItem">
         {child}
       </StyledSpacerItem>
     );
