@@ -3,10 +3,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SelectRenderer } from '@gilbarbara/react-dropdown';
 
+import { FlexInline } from '../Flex';
 import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
-import { DropdownOption } from '../types';
+import { DropdownItem } from '../types';
 
 export const StyledContent = styled('div', getStyledOptions())`
   align-items: center;
@@ -31,9 +32,9 @@ const Item = styled(
       border-radius: ${radius.xxs};
       background-color: ${darkMode ? grayDark : white};
       margin-bottom: ${spacing.xxs};
-      margin-right: ${spacing.xxs};
+      margin-right: ${spacing.xs};
       margin-top: ${spacing.xxs};
-      padding: 2px;
+      padding: 3px 6px;
     `;
   }
 
@@ -58,30 +59,18 @@ const ItemClose = styled(
   `;
 });
 
-const Content = styled(
-  'span',
-  getStyledOptions(),
-)(props => {
-  const { spacing } = getTheme(props);
-
-  return css`
-    display: inline-flex;
-    margin-right: ${spacing.xxs};
-  `;
-});
-
 const Placeholder = styled(
   'div',
   getStyledOptions(),
 )(props => {
-  const { grayMid } = getTheme(props);
+  const { darkMode, grayLight, grayMid } = getTheme(props);
 
   return css`
-    color: ${grayMid};
+    color: ${darkMode ? grayLight : grayMid};
   `;
 });
 
-function DropdownContent<T extends DropdownOption>(props: SelectRenderer<T>) {
+function DropdownContent<T extends DropdownItem>(props: SelectRenderer<T>) {
   const {
     methods: { removeItem },
     props: { color, multi, placeholder },
@@ -99,15 +88,24 @@ function DropdownContent<T extends DropdownOption>(props: SelectRenderer<T>) {
   if (values.length) {
     return (
       <StyledContent>
-        {values.map(value => {
-          const { content, label } = value || {};
+        {values.map(item => {
+          const { label, prefix, suffix, value } = item || {};
 
           return (
-            <Item key={label} color={color} data-component-name="ContentItem" multi={multi}>
-              {!!content && <Content>{content}</Content>}
+            <Item key={value} color={color} data-component-name="ContentItem" multi={multi}>
+              {!!prefix && (
+                <FlexInline data-component-name="ContentItemPrefix" mr="xxs">
+                  {prefix}
+                </FlexInline>
+              )}
               <span>{label || value}</span>
+              {!!suffix && (
+                <FlexInline data-component-name="ContentItemSuffix" ml="xxs">
+                  {suffix}
+                </FlexInline>
+              )}
               {multi && (
-                <ItemClose onClick={handleClickRemove(value)}>
+                <ItemClose onClick={handleClickRemove(item)}>
                   <Icon name="close" />
                 </ItemClose>
               )}

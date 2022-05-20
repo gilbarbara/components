@@ -1,74 +1,77 @@
 import { useState } from 'react';
+import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
-import { Button, Icon } from 'src';
+import { Icon } from 'src';
 import { Dropdown } from 'src/Dropdown';
 
-import { DropdownCreateProps, DropdownOption, DropdownProps } from 'src/types';
+import { DropdownItem, DropdownProps } from 'src/types';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Dropdown',
   component: Dropdown,
-  args: {
-    borderless: false,
-    large: false,
-    multi: false,
-    showCreateAlways: false,
-    showCreateButton: true,
-  },
+  args: Dropdown.defaultProps,
   argTypes: {
     ...hideProps(),
-    options: disableControl(),
-    showCreateButton: { description: 'Storybook only' },
+    ...colorProps(),
+    ...marginProps(),
+    inputOptions: disableControl(),
+    items: disableControl(),
+    onChange: { action: 'onChange' },
+    onCreate: { action: 'onCreate' },
   },
   parameters: {
     actions: {
-      argTypesRegex: '(?!^onDropdownCloseRequest)^on[A-Z].*',
+      argTypesRegex: '^on[A-Z].*',
     },
     minHeight: 350,
   },
 } as ComponentMeta<typeof Dropdown>;
 
-const options: DropdownOption[] = [
-  { value: 1, label: 'One', content: <Icon name="abstract" /> },
-  { value: 2, label: 'Two', content: <Icon name="anchor" /> },
-  { value: 3, label: 'Three', disabled: true, content: <Icon name="awards" /> },
-  { value: 4, label: 'Four', content: <Icon name="check-r" /> },
-  { value: 5, label: 'Five', content: <Icon name="bolt" /> },
-  { value: 6, label: 'Six', content: <Icon name="user-list" /> },
+const items: DropdownItem[] = [
+  { value: 1, label: 'One', prefix: <Icon name="abstract" /> },
+  { value: 2, label: 'Two', prefix: <Icon name="anchor" />, suffix: <Icon name="asterisk" /> },
+  { value: 3, label: 'Three', disabled: true, prefix: <Icon name="awards" /> },
+  { value: 4, label: 'Four', prefix: <Icon name="image" />, suffix: <Icon name="asterisk" /> },
+  { value: 5, label: 'Five', prefix: <Icon name="bolt" /> },
 ];
 
-function CreateButton(props: DropdownCreateProps) {
-  const { close, select, value } = props;
-  const [busy, setBusy] = useState(false);
+export const Basic = (props: DropdownProps) => <Dropdown {...props} items={items} />;
 
-  const handleClick = () => {
-    setBusy(true);
-    const nextValue = value || `Empty-${options.length}`;
+export const WithCreate = (props: DropdownProps) => {
+  const [controlledItems, setItems] = useState(items);
+  const [values, setValues] = useState<DropdownItem[]>([]);
 
-    const item = { value: nextValue, label: `${nextValue}`, content: <Icon name="headset" /> };
+  const handleCreate = (value: string, close: () => void) => {
+    const newItem = {
+      prefix: <Icon name="math-plus" />,
+      label: value,
+      value,
+    };
 
-    setTimeout(() => {
-      setBusy(false);
-      select(item);
-      options.push(item);
-
-      close();
-    }, 600);
+    action('onCreate')(value);
+    setItems([...controlledItems, newItem]);
+    setValues([...values, newItem]);
+    close();
   };
 
-  return (
-    <Button busy={busy} onClick={handleClick} size="sm" transparent>
-      Create item "{value}"
-    </Button>
-  );
-}
+  return <Dropdown {...props} items={controlledItems} onCreate={handleCreate} values={values} />;
+};
 
-export const Basic = (props: DropdownProps & { showCreateButton: boolean }) => {
-  const { showCreateButton } = props;
+WithCreate.args = {
+  allowCreate: true,
+};
 
-  return (
-    <Dropdown createFn={showCreateButton ? CreateButton : undefined} {...props} options={options} />
-  );
+export const WithInput = (props: DropdownProps) => {
+  const customItems = [
+    { value: 'blue' },
+    { value: 'green' },
+    { value: 'magenta' },
+    { value: 'purple' },
+    { value: 'red' },
+    { value: 'yellow' },
+  ];
+
+  return <Dropdown {...props} items={customItems} />;
 };

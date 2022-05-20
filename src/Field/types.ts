@@ -3,7 +3,7 @@ import { FieldValues, UseFormGetValues } from 'react-hook-form';
 import { GenericFunction } from '@gilbarbara/types';
 
 import { FormGroupProps } from '../FormGroup';
-import { CheckboxOption, DropdownOption, DropdownProps, InputTypes, Option } from '../types';
+import { CheckboxOption, DropdownItem, DropdownProps, InputTypes, Option } from '../types';
 
 export interface RegisterOptionsProps extends FieldBaseProps {
   formatter?: FieldInputProps['formatter'];
@@ -62,12 +62,12 @@ export interface FieldDropdownProps extends FieldBaseProps {
   children?: never;
   dropdownProps?: Omit<
     DropdownProps,
-    'disabled' | 'name' | 'onChange' | 'options' | 'placeholder' | 'width'
+    'disabled' | 'items' | 'name' | 'onChange' | 'placeholder' | 'width'
   >;
+  items: DropdownItem[];
   onBlur?: never;
-  onChange?: (value: DropdownOption[]) => void;
+  onChange?: (value: DropdownItem[]) => void;
   onFocus?: never;
-  options: DropdownOption[];
   type: 'dropdown';
 }
 
