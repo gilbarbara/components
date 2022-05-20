@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
-import { RequireAtLeastOne } from 'type-fest';
 
 import { FlexCenter } from './Flex';
 import { Icon } from './Icon';
@@ -11,7 +10,7 @@ import { px } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
 import { Icons, StyledProps, WithChildren, WithMargin } from './types';
 
-export interface ComponentWrapperKnownProps extends StyledProps, WithChildren, WithMargin {
+export interface ComponentWrapperProps extends StyledProps, WithChildren, WithMargin {
   prefix?: Icons | ReactElement;
   /**
    * A single value for both or [width,height]
@@ -23,11 +22,6 @@ export interface ComponentWrapperKnownProps extends StyledProps, WithChildren, W
   /** @default 100% */
   width?: StringOrNumber;
 }
-
-export type ComponentWrapperProps = RequireAtLeastOne<
-  ComponentWrapperKnownProps,
-  'prefix' | 'suffix'
->;
 
 const StyledComponentWrapper = styled(
   'div',
