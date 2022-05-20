@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   ButtonBase,
+  ComponentWrapper,
   Dialog,
   Dropdown,
   H1,
@@ -19,7 +20,7 @@ import {
 } from 'src';
 import { DataTable, DataTableColumn } from 'src/DataTable';
 
-import { DropdownOption } from 'src/types';
+import { DropdownItem } from 'src/types';
 
 import { members } from '../__assets__/data';
 import { hideNoControlsWarning, hideProps, layoutProps, marginProps } from '../__helpers__';
@@ -70,7 +71,7 @@ const teams = members.reduce((acc, member) => {
   }
 
   return acc;
-}, [] as DropdownOption[]);
+}, [] as DropdownItem[]);
 
 const statuses = [
   { label: 'Invites', value: 'invites' },
@@ -94,14 +95,14 @@ const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Elemen
     }, 750);
   };
 
-  const handleChangeStatus = (options: DropdownOption[]) => {
+  const handleChangeStatus = (options: DropdownItem[]) => {
     const [selected] = options;
     const nextStatus = selected ? (selected.value as string) : '';
 
     setState({ status: nextStatus });
   };
 
-  const handleChangeTeam = (options: DropdownOption[]) => {
+  const handleChangeTeam = (options: DropdownItem[]) => {
     const [selected] = options;
     const nextTeam = selected ? (selected.value as string) : '';
 
@@ -110,32 +111,27 @@ const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Elemen
 
   return (
     <Spacer ref={ref} data-component-name="JobTalentsHeader" mb="lg">
-      <Box position="relative" style={{ flex: 1 }}>
+      <ComponentWrapper prefix={<Icon name="search" size={24} />}>
         <Input
           name="name"
           onChange={handleChangeInput}
           placeholder="Search by username"
-          style={{ paddingRight: 44 }}
+          prefixSpacing
           value={searchValue}
         />
-        <Icon
-          name="search"
-          size={24}
-          style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)' }}
-        />
-      </Box>
+      </ComponentWrapper>
       <Dropdown
         clearable={!!team}
+        items={teams}
         onChange={handleChangeTeam}
-        options={teams}
         placeholder="Team"
         values={teams.filter(d => d.value === team)}
         width={180}
       />
       <Dropdown
         clearable={!!status}
+        items={statuses}
         onChange={handleChangeStatus}
-        options={statuses}
         placeholder="Status"
         values={statuses.filter(d => d.value === status)}
         width={180}

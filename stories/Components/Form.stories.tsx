@@ -145,9 +145,9 @@ function EditForm({ formMethods }: FormProps<FormData>) {
             dropdownProps={{
               multi: true,
             }}
+            items={languages}
             label="Languages"
             name="languages"
-            options={languages}
             required
             type="dropdown"
           />
@@ -156,9 +156,9 @@ function EditForm({ formMethods }: FormProps<FormData>) {
               multi: true,
               searchable: false,
             }}
+            items={frameworks}
             label="Frameworks"
             name="frameworks"
-            options={frameworks}
             type="dropdown"
           />
         </Grid>
@@ -228,9 +228,9 @@ function EditForm({ formMethods }: FormProps<FormData>) {
         </Field>
         <Field
           dropdownProps={{ searchable: false }}
+          items={seniorities}
           label="Seniority"
           name="seniority"
-          options={seniorities}
           required
           type="dropdown"
         />

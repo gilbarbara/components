@@ -1,20 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SelectRenderer } from '@gilbarbara/react-dropdown';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
-import is from 'is-lite';
 
 import Add from './Add';
 
 import { FlexInline } from '../Flex';
-import { getTheme } from '../modules/helpers';
+import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
-import { DropdownOption, DropdownProps, Theme } from '../types';
+import { DropdownItem, DropdownProps, Theme, WithColor } from '../types';
 
-interface DropdownOptionsProps<T extends DropdownOption>
-  extends SelectRenderer<T>,
-    Pick<DropdownProps<T>, 'createFn' | 'showCreateAlways'> {}
+interface DropdownOptionsProps<T extends DropdownItem>
+  extends WithColor,
+    SelectRenderer<T>,
+    Pick<DropdownProps<T>, 'allowCreate' | 'createLabel' | 'onCreate' | 'onSearch'> {}
 
 const getSharedStyles = (spacing: Theme['spacing']) => css`
   align-items: center;
@@ -53,14 +53,17 @@ const Empty = styled(
 const Input = styled(
   'input',
   getStyledOptions(),
-)(props => {
-  const { colors, radius } = getTheme(props);
+)<WithColor>(props => {
+  const { shade, variant = 'primary' } = props;
+  const { radius, variants } = getTheme(props);
+  const { bg } = getColorVariant(variant, shade, variants);
 
   return css`
     border-radius: ${radius.xs};
 
     :focus {
-      outline-color: ${colors.primary};
+      filter: drop-shadow(0 0 2px ${bg});
+      outline: none;
     }
   `;
 });
@@ -68,37 +71,59 @@ const Input = styled(
 const Item = styled(
   'div',
   getStyledOptions(),
-)<{ disabled?: boolean; selected: boolean }>(props => {
-  const { color, disabled, selected } = props;
-  const { grayDark, grayDarker, grayLight, grayMid, grayScale, spacing, white } = getTheme(props);
+)<WithColor & { disabled?: boolean; hovered: boolean; selected: boolean }>(props => {
+  const { disabled, hovered, selected, shade, variant = 'primary' } = props;
+  const {
+    darkMode,
+    grayDark,
+    grayDarker,
+    grayLight,
+    grayLighter,
+    grayLightest,
+    grayMid,
+    spacing,
+    variants,
+    white,
+  } = getTheme(props);
+  const { bg, color } = getColorVariant(variant, shade, variants);
+  const { bg: bgHoverLight, color: colorHoverLight } = getColorVariant(
+    variant,
+    'lightest',
+    variants,
+  );
+  const { bg: bgHoverDark, color: colorHoverDark } = getColorVariant(variant, 'darker', variants);
 
-  const darkMode = isDarkMode(props);
-  let itemColor = darkMode ? grayScale['20'] : grayDarker;
+  let itemBgColor = darkMode ? grayDarker : white;
+  let itemColor = darkMode ? grayLighter : grayDarker;
+  const bgHover = darkMode ? bgHoverDark : bgHoverLight;
+  const colorHover = darkMode ? colorHoverDark : colorHoverLight;
 
   if (disabled) {
-    itemColor = grayMid;
+    itemBgColor = darkMode ? grayDark : grayLightest;
+    itemColor = darkMode ? grayLight : grayMid;
   }
 
   return css`
     ${getSharedStyles(spacing)};
+    background-color: ${itemBgColor};
     color: ${itemColor};
     cursor: pointer;
     pointer-events: ${disabled ? 'none' : undefined};
     ${selected &&
     css`
-      background-color: ${color};
-      color: ${white};
+      background-color: ${bg};
+      color: ${color};
+    `};
+    ${hovered &&
+    !disabled &&
+    css`
+      background-color: ${bgHover};
+      color: ${colorHover};
     `};
 
-    img {
-      height: px(20);
-      margin-right: ${spacing.sm};
-      width: px(20);
-    }
-
     &:hover {
-      background-color: ${grayLight};
-      color: ${grayDark};
+      background-color: ${bgHover};
+      color: ${colorHover};
     }
   `;
 });
@@ -120,7 +145,7 @@ const List = styled(
   `;
 });
 
-const Options = styled(
+const Items = styled(
   'div',
   getStyledOptions(),
 )(props => {
@@ -160,58 +185,87 @@ const Search = styled(
   `;
 });
 
-function DropdownOptions<T extends DropdownOption = DropdownOption>({
-  createFn: Create,
+function DropdownOptions<T extends DropdownItem = DropdownItem>({
+  createLabel,
   methods,
+  onCreate,
+  onSearch,
   props,
-  showCreateAlways,
+  shade,
   state,
+  variant,
 }: DropdownOptionsProps<T>) {
-  const { addItem, dropDown, removeItem, setSearch } = methods;
-  const { additionalProps, color, create, dropdownHeight, options, searchable } = props;
-  const { search, values } = state;
+  const { addItem, removeItem, setSearch } = methods;
+  const { autoFocus, create, dropdownHeight, noDataLabel, options, searchable } = props;
+  const { cursor, search, values } = state;
 
   const searchInput = useRef<HTMLInputElement>(null);
 
-  const close = () => dropDown('close');
   let children;
 
   if (create) {
-    children = Create ? (
-      <Create close={close} select={addItem} value={search} />
-    ) : (
-      <Add methods={methods} props={props} state={state} />
+    children = (
+      <Add
+        createLabel={createLabel}
+        methods={methods}
+        onCreate={onCreate}
+        props={props}
+        shade={shade}
+        state={state}
+        variant={variant}
+      />
     );
   }
 
-  const regexp = new RegExp(search, 'i');
+  const regexp = new RegExp(search.replace(/[$()*+.?[\\\]^{|}]/g, '\\$&'), 'i');
 
   useEffect(() => {
     const { current } = searchInput;
 
-    /* istanbul ignore else */
-    if (current) {
+    if (current && autoFocus) {
       current.focus();
     }
-  }, []);
+  }, [autoFocus]);
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    setSearch(event);
+
+    if (onSearch) {
+      onSearch(value);
+    }
+  };
 
   const availableOptions = options
-    .filter(item => regexp.test(`${item.label}`))
-    .map(option => {
-      const { content, disabled, label } = option;
+    .filter(item => regexp.test(`${item.label || item.value}`))
+    .map((option, index) => {
+      const { disabled, label, prefix, suffix, value } = option;
       const isSelected = values.includes(option);
+      const isHovered = cursor === index;
 
       return (
         <Item
-          key={is.string(option) ? option : option.value}
-          color={color}
-          data-component-name="DropdownOption"
+          key={option.value}
+          data-component-name="DropdownItem"
           disabled={disabled}
+          hovered={isHovered}
           onClick={() => (isSelected ? removeItem(null, option, false) : addItem(option))}
           selected={isSelected}
+          shade={shade}
+          variant={variant}
         >
-          <FlexInline mr="xxs">{content}</FlexInline>
-          <FlexInline>{label || option}</FlexInline>
+          {prefix && (
+            <FlexInline data-component-name="DropdownOptionPrefix" mr="xxs">
+              {prefix}
+            </FlexInline>
+          )}
+          <FlexInline flex={1}>{label || value}</FlexInline>
+          {suffix && (
+            <FlexInline data-component-name="DropdownOptionSuffix" ml="xxs">
+              {suffix}
+            </FlexInline>
+          )}
         </Item>
       );
     });
@@ -220,12 +274,12 @@ function DropdownOptions<T extends DropdownOption = DropdownOption>({
     options: availableOptions,
   };
 
-  if (children && (showCreateAlways || !availableOptions.length)) {
+  if (children && !availableOptions.length) {
     output.create = <Centered withBorder={!!availableOptions.length}>{children}</Centered>;
   }
 
   if (!children && !availableOptions.length) {
-    output.options = <Empty>Nothing found</Empty>;
+    output.options = <Empty>{noDataLabel}</Empty>;
   }
 
   return (
@@ -234,14 +288,15 @@ function DropdownOptions<T extends DropdownOption = DropdownOption>({
         <Search data-component-name="DropdownOptionsSearch">
           <Input
             ref={searchInput}
-            onChange={setSearch}
+            onChange={handleSearch}
+            shade={shade}
             type="text"
             value={search}
-            {...additionalProps}
+            variant={variant}
           />
         </Search>
       )}
-      <Options data-component-name="DropdownOptionsList">{output.options}</Options>
+      <Items data-component-name="DropdownOptionsList">{output.options}</Items>
       {output.create}
     </List>
   );
