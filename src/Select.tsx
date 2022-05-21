@@ -6,13 +6,7 @@ import styled from '@emotion/styled';
 import is from 'is-lite';
 
 import { getTheme } from './modules/helpers';
-import {
-  appearanceStyles,
-  baseStyles,
-  getStyledOptions,
-  inputStyles,
-  isDarkMode,
-} from './modules/system';
+import { appearanceStyles, baseStyles, getStyledOptions, inputStyles } from './modules/system';
 import {
   ComponentProps,
   StyledProps,
@@ -37,14 +31,14 @@ export const StyledSelect = styled(
   'select',
   getStyledOptions(),
 )<SelectProps & { filled: boolean }>(props => {
-  const { borderless, filled, large, multiple } = props;
-  const { colors, darkColor, grayMid, spacing, white } = getTheme(props);
+  const { filled, large, multiple } = props;
+  const { colors, darkColor, darkMode, grayMid, spacing, white } = getTheme(props);
 
-  let color = isDarkMode(props) ? white : darkColor;
+  let color = grayMid;
   const paddingY = large ? spacing.sm : spacing.xs;
 
-  if (borderless) {
-    color = filled ? white : grayMid;
+  if (filled) {
+    color = darkMode ? white : darkColor;
   }
 
   if (multiple) {
@@ -54,14 +48,14 @@ export const StyledSelect = styled(
   return css`
     ${appearanceStyles};
     ${baseStyles(props)};
-    background-image: url('${`data:image/svg+xml,%3Csvg width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg"%3E%3Cpolygon fill="${color.replace(
+    background-image: url('${`data:image/svg+xml,%3Csvg height="16px" version="1.1" viewBox="0 0 16 16" width="16px" xmlns="http://www.w3.org/2000/svg" %3E%3Cpath d="M14,5.52466366 C14,5.41704038 13.9641256,5.32735426 13.8923766,5.25560543 L13.3004484,4.60986548 C13.1928251,4.53811658 13.0852018,4.50224213 12.9775785,4.50224213 C12.8699551,4.50224213 12.7802691,4.53811658 12.7085202,4.60986548 L8.02690583,9.3452915 L3.29147982,4.60986548 C3.21973094,4.53811658 3.13004485,4.50224213 3.02242152,4.50224213 C2.91479821,4.50224213 2.82511211,4.53811658 2.75336323,4.60986548 L2.10762332,5.25560543 C2.03587444,5.32735426 2,5.41704038 2,5.52466366 C2,5.63228701 2.03587444,5.72197313 2.10762332,5.79372196 L7.70403588,11.3901345 C7.81165919,11.4618834 7.91928251,11.4977579 8.02690583,11.4977579 C8.13452915,11.4977579 8.22421524,11.4618834 8.29596412,11.3901345 L13.8923766,5.79372196 C13.9641256,5.72197313 14,5.63228701 14,5.52466366 Z" fill="${color.replace(
       '#',
       '%23',
-    )}" points="-8.8817842e-16 0 10 0 4.9980424 6"%3E%3C/polygon%3E%3C/svg%3E`}');
+    )}" /%3E%3C/svg%3E`}');
     background-repeat: no-repeat;
-    background-position: right 8px center;
+    background-position: right 12px center;
     ${inputStyles(props, 'select')};
-    color: ${filled ? color : grayMid};
+    color: ${color};
 
     ${filled &&
     css`
