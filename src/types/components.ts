@@ -1,8 +1,9 @@
-import { ElementType, HTMLProps, ReactNode } from 'react';
+import { CSSProperties, ElementType, HTMLProps, ReactNode } from 'react';
 import { SelectProps } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetOptional } from 'type-fest';
 
+import { Icons } from './common';
 import { WithBlock, WithBorderless, WithColor, WithMargin } from './shared';
 import { Theme } from './theme';
 
@@ -148,23 +149,41 @@ export interface Option {
   value: StringOrNumber;
 }
 
-export interface SearchCreateProps {
-  close: () => void;
-  value: string;
-}
-
-export interface SearchMessages {
-  error?: ReactNode;
-  loading?: ReactNode;
-  noResults?: ReactNode;
-}
-
-export interface SearchOption {
+export interface SearchItem {
   label?: ReactNode;
   value: string;
 }
 
-export type SearchOptionCallback =
-  | ((value: string) => SearchOption[])
-  | ((value: string) => Promise<SearchOption[]>);
-export type SearchOptions = SearchOption[] | SearchOptionCallback;
+export interface SearchProps extends StyledProps, WithBorderless, WithMargin {
+  /** @default 0 */
+  debounce?: number;
+  height?: StringOrNumber;
+  /** @default false */
+  hideIcon?: boolean;
+  /** @default search */
+  icon?: Icons;
+  items: SearchItem[];
+  loading?: boolean;
+  noResultsLabel?: ReactNode;
+  onFocus?: (value: string) => void;
+  /**
+   * Fires after the "debounce" delay
+   */
+  onSearch?: (value: string) => void;
+  onSelect: (value: string) => void;
+  /**
+   * Fires immediately when the user types
+   */
+  onType?: (value: string) => void;
+  /** @default Search for... */
+  placeholder?: string;
+  /**
+   * Show the options on focus (if available)
+   *
+   * @default true
+   */
+  showListOnFocus?: boolean;
+  style?: CSSProperties;
+  /** @default 100% */
+  width?: StringOrNumber;
+}

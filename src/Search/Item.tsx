@@ -3,10 +3,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from '../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../modules/system';
+import { getStyledOptions } from '../modules/system';
 import { WithChildren } from '../types';
 
 export interface SearchItemProps extends WithChildren {
+  isSelected: boolean;
   onClick: MouseEventHandler;
   value: string;
 }
@@ -14,9 +15,18 @@ export interface SearchItemProps extends WithChildren {
 export const StyledSearchItem = styled(
   'div',
   getStyledOptions(),
-)(props => {
-  const { grayDark, spacing, typography, variants, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
+)<{ isSelected: boolean }>(props => {
+  const { isSelected } = props;
+  const { darkMode, grayDark, spacing, typography, variants, white } = getTheme(props);
+
+  const selected = css`
+    background-color: ${variants.primary.mid.bg};
+    color: ${variants.primary.mid.color};
+
+    a {
+      color: ${variants.primary.mid.color};
+    }
+  `;
 
   return css`
     color: ${darkMode ? white : grayDark};
@@ -27,13 +37,10 @@ export const StyledSearchItem = styled(
 
     &:hover,
     &:active {
-      background-color: ${variants.primary.mid.bg};
-      color: ${variants.primary.mid.color};
-
-      a {
-        color: ${variants.primary.mid.color};
-      }
+      ${selected};
     }
+
+    ${isSelected && selected},
 
     a {
       color: ${grayDark};
@@ -46,13 +53,14 @@ export const StyledSearchItem = styled(
   `;
 });
 
-export default function SearchItem({ children, onClick, value }: SearchItemProps) {
+export default function SearchItem({ children, isSelected, onClick, value }: SearchItemProps) {
   return (
     <StyledSearchItem
       data-component-name="SearchItem"
       data-value={value}
+      isSelected={isSelected}
       onClick={onClick}
-      role="presentation"
+      role="listitem"
     >
       {children}
     </StyledSearchItem>
