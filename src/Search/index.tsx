@@ -1,64 +1,23 @@
-import {
-  ChangeEvent,
-  CSSProperties,
-  FocusEvent,
-  FocusEventHandler,
-  MouseEvent,
-  useEffect,
-  useRef,
-} from 'react';
+import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, useEffect, useRef } from 'react';
 import { useSetState } from 'react-use';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { StringOrNumber } from '@gilbarbara/types';
 
-import Options from './Options';
+import Options from './Items';
 
 import { Box } from '../Box';
 import { ClickOutside } from '../ClickOutside';
+import { ComponentWrapper } from '../ComponentWrapper';
 import { Icon } from '../Icon';
 import { Input } from '../Input';
 import { getTheme, px } from '../modules/helpers';
 import { getStyledOptions, marginStyles } from '../modules/system';
-import {
-  Icons,
-  SearchCreateProps,
-  SearchMessages,
-  SearchOptions,
-  StyledProps,
-  WithMargin,
-} from '../types';
-
-export interface SearchProps extends StyledProps, WithMargin {
-  createFn?: (props: SearchCreateProps) => JSX.Element;
-  /** @default 400 */
-  debounce?: number;
-  height?: StringOrNumber;
-  /** @default search */
-  icon?: Icons;
-  messages?: SearchMessages;
-  onBlur?: FocusEventHandler;
-  onFocus?: FocusEventHandler;
-  onSearch?: (value: string) => void;
-  onSelect?: (value: string) => void;
-  onType?: (value: string) => void;
-  options: SearchOptions;
-  /** @default Search for... */
-  placeholder?: string;
-  /**
-   * Always show the create button, even with results.
-   *
-   * It has no effect without the "createFn" prop.
-   * @default false */
-  showCreateAlways?: boolean;
-  style?: CSSProperties;
-  width?: StringOrNumber;
-}
+import { SearchProps } from '../types';
 
 export const StyledSearch = styled(
   Box,
   getStyledOptions(),
-)<Omit<SearchProps, 'onChange' | 'onType' | 'options'>>(props => {
+)<Omit<SearchProps, 'items' | 'onChange' | 'onSelect' | 'onType'>>(props => {
   const { width } = props;
 
   return css`
@@ -68,58 +27,31 @@ export const StyledSearch = styled(
   `;
 });
 
-const SearchInput = styled('div', getStyledOptions())`
-  position: relative;
-
-  [data-component-name='Icon'] {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  [data-component-name='Icon']:nth-of-type(1) {
-    left: 0;
-  }
-
-  [data-component-name='Icon']:nth-of-type(2) {
-    right: 0;
-  }
-
-  [data-component-name='Input'] {
-    padding-left: 32px;
-  }
-`;
-
-const defaultMessages = {
-  error: 'Search error',
-  loading: 'Loading...',
-  noResults: 'Nothing found',
-};
-
 export function Search(props: SearchProps): JSX.Element {
   const {
-    createFn: Create,
-    debounce = 400,
+    borderless,
+    debounce,
     height = 230,
+    hideIcon,
     icon = 'search',
-    messages,
-    onBlur,
+    items,
+    loading,
     onFocus,
     onSearch,
     onSelect,
     onType,
-    options,
-    placeholder = 'Search for...',
-    showCreateAlways,
+    placeholder,
+    showListOnFocus,
     ...rest
   } = props;
 
+  const optionsRef = useRef<HTMLDivElement>(null);
   const isActive = useRef(false);
-  const [{ active, focus, search, searching, typing, value }, setState] = useSetState({
+  const [{ active, currentItems, cursor, focus, typing, value }, setState] = useSetState({
     active: false,
+    currentItems: items,
+    cursor: -1,
     focus: false,
-    search: '',
-    searching: false,
     typing: false,
     value: '',
   });
@@ -134,10 +66,18 @@ export function Search(props: SearchProps): JSX.Element {
     };
   }, []);
 
-  const setStateIfActive = (state: Parameters<typeof setState>[0]) => {
+  const updateState = (state: Parameters<typeof setState>[0]) => {
     if (isActive.current) {
       setState(state);
     }
+  };
+
+  const close = () => {
+    updateState({ active: false });
+  };
+
+  const handleBlur = () => {
+    updateState({ cursor: -1, focus: false });
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -147,78 +87,139 @@ export function Search(props: SearchProps): JSX.Element {
       onType(inputValue);
     }
 
-    setStateIfActive({ active: !!inputValue, typing: true, value: inputValue });
-    clearTimeout(timeout.current);
+    const nextState = { active: !!inputValue, value: inputValue };
 
-    timeout.current = window.setTimeout(() => {
-      setStateIfActive({ typing: false, search: inputValue });
+    if (debounce) {
+      updateState({ ...nextState, typing: true });
+      clearTimeout(timeout.current);
+
+      timeout.current = window.setTimeout(() => {
+        updateState({
+          typing: false,
+          currentItems: items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
+        });
+
+        if (onSearch) {
+          onSearch(inputValue);
+        }
+
+        timeout.current = 0;
+      }, debounce);
+    } else {
+      updateState({
+        ...nextState,
+        currentItems: items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
+      });
 
       if (onSearch) {
         onSearch(inputValue);
       }
-
-      timeout.current = 0;
-    }, debounce);
-  };
-
-  const close = () => {
-    setStateIfActive({ active: false });
-  };
-
-  const handleBlur = (event: FocusEvent) => {
-    setStateIfActive({ focus: false });
-
-    if (onBlur) {
-      onBlur(event);
     }
   };
 
-  const handleFocus = () => {
-    setStateIfActive({ active: !!value, focus: true });
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+
+    updateState({ active: showListOnFocus && !!currentItems.length, focus: true });
+
+    if (onFocus) {
+      onFocus(inputValue);
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    const { code, shiftKey } = event;
+    const optionElement = optionsRef.current;
+
+    if (!active || !optionElement) {
+      return;
+    }
+
+    let nextCursor = cursor;
+
+    if (
+      ((code === 'Tab' && !shiftKey) || code === 'ArrowDown') &&
+      cursor < currentItems.length - 1
+    ) {
+      nextCursor++;
+      event.preventDefault();
+    } else if (((code === 'Tab' && shiftKey) || code === 'ArrowUp') && cursor > 0) {
+      nextCursor--;
+      event.preventDefault();
+    } else if (code === 'Enter') {
+      const { dataset } = optionElement.children[cursor] as HTMLDivElement;
+
+      updateState({ active: false, value: '' });
+      onSelect(dataset.value || '');
+    }
+
+    updateState({ cursor: nextCursor });
+
+    if (optionElement.children[nextCursor]) {
+      optionElement.children[nextCursor].scrollIntoView({ block: 'end' });
+    }
   };
 
   const handleSelect = (event: MouseEvent<HTMLDivElement>) => {
-    setStateIfActive({ active: false, value: '' });
+    const { dataset } = event.currentTarget;
 
-    if (onSelect) {
-      const { dataset } = event.currentTarget;
-
-      onSelect(dataset.value || '');
-    }
+    updateState({ active: false, value: '' });
+    onSelect(dataset.value || '');
   };
 
-  const setSearching = (input: boolean) => {
-    setStateIfActive({ searching: input });
-  };
+  let prefixSpacing = borderless ? 32 : true;
+
+  if (hideIcon) {
+    prefixSpacing = false;
+  }
 
   return (
     <StyledSearch data-component-name="Search" {...rest}>
       <ClickOutside active={active} onClick={close}>
-        <SearchInput>
-          <Icon color={focus || value ? colors.primary : undefined} name={icon} size={24} />
+        <ComponentWrapper
+          prefix={
+            hideIcon ? undefined : (
+              <Icon color={focus || value ? colors.primary : undefined} name={icon} size={24} />
+            )
+          }
+          size={borderless ? [24, 40] : 40}
+          suffix={typing || loading ? <Icon name="spinner" spin /> : undefined}
+        >
           <Input
-            borderless
+            autoComplete="off"
+            borderless={borderless}
             name="search"
             onBlur={handleBlur}
             onChange={handleChange}
             onFocus={handleFocus}
+            onKeyDown={handleKeyDown}
             placeholder={placeholder}
+            prefixSpacing={prefixSpacing}
             value={value}
           />
-          {(typing || searching) && <Icon name="spinner" spin />}
-        </SearchInput>
+        </ComponentWrapper>
         <Options
+          ref={optionsRef}
           active={active}
-          createComponent={Create && <Create close={close} value={search} />}
+          cursor={cursor}
           height={height}
-          messages={{ ...defaultMessages, ...messages }}
+          items={currentItems}
           onSelect={handleSelect}
-          options={options}
-          search={search}
-          setSearching={setSearching}
-          showCreateAlways={showCreateAlways}
+          {...rest}
         />
       </ClickOutside>
     </StyledSearch>
   );
 }
+
+Search.defaultProps = {
+  borderless: false,
+  debounce: 0,
+  height: 230,
+  hideIcon: false,
+  icon: 'search',
+  loading: false,
+  noResultsLabel: 'Nothing found',
+  placeholder: 'Search for...',
+  showListOnFocus: true,
+};
