@@ -7,14 +7,14 @@ import { StringOrNumber } from '@gilbarbara/types';
 import { Radio, RadioProps } from './CheckboxAndRadio';
 import { getTheme } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
-import { Option, WithComponentSize } from './types';
+import { RadioItem, WithComponentSize } from './types';
 
 export interface RadioGroupProps
   extends WithComponentSize,
     Omit<RadioProps, 'checked' | 'defaultChecked' | 'label'> {
   defaultValue?: StringOrNumber;
   inline?: boolean;
-  options: Option[];
+  items: RadioItem[];
 }
 
 const StyledRadioGroup = styled(
@@ -40,7 +40,7 @@ const StyledRadioGroup = styled(
 });
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { defaultValue, disabled, inline, name, onChange, options, size, value, ...rest } = props;
+  const { defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } = props;
   const [selectedValue, setSelectedValue] = useState(value ?? defaultValue);
   const previousProps = usePrevious(props);
 
@@ -67,7 +67,7 @@ export function RadioGroup(props: RadioGroupProps) {
     [disabled, onChange, value],
   );
 
-  if (!options || !options.length) {
+  if (!items || !items.length) {
     return null;
   }
 
@@ -75,7 +75,7 @@ export function RadioGroup(props: RadioGroupProps) {
 
   return (
     <StyledRadioGroup inline={inline} {...rest} data-component-name="RadioGroup" role="radiogroup">
-      {options.map(d => (
+      {items.map(d => (
         <Radio
           key={d.value}
           checked={d.value === currentValue}

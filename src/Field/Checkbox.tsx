@@ -13,7 +13,7 @@ interface Props extends FieldCheckboxProps {
 }
 
 function FieldCheckbox(props: Props) {
-  const { currentValue, name = 'CheckboxGroup', options = [], setValue } = props;
+  const { currentValue, items = [], name = 'CheckboxGroup', setValue } = props;
   const ref = useRef<HTMLDivElement>(null);
 
   useUpdateEffect(() => {
@@ -38,7 +38,7 @@ function FieldCheckbox(props: Props) {
 
   return (
     <Spacer mb="xs">
-      {options.map(d => (
+      {items.map(d => (
         <Checkbox
           key={d.name}
           defaultChecked={currentValue.includes(d.name)}

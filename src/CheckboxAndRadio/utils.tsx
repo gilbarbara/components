@@ -4,15 +4,15 @@ import styled from '@emotion/styled';
 
 import { getTheme, px } from '../modules/helpers';
 import { baseStyles, getStyledOptions, isDarkMode, outlineStyles } from '../modules/system';
-import { CheckboxOption, ComponentProps, Option, StyledProps, WithComponentSize } from '../types';
+import { CheckboxItem, ComponentProps, RadioItem, StyledProps, WithComponentSize } from '../types';
 
 export interface SharedProps extends StyledProps, WithComponentSize {
   name: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export type CheckboxProps = ComponentProps<HTMLInputElement, SharedProps & CheckboxOption>;
-export type RadioProps = ComponentProps<HTMLInputElement, SharedProps & Option>;
+export type CheckboxProps = ComponentProps<HTMLInputElement, SharedProps & CheckboxItem>;
+export type RadioProps = ComponentProps<HTMLInputElement, SharedProps & RadioItem>;
 
 interface InnerProps
   extends Omit<CheckboxProps, 'label' | 'name' | 'value'>,

@@ -3,7 +3,7 @@ import { FieldValues, UseFormGetValues } from 'react-hook-form';
 import { GenericFunction } from '@gilbarbara/types';
 
 import { FormGroupProps } from '../FormGroup';
-import { CheckboxOption, DropdownItem, DropdownProps, InputTypes, Option } from '../types';
+import { CheckboxItem, DropdownItem, DropdownProps, InputTypes, RadioItem } from '../types';
 
 export interface RegisterOptionsProps extends FieldBaseProps {
   formatter?: FieldInputProps['formatter'];
@@ -54,7 +54,7 @@ export interface FieldBaseProps
 export interface FieldCheckboxProps extends FieldBaseProps, FieldInputHandlers<HTMLInputElement> {
   children?: never;
   dropdownProps?: never;
-  options: CheckboxOption[];
+  items: CheckboxItem[];
   type: 'checkbox';
 }
 
@@ -62,7 +62,7 @@ export interface FieldDropdownProps extends FieldBaseProps {
   children?: never;
   dropdownProps?: Omit<
     DropdownProps,
-    'disabled' | 'items' | 'name' | 'onChange' | 'placeholder' | 'width'
+    'disabled' | 'inputOptions' | 'items' | 'onChange' | 'placeholder' | 'width'
   >;
   items: DropdownItem[];
   onBlur?: never;
@@ -75,21 +75,21 @@ export interface FieldInputProps extends FieldBaseProps, FieldInputHandlers<HTML
   children?: never;
   dropdownProps?: never;
   formatter?: 'money' | 'number' | 'phoneBR';
-  options?: never;
+  items?: never;
   type: InputTypes;
 }
 
 export interface FieldRadioProps extends FieldBaseProps, FieldInputHandlers<HTMLInputElement> {
   children?: never;
   dropdownProps?: never;
-  options: Option[];
+  items: RadioItem[];
   type: 'radio';
 }
 
 export interface FieldSelectProps extends FieldBaseProps, FieldInputHandlers<HTMLSelectElement> {
   children: ReactNode[];
   dropdownProps?: never;
-  options?: never;
+  items?: never;
   type: 'select';
 }
 
@@ -98,7 +98,7 @@ export interface FieldTextareaProps
     FieldInputHandlers<HTMLTextAreaElement> {
   children?: never;
   dropdownProps?: never;
-  options?: never;
+  items?: never;
   rows?: number;
   type: 'textarea';
 }
@@ -106,10 +106,10 @@ export interface FieldTextareaProps
 export interface FieldToggleProps extends FieldBaseProps {
   children?: never;
   dropdownProps?: never;
+  items?: never;
   onBlur?: never;
   onChange?: (value: boolean) => void;
   onFocus?: never;
-  options?: never;
   type: 'toggle';
 }
 

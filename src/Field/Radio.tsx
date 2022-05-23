@@ -4,18 +4,18 @@ import { FieldRadioProps } from './types';
 
 import { Radio } from '../CheckboxAndRadio';
 import { Spacer } from '../Spacer';
-import { Option } from '../types';
+import { RadioItem } from '../types';
 
 interface Props extends FieldRadioProps {
   registration: UseFormRegisterReturn;
 }
 
 function FieldRadio(props: Props): JSX.Element {
-  const { options = [], registration } = props;
+  const { items = [], registration } = props;
 
   return (
     <Spacer mb="xs">
-      {options.map((d: Option) => (
+      {items.map((d: RadioItem) => (
         <Radio key={d.value} {...d} {...registration} size="sm" />
       ))}
     </Spacer>
