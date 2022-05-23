@@ -17,7 +17,9 @@ export interface StyledProps {
   theme?: Theme;
 }
 
-export interface CheckboxOption extends Omit<Option, 'value'> {
+export interface CheckboxItem {
+  disabled?: boolean;
+  label: ReactNode;
   name: string;
 }
 
@@ -143,7 +145,7 @@ export interface LoaderProps
   type?: 'pill' | 'grow' | 'pulse' | 'rotate';
 }
 
-export interface Option {
+export interface RadioItem {
   disabled?: boolean;
   label: ReactNode;
   value: StringOrNumber;

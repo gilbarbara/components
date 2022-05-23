@@ -133,9 +133,9 @@ function EditForm({ formMethods }: FormProps<FormData>) {
     engineeringSkills = (
       <>
         <Field
+          items={specializations}
           label="Specialization"
           name="specialization"
-          options={specializations}
           required
           type="radio"
         />
@@ -262,9 +262,9 @@ function EditForm({ formMethods }: FormProps<FormData>) {
         />
       </Grid>
       <Field
+        items={contractTypes}
         label="Contract Type"
         name="contractType"
-        options={contractTypes}
         required
         type="checkbox"
       />

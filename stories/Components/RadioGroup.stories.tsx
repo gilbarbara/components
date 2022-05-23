@@ -11,8 +11,7 @@ export default {
     defaultValue: 2,
     disabled: false,
     inline: false,
-    name: 'position',
-    options: [
+    items: [
       { label: 'First', value: 1 },
       { label: 'Second', value: 2 },
       { label: 'Third', value: 3, disabled: true },
@@ -26,13 +25,14 @@ export default {
         value: 4,
       },
     ],
+    name: 'position',
     size: 'md',
   },
   argTypes: {
     ...hideProps(),
     defaultValue: { control: 'number' },
     onChange: { action: 'onChange', ...disableControl() },
-    options: disableControl(),
+    items: disableControl(),
   },
 } as ComponentMeta<typeof RadioGroup>;
 

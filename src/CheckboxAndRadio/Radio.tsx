@@ -11,7 +11,7 @@ import {
 
 /**
  * Use the RadioGroup component instead of this.
- * RadioGroup accepts an `options` prop that render this component in a group and is responsible for managing state and interactions.
+ * RadioGroup accepts an `items` prop that render this component in a group and is responsible for managing state and interactions.
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const { checked, children, defaultChecked, id, label, name, size, style, ...rest } = props;
