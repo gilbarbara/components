@@ -32,6 +32,7 @@ export function getStyles(key: Typography, props: HeadingProps) {
     font-size: ${selected.fontSize};
     font-weight: ${light ? 400 : selected.weight};
     line-height: ${selected.lineHeight};
+    margin-bottom: 0.5em;
     margin-top: 0;
     ${alignStyles(props)};
     ${marginStyles(props)};
