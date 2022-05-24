@@ -4,7 +4,7 @@ import { StringOrNumber } from '@gilbarbara/types';
 import { SetOptional } from 'type-fest';
 
 import { Icons } from './common';
-import { WithBlock, WithBorderless, WithColor, WithMargin } from './shared';
+import { WithBlock, WithBorderless, WithColor, WithMargin, WithOpen } from './shared';
 import { Theme } from './theme';
 
 export interface BaseProps {
@@ -88,6 +88,7 @@ export interface DropdownProps<T extends DropdownItem = DropdownItem>
     WithBorderless,
     WithColor,
     WithMargin,
+    WithOpen,
     DropdownBaseProps<T> {
   /** @default false */
   allowCreate?: boolean;
@@ -129,10 +130,6 @@ export interface DropdownProps<T extends DropdownItem = DropdownItem>
   onClear?: () => void;
   onCreate?: (value: string, close: () => void) => void;
   onSearch?: (value: string) => void;
-  /**
-   * Controlled status
-   */
-  open?: boolean;
   /** @default 260 */
   width?: StringOrNumber;
 }

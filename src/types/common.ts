@@ -7,6 +7,8 @@ import { icons, inputTypes, sizes, textSizes } from '../modules/options';
 
 export type ButtonTypes = 'button' | 'submit' | 'reset';
 
+export type Direction = 'horizontal' | 'vertical';
+
 export type Icons = typeof icons[number];
 
 export type InputTypes = typeof inputTypes[number];

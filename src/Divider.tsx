@@ -6,6 +6,7 @@ import { getColorVariant, getTheme, px } from './modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles, textStyles } from './modules/system';
 import {
   ComponentProps,
+  Direction,
   Sizes,
   Spacing,
   StyledProps,
@@ -26,7 +27,7 @@ export interface DividerKnownProps
   /** @default sm */
   dimension?: Sizes;
   /** @default horizontal */
-  direction?: 'horizontal' | 'vertical';
+  direction?: Direction;
   /** @default xs */
   gap?: Spacing;
   /** @default 100% */
