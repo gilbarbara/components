@@ -39,9 +39,9 @@ export const radius = {
 };
 
 export const shadow = {
-  low: '0 4px 16px rgba(148, 148, 148, 0.24)',
-  mid: '0 4px 16px rgba(148, 148, 148, 0.24)',
-  high: '0 4px 32px rgba(148, 148, 148, 0.24)',
+  low: '2px 4px 16px 2px rgba(148, 148, 148, 0.16)',
+  mid: '2px 4px 16px 4px rgba(148, 148, 148, 0.24)',
+  high: '2px 4px 16px 8px rgba(148, 148, 148, 0.32)',
 };
 
 export const spacing = {
