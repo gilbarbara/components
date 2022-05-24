@@ -167,11 +167,11 @@ export interface WithPositioning {
 }
 
 export interface WithRadius {
-  radius?: Radius;
+  radius?: Radius | false;
 }
 
 export interface WithShadow {
-  shadow?: Shadow;
+  shadow?: Shadow | false;
 }
 
 export interface WithTextSize {
