@@ -9,7 +9,6 @@ export default {
   args: {
     shade: 'mid',
     size: 128,
-    type: 'pill',
     variant: 'primary',
   },
   argTypes: {
@@ -18,4 +17,22 @@ export default {
   },
 } as ComponentMeta<typeof Loader>;
 
-export const Basic = (props: any) => <Loader {...props} />;
+export const Pill = (props: any) => <Loader {...props} />;
+Pill.args = {
+  type: 'pill',
+};
+
+export const Grow = (props: any) => <Loader {...props} />;
+Grow.args = {
+  type: 'grow',
+};
+
+export const Pulse = (props: any) => <Loader {...props} />;
+Pulse.args = {
+  type: 'pulse',
+};
+
+export const Rotate = (props: any) => <Loader {...props} />;
+Rotate.args = {
+  type: 'rotate',
+};

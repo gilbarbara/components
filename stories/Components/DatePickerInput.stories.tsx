@@ -4,7 +4,7 @@ import { DatePickerInput, DatePickerInputProps } from 'src/DatePicker/Input';
 import { disableControl, hideProps } from '../__helpers__';
 
 export default {
-  title: 'Components/DatePickerInput',
+  title: 'Components/DatePicker',
   component: DatePickerInput,
   args: {
     borderless: false,
@@ -21,4 +21,4 @@ export default {
   },
 } as ComponentMeta<typeof DatePickerInput>;
 
-export const Basic = (props: DatePickerInputProps) => <DatePickerInput {...props} />;
+export const Input = (props: DatePickerInputProps) => <DatePickerInput {...props} />;

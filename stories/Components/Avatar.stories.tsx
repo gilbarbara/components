@@ -25,7 +25,7 @@ export const Basic = (props: AvatarProps) => <Avatar {...props} />;
 export const Sizes = (props: AvatarProps) => (
   <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
     {(['xs', 'sm', 'md', 'lg', 'xl', 'jumbo'] as const).map(d => (
-      <FlexCenter>
+      <FlexCenter key={d}>
         <Avatar key={d} {...props} size={d} />
         <Paragraph mt="xs">{d}</Paragraph>
       </FlexCenter>

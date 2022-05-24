@@ -64,9 +64,10 @@ export const StyledSpacer = styled(
   `;
 });
 
-const StyledSpacerItem = styled.div<
-  Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }
->(props => {
+const StyledSpacerItem = styled(
+  'div',
+  getStyledOptions(),
+)<Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }>(props => {
   const { direction, flex, gap = 'sm', grow } = props;
   const { spacing } = getTheme(props);
   const isHorizontal = direction === 'horizontal';

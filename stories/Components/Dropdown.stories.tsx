@@ -61,9 +61,10 @@ export const WithCreate = (props: DropdownProps) => {
 
 WithCreate.args = {
   allowCreate: true,
+  borderless: true,
 };
 
-export const WithInput = (props: DropdownProps) => {
+export const WithInputOptions = (props: DropdownProps) => {
   const customItems = [
     { value: 'blue' },
     { value: 'green' },

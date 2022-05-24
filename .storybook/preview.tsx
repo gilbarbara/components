@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { usePrevious } from 'react-use';
+import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import { useGlobals } from '@storybook/client-api';
-import { styled } from '@storybook/theming';
 
 import { colors as themeColors } from '../src/modules/theme';
 import { Theme } from '../src/types';
@@ -72,12 +72,10 @@ const ThemeBlock = styled.div(
     top: 0,
     width: '50vw',
   },
-  ({ theme }) => {
-    return {
-      background: theme.darkMode ? '#101010' : '#fff',
-      color: theme.darkMode ? '#fff' : '#101010',
-    };
-  },
+  ({ theme }) => ({
+    background: theme.darkMode ? '#101010' : '#fff',
+    color: theme.darkMode ? '#fff' : '#101010',
+  }),
   ({ side }: any) =>
     side === 'left'
       ? {
