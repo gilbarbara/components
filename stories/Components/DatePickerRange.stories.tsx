@@ -4,7 +4,7 @@ import { DatePickerRange, DatePickerRangerProps } from 'src/DatePicker/Range';
 import { disableControl, hideProps } from '../__helpers__';
 
 export default {
-  title: 'Components/DatePickerRange',
+  title: 'Components/DatePicker',
   component: DatePickerRange,
   argTypes: {
     ...hideProps(),
@@ -13,4 +13,4 @@ export default {
   },
 } as ComponentMeta<typeof DatePickerRange>;
 
-export const Basic = (props: DatePickerRangerProps) => <DatePickerRange {...props} />;
+export const Range = (props: DatePickerRangerProps) => <DatePickerRange {...props} />;

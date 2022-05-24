@@ -1,6 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
-import { GenericFunction } from '@gilbarbara/types';
 
 import { FormGroupProps } from '../FormGroup';
 import { CheckboxItem, DropdownItem, DropdownProps, InputTypes, RadioItem } from '../types';
@@ -35,7 +34,7 @@ export interface FieldBaseProps
     'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
   > {
   autoComplete?: string;
-  clearError?: GenericFunction;
+  clearError?: () => void;
   debug?: boolean;
   disabled?: boolean;
   id?: string;
