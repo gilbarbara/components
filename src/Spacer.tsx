@@ -7,6 +7,7 @@ import { getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions, layoutStyles, marginStyles } from './modules/system';
 import {
   ComponentProps,
+  Direction,
   Spacing,
   StyledProps,
   WithChildren,
@@ -16,7 +17,7 @@ import {
 
 export interface SpacerKnownProps extends StyledProps, WithChildren, WithLayout, WithMargin {
   /** @default horizontal */
-  direction?: 'horizontal' | 'vertical';
+  direction?: Direction;
   /** @default start */
   distribution?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
   /** @default sm */

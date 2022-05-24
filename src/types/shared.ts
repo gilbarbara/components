@@ -139,6 +139,13 @@ export interface WithMargin {
   my?: Spacing | 0;
 }
 
+export interface WithOpen {
+  /**
+   * Controlled status
+   */
+  open?: boolean;
+}
+
 export interface WithPadding {
   /** Also accepts the shortcuts: pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
   padding?: Spacing;

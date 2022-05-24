@@ -22,13 +22,13 @@ import { Icon } from '../Icon';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { Text } from '../Text';
-import { WithBorderless } from '../types';
+import { WithBorderless, WithOpen } from '../types';
 
 export interface DatePickerInputProps
   extends WithBorderless,
+    WithOpen,
     DatePickerBaseProps<DatePickerClickHandler> {
   large?: boolean;
-  open?: boolean;
   placeholder?: string;
   separator?: string;
   showRange?: boolean;
