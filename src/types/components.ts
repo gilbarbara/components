@@ -134,6 +134,10 @@ export interface DropdownProps<T extends DropdownItem = DropdownItem>
   width?: StringOrNumber;
 }
 
+export interface ListItem extends WithColor {
+  content: ReactNode;
+}
+
 export interface LoaderProps
   extends ComponentProps<HTMLDivElement, StyledProps & WithBlock & WithColor> {
   color?: string;
