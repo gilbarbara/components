@@ -5,10 +5,11 @@ import { AnyObject } from '@gilbarbara/types';
 
 import { ButtonBase } from './ButtonBase';
 import { Icon } from './Icon';
-import { Menu } from './Menu';
+import { Menu, MenuProps } from './Menu';
 import { getTheme } from './modules/helpers';
 import { backgroundStyles, getStyledOptions } from './modules/system';
 import {
+  PositionY,
   WithBlock,
   WithBusy,
   WithChildren,
@@ -18,20 +19,17 @@ import {
 } from './types';
 
 export interface ButtonSplitProps
-  extends WithBlock,
+  extends Pick<MenuProps, 'disabled' | 'onToggle'>,
+    WithBlock,
     WithBusy,
     WithChildren,
     WithColor,
     WithComponentSize,
     WithInvert {
-  disabled?: boolean;
   label: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
-  onToggle?: (status: boolean) => void;
-  /** @default right */
-  positionX?: 'left' | 'right';
-  /** @default bottom */
-  positionY?: 'bottom' | 'top';
+  /** @default bottom-right */
+  position?: PositionY;
 }
 
 export const StyledButtonSplit = styled(
@@ -91,7 +89,7 @@ export const StyledButtonSplit = styled(
 });
 
 export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
-  const { busy, children, label, onClick, onToggle, positionX, positionY, ...rest } = props;
+  const { busy, children, label, onClick, onToggle, position, ...rest } = props;
   const { disabled, shade, variant } = rest;
   const [active, setActive] = useState(false);
 
@@ -123,11 +121,10 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
         {label}
       </ButtonBase>
       <Menu
+        component={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={24} />}
         disabled={disabled || busy}
-        icon={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={24} />}
         onToggle={handleToggle}
-        positionX={positionX}
-        positionY={positionY}
+        position={position}
         shade={shade}
         variant={variant}
       >
@@ -138,6 +135,11 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
 }
 
 ButtonSplit.defaultProps = {
+  block: false,
+  busy: false,
+  disabled: false,
+  invert: false,
+  position: 'bottom-right',
   shade: 'mid',
   size: 'md',
   variant: 'primary',

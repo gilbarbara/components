@@ -1,39 +1,27 @@
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
-import { Avatar, ButtonBase } from 'src';
+import { ButtonBase, Icon, Spacer } from 'src';
 import { Menu, MenuDivider, MenuItem, MenuProps } from 'src/Menu';
 
-import { colorProps, hideProps } from '../__helpers__';
+import { colorProps, disableControl, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Menu',
   component: Menu,
   subcomponents: { MenuItem, MenuDivider },
-  args: {
-    disabled: false,
-    icon: 'icon',
-    positionX: 'right',
-    positionY: 'bottom',
-    shade: 'mid',
-    variant: 'primary',
-  },
+  args: Menu.defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),
-    icon: { control: 'select', options: ['icon', 'avatar'] },
-    onToggle: { action: 'onToggle' },
-    positionX: { control: 'inline-radio' },
-    positionY: { control: 'inline-radio' },
+    children: disableControl(),
+    component: disableControl(),
   },
   parameters: {
     minHeight: 200,
   },
 };
 
-export const Basic = ({ icon, ...props }: MenuProps & { icon: string }) => {
-  const Component =
-    icon === 'avatar' ? <Avatar name="Test User" variant={props.variant} /> : undefined;
-
+export const Basic = (props: MenuProps) => {
   const handleClick = (closeMenu: GenericFunction, name?: string) => {
     return () => {
       closeMenu();
@@ -45,7 +33,7 @@ export const Basic = ({ icon, ...props }: MenuProps & { icon: string }) => {
   };
 
   return (
-    <Menu {...props} icon={Component}>
+    <Menu {...props}>
       <>
         <MenuItem>Profile</MenuItem>
         <MenuItem onClick={action('Configuration')}>
@@ -65,4 +53,33 @@ export const Basic = ({ icon, ...props }: MenuProps & { icon: string }) => {
       </MenuItem>
     </Menu>
   );
+};
+
+export const WithComponentAndHover = (props: MenuProps) => {
+  return (
+    <Menu
+      {...props}
+      component={
+        <Spacer gap="xxs">
+          <Icon name="add" /> Add Item
+        </Spacer>
+      }
+    >
+      <MenuItem>Profile</MenuItem>
+      <MenuItem>Configuration</MenuItem>
+      <MenuItem>Help</MenuItem>
+      <MenuDivider />
+      <MenuItem variant="red">
+        <a href="#logout">Logout</a>
+      </MenuItem>
+    </Menu>
+  );
+};
+
+WithComponentAndHover.args = {
+  trigger: 'hover',
+};
+
+WithComponentAndHover.argTypes = {
+  trigger: disableControl(),
 };

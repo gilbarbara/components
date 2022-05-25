@@ -13,6 +13,12 @@ export type Icons = typeof icons[number];
 
 export type InputTypes = typeof inputTypes[number];
 
+export type PositionX = 'left-bottom' | 'left-top' | 'right-bottom' | 'right-top';
+
+export type PositionY = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
+
+export type Position = PositionX | PositionY;
+
 export type Sizes = typeof sizes[number];
 
 export type TextSizes = typeof textSizes[number];

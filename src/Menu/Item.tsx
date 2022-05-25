@@ -1,7 +1,6 @@
 import { Children, isValidElement, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { GenericFunction } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getColorVariant, getTheme } from '../modules/helpers';
@@ -10,7 +9,7 @@ import { Paragraph } from '../Paragraph';
 import { WithColor } from '../types';
 
 interface ChildProps {
-  closeMenu?: GenericFunction;
+  closeMenu?: () => void;
 }
 
 export interface MenuItemProps extends ChildProps, WithColor {
