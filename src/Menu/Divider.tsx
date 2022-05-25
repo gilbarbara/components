@@ -12,7 +12,7 @@ const StyledMenuDivider = styled(
 
   return css`
     background-color: ${grayLight};
-    height: 0.1rem;
+    height: 1px;
     margin-bottom: ${spacing.xxs};
     margin-top: ${spacing.xxs};
   `;

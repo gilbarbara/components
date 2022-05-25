@@ -3,29 +3,34 @@ import mergeRefs from 'react-merge-refs';
 import { useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { StringOrNumber } from '@gilbarbara/types';
+import is from 'is-lite';
 
 import { MenuItem } from './Item';
 
 import { ButtonBase } from '../ButtonBase';
 import { Icon } from '../Icon';
-import { getTheme, recursiveChildrenMap } from '../modules/helpers';
+import { getTheme, px, recursiveChildrenMap } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
-import { ComponentProps, StyledProps, WithChildren, WithColor } from '../types';
+import { easing } from '../modules/theme';
+import { ComponentProps, Position, StyledProps, WithChildren, WithColor, WithOpen } from '../types';
 
-export interface MenuKnownProps extends StyledProps, WithChildren, WithColor {
+export interface MenuKnownProps extends StyledProps, WithChildren, WithColor, WithOpen {
+  /** @default An Icon with more-vertical-o */
+  component?: ReactElement;
   disabled?: boolean;
-  /** @default Icon with more-vertical-o */
-  icon?: ReactElement;
+  /** @default 200 */
+  minWidth?: StringOrNumber;
   onToggle?: (status: boolean) => void;
-  /** @default right */
-  positionX?: 'left' | 'right';
-  /** @default bottom */
-  positionY?: 'bottom' | 'top';
+  /** @default bottom-right */
+  position?: Position;
+  /** @default click */
+  trigger?: 'click' | 'hover';
 }
 
 export type MenuProps = ComponentProps<HTMLDivElement, MenuKnownProps>;
 
-interface MenuItemsProps extends Pick<MenuProps, 'positionX' | 'positionY'> {
+interface MenuItemsProps extends Required<Pick<MenuProps, 'minWidth' | 'position'>> {
   active: boolean;
 }
 
@@ -39,23 +44,16 @@ const StyledMenuItems = styled(
   'div',
   getStyledOptions(),
 )<MenuItemsProps>(props => {
-  const { active, positionX, positionY } = props;
+  const { active, minWidth, position } = props;
+  const [positionMain, positionCross] = position.split('-');
+
   const { grayDarker, grayScale, radius, shadow, spacing, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   return css`
-    background-color: ${darkMode ? grayDarker : white};
-    border-radius: ${radius.xxs};
-    box-shadow: ${shadow.mid};
-    color: ${darkMode ? grayScale['20'] : grayDarker};
-    margin-top: ${spacing.xxs};
-    min-width: 15rem;
-    overflow: hidden;
     position: absolute;
-    top: 100%;
-    transform-origin: top;
     transform: scaleY(0);
-    transition: transform 0.3s;
+    transition: transform 0.3s ${easing};
     z-index: 10;
 
     ${active &&
@@ -63,24 +61,78 @@ const StyledMenuItems = styled(
       transform: scaleY(1);
     `}
 
-    ${positionY === 'top' &&
+    ${positionMain === 'bottom' &&
+    css`
+      top: 100%;
+      transform-origin: top;
+    `}
+
+    ${positionMain === 'left' &&
+    css`
+      right: 100%;
+    `}
+
+    ${positionMain === 'right' &&
+    css`
+      left: 100%;
+    `}
+
+    ${positionMain === 'top' &&
     css`
       bottom: 100%;
-      margin-top: 0;
-      margin-bottom: ${spacing.xxs};
-      top: auto;
       transform-origin: bottom;
     `}
 
-    ${positionX === 'left' &&
+    ${positionCross === 'bottom' &&
+    css`
+      bottom: 0;
+      transform-origin: bottom;
+    `}
+
+    ${positionCross === 'left' &&
     css`
       left: 0;
     `}
 
-    ${positionX === 'right' &&
+    ${positionCross === 'right' &&
     css`
       right: 0;
     `}
+
+    ${positionCross === 'top' &&
+    css`
+      top: 0;
+      transform-origin: top;
+    `}
+
+  > div {
+      background-color: ${darkMode ? grayDarker : white};
+      border-radius: ${radius.xxs};
+      box-shadow: ${shadow.low};
+      color: ${darkMode ? grayScale['20'] : grayDarker};
+      min-width: ${px(minWidth)};
+      overflow: hidden;
+
+      ${positionMain === 'bottom' &&
+      css`
+        margin-top: ${spacing.xxs};
+      `}
+
+      ${positionMain === 'left' &&
+      css`
+        margin-right: ${spacing.xxs};
+      `}
+
+      ${positionMain === 'right' &&
+      css`
+        margin-left: ${spacing.xxs};
+      `}
+
+      ${positionMain === 'top' &&
+      css`
+        margin-bottom: ${spacing.xxs};
+      `}
+    }
   `;
 });
 
@@ -101,15 +153,17 @@ const StyledMenuButton = styled(ButtonBase)(props => {
 export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
   const {
     children,
+    component = <Icon name="more-vertical-o" size={24} title={null} />,
     disabled,
-    icon = <Icon name="more-vertical-o" size={24} title={null} />,
+    minWidth = 200,
     onToggle,
-    positionX,
-    positionY,
+    open,
+    position = 'bottom-right',
     shade,
+    trigger,
     variant,
   } = props;
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(open ?? false);
   const localRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = useCallback(
@@ -126,7 +180,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
   );
 
   useUpdateEffect(() => {
-    if (active) {
+    if (active && !is.boolean(open)) {
       document.addEventListener('click', handleClickOutside);
     }
 
@@ -135,37 +189,50 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
     }
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      if (!is.boolean(open)) {
+        document.removeEventListener('click', handleClickOutside);
+      }
     };
-  }, [active, handleClickOutside, onToggle]);
+  }, [active, handleClickOutside, onToggle, open]);
 
-  const handleClickMenu = useCallback(() => {
+  const handleToggleMenu = useCallback(() => {
+    if (disabled || is.boolean(open)) {
+      return;
+    }
+
     setActive(a => !a);
-  }, []);
+  }, [disabled, open]);
 
   return (
-    <StyledMenu ref={mergeRefs([localRef, ref])} data-component-name="Menu">
+    <StyledMenu
+      ref={mergeRefs([localRef, ref])}
+      data-component-name="Menu"
+      onMouseEnter={trigger === 'hover' ? handleToggleMenu : undefined}
+      onMouseLeave={trigger === 'hover' ? handleToggleMenu : undefined}
+    >
       <StyledMenuButton
         aria-label={active ? 'Close menu' : 'Open menu'}
         data-component-name="MenuButton"
         disabled={disabled}
-        onClick={handleClickMenu}
+        onClick={trigger === 'click' ? handleToggleMenu : undefined}
         title={active ? 'Close menu' : 'Open menu'}
         type="button"
       >
-        {icon}
+        {component}
       </StyledMenuButton>
       <StyledMenuItems
         active={active}
         data-component-name="MenuItems"
-        positionX={positionX}
-        positionY={positionY}
+        minWidth={minWidth}
+        position={position}
       >
-        {recursiveChildrenMap(
-          children,
-          { closeMenu: handleClickMenu, shade, variant },
-          { filter: MenuItem },
-        )}
+        <div data-component-name="MenuItemsWrapper">
+          {recursiveChildrenMap(
+            children,
+            { closeMenu: handleToggleMenu, shade, variant },
+            { filter: MenuItem },
+          )}
+        </div>
       </StyledMenuItems>
     </StyledMenu>
   );
@@ -173,8 +240,9 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
 
 Menu.defaultProps = {
   disabled: false,
-  positionX: 'right',
-  positionY: 'bottom',
+  minWidth: 200,
+  position: 'bottom-right',
+  trigger: 'click',
   variant: 'primary',
 };
 
