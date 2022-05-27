@@ -19,7 +19,7 @@ export { Dropdown } from './Dropdown';
 export { Emoji } from './Emoji';
 export { Field } from './Field';
 export { Flex, FlexCenter, FlexInline, FlexProps } from './Flex';
-export { Form, FormProps } from './Form';
+export { Form, FormProps, FormSubmitHandler } from './Form';
 export { FormGroup } from './FormGroup';
 export { Grid, GridProps } from './Grid';
 export * from './Headings';

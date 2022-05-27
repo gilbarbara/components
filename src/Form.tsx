@@ -15,8 +15,7 @@ interface Props<T> extends UseFormProps<T> {
  It will execute the `children` with the `formMethods` from the `useForm` hook as props. You can use it inline or with a functional component.
 
  ```tsx
- import { SubmitHandler } from 'react-hook-form';
- import { Box, Button, Field, Form, FormProps } from '@gilbarbara/components';
+ import { Box, Button, Field, Form, FormProps, FormSubmitHandler } from '@gilbarbara/components';
 
  interface FormData {
    name: string;
@@ -60,3 +59,5 @@ export function Form<T extends AnyObject = AnyObject>({
     </FormProvider>
   );
 }
+
+export { SubmitHandler as FormSubmitHandler } from 'react-hook-form';
