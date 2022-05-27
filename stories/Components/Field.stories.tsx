@@ -14,7 +14,6 @@ export default {
     name: 'name',
     placeholder: 'Your name here...',
     type: 'text',
-    width: '100%',
   },
   argTypes: hideProps(),
 } as ComponentMeta<typeof Field>;

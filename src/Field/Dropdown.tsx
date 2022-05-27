@@ -56,6 +56,7 @@ function FieldDropdown(props: Props): JSX.Element {
       values={items.filter((d: DropdownItem) =>
         is.array(currentValue) ? currentValue.includes(d.value) : d.value === currentValue,
       )}
+      width="100%"
       {...parameters}
       {...dropdownProps}
       onChange={handleChangeDropdown}
