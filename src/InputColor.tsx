@@ -68,7 +68,7 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
 
   return (
     <StyledColorGroup data-component-name="InputColor" height={height} width={width}>
-      <Box height={height} mr="xs" overflow="hidden" shadow="high" width={width}>
+      <Box height={height} mr="xs" overflow="hidden" width={width}>
         <input ref={ref} id={name} name={name} onChange={handleChange} type="color" {...rest} />
       </Box>
       <Text>{value || localValue}</Text>
