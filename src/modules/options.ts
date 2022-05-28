@@ -603,8 +603,6 @@ export const iconsPack = [
   'smile',
   'software-download',
   'software-upload',
-  'sort-az',
-  'sort-za',
   'space-between-v',
   'space-between',
   'spectrum',
@@ -703,10 +701,12 @@ export const iconsPack = [
 ] as const;
 
 export const iconsCustom = [
+  'accessibility',
   'apple',
   'block-alt',
   'bullseye',
   'bullseye-arrow',
+  'category',
   'check',
   'chevron-double-down',
   'chevron-double-left',
@@ -726,11 +726,15 @@ export const iconsCustom = [
   'rocket-chat',
   'skype',
   'sort',
+  'sort-asc',
+  'sort-desc',
   'spotify',
   'star',
   'thumbs-down',
   'thumbs-up',
+  'vector',
   'whatsapp',
+  'wheelchair',
   'zoom',
 ] as const;
 

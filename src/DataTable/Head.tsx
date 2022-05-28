@@ -50,9 +50,9 @@ function DataTableHead(props: Props): JSX.Element | null {
           if (key === sortBy) {
             icon =
               sortDirection === 'asc' ? (
-                <Icon color={colors.primary} ml="xxs" name="sort-az" />
+                <Icon color={colors.primary} ml="xxs" name="sort-asc" />
               ) : (
-                <Icon color={colors.primary} ml="xxs" name="sort-za" />
+                <Icon color={colors.primary} ml="xxs" name="sort-desc" />
               );
           }
         }
