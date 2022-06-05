@@ -4,18 +4,30 @@ import styled from '@emotion/styled';
 import { StandardShorthandProperties } from 'csstype';
 
 import { getTheme } from './modules/helpers';
-import { baseStyles, getStyledOptions, layoutStyles, marginStyles } from './modules/system';
+import {
+  baseStyles,
+  flexItemStyles,
+  getStyledOptions,
+  layoutStyles,
+  marginStyles,
+} from './modules/system';
 import {
   ComponentProps,
   Direction,
   Spacing,
   StyledProps,
   WithChildren,
+  WithFlexItem,
   WithLayout,
   WithMargin,
 } from './types';
 
-export interface SpacerKnownProps extends StyledProps, WithChildren, WithLayout, WithMargin {
+export interface SpacerKnownProps
+  extends StyledProps,
+    WithChildren,
+    WithFlexItem,
+    WithLayout,
+    WithMargin {
   /** @default horizontal */
   direction?: Direction;
   /** @default start */
@@ -39,7 +51,7 @@ export type SpacerProps = ComponentProps<HTMLDivElement, SpacerKnownProps>;
 
 export const StyledSpacer = styled(
   'div',
-  getStyledOptions(),
+  getStyledOptions('direction'),
 )<SpacerProps>(props => {
   const { direction, distribution, verticalAlign, wrap } = props;
   const isHorizontal = direction === 'horizontal';
@@ -59,6 +71,7 @@ export const StyledSpacer = styled(
     flex-direction: ${direction === 'vertical' ? 'column' : 'row'};
     flex-wrap: ${wrap ? 'wrap' : 'nowrap'};
     ${distributionStyles};
+    ${flexItemStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
   `;
@@ -66,7 +79,7 @@ export const StyledSpacer = styled(
 
 const StyledSpacerItem = styled(
   'div',
-  getStyledOptions(),
+  getStyledOptions('direction'),
 )<Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }>(props => {
   const { direction, flex, gap = 'sm', grow } = props;
   const { spacing } = getTheme(props);

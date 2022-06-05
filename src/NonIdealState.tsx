@@ -10,9 +10,20 @@ import { Icon } from './Icon';
 import { getTheme, responsive } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
 import { Paragraph } from './Paragraph';
-import { ComponentProps, Icons, StyledProps, WithChildrenOptional, WithMargin } from './types';
+import {
+  ComponentProps,
+  Icons,
+  StyledProps,
+  WithChildrenOptional,
+  WithFlexItem,
+  WithMargin,
+} from './types';
 
-export interface NonIdealStateKnownProps extends StyledProps, WithChildrenOptional, WithMargin {
+export interface NonIdealStateKnownProps
+  extends StyledProps,
+    WithChildrenOptional,
+    WithFlexItem,
+    WithMargin {
   description?: ReactNode;
   icon?: Icons;
   small?: boolean;

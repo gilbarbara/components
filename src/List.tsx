@@ -6,6 +6,7 @@ import is from 'is-lite';
 import { getColorVariant, getTheme } from './modules/helpers';
 import {
   baseStyles,
+  flexItemStyles,
   getStyledOptions,
   layoutStyles,
   marginStyles,
@@ -22,6 +23,7 @@ import {
   Variants,
   WithBorderless,
   WithColor,
+  WithFlexItem,
   WithLayout,
   WithMargin,
   WithRadius,
@@ -32,6 +34,7 @@ export interface ListKnownProps
   extends StyledProps,
     WithBorderless,
     WithColor,
+    WithFlexItem,
     WithLayout,
     WithMargin,
     WithRadius,
@@ -79,6 +82,7 @@ export const StyledList = styled(
     margin: 0;
     overflow: hidden;
     padding: 0;
+    ${flexItemStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
     ${radiusStyles(props)};
