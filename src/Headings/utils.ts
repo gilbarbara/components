@@ -1,17 +1,23 @@
 import { css } from '@emotion/react';
 
 import { getTheme } from '../modules/helpers';
-import { alignStyles, baseStyles, marginStyles } from '../modules/system';
+import { alignStyles, baseStyles, colorStyles, marginStyles } from '../modules/system';
 import {
   ComponentProps,
   StyledProps,
   Typography,
   WithAlign,
   WithChildren,
+  WithColor,
   WithMargin,
 } from '../types';
 
-export interface HeadingKnownProps extends StyledProps, WithAlign, WithChildren, WithMargin {
+export interface HeadingKnownProps
+  extends StyledProps,
+    WithAlign,
+    WithColor,
+    WithChildren,
+    WithMargin {
   light?: boolean;
 }
 
@@ -35,6 +41,7 @@ export function getStyles(key: Typography, props: HeadingProps) {
     margin-bottom: 0.5em;
     margin-top: 0;
     ${alignStyles(props)};
+    ${colorStyles(props)};
     ${marginStyles(props)};
   `;
 }
