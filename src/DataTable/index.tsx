@@ -12,7 +12,7 @@ import { scrollTo } from '../modules/animations';
 import { recursiveElementFind } from '../modules/helpers';
 import { Pagination } from '../Pagination';
 import { Text } from '../Text';
-import { ComponentProps, StyledProps, WithLayout, WithMargin } from '../types';
+import { ComponentProps, StyledProps, WithFlexItem, WithLayout, WithMargin } from '../types';
 
 export interface DataTableColumn<T = string> {
   disableSort?: boolean;
@@ -25,7 +25,7 @@ export interface DataTableColumn<T = string> {
   title: ReactNode;
 }
 
-export interface DataTableKnownProps extends StyledProps, WithLayout, WithMargin {
+export interface DataTableKnownProps extends StyledProps, WithFlexItem, WithLayout, WithMargin {
   /** @default 768 */
   breakpoint?: number;
   /**

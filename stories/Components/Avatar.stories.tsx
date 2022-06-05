@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { BoxCenter, Grid, Paragraph } from 'src';
 import { Avatar, AvatarProps } from 'src/Avatar';
 
-import { colorProps, disableControl, hideProps } from '../__helpers__';
+import { colorProps, disableControl, flexItemProps, hideProps } from '../__helpers__';
 
 export default {
   title: 'Components/Avatar',
@@ -17,6 +17,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexItemProps(),
   },
 } as ComponentMeta<typeof Avatar>;
 

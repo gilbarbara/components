@@ -2,7 +2,14 @@ import { ComponentMeta } from '@storybook/react';
 import { List, ListProps } from 'src/List';
 
 import { Avatar, Box, H3, H6, Paragraph, Spacer } from '../../src';
-import { colorProps, disableControl, hideProps, layoutProps, marginProps } from '../__helpers__';
+import {
+  colorProps,
+  disableControl,
+  flexItemProps,
+  hideProps,
+  layoutProps,
+  marginProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/List',
@@ -14,6 +21,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexItemProps(),
     ...layoutProps({ display: 'flex' }),
     ...marginProps(),
     items: disableControl(),

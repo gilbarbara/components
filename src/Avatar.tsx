@@ -6,9 +6,9 @@ import { getInitials } from '@gilbarbara/helpers';
 import { BoxCenter } from './Box';
 import { getColorVariant, getTheme } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
-import { StyledProps, WithColor } from './types';
+import { StyledProps, WithColor, WithFlexItem } from './types';
 
-export interface AvatarProps extends StyledProps, WithColor {
+export interface AvatarProps extends StyledProps, WithColor, WithFlexItem {
   image?: string;
   name: string;
   /** @default md */
