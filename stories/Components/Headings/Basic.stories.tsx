@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 import { H1, H2, H3, H4, H5, H6 } from 'src/Headings';
 import { HeadingProps } from 'src/Headings/utils';
 
-import { hideProps, marginProps } from '../../__helpers__';
+import { colorProps, hideProps, marginProps } from '../../__helpers__';
 
 export default {
   title: 'Components/Headings',
@@ -14,6 +14,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     ...marginProps(),
     children: { control: 'text' },
   },
