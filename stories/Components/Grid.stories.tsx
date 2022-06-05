@@ -5,6 +5,7 @@ import {
   colorProps,
   disableControl,
   flexContent,
+  flexItemProps,
   flexItems,
   hideProps,
   layoutProps,
@@ -24,11 +25,12 @@ export default {
     itemWidth: 100,
     justifyContent: 'space-evenly',
     justifyItems: 'center',
-    templateColumns: 'repeat(3, 120px)',
+    templateColumns: 'repeat(3, auto)',
   },
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexItemProps(),
     ...layoutProps({ display: 'grid' }),
     ...positioningProps(),
     ...spacingProps(),
@@ -60,14 +62,14 @@ export const Basic = (props: GridProps & { itemHeight: number; itemWidth: number
 
   return (
     <Grid {...rest} minHeight="90vh" shadow="high" variant="white" width="90%">
-      <Box minHeight={itemHeight} variant="primary" width={itemWidth} />
-      <Box minHeight={itemHeight} variant="secondary" width={itemWidth} />
-      <Box minHeight={itemHeight} variant="green" width={itemWidth} />
-      <Box minHeight={itemHeight} variant="pink" width={itemWidth} />
-      <Box minHeight={itemHeight} variant="purple" width={itemWidth} />
-      <Box minHeight={itemHeight} variant="red" width={itemWidth} />
-      <Box minHeight={itemHeight} variant="yellow" width={itemWidth} />
-      <Box minHeight={itemHeight} variant="primary" width={itemWidth} />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="secondary" />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="green" />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="pink" />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="purple" />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="red" />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="yellow" />
+      <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
     </Grid>
   );
 };

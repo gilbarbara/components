@@ -7,7 +7,7 @@ import { useGlobals } from '@storybook/client-api';
 import { colors as themeColors } from '../src/modules/theme';
 import { Theme } from '../src/types';
 
-import { Flex, FlexCenter } from '../src';
+import { Box, BoxCenter } from '../src';
 import { useEffect, useRef } from "react";
 
 export const parameters = {
@@ -111,9 +111,9 @@ function Preview(StoryFn: React.FC, context: any) {
 
   if (viewMode === 'docs') {
     return (
-      <Flex ref={docsRef} alignItems="flex-start" justifyContent="center" minHeight={minHeight}>
+      <Box ref={docsRef} align="center" direction="column" display="flex" justify="start" minHeight={minHeight}>
         <StoryFn />
-      </Flex>
+      </Box>
     );
   }
 
@@ -131,9 +131,9 @@ function Preview(StoryFn: React.FC, context: any) {
           }}
         >
           <ThemeBlock data-side="left" side="left">
-            <FlexCenter minHeight="100vh" maxWidth={1024} width="100%">
+            <BoxCenter minHeight="100vh" maxWidth={1024} width="100%">
               <StoryFn />
-            </FlexCenter>
+            </BoxCenter>
           </ThemeBlock>
         </ThemeProvider>
         <ThemeProvider
@@ -143,9 +143,9 @@ function Preview(StoryFn: React.FC, context: any) {
           }}
         >
           <ThemeBlock data-side="right" side="right">
-            <FlexCenter minHeight="100vh" maxWidth={1024} width="100%">
+            <BoxCenter minHeight="100vh" maxWidth={1024} width="100%">
               <StoryFn />
-            </FlexCenter>
+            </BoxCenter>
           </ThemeBlock>
         </ThemeProvider>
       </>
@@ -159,13 +159,13 @@ function Preview(StoryFn: React.FC, context: any) {
         colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
       }}
     >
-      <FlexCenter
+      <BoxCenter
         maxWidth={1024}
         style={{ color: isDarkMode ? '#fff' : '#101010' }}
         width="100%"
       >
         <StoryFn />
-      </FlexCenter>
+      </BoxCenter>
     </ThemeProvider>
   );
 }

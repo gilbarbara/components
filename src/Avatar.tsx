@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { getInitials } from '@gilbarbara/helpers';
 
-import { FlexCenter } from './Flex';
+import { BoxCenter } from './Box';
 import { getColorVariant, getTheme } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
 import { StyledProps, WithColor } from './types';
@@ -69,7 +69,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
   const selectedSize = sizes[size];
 
   return (
-    <FlexCenter
+    <BoxCenter
       ref={ref}
       data-component-name="Avatar"
       height={selectedSize.size}
@@ -85,7 +85,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
           {getInitials(name).toUpperCase()}
         </Circle>
       )}
-    </FlexCenter>
+    </BoxCenter>
   );
 });
 

@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { List, ListProps } from 'src/List';
 
-import { Avatar, Box, H3, H5, Paragraph, Spacer } from '../../src';
+import { Avatar, Box, H3, H6, Paragraph, Spacer } from '../../src';
 import { colorProps, disableControl, hideProps, layoutProps, marginProps } from '../__helpers__';
 
 export default {
@@ -62,7 +62,7 @@ WithComponents.args = {
     <Spacer>
       <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
       <Box>
-        <H5>John Smith</H5>
+        <H6 mb={0}>John Smith</H6>
         <Paragraph>Admin</Paragraph>
       </Box>
     </Spacer>,

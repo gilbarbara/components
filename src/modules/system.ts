@@ -12,6 +12,8 @@ import {
   WithColor,
   WithDisplay,
   WithElementSpacing,
+  WithFlexBox,
+  WithFlexItem,
   WithInvert,
   WithLayout,
   WithMargin,
@@ -127,6 +129,51 @@ export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
   }
 
   return {};
+}
+
+export function flexBoxStyles<T extends WithFlexBox>(props: T): CSSObject {
+  const { align, alignContent, direction, justify, wrap } = props;
+
+  return {
+    alignContent,
+    alignItems: align,
+    flexDirection: direction,
+    flexWrap: wrap,
+    justifyContent: justify,
+  };
+}
+
+export function flexItemStyles<T extends WithFlexItem>(props: T): CSSObject {
+  const { alignSelf, basis, fill, flex, justifySelf, order } = props;
+
+  const output: CSSObject = {};
+
+  if (!is.nullOrUndefined(fill)) {
+    output.height = fill === true || fill === 'vertical' ? '100%' : undefined;
+    output.width = fill === true || fill === 'horizontal' ? '100%' : undefined;
+  }
+
+  if (!is.nullOrUndefined(flex)) {
+    if (is.boolean(flex)) {
+      output.flex = flex ? '1 1' : '0 0';
+    }
+
+    if (is.string(flex)) {
+      output.flex = flex === 'grow' ? '1 0' : '0 1';
+    }
+
+    if (is.plainObject(flex)) {
+      output.flex = `${flex.grow ? flex.grow : 0} ${flex.shrink ? flex.shrink : 0}`;
+    }
+  }
+
+  return {
+    ...output,
+    alignSelf,
+    flexBasis: basis,
+    justifySelf,
+    order,
+  };
 }
 
 export function inputStyles<

@@ -1,7 +1,7 @@
 export { Alert } from './Alert';
 export { Anchor } from './Anchor';
 export { Avatar } from './Avatar';
-export { Box, BoxProps } from './Box';
+export { Box, BoxCenter, BoxInline, BoxProps } from './Box';
 export { Button } from './Button';
 export { ButtonBase } from './ButtonBase';
 export { ButtonGroup } from './ButtonGroup';
@@ -18,7 +18,6 @@ export { Divider } from './Divider';
 export { Dropdown } from './Dropdown';
 export { Emoji } from './Emoji';
 export { Field } from './Field';
-export { Flex, FlexCenter, FlexInline, FlexProps } from './Flex';
 export { Form, FormProps, FormSubmitHandler } from './Form';
 export { FormGroup } from './FormGroup';
 export { Grid, GridProps } from './Grid';

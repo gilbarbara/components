@@ -4,11 +4,42 @@ import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
-import { Box, BoxProps } from './Box';
 import { px } from './modules/helpers';
-import { WithChildren } from './types';
+import {
+  backgroundStyles,
+  baseStyles,
+  displayStyles,
+  flexItemStyles,
+  getStyledOptions,
+  layoutStyles,
+  marginStyles,
+  paddingStyles,
+  positioningStyles,
+  radiusStyles,
+  shadowStyles,
+} from './modules/system';
+import {
+  WithChildren,
+  WithColor,
+  WithFlexItem,
+  WithLayout,
+  WithMargin,
+  WithPadding,
+  WithPositioning,
+  WithRadius,
+  WithShadow,
+} from './types';
 
-export interface GridProps extends Omit<BoxProps, 'children'>, WithChildren {
+export interface GridProps
+  extends WithChildren,
+    WithColor,
+    WithFlexItem,
+    WithLayout,
+    WithMargin,
+    WithPadding,
+    WithPositioning,
+    WithRadius,
+    WithShadow {
   alignContent?: StandardLonghandProperties['alignContent'];
   alignItems?: StandardLonghandProperties['alignItems'];
   autoColumns?: StandardLonghandProperties['gridAutoColumns'];
@@ -29,7 +60,10 @@ export interface GridProps extends Omit<BoxProps, 'children'>, WithChildren {
   templateRows?: StandardLonghandProperties['gridTemplateRows'];
 }
 
-export const StyledGrid = styled(Box)<GridProps>(props => {
+export const StyledGrid = styled(
+  'div',
+  getStyledOptions(),
+)<GridProps>(props => {
   const {
     alignContent,
     alignItems,
@@ -37,7 +71,6 @@ export const StyledGrid = styled(Box)<GridProps>(props => {
     autoFlow,
     autoRows,
     columnGap,
-    display = 'grid',
     gap,
     grid,
     justifyContent,
@@ -55,24 +88,38 @@ export const StyledGrid = styled(Box)<GridProps>(props => {
     align-content: ${alignContent};
     align-items: ${alignItems};
     column-gap: ${columnGap && px(columnGap)};
-    display: ${display};
     gap: ${gap && px(gap)};
     grid-auto-columns: ${autoColumns};
     grid-auto-flow: ${autoFlow};
     grid-auto-rows: ${autoRows};
+    grid-template-areas: ${templateAreas};
+    grid-template-columns: ${templateColumns};
+    grid-template-rows: ${templateRows};
+    grid-template: ${template};
     grid: ${grid};
     justify-content: ${justifyContent};
     justify-items: ${justifyItems};
     place-content: ${placeContent};
     place-items: ${placeItems};
     row-gap: ${rowGap && px(rowGap)};
-    grid-template: ${template};
-    grid-template-areas: ${templateAreas};
-    grid-template-columns: ${templateColumns};
-    grid-template-rows: ${templateRows};
+
+    ${baseStyles(props)};
+    ${backgroundStyles(props)};
+    ${displayStyles(props)};
+    ${flexItemStyles(props)};
+    ${layoutStyles(props)};
+    ${marginStyles(props)};
+    ${paddingStyles(props)};
+    ${positioningStyles(props)};
+    ${radiusStyles(props)};
+    ${shadowStyles(props)};
   `;
 });
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => (
   <StyledGrid ref={ref} data-component-name="Grid" {...props} />
 ));
+
+Grid.defaultProps = {
+  display: 'grid',
+};

@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 
 import type { DataTableProps } from './index';
 
+import { Box } from '../Box';
 import { ButtonBase } from '../ButtonBase';
-import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions } from '../modules/system';
@@ -40,7 +40,7 @@ function DataTableHead(props: Props): JSX.Element | null {
   }
 
   return (
-    <Flex data-component-name="DataTableHead">
+    <Box data-component-name="DataTableHead" display="flex">
       {columns.map(({ disableSort, key, max, min, size, title }) => {
         let icon: ReactNode;
 
@@ -58,10 +58,11 @@ function DataTableHead(props: Props): JSX.Element | null {
         }
 
         return (
-          <Flex
+          <Box
             key={key}
-            alignItems="center"
-            flex={1}
+            align="center"
+            direction="row"
+            flex="grow"
             maxWidth={max || size}
             mb="md"
             minWidth={min || size}
@@ -79,10 +80,10 @@ function DataTableHead(props: Props): JSX.Element | null {
                 {icon}
               </Title>
             )}
-          </Flex>
+          </Box>
         );
       })}
-    </Flex>
+    </Box>
   );
 }
 

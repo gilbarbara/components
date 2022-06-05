@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { Text } from 'src';
+import { Box, Text } from 'src';
 import { Paragraph, ParagraphProps } from 'src/Paragraph';
 
 import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
@@ -21,7 +21,7 @@ export default {
 } as ComponentMeta<typeof Paragraph>;
 
 export const Basic = (props: ParagraphProps) => (
-  <>
+  <Box>
     <Paragraph {...props}>
       Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
       live the blind texts. Separated they live in Bookmarksgrove right at the coast of the
@@ -42,5 +42,5 @@ export const Basic = (props: ParagraphProps) => (
     <Paragraph {...props}>
       <Text>This paragraph uses a {`<Text />`} component so the size props has no effect...</Text>
     </Paragraph>
-  </>
+  </Box>
 );

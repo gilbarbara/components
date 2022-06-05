@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { FlexCenter, Grid, Paragraph } from 'src';
+import { BoxCenter, Grid, Paragraph } from 'src';
 import { Avatar, AvatarProps } from 'src/Avatar';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
@@ -25,10 +25,10 @@ export const Basic = (props: AvatarProps) => <Avatar {...props} />;
 export const Sizes = (props: AvatarProps) => (
   <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
     {(['xs', 'sm', 'md', 'lg', 'xl', 'jumbo'] as const).map(d => (
-      <FlexCenter key={d}>
+      <BoxCenter key={d}>
         <Avatar key={d} {...props} size={d} />
         <Paragraph mt="xs">{d}</Paragraph>
-      </FlexCenter>
+      </BoxCenter>
     ))}
   </Grid>
 );

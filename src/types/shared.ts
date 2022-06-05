@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
-import { Sizes, TextSizes } from './common';
+import { Direction, Sizes, TextSizes } from './common';
 import { Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
 
 export interface WithAlign {
@@ -73,12 +73,57 @@ export interface WithElementSpacing {
   suffixSpacing?: boolean | StringOrNumber;
 }
 
-export interface WithFilled {
+export interface WithFlexBox {
   /**
-   * Display as an inline element
-   * @default false
+   * How to align the contents along the cross axis.<br />
+   * Any 'align-items' valid CSS value is accepted.
    */
-  filled?: boolean;
+  align?: StandardLonghandProperties['alignItems'];
+  /**
+   * How to align the contents when there is extra space in the cross axis.
+   */
+  alignContent?: StandardLonghandProperties['alignContent'];
+  /**
+   * How children are placed in the flex container.<br />
+   * Any 'flex-direction' valid CSS value is accepted.
+   */
+  direction?: StandardLonghandProperties['flexDirection'];
+  /**
+   * How to align the contents along the main axis.<br />
+   * Any 'justify-content' valid CSS value is accepted.
+   */
+  justify?: StandardLonghandProperties['justifyContent'];
+  /**
+   * Sets whether flex items are forced onto one line or can wrap onto multiple lines.
+   */
+  wrap?: StandardLonghandProperties['flexWrap'];
+}
+
+export interface WithFlexItem {
+  /**
+   * How to align along the cross axis when contained in a Box.
+   */
+  alignSelf?: StandardLonghandProperties['alignSelf'];
+  /**
+   * A fixed or relative size along its container's main axis.
+   */
+  basis?: StandardLonghandProperties['flexBasis'];
+  /**
+   * Set width and/or height to fill the container.
+   */
+  fill?: boolean | Direction;
+  /**
+   * Set flex-grow and/or flex-shrink.
+   */
+  flex?: boolean | 'grow' | 'shrink' | { grow: number; shrink: number };
+  /**
+   * Sets how the item is justified inside its container along the appropriate axis.
+   */
+  justifySelf?: StandardLonghandProperties['justifySelf'];
+  /**
+   * Sets the order to lay out an item in a flex container.
+   */
+  order?: StandardLonghandProperties['order'];
 }
 
 export interface WithFormElements {

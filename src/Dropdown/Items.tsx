@@ -6,7 +6,7 @@ import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 
 import Add from './Add';
 
-import { FlexInline } from '../Flex';
+import { BoxInline } from '../Box';
 import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { DropdownItem, DropdownProps, Theme, WithColor } from '../types';
@@ -256,15 +256,15 @@ function DropdownOptions<T extends DropdownItem = DropdownItem>({
           variant={variant}
         >
           {prefix && (
-            <FlexInline data-component-name="DropdownOptionPrefix" mr="xxs">
+            <BoxInline data-component-name="DropdownOptionPrefix" mr="xxs">
               {prefix}
-            </FlexInline>
+            </BoxInline>
           )}
-          <FlexInline flex={1}>{label || value}</FlexInline>
+          <BoxInline flex="grow">{label || value}</BoxInline>
           {suffix && (
-            <FlexInline data-component-name="DropdownOptionSuffix" ml="xxs">
+            <BoxInline data-component-name="DropdownOptionSuffix" ml="xxs">
               {suffix}
-            </FlexInline>
+            </BoxInline>
           )}
         </Item>
       );

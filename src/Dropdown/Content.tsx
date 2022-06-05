@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SelectRenderer } from '@gilbarbara/react-dropdown';
 
-import { FlexInline } from '../Flex';
+import { BoxInline } from '../Box';
 import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
@@ -94,15 +94,15 @@ function DropdownContent<T extends DropdownItem>(props: SelectRenderer<T>) {
           return (
             <Item key={value} color={color} data-component-name="ContentItem" multi={multi}>
               {!!prefix && (
-                <FlexInline data-component-name="ContentItemPrefix" mr="xxs">
+                <BoxInline data-component-name="ContentItemPrefix" mr="xxs">
                   {prefix}
-                </FlexInline>
+                </BoxInline>
               )}
               <span>{label || value}</span>
               {!!suffix && (
-                <FlexInline data-component-name="ContentItemSuffix" ml="xxs">
+                <BoxInline data-component-name="ContentItemSuffix" ml="xxs">
                   {suffix}
-                </FlexInline>
+                </BoxInline>
               )}
               {multi && (
                 <ItemClose onClick={handleClickRemove(item)}>

@@ -2,7 +2,7 @@ import { Meta } from '@storybook/addon-docs';
 import { capitalize } from '@gilbarbara/helpers';
 import { compare, hex2hsl, textColor } from 'colorizr';
 
-import { Box, FlexCenter, Grid, H2, H3, Icon, Jumbo, Paragraph, Spacer, Text } from 'src';
+import { Box, BoxCenter, Grid, H2, H3, Icon, Jumbo, Paragraph, Spacer, Text } from 'src';
 import { colors, grayScale, variants as themeVariants } from 'src/modules/theme';
 import { shades, variants } from '../__helpers__';
 
@@ -24,25 +24,25 @@ import { shades, variants } from '../__helpers__';
     return (
       <Box key={key}>
         <H3 light>{capitalize(key)} ({value})</H3>
-        <FlexCenter padding="xl" variant={key}>
+        <BoxCenter padding="xl" variant={key}>
           <Paragraph>
             The quick brown fox jumps over the lazy dog
           </Paragraph>
           <Paragraph size="large">
             The quick brown fox jumps over the lazy dog
           </Paragraph>
-        </FlexCenter>
+        </BoxCenter>
         <Grid
           templateColumns="repeat(5, 1fr)"
           style={{ border: '1px solid #000' }}
         >
-          <FlexCenter
+          <BoxCenter
             padding="xs"
             style={{ borderRight: "1px solid #000" }}
           >
             Contrast: {contrast}
-          </FlexCenter>
-          <FlexCenter
+          </BoxCenter>
+          <BoxCenter
             padding="xs"
             style={{ borderRight: "1px solid #000" }}
           >
@@ -54,8 +54,8 @@ import { shades, variants } from '../__helpers__';
                 size={24}
               />
             </Spacer>
-          </FlexCenter>
-          <FlexCenter
+          </BoxCenter>
+          <BoxCenter
             padding="xs"
             style={{ borderRight: "1px solid #000" }}
           >
@@ -67,8 +67,8 @@ import { shades, variants } from '../__helpers__';
                 size={24}
               />
             </Spacer>
-          </FlexCenter>
-          <FlexCenter
+          </BoxCenter>
+          <BoxCenter
             padding="xs"
             style={{ borderRight: "1px solid #000" }}
           >
@@ -80,8 +80,8 @@ import { shades, variants } from '../__helpers__';
                 size={24}
               />
             </Spacer>
-          </FlexCenter>
-          <FlexCenter
+          </BoxCenter>
+          <BoxCenter
             padding="xs"
           >
             <Spacer gap="xxs">
@@ -92,7 +92,7 @@ import { shades, variants } from '../__helpers__';
                 size={24}
               />
             </Spacer>
-          </FlexCenter>
+          </BoxCenter>
         </Grid>
       </Box>
     );
@@ -112,7 +112,7 @@ import { shades, variants } from '../__helpers__';
               const { h, s, l } = hex2hsl(value.bg);
               return (
                 <Box key={shade}>
-                  <FlexCenter
+                  <BoxCenter
                     height={100}
                     radius="round"
                     shade={shade}
@@ -120,7 +120,7 @@ import { shades, variants } from '../__helpers__';
                     width={100}
                   >
                     {shade}
-                  </FlexCenter>
+                  </BoxCenter>
                   <Paragraph align="center" size="small" mt="xs">HEX: {value.bg}</Paragraph>
                   <Paragraph align="center" size="small">
                     HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
@@ -148,7 +148,7 @@ import { shades, variants } from '../__helpers__';
               const { h, s, l } = hex2hsl(bg);
               return (
                 <Box key={variant}>
-                  <FlexCenter
+                  <BoxCenter
                     height={100}
                     radius="round"
                     shade={shade}
@@ -156,7 +156,7 @@ import { shades, variants } from '../__helpers__';
                     width={100}
                   >
                     {variant}
-                  </FlexCenter>
+                  </BoxCenter>
                   <Paragraph align="center" size="small" mt="xs">HEX: {bg}</Paragraph>
                   <Paragraph align="center" size="small">
                     HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
@@ -175,14 +175,14 @@ import { shades, variants } from '../__helpers__';
   {Object.entries(grayScale)
     .map(([key, color]) => (
       <Box key={color}>
-        <FlexCenter
+        <BoxCenter
           height={100}
           radius="round"
           width={100}
           style={{ backgroundColor: color }}
         >
           <Text style={{ color: textColor(color) }}>{color}</Text>
-        </FlexCenter>
+        </BoxCenter>
         <Paragraph align="center" size="small" mt="xs">{key}</Paragraph>
       </Box>
     ))}

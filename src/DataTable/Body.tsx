@@ -2,8 +2,7 @@ import { memo } from 'react';
 
 import type { DataTableProps } from './index';
 
-import { Box } from '../Box';
-import { Flex, FlexCenter } from '../Flex';
+import { Box, BoxCenter } from '../Box';
 import { Loader } from '../Loader';
 import { Paragraph } from '../Paragraph';
 
@@ -18,12 +17,13 @@ function DataTableBody(props: Props): JSX.Element {
   return (
     <Box data-component-name="DataTableBody" minHeight={55} position="relative">
       {data.map((item, index) => (
-        <Flex
+        <Box
           key={item.id || index}
-          flexWrap={isResponsive ? 'wrap' : 'nowrap'}
+          display="flex"
           mb="sm"
           radius="sm"
           variant="white"
+          wrap={isResponsive ? 'wrap' : 'nowrap'}
         >
           {columns.map(
             ({ hideOnResponsive, isAction, key, max, min, size, title }, columnIndex) => {
@@ -34,16 +34,17 @@ function DataTableBody(props: Props): JSX.Element {
               }
 
               return (
-                <Flex
+                <Box
                   key={key}
-                  alignItems="flex-start"
-                  flex={1}
-                  flexDirection="column"
-                  flexWrap="wrap"
+                  align="flex-start"
+                  direction="column"
+                  display="flex"
+                  flex="grow"
                   maxWidth={maxWidth}
                   minWidth={min || size}
                   order={isAction ? 1 : columnIndex + 1}
                   padding="md"
+                  wrap="wrap"
                 >
                   {isResponsive && !hideOnResponsive && (
                     <Paragraph
@@ -56,14 +57,14 @@ function DataTableBody(props: Props): JSX.Element {
                     </Paragraph>
                   )}
                   {item[key]}
-                </Flex>
+                </Box>
               );
             },
           )}
-        </Flex>
+        </Box>
       ))}
       {loading && (
-        <FlexCenter
+        <BoxCenter
           bottom={0}
           left={0}
           opacity={isInitialLoad ? 1 : 0.5}
@@ -75,7 +76,7 @@ function DataTableBody(props: Props): JSX.Element {
           zIndex={10}
         >
           <Loader />
-        </FlexCenter>
+        </BoxCenter>
       )}
     </Box>
   );
