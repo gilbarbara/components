@@ -2,8 +2,8 @@ import { ChangeEvent, forwardRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { BoxInline } from './Box';
 import { Button } from './Button';
-import { FlexInline } from './Flex';
 import { getTheme, px } from './modules/helpers';
 import { baseStyles, getStyledOptions } from './modules/system';
 import { Truncate } from './Truncate';
@@ -70,12 +70,12 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
 
   return (
     <StyledFileInput data-component-name="InputFile" {...rest}>
-      <FlexInline overflow="hidden" position="relative">
+      <BoxInline overflow="hidden" position="relative">
         <Button invert={invert} size={large ? 'lg' : 'md'}>
           {placeholder}
         </Button>
         <StyledInput ref={ref} id={name} name={name} onChange={handleChange} type="file" />
-      </FlexInline>
+      </BoxInline>
       <Truncate maxWidth="100%">{value || localValue}</Truncate>
     </StyledFileInput>
   );

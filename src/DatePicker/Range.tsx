@@ -8,8 +8,8 @@ import { DatePicker } from './Base';
 import { DatePickerBaseProps, DatePickerRangeClickHandler } from './types';
 import { getNumberOfMonths } from './utils';
 
+import { BoxCenter } from '../Box';
 import { Button } from '../Button';
-import { Flex } from '../Flex';
 import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions } from '../modules/system';
 import { Paragraph } from '../Paragraph';
@@ -111,9 +111,9 @@ export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
 
   return (
     <StyledDatePicker data-component-name="DatePickerRange" variant={rest.variant}>
-      <Flex alignItems="center" justifyContent="center" mb="md" minHeight={30}>
+      <BoxCenter mb="md" minHeight={30}>
         {content}
-      </Flex>
+      </BoxCenter>
       <DatePicker
         modifiers={modifiers}
         numberOfMonths={getNumberOfMonths(rest)}

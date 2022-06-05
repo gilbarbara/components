@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs';
-import { Flex, FlexCenter, Icon, Jumbo, Paragraph, Text } from 'src';
+import { Box, BoxCenter, Icon, Jumbo, Paragraph, Text } from 'src';
 
 import { icons } from 'src/modules/options';
 
@@ -10,10 +10,10 @@ import { icons } from 'src/modules/options';
 <Paragraph mb="xl" size="large">Based on the <a href="https://css.gg/" target="_blank">CSS icons</a> package
 </Paragraph>
 
-<Flex flexWrap="wrap">{icons.map(d => (
-  <FlexCenter key={d} padding="xs" minHeight={160} minWidth={160}>
+<Box display="flex" direction="row" wrap="wrap">{icons.map(d => (
+  <BoxCenter key={d} padding="xs" minHeight={160} minWidth={160}>
     <Icon name={d} size={64} /><br />
     <Text size="small">{d}</Text>
-  </FlexCenter>
-))}</Flex>
+  </BoxCenter>
+))}</Box>
 

@@ -1,10 +1,12 @@
-import { ComponentMeta } from '@storybook/react';
-import { H3, Paragraph } from 'src';
-import { Box, BoxProps } from 'src/Box';
+import { H3, Icon, Paragraph, Text } from 'src';
+import { Box, BoxCenter, BoxInline, BoxProps } from 'src/Box';
 
 import {
   colorProps,
   disableControl,
+  flexContent,
+  flexItemProps,
+  flexItems,
   hideProps,
   layoutProps,
   positioningProps,
@@ -15,22 +17,26 @@ export default {
   title: 'Components/Box',
   component: Box,
   args: {
-    padding: 'xl',
-    radius: 'lg',
-    shade: 'mid',
+    ...Box.defaultProps,
     shadow: 'high',
-    variant: 'primary',
-    width: 400,
   },
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexItemProps(),
     ...layoutProps(),
     ...positioningProps(),
     ...spacingProps(),
-    children: disableControl(),
+    alignContent: { control: 'select', options: ['', ...flexContent] },
+    align: { control: 'select', options: ['', ...flexItems] },
+    direction: {
+      control: 'select',
+      options: ['row', 'row-reverse', 'column', 'column-reverse'],
+    },
+    justify: { control: 'select', options: ['', ...flexContent] },
+    wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
   },
-} as ComponentMeta<typeof Box>;
+};
 
 export const Basic = (props: BoxProps) => (
   <Box {...props}>
@@ -41,3 +47,63 @@ export const Basic = (props: BoxProps) => (
     <Paragraph>You can use me to create more complex components, like the NonIdealState.</Paragraph>
   </Box>
 );
+Basic.args = {
+  padding: 'xl',
+  radius: 'lg',
+  shade: 'mid',
+  variant: 'primary',
+  width: '400',
+};
+
+export const Composed = (props: BoxProps) => (
+  <Box {...props} minHeight={300} padding="xl" width={480}>
+    <BoxCenter padding="lg" variant="blue" width="40%">
+      Box 40%
+    </BoxCenter>
+    <BoxCenter padding="lg" variant="green" width="60%">
+      Box 60%
+    </BoxCenter>
+    <BoxCenter padding="lg" variant="orange" width="30%">
+      Box 30%
+    </BoxCenter>
+    <BoxCenter padding="lg" variant="yellow" width="70%">
+      Box 70%
+    </BoxCenter>
+  </Box>
+);
+
+Composed.args = {
+  align: 'center',
+  direction: 'row',
+  display: 'flex',
+  wrap: 'wrap',
+  justify: 'flex-start',
+  shadow: 'high',
+  variant: 'white',
+};
+
+Composed.argTypes = {
+  children: disableControl(),
+};
+
+export const Center = (props: BoxProps) => <BoxCenter minHeight={400} width={400} {...props} />;
+
+Center.args = {
+  ...BoxCenter.defaultProps,
+  children: 'This is a centered Box',
+};
+Center.argTypes = {
+  children: { control: 'text' },
+};
+
+export const Inline = (props: BoxProps) => (
+  <BoxInline width={400} {...props}>
+    <Icon mr="xs" name="stories" />
+    <Text>This is a inline Box</Text>
+  </BoxInline>
+);
+
+Inline.args = BoxInline.defaultProps;
+Inline.argTypes = {
+  children: disableControl(),
+};

@@ -49,6 +49,17 @@ export function colorProps() {
   };
 }
 
+export function flexItemProps() {
+  return {
+    alignSelf: { table: { category: 'Flex Item' } },
+    basis: { table: { category: 'Flex Item' } },
+    fill: { table: { category: 'Flex Item' } },
+    flex: { table: { category: 'Flex Item' } },
+    justifySelf: { table: { category: 'Flex Item' } },
+    order: { table: { category: 'Flex Item' } },
+  };
+}
+
 export function layoutProps(options?: { display: string }) {
   const { display = 'block' } = options || {};
 

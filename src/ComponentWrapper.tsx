@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { FlexCenter } from './Flex';
+import { BoxCenter } from './Box';
 import { Icon } from './Icon';
 import { px } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
@@ -45,17 +45,17 @@ export const ComponentWrapper = forwardRef<HTMLDivElement, ComponentWrapperProps
 
   if (prefix) {
     content.prefix = (
-      <FlexCenter bottom={0} height={height} left={0} position="absolute" top={0} width={width}>
+      <BoxCenter bottom={0} height={height} left={0} position="absolute" top={0} width={width}>
         {is.string(prefix) ? <Icon name={prefix} size={20} /> : prefix}
-      </FlexCenter>
+      </BoxCenter>
     );
   }
 
   if (suffix) {
     content.suffix = (
-      <FlexCenter bottom={0} height={height} position="absolute" right={0} top={0} width={width}>
+      <BoxCenter bottom={0} height={height} position="absolute" right={0} top={0} width={width}>
         {is.string(suffix) ? <Icon name={suffix} size={20} /> : suffix}
-      </FlexCenter>
+      </BoxCenter>
     );
   }
 

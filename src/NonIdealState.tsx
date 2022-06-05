@@ -20,7 +20,7 @@ export interface NonIdealStateKnownProps extends StyledProps, WithChildrenOption
   type?: 'error' | 'offline';
 }
 
-export type NonIdealStateProps = ComponentProps<HTMLDivElement, NonIdealStateKnownProps>;
+export type NonIdealStateProps = ComponentProps<HTMLDivElement, NonIdealStateKnownProps, 'wrap'>;
 
 export const StyledNonIdealState = styled(
   Box,

@@ -5,8 +5,8 @@ import { pick } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 
+import { Box } from './Box';
 import { ButtonBase } from './ButtonBase';
-import { Flex } from './Flex';
 import { H3 } from './Headings';
 import { Icon } from './Icon';
 import { getTheme, px } from './modules/helpers';
@@ -90,9 +90,10 @@ export function Modal(props: ModalProps) {
 
   if (!hideCloseButton || title) {
     header = (
-      <Flex
-        alignItems="center"
-        justifyContent={title ? 'space-between' : 'flex-end'}
+      <Box
+        align="center"
+        display="flex"
+        justify={title ? 'space-between' : 'flex-end'}
         mb="xs"
         pt="md"
         px="md"
@@ -103,7 +104,7 @@ export function Modal(props: ModalProps) {
             <Icon color={darkMode ? white : black} name="close" size={26} />
           </ButtonBase>
         )}
-      </Flex>
+      </Box>
     );
   }
 

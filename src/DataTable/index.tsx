@@ -7,8 +7,7 @@ import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 import Body from './Body';
 import Head from './Head';
 
-import { Box } from '../Box';
-import { FlexCenter } from '../Flex';
+import { Box, BoxCenter } from '../Box';
 import { scrollTo } from '../modules/animations';
 import { recursiveElementFind } from '../modules/helpers';
 import { Pagination } from '../Pagination';
@@ -60,7 +59,7 @@ export interface DataTableKnownProps extends StyledProps, WithLayout, WithMargin
   width?: StringOrNumber;
 }
 
-export type DataTableProps = ComponentProps<HTMLDivElement, DataTableKnownProps, 'data'>;
+export type DataTableProps = ComponentProps<HTMLDivElement, DataTableKnownProps, 'data' | 'wrap'>;
 
 function sortData(data: any[], sortBy: string, sortDirection: string) {
   return [...data].sort((a, b) => {
@@ -177,9 +176,9 @@ export function DataTable(props: DataTableProps): JSX.Element {
   const body = useMemo(() => {
     if (isEmpty) {
       return (
-        <FlexCenter padding="md" radius="sm" variant="white" width="100%">
+        <BoxCenter padding="md" radius="sm" variant="white" width="100%">
           {noResults || <Text bold>Nothing found</Text>}
-        </FlexCenter>
+        </BoxCenter>
       );
     }
 

@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { Flex, Icon, Paragraph } from 'src';
+import { Icon, Paragraph, Spacer } from 'src';
 import { Tab, Tabs, TabsProps } from 'src/Tabs';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
@@ -26,10 +26,10 @@ export const Basic = (props: TabsProps) => (
     <Tab
       id="one"
       title={
-        <Flex alignItems="center">
-          <Icon mr="xs" name="add" />
+        <Spacer gap="xs">
+          <Icon name="add" />
           One
-        </Flex>
+        </Spacer>
       }
     >
       <Paragraph>

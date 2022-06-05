@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
+import { Box } from './Box';
 import { ComponentWrapper } from './ComponentWrapper';
-import { Flex } from './Flex';
 import { Icon } from './Icon';
 import { Label } from './Label';
 import { getTheme } from './modules/helpers';
@@ -58,7 +58,7 @@ export const StyledFormGroup = styled(
     ${layoutStyles(props)};
     ${marginStyles(props)};
 
-    [data-component-name='Flex'] {
+    [data-component-name='Box'] {
       > * {
         margin-bottom: 0;
         margin-top: 0;
@@ -172,7 +172,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   );
 
   if (inline) {
-    content.main = <Flex>{content.main}</Flex>;
+    content.main = <Box display="flex">{content.main}</Box>;
   }
 
   return (

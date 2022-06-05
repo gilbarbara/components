@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { Button, Flex, Icon, Paragraph, Spacer } from 'src';
+import { Box, Button, Icon, Paragraph, Spacer } from 'src';
 import { Tooltip, TooltipProps } from 'src/Tooltip';
 
 import { colorProps, hideNoControlsWarning, hideProps } from '../__helpers__';
@@ -32,7 +32,7 @@ export const Basic = (props: TooltipProps) => (
 
 export const Positions = () => (
   <Spacer direction="vertical" gap="xxl" grow minWidth={480}>
-    <Flex justifyContent="space-between">
+    <Box display="flex" justify="space-between">
       <Tooltip
         align="start"
         content="Its me. I am a leftist with large text. Get it?"
@@ -53,8 +53,8 @@ export const Positions = () => (
       <Tooltip align="end" content="Emoji? No problem 😎" position="top">
         <Button size="sm">Top End</Button>
       </Tooltip>
-    </Flex>
-    <Flex justifyContent="space-between">
+    </Box>
+    <Box display="flex" justify="space-between">
       <Tooltip
         content={
           <Paragraph>
@@ -75,8 +75,8 @@ export const Positions = () => (
       >
         <Button size="sm">Right</Button>
       </Tooltip>
-    </Flex>
-    <Flex justifyContent="space-between">
+    </Box>
+    <Box display="flex" justify="space-between">
       <Tooltip align="start" content="I am in the bottom left" position="bottom">
         <Button size="sm">Bottom Start</Button>
       </Tooltip>
@@ -88,7 +88,7 @@ export const Positions = () => (
       <Tooltip align="end" content="Look, its me at the bottom right" position="bottom">
         <Button size="sm">Bottom End</Button>
       </Tooltip>
-    </Flex>
+    </Box>
   </Spacer>
 );
 

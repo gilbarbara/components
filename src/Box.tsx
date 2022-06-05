@@ -5,6 +5,8 @@ import styled from '@emotion/styled';
 import {
   backgroundStyles,
   baseStyles,
+  flexBoxStyles,
+  flexItemStyles,
   getStyledOptions,
   layoutStyles,
   marginStyles,
@@ -18,6 +20,8 @@ import {
   StyledProps,
   WithChildrenOptional,
   WithColor,
+  WithFlexBox,
+  WithFlexItem,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -30,6 +34,8 @@ export interface BoxKnownProps
   extends StyledProps,
     WithChildrenOptional,
     WithColor,
+    WithFlexBox,
+    WithFlexItem,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -41,11 +47,13 @@ export type BoxProps = ComponentProps<HTMLDivElement, BoxKnownProps>;
 
 export const StyledBox = styled(
   'div',
-  getStyledOptions(),
+  getStyledOptions('direction', 'fill'),
 )<BoxProps>(props => {
   return css`
     ${baseStyles(props)};
     ${backgroundStyles(props)};
+    ${flexBoxStyles(props)};
+    ${flexItemStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};
@@ -55,6 +63,9 @@ export const StyledBox = styled(
   `;
 });
 
+/**
+ * A container that lays out its contents using "block" (default) or "flex" (with the display prop).
+ */
 export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
   const { children, ...rest } = props;
 
@@ -64,3 +75,24 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
     </StyledBox>
   );
 });
+
+export const BoxCenter = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
+  <StyledBox ref={ref} data-component-name="BoxCenter" {...props} />
+));
+
+BoxCenter.defaultProps = {
+  align: 'center',
+  direction: 'column',
+  display: 'flex',
+  justify: 'center',
+};
+
+export const BoxInline = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
+  <StyledBox ref={ref} as="span" data-component-name="BoxInline" {...props} />
+));
+
+BoxInline.defaultProps = {
+  align: 'center',
+  display: 'inline-flex',
+  direction: 'row',
+};

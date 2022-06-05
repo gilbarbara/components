@@ -3,7 +3,7 @@ import { Search } from 'src/Search';
 
 import { SearchItem, SearchProps } from 'src/types';
 
-import { Avatar, Box, Flex, Paragraph } from '../../src';
+import { Avatar, Box, Paragraph } from '../../src';
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 
 export default {
@@ -34,7 +34,7 @@ const users = [
 
 const items: SearchItem[] = users.map(d => ({
   label: (
-    <Flex>
+    <Box display="flex">
       <Avatar image={d.image} name={d.name} />
       <Box ml="xs">
         <Paragraph bold>{d.name}</Paragraph>
@@ -44,7 +44,7 @@ const items: SearchItem[] = users.map(d => ({
           </Paragraph>
         )}
       </Box>
-    </Flex>
+    </Box>
   ),
   value: d.name,
 }));
