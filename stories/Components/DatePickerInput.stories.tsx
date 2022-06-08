@@ -6,15 +6,12 @@ import { disableControl, hideProps } from '../__helpers__';
 export default {
   title: 'Components/DatePicker',
   component: DatePickerInput,
-  args: {
-    borderless: false,
-    large: false,
-    locale: 'en',
-    showRange: false,
-  },
+  args: DatePickerInput.defaultProps,
   argTypes: {
     ...hideProps(),
-    onClick: disableControl(),
+    currentMonthLabel: { control: 'text' },
+    onSelect: disableControl(),
+    width: { control: 'text' },
   },
   parameters: {
     minHeight: 350,

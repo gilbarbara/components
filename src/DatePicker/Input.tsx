@@ -3,10 +3,11 @@ import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { formatDateLocale, omit } from '@gilbarbara/helpers';
+import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { DatePicker } from './Base';
 import { DatePickerRange } from './Range';
+import { DatePicker } from './Single';
 import {
   DatePickerBaseProps,
   DatePickerClickHandler,
@@ -14,7 +15,7 @@ import {
   DatePickerRangeParameter,
   DatePickerSingleClickHandler,
 } from './types';
-import { getNumberOfMonths } from './utils';
+import { defaultProps, getNumberOfMonths } from './utils';
 
 import { Box } from '../Box';
 import { ClickOutside } from '../ClickOutside';
@@ -28,11 +29,16 @@ export interface DatePickerInputProps
   extends WithBorderless,
     WithOpen,
     DatePickerBaseProps<DatePickerClickHandler> {
+  /**
+   * @default en-US
+   */
+  formatLocale?: string;
   large?: boolean;
   placeholder?: string;
   separator?: string;
   showRange?: boolean;
-  width?: number;
+  showRangeApply?: boolean;
+  width?: StringOrNumber;
 }
 
 interface State {
@@ -94,7 +100,7 @@ const StyledButton = styled(
     display: flex;
     justify-content: space-between;
     min-height: ${large ? inputHeight.large : inputHeight.normal};
-    min-width: ${px(width || 240)};
+    min-width: 240px;
     width: ${width ? px(width) : 'auto'};
     ${styles};
   `;
@@ -113,17 +119,18 @@ const StyledContent = styled(
     border-radius: ${radius.xxs};
     box-shadow: ${shadow.mid};
     display: flex;
+    flex-direction: column;
     justify-content: center;
     margin-top: ${spacing.xs};
+    min-width: ${px(wide ? 600 : 300)};
     overflow-y: auto;
-    padding: ${spacing.xs};
+    padding: ${spacing.md};
     position: absolute;
     right: 0;
     top: 100%;
     transform-origin: top;
     transform: scaleY(0);
     transition: transform 0.3s;
-    width: ${px(wide ? 640 : 320)};
     z-index: 100;
 
     ${isActive &&
@@ -137,11 +144,12 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
   const {
     borderless,
     large,
-    onClick,
+    onSelect,
     open,
     placeholder,
     separator = ' — ',
     showRange = false,
+    showRangeApply,
     width,
     ...rest
   } = props;
@@ -159,25 +167,41 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
     setState(s => ({ isActive: !s.isActive }));
   };
 
-  const handleClickDay = (isoDate: DatePickerRangeParameter | string) => {
+  const handleApply = (isoDate: DatePickerRangeParameter) => {
+    if (onSelect) {
+      onSelect(isoDate);
+    }
+
+    toggle();
+  };
+
+  const handleSelect = (isoDate: DatePickerRangeParameter | string) => {
     setState({
       isFilled: is.array(isoDate) ? isoDate.some(Boolean) : !!isoDate,
       selected: isoDate,
     });
 
-    if (onClick) {
-      onClick(isoDate);
+    if (onSelect && !showRangeApply) {
+      onSelect(isoDate);
     }
 
-    if ((is.array(isoDate) && isoDate.every(Boolean)) || (!is.array(isoDate) && isoDate)) {
+    if (
+      !showRangeApply &&
+      ((is.array(isoDate) && isoDate.every(Boolean)) || (!is.array(isoDate) && isoDate))
+    ) {
       toggle();
     }
   };
 
   const picker = showRange ? (
-    <DatePickerRange {...rest} onClick={handleClickDay as DatePickerRangeClickHandler} />
+    <DatePickerRange
+      {...rest}
+      onApply={handleApply}
+      onSelect={handleSelect as DatePickerRangeClickHandler}
+      showApply={showRangeApply}
+    />
   ) : (
-    <DatePicker {...rest} onClick={handleClickDay as DatePickerSingleClickHandler} />
+    <DatePicker {...rest} onSelect={handleSelect as DatePickerSingleClickHandler} />
   );
 
   let title: ReactNode = showRange ? 'Select a date range' : 'Select a date';
@@ -202,7 +226,7 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
     title = formatDateLocale(selected);
   }
 
-  const numberOfMonths = getNumberOfMonths(rest);
+  const numberOfMonths = getNumberOfMonths(rest.fromDate, rest.toDate);
 
   return (
     <Box data-component-name="DatePickerInput" position="relative">
@@ -210,7 +234,7 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
         data-component-name="DatePickerInputButton"
         isFilled={isFilled}
         onClick={toggle}
-        {...omit(props, 'onClick')}
+        {...omit(props, 'onSelect')}
       >
         {title}
         <Icon name="calendar" />
@@ -229,8 +253,13 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
 }
 
 DatePickerInput.defaultProps = {
+  ...defaultProps,
   borderless: false,
+  formatLocale: 'en-US',
   large: false,
+  separator: ' — ',
+  showRangeApply: false,
   showRange: false,
   variant: 'primary',
+  width: 'auto',
 };
