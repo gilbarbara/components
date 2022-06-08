@@ -1,15 +1,19 @@
 import { ComponentMeta } from '@storybook/react';
 import { DatePickerRange, DatePickerRangerProps } from 'src/DatePicker/Range';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { disableControl, hideProps, hideTable, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/DatePicker',
   component: DatePickerRange,
+  args: DatePickerRange.defaultProps,
   argTypes: {
     ...hideProps(),
-    onClick: disableControl(),
-    open: { control: 'boolean' },
+    ...spacingProps(),
+    currentMonthLabel: { control: 'text' },
+    onSelect: disableControl(),
+    onApply: hideTable(),
+    showApply: hideTable(),
   },
 } as ComponentMeta<typeof DatePickerRange>;
 

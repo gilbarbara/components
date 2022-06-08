@@ -1,130 +1,178 @@
-import { DateUtils, DayModifiers, RangeModifier } from 'react-day-picker';
-import { useSetState } from 'react-use';
-import { css, useTheme } from '@emotion/react';
+import { ReactNode, useState } from 'react';
+import {
+  DateRange,
+  DayPicker,
+  DayPickerRangeProps,
+  SelectRangeEventHandler,
+} from 'react-day-picker';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { formatDateLocale } from '@gilbarbara/helpers';
+import { formatDateLocale, omit } from '@gilbarbara/helpers';
+import { AnyObject } from '@gilbarbara/types';
 
-import { DatePicker } from './Base';
-import { DatePickerBaseProps, DatePickerRangeClickHandler } from './types';
-import { getNumberOfMonths } from './utils';
+import {
+  DatePickerLayoutProps,
+  DatePickerProps,
+  DatePickerRangeClickHandler,
+  DatePickerRangeParameter,
+} from './types';
+import { defaultProps, getFooter, getNumberOfMonths, getRange, getStyles } from './utils';
 
 import { BoxCenter } from '../Box';
 import { Button } from '../Button';
-import { getColorVariant, getTheme } from '../modules/helpers';
+import { getTheme } from '../modules/helpers';
 import { getStyledOptions } from '../modules/system';
 import { Paragraph } from '../Paragraph';
 import { Spacer } from '../Spacer';
 import { Text } from '../Text';
 
-export type DatePickerRangerProps = DatePickerBaseProps<DatePickerRangeClickHandler>;
+export interface DatePickerRangerProps
+  extends DatePickerProps<DatePickerRangeClickHandler, 'range'>,
+    DatePickerLayoutProps {
+  /**
+   * @default en-US
+   */
+  formatLocale?: string;
+  /**
+   * For internal use with DatePickerInput
+   * @private
+   * */
+  onApply?: (selected: DatePickerRangeParameter) => void;
+  /**
+   * For internal use with DatePickerInput
+   * @private
+   * */
+  showApply?: boolean;
+}
 
 const StyledDatePicker = styled(
   'div',
-  getStyledOptions(),
-)<Pick<DatePickerRangerProps, 'variant'>>(props => {
-  const { variant = 'primary' } = props;
-  const { variants } = getTheme(props);
-
-  const light = getColorVariant(variant, 'lightest', variants).bg;
-  const dark = getColorVariant(variant, 'dark', variants).bg;
-
-  return css`
-    .DayPicker-Day {
-      border-radius: 0 !important;
-
-      &--selected:not(&--start):not(&--end):not(&--outside) {
-        background-color: ${light};
-        color: ${dark};
-      }
-
-      &--start {
-        border-top-left-radius: 50% !important;
-        border-bottom-left-radius: 50% !important;
-      }
-
-      &--end {
-        border-top-right-radius: 50% !important;
-        border-bottom-right-radius: 50% !important;
-      }
-    }
-  `;
+  getStyledOptions('onApply'),
+)<DatePickerRangerProps>(props => {
+  return getStyles(props);
 });
 
 export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
-  const { onClick, ...rest } = props;
-  const [{ from, to }, setState] = useSetState<RangeModifier>({ from: undefined, to: undefined });
+  const {
+    currentMonthLabel,
+    formatLocale,
+    fromDate,
+    onApply,
+    onSelect,
+    showApply,
+    toDate,
+    variant,
+    ...rest
+  } = props;
+  const [month, setMonth] = useState<Date | undefined>(undefined);
+  const [range, setRange] = useState<DateRange | undefined>(undefined);
   const { radius, spacing } = getTheme({ theme: useTheme() });
 
-  const handleClickDay = (day: Date, modifiers: DayModifiers) => {
-    if (modifiers.disabled || modifiers.outside) {
-      return;
+  const handleClickSelect: SelectRangeEventHandler = selectedRange => {
+    setRange(selectedRange);
+
+    if (onSelect) {
+      onSelect([
+        selectedRange?.from?.toISOString() || undefined,
+        selectedRange?.to?.toISOString() || undefined,
+      ]);
     }
+  };
 
-    let range = DateUtils.addDayToRange(day, { from, to });
-
-    if (to) {
-      range = DateUtils.addDayToRange(day, { from: undefined, to: undefined });
-    }
-
-    setState(range);
-
-    if (onClick) {
-      onClick([range.from?.toISOString() || undefined, range.to?.toISOString() || undefined]);
+  const handleClickApply = () => {
+    if (onApply) {
+      onApply([range?.from?.toISOString() || undefined, range?.to?.toISOString() || undefined]);
     }
   };
 
   const handleClickReset = () => {
-    setState({ from: undefined, to: undefined });
+    setRange({ from: undefined, to: undefined });
 
-    if (onClick) {
-      onClick([undefined, undefined]);
+    if (onSelect) {
+      onSelect([undefined, undefined]);
     }
   };
 
-  const modifiers = { start: from || undefined, end: to || undefined };
-  let content = <Paragraph>Select the initial date</Paragraph>;
+  const { from, to } = range || {};
 
-  if (from && to) {
-    content = (
-      <Spacer distribution="center">
-        <Text>
-          From {formatDateLocale(from.toISOString())} to {formatDateLocale(to.toISOString())}
-        </Text>
-        <Button
-          invert
-          onClick={handleClickReset}
-          size="sm"
-          style={{
-            borderRadius: radius.xs,
-            minHeight: 24,
-            padding: `${spacing.xxs} ${spacing.xs}`,
-          }}
-          variant={rest.variant}
-        >
+  const modifiers = { from: from || false, to: to || false };
+  const content: AnyObject<ReactNode> = {
+    header: <Paragraph>Select the initial date</Paragraph>,
+  };
+
+  if (showApply) {
+    content.footer = getFooter(
+      setMonth,
+      currentMonthLabel,
+      <Spacer>
+        <Button disabled={!from} invert onClick={handleClickReset} size="sm" variant={variant}>
           Reset
         </Button>
+        <Button disabled={!to} onClick={handleClickApply} size="sm" variant={variant}>
+          Apply
+        </Button>
+      </Spacer>,
+    );
+  } else {
+    content.footer = getFooter(setMonth, currentMonthLabel);
+    content.reset = (
+      <Button
+        invert
+        onClick={handleClickReset}
+        size="sm"
+        style={{
+          borderRadius: radius.xs,
+          minHeight: 24,
+          padding: `${spacing.xxs} ${spacing.xs}`,
+        }}
+        variant={variant}
+      >
+        Reset
+      </Button>
+    );
+  }
+
+  if (from && to) {
+    content.header = (
+      <Spacer distribution="center">
+        <Text>
+          From {formatDateLocale(from.toISOString(), { locale: formatLocale })} to{' '}
+          {formatDateLocale(to.toISOString(), { locale: formatLocale })}
+        </Text>
+        {content.reset}
       </Spacer>
     );
   } else if (from) {
-    content = <Paragraph>Select the final date</Paragraph>;
+    content.header = <Paragraph>Select the final date</Paragraph>;
   }
 
   return (
-    <StyledDatePicker data-component-name="DatePickerRange" variant={rest.variant}>
+    <StyledDatePicker
+      data-component-name="DatePickerRange"
+      variant={variant}
+      {...omit(props, 'hidden', 'onSelect')}
+    >
       <BoxCenter mb="md" minHeight={30}>
-        {content}
+        {content.header}
       </BoxCenter>
-      <DatePicker
+      <DayPicker
+        mode="range"
         modifiers={modifiers}
-        numberOfMonths={getNumberOfMonths(rest)}
-        onDayClick={handleClickDay}
-        selectedDays={[from || undefined, { from, to }]}
+        month={month}
+        numberOfMonths={getNumberOfMonths(fromDate, toDate)}
+        onMonthChange={setMonth}
+        onSelect={handleClickSelect}
+        selected={range}
+        {...getRange<DayPickerRangeProps>(fromDate, toDate)}
         {...rest}
       />
+      {content.footer}
     </StyledDatePicker>
   );
 }
 
 DatePickerRange.defaultProps = {
-  variant: 'primary',
+  ...defaultProps,
+  formatLocale: 'en-US',
+  showApply: false,
 };
