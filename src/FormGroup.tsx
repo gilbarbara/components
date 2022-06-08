@@ -11,6 +11,7 @@ import { Label } from './Label';
 import { getTheme } from './modules/helpers';
 import {
   baseStyles,
+  borderStyles,
   getStyledOptions,
   isDarkMode,
   layoutStyles,
@@ -19,6 +20,7 @@ import {
 import {
   ComponentProps,
   StyledProps,
+  WithBorder,
   WithChildren,
   WithInline,
   WithLayout,
@@ -27,6 +29,7 @@ import {
 
 export interface FormGroupKnownProps
   extends StyledProps,
+    WithBorder,
     WithChildren,
     WithInline,
     WithLayout,
@@ -55,6 +58,7 @@ export const StyledFormGroup = styled(
     ${baseStyles(props)};
     margin-bottom: ${spacing.md};
     width: 100%;
+    ${borderStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
 

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
-import { Direction, Sizes, TextSizes } from './common';
+import { BorderItem, BorderItemSide, Direction, Sizes, TextSizes } from './common';
 import { Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
 
 export interface WithAlign {
@@ -19,6 +19,10 @@ export interface WithBlock {
    * @default false
    */
   block?: boolean;
+}
+
+export interface WithBorder {
+  border?: boolean | BorderItemSide | BorderItem[];
 }
 
 export interface WithBorderless {

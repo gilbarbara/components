@@ -4,19 +4,31 @@ import styled from '@emotion/styled';
 
 import { Icon } from './Icon';
 import { getTheme } from './modules/helpers';
-import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from './modules/system';
+import {
+  baseStyles,
+  borderStyles,
+  getStyledOptions,
+  isDarkMode,
+  marginStyles,
+} from './modules/system';
 import { Text } from './Text';
 import {
   ComponentProps,
   Icons,
   StyledProps,
   Theme,
+  WithBorder,
   WithChildren,
   WithInvert,
   WithMargin,
 } from './types';
 
-export interface AlertKnownProps extends StyledProps, WithChildren, WithMargin, WithInvert {
+export interface AlertKnownProps
+  extends StyledProps,
+    WithBorder,
+    WithChildren,
+    WithMargin,
+    WithInvert {
   icon?: Icons;
   /** @default success */
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
@@ -77,6 +89,7 @@ export const StyledAlert = styled(
     position: relative;
     max-width: 380px;
     width: 100%;
+    ${borderStyles(props)};
     ${marginStyles(props)};
 
     [data-component-name='Text'] {

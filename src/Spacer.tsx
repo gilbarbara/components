@@ -6,6 +6,7 @@ import { StandardShorthandProperties } from 'csstype';
 import { getTheme } from './modules/helpers';
 import {
   baseStyles,
+  borderStyles,
   flexItemStyles,
   getStyledOptions,
   layoutStyles,
@@ -16,6 +17,7 @@ import {
   Direction,
   Spacing,
   StyledProps,
+  WithBorder,
   WithChildren,
   WithFlexItem,
   WithLayout,
@@ -24,6 +26,7 @@ import {
 
 export interface SpacerKnownProps
   extends StyledProps,
+    WithBorder,
     WithChildren,
     WithFlexItem,
     WithLayout,
@@ -71,6 +74,7 @@ export const StyledSpacer = styled(
     flex-direction: ${direction === 'vertical' ? 'column' : 'row'};
     flex-wrap: ${wrap ? 'wrap' : 'nowrap'};
     ${distributionStyles};
+    ${borderStyles(props)};
     ${flexItemStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
