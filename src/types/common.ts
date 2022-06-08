@@ -1,9 +1,29 @@
 import { CSSProperties, JSXElementConstructor } from 'react';
 import { SerializedStyles } from '@emotion/react';
+import { StandardShorthandProperties } from 'csstype';
 
-import { Breakpoints } from './theme';
+import { Breakpoints, Shades, Variants } from './theme';
 
 import { icons, inputTypes, sizes, textSizes } from '../modules/options';
+
+export type BorderItemSide =
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'top'
+  | 'start'
+  | 'end'
+  | 'all'
+  | Direction;
+
+export interface BorderItem {
+  color?: string;
+  shade?: Shades;
+  side: BorderItemSide;
+  size?: StandardShorthandProperties['borderWidth'] | number;
+  style?: StandardShorthandProperties['borderStyle'];
+  variant?: Variants;
+}
 
 export type ButtonTypes = 'button' | 'submit' | 'reset';
 

@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import {
   backgroundStyles,
   baseStyles,
+  borderStyles,
   flexBoxStyles,
   flexItemStyles,
   getStyledOptions,
@@ -18,6 +19,7 @@ import {
 import {
   ComponentProps,
   StyledProps,
+  WithBorder,
   WithChildrenOptional,
   WithColor,
   WithFlexBox,
@@ -32,6 +34,7 @@ import {
 
 export interface BoxKnownProps
   extends StyledProps,
+    WithBorder,
     WithChildrenOptional,
     WithColor,
     WithFlexBox,
@@ -52,6 +55,7 @@ export const StyledBox = styled(
   return css`
     ${baseStyles(props)};
     ${backgroundStyles(props)};
+    ${borderStyles(props)};
     ${flexBoxStyles(props)};
     ${flexItemStyles(props)};
     ${layoutStyles(props)};

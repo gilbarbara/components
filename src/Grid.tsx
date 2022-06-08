@@ -8,6 +8,7 @@ import { px } from './modules/helpers';
 import {
   backgroundStyles,
   baseStyles,
+  borderStyles,
   displayStyles,
   flexItemStyles,
   getStyledOptions,
@@ -19,6 +20,7 @@ import {
   shadowStyles,
 } from './modules/system';
 import {
+  WithBorder,
   WithChildren,
   WithColor,
   WithFlexItem,
@@ -31,7 +33,8 @@ import {
 } from './types';
 
 export interface GridProps
-  extends WithChildren,
+  extends WithBorder,
+    WithChildren,
     WithColor,
     WithFlexItem,
     WithLayout,
@@ -105,6 +108,7 @@ export const StyledGrid = styled(
 
     ${baseStyles(props)};
     ${backgroundStyles(props)};
+    ${borderStyles(props)};
     ${displayStyles(props)};
     ${flexItemStyles(props)};
     ${layoutStyles(props)};

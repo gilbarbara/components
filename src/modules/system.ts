@@ -1,5 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid';
 import { css, CSSObject } from '@emotion/react';
+import { capitalize } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 import { rgba } from 'polished';
@@ -7,7 +8,9 @@ import { rgba } from 'polished';
 import { getColorVariant, getTheme, px } from './helpers';
 
 import {
+  BorderItemSide,
   WithAlign,
+  WithBorder,
   WithBorderless,
   WithColor,
   WithDisplay,
@@ -98,6 +101,73 @@ export function baseStyles<T extends WithColor & WithTheme>(props: T): CSSObject
     boxSizing: 'border-box',
     fontFamily,
   };
+}
+
+export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObject {
+  const { border } = props;
+  const { variants } = getTheme(props);
+
+  let { bg: borderColor } = getColorVariant('gray', 'lighter', variants);
+  const defaultBorder = `1px solid ${borderColor}`;
+  let output: CSSObject = {};
+
+  const getBorderValue = (side: BorderItemSide, value: string = defaultBorder) => {
+    const item: CSSObject = {};
+
+    if (['bottom', 'left', 'right', 'top'].includes(side)) {
+      item[`border${capitalize(side)}`] = value;
+    } else if (['start', 'end'].includes(side)) {
+      item[`borderInline${capitalize(side)}`] = value;
+    } else if (side === 'horizontal') {
+      item.borderBottom = value;
+      item.borderTop = value;
+    } else if (side === 'vertical') {
+      item.borderLeft = value;
+      item.borderRight = value;
+    } else {
+      item.border = value;
+    }
+
+    return item;
+  };
+
+  if (is.nullOrUndefined(border)) {
+    return output;
+  }
+
+  if (is.boolean(border)) {
+    output.border = border ? defaultBorder : undefined;
+  } else if (is.string(border)) {
+    output = getBorderValue(border);
+  } else if (is.array(border)) {
+    const items: CSSObject[] = [];
+
+    border.forEach(item => {
+      const {
+        color,
+        shade = 'lighter',
+        side,
+        size = '1px',
+        style = 'solid',
+        variant = 'gray',
+      } = item;
+
+      ({ bg: borderColor } = getColorVariant(variant, shade, variants));
+      const value = `${px(size)} ${style} ${color || borderColor}`;
+
+      items.push(getBorderValue(side, value));
+    });
+
+    output = items.reduce<CSSObject>((acc, item) => {
+      Object.entries(item).forEach(([key, value]) => {
+        acc[key] = value;
+      });
+
+      return acc;
+    }, {});
+  }
+
+  return output;
 }
 
 export const buttonStyles: CSSObject = {
