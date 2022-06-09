@@ -6,6 +6,7 @@ import is from 'is-lite';
 import { getColorVariant, getTheme } from './modules/helpers';
 import {
   baseStyles,
+  borderStyles,
   flexItemStyles,
   getStyledOptions,
   layoutStyles,
@@ -21,7 +22,7 @@ import {
   StyledProps,
   Theme,
   Variants,
-  WithBorderless,
+  WithBorder,
   WithColor,
   WithFlexItem,
   WithLayout,
@@ -32,7 +33,7 @@ import {
 
 export interface ListKnownProps
   extends StyledProps,
-    WithBorderless,
+    WithBorder,
     WithColor,
     WithFlexItem,
     WithLayout,
@@ -68,13 +69,16 @@ export const StyledList = styled(
   'ul',
   getStyledOptions(),
 )<ListProps>(props => {
-  const { borderless, direction, shade = 'lighter', variant = 'gray' } = props;
-  const { variants } = getTheme(props);
-  const { bg: borderColor } = getColorVariant(variant, shade, variants);
+  const { border, direction, shade, variant } = props;
+
+  const borderProps = { ...props };
+
+  if (border === true && (shade !== 'lighter' || variant !== 'gray')) {
+    borderProps.border = [{ side: 'all', shade, variant }];
+  }
 
   return css`
     ${baseStyles(props)};
-    border: ${borderless ? undefined : `1px solid ${borderColor}`};
     display: flex;
     flex-direction: ${direction === 'horizontal' ? 'row' : 'column'};
     list-style-position: inside;
@@ -82,6 +86,7 @@ export const StyledList = styled(
     margin: 0;
     overflow: hidden;
     padding: 0;
+    ${borderStyles(borderProps)};
     ${flexItemStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
@@ -94,14 +99,14 @@ export const StyledListItem = styled(
   'li',
   getStyledOptions(),
 )<
-  Required<Pick<ListProps, 'borderless' | 'direction' | 'shade' | 'size' | 'split' | 'variant'>> & {
+  Required<Pick<ListProps, 'border' | 'direction' | 'shade' | 'size' | 'split' | 'variant'>> & {
     itemShade?: Shades;
     itemVariant?: Variants;
   }
 >(props => {
   const { black, spacing, variants, white } = getTheme(props);
   const {
-    borderless,
+    border,
     direction,
     itemShade,
     itemVariant,
@@ -130,7 +135,7 @@ export const StyledListItem = styled(
     ${direction === 'vertical' &&
     css`
       border-bottom: ${split ? `1px solid ${borderColor}` : undefined};
-      padding: ${spacerMain} ${borderless ? 0 : spacerCross};
+      padding: ${spacerMain} ${border ? spacerCross : 0};
 
       &:last-of-type {
         border-bottom: none;
@@ -140,7 +145,7 @@ export const StyledListItem = styled(
     ${direction === 'horizontal' &&
     css`
       border-right: ${split ? `1px solid ${borderColor}` : undefined};
-      padding: ${borderless ? 0 : spacerMain} ${spacerCross};
+      padding: ${border ? spacerMain : 0} ${spacerCross};
 
       &:last-of-type {
         border-right: none;
@@ -155,7 +160,7 @@ function isListItem(item: unknown): item is ListItem {
 
 export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
   const {
-    borderless = false,
+    border = true,
     direction = 'vertical',
     items,
     shade = 'lighter',
@@ -187,7 +192,7 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
         return (
           <StyledListItem
             key={key}
-            borderless={borderless}
+            border={border}
             direction={direction}
             itemShade={itemShade}
             itemVariant={itemVariant}
@@ -205,7 +210,7 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
 });
 
 List.defaultProps = {
-  borderless: false,
+  border: true,
   direction: 'vertical',
   radius: 'xs',
   shade: 'lighter',

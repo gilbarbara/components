@@ -61,7 +61,7 @@ Horizontal.argTypes = {
 
 export const WithComponents = (props: ListProps) => <List {...props} />;
 WithComponents.args = {
-  borderless: true,
+  border: false,
   items: [
     <Box>
       <H3 mb="xs">Brown Fox</H3>
