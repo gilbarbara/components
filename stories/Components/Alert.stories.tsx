@@ -1,19 +1,18 @@
 import { ComponentMeta } from '@storybook/react';
 import { Alert, AlertProps } from 'src/Alert';
 
-import { disableControl, hideProps, marginProps } from '../__helpers__';
+import { disableControl, hideProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Alert',
   component: Alert,
   args: {
+    ...Alert.defaultProps,
     children: 'Registration completed!',
-    invert: false,
-    type: 'success',
   },
   argTypes: {
     ...hideProps(),
-    ...marginProps(),
+    ...spacingProps(),
     children: { control: 'text' },
     type: { control: 'select' },
   },
