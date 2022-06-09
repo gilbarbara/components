@@ -10,6 +10,8 @@ import {
   getStyledOptions,
   isDarkMode,
   marginStyles,
+  paddingStyles,
+  radiusStyles,
 } from './modules/system';
 import { Text } from './Text';
 import {
@@ -21,14 +23,18 @@ import {
   WithChildren,
   WithInvert,
   WithMargin,
+  WithPadding,
+  WithRadius,
 } from './types';
 
 export interface AlertKnownProps
   extends StyledProps,
     WithBorder,
     WithChildren,
+    WithInvert,
     WithMargin,
-    WithInvert {
+    WithPadding,
+    WithRadius {
   icon?: Icons;
   /** @default success */
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
@@ -68,7 +74,7 @@ export const StyledAlert = styled(
   getStyledOptions('type'),
 )<AlertProps>(props => {
   const { invert } = props;
-  const { grayDark, lightColor, radius, spacing, white } = getTheme(props);
+  const { grayDark, lightColor, spacing, white } = getTheme(props);
   let backgroundColor = isDarkMode(props) ? lightColor : grayDark;
   let color = isDarkMode(props) ? grayDark : white;
 
@@ -81,16 +87,16 @@ export const StyledAlert = styled(
     ${baseStyles(props)};
     align-items: center;
     background-color: ${backgroundColor};
-    border-radius: ${radius.xs};
     color: ${color};
     display: flex;
     overflow: hidden;
-    padding: ${spacing.md};
     position: relative;
     max-width: 380px;
     width: 100%;
     ${borderStyles(props)};
     ${marginStyles(props)};
+    ${paddingStyles(props)};
+    ${radiusStyles(props)};
 
     [data-component-name='Text'] {
       margin-left: ${spacing.xs};
@@ -113,5 +119,8 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
 });
 
 Alert.defaultProps = {
+  invert: false,
+  padding: 'md',
+  radius: 'xs',
   type: 'success',
 };
