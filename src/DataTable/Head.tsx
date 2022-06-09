@@ -10,7 +10,7 @@ import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions } from '../modules/system';
 
-interface Props extends Pick<DataTableProps, 'columns'> {
+interface Props extends Pick<DataTableProps, 'clean' | 'columns'> {
   isDisabled: boolean;
   isResponsive: boolean;
   onClick: MouseEventHandler;
@@ -32,7 +32,7 @@ const Title = styled(
 });
 
 function DataTableHead(props: Props): JSX.Element | null {
-  const { columns, isDisabled, isResponsive, onClick, sortBy, sortDirection } = props;
+  const { clean, columns, isDisabled, isResponsive, onClick, sortBy, sortDirection } = props;
   const { colors } = getTheme({ theme: useTheme() });
 
   if (isResponsive) {
@@ -45,14 +45,14 @@ function DataTableHead(props: Props): JSX.Element | null {
         let icon: ReactNode;
 
         if (!disableSort) {
-          icon = <Icon ml="xxs" name="sort" />;
+          icon = <Icon ml="xxs" name="sort" size={20} />;
 
           if (key === sortBy) {
             icon =
               sortDirection === 'asc' ? (
-                <Icon color={colors.primary} ml="xxs" name="sort-asc" />
+                <Icon color={colors.primary} ml="xxs" name="sort-asc" size={20} />
               ) : (
-                <Icon color={colors.primary} ml="xxs" name="sort-desc" />
+                <Icon color={colors.primary} ml="xxs" name="sort-desc" size={20} />
               );
           }
         }
@@ -61,12 +61,14 @@ function DataTableHead(props: Props): JSX.Element | null {
           <Box
             key={key}
             align="center"
+            data-component-name="DataTableHeadColumn"
             direction="row"
             flex="grow"
             maxWidth={max || size}
-            mb="md"
+            mb="sm"
             minWidth={min || size}
-            px="md"
+            pr={clean ? 'sm' : undefined}
+            px={!clean ? 'md' : undefined}
           >
             {title && (
               <Title
