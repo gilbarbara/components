@@ -1,19 +1,17 @@
 import { ComponentMeta } from '@storybook/react';
 import { NonIdealState, NonIdealStateProps } from 'src/NonIdealState';
 
-import { flexItemProps, hideProps, marginProps } from '../__helpers__';
+import { flexItemProps, hideProps, layoutProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/NonIdealState',
   component: NonIdealState,
-  args: {
-    small: false,
-    type: 'error',
-  },
+  args: NonIdealState.defaultProps,
   argTypes: {
     ...hideProps(),
     ...flexItemProps(),
-    ...marginProps(),
+    ...layoutProps(),
+    ...spacingProps(),
     children: { control: 'text' },
     description: { control: 'text' },
     title: { control: 'text' },
