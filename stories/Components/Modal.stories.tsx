@@ -2,24 +2,19 @@ import { useState } from 'react';
 import { Button, FormGroup, Input, Spacer, Textarea } from 'src';
 import { Modal, ModalProps } from 'src/Modal';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { disableControl, hideProps, paddingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Modal',
   component: Modal,
   args: {
-    closeOnClickOverlay: true,
-    closeOnEsc: true,
-    hideCloseButton: false,
-    hideOverlay: false,
-    maxHeight: '80vh',
+    ...Modal.defaultProps,
     title: 'Add User',
-    variant: 'primary',
     width: 600,
-    zIndex: 1000,
   },
   argTypes: {
     ...hideProps(),
+    ...paddingProps(),
     children: disableControl(),
     isActive: disableControl(),
     maxWidth: { control: 'text' },

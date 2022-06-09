@@ -1,7 +1,6 @@
 import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { pick } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 
@@ -10,20 +9,24 @@ import { ButtonBase } from './ButtonBase';
 import { H3 } from './Headings';
 import { Icon } from './Icon';
 import { getTheme, px } from './modules/helpers';
-import { getStyledOptions, isDarkMode } from './modules/system';
+import {
+  borderStyles,
+  getStyledOptions,
+  isDarkMode,
+  paddingStyles,
+  radiusStyles,
+  shadowStyles,
+} from './modules/system';
 import { Portal, PortalProps } from './Portal';
+import { StyledProps, WithBorder, WithPadding, WithRadius, WithShadow } from './types';
 
 export interface ModalProps
-  extends Pick<
-    PortalProps,
-    | 'children'
-    | 'closeOnClickOverlay'
-    | 'closeOnEsc'
-    | 'hideOverlay'
-    | 'onClose'
-    | 'onOpen'
-    | 'zIndex'
-  > {
+  extends StyledProps,
+    WithBorder,
+    WithPadding,
+    WithRadius,
+    WithShadow,
+    Omit<PortalProps, 'isActive' | 'showCloseButton'> {
   hideCloseButton?: boolean;
   isActive: boolean;
   maxHeight?: StandardLonghandProperties['maxHeight'] | number;
@@ -36,19 +39,20 @@ export interface ModalProps
 const StyledModal = styled(
   'div',
   getStyledOptions(),
-)<Omit<ModalProps, 'content' | 'onClose' | 'onOpen' | 'title'>>(props => {
+)<Omit<ModalProps, 'content' | 'isActive' | 'onClose' | 'onOpen' | 'title'>>(props => {
   const { maxWidth, width } = props;
-  const { black, darkColor, radius, shadow, spacing, white } = getTheme(props);
+  const { black, darkColor, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   return css`
     background-color: ${darkMode ? darkColor : white};
-    border-radius: ${radius.lg};
-    box-shadow: ${shadow.high};
     color: ${darkMode ? white : black};
     max-width: ${maxWidth ? px(maxWidth) : 'none'};
-    padding: ${spacing.md};
     width: ${width ? px(width) : 'auto'};
+    ${borderStyles(props)};
+    ${paddingStyles(props)};
+    ${radiusStyles(props)};
+    ${shadowStyles(props)};
   `;
 });
 
@@ -57,26 +61,28 @@ const StyledModalContent = styled(
   getStyledOptions(),
 )<Required<Pick<ModalProps, 'maxHeight'>>>(props => {
   const { maxHeight } = props;
-  const { spacing } = getTheme(props);
 
   return css`
     max-height: ${px(maxHeight)};
     overflow-y: auto;
-    padding: ${spacing.md};
   `;
 });
 
 export function Modal(props: ModalProps) {
   const {
     children,
+    closeOnClickOverlay,
     closeOnEsc,
     hideCloseButton,
+    hideOverlay,
     isActive,
     maxHeight = '80vh',
     onClose,
+    onOpen,
     style,
     title,
-    ...portalProps
+    zIndex,
+    ...rest
   } = props;
   const { black, darkMode, white } = getTheme({ theme: useTheme() });
 
@@ -90,14 +96,7 @@ export function Modal(props: ModalProps) {
 
   if (!hideCloseButton || title) {
     header = (
-      <Box
-        align="center"
-        display="flex"
-        justify={title ? 'space-between' : 'flex-end'}
-        mb="xs"
-        pt="md"
-        px="md"
-      >
+      <Box align="center" display="flex" justify={title ? 'space-between' : 'flex-end'} mb="md">
         {title && <H3 style={{ marginBottom: 0 }}>{title}</H3>}
         {!hideCloseButton && (
           <ButtonBase onClick={onClose}>
@@ -110,16 +109,15 @@ export function Modal(props: ModalProps) {
 
   return (
     <Portal
+      closeOnClickOverlay={closeOnClickOverlay}
       closeOnEsc={closeOnEsc}
+      hideOverlay={hideOverlay}
       isActive={isActive}
       onClose={handlePortalClose}
-      {...portalProps}
+      onOpen={onOpen}
+      zIndex={zIndex}
     >
-      <StyledModal
-        data-component-name="Modal"
-        {...pick(props, 'isActive', 'maxWidth', 'width')}
-        style={style}
-      >
+      <StyledModal data-component-name="Modal" {...rest} style={style}>
         {header}
         <StyledModalContent maxHeight={maxHeight}>{children}</StyledModalContent>
       </StyledModal>
@@ -128,6 +126,13 @@ export function Modal(props: ModalProps) {
 }
 
 Modal.defaultProps = {
+  closeOnClickOverlay: true,
   closeOnEsc: true,
+  hideCloseButton: false,
+  hideOverlay: false,
   maxHeight: '80vh',
+  padding: 'lg',
+  radius: 'lg',
+  shadow: 'high',
+  zIndex: 1000,
 };
