@@ -1,20 +1,13 @@
 import { ComponentMeta } from '@storybook/react';
 import { Divider, DividerProps } from 'src/Divider';
 
+import { Box } from '../../src';
 import { colorProps, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Divider',
   component: Divider,
-  args: {
-    borderStyle: 'solid',
-    dimension: 'sm',
-    direction: 'horizontal',
-    gap: 'xs',
-    shade: 'light',
-    size: 'mid',
-    variant: 'gray',
-  },
+  args: Divider.defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),
@@ -26,15 +19,18 @@ export default {
 
 export const Basic = (props: DividerProps) => <Divider {...props} />;
 
-export const Vertical = (props: DividerProps) => <Divider {...props} />;
+export const Vertical = (props: DividerProps) => (
+  <Box height={100}>
+    <Divider {...props} />
+  </Box>
+);
 
 Vertical.args = {
   direction: 'vertical',
-  length: 100,
 };
 
 export const WithText = (props: DividerProps) => <Divider {...props} />;
 
 WithText.args = {
-  children: 'or',
+  children: 'Title',
 };
