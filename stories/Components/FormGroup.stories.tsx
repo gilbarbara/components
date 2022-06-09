@@ -2,23 +2,21 @@ import { ComponentMeta } from '@storybook/react';
 import { Input, Select, Textarea } from 'src';
 import { FormGroup, FormGroupProps } from 'src/FormGroup';
 
-import { disableControl, hideProps, layoutProps, marginProps } from '../__helpers__';
+import { disableControl, hideProps, layoutProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/FormGroup',
   component: FormGroup,
   args: {
+    ...FormGroup.defaultProps,
     assistiveText: 'Required',
-    hideAssistiveText: false,
-    inline: false,
     label: 'Name',
     maxWidth: 640,
-    required: false,
   },
   argTypes: {
     ...hideProps(),
     ...layoutProps(),
-    ...marginProps(),
+    ...spacingProps(),
     assistiveText: { control: 'text' },
     error: { control: 'text' },
     label: { control: 'text' },

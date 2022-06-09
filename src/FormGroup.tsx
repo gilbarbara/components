@@ -16,6 +16,8 @@ import {
   isDarkMode,
   layoutStyles,
   marginStyles,
+  paddingStyles,
+  radiusStyles,
 } from './modules/system';
 import {
   ComponentProps,
@@ -25,6 +27,8 @@ import {
   WithInline,
   WithLayout,
   WithMargin,
+  WithPadding,
+  WithRadius,
 } from './types';
 
 export interface FormGroupKnownProps
@@ -33,7 +37,9 @@ export interface FormGroupKnownProps
     WithChildren,
     WithInline,
     WithLayout,
-    WithMargin {
+    WithMargin,
+    WithPadding,
+    WithRadius {
   assistiveText?: ReactNode;
   error?: ReactNode;
   hideAssistiveText?: boolean;
@@ -61,6 +67,8 @@ export const StyledFormGroup = styled(
     ${borderStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
+    ${paddingStyles(props)};
+    ${radiusStyles(props)};
 
     [data-component-name='Box'] {
       > * {
@@ -188,6 +196,8 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
 
 FormGroup.defaultProps = {
   hideAssistiveText: false,
+  inline: false,
+  radius: false,
   required: false,
   skipIcon: false,
 };
