@@ -2,24 +2,23 @@ import { ComponentMeta } from '@storybook/react';
 import { Box, Button, H2, Icon, Input } from 'src';
 import { Spacer, SpacerProps } from 'src/Spacer';
 
-import { disableControl, flexItemProps, hideProps, layoutProps, marginProps } from '../__helpers__';
+import {
+  disableControl,
+  flexItemProps,
+  hideProps,
+  layoutProps,
+  spacingProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/Spacer',
   component: Spacer,
-  args: {
-    direction: 'horizontal',
-    distribution: 'start',
-    gap: 'sm',
-    grow: false,
-    verticalAlign: 'center',
-    wrap: true,
-  },
+  args: Spacer.defaultProps,
   argTypes: {
     ...hideProps(),
     ...flexItemProps(),
     ...layoutProps({ display: 'flex' }),
-    ...marginProps(),
+    ...spacingProps(),
     children: disableControl(),
   },
 } as ComponentMeta<typeof Spacer>;

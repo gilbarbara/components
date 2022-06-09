@@ -11,6 +11,9 @@ import {
   getStyledOptions,
   layoutStyles,
   marginStyles,
+  paddingStyles,
+  radiusStyles,
+  shadowStyles,
 } from './modules/system';
 import {
   ComponentProps,
@@ -22,6 +25,9 @@ import {
   WithFlexItem,
   WithLayout,
   WithMargin,
+  WithPadding,
+  WithRadius,
+  WithShadow,
 } from './types';
 
 export interface SpacerKnownProps
@@ -30,7 +36,10 @@ export interface SpacerKnownProps
     WithChildren,
     WithFlexItem,
     WithLayout,
-    WithMargin {
+    WithMargin,
+    WithPadding,
+    WithRadius,
+    WithShadow {
   /** @default horizontal */
   direction?: Direction;
   /** @default start */
@@ -78,6 +87,9 @@ export const StyledSpacer = styled(
     ${flexItemStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
+    ${paddingStyles(props)};
+    ${radiusStyles(props)};
+    ${shadowStyles(props)};
   `;
 });
 
@@ -130,6 +142,8 @@ Spacer.defaultProps = {
   distribution: 'start',
   gap: 'sm',
   grow: false,
+  radius: false,
+  shadow: false,
   verticalAlign: 'center',
   wrap: true,
 };
