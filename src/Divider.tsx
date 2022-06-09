@@ -10,6 +10,7 @@ import {
   Sizes,
   Spacing,
   StyledProps,
+  WithAlign,
   WithChildrenOptional,
   WithColor,
   WithMargin,
@@ -18,25 +19,34 @@ import {
 
 export interface DividerKnownProps
   extends StyledProps,
+    WithAlign,
     WithChildrenOptional,
     WithColor,
     WithMargin,
     WithTextSize {
+  /** @default sm */
+  borderSize?: Sizes;
   /** @default solid */
   borderStyle?: 'solid' | 'dashed' | 'dotted';
-  /** @default sm */
-  dimension?: Sizes;
   /** @default horizontal */
   direction?: Direction;
-  /** @default xs */
+  /**
+   * The distance between the text and borders
+   *
+   * @default xs
+   */
   gap?: Spacing;
-  /** @default 100% */
+  /**
+   * The width (for horizontal) or height (for vertical)
+   *
+   * @default 100%
+   */
   length?: StringOrNumber;
 }
 
 export type DividerProps = ComponentProps<HTMLDivElement, DividerKnownProps>;
 
-const dimensions = {
+const borderSizes = {
   sm: '1px',
   md: '2px',
   lg: '4px',
@@ -47,9 +57,10 @@ const StyledDivider = styled(
   getStyledOptions('type'),
 )<DividerProps>(props => {
   const {
+    align,
+    borderSize = 'sm',
     borderStyle,
     children,
-    dimension = 'sm',
     direction,
     gap = 'xs',
     length = '100%',
@@ -61,7 +72,7 @@ const StyledDivider = styled(
 
   const { bg } = getColorVariant(variant, shade, variants);
 
-  const selectedDimension = dimensions[dimension];
+  const selectedDimension = borderSizes[borderSize];
   const margin = isHorizontal
     ? css`
         margin-bottom: ${spacing.md};
@@ -73,6 +84,19 @@ const StyledDivider = styled(
       `;
 
   if (isHorizontal && children) {
+    let borderLeftWidth = '50%';
+    let borderRightWidth = '50%';
+
+    if (align === 'left') {
+      borderLeftWidth = '5%';
+      borderRightWidth = 'calc(95%)';
+    }
+
+    if (align === 'right') {
+      borderLeftWidth = 'calc(95%)';
+      borderRightWidth = '5%';
+    }
+
     return css`
       ${baseStyles(props)};
       align-items: center;
@@ -80,6 +104,7 @@ const StyledDivider = styled(
       display: flex;
       flex-direction: row;
       line-height: 1;
+      position: relative;
       ${margin};
       width: ${px(length)};
       ${marginStyles(props)};
@@ -88,17 +113,17 @@ const StyledDivider = styled(
       &:before,
       &:after {
         content: '';
-        flex: 1 1;
-        border-bottom: ${dimensions[dimension]} ${borderStyle} ${bg};
-        margin: auto;
+        border-top: ${borderSizes[borderSize]} ${borderStyle} ${bg};
       }
 
       &:before {
         margin-right: ${spacing[gap]};
+        width: ${borderLeftWidth};
       }
 
       &:after {
         margin-left: ${spacing[gap]};
+        width: ${borderRightWidth};
       }
     `;
   }
@@ -119,12 +144,13 @@ export function Divider(props: DividerProps): JSX.Element {
 }
 
 Divider.defaultProps = {
+  align: 'center',
+  borderSize: 'sm',
   borderStyle: 'solid',
-  dimension: 'sm',
   direction: 'horizontal',
   gap: 'xs',
   length: '100%',
   shade: 'light',
-  size: 'mid',
+  size: 'regular',
   variant: 'gray',
 };
