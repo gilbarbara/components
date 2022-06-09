@@ -419,11 +419,11 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
   const { margin, mb, ml, mr, mt, mx, my } = props;
   const { spacing } = getTheme(props);
 
-  if (!is.undefined(margin)) {
-    return { margin: margin ? spacing[margin] : margin };
-  }
-
   const output: CSSObject = {};
+
+  if (!is.undefined(margin)) {
+    output.margin = margin ? spacing[margin] : margin;
+  }
 
   if (!is.undefined(my)) {
     output.marginBottom = my ? spacing[my] : my;
@@ -466,11 +466,11 @@ export function paddingStyles<T extends WithPadding>(props: T): CSSObject {
   const { padding, pb, pl, pr, pt, px: paddingX, py } = props;
   const { spacing } = getTheme(props);
 
-  if (padding) {
-    return { padding: spacing[padding] };
-  }
-
   const output: CSSObject = {};
+
+  if (padding) {
+    output.padding = spacing[padding];
+  }
 
   if (py) {
     output.paddingBottom = spacing[py];
