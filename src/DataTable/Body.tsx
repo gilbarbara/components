@@ -6,12 +6,13 @@ import { Box, BoxCenter } from '../Box';
 import { Loader } from '../Loader';
 import { Paragraph } from '../Paragraph';
 
-interface Props extends Pick<DataTableProps, 'columns' | 'data' | 'defaultColumn' | 'loading'> {
+interface Props
+  extends Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'defaultColumn' | 'loading'> {
   isResponsive: boolean;
 }
 
 function DataTableBody(props: Props): JSX.Element {
-  const { columns, data, defaultColumn, isResponsive, loading } = props;
+  const { clean, columns, data, defaultColumn, isResponsive, loading } = props;
   const isInitialLoad = loading && !data.length;
 
   return (
@@ -19,6 +20,7 @@ function DataTableBody(props: Props): JSX.Element {
       {data.map((item, index) => (
         <Box
           key={item.id || index}
+          data-component-name="DataTableBodyRow"
           display="flex"
           mb="sm"
           radius="sm"
@@ -37,13 +39,16 @@ function DataTableBody(props: Props): JSX.Element {
                 <Box
                   key={key}
                   align="flex-start"
+                  border={clean ? [{ side: 'top' }] : undefined}
+                  data-component-name="DataTableBodyColumn"
                   direction="column"
                   display="flex"
                   flex="grow"
                   maxWidth={maxWidth}
                   minWidth={min || size}
                   order={isAction ? 1 : columnIndex + 1}
-                  padding="md"
+                  padding={!clean ? 'md' : undefined}
+                  pt={clean ? 'sm' : undefined}
                   wrap="wrap"
                 >
                   {isResponsive && !hideOnResponsive && (

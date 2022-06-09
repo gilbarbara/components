@@ -28,6 +28,7 @@ import { hideNoControlsWarning, hideProps, layoutProps, marginProps } from '../_
 export default {
   title: 'Components/DataTable',
   component: DataTable,
+  args: DataTable.defaultProps,
   argTypes: {
     ...hideProps(),
     ...layoutProps(),
@@ -78,7 +79,7 @@ const statuses = [
   { label: 'Users', value: 'users' },
 ];
 
-const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element => {
+const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element => {
   const { setState, status, team } = props;
   const [searchValue, setSearchValue] = useState('');
   const debounceTimeout = useRef<number>();
@@ -110,7 +111,7 @@ const TalentsHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Elemen
   };
 
   return (
-    <Spacer ref={ref} data-component-name="JobTalentsHeader" mb="lg">
+    <Spacer ref={ref} data-component-name="UserHeader" mb="lg">
       <ComponentWrapper data-flex="1" prefix={<Icon name="search" size={24} />}>
         <Input
           name="name"
@@ -203,7 +204,6 @@ export const Basic = () => {
           </>
         ),
         team: <Text size="mid">{member.team || '--'}</Text>,
-
         status: (
           <Tag
             iconAfter={member.id ? 'check' : 'sand-clock'}
@@ -240,18 +240,12 @@ export const Basic = () => {
   return (
     <Box mt="xl">
       <H1>Members</H1>
-      <TalentsHeader
-        ref={headerRef}
-        search={search}
-        setState={setState}
-        status={status}
-        team={team}
-      />
+      <UserHeader ref={headerRef} search={search} setState={setState} status={status} team={team} />
       <Box data-component-name="DataTableWrapper" minWidth={768}>
         <DataTable
           columns={columns}
           data={data}
-          defaultColumn="name"
+          defaultColumn="email"
           disableScroll
           loading={loading}
           noResults={noResults}

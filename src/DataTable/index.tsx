@@ -37,7 +37,7 @@ export interface DataTableKnownProps extends StyledProps, WithFlexItem, WithLayo
   data: AnyObject[];
   defaultColumn?: string;
   disableScroll?: boolean;
-  /** @default true */
+  /** @default false */
   loading?: boolean;
   /** @default 10 */
   maxRows?: number;
@@ -87,7 +87,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
     data,
     defaultColumn,
     disableScroll,
-    loading = true,
+    loading = false,
     maxRows = 10,
     noResults,
     onClickPage,
@@ -184,6 +184,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
 
     return (
       <Body
+        clean={clean}
         columns={columns}
         data={rows.slice(maxRows * (currentPage - 1), maxRows * currentPage)}
         defaultColumn={defaultColumn}
@@ -192,6 +193,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
       />
     );
   }, [
+    clean,
     columns,
     currentPage,
     defaultColumn,
@@ -222,6 +224,7 @@ export function DataTable(props: DataTableProps): JSX.Element {
       {...rest}
     >
       <Head
+        clean={clean}
         columns={columns}
         isDisabled={loading || isEmpty}
         isResponsive={isResponsive}
@@ -231,11 +234,13 @@ export function DataTable(props: DataTableProps): JSX.Element {
       />
       {body}
       {pagination && (
-        <Pagination
-          currentPage={paginationCurrentPage || currentPage}
-          onClick={handleClickPage}
-          totalPages={paginationTotalPages || totalPages}
-        />
+        <Box border={clean ? [{ side: 'top' }] : undefined} pt={clean ? 'sm' : undefined}>
+          <Pagination
+            currentPage={paginationCurrentPage || currentPage}
+            onClick={handleClickPage}
+            totalPages={paginationTotalPages || totalPages}
+          />
+        </Box>
       )}
     </Box>
   );
@@ -243,8 +248,11 @@ export function DataTable(props: DataTableProps): JSX.Element {
 
 DataTable.defaultProps = {
   breakpoint: 768,
+  clean: false,
   loading: false,
   maxRows: 10,
   pagination: true,
   responsive: false,
+  scrollDuration: 400,
+  scrollMargin: 16,
 };
