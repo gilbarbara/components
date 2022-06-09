@@ -2,23 +2,19 @@ import { useState } from 'react';
 import { Button } from 'src';
 import { Dialog, DialogProps } from 'src/Dialog';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { disableControl, hideProps, paddingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Dialog',
   component: Dialog,
   args: {
-    buttonOrder: 'ltr',
-    closeOnClickOverlay: false,
-    closeOnEsc: true,
+    ...Dialog.defaultProps,
     content: 'You are adding a partner',
-    hideOverlay: false,
-    textAlign: 'left',
     title: 'Do you really want to add it?',
-    width: 400,
   },
   argTypes: {
     ...hideProps(),
+    ...paddingProps(),
     isActive: disableControl(),
   },
 };
