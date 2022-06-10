@@ -55,7 +55,6 @@ export const StyledAnchor = styled(
     align-items: center;
     color: inherit;
     cursor: pointer;
-    display: inline-flex;
     font-family: inherit;
     line-height: 1;
     padding: 0;
@@ -94,8 +93,10 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =>
 });
 
 Anchor.defaultProps = {
+  bold: false,
   display: 'inline-flex',
   external: false,
   hideDecoration: false,
+  shade: 'mid',
   variant: 'primary',
 };

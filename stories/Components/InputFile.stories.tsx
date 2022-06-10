@@ -7,11 +7,8 @@ export default {
   title: 'Components/InputFile',
   component: InputFile,
   args: {
-    disabled: false,
-    invert: true,
-    large: false,
+    ...InputFile.defaultProps,
     name: 'file',
-    readOnly: false,
     width: 480,
   },
   argTypes: hideProps(),

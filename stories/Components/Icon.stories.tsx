@@ -9,10 +9,9 @@ export default {
   title: 'Components/Icon',
   component: Icon,
   args: {
+    ...Icon.defaultProps,
     name: 'check-o',
-    shade: 'mid',
     size: 24,
-    spin: false,
   },
   argTypes: {
     ...hideProps(),

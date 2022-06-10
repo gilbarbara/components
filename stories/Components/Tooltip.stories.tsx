@@ -8,13 +8,8 @@ export default {
   title: 'Components/Tooltip',
   component: Tooltip,
   args: {
-    align: 'middle',
-    bold: false,
+    ...Tooltip.defaultProps,
     content: 'The quick brown fox jumps over the lazy dog',
-    position: 'bottom',
-    shade: 'dark',
-    size: 'mid',
-    variant: 'gray',
   },
   argTypes: {
     ...hideProps(),

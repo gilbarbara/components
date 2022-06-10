@@ -7,12 +7,8 @@ export default {
   title: 'Components/ButtonBase',
   component: ButtonBase,
   args: {
-    bold: false,
-    busy: false,
+    ...ButtonBase.defaultProps,
     children: 'Button',
-    disabled: false,
-    size: 'regular',
-    type: 'button',
   },
   argTypes: {
     ...hideProps(),

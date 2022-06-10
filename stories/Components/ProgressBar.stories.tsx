@@ -7,13 +7,9 @@ export default {
   title: 'Components/ProgressBar',
   component: ProgressBar,
   args: {
-    backgroundShade: 'light',
-    large: false,
-    hideText: false,
-    shade: 'mid',
+    ...ProgressBar.defaultProps,
     step: 1,
     steps: 4,
-    variant: 'primary',
     width: 400,
   },
   argTypes: {

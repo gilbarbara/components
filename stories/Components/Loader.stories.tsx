@@ -7,9 +7,8 @@ export default {
   title: 'Components/Loader',
   component: Loader,
   args: {
-    shade: 'mid',
+    ...Loader.defaultProps,
     size: 128,
-    variant: 'primary',
   },
   argTypes: {
     ...hideProps(),

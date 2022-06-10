@@ -49,10 +49,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 Input.defaultProps = {
   borderless: false,
   disabled: false,
-  suffixSpacing: false,
   large: false,
-  readOnly: false,
   prefixSpacing: false,
+  readOnly: false,
+  suffixSpacing: false,
   type: 'text',
   width: '100%',
 };

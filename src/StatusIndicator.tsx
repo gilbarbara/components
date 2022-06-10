@@ -56,5 +56,6 @@ StatusIndicator.defaultProps = {
   centerShade: 'lighter',
   ratio: 0.7,
   size: 24,
+  shade: 'mid',
   variant: 'green',
 };

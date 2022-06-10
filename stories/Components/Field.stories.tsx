@@ -8,12 +8,11 @@ export default {
   title: 'Components/Field',
   component: Field,
   args: {
+    ...Field.defaultProps,
     assistiveText: 'Make sure to fill out your full name',
-    disabled: false,
     label: 'Name',
     name: 'name',
     placeholder: 'Your name here...',
-    type: 'text',
   },
   argTypes: hideProps(),
 } as ComponentMeta<typeof Field>;

@@ -61,11 +61,10 @@ export const StyledTag = styled(
     border-radius: ${radius.xs};
     color: ${colorProp};
     display: inline-flex;
-    line-height: 1;
     padding: ${spacing.xxs} ${spacing.sm};
     ${backgroundStyles(props)};
     ${marginStyles(props)};
-    ${textStyles(props)};
+    ${textStyles(props, 1)};
   `;
 });
 
@@ -123,6 +122,6 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
 Tag.defaultProps = {
   bold: false,
   invert: false,
-  size: 'small',
+  size: 'mid',
   variant: 'primary',
 };

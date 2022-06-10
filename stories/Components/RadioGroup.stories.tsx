@@ -8,9 +8,8 @@ export default {
   title: 'Components/RadioGroup',
   component: RadioGroup,
   args: {
+    ...RadioGroup.defaultProps,
     defaultValue: 2,
-    disabled: false,
-    inline: false,
     items: [
       { label: 'First', value: 1 },
       { label: 'Second', value: 2 },
@@ -26,7 +25,6 @@ export default {
       },
     ],
     name: 'position',
-    size: 'md',
   },
   argTypes: {
     ...hideProps(),

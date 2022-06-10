@@ -7,15 +7,9 @@ export default {
   title: 'Components/Textarea',
   component: Textarea,
   args: {
-    borderless: false,
-    disabled: false,
+    ...Textarea.defaultProps,
     name: 'description',
     placeholder: 'Tell us something about yourself...',
-    prefixSpacing: false,
-    readOnly: false,
-    rows: 3,
-    suffixSpacing: false,
-    width: '100%',
   },
   argTypes: {
     ...hideProps(),

@@ -84,6 +84,9 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>((props,
 });
 
 ButtonBase.defaultProps = {
+  bold: false,
+  busy: false,
+  disabled: false,
   size: 'regular',
   type: 'button',
 };

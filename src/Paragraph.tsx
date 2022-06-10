@@ -60,3 +60,8 @@ export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props
     </StyledParagraph>
   );
 });
+
+Paragraph.defaultProps = {
+  bold: false,
+  size: 'regular',
+};

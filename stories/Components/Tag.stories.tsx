@@ -14,12 +14,7 @@ import { colorProps, disableControl, hideProps, marginProps } from '../__helpers
 export default {
   title: 'Components/Tag',
   component: Tag,
-  args: {
-    bold: false,
-    invert: false,
-    size: 'small',
-    variant: 'primary',
-  },
+  args: Tag.defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

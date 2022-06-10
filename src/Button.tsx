@@ -146,8 +146,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 });
 
 Button.defaultProps = {
+  block: false,
+  busy: false,
+  disabled: false,
+  invert: false,
   shade: 'mid',
   size: 'md',
+  transparent: false,
   type: 'button',
   variant: 'primary',
+  wide: false,
 };

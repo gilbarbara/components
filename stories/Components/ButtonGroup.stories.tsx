@@ -7,11 +7,7 @@ import { colorProps, disableControl, hideProps } from '../__helpers__';
 export default {
   title: 'Components/ButtonGroup',
   component: ButtonGroup,
-  args: {
-    shade: 'mid',
-    size: 'md',
-    variant: 'primary',
-  },
+  args: ButtonGroup.defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

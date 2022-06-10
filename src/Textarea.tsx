@@ -36,5 +36,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
 });
 
 Textarea.defaultProps = {
+  borderless: false,
+  disabled: false,
+  prefixSpacing: false,
+  readOnly: false,
   rows: 3,
+  suffixSpacing: false,
+  width: '100%',
 };

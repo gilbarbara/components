@@ -21,17 +21,8 @@ export default {
   title: 'Components/Button',
   component: Button,
   args: {
-    block: false,
-    busy: false,
+    ...Button.defaultProps,
     children: 'Button',
-    disabled: false,
-    invert: false,
-    shade: 'mid',
-    size: 'md',
-    transparent: false,
-    type: 'button',
-    variant: 'primary',
-    wide: false,
   },
   argTypes: {
     ...hideProps(),

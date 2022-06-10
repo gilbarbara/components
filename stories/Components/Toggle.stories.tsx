@@ -13,12 +13,9 @@ export default {
   title: 'Components/Toggle',
   component: Toggle,
   args: {
-    defaultChecked: false,
-    disabled: false,
+    ...Toggle.defaultProps,
     label: 'Toggle',
     name: 'toggle',
-    variant: 'primary',
-    shade: 'mid',
   },
   argTypes: {
     ...hideProps(),

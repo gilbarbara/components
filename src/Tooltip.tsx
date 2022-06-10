@@ -314,6 +314,7 @@ export function Tooltip(props: TooltipProps): JSX.Element {
 
 Tooltip.defaultProps = {
   align: 'middle',
+  bold: false,
   position: 'bottom',
   shade: 'dark',
   size: 'mid',

@@ -178,7 +178,15 @@ export function Field<T extends FieldProps>(props: T) {
 }
 
 Field.defaultProps = {
+  debug: false,
+  disabled: false,
+  hideAssistiveText: false,
+  inline: false,
   label: '',
+  readOnly: false,
+  required: false,
+  skipValidation: false,
+  type: 'text',
 };
 
 export { FieldProps } from './types';

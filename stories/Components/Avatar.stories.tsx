@@ -8,11 +8,9 @@ export default {
   title: 'Components/Avatar',
   component: Avatar,
   args: {
+    ...Avatar.defaultProps,
     image: 'https://images.unsplash.com/photo-1564164841584-391b5c7b590c?w=800',
     name: 'Test User',
-    shade: 'mid',
-    size: 'md',
-    variant: 'primary',
   },
   argTypes: {
     ...hideProps(),
