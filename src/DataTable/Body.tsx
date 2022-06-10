@@ -23,8 +23,8 @@ function DataTableBody(props: Props): JSX.Element {
           data-component-name="DataTableBodyRow"
           display="flex"
           mb="sm"
-          radius="sm"
-          variant="white"
+          radius={clean ? undefined : 'sm'}
+          variant={clean ? undefined : 'white'}
           wrap={isResponsive ? 'wrap' : 'nowrap'}
         >
           {columns.map(

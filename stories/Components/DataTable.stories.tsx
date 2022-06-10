@@ -23,7 +23,13 @@ import { DataTable, DataTableColumn } from 'src/DataTable';
 import { DropdownItem } from 'src/types';
 
 import { members } from '../__assets__/data';
-import { hideNoControlsWarning, hideProps, layoutProps, marginProps } from '../__helpers__';
+import {
+  flexItemProps,
+  hideNoControlsWarning,
+  hideProps,
+  layoutProps,
+  marginProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/DataTable',
@@ -31,6 +37,7 @@ export default {
   args: DataTable.defaultProps,
   argTypes: {
     ...hideProps(),
+    ...flexItemProps(),
     ...layoutProps(),
     ...marginProps(),
   },
