@@ -66,7 +66,6 @@ const ThemeBlock = styled.div(
     left: 0,
     minHeight: '100vh',
     overflow: 'auto',
-    padding: 16,
     position: 'absolute',
     right: '50vw',
     top: 0,
@@ -91,7 +90,7 @@ const ThemeBlock = styled.div(
 function Preview(StoryFn: React.FC, context: any) {
   const {
     globals: { appearance, baseColor },
-    parameters: { minHeight },
+    parameters: { maxWidth = 1024, minHeight, withoutPadding },
     viewMode,
   } = context;
 
@@ -111,7 +110,15 @@ function Preview(StoryFn: React.FC, context: any) {
 
   if (viewMode === 'docs') {
     return (
-      <Box ref={docsRef} align="center" direction="column" display="flex" justify="start" minHeight={minHeight}>
+      <Box
+        ref={docsRef}
+        align="center"
+        data-component-name="StoryDocs"
+        direction="column"
+        display="flex"
+        justify="start"
+        minHeight={minHeight}
+      >
         <StoryFn />
       </Box>
     );
@@ -131,7 +138,13 @@ function Preview(StoryFn: React.FC, context: any) {
           }}
         >
           <ThemeBlock data-side="left" side="left">
-            <BoxCenter minHeight="100vh" maxWidth={1024} width="100%">
+            <BoxCenter
+              data-component-name="Story-Left"
+              maxWidth={maxWidth}
+              minHeight="100vh"
+              padding={withoutPadding ? undefined : 'md'}
+              width="100%"
+            >
               <StoryFn />
             </BoxCenter>
           </ThemeBlock>
@@ -143,7 +156,13 @@ function Preview(StoryFn: React.FC, context: any) {
           }}
         >
           <ThemeBlock data-side="right" side="right">
-            <BoxCenter minHeight="100vh" maxWidth={1024} width="100%">
+            <BoxCenter
+              data-component-name="Story-Right"
+              maxWidth={maxWidth}
+              minHeight="100vh"
+              padding={withoutPadding ? undefined : 'md'}
+              width="100%"
+            >
               <StoryFn />
             </BoxCenter>
           </ThemeBlock>
@@ -160,7 +179,9 @@ function Preview(StoryFn: React.FC, context: any) {
       }}
     >
       <BoxCenter
-        maxWidth={1024}
+        data-component-name="Story"
+        maxWidth={maxWidth}
+        padding={withoutPadding ? undefined : 'md'}
         style={{ color: isDarkMode ? '#fff' : '#101010' }}
         width="100%"
       >
