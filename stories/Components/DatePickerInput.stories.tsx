@@ -14,7 +14,7 @@ export default {
     width: { control: 'text' },
   },
   parameters: {
-    minHeight: 350,
+    minHeight: 450,
   },
 } as ComponentMeta<typeof DatePickerInput>;
 

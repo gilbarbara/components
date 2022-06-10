@@ -20,6 +20,9 @@ export default {
     noResultsLabel: { control: 'text' },
     onFocus: disableControl(),
   },
+  parameters: {
+    minHeight: 300,
+  },
 } as ComponentMeta<typeof Search>;
 
 const users = [

@@ -258,8 +258,8 @@ DatePickerInput.defaultProps = {
   formatLocale: 'en-US',
   large: false,
   separator: ' — ',
-  showRangeApply: false,
   showRange: false,
+  showRangeApply: false,
   variant: 'primary',
   width: 'auto',
 };

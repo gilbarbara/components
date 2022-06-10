@@ -11,7 +11,7 @@ Storybook: https://components.gilbarbara.dev
 ## Installation
 
 ```shell
-npm i @gilbarbara/components
+npm i @gilbarbara/components @emotion/react @emotion/styled
 ```
 
 ### Usage

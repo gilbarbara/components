@@ -26,7 +26,7 @@ export default {
 
 export const Basic = (props: ToggleProps) => <Toggle {...props} />;
 
-export const Colors = (props: ToggleProps) => {
+export const Variants = (props: ToggleProps) => {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
@@ -45,7 +45,7 @@ export const Colors = (props: ToggleProps) => {
   );
 };
 
-Colors.argTypes = {
+Variants.argTypes = {
   label: disableControl(),
   name: disableControl(),
   variant: disableControl(),
