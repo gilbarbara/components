@@ -30,7 +30,7 @@ Basic.args = {
   children: 'Tag',
 };
 
-export const Colors = (props: TagProps) => {
+export const Variants = (props: TagProps) => {
   const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
   return (
@@ -46,7 +46,7 @@ export const Colors = (props: TagProps) => {
   );
 };
 
-Colors.argTypes = {
+Variants.argTypes = {
   variant: disableControl(),
 };
 

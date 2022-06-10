@@ -50,7 +50,7 @@ Sizes.argTypes = {
   size: disableControl(),
 };
 
-export const Colors = (props: ButtonProps) => (
+export const Variants = (props: ButtonProps) => (
   <Grid gap={30} templateColumns="repeat(3, 1fr)">
     {variants.map(d => (
       <Button key={d} {...props} variant={d}>
@@ -66,7 +66,7 @@ export const Colors = (props: ButtonProps) => (
   </Grid>
 );
 
-Colors.argTypes = {
+Variants.argTypes = {
   variant: disableControl(),
 };
 

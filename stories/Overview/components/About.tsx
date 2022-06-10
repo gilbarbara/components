@@ -42,7 +42,9 @@ function OverviewAbout(): JSX.Element {
 
       <H2>Installation</H2>
 
-      <CodeBlock language="bash">npm i @gilbarbara/components</CodeBlock>
+      <CodeBlock language="bash">
+        npm i @gilbarbara/components @emotion/react @emotion/styled
+      </CodeBlock>
 
       <H2>Usage</H2>
 

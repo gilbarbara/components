@@ -97,6 +97,6 @@ export const BoxInline = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
 
 BoxInline.defaultProps = {
   align: 'center',
-  display: 'inline-flex',
   direction: 'row',
+  display: 'inline-flex',
 };
