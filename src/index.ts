@@ -29,6 +29,7 @@ export { InputFile } from './InputFile';
 export { Label } from './Label';
 export { List } from './List';
 export { Loader } from './Loader';
+export { Main } from './Main';
 export { Modal } from './Modal';
 export { Menu, MenuDivider, MenuItem } from './Menu';
 export { NonIdealState } from './NonIdealState';
