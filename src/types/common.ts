@@ -6,6 +6,8 @@ import { Breakpoints, Shades, Variants } from './theme';
 
 import { icons, inputTypes, sizes, textSizes } from '../modules/options';
 
+export type Alignment = 'left' | 'center' | 'right';
+
 export type BorderItemSide =
   | 'bottom'
   | 'left'

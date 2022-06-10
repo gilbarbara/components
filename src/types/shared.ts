@@ -2,14 +2,14 @@ import { ReactNode } from 'react';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
-import { BorderItem, BorderItemSide, Direction, Sizes, TextSizes } from './common';
+import { Alignment, BorderItem, BorderItemSide, Direction, Sizes, TextSizes } from './common';
 import { Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
 
 export interface WithAlign {
   /**
    * Text alignment
    */
-  align?: 'left' | 'center' | 'right';
+  align?: Alignment;
 }
 
 export interface WithBlock {
