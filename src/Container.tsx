@@ -5,16 +5,16 @@ import { StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme, px, responsive } from './modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles, paddingStyles } from './modules/system';
-import { WithChildren, WithMargin, WithPadding } from './types';
+import { Alignment, WithChildren, WithMargin, WithPadding } from './types';
 
 export interface ContainerProps extends WithChildren, WithMargin, WithPadding {
   /** @default left */
-  align?: 'left' | 'center' | 'right' | 'stretch';
+  align?: Alignment | 'stretch';
   fullScreen?: boolean;
   fullScreenOffset?: StringOrNumber;
   style?: CSSProperties;
   /** @default left */
-  textAlign?: 'left' | 'center' | 'right';
+  textAlign?: Alignment;
   /** @default start */
   verticalAlign?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
   verticalPadding?: boolean;

@@ -18,6 +18,7 @@ import { Paragraph } from './Paragraph';
 import { Portal, PortalProps } from './Portal';
 import { Spacer } from './Spacer';
 import {
+  Alignment,
   ColorVariants,
   StyledProps,
   WithBorder,
@@ -43,7 +44,7 @@ export interface DialogProps
   onClickConfirmation: () => void;
   style?: CSSProperties;
   /** @default left */
-  textAlign?: 'left' | 'center' | 'right';
+  textAlign?: Alignment;
   title: ReactNode;
   /** @default primary */
   variant?: ColorVariants;
