@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
@@ -6,8 +6,8 @@ import { Property } from 'csstype';
 
 import { Box } from './Box';
 import { Loader } from './Loader';
-import { getTheme, responsive } from './modules/helpers';
-import { Alignment, WithColor, WithFlexBox, WithPadding } from './types';
+import { getColorVariant, getTheme, responsive } from './modules/helpers';
+import { Alignment, ColorVariants, Shades, WithColor, WithFlexBox, WithPadding } from './types';
 
 export interface MainProps extends WithColor, Pick<WithFlexBox, 'align' | 'justify'>, WithPadding {
   /**
@@ -17,6 +17,9 @@ export interface MainProps extends WithColor, Pick<WithFlexBox, 'align' | 'justi
    */
   centered?: boolean;
   children: ReactNode;
+  color?: string;
+  colorShade?: Shades;
+  colorVariant?: ColorVariants;
   /** @default false */
   isLoading?: boolean;
   maxWidth?: StringOrNumber;
@@ -26,14 +29,21 @@ export interface MainProps extends WithColor, Pick<WithFlexBox, 'align' | 'justi
    * @default Main
    */
   name?: string;
+  style?: CSSProperties;
   textAlign?: Alignment;
 }
 
 export const StyledMain = styled(Box)<Omit<MainProps, 'name'>>(props => {
-  const { padding } = props;
-  const { spacing } = getTheme(props);
+  const { color, colorShade = 'mid', colorVariant, padding } = props;
+  const { spacing, variants } = getTheme(props);
+  let selectedColor = color;
+
+  if (!color && colorVariant) {
+    selectedColor = getColorVariant(colorVariant, colorShade, variants).bg;
+  }
 
   return css`
+    color: ${selectedColor};
     min-height: 100vh;
     width: 100%;
 
