@@ -8,10 +8,9 @@ export default {
   title: 'Components/Checkbox',
   component: Checkbox,
   args: {
-    disabled: false,
+    ...Checkbox.defaultProps,
     label: 'Skip Packaging',
     name: 'skipPackaging',
-    size: 'md',
   },
   argTypes: {
     ...hideProps(),

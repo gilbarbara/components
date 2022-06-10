@@ -31,6 +31,8 @@ export function Loader(props: LoaderProps) {
 }
 
 Loader.defaultProps = {
+  block: false,
+  shade: 'mid',
   type: 'pill',
   variant: 'primary',
 };

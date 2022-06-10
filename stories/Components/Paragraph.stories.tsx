@@ -8,9 +8,8 @@ export default {
   title: 'Components/Paragraph',
   component: Paragraph,
   args: {
+    ...Paragraph.defaultProps,
     align: 'left',
-    bold: false,
-    size: 'regular',
   },
   argTypes: {
     ...hideProps(),

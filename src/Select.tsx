@@ -115,6 +115,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
 });
 
 Select.defaultProps = {
+  borderless: false,
+  disabled: false,
   large: false,
   multiple: false,
+  prefixSpacing: false,
+  width: '100%',
 };

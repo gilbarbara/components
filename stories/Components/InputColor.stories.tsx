@@ -7,9 +7,8 @@ export default {
   title: 'Components/InputColor',
   component: InputColor,
   args: {
-    disabled: false,
+    ...InputColor.defaultProps,
     name: 'color',
-    readOnly: false,
   },
   argTypes: {
     ...hideProps(),

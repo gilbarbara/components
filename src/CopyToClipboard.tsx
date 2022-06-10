@@ -104,6 +104,7 @@ export const CopyToClipboard = forwardRef<HTMLSpanElement, CopyToClipboardProps>
 });
 
 CopyToClipboard.defaultProps = {
+  disableAnimation: false,
   icon: 'copy',
   size: 16,
   tooltipText: 'Copy',

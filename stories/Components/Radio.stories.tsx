@@ -7,6 +7,7 @@ export default {
   title: 'Components/Radio',
   component: Radio,
   args: {
+    ...Radio.defaultProps,
     label: 'Skip Packaging',
     name: 'skipPackaging',
     value: 'skipPackaging',

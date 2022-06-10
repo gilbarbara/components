@@ -8,14 +8,11 @@ export default {
   title: 'Components/Anchor',
   component: Anchor,
   args: {
-    bold: false,
+    ...Anchor.defaultProps,
     children: 'Open in GitHub',
     external: true,
-    hideDecoration: false,
     href: 'https://github.com/gilbarbara/components',
     iconBefore: 'github',
-    shade: 'mid',
-    variant: 'primary',
   },
   argTypes: {
     ...hideProps(),

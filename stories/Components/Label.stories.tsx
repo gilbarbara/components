@@ -7,7 +7,7 @@ export default {
   title: 'Components/Label',
   component: Label,
   args: {
-    inline: false,
+    ...Label.defaultProps,
     labelInfo: '*',
   },
   argTypes: {

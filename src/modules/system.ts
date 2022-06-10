@@ -554,7 +554,10 @@ export function shadowStyles<T extends WithShadow & WithTheme>(props: T): CSSObj
   return {};
 }
 
-export function textStyles<T extends WithTextOptions & WithTheme>(props: T): CSSObject {
+export function textStyles<T extends WithTextOptions & WithTheme>(
+  props: T,
+  lineHeightCustom?: StringOrNumber,
+): CSSObject {
   const { bold = false, size } = props;
   const { typography } = getTheme(props);
 
@@ -565,7 +568,7 @@ export function textStyles<T extends WithTextOptions & WithTheme>(props: T): CSS
     return {
       fontSize,
       fontWeight,
-      lineHeight,
+      lineHeight: lineHeightCustom || lineHeight,
     };
   }
 

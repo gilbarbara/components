@@ -8,7 +8,6 @@ import { Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
 export interface WithAlign {
   /**
    * Text alignment
-   * @default left
    */
   align?: 'left' | 'center' | 'right';
 }

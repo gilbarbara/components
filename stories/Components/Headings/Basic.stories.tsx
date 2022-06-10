@@ -8,9 +8,9 @@ export default {
   title: 'Components/Headings',
   component: H1,
   args: {
-    align: 'left',
+    ...H1.defaultProps,
+    align: 'center',
     children: 'The quick brown fox jumps over the lazy dog',
-    light: false,
   },
   argTypes: {
     ...hideProps(),

@@ -93,6 +93,7 @@ ProgressBar.defaultProps = {
   backgroundShade: 'light',
   hideText: false,
   large: false,
+  shade: 'mid',
   variant: 'primary',
   width: '100%',
 };

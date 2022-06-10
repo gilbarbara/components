@@ -9,8 +9,7 @@ export default {
   title: 'Components/Pagination',
   component: Pagination,
   args: {
-    disableEdgeNavigation: false,
-    edgeNavigationLimit: 3,
+    ...Pagination.defaultProps,
     totalPages: 10,
   },
   argTypes: {

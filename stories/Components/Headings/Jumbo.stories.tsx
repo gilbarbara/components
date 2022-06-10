@@ -8,10 +8,9 @@ export default {
   title: 'Components/Headings',
   component: Jumbo,
   args: {
+    ...Jumbo.defaultProps,
     align: 'center',
     children: 'The quick brown fox jumps over the lazy dog',
-    large: false,
-    light: false,
   },
   argTypes: {
     ...hideProps(),

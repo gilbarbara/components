@@ -7,10 +7,7 @@ export default {
   title: 'Components/CopyToClipboard',
   component: CopyToClipboard,
   args: {
-    disableAnimation: false,
-    hoverText: 'Copy',
-    icon: 'copy',
-    size: 16,
+    ...CopyToClipboard.defaultProps,
     text: 'test-user@example.com',
   },
   argTypes: {

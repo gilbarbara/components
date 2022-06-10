@@ -7,6 +7,7 @@ import { hideProps, marginProps } from '../__helpers__';
 export default {
   title: 'Components/ComponentWrapper',
   component: ComponentWrapper,
+  args: ComponentWrapper.defaultProps,
   argTypes: {
     ...hideProps(),
     ...marginProps(),

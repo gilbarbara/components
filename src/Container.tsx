@@ -92,6 +92,8 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>((props, ref)
 
 Container.defaultProps = {
   align: 'stretch',
+  fullScreen: false,
   textAlign: 'left',
   verticalAlign: 'start',
+  verticalPadding: false,
 };

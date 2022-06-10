@@ -7,13 +7,7 @@ import { disableControl, hideProps, spacingProps } from '../__helpers__';
 export default {
   title: 'Components/Container',
   component: Container,
-  args: {
-    align: 'stretch',
-    fullScreen: false,
-    textAlign: 'left',
-    verticalAlign: 'start',
-    verticalPadding: false,
-  },
+  args: Container.defaultProps,
   argTypes: {
     ...hideProps(),
     ...spacingProps(),

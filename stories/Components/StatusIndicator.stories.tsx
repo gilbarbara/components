@@ -7,13 +7,7 @@ import { colorProps, disableControl, hideProps, marginProps, variants } from '..
 export default {
   title: 'Components/StatusIndicator',
   component: StatusIndicator,
-  args: {
-    centerShade: 'lighter',
-    ratio: 0.7,
-    size: 24,
-    shade: 'mid',
-    variant: 'green',
-  },
+  args: StatusIndicator.defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

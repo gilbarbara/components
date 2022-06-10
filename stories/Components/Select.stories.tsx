@@ -7,15 +7,8 @@ export default {
   title: 'Components/Select',
   component: Select,
   args: {
-    borderless: false,
-    disabled: false,
-    large: false,
-    multiple: false,
+    ...Select.defaultProps,
     name: 'gender',
-    prefixSpacing: false,
-    size: 1,
-    suffixSpacing: false,
-    width: '100%',
   },
   argTypes: {
     ...hideProps(),

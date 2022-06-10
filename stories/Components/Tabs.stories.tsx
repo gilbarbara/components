@@ -8,9 +8,8 @@ export default {
   title: 'Components/Tabs',
   component: Tabs,
   args: {
+    ...Tabs.defaultProps,
     initialId: 'one',
-    shade: 'mid',
-    variant: 'primary',
   },
   argTypes: {
     ...hideProps(),

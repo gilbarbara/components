@@ -9,16 +9,9 @@ export default {
   title: 'Components/Input',
   component: Input,
   args: {
-    borderless: false,
-    disabled: false,
-    large: false,
+    ...Input.defaultProps,
     name: 'name',
     placeholder: 'Your name here...',
-    prefixSpacing: false,
-    readOnly: false,
-    suffixSpacing: false,
-    type: 'text',
-    width: '100%',
   },
   argTypes: {
     ...hideProps(),
