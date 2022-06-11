@@ -6,10 +6,14 @@ import { Property } from 'csstype';
 
 import { Box } from './Box';
 import { Loader } from './Loader';
-import { getColorVariant, getTheme, responsive } from './modules/helpers';
-import { Alignment, ColorVariants, Shades, WithColor, WithFlexBox, WithPadding } from './types';
+import { getTheme, px, responsive } from './modules/helpers';
+import { Alignment, WithColor, WithFlexBox, WithPadding, WithTextColor } from './types';
 
-export interface MainProps extends WithColor, Pick<WithFlexBox, 'align' | 'justify'>, WithPadding {
+export interface MainProps
+  extends WithColor,
+    Pick<WithFlexBox, 'align' | 'justify'>,
+    WithPadding,
+    WithTextColor {
   /**
    * Override `align` and `justify` to "center"
    *
@@ -17,12 +21,11 @@ export interface MainProps extends WithColor, Pick<WithFlexBox, 'align' | 'justi
    */
   centered?: boolean;
   children: ReactNode;
-  color?: string;
-  colorShade?: Shades;
-  colorVariant?: ColorVariants;
   /** @default false */
   isLoading?: boolean;
   maxWidth?: StringOrNumber;
+  /** @default 100vh */
+  minHeight?: StringOrNumber;
   /**
    * Set the "data-component-name" property
    *
@@ -34,17 +37,12 @@ export interface MainProps extends WithColor, Pick<WithFlexBox, 'align' | 'justi
 }
 
 export const StyledMain = styled(Box)<Omit<MainProps, 'name'>>(props => {
-  const { color, colorShade = 'mid', colorVariant, padding } = props;
-  const { spacing, variants } = getTheme(props);
-  let selectedColor = color;
-
-  if (!color && colorVariant) {
-    selectedColor = getColorVariant(colorVariant, colorShade, variants).bg;
-  }
+  const { minHeight = '100vh', padding } = props;
+  const { spacing } = getTheme(props);
 
   return css`
-    color: ${selectedColor};
-    min-height: 100vh;
+    display: grid;
+    min-height: ${px(minHeight)};
     width: 100%;
 
     ${!padding &&
@@ -103,5 +101,6 @@ export function Main(props: MainProps): JSX.Element {
 Main.defaultProps = {
   centered: false,
   isLoading: false,
+  minHeight: '100vh',
   name: 'Main',
 };
