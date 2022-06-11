@@ -77,6 +77,7 @@ export const appearanceStyles: CSSObject = {
 
 export function backgroundStyles<T extends WithColor & WithInvert & WithTransparent & WithTheme>(
   props: T,
+  withBorder = true,
 ): CSSObject {
   const { variants } = getTheme(props);
   const { invert, shade = 'mid', transparent, variant } = props;
@@ -84,11 +85,16 @@ export function backgroundStyles<T extends WithColor & WithInvert & WithTranspar
   if (variant) {
     const { bg, color } = getColorVariant(variant, shade, variants);
 
-    return {
+    const styles: CSSObject = {
       backgroundColor: invert || transparent ? 'transparent' : bg,
-      border: transparent ? 0 : `1px solid ${bg}`,
       color: invert || transparent ? bg : color,
     };
+
+    if (withBorder) {
+      styles.border = transparent ? 0 : `1px solid ${bg}`;
+    }
+
+    return styles;
   }
 
   return {};

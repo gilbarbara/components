@@ -54,7 +54,7 @@ export const StyledBox = styled(
 )<BoxProps>(props => {
   return css`
     ${baseStyles(props)};
-    ${backgroundStyles(props)};
+    ${backgroundStyles(props, false)};
     ${borderStyles(props)};
     ${flexBoxStyles(props)};
     ${flexItemStyles(props)};
