@@ -15,6 +15,7 @@ import {
   positioningStyles,
   radiusStyles,
   shadowStyles,
+  textColorStyles,
 } from './modules/system';
 import {
   ComponentProps,
@@ -30,6 +31,7 @@ import {
   WithPositioning,
   WithRadius,
   WithShadow,
+  WithTextColor,
 } from './types';
 
 export interface BoxKnownProps
@@ -44,7 +46,8 @@ export interface BoxKnownProps
     WithPadding,
     WithPositioning,
     WithRadius,
-    WithShadow {}
+    WithShadow,
+    WithTextColor {}
 
 export type BoxProps = ComponentProps<HTMLDivElement, BoxKnownProps>;
 
@@ -64,6 +67,7 @@ export const StyledBox = styled(
     ${positioningStyles(props)};
     ${radiusStyles(props)};
     ${shadowStyles(props)};
+    ${textColorStyles(props)};
   `;
 });
 

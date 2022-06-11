@@ -229,6 +229,17 @@ export interface WithShadow {
   shadow?: Shadow | false;
 }
 
+export interface WithTextColor {
+  color?: string;
+  /**
+   * Component shade
+   * @default mid
+   */
+  colorShade?: Shades;
+  /** Component color */
+  colorVariant?: Variants;
+}
+
 export interface WithTextSize {
   /**
    * Text size

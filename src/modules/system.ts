@@ -24,6 +24,7 @@ import {
   WithPositioning,
   WithRadius,
   WithShadow,
+  WithTextColor,
   WithTextOptions,
   WithTheme,
   WithTransparent,
@@ -554,6 +555,27 @@ export function shadowStyles<T extends WithShadow & WithTheme>(props: T): CSSObj
       boxShadow: isDarkMode(props)
         ? shadow[props.shadow].replace(/148/g, '222')
         : shadow[props.shadow],
+    };
+  }
+
+  return {};
+}
+
+export function textColorStyles<T extends WithTextColor & WithTheme>(props: T): CSSObject {
+  const { color, colorShade = 'mid', colorVariant } = props;
+  const { variants } = getTheme(props);
+
+  if (color) {
+    return {
+      color,
+    };
+  }
+
+  if (colorVariant) {
+    const { bg } = getColorVariant(colorVariant, colorShade, variants);
+
+    return {
+      color: bg,
     };
   }
 
