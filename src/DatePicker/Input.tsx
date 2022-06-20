@@ -23,18 +23,18 @@ import { Icon } from '../Icon';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { Text } from '../Text';
-import { WithBorderless, WithOpen } from '../types';
+import { Alignment, WithBorderless, WithOpen } from '../types';
 
 export interface DatePickerInputProps
   extends WithBorderless,
     WithOpen,
     DatePickerBaseProps<DatePickerClickHandler> {
-  /**
-   * @default en-US
-   */
+  /**  @default en-US */
   formatLocale?: string;
   large?: boolean;
   placeholder?: string;
+  /** @default right */
+  position?: Alignment;
   separator?: string;
   showRange?: boolean;
   showRangeApply?: boolean;
@@ -109,10 +109,17 @@ const StyledButton = styled(
 const StyledContent = styled(
   'div',
   getStyledOptions(),
-)<{ isActive: boolean; wide: boolean }>(props => {
-  const { isActive, wide } = props;
+)<{ isActive: boolean; position: Alignment; wide: boolean }>(props => {
+  const { isActive, position, wide } = props;
   const { grayDarker, radius, shadow, spacing, white } = getTheme(props);
   const darkMode = isDarkMode(props);
+  let left = position === 'left' ? 0 : 'auto';
+  let translateX = '';
+
+  if (position === 'center') {
+    left = '50%';
+    translateX = ' translateX(-50%)';
+  }
 
   return css`
     background-color: ${darkMode ? grayDarker : white};
@@ -121,21 +128,22 @@ const StyledContent = styled(
     display: flex;
     flex-direction: column;
     justify-content: center;
+    left: ${left};
     margin-top: ${spacing.xs};
     min-width: ${px(wide ? 600 : 300)};
     overflow-y: auto;
     padding: ${spacing.md};
     position: absolute;
-    right: 0;
+    right: ${position === 'right' ? 0 : 'auto'};
     top: 100%;
     transform-origin: top;
-    transform: scaleY(0);
+    transform: ${`scaleY(0)${translateX}`};
     transition: transform 0.3s;
     z-index: 100;
 
     ${isActive &&
     css`
-      transform: scaleY(1);
+      transform: ${`scaleY(1)${translateX}`};
     `}
   `;
 });
@@ -147,6 +155,7 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
     onSelect,
     open,
     placeholder,
+    position = 'right',
     separator = ' — ',
     showRange = false,
     showRangeApply,
@@ -230,19 +239,20 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
 
   return (
     <Box data-component-name="DatePickerInput" position="relative">
-      <StyledButton
-        data-component-name="DatePickerInputButton"
-        isFilled={isFilled}
-        onClick={toggle}
-        {...omit(props, 'onSelect')}
-      >
-        {title}
-        <Icon name="calendar" />
-      </StyledButton>
       <ClickOutside active={isActive} onClick={toggle}>
+        <StyledButton
+          data-component-name="DatePickerInputButton"
+          isFilled={isFilled}
+          onClick={toggle}
+          {...omit(props, 'onSelect')}
+        >
+          {title}
+          <Icon name="calendar" />
+        </StyledButton>
         <StyledContent
           data-component-name="DatePickerInputContent"
           isActive={isActive}
+          position={position}
           wide={showRange && numberOfMonths > 1}
         >
           {picker}
@@ -257,6 +267,7 @@ DatePickerInput.defaultProps = {
   borderless: false,
   formatLocale: 'en-US',
   large: false,
+  position: 'right',
   separator: ' — ',
   showRange: false,
   showRangeApply: false,
