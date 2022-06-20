@@ -7,10 +7,19 @@ import { Property } from 'csstype';
 import { Box } from './Box';
 import { Loader } from './Loader';
 import { getTheme, px, responsive } from './modules/helpers';
-import { Alignment, WithColor, WithFlexBox, WithPadding, WithTextColor } from './types';
+import {
+  Alignment,
+  ComponentProps,
+  StyledProps,
+  WithColor,
+  WithFlexBox,
+  WithPadding,
+  WithTextColor,
+} from './types';
 
-export interface MainProps
-  extends WithColor,
+export interface MainKnownProps
+  extends StyledProps,
+    WithColor,
     Pick<WithFlexBox, 'align' | 'justify'>,
     WithPadding,
     WithTextColor {
@@ -35,6 +44,8 @@ export interface MainProps
   style?: CSSProperties;
   textAlign?: Alignment;
 }
+
+export type MainProps = ComponentProps<HTMLDivElement, MainKnownProps, 'wrap'>;
 
 export const StyledMain = styled(Box)<Omit<MainProps, 'name'>>(props => {
   const { minHeight = '100vh', padding } = props;

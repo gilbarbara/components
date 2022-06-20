@@ -20,6 +20,8 @@ import {
   shadowStyles,
 } from './modules/system';
 import {
+  ComponentProps,
+  StyledProps,
   WithBorder,
   WithChildren,
   WithColor,
@@ -32,8 +34,9 @@ import {
   WithShadow,
 } from './types';
 
-export interface GridProps
-  extends WithBorder,
+export interface GridKnownProps
+  extends StyledProps,
+    WithBorder,
     WithChildren,
     WithColor,
     WithFlexItem,
@@ -62,6 +65,8 @@ export interface GridProps
   templateColumns?: StandardLonghandProperties['gridTemplateColumns'];
   templateRows?: StandardLonghandProperties['gridTemplateRows'];
 }
+
+export type GridProps = ComponentProps<HTMLDivElement, GridKnownProps>;
 
 export const StyledGrid = styled(
   'div',

@@ -5,9 +5,16 @@ import { StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme, px, responsive } from './modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles, paddingStyles } from './modules/system';
-import { Alignment, WithChildren, WithMargin, WithPadding } from './types';
+import {
+  Alignment,
+  ComponentProps,
+  StyledProps,
+  WithChildren,
+  WithMargin,
+  WithPadding,
+} from './types';
 
-export interface ContainerProps extends WithChildren, WithMargin, WithPadding {
+export interface ContainerKnownProps extends StyledProps, WithChildren, WithMargin, WithPadding {
   /** @default left */
   align?: Alignment | 'stretch';
   fullScreen?: boolean;
@@ -19,6 +26,8 @@ export interface ContainerProps extends WithChildren, WithMargin, WithPadding {
   verticalAlign?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
   verticalPadding?: boolean;
 }
+
+export type ContainerProps = ComponentProps<HTMLDivElement, ContainerKnownProps>;
 
 const flexMap = {
   center: 'center',
