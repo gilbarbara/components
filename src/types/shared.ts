@@ -196,7 +196,7 @@ export interface WithOpen {
 
 export interface WithPadding {
   /** Also accepts the shortcuts: pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
-  padding?: Spacing;
+  padding?: Spacing | 0;
   /** padding-bottom */
   pb?: Spacing;
   /** padding-left */
