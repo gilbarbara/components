@@ -3,10 +3,12 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 import { Property } from 'csstype';
+import is from 'is-lite';
 
 import { Box } from './Box';
 import { Loader } from './Loader';
 import { getTheme, px, responsive } from './modules/helpers';
+import { paddingStyles } from './modules/system';
 import {
   Alignment,
   ComponentProps,
@@ -56,7 +58,7 @@ export const StyledMain = styled(Box)<Omit<MainProps, 'name'>>(props => {
     min-height: ${px(minHeight)};
     width: 100%;
 
-    ${!padding &&
+    ${is.nullOrUndefined(padding) &&
     responsive({
       _: {
         padding: spacing.md,
@@ -65,6 +67,9 @@ export const StyledMain = styled(Box)<Omit<MainProps, 'name'>>(props => {
         padding: spacing.xl,
       },
     })};
+
+    // overrides default padding
+    ${paddingStyles(props)};
   `;
 });
 
