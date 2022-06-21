@@ -251,6 +251,7 @@ function DropdownOptions<T extends DropdownItem = DropdownItem>({
           disabled={disabled}
           hovered={isHovered}
           onClick={() => (isSelected ? removeItem(null, option, false) : addItem(option))}
+          role="listitem"
           selected={isSelected}
           shade={shade}
           variant={variant}
@@ -283,7 +284,7 @@ function DropdownOptions<T extends DropdownItem = DropdownItem>({
   }
 
   return (
-    <List data-component-name="DropdownOptions" maxHeight={dropdownHeight} role="list">
+    <List data-component-name="DropdownOptions" maxHeight={dropdownHeight}>
       {searchable && (
         <Search data-component-name="DropdownOptionsSearch">
           <Input
