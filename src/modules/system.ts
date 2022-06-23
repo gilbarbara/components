@@ -437,11 +437,11 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
     output.marginTop = my ? spacing[my] : my;
   } else {
     if (!is.undefined(mb)) {
-      output.marginBottom = mb ? spacing[mb] : mb;
+      output.marginBottom = mb === 'auto' || mb === 0 ? mb : spacing[mb];
     }
 
     if (!is.undefined(mt)) {
-      output.marginTop = mt ? spacing[mt] : mt;
+      output.marginTop = mt === 'auto' || mt === 0 ? mt : spacing[mt];
     }
   }
 

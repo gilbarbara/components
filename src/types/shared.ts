@@ -174,13 +174,13 @@ export interface WithMargin {
   /** Also accepts the shortcuts: mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical) */
   margin?: Spacing | 0;
   /** margin-bottom */
-  mb?: Spacing | 0;
+  mb?: Spacing | 0 | 'auto';
   /** margin-left */
   ml?: Spacing | 0 | 'auto';
   /** margin-right */
   mr?: Spacing | 0 | 'auto';
   /** margin-top */
-  mt?: Spacing | 0;
+  mt?: Spacing | 0 | 'auto';
   /** margin horizontal axis */
   mx?: Spacing | 0 | 'auto';
   /** margin vertical axis */
