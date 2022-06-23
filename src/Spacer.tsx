@@ -40,22 +40,37 @@ export interface SpacerKnownProps
     WithPadding,
     WithRadius,
     WithShadow {
-  /** @default horizontal */
+  /**
+   * The spacer direction.
+   * @default horizontal
+   */
   direction?: Direction;
-  /** @default start */
+  /**
+   * Distribution of the children in the spacer.
+   * @default start
+   */
   distribution?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
-  /** @default sm */
+  /**
+   * The horizontal gap between the children.
+   * @default sm
+   */
   gap?: Spacing;
+  /** The vertical gap between the children. */
+  gapVertical?: Spacing;
   /**
    * Expand child width (Vertical only)
    * @default false
    */
   grow?: boolean;
   /**
-   * Horizontal only
-   * @default center */
+   * The vertical alignment of the children.
+   * @default center
+   * */
   verticalAlign?: 'center' | 'end' | 'start';
-  /** @default true */
+  /**
+   * Wrap the children if they don't fit in the container.
+   * @default true
+   * */
   wrap?: boolean;
 }
 
@@ -97,13 +112,14 @@ const StyledSpacerItem = styled(
   'div',
   getStyledOptions('direction'),
 )<Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }>(props => {
-  const { direction, flex, gap = 'sm', grow } = props;
+  const { direction, flex, gap = 'sm', gapVertical, grow } = props;
   const { spacing } = getTheme(props);
   const isHorizontal = direction === 'horizontal';
 
   return css`
     display: ${isHorizontal ? 'flex' : 'block'};
     flex: ${flex};
+    margin-bottom: ${gapVertical ? spacing[gapVertical] : undefined};
     width: ${!isHorizontal && grow ? '100%' : 'auto'};
 
     &:not(:last-of-type) {

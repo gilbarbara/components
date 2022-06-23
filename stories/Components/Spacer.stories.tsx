@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { Box, Button, H2, Icon, Input } from 'src';
+import { Box, Button, H2, Icon, Input, Tag } from 'src';
 import { Spacer, SpacerProps } from 'src/Spacer';
 
 import {
@@ -24,28 +24,36 @@ export default {
 } as ComponentMeta<typeof Spacer>;
 
 export const Basic = (props: SpacerProps) => (
-  <Box padding="xl" shadow="high" width={600}>
+  <Spacer {...props}>
+    <Button>Yes, add it</Button>
+    <Button invert>No, cancel</Button>
+  </Spacer>
+);
+
+export const WithGapVertical = (props: SpacerProps) => (
+  <Box width={480}>
     <Spacer {...props}>
-      <Button size="sm">Yes, add it</Button>
-      <Button invert size="sm">
-        No, cancel
-      </Button>
+      {['react', 'react-component', 'react-mixin', 'joyride', 'walkthroughs', 'tour'].map(tag => (
+        <Tag>{tag}</Tag>
+      ))}
     </Spacer>
   </Box>
 );
 
+WithGapVertical.args = {
+  gapVertical: 'sm',
+};
+
 export const Vertical = (props: SpacerProps) => (
-  <Box padding="xl" shadow="high" width={600}>
-    <Spacer {...props} direction="vertical" gap="xl">
-      <Button size="sm">Yes, add it</Button>
-      <Button size="sm" variant="orange">
-        Maybe?
-      </Button>
-      <Button invert size="sm" variant="red">
-        No, cancel
-      </Button>
-    </Spacer>
-  </Box>
+  <Spacer fill {...props} direction="vertical" distribution="center" gap="xl">
+    <Button size="sm">Yes, add it</Button>
+    <Button size="sm" variant="orange">
+      Maybe?
+    </Button>
+    <Button invert size="sm" variant="red">
+      No, cancel
+    </Button>
+  </Spacer>
 );
 
 Vertical.argTypes = {
@@ -54,7 +62,7 @@ Vertical.argTypes = {
 };
 
 export const WithDifferentHeights = (props: SpacerProps) => (
-  <Box padding="xl" shadow="high" width={600}>
+  <Box width={600}>
     <Spacer {...props}>
       <H2 mb={0}>My Big Title</H2>
       <Box data-flex="1">
@@ -67,14 +75,12 @@ export const WithDifferentHeights = (props: SpacerProps) => (
 );
 
 export const WithInput = (props: SpacerProps) => (
-  <Box padding="xl" shadow="high" width={600}>
-    <Spacer {...props}>
-      <Input name="name" placeholder="Type your name" width={200} />
-      <Button shape="round">
-        <Icon name="check" size={24} />
-      </Button>
-    </Spacer>
-  </Box>
+  <Spacer {...props}>
+    <Input name="name" placeholder="Type your name" width={200} />
+    <Button shape="round">
+      <Icon name="check" size={24} />
+    </Button>
+  </Spacer>
 );
 
 WithInput.args = {
