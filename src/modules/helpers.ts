@@ -209,7 +209,7 @@ export function recursiveChildrenMap(
 }
 
 /**
- * SC Helper to generate responsive media queries1
+ * SC Helper to generate responsive media queries
  */
 export function responsive(rules: ResponsiveInput) {
   const entries: AnyObject = {};

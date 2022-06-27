@@ -2,6 +2,7 @@ import { useTheme } from '@emotion/react';
 
 import LoaderGrow from './Grow';
 import LoaderPill from './Pill';
+import LoaderPride from './Pride';
 import LoaderPulse from './Pulse';
 import LoaderRotate from './Rotate';
 
@@ -15,6 +16,9 @@ export function Loader(props: LoaderProps) {
   switch (type) {
     case 'grow': {
       return <LoaderGrow theme={theme} {...rest} />;
+    }
+    case 'pride': {
+      return <LoaderPride theme={theme} {...rest} />;
     }
     case 'pulse': {
       return <LoaderPulse theme={theme} {...rest} />;
