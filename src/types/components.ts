@@ -143,7 +143,7 @@ export interface LoaderProps
   color?: string;
   size?: number;
   /** @default pill */
-  type?: 'pill' | 'grow' | 'pulse' | 'rotate';
+  type?: 'grow' | 'pill' | 'pride' | 'pulse' | 'rotate';
 }
 
 export interface RadioItem {

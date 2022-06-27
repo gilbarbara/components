@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { Loader } from 'src/Loader';
 
-import { colorProps, hideProps } from '../__helpers__';
+import { colorProps, hideProps, hideTable } from '../__helpers__';
 
 export default {
   title: 'Components/Loader',
@@ -24,6 +24,16 @@ Pill.args = {
 export const Grow = (props: any) => <Loader {...props} />;
 Grow.args = {
   type: 'grow',
+};
+
+export const Pride = (props: any) => <Loader {...props} />;
+Pride.args = {
+  type: 'pride',
+};
+Pride.argTypes = {
+  color: hideTable(),
+  shade: hideTable(),
+  variant: hideTable(),
 };
 
 export const Pulse = (props: any) => <Loader {...props} />;
