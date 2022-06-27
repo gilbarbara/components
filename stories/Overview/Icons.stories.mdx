@@ -1,19 +1,7 @@
 import { Meta } from '@storybook/addon-docs';
-import { Box, BoxCenter, Icon, Jumbo, Paragraph, Text } from 'src';
-
-import { icons } from 'src/modules/options';
+import Icons from './components/Icons';
 
 <Meta title='Overview/Icons' />
 
-<Jumbo>Icons</Jumbo>
-
-<Paragraph mb="xl" size="large">Based on the <a href="https://css.gg/" target="_blank">CSS icons</a> package
-</Paragraph>
-
-<Box display="flex" direction="row" wrap="wrap">{icons.map(d => (
-  <BoxCenter key={d} padding="xs" minHeight={160} minWidth={160}>
-    <Icon name={d} size={64} /><br />
-    <Text size="small">{d}</Text>
-  </BoxCenter>
-))}</Box>
+<Icons />
 
