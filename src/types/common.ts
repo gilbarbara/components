@@ -31,7 +31,7 @@ export type ButtonTypes = 'button' | 'submit' | 'reset';
 
 export type Direction = 'horizontal' | 'vertical';
 
-export type Icons = typeof icons[number];
+export type Icons = typeof icons[number]['name'];
 
 export type InputTypes = typeof inputTypes[number];
 
