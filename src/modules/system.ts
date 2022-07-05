@@ -469,7 +469,7 @@ export function outlineStyles<T extends WithTheme>(props: T): CSSObject {
   };
 }
 
-export function paddingStyles<T extends WithPadding>(props: T): CSSObject {
+export function paddingStyles<T extends WithPadding>(props: T, force = false): CSSObject {
   const { padding, pb, pl, pr, pt, px: paddingX, py } = props;
   const { spacing } = getTheme(props);
 
@@ -503,6 +503,14 @@ export function paddingStyles<T extends WithPadding>(props: T): CSSObject {
     if (pr) {
       output.paddingRight = spacing[pr];
     }
+  }
+
+  if (force) {
+    return Object.entries(output).reduce<CSSObject>((acc, [key, value]) => {
+      acc[key] = `${value} !important`;
+
+      return acc;
+    }, {});
   }
 
   return output;
