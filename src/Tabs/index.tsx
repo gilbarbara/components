@@ -14,9 +14,13 @@ import { Loader } from '../Loader';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
 import { NonIdealState } from '../NonIdealState';
-import { StyledProps, WithChildren, WithColor, WithMargin } from '../types';
+import { Direction, StyledProps, WithChildren, WithColor, WithMargin } from '../types';
 
 export interface TabsProps extends StyledProps, WithChildren, WithColor, WithMargin {
+  /** @default vertical */
+  direction?: Direction;
+  /** @default false */
+  disableActiveBorderRadius?: boolean;
   initialId?: string;
   loader?: ReactNode;
   maxHeight?: number | StandardLonghandProperties['maxHeight'];
@@ -35,34 +39,63 @@ interface State {
 
 const StyledTabs = styled(
   'div',
-  getStyledOptions(),
+  getStyledOptions('direction'),
 )<TabsProps>(props => {
+  const { direction } = props;
+  const isVertical = direction === 'vertical';
+
   return css`
+    display: ${isVertical ? 'block' : 'flex'};
     ${marginStyles(props)};
   `;
 });
 
-const StyledHeader = styled.div(props => {
+const StyledMenu = styled(
+  'div',
+  getStyledOptions('direction'),
+)<TabsProps>(props => {
+  const { direction } = props;
   const { grayLighter, spacing } = getTheme(props);
+
+  const isVertical = direction === 'vertical';
 
   return css`
     align-items: flex-start;
-    border-bottom: 1px solid ${grayLighter};
+    border-bottom: ${isVertical ? `1px solid ${grayLighter}` : 'none'};
+    border-right: ${!isVertical ? `1px solid ${grayLighter}` : 'none'};
     display: flex;
+    flex-direction: ${isVertical ? 'row' : 'column'};
     flex-wrap: nowrap;
-    margin-bottom: ${spacing.md};
+    margin-bottom: ${isVertical ? spacing.md : undefined};
+    margin-right: ${!isVertical ? spacing.md : undefined};
+    // min-width: ${!isVertical ? '120px' : 'auto'};
   `;
 });
 
-const StyledHeaderItem = styled(ButtonBase)<
-  Pick<TabsProps, 'shade' | 'variant'> & { invalid: boolean; isActive: boolean }
+const StyledMenuItem = styled(
+  ButtonBase,
+  getStyledOptions('direction'),
+)<
+  Pick<TabsProps, 'direction' | 'disableActiveBorderRadius' | 'shade' | 'variant'> & {
+    invalid: boolean;
+    isActive: boolean;
+  }
 >(props => {
-  const { invalid, isActive, shade, variant = 'primary' } = props;
+  const {
+    direction,
+    disableActiveBorderRadius,
+    invalid,
+    isActive,
+    shade,
+    variant = 'primary',
+  } = props;
   const { grayDarker, grayMid, grayScale, spacing, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   const { bg } = getColorVariant(variant, shade, variants);
   const color = darkMode ? grayScale['20'] : grayDarker;
+  const isVertical = direction === 'vertical';
+  const isHorizontal = direction === 'horizontal';
 
   return css`
     color: ${invalid ? grayMid : color};
@@ -71,20 +104,28 @@ const StyledHeaderItem = styled(ButtonBase)<
     line-height: 1;
     padding: ${spacing.xs} ${spacing.md};
     position: relative;
+    width: ${isHorizontal ? '100%' : undefined};
 
     ${isActive &&
     css`
       &:before {
         background-color: ${bg};
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        bottom: -1px;
+        bottom: ${isVertical ? '-1px' : 0};
         content: '';
         display: block;
-        height: 3px;
-        left: 0;
+        height: ${isVertical ? '3px' : undefined};
+        left: ${isVertical ? 0 : undefined};
         position: absolute;
-        right: 0;
+        right: ${isHorizontal ? '-1px' : 0};
+        top: ${isHorizontal ? 0 : undefined};
+        width: ${isHorizontal ? '3px' : undefined};
+
+        ${!disableActiveBorderRadius &&
+        css`
+          border-top-left-radius: 3px;
+          border-top-right-radius: ${isVertical ? '3px' : undefined};
+          border-bottom-left-radius: ${isHorizontal ? '3px' : undefined};
+        `};
       }
     `}
   `;
@@ -168,13 +209,16 @@ export function Tabs(props: TabsProps) {
 
   if (isReady) {
     if (tabs.length) {
-      content.header = (
-        <StyledHeader>
+      content.menu = (
+        <StyledMenu data-component-name="TabsMenu" direction={rest.direction}>
           {tabs.map(d => (
-            <StyledHeaderItem
+            <StyledMenuItem
               key={d.id}
+              data-component-name="TabsMenuItem"
               data-disabled={!!d.disabled}
               data-id={d.id}
+              direction={rest.direction}
+              disableActiveBorderRadius={rest.disableActiveBorderRadius}
               invalid={!!d.disabled}
               isActive={d.id === activeId}
               onClick={handleClickItem}
@@ -182,13 +226,13 @@ export function Tabs(props: TabsProps) {
               variant={variant}
             >
               {d.title}
-            </StyledHeaderItem>
+            </StyledMenuItem>
           ))}
-        </StyledHeader>
+        </StyledMenu>
       );
 
       content.main = (
-        <StyledContent maxHeight={maxHeight}>
+        <StyledContent data-component-name="TabsContent" maxHeight={maxHeight}>
           {Children.toArray(children).filter(d => isValidElement(d) && d.props.id === activeId)}
         </StyledContent>
       );
@@ -203,13 +247,15 @@ export function Tabs(props: TabsProps) {
 
   return (
     <StyledTabs data-component-name="Tabs" {...rest}>
-      {content.header}
+      {content.menu}
       {content.main}
     </StyledTabs>
   );
 }
 
 Tabs.defaultProps = {
+  direction: 'vertical',
+  disableActiveBorderRadius: false,
   shade: 'mid',
   variant: 'primary',
 };

@@ -25,7 +25,7 @@ export const Basic = (props: TabsProps) => (
     <Tab
       id="one"
       title={
-        <Spacer gap="xs">
+        <Spacer gap="xs" wrap={false}>
           <Icon name="add" />
           One
         </Spacer>
