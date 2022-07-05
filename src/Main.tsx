@@ -7,7 +7,7 @@ import is from 'is-lite';
 
 import { Box } from './Box';
 import { Loader } from './Loader';
-import { getTheme, px, responsive } from './modules/helpers';
+import { getTheme, px, responsive as responsiveHelper } from './modules/helpers';
 import { paddingStyles } from './modules/system';
 import {
   Alignment,
@@ -43,6 +43,11 @@ export interface MainKnownProps
    * @default Main
    */
   name?: string;
+  /**
+   * Updates the padding for large screens.
+   * @default true
+   */
+  responsive?: boolean;
   style?: CSSProperties;
   textAlign?: Alignment;
 }
@@ -50,26 +55,25 @@ export interface MainKnownProps
 export type MainProps = ComponentProps<HTMLDivElement, MainKnownProps, 'wrap'>;
 
 export const StyledMain = styled(Box)<Omit<MainProps, 'name'>>(props => {
-  const { minHeight = '100vh', padding } = props;
+  const { minHeight = '100vh', padding, responsive } = props;
   const { spacing } = getTheme(props);
 
   return css`
     display: grid;
     min-height: ${px(minHeight)};
+    padding: ${spacing.md};
     width: 100%;
 
-    ${is.nullOrUndefined(padding) &&
-    responsive({
-      _: {
-        padding: spacing.md,
-      },
+    ${responsive &&
+    is.nullOrUndefined(padding) &&
+    responsiveHelper({
       lg: {
         padding: spacing.xl,
       },
     })};
 
     // overrides default padding
-    ${paddingStyles(props)};
+    ${paddingStyles(props, true)};
   `;
 });
 
@@ -119,4 +123,5 @@ Main.defaultProps = {
   isLoading: false,
   minHeight: '100vh',
   name: 'Main',
+  responsive: true,
 };

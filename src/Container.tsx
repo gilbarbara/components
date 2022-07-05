@@ -3,7 +3,7 @@ import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { getTheme, px, responsive } from './modules/helpers';
+import { getTheme, px, responsive as responsiveHelper } from './modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles, paddingStyles } from './modules/system';
 import {
   Alignment,
@@ -19,6 +19,11 @@ export interface ContainerKnownProps extends StyledProps, WithChildren, WithMarg
   align?: Alignment | 'stretch';
   fullScreen?: boolean;
   fullScreenOffset?: StringOrNumber;
+  /**
+   * Updates the padding for large screens.
+   * @default true
+   */
+  responsive?: boolean;
   style?: CSSProperties;
   /** @default left */
   textAlign?: Alignment;
@@ -44,6 +49,7 @@ export const StyledContainer = styled(
     align = 'left',
     fullScreen,
     fullScreenOffset,
+    responsive,
     textAlign,
     verticalAlign,
     verticalPadding,
@@ -65,22 +71,23 @@ export const StyledContainer = styled(
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-    ${responsive({
-      _: {
-        paddingLeft: spacing.md,
-        paddingRight: spacing.md,
-      },
+    padding-left: ${spacing.md};
+    padding-right: ${spacing.md};
+    ${responsive &&
+    responsiveHelper({
       lg: {
         paddingLeft: spacing.xl,
         paddingRight: spacing.xl,
       },
     })};
     ${verticalPadding &&
-    responsive({
-      _: {
-        paddingBottom: spacing.md,
-        paddingTop: spacing.md,
-      },
+    css`
+      padding-bottom: ${spacing.md};
+      padding-top: ${spacing.md};
+    `};
+    ${responsive &&
+    verticalPadding &&
+    responsiveHelper({
       lg: {
         paddingBottom: spacing.xl,
         paddingTop: spacing.xl,
@@ -91,7 +98,7 @@ export const StyledContainer = styled(
     ${css(styles)};
 
     ${marginStyles(props)};
-    ${paddingStyles(props)};
+    ${paddingStyles(props, true)};
   `;
 });
 
@@ -102,6 +109,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>((props, ref)
 Container.defaultProps = {
   align: 'stretch',
   fullScreen: false,
+  responsive: true,
   textAlign: 'left',
   verticalAlign: 'start',
   verticalPadding: false,
