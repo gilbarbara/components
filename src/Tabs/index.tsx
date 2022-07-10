@@ -1,5 +1,13 @@
-import { Children, CSSProperties, isValidElement, MouseEvent, ReactNode, useEffect } from 'react';
-import { useSetState } from 'react-use';
+import {
+  Children,
+  CSSProperties,
+  isValidElement,
+  MouseEvent,
+  ReactNode,
+  useEffect,
+  useRef,
+} from 'react';
+import { useMeasure, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
@@ -35,6 +43,7 @@ interface State {
   error: boolean;
   isReady: boolean;
   tabs: Omit<TabProps, 'children'>[];
+  width: number | null;
 }
 
 const StyledTabs = styled(
@@ -42,10 +51,9 @@ const StyledTabs = styled(
   getStyledOptions('direction'),
 )<TabsProps>(props => {
   const { direction } = props;
-  const isVertical = direction === 'vertical';
 
   return css`
-    display: ${isVertical ? 'block' : 'flex'};
+    display: ${direction === 'vertical' ? 'block' : 'flex'};
     ${marginStyles(props)};
   `;
 });
@@ -53,8 +61,8 @@ const StyledTabs = styled(
 const StyledMenu = styled(
   'div',
   getStyledOptions('direction'),
-)<TabsProps>(props => {
-  const { direction } = props;
+)<TabsProps & { width: number }>(props => {
+  const { direction, width } = props;
   const { grayLighter, spacing } = getTheme(props);
 
   const isVertical = direction === 'vertical';
@@ -65,10 +73,10 @@ const StyledMenu = styled(
     border-right: ${!isVertical ? `1px solid ${grayLighter}` : 'none'};
     display: flex;
     flex-direction: ${isVertical ? 'row' : 'column'};
-    flex-wrap: nowrap;
     margin-bottom: ${isVertical ? spacing.md : undefined};
     margin-right: ${!isVertical ? spacing.md : undefined};
-    // min-width: ${!isVertical ? '120px' : 'auto'};
+    max-width: ${px(width)};
+    overflow: auto hidden;
   `;
 });
 
@@ -105,6 +113,7 @@ const StyledMenuItem = styled(
     padding: ${spacing.xs} ${spacing.md};
     position: relative;
     width: ${isHorizontal ? '100%' : undefined};
+    white-space: nowrap;
 
     ${isActive &&
     css`
@@ -156,15 +165,30 @@ export function Tabs(props: TabsProps) {
     variant,
     ...rest
   } = props;
-  const [{ activeId, error, isReady, tabs }, setState] = useSetState<State>({
+  const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
     activeId: initialId,
     error: false,
     isReady: false,
     tabs: [],
+    width: null,
   });
+  const isMounted = useRef(false);
+  const [ref, measurements] = useMeasure<HTMLDivElement>();
 
   useEffect(() => {
-    const nextState: SetOptional<State, 'activeId'> = { error: false, isReady: true, tabs: [] };
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const nextState: SetOptional<State, 'activeId' | 'width'> = {
+      error: false,
+      isReady: true,
+      tabs: [],
+    };
 
     Children.forEach(children, (child, index) => {
       if (!isValidElement(child)) {
@@ -186,6 +210,12 @@ export function Tabs(props: TabsProps) {
 
     setState(nextState);
   }, [activeId, children, setState]);
+
+  useEffect(() => {
+    if (measurements.width && measurements.width !== width) {
+      setState({ width: measurements.width });
+    }
+  }, [measurements, setState, width]);
 
   const handleClickItem = (event: MouseEvent<HTMLButtonElement>) => {
     const { disabled, id = '' } = event.currentTarget.dataset;
@@ -209,27 +239,34 @@ export function Tabs(props: TabsProps) {
 
   if (isReady) {
     if (tabs.length) {
-      content.menu = (
-        <StyledMenu data-component-name="TabsMenu" direction={rest.direction}>
-          {tabs.map(d => (
-            <StyledMenuItem
-              key={d.id}
-              data-component-name="TabsMenuItem"
-              data-disabled={!!d.disabled}
-              data-id={d.id}
-              direction={rest.direction}
-              disableActiveBorderRadius={rest.disableActiveBorderRadius}
-              invalid={!!d.disabled}
-              isActive={d.id === activeId}
-              onClick={handleClickItem}
-              shade={shade}
-              variant={variant}
-            >
-              {d.title}
-            </StyledMenuItem>
-          ))}
-        </StyledMenu>
-      );
+      if (width) {
+        content.menu = (
+          <StyledMenu
+            data-component-name="TabsMenu"
+            direction={rest.direction}
+            role="tablist"
+            width={width}
+          >
+            {tabs.map(d => (
+              <StyledMenuItem
+                key={d.id}
+                data-component-name="TabsMenuItem"
+                data-disabled={!!d.disabled}
+                data-id={d.id}
+                direction={rest.direction}
+                disableActiveBorderRadius={rest.disableActiveBorderRadius}
+                invalid={!!d.disabled}
+                isActive={d.id === activeId}
+                onClick={handleClickItem}
+                shade={shade}
+                variant={variant}
+              >
+                {d.title}
+              </StyledMenuItem>
+            ))}
+          </StyledMenu>
+        );
+      }
 
       content.main = (
         <StyledContent data-component-name="TabsContent" maxHeight={maxHeight}>
@@ -247,6 +284,7 @@ export function Tabs(props: TabsProps) {
 
   return (
     <StyledTabs data-component-name="Tabs" {...rest}>
+      <div ref={ref} />
       {content.menu}
       {content.main}
     </StyledTabs>

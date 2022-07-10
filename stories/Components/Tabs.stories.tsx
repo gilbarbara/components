@@ -27,7 +27,7 @@ export const Basic = (props: TabsProps) => (
       title={
         <Spacer gap="xs" wrap={false}>
           <Icon name="add" />
-          One
+          First tab
         </Spacer>
       }
     >
@@ -47,7 +47,7 @@ export const Basic = (props: TabsProps) => (
         belt and made herself on the way.
       </Paragraph>
     </Tab>
-    <Tab id="two" title="Two">
+    <Tab id="two" title="Second tab">
       <Paragraph>
         When she reached the first hills of the Italic Mountains, she had a last view back on the
         skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of
@@ -63,7 +63,7 @@ export const Basic = (props: TabsProps) => (
         agency.
       </Paragraph>
     </Tab>
-    <Tab id="three" title="Three">
+    <Tab id="three" title="Third tab">
       <Paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lorem turpis, rhoncus eu
         efficitur vulputate, ornare in leo. Duis euismod aliquet ultricies. Nam elementum sem eu
@@ -80,7 +80,7 @@ export const Basic = (props: TabsProps) => (
         sed lorem suscipit, fringilla turpis ut, faucibus nibh.
       </Paragraph>
     </Tab>
-    <Tab disabled id="four" title="Four">
+    <Tab disabled id="four" title="Fourth tab">
       <Paragraph>
         Vivamus quis eros ut metus ultrices blandit eget eget velit. Maecenas quis turpis in nisi
         sagittis ullamcorper in nec erat. Morbi hendrerit imperdiet felis ultrices sagittis. Sed sed
