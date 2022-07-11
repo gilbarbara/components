@@ -10,7 +10,7 @@ import {
 import { useMeasure, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { omit } from '@gilbarbara/helpers';
+import { omit, unique } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import { SetOptional } from 'type-fest';
@@ -61,38 +61,49 @@ const StyledTabs = styled(
 const StyledMenu = styled(
   'div',
   getStyledOptions('direction'),
-)<TabsProps & { width: number }>(props => {
+)<TabsProps & { width: number | null }>(props => {
   const { direction, width } = props;
   const { grayLighter, spacing } = getTheme(props);
 
+  const isHorizontal = direction === 'horizontal';
   const isVertical = direction === 'vertical';
 
   return css`
     align-items: flex-start;
-    border-bottom: ${isVertical ? `1px solid ${grayLighter}` : 'none'};
-    border-right: ${!isVertical ? `1px solid ${grayLighter}` : 'none'};
     display: flex;
     flex-direction: ${isVertical ? 'row' : 'column'};
     margin-bottom: ${isVertical ? spacing.md : undefined};
-    margin-right: ${!isVertical ? spacing.md : undefined};
-    max-width: ${px(width)};
-    overflow: auto hidden;
+    margin-right: ${isHorizontal ? spacing.md : undefined};
+    max-width: ${width ? px(width) : undefined};
+    overflow: ${isVertical ? 'auto hidden' : undefined};
+    position: relative;
+
+    &:before {
+      border-bottom: ${isVertical ? `1px solid ${grayLighter}` : undefined};
+      border-right: ${isHorizontal ? `1px solid ${grayLighter}` : undefined};
+      bottom: 0;
+      content: '';
+      left: ${isVertical ? 0 : undefined};
+      position: absolute;
+      right: ${isHorizontal ? '-1px' : 0};
+      top: ${isHorizontal ? 0 : undefined};
+    }
   `;
 });
 
 const StyledMenuItem = styled(
   ButtonBase,
-  getStyledOptions('direction'),
+  getStyledOptions('direction', 'disabled'),
 )<
   Pick<TabsProps, 'direction' | 'disableActiveBorderRadius' | 'shade' | 'variant'> & {
-    invalid: boolean;
+    disabled: boolean;
     isActive: boolean;
   }
 >(props => {
   const {
     direction,
     disableActiveBorderRadius,
-    invalid,
+    disabled,
     isActive,
     shade,
     variant = 'primary',
@@ -101,14 +112,19 @@ const StyledMenuItem = styled(
   const darkMode = isDarkMode(props);
 
   const { bg } = getColorVariant(variant, shade, variants);
-  const color = darkMode ? grayScale['20'] : grayDarker;
+  let color = darkMode ? grayScale['20'] : grayDarker;
   const isVertical = direction === 'vertical';
   const isHorizontal = direction === 'horizontal';
 
+  if (disabled) {
+    color = grayMid;
+  } else if (isActive) {
+    color = bg;
+  }
+
   return css`
-    color: ${invalid ? grayMid : color};
-    cursor: ${invalid ? 'not-allowed' : 'pointer'};
-    font-weight: ${isActive ? 700 : 400};
+    color: ${disabled ? grayMid : color};
+    cursor: ${disabled ? 'not-allowed' : 'pointer'};
     line-height: 1;
     padding: ${spacing.xs} ${spacing.md};
     position: relative;
@@ -159,6 +175,7 @@ export function Tabs(props: TabsProps) {
     initialId = '',
     loader,
     maxHeight,
+    minHeight,
     noContent,
     onClick,
     shade,
@@ -173,6 +190,7 @@ export function Tabs(props: TabsProps) {
     width: null,
   });
   const isMounted = useRef(false);
+  const uniqueId = useRef(unique(6));
   const [ref, measurements] = useMeasure<HTMLDivElement>();
 
   useEffect(() => {
@@ -239,7 +257,7 @@ export function Tabs(props: TabsProps) {
 
   if (isReady) {
     if (tabs.length) {
-      if (width) {
+      if (width || rest.direction === 'horizontal') {
         content.menu = (
           <StyledMenu
             data-component-name="TabsMenu"
@@ -250,14 +268,17 @@ export function Tabs(props: TabsProps) {
             {tabs.map(d => (
               <StyledMenuItem
                 key={d.id}
+                aria-controls={`panel-${uniqueId.current}-${d.id}`}
+                aria-selected={d.id === activeId}
                 data-component-name="TabsMenuItem"
                 data-disabled={!!d.disabled}
                 data-id={d.id}
                 direction={rest.direction}
                 disableActiveBorderRadius={rest.disableActiveBorderRadius}
-                invalid={!!d.disabled}
+                disabled={!!d.disabled}
                 isActive={d.id === activeId}
                 onClick={handleClickItem}
+                role="tab"
                 shade={shade}
                 variant={variant}
               >
@@ -269,8 +290,25 @@ export function Tabs(props: TabsProps) {
       }
 
       content.main = (
-        <StyledContent data-component-name="TabsContent" maxHeight={maxHeight}>
-          {Children.toArray(children).filter(d => isValidElement(d) && d.props.id === activeId)}
+        <StyledContent
+          data-component-name="TabsContent"
+          maxHeight={maxHeight}
+          minHeight={minHeight}
+        >
+          {Children.toArray(children)
+            .filter(d => isValidElement(d) && d.props.id === activeId)
+            .map(
+              d =>
+                isValidElement(d) && (
+                  <div
+                    data-component-name="TabsPanel"
+                    id={`panel-${uniqueId.current}-${d.props.id}`}
+                    role="tabpanel"
+                  >
+                    {d.props.children}
+                  </div>
+                ),
+            )}
         </StyledContent>
       );
     } else {
@@ -284,7 +322,7 @@ export function Tabs(props: TabsProps) {
 
   return (
     <StyledTabs data-component-name="Tabs" {...rest}>
-      <div ref={ref} />
+      {rest.direction === 'vertical' && <div ref={ref} />}
       {content.menu}
       {content.main}
     </StyledTabs>
