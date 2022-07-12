@@ -47,15 +47,24 @@ export interface BoxKnownProps
     WithPositioning,
     WithRadius,
     WithShadow,
-    WithTextColor {}
+    WithTextColor {
+  /**
+   * Set the display to flex.
+   * @default false
+   */
+  flexBox?: boolean;
+}
 
 export type BoxProps = ComponentProps<HTMLDivElement, BoxKnownProps>;
 
 export const StyledBox = styled(
   'div',
-  getStyledOptions('direction', 'fill'),
+  getStyledOptions('fill'),
 )<BoxProps>(props => {
+  const { flexBox } = props;
+
   return css`
+    display: ${flexBox ? 'flex' : undefined};
     ${baseStyles(props)};
     ${backgroundStyles(props, false)};
     ${borderStyles(props)};
@@ -83,6 +92,10 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
     </StyledBox>
   );
 });
+
+Box.defaultProps = {
+  flexBox: false,
+};
 
 export const BoxCenter = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
   <StyledBox ref={ref} data-component-name="BoxCenter" {...props} />

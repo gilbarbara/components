@@ -13,7 +13,7 @@ import { DropdownItem, DropdownProps } from '../types';
 
 export const StyledDropdown = styled(
   'div',
-  getStyledOptions('direction', 'placeholder', 'onSearch'),
+  getStyledOptions('placeholder', 'onSearch'),
 )<
   Omit<DropdownProps<any>, 'items' | 'onChange' | 'values'> & {
     isFilled: boolean;

@@ -78,7 +78,7 @@ export type SpacerProps = ComponentProps<HTMLDivElement, SpacerKnownProps>;
 
 export const StyledSpacer = styled(
   'div',
-  getStyledOptions('direction'),
+  getStyledOptions('fill'),
 )<SpacerProps>(props => {
   const { direction, distribution, verticalAlign, wrap } = props;
   const isHorizontal = direction === 'horizontal';
@@ -110,7 +110,7 @@ export const StyledSpacer = styled(
 
 const StyledSpacerItem = styled(
   'div',
-  getStyledOptions('direction'),
+  getStyledOptions('fill'),
 )<Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }>(props => {
   const { direction, flex, gap = 'sm', gapVertical, grow } = props;
   const { spacing } = getTheme(props);

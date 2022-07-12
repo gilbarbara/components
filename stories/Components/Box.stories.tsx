@@ -71,23 +71,21 @@ export const Composed = (props: BoxProps) => (
     </BoxCenter>
   </Box>
 );
-
 Composed.args = {
   align: 'center',
   direction: 'row',
-  display: 'flex',
-  wrap: 'wrap',
+  flexBox: true,
   justify: 'flex-start',
   shadow: 'high',
   variant: 'white',
+  wrap: 'wrap',
 };
-
 Composed.argTypes = {
   children: disableControl(),
 };
+Composed.storyName = 'Flex (Composed)';
 
 export const Center = (props: BoxProps) => <BoxCenter minHeight={400} width={400} {...props} />;
-
 Center.args = {
   ...BoxCenter.defaultProps,
   children: 'This is a centered Box',
@@ -95,6 +93,7 @@ Center.args = {
 Center.argTypes = {
   children: { control: 'text' },
 };
+Center.storyName = 'BoxCenter';
 
 export const Inline = (props: BoxProps) => (
   <BoxInline width={400} {...props}>
@@ -102,8 +101,8 @@ export const Inline = (props: BoxProps) => (
     <Text>This is a inline Box</Text>
   </BoxInline>
 );
-
 Inline.args = BoxInline.defaultProps;
 Inline.argTypes = {
   children: disableControl(),
 };
+Inline.storyName = 'BoxInline';

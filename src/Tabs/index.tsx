@@ -48,7 +48,7 @@ interface State {
 
 const StyledTabs = styled(
   'div',
-  getStyledOptions('direction'),
+  getStyledOptions(),
 )<TabsProps>(props => {
   const { direction } = props;
 
@@ -60,7 +60,7 @@ const StyledTabs = styled(
 
 const StyledMenu = styled(
   'div',
-  getStyledOptions('direction'),
+  getStyledOptions(),
 )<TabsProps & { width: number | null }>(props => {
   const { direction, width } = props;
   const { grayLighter, spacing } = getTheme(props);
@@ -93,7 +93,7 @@ const StyledMenu = styled(
 
 const StyledMenuItem = styled(
   ButtonBase,
-  getStyledOptions('direction', 'disabled'),
+  getStyledOptions('disabled'),
 )<
   Pick<TabsProps, 'direction' | 'disableActiveBorderRadius' | 'shade' | 'variant'> & {
     disabled: boolean;
@@ -301,6 +301,7 @@ export function Tabs(props: TabsProps) {
               d =>
                 isValidElement(d) && (
                   <div
+                    key={d.props.id}
                     data-component-name="TabsPanel"
                     id={`panel-${uniqueId.current}-${d.props.id}`}
                     role="tabpanel"

@@ -61,7 +61,7 @@ export function flexItemProps() {
 }
 
 export function layoutProps(options?: { display: string }) {
-  const { display = 'block' } = options || {};
+  const { display } = options || {};
 
   return {
     display: { control: 'text', defaultValue: display, table: { category: 'Layout' } },

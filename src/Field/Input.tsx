@@ -76,7 +76,7 @@ function FieldInput(props: Props): JSX.Element {
   );
 
   const input = {
-    ...getInputParameters(props, 'currentValue', 'isDirty', 'registration', 'setStatus'),
+    ...getInputParameters(props, 'currentValue', 'inline', 'isDirty', 'registration', 'setStatus'),
     id: id || name,
     onBlur: handleBlur,
     onChange: handleChange,

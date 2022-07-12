@@ -30,20 +30,6 @@ export const Basic = (props: SpacerProps) => (
   </Spacer>
 );
 
-export const WithGapVertical = (props: SpacerProps) => (
-  <Box width={480}>
-    <Spacer {...props}>
-      {['react', 'react-component', 'react-mixin', 'joyride', 'walkthroughs', 'tour'].map(tag => (
-        <Tag>{tag}</Tag>
-      ))}
-    </Spacer>
-  </Box>
-);
-
-WithGapVertical.args = {
-  gapVertical: 'sm',
-};
-
 export const Vertical = (props: SpacerProps) => (
   <Spacer fill {...props} direction="vertical" distribution="center" gap="xl">
     <Button size="sm">Yes, add it</Button>
@@ -55,10 +41,22 @@ export const Vertical = (props: SpacerProps) => (
     </Button>
   </Spacer>
 );
-
 Vertical.argTypes = {
   direction: disableControl(),
   gap: disableControl(),
+};
+
+export const WithGapVertical = (props: SpacerProps) => (
+  <Box width={480}>
+    <Spacer {...props}>
+      {['react', 'react-component', 'react-mixin', 'joyride', 'walkthroughs', 'tour'].map(tag => (
+        <Tag key={tag}>{tag}</Tag>
+      ))}
+    </Spacer>
+  </Box>
+);
+WithGapVertical.args = {
+  gapVertical: 'sm',
 };
 
 export const WithDifferentHeights = (props: SpacerProps) => (
@@ -82,7 +80,6 @@ export const WithInput = (props: SpacerProps) => (
     </Button>
   </Spacer>
 );
-
 WithInput.args = {
   distribution: 'center',
 };

@@ -36,6 +36,7 @@ export function getStyledOptions(...exclude: string[]) {
       isPropValid(prop) &&
       ![
         'color',
+        'direction',
         'display',
         'height',
         'loading',
