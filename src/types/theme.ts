@@ -1,6 +1,8 @@
+import { MapLiteralToPrimitive } from './utils';
+
 import * as theme from '../modules/theme';
 
-export type BaseTheme = typeof theme;
+export type BaseTheme = MapLiteralToPrimitive<typeof theme>;
 
 export type Breakpoints = keyof typeof theme.breakpoints;
 
