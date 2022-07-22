@@ -10,7 +10,7 @@ import { MenuItem } from './Item';
 
 import { ButtonBase } from '../ButtonBase';
 import { Icon } from '../Icon';
-import { getTheme, px, recursiveChildrenMap } from '../modules/helpers';
+import { getTheme, px, recursiveChildrenEnhancer } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { easing } from '../modules/theme';
 import { ComponentProps, Position, StyledProps, WithChildren, WithColor, WithOpen } from '../types';
@@ -227,10 +227,10 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
         position={position}
       >
         <div data-component-name="MenuItemsWrapper">
-          {recursiveChildrenMap(
+          {recursiveChildrenEnhancer(
             children,
             { closeMenu: handleToggleMenu, shade, variant },
-            { filter: MenuItem },
+            { componentType: MenuItem },
           )}
         </div>
       </StyledMenuItems>
