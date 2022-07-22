@@ -283,8 +283,8 @@ export function inputStyles<
 
   let height;
   let paddingY = large ? spacing.md : spacing.sm;
-  let paddingLeft = borderless ? 0 : spacing.md;
-  let paddingRight = borderless ? 0 : spacing.md;
+  let paddingLeft: StringOrNumber | undefined = borderless ? 0 : spacing.md;
+  let paddingRight: StringOrNumber | undefined = borderless ? 0 : spacing.md;
 
   if (type === 'textarea') {
     paddingY = spacing.xs;
