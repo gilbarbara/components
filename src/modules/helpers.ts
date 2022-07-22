@@ -126,8 +126,8 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
   };
 }
 
-export function px(value: StringOrNumber): string {
-  return is.number(value) || is.numericString(value) ? `${value}px` : value || '0px';
+export function px(value: StringOrNumber | undefined): string | undefined {
+  return is.number(value) || is.numericString(value) ? `${value}px` : value;
 }
 
 export function recursiveElementFind(
