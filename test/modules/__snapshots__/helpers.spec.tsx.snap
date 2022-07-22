@@ -1,0 +1,1540 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getMediaQueries should return properly 1`] = `
+Object {
+  "lg": "@media screen and (min-width: 1024px)",
+  "md": "@media screen and (min-width: 768px)",
+  "sm": "@media screen and (min-width: 400px)",
+  "xl": "@media screen and (min-width: 1280px)",
+  "xs": "@media screen and (min-width: 375px)",
+  "xxl": "@media screen and (min-width: 1440px)",
+  "xxs": "@media screen and (min-width: 320px)",
+  "xxxl": "@media screen and (min-width: 1680px)",
+}
+`;
+
+exports[`getTheme should return the theme 1`] = `
+Object {
+  "black": "#000",
+  "breakpoints": Object {
+    "lg": "1024px",
+    "md": "768px",
+    "sm": "400px",
+    "xl": "1280px",
+    "xs": "375px",
+    "xxl": "1440px",
+    "xxs": "320px",
+    "xxxl": "1680px",
+  },
+  "button": Object {
+    "borderRadius": Object {
+      "lg": "8px",
+      "md": "8px",
+      "sm": "8px",
+    },
+    "fontSize": Object {
+      "lg": "18px",
+      "md": "16px",
+      "sm": "14px",
+    },
+    "fontWeight": 700,
+    "height": Object {
+      "lg": "48px",
+      "md": "40px",
+      "sm": "32px",
+    },
+    "lineHeight": Object {
+      "lg": 1.4,
+      "md": 1.3,
+      "sm": 1.2,
+    },
+    "padding": Object {
+      "lg": Array [
+        "10px",
+        "20px",
+      ],
+      "md": Array [
+        "8px",
+        "16px",
+      ],
+      "sm": Array [
+        "6px",
+        "12px",
+      ],
+    },
+  },
+  "colors": Object {
+    "blue": "#66a5ff",
+    "green": "#58d063",
+    "orange": "#ff995d",
+    "pink": "#ee63ab",
+    "primary": "#3030e8",
+    "purple": "#ad7bff",
+    "red": "#ff5e5e",
+    "secondary": "#2A5D65",
+    "yellow": "#ffe166",
+  },
+  "darkColor": "#101010",
+  "easing": "cubic-bezier(0.35, 0.01, 0.77, 0.34);",
+  "fontFamily": "inherit",
+  "fontMonospace": "Courier, monospace",
+  "gray": "#808080",
+  "grayDark": "#484848",
+  "grayDarker": "#242424",
+  "grayDarkest": "#101010",
+  "grayLight": "#c0c0c0",
+  "grayLighter": "#e0e0e0",
+  "grayLightest": "#f5f5f5",
+  "grayMid": "#767676",
+  "grayScale": Object {
+    "1": "#fcfcfc",
+    "10": "#e6e6e6",
+    "15": "#d9d9d9",
+    "2": "#fafafa",
+    "20": "#cccccc",
+    "3": "#f7f7f7",
+    "30": "#b3b3b3",
+    "4": "#f5f5f5",
+    "40": "#999999",
+    "5": "#f2f2f2",
+    "50": "#808080",
+    "60": "#666666",
+    "70": "#4d4d4d",
+    "80": "#333333",
+    "90": "#1a1a1a",
+    "95": "#0d0d0d",
+  },
+  "inputHeight": Object {
+    "large": "48px",
+    "normal": "40px",
+  },
+  "lightColor": "#f5f5f5",
+  "opacity": Object {
+    "intense": 0.64,
+    "light": 0.16,
+    "medium": 0.32,
+    "semiOpaque": 0.72,
+    "semiTransparent": 0.08,
+  },
+  "radius": Object {
+    "lg": "24px",
+    "md": "16px",
+    "round": "50%",
+    "sm": "12px",
+    "xl": "32px",
+    "xs": "8px",
+    "xxs": "4px",
+  },
+  "shadow": Object {
+    "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
+    "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
+    "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
+  },
+  "spacing": Object {
+    "jumbo": "96px",
+    "lg": "24px",
+    "md": "16px",
+    "sm": "12px",
+    "xl": "32px",
+    "xs": "8px",
+    "xxl": "48px",
+    "xxs": "4px",
+    "xxxl": "64px",
+  },
+  "typography": Object {
+    "h1": Object {
+      "fontSize": "32px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h2": Object {
+      "fontSize": "28px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h3": Object {
+      "fontSize": "24px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h4": Object {
+      "fontSize": "20px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h5": Object {
+      "fontSize": "18px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h6": Object {
+      "fontSize": "16px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "jumbo": Object {
+      "fontSize": "48px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "jumboLarge": Object {
+      "fontSize": "64px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "large": Object {
+      "fontSize": "18px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "mid": Object {
+      "fontSize": "14px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "regular": Object {
+      "fontSize": "16px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "small": Object {
+      "fontSize": "12px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+  },
+  "variants": Object {
+    "blue": Object {
+      "dark": Object {
+        "bg": "#0067fa",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#0042a1",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#002c6b",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#70abff",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#d6e7ff",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ebf3ff",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#66a5ff",
+        "color": "#000000",
+      },
+    },
+    "gray": Object {
+      "dark": Object {
+        "bg": "#484848",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#242424",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#101010",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#c0c0c0",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#e0e0e0",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#f5f5f5",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#808080",
+        "color": "#000000",
+      },
+    },
+    "green": Object {
+      "dark": Object {
+        "bg": "#2ea238",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#1d6824",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#144518",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#90e097",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#dff6e1",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#effbf0",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#58d063",
+        "color": "#000000",
+      },
+    },
+    "orange": Object {
+      "dark": Object {
+        "bg": "#f45a00",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#9d3a00",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#682700",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ffa570",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#ffe5d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fff2eb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ff995d",
+        "color": "#000000",
+      },
+    },
+    "pink": Object {
+      "dark": Object {
+        "bg": "#d51779",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#890f4e",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#5b0a34",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#f17eba",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#fbdaeb",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fdedf5",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ee63ab",
+        "color": "#000000",
+      },
+    },
+    "primary": Object {
+      "dark": Object {
+        "bg": "#1414b0",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#0d0d71",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#08084c",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#7e7ef1",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#c7c7f9",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ededfd",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#3030e8",
+        "color": "#ffffff",
+      },
+    },
+    "purple": Object {
+      "dark": Object {
+        "bg": "#670aff",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#4000aa",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#2b0071",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#a670ff",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#e6d6ff",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#f2ebff",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ad7bff",
+        "color": "#000000",
+      },
+    },
+    "red": Object {
+      "dark": Object {
+        "bg": "#f40000",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#9d0000",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#690000",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ff7070",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#ffd6d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ffebeb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ff5e5e",
+        "color": "#000000",
+      },
+    },
+    "secondary": Object {
+      "dark": Object {
+        "bg": "#306a73",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#18353a",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#0d1c1e",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#7dbfc9",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#bedfe4",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#e2f1f3",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#2A5D65",
+        "color": "#ffffff",
+      },
+    },
+    "yellow": Object {
+      "dark": Object {
+        "bg": "#fac900",
+        "color": "#000000",
+      },
+      "darker": Object {
+        "bg": "#a18100",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#6b5600",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ffe370",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#fff7d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fffbeb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ffe166",
+        "color": "#000000",
+      },
+    },
+  },
+  "white": "#fff",
+}
+`;
+
+exports[`mergeTheme should return a modified theme 1`] = `
+Object {
+  "black": "#000",
+  "breakpoints": Object {
+    "lg": "1024px",
+    "md": "768px",
+    "sm": "100px",
+    "xl": "1280px",
+    "xs": "375px",
+    "xxl": "1440px",
+    "xxs": "320px",
+    "xxxl": "1680px",
+  },
+  "button": Object {
+    "borderRadius": Object {
+      "lg": "8px",
+      "md": "8px",
+      "sm": "8px",
+    },
+    "fontSize": Object {
+      "lg": "18px",
+      "md": "16px",
+      "sm": "14px",
+    },
+    "fontWeight": 700,
+    "height": Object {
+      "lg": "48px",
+      "md": "40px",
+      "sm": "32px",
+    },
+    "lineHeight": Object {
+      "lg": 1.4,
+      "md": 1.3,
+      "sm": 1.2,
+    },
+    "padding": Object {
+      "lg": Array [
+        "10px",
+        "20px",
+      ],
+      "md": Array [
+        "8px",
+        "16px",
+      ],
+      "sm": Array [
+        "6px",
+        "12px",
+      ],
+    },
+  },
+  "colors": Object {
+    "blue": "#66a5ff",
+    "green": "#58d063",
+    "orange": "#ff995d",
+    "pink": "#ee63ab",
+    "primary": "#f04",
+    "purple": "#ad7bff",
+    "red": "#ff5e5e",
+    "secondary": "#2A5D65",
+    "yellow": "#ffe166",
+  },
+  "darkColor": "#f04",
+  "easing": "cubic-bezier(0.35, 0.01, 0.77, 0.34);",
+  "fontFamily": "inherit",
+  "fontMonospace": "Courier, monospace",
+  "gray": "#808080",
+  "grayDark": "#484848",
+  "grayDarker": "#242424",
+  "grayDarkest": "#101010",
+  "grayLight": "#c0c0c0",
+  "grayLighter": "#e0e0e0",
+  "grayLightest": "#f5f5f5",
+  "grayMid": "#767676",
+  "grayScale": Object {
+    "1": "#fcfcfc",
+    "10": "#e6e6e6",
+    "15": "#d9d9d9",
+    "2": "#fafafa",
+    "20": "#cccccc",
+    "3": "#f7f7f7",
+    "30": "#b3b3b3",
+    "4": "#f5f5f5",
+    "40": "#999999",
+    "5": "#f2f2f2",
+    "50": "#808080",
+    "60": "#666666",
+    "70": "#4d4d4d",
+    "80": "#333333",
+    "90": "#1a1a1a",
+    "95": "#0d0d0d",
+  },
+  "inputHeight": Object {
+    "large": "48px",
+    "normal": "40px",
+  },
+  "lightColor": "#f5f5f5",
+  "opacity": Object {
+    "intense": 0.64,
+    "light": 0.16,
+    "medium": 0.32,
+    "semiOpaque": 0.72,
+    "semiTransparent": 0.08,
+  },
+  "radius": Object {
+    "lg": "24px",
+    "md": "16px",
+    "round": "50%",
+    "sm": "12px",
+    "xl": "32px",
+    "xs": "8px",
+    "xxs": "4px",
+  },
+  "shadow": Object {
+    "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
+    "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
+    "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
+  },
+  "spacing": Object {
+    "jumbo": "96px",
+    "lg": "24px",
+    "md": "16px",
+    "sm": "12px",
+    "xl": "32px",
+    "xs": "8px",
+    "xxl": "48px",
+    "xxs": "4px",
+    "xxxl": "64px",
+  },
+  "typography": Object {
+    "h1": Object {
+      "fontSize": "32px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h2": Object {
+      "fontSize": "28px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h3": Object {
+      "fontSize": "24px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h4": Object {
+      "fontSize": "20px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h5": Object {
+      "fontSize": "18px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h6": Object {
+      "fontSize": "16px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "jumbo": Object {
+      "fontSize": "48px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "jumboLarge": Object {
+      "fontSize": "64px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "large": Object {
+      "fontSize": "18px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "mid": Object {
+      "fontSize": "14px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "regular": Object {
+      "fontSize": "16px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "small": Object {
+      "fontSize": "12px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        300,
+        400,
+      ],
+    },
+  },
+  "variants": Object {
+    "blue": Object {
+      "dark": Object {
+        "bg": "#0067fa",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#0042a1",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#002c6b",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#70abff",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#d6e7ff",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ebf3ff",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#66a5ff",
+        "color": "#000000",
+      },
+    },
+    "gray": Object {
+      "dark": Object {
+        "bg": "#484848",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#242424",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#101010",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#c0c0c0",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#e0e0e0",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#f5f5f5",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#808080",
+        "color": "#000000",
+      },
+    },
+    "green": Object {
+      "dark": Object {
+        "bg": "#2ea238",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#1d6824",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#144518",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#90e097",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#dff6e1",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#effbf0",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#58d063",
+        "color": "#000000",
+      },
+    },
+    "orange": Object {
+      "dark": Object {
+        "bg": "#f45a00",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#9d3a00",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#682700",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ffa570",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#ffe5d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fff2eb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ff995d",
+        "color": "#000000",
+      },
+    },
+    "pink": Object {
+      "dark": Object {
+        "bg": "#d51779",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#890f4e",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#5b0a34",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#f17eba",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#fbdaeb",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fdedf5",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ee63ab",
+        "color": "#000000",
+      },
+    },
+    "primary": Object {
+      "dark": Object {
+        "bg": "#b30030",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#73001f",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#4d0014",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ff668f",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#ffa3bc",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ffe6ec",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#f04",
+        "color": "#ffffff",
+      },
+    },
+    "purple": Object {
+      "dark": Object {
+        "bg": "#670aff",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#4000aa",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#2b0071",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#a670ff",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#e6d6ff",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#f2ebff",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ad7bff",
+        "color": "#000000",
+      },
+    },
+    "red": Object {
+      "dark": Object {
+        "bg": "#f40000",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#9d0000",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#690000",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ff7070",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#ffd6d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ffebeb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ff5e5e",
+        "color": "#000000",
+      },
+    },
+    "secondary": Object {
+      "dark": Object {
+        "bg": "#306a73",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#18353a",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#0d1c1e",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#7dbfc9",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#bedfe4",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#e2f1f3",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#2A5D65",
+        "color": "#ffffff",
+      },
+    },
+    "yellow": Object {
+      "dark": Object {
+        "bg": "#fac900",
+        "color": "#000000",
+      },
+      "darker": Object {
+        "bg": "#a18100",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#6b5600",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ffe370",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#fff7d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fffbeb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ffe166",
+        "color": "#000000",
+      },
+    },
+  },
+  "white": "#fff",
+}
+`;
+
+exports[`mergeTheme should return the default theme 1`] = `
+Object {
+  "black": "#000",
+  "breakpoints": Object {
+    "lg": "1024px",
+    "md": "768px",
+    "sm": "400px",
+    "xl": "1280px",
+    "xs": "375px",
+    "xxl": "1440px",
+    "xxs": "320px",
+    "xxxl": "1680px",
+  },
+  "button": Object {
+    "borderRadius": Object {
+      "lg": "8px",
+      "md": "8px",
+      "sm": "8px",
+    },
+    "fontSize": Object {
+      "lg": "18px",
+      "md": "16px",
+      "sm": "14px",
+    },
+    "fontWeight": 700,
+    "height": Object {
+      "lg": "48px",
+      "md": "40px",
+      "sm": "32px",
+    },
+    "lineHeight": Object {
+      "lg": 1.4,
+      "md": 1.3,
+      "sm": 1.2,
+    },
+    "padding": Object {
+      "lg": Array [
+        "10px",
+        "20px",
+      ],
+      "md": Array [
+        "8px",
+        "16px",
+      ],
+      "sm": Array [
+        "6px",
+        "12px",
+      ],
+    },
+  },
+  "colors": Object {
+    "blue": "#66a5ff",
+    "green": "#58d063",
+    "orange": "#ff995d",
+    "pink": "#ee63ab",
+    "primary": "#3030e8",
+    "purple": "#ad7bff",
+    "red": "#ff5e5e",
+    "secondary": "#2A5D65",
+    "yellow": "#ffe166",
+  },
+  "darkColor": "#101010",
+  "easing": "cubic-bezier(0.35, 0.01, 0.77, 0.34);",
+  "fontFamily": "inherit",
+  "fontMonospace": "Courier, monospace",
+  "gray": "#808080",
+  "grayDark": "#484848",
+  "grayDarker": "#242424",
+  "grayDarkest": "#101010",
+  "grayLight": "#c0c0c0",
+  "grayLighter": "#e0e0e0",
+  "grayLightest": "#f5f5f5",
+  "grayMid": "#767676",
+  "grayScale": Object {
+    "1": "#fcfcfc",
+    "10": "#e6e6e6",
+    "15": "#d9d9d9",
+    "2": "#fafafa",
+    "20": "#cccccc",
+    "3": "#f7f7f7",
+    "30": "#b3b3b3",
+    "4": "#f5f5f5",
+    "40": "#999999",
+    "5": "#f2f2f2",
+    "50": "#808080",
+    "60": "#666666",
+    "70": "#4d4d4d",
+    "80": "#333333",
+    "90": "#1a1a1a",
+    "95": "#0d0d0d",
+  },
+  "inputHeight": Object {
+    "large": "48px",
+    "normal": "40px",
+  },
+  "lightColor": "#f5f5f5",
+  "opacity": Object {
+    "intense": 0.64,
+    "light": 0.16,
+    "medium": 0.32,
+    "semiOpaque": 0.72,
+    "semiTransparent": 0.08,
+  },
+  "radius": Object {
+    "lg": "24px",
+    "md": "16px",
+    "round": "50%",
+    "sm": "12px",
+    "xl": "32px",
+    "xs": "8px",
+    "xxs": "4px",
+  },
+  "shadow": Object {
+    "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
+    "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
+    "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
+  },
+  "spacing": Object {
+    "jumbo": "96px",
+    "lg": "24px",
+    "md": "16px",
+    "sm": "12px",
+    "xl": "32px",
+    "xs": "8px",
+    "xxl": "48px",
+    "xxs": "4px",
+    "xxxl": "64px",
+  },
+  "typography": Object {
+    "h1": Object {
+      "fontSize": "32px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h2": Object {
+      "fontSize": "28px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h3": Object {
+      "fontSize": "24px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h4": Object {
+      "fontSize": "20px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h5": Object {
+      "fontSize": "18px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "h6": Object {
+      "fontSize": "16px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "jumbo": Object {
+      "fontSize": "48px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "jumboLarge": Object {
+      "fontSize": "64px",
+      "lineHeight": 1.2,
+      "weight": 700,
+    },
+    "large": Object {
+      "fontSize": "18px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "mid": Object {
+      "fontSize": "14px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "regular": Object {
+      "fontSize": "16px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+    "small": Object {
+      "fontSize": "12px",
+      "lineHeight": 1.2,
+      "weight": Array [
+        400,
+        700,
+      ],
+    },
+  },
+  "variants": Object {
+    "blue": Object {
+      "dark": Object {
+        "bg": "#0067fa",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#0042a1",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#002c6b",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#70abff",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#d6e7ff",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ebf3ff",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#66a5ff",
+        "color": "#000000",
+      },
+    },
+    "gray": Object {
+      "dark": Object {
+        "bg": "#484848",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#242424",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#101010",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#c0c0c0",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#e0e0e0",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#f5f5f5",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#808080",
+        "color": "#000000",
+      },
+    },
+    "green": Object {
+      "dark": Object {
+        "bg": "#2ea238",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#1d6824",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#144518",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#90e097",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#dff6e1",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#effbf0",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#58d063",
+        "color": "#000000",
+      },
+    },
+    "orange": Object {
+      "dark": Object {
+        "bg": "#f45a00",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#9d3a00",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#682700",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ffa570",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#ffe5d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fff2eb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ff995d",
+        "color": "#000000",
+      },
+    },
+    "pink": Object {
+      "dark": Object {
+        "bg": "#d51779",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#890f4e",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#5b0a34",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#f17eba",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#fbdaeb",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fdedf5",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ee63ab",
+        "color": "#000000",
+      },
+    },
+    "primary": Object {
+      "dark": Object {
+        "bg": "#1414b0",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#0d0d71",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#08084c",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#7e7ef1",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#c7c7f9",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ededfd",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#3030e8",
+        "color": "#ffffff",
+      },
+    },
+    "purple": Object {
+      "dark": Object {
+        "bg": "#670aff",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#4000aa",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#2b0071",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#a670ff",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#e6d6ff",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#f2ebff",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ad7bff",
+        "color": "#000000",
+      },
+    },
+    "red": Object {
+      "dark": Object {
+        "bg": "#f40000",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#9d0000",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#690000",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ff7070",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#ffd6d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#ffebeb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ff5e5e",
+        "color": "#000000",
+      },
+    },
+    "secondary": Object {
+      "dark": Object {
+        "bg": "#306a73",
+        "color": "#ffffff",
+      },
+      "darker": Object {
+        "bg": "#18353a",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#0d1c1e",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#7dbfc9",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#bedfe4",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#e2f1f3",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#2A5D65",
+        "color": "#ffffff",
+      },
+    },
+    "yellow": Object {
+      "dark": Object {
+        "bg": "#fac900",
+        "color": "#000000",
+      },
+      "darker": Object {
+        "bg": "#a18100",
+        "color": "#ffffff",
+      },
+      "darkest": Object {
+        "bg": "#6b5600",
+        "color": "#ffffff",
+      },
+      "light": Object {
+        "bg": "#ffe370",
+        "color": "#000000",
+      },
+      "lighter": Object {
+        "bg": "#fff7d6",
+        "color": "#000000",
+      },
+      "lightest": Object {
+        "bg": "#fffbeb",
+        "color": "#000000",
+      },
+      "mid": Object {
+        "bg": "#ffe166",
+        "color": "#000000",
+      },
+    },
+  },
+  "white": "#fff",
+}
+`;
+
+exports[`responsive should return proper styles 1`] = `"width:120px;@media screen and (min-width: 768px){width:200px;}"`;

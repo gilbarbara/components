@@ -12,19 +12,15 @@ import * as theme from './theme';
 import {
   BaseProps,
   Breakpoints,
+  GetElementPropertyOptions,
   MediaQueries,
-  RecursiveChildrenMapOptions,
+  RecursiveChildrenEnhancerOptions,
   ResponsiveInput,
   ResponsiveSizes,
   Shades,
   Theme,
   Variants,
 } from '../types';
-
-interface RecursiveElementFindOptions {
-  property?: string;
-  type: string;
-}
 
 const { black, breakpoints, white } = theme;
 
@@ -34,7 +30,7 @@ const deepmerge = deepmergeCustom<{
   mergeArrays: false,
 });
 
-export function clearNumber(value = '') {
+export function clearNumber(value: string) {
   return value.replace(/\D+/g, '');
 }
 
@@ -72,6 +68,47 @@ export function getColorVariant(
   } catch {
     return variants.primary.mid;
   }
+}
+
+export function getElementProperty(
+  element: ReactElement,
+  options: GetElementPropertyOptions,
+): string | null {
+  const { children } = element.props;
+  const { property, type } = options;
+
+  const getValue = (input: ReactElement) => {
+    const { props } = input;
+
+    if (input.type === type) {
+      if (property) {
+        return props?.[property] || null;
+      }
+
+      return props.children || null;
+    }
+
+    return null;
+  };
+
+  for (const child of Children.toArray(children)) {
+    if (!isValidElement(child)) {
+      return getValue(element);
+    }
+
+    const childrenElement = child.props?.children?.type === type ? child.props.children : undefined;
+    const selectedElement = child.type === type ? child : childrenElement;
+
+    if (selectedElement) {
+      return getValue(selectedElement);
+    }
+
+    if (is.array(child.props.children)) {
+      return getElementProperty(child, options);
+    }
+  }
+
+  return null;
 }
 
 export function getMediaQueries(): MediaQueries {
@@ -130,54 +167,12 @@ export function px(value: StringOrNumber | undefined): string | undefined {
   return is.number(value) || is.numericString(value) ? `${value}px` : value;
 }
 
-export function recursiveElementFind(
-  element: ReactElement,
-  options: RecursiveElementFindOptions,
-): string | null {
-  const { children } = element.props;
-  const { property, type } = options;
-
-  const getValue = (input: ReactElement) => {
-    const props = input.props as any;
-
-    if (input.type === type) {
-      if (property) {
-        return props?.[property] || null;
-      }
-
-      return props.children || '';
-    }
-
-    return input;
-  };
-
-  if (is.array(children)) {
-    for (const child of children) {
-      const childrenElement =
-        child.props?.children?.type === type ? child.props.children : undefined;
-      const selectedElement = child.type === type ? child : childrenElement;
-
-      if (selectedElement) {
-        return getValue(selectedElement);
-      }
-
-      if (is.array(child.props.children)) {
-        return recursiveElementFind(child, options);
-      }
-    }
-  } else if (isValidElement(children)) {
-    return getValue(children);
-  }
-
-  return null;
-}
-
-export function recursiveChildrenMap(
+export function recursiveChildrenEnhancer(
   children: ReactNode,
   props: AnyObject,
-  options: RecursiveChildrenMapOptions = {},
+  options: RecursiveChildrenEnhancerOptions,
 ): ReactNode {
-  const { filter, overrideProps } = options;
+  const { componentType, overrideProps } = options;
 
   return Children.map(children, child => {
     if (!isValidElement(child)) {
@@ -190,17 +185,17 @@ export function recursiveChildrenMap(
       let childProps = {
         children: is.function(child.props.children)
           ? child.props.children
-          : recursiveChildrenMap(child.props.children, nextProps, options),
+          : recursiveChildrenEnhancer(child.props.children, nextProps, options),
       };
 
-      if (filter && child.type === filter) {
+      if (child.type === componentType) {
         childProps = { ...childProps, ...nextProps };
       }
 
       return cloneElement(child, childProps);
     }
 
-    if (filter && child.type !== filter) {
+    if (child.type !== componentType) {
       return child;
     }
 
@@ -209,7 +204,7 @@ export function recursiveChildrenMap(
 }
 
 /**
- * SC Helper to generate responsive media queries
+ * Helper to generate responsive media queries
  */
 export function responsive(rules: ResponsiveInput) {
   const entries: AnyObject = {};
