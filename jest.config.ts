@@ -1,12 +1,12 @@
 module.exports = {
   collectCoverage: false,
-  collectCoverageFrom: ['src/**/*', '!src/types/**/*'],
+  collectCoverageFrom: ['src/modules/**/*'],
   coverageThreshold: {
     global: {
-      branches: 70,
-      functions: 90,
-      lines: 90,
-      statements: 90,
+      branches: 15,
+      functions: 15,
+      lines: 15,
+      statements: 15,
     },
   },
   globals: {
@@ -17,7 +17,6 @@ module.exports = {
       },
     },
   },
-  moduleFileExtensions: ['js', 'ts', 'tsx', 'json'],
   moduleDirectories: ['node_modules', 'src'],
   preset: 'ts-jest',
   testRegex: 'test/.*?\\.(test|spec)\\.tsx?$',

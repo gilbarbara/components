@@ -31,6 +31,11 @@ export type ButtonTypes = 'button' | 'submit' | 'reset';
 
 export type Direction = 'horizontal' | 'vertical';
 
+export interface GetElementPropertyOptions {
+  property?: string;
+  type: string;
+}
+
 export type Icons = typeof icons[number]['name'];
 
 export type InputTypes = typeof inputTypes[number];
@@ -56,8 +61,8 @@ export interface MediaQueries {
   xs: string;
 }
 
-export interface RecursiveChildrenMapOptions {
-  filter?: JSXElementConstructor<any>;
+export interface RecursiveChildrenEnhancerOptions {
+  componentType?: JSXElementConstructor<any>;
   overrideProps?: boolean;
 }
 

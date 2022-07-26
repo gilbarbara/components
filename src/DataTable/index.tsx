@@ -9,7 +9,7 @@ import Head from './Head';
 
 import { Box, BoxCenter } from '../Box';
 import { scrollTo } from '../modules/animations';
-import { recursiveElementFind } from '../modules/helpers';
+import { getElementProperty } from '../modules/helpers';
 import { Pagination } from '../Pagination';
 import { Text } from '../Text';
 import { ComponentProps, StyledProps, WithFlexItem, WithLayout, WithMargin } from '../types';
@@ -67,8 +67,8 @@ function sortData(data: any[], sortBy: string, sortDirection: string) {
     let right = innerText(b[sortBy]);
 
     if (sortBy === 'date') {
-      left = recursiveElementFind(a[sortBy], { type: 'time', property: 'dateTime' }) || left;
-      right = recursiveElementFind(b[sortBy], { type: 'time', property: 'dateTime' }) || right;
+      left = getElementProperty(a[sortBy], { type: 'time', property: 'dateTime' }) || left;
+      right = getElementProperty(b[sortBy], { type: 'time', property: 'dateTime' }) || right;
     }
 
     if (sortDirection === 'desc') {

@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "baseUrl": "../src",
+    "noUnusedLocals": false
+  },
+  "include": ["../*.d.ts", "**/*"]
+}
