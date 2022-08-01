@@ -1,4 +1,4 @@
-import { forwardRef, MouseEvent, useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import * as ReactCopyToClipboard from 'react-copy-to-clipboard';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -50,7 +50,7 @@ const StyledIcon = styled(Icon)`
   }
 `;
 
-export const CopyToClipboard = forwardRef<HTMLSpanElement, CopyToClipboardProps>((props, ref) => {
+export function CopyToClipboard(props: CopyToClipboardProps) {
   const {
     disableAnimation = false,
     icon = 'copy',
@@ -88,12 +88,7 @@ export const CopyToClipboard = forwardRef<HTMLSpanElement, CopyToClipboardProps>
   };
 
   return (
-    <StyledCopyToClipboard
-      ref={ref}
-      data-component-name="CopyToClipboard"
-      onClick={handleClick}
-      {...rest}
-    >
+    <StyledCopyToClipboard data-component-name="CopyToClipboard" onClick={handleClick} {...rest}>
       <Tooltip content={content} position="right" size="small">
         <ReactCopyToClipboard onCopy={onCopy} text={text}>
           <StyledIcon name={icon} size={size} title={null} />
@@ -101,7 +96,7 @@ export const CopyToClipboard = forwardRef<HTMLSpanElement, CopyToClipboardProps>
       </Tooltip>
     </StyledCopyToClipboard>
   );
-});
+}
 
 CopyToClipboard.defaultProps = {
   disableAnimation: false,
