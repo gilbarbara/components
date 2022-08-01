@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./lib",
-    "target": "es5"
+    "target": "ESNext"
   },
   "include": ["src/**/*", "*.d.ts"]
 }
