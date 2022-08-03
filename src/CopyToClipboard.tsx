@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
-import * as ReactCopyToClipboard from 'react-copy-to-clipboard';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import copy from 'copy-text-to-clipboard';
 
 import { Icon } from './Icon';
 import { animateIcon, fadeInOut } from './modules/animations';
@@ -78,6 +78,8 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
       animateIcon(event.currentTarget, 'primary', theme);
     }
 
+    copy(text);
+
     setContent(tooltipCopiedText);
 
     setTimeout(() => {
@@ -90,9 +92,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
   return (
     <StyledCopyToClipboard data-component-name="CopyToClipboard" onClick={handleClick} {...rest}>
       <Tooltip content={content} position="right" size="small">
-        <ReactCopyToClipboard onCopy={onCopy} text={text}>
-          <StyledIcon name={icon} size={size} title={null} />
-        </ReactCopyToClipboard>
+        <StyledIcon name={icon} size={size} title={null} />
       </Tooltip>
     </StyledCopyToClipboard>
   );
