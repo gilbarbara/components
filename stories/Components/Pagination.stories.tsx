@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
 import { Pagination, PaginationProps } from 'src/Pagination';
 
-import { disableControl, hideProps, marginProps } from '../__helpers__';
+import { disableControl, hideProps, spacingProps } from '../__helpers__';
 
 export default {
   title: 'Components/Pagination',
@@ -14,7 +14,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...marginProps(),
+    ...spacingProps(),
     currentPage: disableControl(),
     onClick: disableControl(),
   },
