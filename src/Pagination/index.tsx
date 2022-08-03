@@ -1,14 +1,17 @@
-import { MouseEventHandler, ReactNode } from 'react';
+import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
 
 import PaginationButton from './Button';
 
 import { Icon } from '../Icon';
-import { getStyledOptions, marginStyles } from '../modules/system';
-import { WithMargin } from '../types';
+import { borderStyles, getStyledOptions, marginStyles, paddingStyles } from '../modules/system';
+import { WithBorder, WithMargin, WithPadding } from '../types';
 
-export interface PaginationProps extends WithMargin {
+export interface PaginationProps extends WithBorder, WithMargin, WithPadding {
+  /** @default end */
+  align?: 'start' | 'center' | 'end';
   currentPage: number;
   /**
    * Hide First/Last links
@@ -21,6 +24,7 @@ export interface PaginationProps extends WithMargin {
    */
   edgeNavigationLimit?: number;
   onClick: MouseEventHandler<HTMLButtonElement>;
+  style?: CSSProperties;
   totalPages: number;
 }
 
@@ -31,12 +35,21 @@ interface Item {
   page?: number;
 }
 
-const StyledPagination = styled('div', getStyledOptions())`
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
-  ${marginStyles};
-`;
+const StyledPagination = styled(
+  'div',
+  getStyledOptions(),
+)<Omit<PaginationProps, 'currentPage' | 'onClick' | 'totalPages'>>(props => {
+  const { align } = props;
+
+  return css`
+    align-items: center;
+    display: flex;
+    justify-content: ${align};
+    ${borderStyles(props)};
+    ${marginStyles(props)};
+    ${paddingStyles(props)};
+  `;
+});
 
 export function Pagination(props: PaginationProps): JSX.Element | null {
   const {
@@ -154,6 +167,7 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
 }
 
 Pagination.defaultProps = {
+  align: 'end',
   disableEdgeNavigation: false,
   edgeNavigationLimit: 3,
 };
