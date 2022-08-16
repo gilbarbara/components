@@ -1,10 +1,10 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import copy from 'copy-text-to-clipboard';
 
 import { Icon } from './Icon';
 import { animateIcon, fadeInOut } from './modules/animations';
+import copy from './modules/copy-text-to-clipboard';
 import { getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { Tooltip } from './Tooltip';
