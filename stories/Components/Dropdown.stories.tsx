@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
+
 import { Icon } from 'src';
 import { Dropdown } from 'src/Dropdown';
-
 import { DropdownItem, DropdownProps } from 'src/types';
 
 import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';

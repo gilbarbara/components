@@ -2,6 +2,7 @@ import { ChangeEvent, forwardRef, ReactNode, useCallback, useMemo, useRef, useSt
 import { useSetState } from 'react-use';
 import { removeAccents } from '@gilbarbara/helpers';
 import { ComponentMeta } from '@storybook/react';
+
 import {
   Anchor,
   Box,
@@ -19,7 +20,6 @@ import {
   Text,
 } from 'src';
 import { DataTable, DataTableColumn } from 'src/DataTable';
-
 import { DropdownItem } from 'src/types';
 
 import { members } from '../__assets__/data';

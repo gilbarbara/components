@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Box, Text } from 'src';
 import { Paragraph, ParagraphProps } from 'src/Paragraph';
 

@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Truncate, TruncateProps } from 'src/Truncate';
 
 import { hideProps } from '../__helpers__';

@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { H1, H2, H3, H4, H5, H6 } from 'src/Headings';
 import { HeadingProps } from 'src/Headings/utils';
 

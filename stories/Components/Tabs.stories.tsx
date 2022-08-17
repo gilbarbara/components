@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Icon, Paragraph, Spacer } from 'src';
 import { Tab, Tabs, TabsProps } from 'src/Tabs';
 

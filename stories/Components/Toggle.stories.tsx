@@ -1,10 +1,9 @@
 import { useTheme } from '@emotion/react';
 import { ComponentMeta } from '@storybook/react';
+
 import { Grid } from 'src';
-import { Toggle, ToggleProps } from 'src/Toggle';
-
 import { getTheme } from 'src/modules/helpers';
-
+import { Toggle, ToggleProps } from 'src/Toggle';
 import * as Types from 'src/types';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';

@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { ProgressBar, ProgressBarProps } from 'src/ProgressBar';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';

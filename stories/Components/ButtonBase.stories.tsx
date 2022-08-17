@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { ButtonBase, ButtonBaseProps } from 'src/ButtonBase';
 
 import { colorProps, hideProps, spacingProps } from '../__helpers__';

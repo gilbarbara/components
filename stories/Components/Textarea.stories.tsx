@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Textarea, TextareaProps } from 'src/Textarea';
 
 import { hideProps } from '../__helpers__';

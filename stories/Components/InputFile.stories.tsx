@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { InputFile, InputFileProps } from 'src/InputFile';
 
 import { hideProps } from '../__helpers__';

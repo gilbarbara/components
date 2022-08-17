@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Loader } from 'src/Loader';
 
 import { colorProps, hideProps, hideTable } from '../__helpers__';

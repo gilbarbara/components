@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Box, Button, Icon, Paragraph, Spacer } from 'src';
 import { Tooltip, TooltipProps } from 'src/Tooltip';
 

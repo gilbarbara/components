@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { DatePicker, DatePickerSingleProps } from 'src/DatePicker/Single';
 
 import { disableControl, hideProps, spacingProps } from '../__helpers__';

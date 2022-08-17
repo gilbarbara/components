@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { InputColor, InputColorProps } from 'src/InputColor';
 
 import { hideProps } from '../__helpers__';

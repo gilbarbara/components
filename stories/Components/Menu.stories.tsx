@@ -1,5 +1,6 @@
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
+
 import { ButtonBase, Icon, Spacer } from 'src';
 import { Menu, MenuDivider, MenuItem, MenuProps } from 'src/Menu';
 

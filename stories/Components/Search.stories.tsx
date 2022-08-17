@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react';
-import { Search } from 'src/Search';
 
+import { Search } from 'src/Search';
 import { SearchItem, SearchProps } from 'src/types';
 
 import { Avatar, Box, Paragraph } from '../../src';

@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { BoxCenter, Grid, Paragraph } from 'src';
 import { Avatar, AvatarProps } from 'src/Avatar';
 

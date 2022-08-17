@@ -1,10 +1,10 @@
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
-import { Paragraph } from 'src';
-import { Text, TextProps } from 'src/Text';
 
+import { Paragraph } from 'src';
 import { textSizes } from 'src/modules/options';
+import { Text, TextProps } from 'src/Text';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
 

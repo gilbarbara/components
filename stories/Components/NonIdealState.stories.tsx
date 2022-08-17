@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { NonIdealState, NonIdealStateProps } from 'src/NonIdealState';
 
 import { flexItemProps, hideProps, layoutProps, spacingProps } from '../__helpers__';

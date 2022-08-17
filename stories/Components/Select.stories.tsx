@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Select, SelectProps } from 'src/Select';
 
 import { hideProps } from '../__helpers__';

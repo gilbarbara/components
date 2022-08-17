@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Alert, AlertProps } from 'src/Alert';
 
 import { disableControl, hideProps, spacingProps } from '../__helpers__';

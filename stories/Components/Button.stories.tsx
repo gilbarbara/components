@@ -1,11 +1,10 @@
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
+
 import { Grid, Icon, Spacer } from 'src';
 import { Button, ButtonProps } from 'src/Button';
-
 import { sizes } from 'src/modules/options';
-
 import * as Types from 'src/types';
 
 import {

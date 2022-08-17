@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Divider, DividerProps } from 'src/Divider';
 
 import { Box } from '../../src';

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { ComponentMeta } from '@storybook/react';
-import { ResponsiveMedia, ResponsiveMediaProps } from 'src/ResponsiveMedia';
 
 import { grayMid } from 'src/modules/theme';
+import { ResponsiveMedia, ResponsiveMediaProps } from 'src/ResponsiveMedia';
 
 import { hideProps, marginProps } from '../__helpers__';
 

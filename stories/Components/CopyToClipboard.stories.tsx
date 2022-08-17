@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { CopyToClipboard, CopyToClipboardProps } from 'src/CopyToClipboard';
 
 import { hideProps, marginProps } from '../__helpers__';

@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Box, Grid, Paragraph } from 'src';
 import { StatusIndicator, StatusIndicatorProps } from 'src/StatusIndicator';
 

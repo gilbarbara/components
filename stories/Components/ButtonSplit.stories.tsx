@@ -2,6 +2,7 @@ import { MouseEvent, useState } from 'react';
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
+
 import { ButtonBase, Icon } from 'src';
 import {
   ButtonSplit,

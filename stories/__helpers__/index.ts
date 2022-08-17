@@ -1,7 +1,6 @@
 import { AnyObject } from '@gilbarbara/types';
 
 import { variants as themeVariants } from 'src/modules/theme';
-
 import { Shades, Variants } from 'src/types';
 
 const base = ['normal', 'stretch'];

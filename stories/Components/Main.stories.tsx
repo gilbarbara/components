@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Box, Button, H4, Jumbo, Paragraph } from 'src';
 import { Main, MainProps } from 'src/Main';
 

@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { DatePickerInput, DatePickerInputProps } from 'src/DatePicker/Input';
 
 import { disableControl, hideProps } from '../__helpers__';

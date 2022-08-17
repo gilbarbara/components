@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Label, LabelProps } from 'src/Label';
 
 import { hideProps } from '../__helpers__';

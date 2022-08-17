@@ -1,12 +1,11 @@
 import { useTheme } from '@emotion/react';
 import { capitalize } from '@gilbarbara/helpers';
 import { ComponentMeta } from '@storybook/react';
-import { Grid, Spacer } from 'src';
-import { Tag, TagProps } from 'src/Tag';
 
+import { Grid, Spacer } from 'src';
 import { getTheme } from 'src/modules/helpers';
 import { textSizes } from 'src/modules/options';
-
+import { Tag, TagProps } from 'src/Tag';
 import * as Types from 'src/types';
 
 import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';

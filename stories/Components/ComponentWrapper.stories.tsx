@@ -1,4 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
+
 import { Icon, Input, Select, Textarea } from 'src';
 import { ComponentWrapper } from 'src/ComponentWrapper';
 

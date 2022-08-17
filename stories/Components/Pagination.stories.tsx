@@ -1,6 +1,7 @@
 import { MouseEvent, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { ComponentMeta } from '@storybook/react';
+
 import { Pagination, PaginationProps } from 'src/Pagination';
 
 import { disableControl, hideProps, spacingProps } from '../__helpers__';
