@@ -231,12 +231,12 @@ export const Basic = () => {
   const noResults = useMemo(() => {
     if (!members.length) {
       return (
-        <NonIdealState icon="info" small title="Você ainda não adicionou candidatos na vaga" />
+        <NonIdealState icon="info" size="sm" title="Você ainda não adicionou candidatos na vaga" />
       );
     }
 
     return (
-      <NonIdealState icon="search" small title="Sua busca não retornou resultados!">
+      <NonIdealState icon="search" size="sm" title="Sua busca não retornou resultados!">
         <Button onClick={handleClickReset} size="sm">
           Reset filters
         </Button>

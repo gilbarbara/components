@@ -314,7 +314,7 @@ export function Tabs(props: TabsProps) {
       );
     } else {
       content.main = noContent || (
-        <NonIdealState description="Content not available" icon="danger" small />
+        <NonIdealState description="Content not available" icon="danger" size="sm" />
       );
     }
   } else {

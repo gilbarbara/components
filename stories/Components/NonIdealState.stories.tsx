@@ -2,7 +2,14 @@ import { ComponentMeta } from '@storybook/react';
 
 import { NonIdealState, NonIdealStateProps } from 'src/NonIdealState';
 
-import { flexItemProps, hideProps, layoutProps, spacingProps } from '../__helpers__';
+import {
+  colorProps,
+  disableControl,
+  flexItemProps,
+  hideProps,
+  layoutProps,
+  spacingProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/NonIdealState',
@@ -10,6 +17,7 @@ export default {
   args: NonIdealState.defaultProps,
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     ...flexItemProps(),
     ...layoutProps(),
     ...spacingProps(),
@@ -21,3 +29,11 @@ export default {
 } as ComponentMeta<typeof NonIdealState>;
 
 export const Basic = (props: NonIdealStateProps) => <NonIdealState {...props} />;
+
+export const Horizontal = (props: NonIdealStateProps) => (
+  <NonIdealState {...props} direction="horizontal" />
+);
+
+Horizontal.argTypes = {
+  direction: disableControl(),
+};
