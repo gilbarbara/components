@@ -30,7 +30,7 @@ export default {
 } as ComponentMeta<typeof Dropdown>;
 
 const items: DropdownItem[] = [
-  { value: 1, label: 'One', prefix: <Icon name="abstract" /> },
+  { value: 1, label: 'One', prefix: <Icon name="chevron-right" /> },
   { value: 2, label: 'Two', prefix: <Icon name="anchor" />, suffix: <Icon name="asterisk" /> },
   { value: 3, label: 'Three', disabled: true, prefix: <Icon name="awards" /> },
   { value: 4, label: 'Four', prefix: <Icon name="image" />, suffix: <Icon name="asterisk" /> },
