@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react';
 
 import { Radio, RadioProps } from 'src/CheckboxAndRadio';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { disableControl, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Radio',
@@ -15,6 +15,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...marginProps(),
     label: { control: 'text' },
     onChange: { action: 'onChange', ...disableControl() },
     value: { control: 'text' },

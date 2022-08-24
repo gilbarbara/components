@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 
 import {
+  getMarginProps,
   handleKeyDown,
   RadioProps,
   StyledCheckboxRadioInput,
@@ -14,10 +15,16 @@ import {
  * RadioGroup accepts an `items` prop that render this component in a group and is responsible for managing state and interactions.
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const { checked, children, defaultChecked, id, label, name, size, style, ...rest } = props;
+  const { align, checked, defaultChecked, id, label, name, size, style, ...rest } = props;
 
   return (
-    <StyledLabel category="radio" data-component-name="Radio" htmlFor={id}>
+    <StyledLabel
+      align={align}
+      category="radio"
+      data-component-name="Radio"
+      htmlFor={id}
+      {...getMarginProps(props)}
+    >
       <StyledCheckboxRadioInput
         ref={ref}
         aria-checked={!!(checked || defaultChecked)}
@@ -31,19 +38,23 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       />
       <StyledElement
         category="radio"
+        label={label}
         onKeyDown={handleKeyDown}
         size={size}
         style={style}
         tabIndex={props.disabled ? -1 : 0}
       />
-      <StyledText category="radio" size={size}>
-        {children || label}
-      </StyledText>
+      {label && (
+        <StyledText category="radio" size={size}>
+          {label}
+        </StyledText>
+      )}
     </StyledLabel>
   );
 });
 
 Radio.defaultProps = {
+  align: 'center',
   disabled: false,
   size: 'md',
 };
