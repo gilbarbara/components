@@ -19,7 +19,7 @@ export interface StyledProps {
 
 export interface CheckboxItem {
   disabled?: boolean;
-  label: ReactNode;
+  label?: ReactNode;
   name: string;
 }
 
@@ -148,7 +148,7 @@ export interface LoaderProps
 
 export interface RadioItem {
   disabled?: boolean;
-  label: ReactNode;
+  label?: ReactNode;
   value: StringOrNumber;
 }
 

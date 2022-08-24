@@ -3,7 +3,7 @@ import { ComponentMeta } from '@storybook/react';
 import { FormGroup, Spacer } from 'src';
 import { Checkbox, CheckboxProps } from 'src/CheckboxAndRadio';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { disableControl, hideProps, marginProps } from '../__helpers__';
 
 export default {
   title: 'Components/Checkbox',
@@ -15,6 +15,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...marginProps(),
     label: { control: 'text' },
     onChange: { action: 'onChange', ...disableControl() },
   },

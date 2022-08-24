@@ -11,7 +11,7 @@ import { RadioItem, WithComponentSize } from './types';
 
 export interface RadioGroupProps
   extends WithComponentSize,
-    Omit<RadioProps, 'checked' | 'defaultChecked' | 'label'> {
+    Omit<RadioProps, 'align' | 'checked' | 'defaultChecked' | 'label'> {
   defaultValue?: StringOrNumber;
   inline?: boolean;
   items: RadioItem[];
@@ -78,9 +78,11 @@ export function RadioGroup(props: RadioGroupProps) {
       {items.map(d => (
         <Radio
           key={d.value}
+          align="start"
           checked={d.value === currentValue}
           disabled={disabled || d.disabled}
           label={d.label || d.value}
+          mb="xxs"
           name={name}
           onChange={handleChange}
           size={size}

@@ -1,12 +1,29 @@
 import { ChangeEventHandler, KeyboardEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { pick } from '@gilbarbara/helpers';
 
 import { getTheme, px } from '../modules/helpers';
-import { baseStyles, getStyledOptions, isDarkMode, outlineStyles } from '../modules/system';
-import { CheckboxItem, ComponentProps, RadioItem, StyledProps, WithComponentSize } from '../types';
+import {
+  baseStyles,
+  getStyledOptions,
+  isDarkMode,
+  marginStyles,
+  outlineStyles,
+} from '../modules/system';
+import {
+  CheckboxItem,
+  ComponentProps,
+  RadioItem,
+  StyledProps,
+  WithComponentSize,
+  WithFlexBox,
+  WithMargin,
+} from '../types';
 
-export interface SharedProps extends StyledProps, WithComponentSize {
+export interface SharedProps extends StyledProps, WithComponentSize, WithMargin {
+  /** @default center */
+  align?: WithFlexBox['align'];
   name: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
@@ -15,8 +32,8 @@ export type CheckboxProps = ComponentProps<HTMLInputElement, SharedProps & Check
 export type RadioProps = ComponentProps<HTMLInputElement, SharedProps & RadioItem>;
 
 interface InnerProps
-  extends Omit<CheckboxProps, 'label' | 'name' | 'value'>,
-    Omit<RadioProps, 'label' | 'name' | 'value'> {
+  extends Omit<CheckboxProps, 'name' | 'value'>,
+    Omit<RadioProps, 'name' | 'value'> {
   category?: 'checkbox' | 'radio';
 }
 
@@ -44,9 +61,9 @@ export const StyledText = styled(
 
 export const StyledElement = styled(
   'span',
-  getStyledOptions(),
+  getStyledOptions('label'),
 )<InnerProps>(props => {
-  const { category = 'checkbox', size } = props;
+  const { category = 'checkbox', label, size } = props;
   const { colors, grayDark, grayDarker, grayLighter, radius, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
@@ -110,7 +127,7 @@ export const StyledElement = styled(
     display: inline-flex;
     flex-shrink: 0;
     height: ${px(dimensions)};
-    margin-right: 6px;
+    margin-right: ${label ? '6px' : '0'};
     overflow: hidden;
     position: relative;
     transition: background-color 0.2s, border-color 0.2s;
@@ -153,13 +170,14 @@ export const StyledLabel = styled(
   'label',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { disabled } = props;
+  const { align, disabled } = props;
 
   return css`
-    align-items: center;
+    ${marginStyles(props)};
+    align-items: ${align};
     cursor: ${disabled ? 'default' : 'pointer'};
     display: flex;
-    margin-bottom: 8px;
+    justify-content: flex-start;
     position: relative;
 
     &:focus,
@@ -179,6 +197,10 @@ export const StyledLabel = styled(
     }
   `;
 });
+
+export function getMarginProps(props: CheckboxProps | RadioProps) {
+  return pick(props, 'margin', 'mb', 'ml', 'mr', 'mt', 'mx', 'my');
+}
 
 export function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
   const target = event.target as HTMLSpanElement;
