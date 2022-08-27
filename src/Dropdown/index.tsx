@@ -159,7 +159,7 @@ export function Dropdown<T extends DropdownItem>(props: DropdownProps<T>) {
     values = [],
     ...rest
   } = props;
-  const [currentValues, setCurrentValues] = useState<T[]>([]);
+  const [currentValues, setCurrentValues] = useState<T[]>(values);
   const [isFilled, setFilled] = useState(!!values.length);
 
   const { variants } = getTheme({ theme: useTheme() });
