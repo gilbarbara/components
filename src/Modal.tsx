@@ -47,7 +47,7 @@ const StyledModal = styled(
   return css`
     background-color: ${darkMode ? darkColor : white};
     color: ${darkMode ? white : black};
-    max-width: ${maxWidth ? px(maxWidth) : 'none'};
+    max-width: ${px(maxWidth)};
     width: ${width ? px(width) : 'auto'};
     ${borderStyles(props)};
     ${paddingStyles(props)};
@@ -59,10 +59,13 @@ const StyledModal = styled(
 const StyledModalContent = styled(
   'div',
   getStyledOptions(),
-)<Required<Pick<ModalProps, 'maxHeight'>>>(props => {
-  const { maxHeight } = props;
+)<Required<Pick<ModalProps, 'maxHeight' | 'padding'>>>(props => {
+  const { maxHeight, padding } = props;
+  const { spacing } = getTheme(props);
 
   return css`
+    margin: 0 -${padding ? spacing[padding] : padding};
+    padding: 0 ${padding ? spacing[padding] : padding};
     max-height: ${px(maxHeight)};
     overflow-y: auto;
   `;
@@ -84,6 +87,7 @@ export function Modal(props: ModalProps) {
     zIndex,
     ...rest
   } = props;
+  const { padding = 'lg' } = rest;
   const { black, darkMode, white } = getTheme({ theme: useTheme() });
 
   const handlePortalClose = useCallback(() => {
@@ -119,7 +123,9 @@ export function Modal(props: ModalProps) {
     >
       <StyledModal data-component-name="Modal" {...rest} style={style}>
         {header}
-        <StyledModalContent maxHeight={maxHeight}>{children}</StyledModalContent>
+        <StyledModalContent maxHeight={maxHeight} padding={padding}>
+          {children}
+        </StyledModalContent>
       </StyledModal>
     </Portal>
   );
@@ -131,6 +137,7 @@ Modal.defaultProps = {
   hideCloseButton: false,
   hideOverlay: false,
   maxHeight: '80vh',
+  maxWidth: '100vw',
   padding: 'lg',
   radius: 'lg',
   shadow: 'high',
