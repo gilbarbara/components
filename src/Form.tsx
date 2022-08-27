@@ -1,11 +1,11 @@
 import { FieldValues, FormProvider, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
 import { AnyObject } from '@gilbarbara/types';
 
-export interface FormProps<T = FieldValues> {
+export interface FormProps<T extends FieldValues = FieldValues> {
   formMethods: UseFormReturn<T>;
 }
 
-interface Props<T> extends UseFormProps<T> {
+interface Props<T extends FieldValues> extends UseFormProps<T> {
   children: (props: FormProps<T>) => JSX.Element;
 }
 
