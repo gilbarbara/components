@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`getMediaQueries should return properly 1`] = `
-Object {
+{
   "lg": "@media screen and (min-width: 1024px)",
   "md": "@media screen and (min-width: 768px)",
   "sm": "@media screen and (min-width: 400px)",
@@ -14,9 +14,9 @@ Object {
 `;
 
 exports[`getTheme should return the theme 1`] = `
-Object {
+{
   "black": "#000",
-  "breakpoints": Object {
+  "breakpoints": {
     "lg": "1024px",
     "md": "768px",
     "sm": "400px",
@@ -26,44 +26,44 @@ Object {
     "xxs": "320px",
     "xxxl": "1680px",
   },
-  "button": Object {
-    "borderRadius": Object {
+  "button": {
+    "borderRadius": {
       "lg": "8px",
       "md": "8px",
       "sm": "8px",
     },
-    "fontSize": Object {
+    "fontSize": {
       "lg": "18px",
       "md": "16px",
       "sm": "14px",
     },
     "fontWeight": 700,
-    "height": Object {
+    "height": {
       "lg": "48px",
       "md": "40px",
       "sm": "32px",
     },
-    "lineHeight": Object {
+    "lineHeight": {
       "lg": 1.4,
       "md": 1.3,
       "sm": 1.2,
     },
-    "padding": Object {
-      "lg": Array [
+    "padding": {
+      "lg": [
         "10px",
         "20px",
       ],
-      "md": Array [
+      "md": [
         "8px",
         "16px",
       ],
-      "sm": Array [
+      "sm": [
         "6px",
         "12px",
       ],
     },
   },
-  "colors": Object {
+  "colors": {
     "blue": "#66a5ff",
     "green": "#58d063",
     "orange": "#ff995d",
@@ -86,7 +86,7 @@ Object {
   "grayLighter": "#e0e0e0",
   "grayLightest": "#f5f5f5",
   "grayMid": "#767676",
-  "grayScale": Object {
+  "grayScale": {
     "1": "#fcfcfc",
     "10": "#e6e6e6",
     "15": "#d9d9d9",
@@ -104,19 +104,19 @@ Object {
     "90": "#1a1a1a",
     "95": "#0d0d0d",
   },
-  "inputHeight": Object {
+  "inputHeight": {
     "large": "48px",
     "normal": "40px",
   },
   "lightColor": "#f5f5f5",
-  "opacity": Object {
+  "opacity": {
     "intense": 0.64,
     "light": 0.16,
     "medium": 0.32,
     "semiOpaque": 0.72,
     "semiTransparent": 0.08,
   },
-  "radius": Object {
+  "radius": {
     "lg": "24px",
     "md": "16px",
     "round": "50%",
@@ -125,12 +125,12 @@ Object {
     "xs": "8px",
     "xxs": "4px",
   },
-  "shadow": Object {
+  "shadow": {
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
     "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
     "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
   },
-  "spacing": Object {
+  "spacing": {
     "jumbo": "96px",
     "lg": "24px",
     "md": "16px",
@@ -141,377 +141,377 @@ Object {
     "xxs": "4px",
     "xxxl": "64px",
   },
-  "typography": Object {
-    "h1": Object {
+  "typography": {
+    "h1": {
       "fontSize": "32px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h2": Object {
+    "h2": {
       "fontSize": "28px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h3": Object {
+    "h3": {
       "fontSize": "24px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h4": Object {
+    "h4": {
       "fontSize": "20px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h5": Object {
+    "h5": {
       "fontSize": "18px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h6": Object {
+    "h6": {
       "fontSize": "16px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "jumbo": Object {
+    "jumbo": {
       "fontSize": "48px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "jumboLarge": Object {
+    "jumboLarge": {
       "fontSize": "64px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "large": Object {
+    "large": {
       "fontSize": "18px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "mid": Object {
+    "mid": {
       "fontSize": "14px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "regular": Object {
+    "regular": {
       "fontSize": "16px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "small": Object {
+    "small": {
       "fontSize": "12px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
   },
-  "variants": Object {
-    "blue": Object {
-      "dark": Object {
+  "variants": {
+    "blue": {
+      "dark": {
         "bg": "#0067fa",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#0042a1",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#002c6b",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#70abff",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#d6e7ff",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ebf3ff",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#66a5ff",
         "color": "#000000",
       },
     },
-    "gray": Object {
-      "dark": Object {
+    "gray": {
+      "dark": {
         "bg": "#484848",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#242424",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#101010",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#c0c0c0",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#e0e0e0",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#f5f5f5",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#808080",
         "color": "#000000",
       },
     },
-    "green": Object {
-      "dark": Object {
+    "green": {
+      "dark": {
         "bg": "#2ea238",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#1d6824",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#144518",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#90e097",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#dff6e1",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#effbf0",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#58d063",
         "color": "#000000",
       },
     },
-    "orange": Object {
-      "dark": Object {
+    "orange": {
+      "dark": {
         "bg": "#f45a00",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#9d3a00",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#682700",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ffa570",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#ffe5d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fff2eb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ff995d",
         "color": "#000000",
       },
     },
-    "pink": Object {
-      "dark": Object {
+    "pink": {
+      "dark": {
         "bg": "#d51779",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#890f4e",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#5b0a34",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#f17eba",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#fbdaeb",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fdedf5",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ee63ab",
         "color": "#000000",
       },
     },
-    "primary": Object {
-      "dark": Object {
+    "primary": {
+      "dark": {
         "bg": "#1414b0",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#0d0d71",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#08084c",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#7e7ef1",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#c7c7f9",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ededfd",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#3030e8",
         "color": "#ffffff",
       },
     },
-    "purple": Object {
-      "dark": Object {
+    "purple": {
+      "dark": {
         "bg": "#670aff",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#4000aa",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#2b0071",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#a670ff",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#e6d6ff",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#f2ebff",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ad7bff",
         "color": "#000000",
       },
     },
-    "red": Object {
-      "dark": Object {
+    "red": {
+      "dark": {
         "bg": "#f40000",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#9d0000",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#690000",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ff7070",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#ffd6d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ffebeb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ff5e5e",
         "color": "#000000",
       },
     },
-    "secondary": Object {
-      "dark": Object {
+    "secondary": {
+      "dark": {
         "bg": "#306a73",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#18353a",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#0d1c1e",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#7dbfc9",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#bedfe4",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#e2f1f3",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#2A5D65",
         "color": "#ffffff",
       },
     },
-    "yellow": Object {
-      "dark": Object {
+    "yellow": {
+      "dark": {
         "bg": "#fac900",
         "color": "#000000",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#a18100",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#6b5600",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ffe370",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#fff7d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fffbeb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ffe166",
         "color": "#000000",
       },
@@ -522,9 +522,9 @@ Object {
 `;
 
 exports[`mergeTheme should return a modified theme 1`] = `
-Object {
+{
   "black": "#000",
-  "breakpoints": Object {
+  "breakpoints": {
     "lg": "1024px",
     "md": "768px",
     "sm": "100px",
@@ -534,44 +534,44 @@ Object {
     "xxs": "320px",
     "xxxl": "1680px",
   },
-  "button": Object {
-    "borderRadius": Object {
+  "button": {
+    "borderRadius": {
       "lg": "8px",
       "md": "8px",
       "sm": "8px",
     },
-    "fontSize": Object {
+    "fontSize": {
       "lg": "18px",
       "md": "16px",
       "sm": "14px",
     },
     "fontWeight": 700,
-    "height": Object {
+    "height": {
       "lg": "48px",
       "md": "40px",
       "sm": "32px",
     },
-    "lineHeight": Object {
+    "lineHeight": {
       "lg": 1.4,
       "md": 1.3,
       "sm": 1.2,
     },
-    "padding": Object {
-      "lg": Array [
+    "padding": {
+      "lg": [
         "10px",
         "20px",
       ],
-      "md": Array [
+      "md": [
         "8px",
         "16px",
       ],
-      "sm": Array [
+      "sm": [
         "6px",
         "12px",
       ],
     },
   },
-  "colors": Object {
+  "colors": {
     "blue": "#66a5ff",
     "green": "#58d063",
     "orange": "#ff995d",
@@ -594,7 +594,7 @@ Object {
   "grayLighter": "#e0e0e0",
   "grayLightest": "#f5f5f5",
   "grayMid": "#767676",
-  "grayScale": Object {
+  "grayScale": {
     "1": "#fcfcfc",
     "10": "#e6e6e6",
     "15": "#d9d9d9",
@@ -612,19 +612,19 @@ Object {
     "90": "#1a1a1a",
     "95": "#0d0d0d",
   },
-  "inputHeight": Object {
+  "inputHeight": {
     "large": "48px",
     "normal": "40px",
   },
   "lightColor": "#f5f5f5",
-  "opacity": Object {
+  "opacity": {
     "intense": 0.64,
     "light": 0.16,
     "medium": 0.32,
     "semiOpaque": 0.72,
     "semiTransparent": 0.08,
   },
-  "radius": Object {
+  "radius": {
     "lg": "24px",
     "md": "16px",
     "round": "50%",
@@ -633,12 +633,12 @@ Object {
     "xs": "8px",
     "xxs": "4px",
   },
-  "shadow": Object {
+  "shadow": {
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
     "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
     "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
   },
-  "spacing": Object {
+  "spacing": {
     "jumbo": "96px",
     "lg": "24px",
     "md": "16px",
@@ -649,377 +649,377 @@ Object {
     "xxs": "4px",
     "xxxl": "64px",
   },
-  "typography": Object {
-    "h1": Object {
+  "typography": {
+    "h1": {
       "fontSize": "32px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h2": Object {
+    "h2": {
       "fontSize": "28px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h3": Object {
+    "h3": {
       "fontSize": "24px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h4": Object {
+    "h4": {
       "fontSize": "20px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h5": Object {
+    "h5": {
       "fontSize": "18px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h6": Object {
+    "h6": {
       "fontSize": "16px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "jumbo": Object {
+    "jumbo": {
       "fontSize": "48px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "jumboLarge": Object {
+    "jumboLarge": {
       "fontSize": "64px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "large": Object {
+    "large": {
       "fontSize": "18px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "mid": Object {
+    "mid": {
       "fontSize": "14px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "regular": Object {
+    "regular": {
       "fontSize": "16px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "small": Object {
+    "small": {
       "fontSize": "12px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         300,
         400,
       ],
     },
   },
-  "variants": Object {
-    "blue": Object {
-      "dark": Object {
+  "variants": {
+    "blue": {
+      "dark": {
         "bg": "#0067fa",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#0042a1",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#002c6b",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#70abff",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#d6e7ff",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ebf3ff",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#66a5ff",
         "color": "#000000",
       },
     },
-    "gray": Object {
-      "dark": Object {
+    "gray": {
+      "dark": {
         "bg": "#484848",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#242424",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#101010",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#c0c0c0",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#e0e0e0",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#f5f5f5",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#808080",
         "color": "#000000",
       },
     },
-    "green": Object {
-      "dark": Object {
+    "green": {
+      "dark": {
         "bg": "#2ea238",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#1d6824",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#144518",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#90e097",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#dff6e1",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#effbf0",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#58d063",
         "color": "#000000",
       },
     },
-    "orange": Object {
-      "dark": Object {
+    "orange": {
+      "dark": {
         "bg": "#f45a00",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#9d3a00",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#682700",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ffa570",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#ffe5d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fff2eb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ff995d",
         "color": "#000000",
       },
     },
-    "pink": Object {
-      "dark": Object {
+    "pink": {
+      "dark": {
         "bg": "#d51779",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#890f4e",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#5b0a34",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#f17eba",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#fbdaeb",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fdedf5",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ee63ab",
         "color": "#000000",
       },
     },
-    "primary": Object {
-      "dark": Object {
+    "primary": {
+      "dark": {
         "bg": "#b30030",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#73001f",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#4d0014",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ff668f",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#ffa3bc",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ffe6ec",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#f04",
         "color": "#ffffff",
       },
     },
-    "purple": Object {
-      "dark": Object {
+    "purple": {
+      "dark": {
         "bg": "#670aff",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#4000aa",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#2b0071",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#a670ff",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#e6d6ff",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#f2ebff",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ad7bff",
         "color": "#000000",
       },
     },
-    "red": Object {
-      "dark": Object {
+    "red": {
+      "dark": {
         "bg": "#f40000",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#9d0000",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#690000",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ff7070",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#ffd6d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ffebeb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ff5e5e",
         "color": "#000000",
       },
     },
-    "secondary": Object {
-      "dark": Object {
+    "secondary": {
+      "dark": {
         "bg": "#306a73",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#18353a",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#0d1c1e",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#7dbfc9",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#bedfe4",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#e2f1f3",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#2A5D65",
         "color": "#ffffff",
       },
     },
-    "yellow": Object {
-      "dark": Object {
+    "yellow": {
+      "dark": {
         "bg": "#fac900",
         "color": "#000000",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#a18100",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#6b5600",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ffe370",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#fff7d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fffbeb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ffe166",
         "color": "#000000",
       },
@@ -1030,9 +1030,9 @@ Object {
 `;
 
 exports[`mergeTheme should return the default theme 1`] = `
-Object {
+{
   "black": "#000",
-  "breakpoints": Object {
+  "breakpoints": {
     "lg": "1024px",
     "md": "768px",
     "sm": "400px",
@@ -1042,44 +1042,44 @@ Object {
     "xxs": "320px",
     "xxxl": "1680px",
   },
-  "button": Object {
-    "borderRadius": Object {
+  "button": {
+    "borderRadius": {
       "lg": "8px",
       "md": "8px",
       "sm": "8px",
     },
-    "fontSize": Object {
+    "fontSize": {
       "lg": "18px",
       "md": "16px",
       "sm": "14px",
     },
     "fontWeight": 700,
-    "height": Object {
+    "height": {
       "lg": "48px",
       "md": "40px",
       "sm": "32px",
     },
-    "lineHeight": Object {
+    "lineHeight": {
       "lg": 1.4,
       "md": 1.3,
       "sm": 1.2,
     },
-    "padding": Object {
-      "lg": Array [
+    "padding": {
+      "lg": [
         "10px",
         "20px",
       ],
-      "md": Array [
+      "md": [
         "8px",
         "16px",
       ],
-      "sm": Array [
+      "sm": [
         "6px",
         "12px",
       ],
     },
   },
-  "colors": Object {
+  "colors": {
     "blue": "#66a5ff",
     "green": "#58d063",
     "orange": "#ff995d",
@@ -1102,7 +1102,7 @@ Object {
   "grayLighter": "#e0e0e0",
   "grayLightest": "#f5f5f5",
   "grayMid": "#767676",
-  "grayScale": Object {
+  "grayScale": {
     "1": "#fcfcfc",
     "10": "#e6e6e6",
     "15": "#d9d9d9",
@@ -1120,19 +1120,19 @@ Object {
     "90": "#1a1a1a",
     "95": "#0d0d0d",
   },
-  "inputHeight": Object {
+  "inputHeight": {
     "large": "48px",
     "normal": "40px",
   },
   "lightColor": "#f5f5f5",
-  "opacity": Object {
+  "opacity": {
     "intense": 0.64,
     "light": 0.16,
     "medium": 0.32,
     "semiOpaque": 0.72,
     "semiTransparent": 0.08,
   },
-  "radius": Object {
+  "radius": {
     "lg": "24px",
     "md": "16px",
     "round": "50%",
@@ -1141,12 +1141,12 @@ Object {
     "xs": "8px",
     "xxs": "4px",
   },
-  "shadow": Object {
+  "shadow": {
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
     "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
     "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
   },
-  "spacing": Object {
+  "spacing": {
     "jumbo": "96px",
     "lg": "24px",
     "md": "16px",
@@ -1157,377 +1157,377 @@ Object {
     "xxs": "4px",
     "xxxl": "64px",
   },
-  "typography": Object {
-    "h1": Object {
+  "typography": {
+    "h1": {
       "fontSize": "32px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h2": Object {
+    "h2": {
       "fontSize": "28px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h3": Object {
+    "h3": {
       "fontSize": "24px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h4": Object {
+    "h4": {
       "fontSize": "20px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h5": Object {
+    "h5": {
       "fontSize": "18px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "h6": Object {
+    "h6": {
       "fontSize": "16px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "jumbo": Object {
+    "jumbo": {
       "fontSize": "48px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "jumboLarge": Object {
+    "jumboLarge": {
       "fontSize": "64px",
       "lineHeight": 1.2,
       "weight": 700,
     },
-    "large": Object {
+    "large": {
       "fontSize": "18px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "mid": Object {
+    "mid": {
       "fontSize": "14px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "regular": Object {
+    "regular": {
       "fontSize": "16px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
-    "small": Object {
+    "small": {
       "fontSize": "12px",
       "lineHeight": 1.2,
-      "weight": Array [
+      "weight": [
         400,
         700,
       ],
     },
   },
-  "variants": Object {
-    "blue": Object {
-      "dark": Object {
+  "variants": {
+    "blue": {
+      "dark": {
         "bg": "#0067fa",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#0042a1",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#002c6b",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#70abff",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#d6e7ff",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ebf3ff",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#66a5ff",
         "color": "#000000",
       },
     },
-    "gray": Object {
-      "dark": Object {
+    "gray": {
+      "dark": {
         "bg": "#484848",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#242424",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#101010",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#c0c0c0",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#e0e0e0",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#f5f5f5",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#808080",
         "color": "#000000",
       },
     },
-    "green": Object {
-      "dark": Object {
+    "green": {
+      "dark": {
         "bg": "#2ea238",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#1d6824",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#144518",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#90e097",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#dff6e1",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#effbf0",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#58d063",
         "color": "#000000",
       },
     },
-    "orange": Object {
-      "dark": Object {
+    "orange": {
+      "dark": {
         "bg": "#f45a00",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#9d3a00",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#682700",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ffa570",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#ffe5d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fff2eb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ff995d",
         "color": "#000000",
       },
     },
-    "pink": Object {
-      "dark": Object {
+    "pink": {
+      "dark": {
         "bg": "#d51779",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#890f4e",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#5b0a34",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#f17eba",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#fbdaeb",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fdedf5",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ee63ab",
         "color": "#000000",
       },
     },
-    "primary": Object {
-      "dark": Object {
+    "primary": {
+      "dark": {
         "bg": "#1414b0",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#0d0d71",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#08084c",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#7e7ef1",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#c7c7f9",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ededfd",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#3030e8",
         "color": "#ffffff",
       },
     },
-    "purple": Object {
-      "dark": Object {
+    "purple": {
+      "dark": {
         "bg": "#670aff",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#4000aa",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#2b0071",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#a670ff",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#e6d6ff",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#f2ebff",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ad7bff",
         "color": "#000000",
       },
     },
-    "red": Object {
-      "dark": Object {
+    "red": {
+      "dark": {
         "bg": "#f40000",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#9d0000",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#690000",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ff7070",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#ffd6d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#ffebeb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ff5e5e",
         "color": "#000000",
       },
     },
-    "secondary": Object {
-      "dark": Object {
+    "secondary": {
+      "dark": {
         "bg": "#306a73",
         "color": "#ffffff",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#18353a",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#0d1c1e",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#7dbfc9",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#bedfe4",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#e2f1f3",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#2A5D65",
         "color": "#ffffff",
       },
     },
-    "yellow": Object {
-      "dark": Object {
+    "yellow": {
+      "dark": {
         "bg": "#fac900",
         "color": "#000000",
       },
-      "darker": Object {
+      "darker": {
         "bg": "#a18100",
         "color": "#ffffff",
       },
-      "darkest": Object {
+      "darkest": {
         "bg": "#6b5600",
         "color": "#ffffff",
       },
-      "light": Object {
+      "light": {
         "bg": "#ffe370",
         "color": "#000000",
       },
-      "lighter": Object {
+      "lighter": {
         "bg": "#fff7d6",
         "color": "#000000",
       },
-      "lightest": Object {
+      "lightest": {
         "bg": "#fffbeb",
         "color": "#000000",
       },
-      "mid": Object {
+      "mid": {
         "bg": "#ffe166",
         "color": "#000000",
       },
