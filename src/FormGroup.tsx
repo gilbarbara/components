@@ -152,12 +152,15 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     );
   }
 
-  content.children =
-    is.boolean(valid) && valid && !skipIcon ? (
-      <ComponentWrapper suffix={<Icon name="check-o" title="valid" />}>{children}</ComponentWrapper>
-    ) : (
-      children
-    );
+  content.children = !skipIcon ? (
+    <ComponentWrapper
+      suffix={is.boolean(valid) && valid ? <Icon name="check-o" title="valid" /> : undefined}
+    >
+      {children}
+    </ComponentWrapper>
+  ) : (
+    children
+  );
 
   if (label) {
     content.label = (
