@@ -1,6 +1,6 @@
 import { Children, isValidElement } from 'react';
+import { Box } from 'Box';
 import { MenuDivider, MenuItem } from 'Menu';
-
 import {
   clearNumber,
   createMediaQuery,
@@ -14,8 +14,6 @@ import {
   recursiveChildrenEnhancer,
   responsive,
 } from 'modules/helpers';
-
-import { Box } from '../../src';
 
 describe('clearNumber', () => {
   it('should return properly', () => {
