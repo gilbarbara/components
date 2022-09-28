@@ -1,7 +1,6 @@
 import { CSSProperties, ElementType, HTMLProps, ReactNode } from 'react';
-import { SelectProps } from '@gilbarbara/react-dropdown';
+import { HiddenInput, Option, Props } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
-import { SetOptional } from 'type-fest';
 
 import { Icons } from './common';
 import { WithBlock, WithBorderless, WithColor, WithMargin, WithOpen } from './shared';
@@ -26,109 +25,59 @@ export interface CheckboxItem {
 export type ComponentProps<T, P, E extends string = never> = P &
   Omit<HTMLProps<T>, 'ref' | 'size' | keyof P | E>;
 
-export interface DropdownItem {
-  disabled?: boolean;
-  label?: string;
+export interface DropdownOption extends Option {
   prefix?: ReactNode;
   suffix?: ReactNode;
   type?: string;
-  value: StringOrNumber;
 }
 
-export type DropdownBaseProps<T extends DropdownItem = DropdownItem> = SetOptional<
-  Omit<
-    SelectProps<T>,
-    | 'additionalProps'
-    | 'addPlaceholder'
-    | 'className'
-    | 'clearOnBlur'
-    | 'clearOnSelect'
-    | 'clearRenderer'
-    | 'closeOnSelect'
-    | 'color'
-    | 'contentRenderer'
-    | 'create'
-    | 'createNewLabel'
-    | 'debounceDelay'
-    | 'disabledLabel'
-    | 'dropdownHandle'
-    | 'dropdownHandleRenderer'
-    | 'dropdownHeight'
-    | 'dropdownRenderer'
-    | 'handleKeyDownFn'
-    | 'inputRenderer'
-    | 'itemRenderer'
-    | 'keepOpen'
-    | 'labelField'
-    | 'loadingRenderer'
-    | 'name'
-    | 'noDataRenderer'
-    | 'onClearAll'
-    | 'onCreateNew'
-    | 'onDropdownCloseRequest'
-    | 'onSelectAll'
-    | 'optionRenderer'
-    | 'options'
-    | 'pattern'
-    | 'portal'
-    | 'required'
-    | 'searchBy'
-    | 'searchFn'
-    | 'separatorRenderer'
-    | 'sortBy'
-    | 'style'
-    | 'valueField'
-    | 'wrapperClassName'
-  >,
-  'onChange' | 'values'
+export type DropdownBaseProps = Omit<
+  Props,
+  | 'className'
+  | 'clearComponent'
+  | 'clearOnSelect'
+  | 'contentComponent'
+  | 'create'
+  | 'handleComponent'
+  | 'inputComponent'
+  | 'loadingComponent'
+  | 'menuComponent'
+  | 'menuItemComponent'
+  | 'noDataComponent'
+  | 'onClearAll'
+  | 'onCreate'
+  | 'onSelectAll'
+  | 'optionComponent'
+  | 'options'
+  | 'searchFn'
+  | 'secondaryPlaceholder'
+  | 'separatorComponent'
+  | 'style'
+  | 'styles'
 >;
 
-export interface DropdownProps<T extends DropdownItem = DropdownItem>
+export interface DropdownProps
   extends StyledProps,
     WithBorderless,
     WithColor,
     WithMargin,
     WithOpen,
-    DropdownBaseProps<T> {
+    DropdownBaseProps {
   /** @default false */
   allowCreate?: boolean;
-  /**
-   * The label for the Create component. "{search}" will be replaced by search value.
-   * @default Add {search}
-   */
   /** @default false */
   closeMultiOnSelect?: boolean;
-  createLabel?: string;
-  /** @default 260 */
-  height?: StringOrNumber;
   /**
    * If set, an input with type hidden will be added to the component with the value of the selected option(s).
    * In case of multiple items, the value will be a string concatenated with "separator".
    */
-  inputOptions?: {
-    /**
-     * The input name.
-     */
-    name: string;
-    /**
-     * The property used in the input value.
-     * @default value
-     */
-    property?: 'label' | 'value';
-    /**
-     * Set the input to be required.
-     */
-    required?: boolean;
-    /**
-     * The character to separate multiple values.
-     * @default ,
-     */
-    separator?: string;
-  };
-  items: T[];
+  inputOptions?: HiddenInput;
+  items: Option[];
   large?: boolean;
+  /** @default 260 */
+  menuMaxHeight?: number;
   onClear?: () => void;
-  onCreate?: (value: string, close: () => void) => void;
+  onCreate?: (item: string, close: () => void) => void;
   onSearch?: (value: string) => void;
   /** @default 260 */
   width?: StringOrNumber;

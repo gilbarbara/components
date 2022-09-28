@@ -1,13 +1,12 @@
 import { MouseEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { SelectRenderer } from '@gilbarbara/react-dropdown';
+import { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 
 import { BoxInline } from '../Box';
 import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
-import { DropdownItem } from '../types';
 
 export const StyledContent = styled('div', getStyledOptions())`
   align-items: center;
@@ -66,18 +65,20 @@ const Placeholder = styled(
   const { darkMode, grayLight, grayMid } = getTheme(props);
 
   return css`
+    align-items: center;
     color: ${darkMode ? grayLight : grayMid};
+    display: flex;
   `;
 });
 
-function DropdownContent<T extends DropdownItem>(props: SelectRenderer<T>) {
+function DropdownContent(props: ComponentProps) {
   const {
-    methods: { removeItem },
-    props: { color, multi, placeholder },
+    methods: { getStyles, removeItem },
+    props: { multi, placeholder },
     state: { values },
   } = props;
 
-  const handleClickRemove = (value: T) => {
+  const handleClickRemove = (value: Option) => {
     return (event: MouseEvent) => {
       event.stopPropagation();
 
@@ -92,7 +93,12 @@ function DropdownContent<T extends DropdownItem>(props: SelectRenderer<T>) {
           const { label, prefix, suffix, value } = item || {};
 
           return (
-            <Item key={value} color={color} data-component-name="ContentItem" multi={multi}>
+            <Item
+              key={value}
+              color={getStyles().color}
+              data-component-name="ContentItem"
+              multi={multi}
+            >
               {!!prefix && (
                 <BoxInline data-component-name="ContentItemPrefix" mr="xxs">
                   {prefix}

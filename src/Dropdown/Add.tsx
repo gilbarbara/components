@@ -1,13 +1,10 @@
 import styled from '@emotion/styled';
-import { SelectRenderer } from '@gilbarbara/react-dropdown';
+import { ComponentProps } from '@gilbarbara/react-dropdown';
 
 import { ButtonBase } from '../ButtonBase';
 import { DropdownProps, WithColor } from '../types';
 
-interface Props
-  extends WithColor,
-    SelectRenderer<any>,
-    Pick<DropdownProps<any>, 'createLabel' | 'onCreate'> {}
+interface Props extends WithColor, ComponentProps, Pick<DropdownProps, 'onCreate'> {}
 
 const StyledDropdownAdd = styled.div`
   width: 100%;
@@ -22,8 +19,7 @@ const StyledDropdownAdd = styled.div`
 
 function DropdownAdd(props: Props): JSX.Element {
   const {
-    createLabel,
-    methods: { dropDown },
+    methods: { getLabels, setStatus },
     onCreate,
     shade,
     state: { search },
@@ -32,14 +28,14 @@ function DropdownAdd(props: Props): JSX.Element {
 
   const handleClick = () => {
     if (onCreate) {
-      onCreate(search, () => dropDown('close', null));
+      onCreate(search, () => setStatus('close'));
     }
   };
 
   return (
     <StyledDropdownAdd data-component-name="DropdownAdd">
       <ButtonBase onClick={handleClick} shade={shade} variant={variant}>
-        {createLabel?.replace(/{search}/, `"${search}"`)}
+        {getLabels().create.replace(/{search}/, `"${search}"`)}
       </ButtonBase>
     </StyledDropdownAdd>
   );

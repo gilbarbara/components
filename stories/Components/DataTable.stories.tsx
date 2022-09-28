@@ -20,7 +20,7 @@ import {
   Text,
 } from 'src';
 import { DataTable, DataTableColumn } from 'src/DataTable';
-import { DropdownItem } from 'src/types';
+import { DropdownOption } from 'src/types';
 
 import { members } from '../__assets__/data';
 import {
@@ -79,7 +79,7 @@ const teams = members.reduce((acc, member) => {
   }
 
   return acc;
-}, [] as DropdownItem[]);
+}, [] as DropdownOption[]);
 
 const statuses = [
   { label: 'Invites', value: 'invites' },
@@ -103,14 +103,14 @@ const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element =
     }, 750);
   };
 
-  const handleChangeStatus = (options: DropdownItem[]) => {
+  const handleChangeStatus = (options: DropdownOption[]) => {
     const [selected] = options;
     const nextStatus = selected ? (selected.value as string) : '';
 
     setState({ status: nextStatus });
   };
 
-  const handleChangeTeam = (options: DropdownItem[]) => {
+  const handleChangeTeam = (options: DropdownOption[]) => {
     const [selected] = options;
     const nextTeam = selected ? (selected.value as string) : '';
 

@@ -32,7 +32,7 @@
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.0",
     "@gilbarbara/helpers": "^0.6.3",
-    "@gilbarbara/react-dropdown": "^0.0.4",
+    "@gilbarbara/react-dropdown": "^0.1.0",
     "colorizr": "^2.1.1",
     "date-fns": "^2.29.3",
     "deepmerge-ts": "^4.2.2",

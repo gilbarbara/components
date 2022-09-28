@@ -4,7 +4,7 @@ import { ComponentMeta } from '@storybook/react';
 
 import { Icon } from 'src';
 import { Dropdown } from 'src/Dropdown';
-import { DropdownItem, DropdownProps } from 'src/types';
+import { DropdownOption, DropdownProps } from 'src/types';
 
 import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
 
@@ -29,7 +29,7 @@ export default {
   },
 } as ComponentMeta<typeof Dropdown>;
 
-const items: DropdownItem[] = [
+const items: DropdownOption[] = [
   { value: 1, label: 'One', prefix: <Icon name="chevron-right" /> },
   { value: 2, label: 'Two', prefix: <Icon name="anchor" />, suffix: <Icon name="asterisk" /> },
   { value: 3, label: 'Three', disabled: true, prefix: <Icon name="awards" /> },
@@ -41,7 +41,7 @@ export const Basic = (props: DropdownProps) => <Dropdown {...props} items={items
 
 export const WithCreate = (props: DropdownProps) => {
   const [controlledItems, setItems] = useState(items);
-  const [values, setValues] = useState<DropdownItem[]>([]);
+  const [values, setValues] = useState<DropdownOption[]>([]);
 
   const handleCreate = (value: string, close: () => void) => {
     const newItem = {
@@ -62,17 +62,4 @@ export const WithCreate = (props: DropdownProps) => {
 WithCreate.args = {
   allowCreate: true,
   borderless: true,
-};
-
-export const WithInputOptions = (props: DropdownProps) => {
-  const customItems = [
-    { value: 'blue' },
-    { value: 'green' },
-    { value: 'magenta' },
-    { value: 'purple' },
-    { value: 'red' },
-    { value: 'yellow' },
-  ];
-
-  return <Dropdown {...props} items={customItems} />;
 };

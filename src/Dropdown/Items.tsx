@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { SelectRenderer } from '@gilbarbara/react-dropdown';
+import { ComponentProps } from '@gilbarbara/react-dropdown';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 
 import Add from './Add';
@@ -9,12 +9,12 @@ import Add from './Add';
 import { BoxInline } from '../Box';
 import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
-import { DropdownItem, DropdownProps, Theme, WithColor } from '../types';
+import { DropdownProps, Theme, WithColor } from '../types';
 
-interface DropdownOptionsProps<T extends DropdownItem>
+interface DropdownOptionsProps
   extends WithColor,
-    SelectRenderer<T>,
-    Pick<DropdownProps<T>, 'allowCreate' | 'createLabel' | 'onCreate' | 'onSearch'> {}
+    ComponentProps,
+    Pick<DropdownProps, 'allowCreate' | 'onCreate' | 'onSearch'> {}
 
 const getSharedStyles = (spacing: Theme['spacing']) => css`
   align-items: center;
@@ -185,8 +185,7 @@ const Search = styled(
   `;
 });
 
-function DropdownOptions<T extends DropdownItem = DropdownItem>({
-  createLabel,
+function DropdownOptions({
   methods,
   onCreate,
   onSearch,
@@ -194,9 +193,9 @@ function DropdownOptions<T extends DropdownItem = DropdownItem>({
   shade,
   state,
   variant,
-}: DropdownOptionsProps<T>) {
-  const { addItem, removeItem, setSearch } = methods;
-  const { autoFocus, create, dropdownHeight, noDataLabel, options, searchable } = props;
+}: DropdownOptionsProps) {
+  const { addItem, getLabels, getStyles, removeItem, setSearch } = methods;
+  const { autoFocus, create, options, searchable } = props;
   const { cursor, search, values } = state;
 
   const searchInput = useRef<HTMLInputElement>(null);
@@ -206,7 +205,6 @@ function DropdownOptions<T extends DropdownItem = DropdownItem>({
   if (create) {
     children = (
       <Add
-        createLabel={createLabel}
         methods={methods}
         onCreate={onCreate}
         props={props}
@@ -280,11 +278,11 @@ function DropdownOptions<T extends DropdownItem = DropdownItem>({
   }
 
   if (!children && !availableOptions.length) {
-    output.options = <Empty>{noDataLabel}</Empty>;
+    output.options = <Empty>{getLabels().noData}</Empty>;
   }
 
   return (
-    <List data-component-name="DropdownOptions" maxHeight={dropdownHeight}>
+    <List data-component-name="DropdownOptions" maxHeight={getStyles().menuMaxHeight}>
       {searchable && (
         <Search data-component-name="DropdownOptionsSearch">
           <Input
