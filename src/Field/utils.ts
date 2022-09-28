@@ -71,7 +71,7 @@ export function getRegisterOptions(
   }
 
   if (required) {
-    registerOptions.required = 'Obrigatório';
+    registerOptions.required = 'Required';
   }
 
   if (minLength) {

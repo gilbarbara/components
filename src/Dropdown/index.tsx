@@ -1,27 +1,25 @@
 import { useState } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import ReactDropdown, { SelectRenderer } from '@gilbarbara/react-dropdown';
+import ReactDropdown, { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 
 import Content from './Content';
-import Handle from './Handle';
 import Items from './Items';
 
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
-import { DropdownItem, DropdownProps } from '../types';
+import { DropdownProps } from '../types';
 
 export const StyledDropdown = styled(
   'div',
   getStyledOptions('placeholder', 'onSearch'),
 )<
-  Omit<DropdownProps<any>, 'items' | 'onChange' | 'values'> & {
+  Omit<DropdownProps, 'items' | 'large' | 'onChange' | 'values'> & {
     isFilled: boolean;
   }
 >(props => {
-  const { borderless, isFilled, large, separator, shade, variant = 'primary', width } = props;
-  const { grayDark, grayDarker, grayMid, inputHeight, radius, spacing, variants, white } =
-    getTheme(props);
+  const { borderless, isFilled, multi, shade, variant = 'primary', width } = props;
+  const { grayDark, grayDarker, grayMid, radius, spacing, variants, white } = getTheme(props);
   const { bg } = getColorVariant(variant, shade, variants);
 
   const darkMode = isDarkMode(props);
@@ -42,49 +40,36 @@ export const StyledDropdown = styled(
         background-color: ${darkMode ? grayDarker : white};
         border: 1px solid ${borderColor};
         border-radius: ${radius.xs};
-        padding: 0 0 0 ${spacing.md} !important;
+        padding-left: ${multi ? 0 : spacing.xs} !important;
       `;
 
   return css`
     min-width: ${px(width || 260)};
-    width: ${width ? px(width) : 'auto'};
+    width: ${px(width) || 'auto'};
     ${marginStyles(props)};
 
-    .react-dropdown-select {
-      min-height: ${large ? inputHeight.large : inputHeight.normal};
+    .react-dropdown {
       ${styles};
 
-      &:hover,
       &:focus,
       &:focus-within {
         border-color: ${bg} !important;
         box-shadow: ${borderless ? 'none' : `0 0 8px 1px ${bg}`} !important;
 
-        .react-dropdown-select-separator {
-          border-color: ${bg};
+        .react-dropdown-separator {
+          background-color: ${bg};
         }
       }
 
       &[disabled] {
         opacity: 1 !important;
 
-        .react-dropdown-select-content {
+        .react-dropdown-content {
           color: ${grayMid};
         }
       }
 
       &-clear {
-        align-items: center;
-        align-self: stretch;
-        color: ${grayMid};
-        display: flex;
-        font-size: 20px;
-        line-height: 1;
-        margin: 0;
-        padding-left: ${spacing.xs};
-        padding-right: ${separator ? spacing.xs : spacing.xxs};
-        transition: color 0.2s;
-
         &:hover {
           color: ${variants.red.mid.bg};
         }
@@ -103,7 +88,7 @@ export const StyledDropdown = styled(
         }
       }
 
-      &-dropdown {
+      &-menu {
         border: 0 !important;
         border-radius: ${radius.xs};
         overflow: hidden;
@@ -115,101 +100,80 @@ export const StyledDropdown = styled(
         }
       }
 
-      &-dropdown-handle {
-        align-items: center;
-        align-self: stretch;
-        display: flex;
-      }
-
       &-loading {
         padding: 0 ${spacing.xs};
+
         &:after {
           margin: 0;
         }
       }
 
       &-separator {
-        align-self: stretch;
-        border-left-color: ${borderColor};
-        height: auto;
+        background-color: ${borderColor};
       }
     }
   `;
 });
 
-function getDropdownRenderer<T extends DropdownItem>(
-  props: Pick<DropdownProps<T>, 'allowCreate' | 'onSearch' | 'shade' | 'variant'>,
+function getDropdownComponent(
+  props: Pick<DropdownProps, 'allowCreate' | 'onSearch' | 'shade' | 'variant'>,
 ) {
-  return function DropdownRenderer(renderer: SelectRenderer<T>) {
+  return function DropdownRenderer(renderer: ComponentProps) {
     return <Items {...renderer} {...props} />;
   };
 }
 
-export function Dropdown<T extends DropdownItem>(props: DropdownProps<T>) {
+export function Dropdown(props: DropdownProps) {
   const {
     allowCreate,
-    clearable,
     closeMultiOnSelect,
     inputOptions,
-    height = 260,
+    menuMaxHeight = 260,
     items,
+    large,
     onClear,
     onChange,
     open,
+    showClearButton,
     values = [],
     ...rest
   } = props;
-  const [currentValues, setCurrentValues] = useState<T[]>(values);
   const [isFilled, setFilled] = useState(!!values.length);
 
-  const { variants } = getTheme({ theme: useTheme() });
+  const { inputHeight, variants } = getTheme({ theme: useTheme() });
   const { bg } = getColorVariant(rest.variant || 'primary', rest.shade, variants);
 
-  const handleChange = (value: T[]) => {
+  const handleChange = (value: Option[]) => {
     setFilled(!!value.length);
-
-    setCurrentValues(value);
 
     if (onChange) {
       onChange(value);
     }
   };
 
-  let input;
-
-  if (inputOptions) {
-    const { name, property = 'value', required, separator = ',' } = inputOptions;
-
-    input = (
-      <input
-        name={name}
-        required={required}
-        type="hidden"
-        value={currentValues.map(d => d[property] || d.value).join(separator)}
-      />
-    );
-  }
-
   return (
     <StyledDropdown data-component-name="Dropdown" isFilled={isFilled} {...rest}>
       <ReactDropdown
-        className=""
-        clearable={clearable && isFilled}
         closeOnSelect={closeMultiOnSelect}
-        color={bg}
-        contentRenderer={Content}
+        contentComponent={Content}
         create={allowCreate}
-        dropdownHandleRenderer={Handle}
-        dropdownHeight={px(height)}
-        dropdownRenderer={getDropdownRenderer<T>({ allowCreate, ...rest })}
-        keepOpen={open}
+        hiddenInput={inputOptions}
+        menuComponent={getDropdownComponent({ allowCreate, ...rest })}
         onChange={handleChange}
         onClearAll={onClear}
+        open={open}
         options={items}
+        showClearButton={showClearButton}
+        styles={{
+          color: bg,
+          gap: 0,
+          minHeight: parseInt(large ? inputHeight.large : inputHeight.normal, 10),
+          menuMaxHeight,
+          width: rest.width,
+        }}
         values={values}
         {...rest}
       />
-      {input}
     </StyledDropdown>
   );
 }
@@ -217,25 +181,25 @@ export function Dropdown<T extends DropdownItem>(props: DropdownProps<T>) {
 Dropdown.defaultProps = {
   allowCreate: false,
   autoFocus: true,
-  backspaceDelete: true,
   borderless: false,
-  clearable: false,
-  closeMultiOnSelect: false,
+  clearOnSelect: false,
   closeOnScroll: false,
-  createLabel: 'Create {search}',
   direction: 'ltr',
   disabled: false,
-  dropdownGap: 0,
-  dropdownPosition: 'auto',
   height: 260,
   keepSelectedInList: true,
+  labels: {
+    create: 'Create {search}',
+    noData: 'Nothing found',
+  },
   large: false,
   loading: false,
   multi: false,
-  noDataLabel: 'Nothing found',
   placeholder: 'Select an option',
+  searchBy: 'label',
   searchable: true,
-  separator: false,
+  showClearButton: false,
+  showSeparator: false,
   shade: 'mid',
   variant: 'primary',
   width: 260,

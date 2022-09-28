@@ -2,7 +2,7 @@ import { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
 
 import { FormGroupProps } from '../FormGroup';
-import { CheckboxItem, DropdownItem, DropdownProps, InputTypes, RadioItem } from '../types';
+import { CheckboxItem, DropdownOption, DropdownProps, InputTypes, RadioItem } from '../types';
 
 export interface RegisterOptionsProps extends FieldBaseProps {
   formatter?: FieldInputProps['formatter'];
@@ -63,9 +63,9 @@ export interface FieldDropdownProps extends FieldBaseProps {
     DropdownProps,
     'disabled' | 'inputOptions' | 'items' | 'onChange' | 'placeholder' | 'width'
   >;
-  items: DropdownItem[];
+  items: DropdownOption[];
   onBlur?: never;
-  onChange?: (value: DropdownItem[]) => void;
+  onChange?: (value: DropdownOption[]) => void;
   onFocus?: never;
   type: 'dropdown';
 }

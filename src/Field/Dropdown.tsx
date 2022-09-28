@@ -6,7 +6,7 @@ import { FieldDropdownProps } from './types';
 import { getInputParameters } from './utils';
 
 import { Dropdown } from '../Dropdown';
-import { DropdownItem } from '../types';
+import { DropdownOption } from '../types';
 
 interface Props extends FieldDropdownProps {
   currentValue: any;
@@ -18,7 +18,7 @@ function FieldDropdown(props: Props): JSX.Element {
   const { currentValue, dropdownProps = {}, items = [], name, onChange, setValue } = props;
 
   const handleChangeDropdown = useCallback(
-    (data: DropdownItem[]) => {
+    (data: DropdownOption[]) => {
       const { multi } = dropdownProps;
       const setValueOptions = { shouldDirty: true, shouldValidate: true };
 
@@ -53,7 +53,7 @@ function FieldDropdown(props: Props): JSX.Element {
   return (
     <Dropdown
       items={items}
-      values={items.filter((d: DropdownItem) =>
+      values={items.filter((d: DropdownOption) =>
         is.array(currentValue) ? currentValue.includes(d.value) : d.value === currentValue,
       )}
       width="100%"
