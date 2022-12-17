@@ -163,6 +163,10 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
   };
 }
 
+export function px(value: undefined): undefined;
+export function px(value: StringOrNumber): string;
+export function px(value: StringOrNumber | undefined): string | undefined;
+// eslint-disable-next-line padding-line-between-statements
 export function px(value: StringOrNumber | undefined): string | undefined {
   return is.number(value) || is.numericString(value) ? `${value}px` : value;
 }
