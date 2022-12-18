@@ -3,11 +3,13 @@ import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 
+import { Box } from './Box';
 import { px } from './modules/helpers';
 import {
   baseStyles,
+  flexBoxStyles,
+  flexItemStyles,
   getContainerStyles,
-  getStyledOptions,
   marginStyles,
   paddingStyles,
 } from './modules/system';
@@ -16,11 +18,19 @@ import {
   ComponentProps,
   StyledProps,
   WithChildren,
+  WithFlexBox,
+  WithFlexItem,
   WithMargin,
   WithPadding,
 } from './types';
 
-export interface ContainerKnownProps extends StyledProps, WithChildren, WithMargin, WithPadding {
+export interface ContainerKnownProps
+  extends StyledProps,
+    WithChildren,
+    WithFlexBox,
+    WithFlexItem,
+    WithMargin,
+    WithPadding {
   /** @default left */
   align?: Alignment | 'stretch';
   fullScreen?: boolean;
@@ -33,8 +43,6 @@ export interface ContainerKnownProps extends StyledProps, WithChildren, WithMarg
   style?: CSSProperties;
   /** @default left */
   textAlign?: Alignment;
-  /** @default start */
-  verticalAlign?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
   verticalPadding?: boolean;
 }
 
@@ -47,22 +55,17 @@ const flexMap = {
   stretch: 'stretch',
 };
 
-export const StyledContainer = styled(
-  'div',
-  getStyledOptions(),
-)<ContainerProps>(props => {
+export const StyledContainer = styled(Box)<ContainerProps>(props => {
   const {
     align = 'left',
     fullScreen,
     fullScreenOffset,
     responsive,
     textAlign,
-    verticalAlign,
     verticalPadding,
   } = props;
   const styles: CSSObject = {
     alignItems: flexMap[align],
-    justifyContent: verticalAlign,
     textAlign,
   };
 
@@ -72,6 +75,8 @@ export const StyledContainer = styled(
 
   return css`
     ${baseStyles(props)};
+    ${flexBoxStyles(props)};
+    ${flexItemStyles(props)};
     display: flex;
     flex-direction: column;
     margin-left: auto;
@@ -95,6 +100,6 @@ Container.defaultProps = {
   fullScreen: false,
   responsive: true,
   textAlign: 'left',
-  verticalAlign: 'start',
+  justify: 'start',
   verticalPadding: false,
 };

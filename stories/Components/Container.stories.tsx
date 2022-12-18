@@ -1,9 +1,15 @@
 import { ComponentMeta } from '@storybook/react';
 
-import { Jumbo, Paragraph, Text } from 'src';
+import { Box, Jumbo, Paragraph, Text } from 'src';
 import { Container, ContainerProps } from 'src/Container';
 
-import { disableControl, hideProps, spacingProps } from '../__helpers__';
+import {
+  disableControl,
+  flexBoxProps,
+  flexItemProps,
+  hideProps,
+  spacingProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/Container',
@@ -11,6 +17,8 @@ export default {
   args: Container.defaultProps,
   argTypes: {
     ...hideProps(),
+    ...flexBoxProps(),
+    ...flexItemProps(),
     ...spacingProps(),
     children: disableControl(),
     fullScreenOffset: { control: 'text' },
@@ -33,3 +41,21 @@ export const Basic = (props: ContainerProps) => (
     </Text>
   </Container>
 );
+Basic.args = {
+  verticalPadding: true,
+};
+
+export const WithParent = (props: ContainerProps) => (
+  <Box flexBox minHeight={300} shade="lightest" variant="primary">
+    <Container {...props}>
+      <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
+      <Paragraph>
+        I'm a wrapper that holds any type of component with a pre-defined horizontal padding and an
+        optional vertical padding
+      </Paragraph>
+    </Container>
+  </Box>
+);
+WithParent.args = {
+  justify: 'center',
+};
