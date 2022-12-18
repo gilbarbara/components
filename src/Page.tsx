@@ -3,12 +3,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 import { Property } from 'csstype';
-import is from 'is-lite';
 
 import { Box } from './Box';
 import { Loader } from './Loader';
-import { getTheme, px, responsive as responsiveHelper } from './modules/helpers';
-import { paddingStyles } from './modules/system';
+import { px } from './modules/helpers';
+import { getContainerStyles, paddingStyles } from './modules/system';
 import {
   Alignment,
   ComponentProps,
@@ -19,7 +18,7 @@ import {
   WithTextColor,
 } from './types';
 
-export interface MainKnownProps
+export interface PageKnownProps
   extends StyledProps,
     WithColor,
     Pick<WithFlexBox, 'align' | 'justify'>,
@@ -40,44 +39,35 @@ export interface MainKnownProps
   /**
    * Set the "data-component-name" property
    *
-   * @default Main
+   * @default Page
    */
   name?: string;
   /**
-   * Updates the padding for large screens.
-   * @default true
+   * Don't add the default padding
+   * @default false
    */
-  responsive?: boolean;
+  skipSpacing?: boolean;
   style?: CSSProperties;
   textAlign?: Alignment;
 }
 
-export type MainProps = ComponentProps<HTMLDivElement, MainKnownProps, 'wrap'>;
+export type PageProps = ComponentProps<HTMLDivElement, PageKnownProps, 'wrap'>;
 
-export const StyledMain = styled(Box)<Omit<MainProps, 'name'>>(props => {
-  const { minHeight = '100vh', padding, responsive } = props;
-  const { spacing } = getTheme(props);
+export const StyledPage = styled(Box)<Omit<PageProps, 'name'>>(props => {
+  const { minHeight = '100vh', skipSpacing } = props;
 
   return css`
+    ${paddingStyles(props, true)};
     display: grid;
     min-height: ${px(minHeight)};
-    padding: ${spacing.md};
     width: 100%;
-
-    ${responsive &&
-    is.nullOrUndefined(padding) &&
-    responsiveHelper({
-      lg: {
-        padding: spacing.xl,
-      },
-    })};
-
-    // overrides default padding
-    ${paddingStyles(props, true)};
+    ${!skipSpacing
+      ? getContainerStyles(props, { responsive: true, verticalPadding: true })
+      : undefined};
   `;
 });
 
-export function Main(props: MainProps): JSX.Element {
+export function Page(props: PageProps): JSX.Element {
   const { align, centered, children, isLoading, justify, maxWidth, name, textAlign, ...rest } =
     props;
 
@@ -101,7 +91,7 @@ export function Main(props: MainProps): JSX.Element {
   }
 
   return (
-    <StyledMain data-component-name={name} {...rest}>
+    <StyledPage data-component-name={name} {...rest}>
       <Box
         align={shouldCenter ? 'center' : align}
         direction="column"
@@ -114,14 +104,14 @@ export function Main(props: MainProps): JSX.Element {
       >
         {isLoading ? <Loader block /> : children}
       </Box>
-    </StyledMain>
+    </StyledPage>
   );
 }
 
-Main.defaultProps = {
+Page.defaultProps = {
   centered: false,
   isLoading: false,
   minHeight: '100vh',
-  name: 'Main',
-  responsive: true,
+  name: 'Page',
+  skipSpacing: false,
 };
