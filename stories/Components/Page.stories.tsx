@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 
 import { Box, Button, H4, Jumbo, Paragraph } from 'src';
-import { Main, MainProps } from 'src/Main';
+import { Page, PageProps } from 'src/Page';
 
 import {
   colorProps,
@@ -13,10 +13,10 @@ import {
 } from '../__helpers__';
 
 export default {
-  title: 'Components/Main',
-  component: Main,
+  title: 'Components/Page',
+  component: Page,
   args: {
-    ...Main.defaultProps,
+    ...Page.defaultProps,
     name: 'About',
     maxWidth: 1280,
     shade: 'lightest',
@@ -36,10 +36,10 @@ export default {
     minHeight: 400,
     withoutPadding: true,
   },
-} as ComponentMeta<typeof Main>;
+} as ComponentMeta<typeof Page>;
 
-export const Basic = (props: MainProps) => (
-  <Main {...props}>
+export const Basic = (props: PageProps) => (
+  <Page {...props}>
     <Box>
       <H4 light mb={0} variant="gray">
         ABOUT
@@ -53,5 +53,5 @@ export const Basic = (props: MainProps) => (
       ipsum iaculis sit amet.
     </Paragraph>
     <Button>Learn More</Button>
-  </Main>
+  </Page>
 );
