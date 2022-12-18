@@ -55,4 +55,5 @@ export { animateIcon, fadeIn, fadeOut, fadeInOut, rotate } from './modules/anima
 export { icons } from './modules/options';
 export { mergeTheme, px, responsive } from './modules/helpers';
 export * as theme from './modules/theme';
+export { getContainerStyles } from './modules/system';
 export * as Types from './types';

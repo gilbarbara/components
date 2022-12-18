@@ -69,6 +69,11 @@ function App() {
       </Box>
 
       <Box mb="md">
+        <Paragraph bold>getContainerStyles</Paragraph>
+        <Paragraph mt={0}>Add responsive padding to a component.</Paragraph>
+      </Box>
+
+      <Box mb="md">
         <Paragraph bold>mergeTheme</Paragraph>
         <Paragraph mt={0}>A function to create a new theme with custom tokens.</Paragraph>
       </Box>

@@ -5,7 +5,7 @@ import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 import { rgba } from 'polished';
 
-import { getColorVariant, getTheme, px } from './helpers';
+import { getColorVariant, getTheme, px, responsive as responsiveHelper } from './helpers';
 
 import {
   BorderItemSide,
@@ -29,6 +29,44 @@ import {
   WithTheme,
   WithTransparent,
 } from '../types';
+
+interface GetContainerStylesOptions {
+  responsive?: boolean;
+  verticalPadding?: boolean;
+}
+
+export function getContainerStyles(props: WithTheme, options?: GetContainerStylesOptions) {
+  const { responsive = true, verticalPadding = false } = options || {};
+  const { spacing } = getTheme(props);
+
+  return css`
+    padding-left: ${spacing.md};
+    padding-right: ${spacing.md};
+
+    ${responsive &&
+    responsiveHelper({
+      lg: {
+        paddingLeft: spacing.xl,
+        paddingRight: spacing.xl,
+      },
+    })};
+
+    ${verticalPadding &&
+    css`
+      padding-bottom: ${spacing.md};
+      padding-top: ${spacing.md};
+    `};
+
+    ${responsive &&
+    verticalPadding &&
+    responsiveHelper({
+      lg: {
+        paddingBottom: spacing.xl,
+        paddingTop: spacing.xl,
+      },
+    })};
+  `;
+}
 
 export function getStyledOptions(...exclude: string[]) {
   return {

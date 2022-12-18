@@ -3,8 +3,14 @@ import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { getTheme, px, responsive as responsiveHelper } from './modules/helpers';
-import { baseStyles, getStyledOptions, marginStyles, paddingStyles } from './modules/system';
+import { px } from './modules/helpers';
+import {
+  baseStyles,
+  getContainerStyles,
+  getStyledOptions,
+  marginStyles,
+  paddingStyles,
+} from './modules/system';
 import {
   Alignment,
   ComponentProps,
@@ -20,7 +26,7 @@ export interface ContainerKnownProps extends StyledProps, WithChildren, WithMarg
   fullScreen?: boolean;
   fullScreenOffset?: StringOrNumber;
   /**
-   * Updates the padding for large screens.
+   * Update the padding for large screens.
    * @default true
    */
   responsive?: boolean;
@@ -54,7 +60,6 @@ export const StyledContainer = styled(
     verticalAlign,
     verticalPadding,
   } = props;
-  const { spacing } = getTheme(props);
   const styles: CSSObject = {
     alignItems: flexMap[align],
     justifyContent: verticalAlign,
@@ -71,28 +76,7 @@ export const StyledContainer = styled(
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-    padding-left: ${spacing.md};
-    padding-right: ${spacing.md};
-    ${responsive &&
-    responsiveHelper({
-      lg: {
-        paddingLeft: spacing.xl,
-        paddingRight: spacing.xl,
-      },
-    })};
-    ${verticalPadding &&
-    css`
-      padding-bottom: ${spacing.md};
-      padding-top: ${spacing.md};
-    `};
-    ${responsive &&
-    verticalPadding &&
-    responsiveHelper({
-      lg: {
-        paddingBottom: spacing.xl,
-        paddingTop: spacing.xl,
-      },
-    })}
+    ${getContainerStyles(props, { responsive, verticalPadding })};
     position: relative;
     width: 100%;
     ${css(styles)};
