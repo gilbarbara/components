@@ -10,6 +10,7 @@ import {
   flexBoxStyles,
   flexItemStyles,
   getContainerStyles,
+  layoutStyles,
   marginStyles,
   paddingStyles,
 } from './modules/system';
@@ -20,6 +21,7 @@ import {
   WithChildren,
   WithFlexBox,
   WithFlexItem,
+  WithLayout,
   WithMargin,
   WithPadding,
 } from './types';
@@ -29,6 +31,7 @@ export interface ContainerKnownProps
     WithChildren,
     WithFlexBox,
     WithFlexItem,
+    WithLayout,
     WithMargin,
     WithPadding {
   /** @default left */
@@ -75,17 +78,17 @@ export const StyledContainer = styled(Box)<ContainerProps>(props => {
 
   return css`
     ${baseStyles(props)};
-    ${flexBoxStyles(props)};
-    ${flexItemStyles(props)};
     display: flex;
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-    ${getContainerStyles(props, { responsive, verticalPadding })};
     position: relative;
     width: 100%;
     ${css(styles)};
-
+    ${getContainerStyles(props, { responsive, verticalPadding })};
+    ${flexBoxStyles(props)};
+    ${flexItemStyles(props)};
+    ${layoutStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props, true)};
   `;
