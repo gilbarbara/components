@@ -4,9 +4,8 @@ import { Box, BoxCenter, BoxInline, BoxProps } from 'src/Box';
 import {
   colorProps,
   disableControl,
-  flexContent,
+  flexBoxProps,
   flexItemProps,
-  flexItems,
   hideProps,
   layoutProps,
   positioningProps,
@@ -23,18 +22,11 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexBoxProps(),
     ...flexItemProps(),
     ...layoutProps(),
     ...positioningProps(),
     ...spacingProps(),
-    alignContent: { control: 'select', options: ['', ...flexContent] },
-    align: { control: 'select', options: ['', ...flexItems] },
-    direction: {
-      control: 'select',
-      options: ['row', 'row-reverse', 'column', 'column-reverse'],
-    },
-    justify: { control: 'select', options: ['', ...flexContent] },
-    wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
   },
 };
 

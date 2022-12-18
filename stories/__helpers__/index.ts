@@ -48,6 +48,19 @@ export function colorProps() {
   };
 }
 
+export function flexBoxProps() {
+  return {
+    alignContent: { control: 'select', options: ['', ...flexContent] },
+    align: { control: 'select', options: ['', ...flexItems] },
+    direction: {
+      control: 'select',
+      options: ['row', 'row-reverse', 'column', 'column-reverse'],
+    },
+    justify: { control: 'select', options: ['', ...flexContent] },
+    wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
+  };
+}
+
 export function flexItemProps() {
   return {
     alignSelf: { table: { category: 'Flex Item' } },
