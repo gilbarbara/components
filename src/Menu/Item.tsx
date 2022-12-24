@@ -1,4 +1,4 @@
-import { Children, isValidElement, MouseEventHandler, ReactNode, useCallback } from 'react';
+import { Children, isValidElement, MouseEvent, MouseEventHandler, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
@@ -14,6 +14,7 @@ interface ChildProps {
 
 export interface MenuItemProps extends ChildProps, WithColor {
   children: ((props: Required<ChildProps>) => ReactNode) | ReactNode;
+  disabled?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -21,7 +22,7 @@ export const StyledMenuItem = styled(
   'div',
   getStyledOptions(),
 )<MenuItemProps>(props => {
-  const { shade, variant = 'primary' } = props;
+  const { disabled, shade, variant = 'primary' } = props;
   const { grayDarker, grayScale, spacing, typography, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
 
@@ -31,19 +32,22 @@ export const StyledMenuItem = styled(
 
   return css`
     color: ${themeColor};
-    cursor: pointer;
+    cursor: ${disabled ? 'default' : 'pointer'};
     font-size: ${typography.mid.fontSize};
     transition: background-color 0.3s;
 
-    &:hover,
-    &:active {
-      background-color: ${bg};
-      color: ${color};
-
-      * {
+    ${!disabled &&
+    css`
+      &:hover,
+      &:active {
+        background-color: ${bg};
         color: ${color};
+
+        * {
+          color: ${color};
+        }
       }
-    }
+    `};
 
     a {
       color: ${themeColor};
@@ -59,19 +63,26 @@ export const StyledMenuItem = styled(
   `;
 });
 
-export function MenuItem({ children, closeMenu, onClick, ...rest }: MenuItemProps): JSX.Element {
-  const handleClick = useCallback(
-    event => {
-      if (!is.function(children) && closeMenu) {
-        closeMenu();
-      }
+export function MenuItem({
+  children,
+  closeMenu,
+  disabled,
+  onClick,
+  ...rest
+}: MenuItemProps): JSX.Element {
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (disabled) {
+      return;
+    }
 
-      if (onClick) {
-        onClick(event);
-      }
-    },
-    [children, closeMenu, onClick],
-  );
+    if (!is.function(children) && closeMenu) {
+      closeMenu();
+    }
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
 
   let content = children;
 
@@ -82,7 +93,12 @@ export function MenuItem({ children, closeMenu, onClick, ...rest }: MenuItemProp
   }
 
   return (
-    <StyledMenuItem data-component-name="MenuItem" onClick={handleClick} {...rest}>
+    <StyledMenuItem
+      data-component-name="MenuItem"
+      disabled={disabled}
+      onClick={handleClick}
+      {...rest}
+    >
       {content}
     </StyledMenuItem>
   );
