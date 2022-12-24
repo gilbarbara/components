@@ -36,7 +36,7 @@ export const Basic = (props: MenuProps) => {
   return (
     <Menu {...props}>
       <>
-        <MenuItem>Profile</MenuItem>
+        <MenuItem disabled>Profile</MenuItem>
         <MenuItem onClick={action('Configuration')}>
           <ButtonBase>Configuration</ButtonBase>
         </MenuItem>
