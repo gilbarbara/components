@@ -22,6 +22,7 @@ import {
   WithColor,
   WithComponentSize,
   WithInvert,
+  WithLight,
   WithPadding,
   WithTransparent,
 } from './types';
@@ -34,6 +35,7 @@ export interface ButtonKnownProps
     WithColor,
     WithComponentSize,
     WithInvert,
+    WithLight,
     WithPadding,
     WithTransparent {
   /**
@@ -58,7 +60,7 @@ export const StyledButton = styled(
   'button',
   getStyledOptions(),
 )<ButtonProps>(props => {
-  const { block, busy, shade, shape, size = 'md', variant = 'primary', wide } = props;
+  const { block, busy, light, shade, shape, size = 'md', variant = 'primary', wide } = props;
   const { button, grayLighter, grayMid, radius, spacing, variants } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
   let buttonPadding = `${padding[size][0]} ${
@@ -90,7 +92,7 @@ export const StyledButton = styled(
     cursor: pointer;
     display: inline-flex;
     font-size: ${fontSize[size]};
-    font-weight: ${fontWeight};
+    font-weight: ${light ? 400 : fontWeight};
     min-height: ${height[size]};
     min-width: ${height[size]};
     justify-content: center;
@@ -122,14 +124,14 @@ export const StyledButton = styled(
 });
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { busy, children, shape, size = 'md' } = props;
+  const { busy = false, children, shape, size = 'md' } = props;
   const {
     button: { fontSize },
   } = getTheme(props);
 
   const content: AnyObject = {
     children,
-    icon: !!busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />,
+    icon: busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />,
   };
 
   if (shape && busy) {
@@ -150,6 +152,7 @@ Button.defaultProps = {
   busy: false,
   disabled: false,
   invert: false,
+  light: false,
   shade: 'mid',
   size: 'md',
   transparent: false,
