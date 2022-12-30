@@ -43,19 +43,19 @@ export function getContainerStyles(props: WithTheme, options?: GetContainerStyle
     padding-left: ${spacing.md};
     padding-right: ${spacing.md};
 
+    ${verticalPadding &&
+    css`
+      padding-bottom: ${spacing.md};
+      padding-top: ${spacing.md};
+    `}
+
     ${responsive &&
     responsiveHelper({
       lg: {
         paddingLeft: spacing.xl,
         paddingRight: spacing.xl,
       },
-    })};
-
-    ${verticalPadding &&
-    css`
-      padding-bottom: ${spacing.md};
-      padding-top: ${spacing.md};
-    `};
+    })}
 
     ${responsive &&
     verticalPadding &&
@@ -64,7 +64,7 @@ export function getContainerStyles(props: WithTheme, options?: GetContainerStyle
         paddingBottom: spacing.xl,
         paddingTop: spacing.xl,
       },
-    })};
+    })}
   `;
 }
 
@@ -77,6 +77,7 @@ export function getStyledOptions(...exclude: string[]) {
         'direction',
         'display',
         'height',
+        'letterSpacing',
         'loading',
         'margin',
         'opacity',
@@ -86,8 +87,11 @@ export function getStyledOptions(...exclude: string[]) {
         'radius',
         'shadow',
         'size',
+        'textDecoration',
+        'textTransform',
         'transform',
         'width',
+        'wordSpacing',
         'wrap',
         ...exclude,
       ].includes(prop) &&
@@ -633,19 +637,39 @@ export function textStyles<T extends WithTextOptions & WithTheme>(
   props: T,
   lineHeightCustom?: StringOrNumber,
 ): CSSObject {
-  const { bold = false, size } = props;
+  const {
+    bold = false,
+    italic = false,
+    letterSpacing,
+    lineHeight,
+    size,
+    textDecoration,
+    textTransform,
+    wordSpacing,
+  } = props;
   const { typography } = getTheme(props);
 
+  const styles: CSSObject = {
+    fontWeight: bold ? 700 : undefined,
+    fontStyle: italic ? 'italic' : 'normal',
+    letterSpacing,
+    lineHeight,
+    textDecoration,
+    textTransform,
+    wordSpacing,
+  };
+
   if (size) {
-    const { fontSize, lineHeight, weight } = typography[size];
+    const { fontSize, lineHeight: typographyLineHeight, weight } = typography[size];
     const fontWeight = bold ? weight[1] : weight[0];
 
     return {
+      ...styles,
       fontSize,
       fontWeight,
-      lineHeight: lineHeightCustom || lineHeight,
+      lineHeight: styles.lineHeight || lineHeightCustom || typographyLineHeight,
     };
   }
 
-  return {};
+  return styles;
 }

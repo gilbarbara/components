@@ -1,8 +1,10 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { omit } from '@gilbarbara/helpers';
 
 import { Icon } from './Icon';
+import { textDefaultOptions } from './modules/options';
 import {
   appearanceStyles,
   baseStyles,
@@ -93,7 +95,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =>
 });
 
 Anchor.defaultProps = {
-  bold: false,
+  ...omit(textDefaultOptions, 'size'),
   display: 'inline-flex',
   external: false,
   hideDecoration: false,

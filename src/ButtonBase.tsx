@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { Icon } from './Icon';
+import { textDefaultOptions } from './modules/options';
 import {
   appearanceStyles,
   baseStyles,
@@ -84,9 +85,8 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>((props,
 });
 
 ButtonBase.defaultProps = {
-  bold: false,
+  ...textDefaultOptions,
   busy: false,
   disabled: false,
-  size: 'regular',
   type: 'button',
 };

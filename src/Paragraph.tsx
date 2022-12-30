@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme, px } from './modules/helpers';
+import { textDefaultOptions } from './modules/options';
 import {
   alignStyles,
   baseStyles,
@@ -61,7 +62,4 @@ export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props
   );
 });
 
-Paragraph.defaultProps = {
-  bold: false,
-  size: 'regular',
-};
+Paragraph.defaultProps = textDefaultOptions;

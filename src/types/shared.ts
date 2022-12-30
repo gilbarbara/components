@@ -170,6 +170,13 @@ export interface WithLayout extends WithDisplay {
   width?: StandardLonghandProperties['width'] | number;
 }
 
+export interface WithLight {
+  /**
+   * Remove bold style
+   */
+  light?: boolean;
+}
+
 export interface WithMargin {
   /** Also accepts the shortcuts: mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical) */
   margin?: Spacing | 0;
@@ -249,10 +256,20 @@ export interface WithTextSize {
 
 export interface WithTextOptions extends WithTextSize {
   /**
-   * Make the text bold
+   * Bold text
    * @default false
    */
   bold?: boolean;
+  /**
+   * Italic text
+   * @default false
+   */
+  italic?: boolean;
+  letterSpacing?: StandardLonghandProperties['letterSpacing'];
+  lineHeight?: StandardLonghandProperties['lineHeight'];
+  textDecoration?: StandardShorthandProperties['textDecoration'];
+  textTransform?: StandardLonghandProperties['textTransform'];
+  wordSpacing?: StandardLonghandProperties['wordSpacing'];
 }
 
 export interface WithTheme {
