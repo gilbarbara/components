@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
 
 import { getColorVariant, getTheme, px } from './modules/helpers';
+import { textDefaultOptions } from './modules/options';
 import { baseStyles, getStyledOptions, marginStyles, textStyles } from './modules/system';
 import {
   ComponentProps,
@@ -14,7 +15,7 @@ import {
   WithChildrenOptional,
   WithColor,
   WithMargin,
-  WithTextSize,
+  WithTextOptions,
 } from './types';
 
 export interface DividerKnownProps
@@ -23,7 +24,7 @@ export interface DividerKnownProps
     WithChildrenOptional,
     WithColor,
     WithMargin,
-    WithTextSize {
+    WithTextOptions {
   /** @default sm */
   borderSize?: Sizes;
   /** @default solid */
@@ -144,6 +145,7 @@ export function Divider(props: DividerProps): JSX.Element {
 }
 
 Divider.defaultProps = {
+  ...textDefaultOptions,
   align: 'center',
   borderSize: 'sm',
   borderStyle: 'solid',

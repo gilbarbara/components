@@ -7,6 +7,7 @@ import {
   borderStyles,
   colorStyles,
   marginStyles,
+  textStyles,
 } from '../modules/system';
 import {
   ComponentProps,
@@ -16,7 +17,9 @@ import {
   WithBorder,
   WithChildren,
   WithColor,
+  WithLight,
   WithMargin,
+  WithTextOptions,
 } from '../types';
 
 export interface HeadingKnownProps
@@ -25,9 +28,9 @@ export interface HeadingKnownProps
     WithBorder,
     WithColor,
     WithChildren,
-    WithMargin {
-  light?: boolean;
-}
+    WithLight,
+    WithMargin,
+    Omit<WithTextOptions, 'bold' | 'size'> {}
 
 export type HeadingProps = ComponentProps<HTMLHeadingElement, HeadingKnownProps>;
 export type HeadingLargeProps = ComponentProps<
@@ -52,5 +55,6 @@ export function getStyles(key: Typography, props: HeadingProps) {
     ${borderStyles(props)};
     ${colorStyles(props)};
     ${marginStyles(props)};
+    ${textStyles(props)};
   `;
 }
