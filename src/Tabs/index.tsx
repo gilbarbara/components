@@ -13,6 +13,7 @@ import styled from '@emotion/styled';
 import { omit, unique } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
+import is from 'is-lite';
 import { SetOptional } from 'type-fest';
 
 import { Tab, TabProps } from './Tab';
@@ -25,11 +26,12 @@ import { NonIdealState } from '../NonIdealState';
 import { Direction, StyledProps, WithChildren, WithColor, WithMargin } from '../types';
 
 export interface TabsProps extends StyledProps, WithChildren, WithColor, WithMargin {
+  defaultId?: string;
   /** @default vertical */
   direction?: Direction;
   /** @default false */
   disableActiveBorderRadius?: boolean;
-  initialId?: string;
+  id?: string;
   loader?: ReactNode;
   maxHeight?: number | StandardLonghandProperties['maxHeight'];
   minHeight?: number | StandardLonghandProperties['minHeight'];
@@ -172,7 +174,8 @@ const StyledContent = styled(
 export function Tabs(props: TabsProps) {
   const {
     children,
-    initialId = '',
+    defaultId = '',
+    id,
     loader,
     maxHeight,
     minHeight,
@@ -183,7 +186,7 @@ export function Tabs(props: TabsProps) {
     ...rest
   } = props;
   const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
-    activeId: initialId,
+    activeId: id || defaultId,
     error: false,
     isReady: false,
     tabs: [],
@@ -235,17 +238,23 @@ export function Tabs(props: TabsProps) {
     }
   }, [measurements, setState, width]);
 
-  const handleClickItem = (event: MouseEvent<HTMLButtonElement>) => {
-    const { disabled, id = '' } = event.currentTarget.dataset;
+  useEffect(() => {
+    setState({ activeId: id });
+  }, [id, setState]);
 
-    if (activeId === id || disabled === 'true') {
+  const handleClickItem = (event: MouseEvent<HTMLButtonElement>) => {
+    const { disabled, tabId = '' } = event.currentTarget.dataset;
+
+    if (activeId === tabId || disabled === 'true') {
       return;
     }
 
-    setState({ activeId: id });
+    if (is.undefined(id)) {
+      setState({ activeId: tabId });
+    }
 
     if (onClick) {
-      onClick(id);
+      onClick(tabId);
     }
   };
 
@@ -272,7 +281,7 @@ export function Tabs(props: TabsProps) {
                 aria-selected={d.id === activeId}
                 data-component-name="TabsMenuItem"
                 data-disabled={!!d.disabled}
-                data-id={d.id}
+                data-tab-id={d.id}
                 direction={rest.direction}
                 disableActiveBorderRadius={rest.disableActiveBorderRadius}
                 disabled={!!d.disabled}
