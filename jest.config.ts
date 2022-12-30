@@ -10,7 +10,9 @@ module.exports = {
     },
   },
   moduleDirectories: ['node_modules', 'src'],
-  preset: 'ts-jest',
+  snapshotSerializers: ['@emotion/jest/serializer'],
+  setupFilesAfterEnv: ['<rootDir>/test/__setup__/setupFilesAfterEnv.ts'],
+  testEnvironment: '@happy-dom/jest-environment',
   testRegex: 'test/.*?\\.(test|spec)\\.tsx?$',
   transform: {
     '^.+\\.tsx?$': [
