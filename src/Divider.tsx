@@ -43,6 +43,12 @@ export interface DividerKnownProps
    * @default 100%
    */
   length?: StringOrNumber;
+  /**
+   * The minimum border width for horizontal direction with text
+   *
+   * @default 50
+   */
+  minBorderWidth?: StringOrNumber;
 }
 
 export type DividerProps = ComponentProps<HTMLDivElement, DividerKnownProps>;
@@ -65,6 +71,7 @@ const StyledDivider = styled(
     direction,
     gap = 'xs',
     length = '100%',
+    minBorderWidth,
     shade,
     variant = 'gray',
   } = props;
@@ -85,17 +92,14 @@ const StyledDivider = styled(
       `;
 
   if (isHorizontal && children) {
-    let borderLeftWidth = '50%';
-    let borderRightWidth = '50%';
+    let textAlign = 'center';
 
     if (align === 'left') {
-      borderLeftWidth = '5%';
-      borderRightWidth = 'calc(95%)';
+      textAlign = 'left';
     }
 
     if (align === 'right') {
-      borderLeftWidth = 'calc(95%)';
-      borderRightWidth = '5%';
+      textAlign = 'right';
     }
 
     return css`
@@ -107,24 +111,26 @@ const StyledDivider = styled(
       line-height: 1;
       position: relative;
       ${margin};
+      text-align: ${textAlign};
       width: ${px(length)};
       ${marginStyles(props)};
       ${textStyles(props)};
 
       &:before,
       &:after {
-        content: '';
         border-top: ${borderSizes[borderSize]} ${borderStyle} ${bg};
+        content: '';
+        display: inline-flex;
+        min-width: ${px(minBorderWidth)};
+        flex-grow: 1;
       }
 
       &:before {
         margin-right: ${spacing[gap]};
-        width: ${borderLeftWidth};
       }
 
       &:after {
         margin-left: ${spacing[gap]};
-        width: ${borderRightWidth};
       }
     `;
   }
@@ -152,6 +158,7 @@ Divider.defaultProps = {
   direction: 'horizontal',
   gap: 'xs',
   length: '100%',
+  minBorderWidth: 50,
   shade: 'light',
   size: 'regular',
   variant: 'gray',
