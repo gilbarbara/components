@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`alignStyles should return an empty object without the "align" prop 1`] = `{}`;
+
+exports[`alignStyles should return properly 1`] = `
+{
+  "textAlign": "center",
+}
+`;
+
+exports[`getContainerStyles should return properly 1`] = `
+"
+    padding-left: 16px;
+    padding-right: 16px;
+
+    
+
+    @media screen and (min-width: 1024px){padding-left:32px;padding-right:32px;};
+
+    
+  "
+`;
+
+exports[`getContainerStyles should return properly with "responsive: false" 1`] = `
+"
+    padding-left: 16px;
+    padding-right: 16px;
+
+    
+
+    
+
+    
+  "
+`;
+
+exports[`getContainerStyles should return properly with "verticalPadding: true" 1`] = `
+"
+    padding-left: 16px;
+    padding-right: 16px;
+
+    
+      padding-bottom: 16px;
+      padding-top: 16px;
+    ;
+
+    @media screen and (min-width: 1024px){padding-left:32px;padding-right:32px;};
+
+    @media screen and (min-width: 1024px){padding-bottom:32px;padding-top:32px;};
+  "
+`;
