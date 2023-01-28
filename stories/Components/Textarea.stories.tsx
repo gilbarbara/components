@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { Textarea, TextareaProps } from 'src/Textarea';
+import { Textarea } from 'src/Textarea';
 
 import { hideProps } from '../__helpers__';
 
@@ -16,6 +16,6 @@ export default {
     ...hideProps(),
     width: { control: 'text' },
   },
-} as ComponentMeta<typeof Textarea>;
+} as Meta<typeof Textarea>;
 
-export const Basic = (props: TextareaProps) => <Textarea {...props} />;
+export const Basic = {};

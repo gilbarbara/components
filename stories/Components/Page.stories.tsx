@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Box, Button, H4, Jumbo, Paragraph } from 'src';
 import { Page, PageProps } from 'src/Page';
@@ -36,22 +36,24 @@ export default {
     minHeight: 400,
     withoutPadding: true,
   },
-} as ComponentMeta<typeof Page>;
+} as Meta<typeof Page>;
 
-export const Basic = (props: PageProps) => (
-  <Page {...props}>
-    <Box>
-      <H4 light mb={0} variant="gray">
-        ABOUT
-      </H4>
-      <Jumbo mb="lg">How it works</Jumbo>
-    </Box>
-    <Paragraph mb="md">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id suscipit ex. Suspendisse
-      rhoncus laoreet purus . Phasellus sed efficitur dolor, et ultricies sapien. Quisque fringilla
-      sit amet dolor commodo efficitur. Aliquam et sem odio. In ullamcorper nisi nunc, et molestie
-      ipsum iaculis sit amet.
-    </Paragraph>
-    <Button>Learn More</Button>
-  </Page>
-);
+export const Basic = {
+  render: (props: PageProps) => (
+    <Page {...props}>
+      <Box>
+        <H4 light mb={0} variant="gray">
+          ABOUT
+        </H4>
+        <Jumbo mb="lg">How it works</Jumbo>
+      </Box>
+      <Paragraph mb="md">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id suscipit ex.
+        Suspendisse rhoncus laoreet purus . Phasellus sed efficitur dolor, et ultricies sapien.
+        Quisque fringilla sit amet dolor commodo efficitur. Aliquam et sem odio. In ullamcorper nisi
+        nunc, et molestie ipsum iaculis sit amet.
+      </Paragraph>
+      <Button>Learn More</Button>
+    </Page>
+  ),
+};

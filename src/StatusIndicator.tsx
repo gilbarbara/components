@@ -5,7 +5,7 @@ import { getColorVariant, getTheme, px } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, Shades, StyledProps, WithColor, WithMargin } from './types';
 
-interface StatusIndicatorKnownProps extends StyledProps, WithColor, WithMargin {
+export interface StatusIndicatorKnownProps extends StyledProps, WithColor, WithMargin {
   /** @default lighter */
   centerShade?: Shades;
   ratio?: number;

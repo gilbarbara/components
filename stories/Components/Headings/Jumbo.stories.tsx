@@ -1,7 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Jumbo } from 'src/Headings';
-import { HeadingLargeProps } from 'src/Headings/utils';
 
 import { colorProps, hideProps, marginProps } from '../../__helpers__';
 
@@ -18,8 +17,8 @@ export default {
     ...colorProps(),
     ...marginProps(),
   },
-} as ComponentMeta<typeof Jumbo>;
+} as Meta<typeof Jumbo>;
 
-export const BasicJumbo = (props: HeadingLargeProps) => <Jumbo {...props} />;
-
-BasicJumbo.storyName = 'Jumbo';
+export const BasicJumbo = {
+  name: 'Jumbo',
+};

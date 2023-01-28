@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { NonIdealState, NonIdealStateProps } from 'src/NonIdealState';
+import { NonIdealState } from 'src/NonIdealState';
 
 import {
   colorProps,
@@ -26,14 +26,15 @@ export default {
     title: { control: 'text' },
     type: { control: 'select' },
   },
-} as ComponentMeta<typeof NonIdealState>;
+} as Meta<typeof NonIdealState>;
 
-export const Basic = (props: NonIdealStateProps) => <NonIdealState {...props} />;
+export const Basic = {};
 
-export const Horizontal = (props: NonIdealStateProps) => (
-  <NonIdealState {...props} direction="horizontal" />
-);
-
-Horizontal.argTypes = {
-  direction: disableControl(),
+export const Horizontal = {
+  args: {
+    direction: 'horizontal',
+  },
+  argTypes: {
+    direction: disableControl(),
+  },
 };

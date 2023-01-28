@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useTheme } from '@emotion/react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Grid } from 'src';
 import { getTheme } from 'src/modules/helpers';
@@ -21,31 +22,32 @@ export default {
     ...colorProps(),
     label: { control: 'text' },
   },
-} as ComponentMeta<typeof Toggle>;
+} as Meta<typeof Toggle>;
 
-export const Basic = (props: ToggleProps) => <Toggle {...props} />;
+export const Basic = {};
 
-export const Variants = (props: ToggleProps) => {
-  const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
+export const Variants = {
+  argTypes: {
+    label: disableControl(),
+    name: disableControl(),
+    variant: disableControl(),
+  },
+  render: (props: ToggleProps) => {
+    const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
 
-  return (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {[...Object.keys(variants), 'black', 'white'].map(color => (
-        <Toggle
-          key={color}
-          {...props}
-          defaultChecked
-          label={color}
-          name={color}
-          variant={color as Types.Variants}
-        />
-      ))}
-    </Grid>
-  );
-};
-
-Variants.argTypes = {
-  label: disableControl(),
-  name: disableControl(),
-  variant: disableControl(),
+    return (
+      <Grid gap={30} templateColumns="repeat(3, 1fr)">
+        {[...Object.keys(variants), 'black', 'white'].map(color => (
+          <Toggle
+            key={color}
+            {...props}
+            defaultChecked
+            label={color}
+            name={color}
+            variant={color as Types.Variants}
+          />
+        ))}
+      </Grid>
+    );
+  },
 };

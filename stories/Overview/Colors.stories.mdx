@@ -1,190 +1,193 @@
+import { Unstyled } from '@storybook/blocks';
 import { Meta } from '@storybook/addon-docs';
 import { capitalize } from '@gilbarbara/helpers';
 import { compare, hex2hsl, textColor } from 'colorizr';
 
-import { Box, BoxCenter, Grid, H2, H3, Icon, Jumbo, Paragraph, Spacer, Text } from 'src';
-import { colors, grayScale, variants as themeVariants } from 'src/modules/theme';
+import { Box, BoxCenter, Grid, H2, H3, Icon, Jumbo, Paragraph, Spacer, Text } from '../../src';
+import { colors, grayScale, variants as themeVariants } from '../../src/modules/theme';
 import { shades, variants } from '../__helpers__';
 
 <Meta title="Overview/Colors" />
 
-<Jumbo>Colors and shades</Jumbo>
+<Unstyled>
+  <Jumbo>Colors and shades</Jumbo>
 
-<H2>Colors</H2>
+  <H2>Colors</H2>
 
-<Spacer direction="vertical" grow maxWidth={900} gap="xl" mb="xxl">
-  {Object.entries(colors).map(([key, value]) => {
-    const {
-      contrast,
-      largeAA,
-      largeAAA,
-      normalAA,
-      normalAAA
-    } = compare(value, textColor(value));
-    return (
-      <Box key={key}>
-        <H3 light>{capitalize(key)} ({value})</H3>
-        <BoxCenter padding="xl" variant={key}>
-          <Paragraph>
-            The quick brown fox jumps over the lazy dog
-          </Paragraph>
-          <Paragraph size="large">
-            The quick brown fox jumps over the lazy dog
-          </Paragraph>
-        </BoxCenter>
-        <Grid
-          templateColumns="repeat(5, 1fr)"
-          style={{ border: '1px solid #000' }}
-        >
-          <BoxCenter
-            padding="xs"
-            style={{ borderRight: "1px solid #000" }}
-          >
-            Contrast: {contrast}
+  <Spacer direction="vertical" grow maxWidth={900} gap="xl" mb="xxl">
+    {Object.entries(colors).map(([key, value]) => {
+      const {
+        contrast,
+        largeAA,
+        largeAAA,
+        normalAA,
+        normalAAA
+      } = compare(value, textColor(value));
+      return (
+        <Box key={key}>
+          <H3 light>{capitalize(key)} ({value})</H3>
+          <BoxCenter padding="xl" variant={key}>
+            <Paragraph>
+              The quick brown fox jumps over the lazy dog
+            </Paragraph>
+            <Paragraph size="large">
+              The quick brown fox jumps over the lazy dog
+            </Paragraph>
           </BoxCenter>
-          <BoxCenter
-            padding="xs"
-            style={{ borderRight: "1px solid #000" }}
+          <Grid
+            templateColumns="repeat(5, 1fr)"
+            style={{ border: '1px solid #000' }}
           >
-            <Spacer gap="xxs">
-              <Text>normal AA:</Text>
-              <Icon
-                color={normalAA ? colors.green : colors.red}
-                name={normalAA ? "check-o" : "close-o"}
-                size={24}
-              />
-            </Spacer>
-          </BoxCenter>
+            <BoxCenter
+              padding="xs"
+              style={{ borderRight: "1px solid #000" }}
+            >
+              Contrast: {contrast}
+            </BoxCenter>
+            <BoxCenter
+              padding="xs"
+              style={{ borderRight: "1px solid #000" }}
+            >
+              <Spacer gap="xxs">
+                <Text>normal AA:</Text>
+                <Icon
+                  color={normalAA ? colors.green : colors.red}
+                  name={normalAA ? "check-o" : "close-o"}
+                  size={24}
+                />
+              </Spacer>
+            </BoxCenter>
+            <BoxCenter
+              padding="xs"
+              style={{ borderRight: "1px solid #000" }}
+            >
+              <Spacer gap="xxs">
+                <Text>normal AAA:</Text>
+                <Icon
+                  color={normalAAA ? colors.green : colors.red}
+                  name={normalAAA ? "check-o" : "close-o"}
+                  size={24}
+                />
+              </Spacer>
+            </BoxCenter>
+            <BoxCenter
+              padding="xs"
+              style={{ borderRight: "1px solid #000" }}
+            >
+              <Spacer gap="xxs">
+                <Text>large AA:</Text>
+                <Icon
+                  color={largeAA ? colors.green : colors.red}
+                  name={largeAA ? "check-o" : "close-o"}
+                  size={24}
+                />
+              </Spacer>
+            </BoxCenter>
+            <BoxCenter
+              padding="xs"
+            >
+              <Spacer gap="xxs">
+                <Text>large AAA:</Text>
+                <Icon
+                  color={largeAAA ? colors.green : colors.red}
+                  name={largeAAA ? "check-o" : "close-o"}
+                  size={24}
+                />
+              </Spacer>
+            </BoxCenter>
+          </Grid>
+        </Box>
+      );
+    })}
+  </Spacer>
+
+  <H2>Variants</H2>
+
+  <Spacer direction="vertical" grow maxWidth={900} gap="xl" mb="xxl">
+    {Object.entries(themeVariants)
+      .map(([variant, color]) => (
+        <Box key={variant}>
+          <H3 light>{capitalize(variant)}</H3>
+          <Grid gap={32} justifyContent="start" templateColumns="repeat(7, auto)">
+            {Object.entries(color)
+              .map(([shade, value]) => {
+                const { h, s, l } = hex2hsl(value.bg);
+                return (
+                  <Box key={shade}>
+                    <BoxCenter
+                      height={100}
+                      radius="round"
+                      shade={shade}
+                      variant={variant}
+                      width={100}
+                    >
+                      {shade}
+                    </BoxCenter>
+                    <Paragraph align="center" size="small" mt="xs">HEX: {value.bg}</Paragraph>
+                    <Paragraph align="center" size="small">
+                      HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
+                    </Paragraph>
+                  </Box>
+                );
+              })}
+          </Grid>
+        </Box>
+      ))}
+  </Spacer>
+
+
+  <H2>Shades</H2>
+
+  <Spacer direction="vertical" grow maxWidth={768} gap="xl" mb="xxl">
+    {shades
+      .map((shade) => (
+        <Box key={shade}>
+          <H3 light>{capitalize(shade)}</H3>
+          <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+            {variants
+              .map((variant) => {
+                const { bg } = themeVariants[variant][shade];
+                const { h, s, l } = hex2hsl(bg);
+                return (
+                  <Box key={variant}>
+                    <BoxCenter
+                      height={100}
+                      radius="round"
+                      shade={shade}
+                      variant={variant}
+                      width={100}
+                    >
+                      {variant}
+                    </BoxCenter>
+                    <Paragraph align="center" size="small" mt="xs">HEX: {bg}</Paragraph>
+                    <Paragraph align="center" size="small">
+                      HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
+                    </Paragraph>
+                  </Box>
+                );
+              })}
+          </Grid>
+        </Box>
+      ))}
+  </Spacer>
+
+  <H2>Grayscale</H2>
+
+  <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+    {Object.entries(grayScale)
+      .map(([key, color]) => (
+        <Box key={color}>
           <BoxCenter
-            padding="xs"
-            style={{ borderRight: "1px solid #000" }}
+            height={100}
+            radius="round"
+            width={100}
+            style={{ backgroundColor: color }}
           >
-            <Spacer gap="xxs">
-              <Text>normal AAA:</Text>
-              <Icon
-                color={normalAAA ? colors.green : colors.red}
-                name={normalAAA ? "check-o" : "close-o"}
-                size={24}
-              />
-            </Spacer>
+            <Text style={{ color: textColor(color) }}>{color}</Text>
           </BoxCenter>
-          <BoxCenter
-            padding="xs"
-            style={{ borderRight: "1px solid #000" }}
-          >
-            <Spacer gap="xxs">
-              <Text>large AA:</Text>
-              <Icon
-                color={largeAA ? colors.green : colors.red}
-                name={largeAA ? "check-o" : "close-o"}
-                size={24}
-              />
-            </Spacer>
-          </BoxCenter>
-          <BoxCenter
-            padding="xs"
-          >
-            <Spacer gap="xxs">
-              <Text>large AAA:</Text>
-              <Icon
-                color={largeAAA ? colors.green : colors.red}
-                name={largeAAA ? "check-o" : "close-o"}
-                size={24}
-              />
-            </Spacer>
-          </BoxCenter>
-        </Grid>
-      </Box>
-    );
-  })}
-</Spacer>
-
-<H2>Variants</H2>
-
-<Spacer direction="vertical" grow maxWidth={900} gap="xl" mb="xxl">
-  {Object.entries(themeVariants)
-    .map(([variant, color]) => (
-      <Box key={variant}>
-        <H3 light>{capitalize(variant)}</H3>
-        <Grid gap={32} justifyContent="start" templateColumns="repeat(7, auto)">
-          {Object.entries(color)
-            .map(([shade, value]) => {
-              const { h, s, l } = hex2hsl(value.bg);
-              return (
-                <Box key={shade}>
-                  <BoxCenter
-                    height={100}
-                    radius="round"
-                    shade={shade}
-                    variant={variant}
-                    width={100}
-                  >
-                    {shade}
-                  </BoxCenter>
-                  <Paragraph align="center" size="small" mt="xs">HEX: {value.bg}</Paragraph>
-                  <Paragraph align="center" size="small">
-                    HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
-                  </Paragraph>
-                </Box>
-              );
-            })}
-        </Grid>
-      </Box>
-    ))}
-</Spacer>
-
-
-<H2>Shades</H2>
-
-<Spacer direction="vertical" grow maxWidth={768} gap="xl" mb="xxl">
-  {shades
-    .map((shade) => (
-      <Box key={shade}>
-        <H3 light>{capitalize(shade)}</H3>
-        <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
-          {variants
-            .map((variant) => {
-              const { bg } = themeVariants[variant][shade];
-              const { h, s, l } = hex2hsl(bg);
-              return (
-                <Box key={variant}>
-                  <BoxCenter
-                    height={100}
-                    radius="round"
-                    shade={shade}
-                    variant={variant}
-                    width={100}
-                  >
-                    {variant}
-                  </BoxCenter>
-                  <Paragraph align="center" size="small" mt="xs">HEX: {bg}</Paragraph>
-                  <Paragraph align="center" size="small">
-                    HSL: {Math.round(h)}/{Math.round(s)}/{Math.round(l)}
-                  </Paragraph>
-                </Box>
-              );
-            })}
-        </Grid>
-      </Box>
-    ))}
-</Spacer>
-
-<H2>Grayscale</H2>
-
-<Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
-  {Object.entries(grayScale)
-    .map(([key, color]) => (
-      <Box key={color}>
-        <BoxCenter
-          height={100}
-          radius="round"
-          width={100}
-          style={{ backgroundColor: color }}
-        >
-          <Text style={{ color: textColor(color) }}>{color}</Text>
-        </BoxCenter>
-        <Paragraph align="center" size="small" mt="xs">{key}</Paragraph>
-      </Box>
-    ))}
-</Grid>
+          <Paragraph align="center" size="small" mt="xs">{key}</Paragraph>
+        </Box>
+      ))}
+  </Grid>
+</Unstyled>
 

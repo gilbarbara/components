@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Button, Spacer } from 'src';
 import { Icon, IconProps } from 'src/Icon';
@@ -20,25 +20,30 @@ export default {
     name: { control: 'select' },
     title: { control: 'text' },
   },
-} as ComponentMeta<typeof Icon>;
+} as Meta<typeof Icon>;
 
-export const Basic = (props: IconProps) => <Icon {...props} />;
+export const Basic = {};
 
-export const IconWithButton = (props: IconProps) => (
-  <Button>
-    <Icon {...props} mr="xs" />
-    Send
-  </Button>
-);
-IconWithButton.args = {
-  size: 18,
+export const IconWithButton = {
+  args: {
+    size: 18,
+  },
+  render: (props: IconProps) => (
+    <Button>
+      <Icon {...props} mr="xs" />
+      Send
+    </Button>
+  ),
 };
-export const IconWithText = (props: IconProps) => (
-  <Spacer gap="xxs">
-    <Icon {...props} />
-    Send
-  </Spacer>
-);
-IconWithText.args = {
-  size: 18,
+
+export const IconWithText = {
+  args: {
+    size: 18,
+  },
+  render: (props: IconProps) => (
+    <Spacer gap="xxs">
+      <Icon {...props} />
+      Send
+    </Spacer>
+  ),
 };

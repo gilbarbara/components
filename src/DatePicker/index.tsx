@@ -1,3 +1,4 @@
-export { DatePicker, DatePickerSingleProps } from './Single';
-export { DatePickerRange, DatePickerRangerProps } from './Range';
-export { DatePickerInput, DatePickerInputProps } from './Input';
+export { DatePicker } from './Single';
+export { DatePickerRange } from './Range';
+export { DatePickerInput } from './Input';
+export type { DatePickerInputProps, DatePickerSingleProps, DatePickerRangerProps } from './types';

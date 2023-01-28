@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 
 import { Button } from 'src';
@@ -20,23 +21,25 @@ export default {
   },
 };
 
-export const Basic = (props: DialogProps) => {
-  const [isActive, setActive] = useState(false);
+export const Basic = {
+  render: (props: DialogProps) => {
+    const [isActive, setActive] = useState(false);
 
-  const handleClicks = () => {
-    setActive(v => !v);
-  };
+    const handleClicks = () => {
+      setActive(v => !v);
+    };
 
-  return (
-    <div className="flex-center">
-      <Button onClick={handleClicks}>Open Dialog</Button>
+    return (
+      <div className="flex-center">
+        <Button onClick={handleClicks}>Open Dialog</Button>
 
-      <Dialog
-        {...props}
-        isActive={isActive}
-        onClickCancel={handleClicks}
-        onClickConfirmation={handleClicks}
-      />
-    </div>
-  );
+        <Dialog
+          {...props}
+          isActive={isActive}
+          onClickCancel={handleClicks}
+          onClickConfirmation={handleClicks}
+        />
+      </div>
+    );
+  },
 };

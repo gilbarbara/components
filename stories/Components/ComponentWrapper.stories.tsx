@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Icon, Input, Select, Textarea } from 'src';
 import { ComponentWrapper } from 'src/ComponentWrapper';
@@ -13,7 +13,10 @@ export default {
     ...hideProps(),
     ...marginProps(),
   },
-} as ComponentMeta<typeof ComponentWrapper>;
+  parameters: {
+    controls: { hideNoControlsWarning: true },
+  },
+} as Meta<typeof ComponentWrapper>;
 
 export const Basic = () => (
   <>

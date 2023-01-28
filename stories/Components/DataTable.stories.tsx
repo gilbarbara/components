@@ -1,7 +1,7 @@
 import { ChangeEvent, forwardRef, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { useSetState } from 'react-use';
 import { removeAccents } from '@gilbarbara/helpers';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import {
   Anchor,
@@ -44,7 +44,7 @@ export default {
   parameters: {
     controls: hideNoControlsWarning(),
   },
-} as ComponentMeta<typeof DataTable>;
+} as Meta<typeof DataTable>;
 
 type Columns = 'email' | 'team' | 'status' | 'action';
 
@@ -129,18 +129,18 @@ const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element =
         />
       </ComponentWrapper>
       <Dropdown
-        clearable={!!team}
         items={teams}
         onChange={handleChangeTeam}
         placeholder="Team"
+        showClearButton={!!team}
         values={teams.filter(d => d.value === team)}
         width={180}
       />
       <Dropdown
-        clearable={!!status}
         items={statuses}
         onChange={handleChangeStatus}
         placeholder="Status"
+        showClearButton={!!status}
         values={statuses.filter(d => d.value === status)}
         width={180}
       />

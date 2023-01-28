@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Icon, Paragraph, Spacer } from 'src';
 import { Tab, Tabs, TabsProps } from 'src/Tabs';
@@ -20,7 +21,7 @@ export default {
     maxHeight: { control: 'text' },
     minHeight: { control: 'text' },
   },
-} as ComponentMeta<typeof Tabs>;
+} as Meta<typeof Tabs>;
 
 const TabItems = [
   <Tab
@@ -101,22 +102,27 @@ const TabItems = [
   </Tab>,
 ];
 
-export const Basic = (props: TabsProps) => <Tabs {...props}>{TabItems}</Tabs>;
-
-export const Controlled = (props: TabsProps) => {
-  const [id, setId] = useState('two');
-
-  const handleClick = (selectedId: string) => {
-    setId(selectedId);
-  };
-
-  return (
-    <Tabs {...props} id={id} onClick={handleClick}>
-      {TabItems}
-    </Tabs>
-  );
+export const Basic = {
+  args: {
+    children: TabItems,
+  },
 };
 
-Controlled.argTypes = {
-  id: { control: { disable: true } },
+export const Controlled = {
+  argTypes: {
+    id: { control: { disable: true } },
+  },
+  render: (props: TabsProps) => {
+    const [id, setId] = useState('two');
+
+    const handleClick = (selectedId: string) => {
+      setId(selectedId);
+    };
+
+    return (
+      <Tabs {...props} id={id} onClick={handleClick}>
+        {TabItems}
+      </Tabs>
+    );
+  },
 };

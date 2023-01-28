@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Form } from 'src';
 import { Field, FieldProps } from 'src/Field';
@@ -16,6 +16,8 @@ export default {
     placeholder: 'Your name here...',
   },
   argTypes: hideProps(),
-} as ComponentMeta<typeof Field>;
+} as Meta<typeof Field>;
 
-export const Basic = (props: FieldProps) => <Form>{() => <Field {...props} />}</Form>;
+export const Basic = {
+  render: (props: FieldProps) => <Form>{() => <Field {...props} />}</Form>,
+};

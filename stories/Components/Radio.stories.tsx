@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { Radio, RadioProps } from 'src/CheckboxAndRadio';
+import { Radio } from 'src/CheckboxAndRadio';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 
@@ -20,6 +20,6 @@ export default {
     onChange: { action: 'onChange', ...disableControl() },
     value: { control: 'text' },
   },
-} as ComponentMeta<typeof Radio>;
+} as Meta<typeof Radio>;
 
-export const Basic = (props: RadioProps) => <Radio {...props} />;
+export const Basic = {};

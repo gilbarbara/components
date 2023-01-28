@@ -189,4 +189,4 @@ Field.defaultProps = {
   type: 'text',
 };
 
-export { FieldProps } from './types';
+export type { FieldProps } from './types';

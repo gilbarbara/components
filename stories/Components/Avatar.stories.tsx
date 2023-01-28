@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { BoxCenter, Grid, Paragraph } from 'src';
 import { Avatar, AvatarProps } from 'src/Avatar';
@@ -18,27 +18,28 @@ export default {
     ...colorProps(),
     ...flexItemProps(),
   },
-} as ComponentMeta<typeof Avatar>;
+} as Meta<typeof Avatar>;
 
-export const Basic = (props: AvatarProps) => <Avatar {...props} />;
+export const Basic = {};
 
-export const Sizes = (props: AvatarProps) => (
-  <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
-    {(['xs', 'sm', 'md', 'lg', 'xl', 'jumbo'] as const).map(d => (
-      <BoxCenter key={d}>
-        <Avatar key={d} {...props} size={d} />
-        <Paragraph mt="xs">{d}</Paragraph>
-      </BoxCenter>
-    ))}
-  </Grid>
-);
-
-Sizes.argTypes = {
-  size: disableControl(),
+export const Sizes = {
+  argTypes: {
+    size: disableControl(),
+  },
+  render: (props: AvatarProps) => (
+    <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
+      {(['xs', 'sm', 'md', 'lg', 'xl', 'jumbo'] as const).map(d => (
+        <BoxCenter key={d}>
+          <Avatar key={d} {...props} size={d} />
+          <Paragraph mt="xs">{d}</Paragraph>
+        </BoxCenter>
+      ))}
+    </Grid>
+  ),
 };
 
-export const WithoutImage = (props: AvatarProps) => <Avatar {...props} />;
-
-WithoutImage.args = {
-  image: undefined,
+export const WithoutImage = {
+  args: {
+    image: undefined,
+  },
 };

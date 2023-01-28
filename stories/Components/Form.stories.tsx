@@ -1,9 +1,9 @@
 import { SubmitHandler } from 'react-hook-form';
 import { action } from '@storybook/addon-actions';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Box, Button, Divider, Field, Grid, H2, H3, Spacer } from 'src';
-import { Form, FormProps } from 'src/Form';
+import { Form, FormRenderProps } from 'src/Form';
 
 import { hideNoControlsWarning } from '../__helpers__';
 
@@ -14,7 +14,7 @@ export default {
   parameters: {
     controls: hideNoControlsWarning(),
   },
-} as ComponentMeta<typeof Form>;
+} as Meta<typeof Form>;
 
 export interface FormData {
   area: string;
@@ -115,7 +115,7 @@ const defaultValues: FormData = {
   specialization: 'front-end',
 };
 
-function EditForm({ formMethods }: FormProps<FormData>) {
+function EditForm({ formMethods }: FormRenderProps<FormData>) {
   const {
     formState: { isDirty },
     handleSubmit,

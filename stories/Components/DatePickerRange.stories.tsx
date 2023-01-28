@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { DatePickerRange, DatePickerRangerProps } from 'src/DatePicker/Range';
+import { DatePickerRange } from 'src/DatePicker/Range';
 
 import { disableControl, hideProps, hideTable, spacingProps } from '../__helpers__';
 
@@ -16,6 +16,6 @@ export default {
     onApply: hideTable(),
     showApply: hideTable(),
   },
-} as ComponentMeta<typeof DatePickerRange>;
+} as Meta<typeof DatePickerRange>;
 
-export const Range = (props: DatePickerRangerProps) => <DatePickerRange {...props} />;
+export const Range = {};

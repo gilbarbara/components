@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Input, InputProps } from 'src/Input';
 import { inputTypes } from 'src/modules/options';
@@ -18,35 +18,35 @@ export default {
     type: { control: 'select', options: inputTypes },
     width: { control: 'text' },
   },
-} as ComponentMeta<typeof Input>;
+} as Meta<typeof Input>;
 
-export const Basic = (props: InputProps) => <Input {...props} />;
+export const Basic = {};
 
-export const Variants = (props: InputProps) => (
-  <>
-    <Input {...props} name="normal" placeholder="normal" />
-    <br />
-    <Input {...props} disabled name="normal-disabled" placeholder="normal (disabled)" />
-    <br />
-    <Input {...props} borderless name="borderless" placeholder="borderless" />
-    <br />
-    <Input
-      {...props}
-      borderless
-      disabled
-      name="borderless-disabled"
-      placeholder="borderless (disabled)"
-    />
-    <br />
-  </>
-);
-
-Variants.args = {
-  placeholder: '',
-};
-
-Variants.argTypes = {
-  borderless: disableControl(),
-  disabled: disableControl(),
-  name: disableControl(),
+export const Variants = {
+  args: {
+    placeholder: '',
+  },
+  argTypes: {
+    borderless: disableControl(),
+    disabled: disableControl(),
+    name: disableControl(),
+  },
+  render: (props: InputProps) => (
+    <>
+      <Input {...props} name="normal" placeholder="normal" />
+      <br />
+      <Input {...props} disabled name="normal-disabled" placeholder="normal (disabled)" />
+      <br />
+      <Input {...props} borderless name="borderless" placeholder="borderless" />
+      <br />
+      <Input
+        {...props}
+        borderless
+        disabled
+        name="borderless-disabled"
+        placeholder="borderless (disabled)"
+      />
+      <br />
+    </>
+  ),
 };

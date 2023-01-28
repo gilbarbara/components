@@ -1,7 +1,7 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Paragraph, Text } from 'src';
-import { RadioGroup, RadioGroupProps } from 'src/RadioGroup';
+import { RadioGroup } from 'src/RadioGroup';
 
 import { disableControl, hideProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   component: RadioGroup,
   args: {
     ...RadioGroup.defaultProps,
-    defaultValue: 2,
+    defaultValue: 4,
     items: [
       { label: 'First', value: 1 },
       { label: 'Second', value: 2 },
@@ -33,6 +33,6 @@ export default {
     onChange: { action: 'onChange', ...disableControl() },
     items: disableControl(),
   },
-} as ComponentMeta<typeof RadioGroup>;
+} as Meta<typeof RadioGroup>;
 
-export const Basic = (props: RadioGroupProps) => <RadioGroup defaultValue={4} {...props} />;
+export const Basic = {};
