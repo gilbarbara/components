@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { InputFile, InputFileProps } from 'src/InputFile';
+import { InputFile } from 'src/InputFile';
 
 import { hideProps } from '../__helpers__';
 
@@ -13,6 +13,6 @@ export default {
     width: 480,
   },
   argTypes: hideProps(),
-} as ComponentMeta<typeof InputFile>;
+} as Meta<typeof InputFile>;
 
-export const Basic = (props: InputFileProps) => <InputFile {...props} />;
+export const Basic = {};

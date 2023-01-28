@@ -30,71 +30,82 @@ export default {
   },
 };
 
-export const Basic = (props: BoxProps) => (
-  <Box {...props}>
-    <H3 mb="lg">Hello, I'm the Box!</H3>
-    <Paragraph>
-      I'm the base component with support for layout, positioning, color, spacing, etc.
-    </Paragraph>
-    <Paragraph>You can use me to create more complex components, like the NonIdealState.</Paragraph>
-  </Box>
-);
-Basic.args = {
-  padding: 'xl',
-  radius: 'lg',
-  shade: 'mid',
-  variant: 'primary',
-  width: '400',
+export const Basic = {
+  args: {
+    padding: 'xl',
+    radius: 'lg',
+    shade: 'mid',
+    variant: 'primary',
+    width: '400',
+  },
+  render: (props: BoxProps) => (
+    <Box {...props}>
+      <H3 mb="lg">Hello, I'm the Box!</H3>
+      <Paragraph>
+        I'm the base component with support for layout, positioning, color, spacing, etc.
+      </Paragraph>
+      <Paragraph>
+        You can use me to create more complex components, like the NonIdealState.
+      </Paragraph>
+    </Box>
+  ),
 };
 
-export const Composed = (props: BoxProps) => (
-  <Box {...props} minHeight={300} padding="xl" width={480}>
-    <BoxCenter padding="lg" variant="blue" width="40%">
-      Box 40%
-    </BoxCenter>
-    <BoxCenter padding="lg" variant="green" width="60%">
-      Box 60%
-    </BoxCenter>
-    <BoxCenter padding="lg" variant="orange" width="30%">
-      Box 30%
-    </BoxCenter>
-    <BoxCenter padding="lg" variant="yellow" width="70%">
-      Box 70%
-    </BoxCenter>
-  </Box>
-);
-Composed.args = {
-  align: 'center',
-  direction: 'row',
-  flexBox: true,
-  justify: 'flex-start',
-  shadow: 'high',
-  variant: 'white',
-  wrap: 'wrap',
-};
-Composed.argTypes = {
-  children: disableControl(),
-};
-Composed.storyName = 'Flex (Composed)';
+export const Composed = {
+  name: 'Flex (Composed)',
+  args: {
+    align: 'center',
+    direction: 'row',
+    flexBox: true,
+    justify: 'flex-start',
+    shadow: 'high',
+    variant: 'white',
+    wrap: 'wrap',
+  },
 
-export const Center = (props: BoxProps) => <BoxCenter minHeight={400} width={400} {...props} />;
-Center.args = {
-  ...BoxCenter.defaultProps,
-  children: 'This is a centered Box',
+  argTypes: {
+    children: disableControl(),
+  },
+  render: (props: BoxProps) => (
+    <Box {...props} minHeight={300} padding="xl" width={480}>
+      <BoxCenter padding="lg" variant="blue" width="40%">
+        Box 40%
+      </BoxCenter>
+      <BoxCenter padding="lg" variant="green" width="60%">
+        Box 60%
+      </BoxCenter>
+      <BoxCenter padding="lg" variant="orange" width="30%">
+        Box 30%
+      </BoxCenter>
+      <BoxCenter padding="lg" variant="yellow" width="70%">
+        Box 70%
+      </BoxCenter>
+    </Box>
+  ),
 };
-Center.argTypes = {
-  children: { control: 'text' },
-};
-Center.storyName = 'BoxCenter';
 
-export const Inline = (props: BoxProps) => (
-  <BoxInline width={400} {...props}>
-    <Icon mr="xs" name="stories" />
-    <Text>This is a inline Box</Text>
-  </BoxInline>
-);
-Inline.args = BoxInline.defaultProps;
-Inline.argTypes = {
-  children: disableControl(),
+export const Center = {
+  name: 'BoxCenter',
+  args: {
+    ...BoxCenter.defaultProps,
+    children: 'This is a centered Box',
+  },
+  argTypes: {
+    children: { control: 'text' },
+  },
+  render: (props: BoxProps) => <BoxCenter minHeight={400} width={400} {...props} />,
 };
-Inline.storyName = 'BoxInline';
+
+export const Inline = {
+  name: 'BoxInline',
+  args: BoxInline.defaultProps,
+  argTypes: {
+    children: disableControl(),
+  },
+  render: (props: BoxProps) => (
+    <BoxInline width={400} {...props}>
+      <Icon mr="xs" name="stories" />
+      <Text>This is a inline Box</Text>
+    </BoxInline>
+  ),
+};

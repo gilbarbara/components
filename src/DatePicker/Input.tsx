@@ -3,14 +3,12 @@ import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { formatDateLocale, omit } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { DatePickerRange } from './Range';
 import { DatePicker } from './Single';
 import {
-  DatePickerBaseProps,
-  DatePickerClickHandler,
+  DatePickerInputProps,
   DatePickerRangeClickHandler,
   DatePickerRangeParameter,
   DatePickerSingleClickHandler,
@@ -23,23 +21,7 @@ import { Icon } from '../Icon';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { Text } from '../Text';
-import { Alignment, WithBorderless, WithOpen } from '../types';
-
-export interface DatePickerInputProps
-  extends WithBorderless,
-    WithOpen,
-    DatePickerBaseProps<DatePickerClickHandler> {
-  /**  @default en-US */
-  formatLocale?: string;
-  large?: boolean;
-  placeholder?: string;
-  /** @default right */
-  position?: Alignment;
-  separator?: string;
-  showRange?: boolean;
-  showRangeApply?: boolean;
-  width?: StringOrNumber;
-}
+import { Alignment } from '../types';
 
 interface State {
   isActive: boolean;

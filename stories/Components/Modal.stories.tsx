@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from 'src';
@@ -22,33 +23,35 @@ export default {
   },
 };
 
-export const Basic = (props: ModalProps) => {
-  const [isActive, setActive] = useState(false);
+export const Basic = {
+  render: (props: ModalProps) => {
+    const [isActive, setActive] = useState(false);
 
-  const handleClick = () => {
-    setActive(v => !v);
-  };
+    const handleClick = () => {
+      setActive(v => !v);
+    };
 
-  return (
-    <div className="flex-center">
-      {!isActive && <Button onClick={handleClick}>Open Modal</Button>}
+    return (
+      <div className="flex-center">
+        {!isActive && <Button onClick={handleClick}>Open Modal</Button>}
 
-      <Modal {...props} isActive={isActive} onClose={handleClick}>
-        <FormGroup label="Name *">
-          <Input name="name" placeholder="Name" />
-        </FormGroup>
-        <FormGroup label="Description">
-          <Textarea name="description" placeholder="Tell us about yourself" />
-        </FormGroup>
-        <Spacer distribution="end">
-          <Button invert onClick={handleClick}>
-            Cancel
-          </Button>
-          <Button onClick={handleClick} type="submit">
-            Enviar
-          </Button>
-        </Spacer>
-      </Modal>
-    </div>
-  );
+        <Modal {...props} isActive={isActive} onClose={handleClick}>
+          <FormGroup label="Name *">
+            <Input name="name" placeholder="Name" />
+          </FormGroup>
+          <FormGroup label="Description">
+            <Textarea name="description" placeholder="Tell us about yourself" />
+          </FormGroup>
+          <Spacer distribution="end">
+            <Button invert onClick={handleClick}>
+              Cancel
+            </Button>
+            <Button onClick={handleClick} type="submit">
+              Enviar
+            </Button>
+          </Spacer>
+        </Modal>
+      </div>
+    );
+  },
 };

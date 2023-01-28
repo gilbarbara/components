@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { List, ListProps } from 'src/List';
 
@@ -27,54 +27,58 @@ export default {
     ...marginProps(),
     items: disableControl(),
   },
-} as ComponentMeta<typeof List>;
+} as Meta<typeof List>;
 
-export const Basic = (props: ListProps) => {
-  const items = [
-    {
-      content: 'The first item',
-      variant: 'primary',
-    },
-    'The second item',
-    'The third item',
-    'The forth item',
-    'The fifth item',
-  ];
+export const Basic = {
+  render: (props: ListProps) => {
+    const items = [
+      {
+        content: 'The first item',
+        variant: 'primary',
+      },
+      'The second item',
+      'The third item',
+      'The forth item',
+      'The fifth item',
+    ];
 
-  return <List {...props} items={items} />;
+    return <List {...props} items={items} />;
+  },
 };
 
-export const Horizontal = (props: ListProps) => {
-  const items = ['Contrast: 4.1', 'Luminance: 2', 'Hue: 344', 'Saturation: 100', 'Lightness: 50'];
+export const Horizontal = {
+  args: {
+    direction: 'horizontal',
+    radius: 'xl',
+    shadow: 'low',
+    variant: 'black',
+  },
+  argTypes: {
+    direction: disableControl(),
+  },
+  render: (props: ListProps) => {
+    const items = ['Contrast: 4.1', 'Luminance: 2', 'Hue: 344', 'Saturation: 100', 'Lightness: 50'];
 
-  return <List {...props} items={items} />;
+    return <List {...props} items={items} />;
+  },
 };
 
-Horizontal.args = {
-  direction: 'horizontal',
-  radius: 'xl',
-  shadow: 'low',
-  variant: 'black',
-};
-Horizontal.argTypes = {
-  direction: disableControl(),
-};
-
-export const WithComponents = (props: ListProps) => <List {...props} />;
-WithComponents.args = {
-  border: false,
-  items: [
-    <Box>
-      <H3 mb="xs">Brown Fox</H3>
-      <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
-    </Box>,
-    <Spacer>
-      <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
+export const WithComponents = {
+  args: {
+    border: false,
+    items: [
       <Box>
-        <H6 mb={0}>John Smith</H6>
-        <Paragraph>Admin</Paragraph>
-      </Box>
-    </Spacer>,
-  ],
-  radius: false,
+        <H3 mb="xs">Brown Fox</H3>
+        <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
+      </Box>,
+      <Spacer>
+        <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
+        <Box>
+          <H6 mb={0}>John Smith</H6>
+          <Paragraph>Admin</Paragraph>
+        </Box>
+      </Spacer>,
+    ],
+    radius: false,
+  },
 };

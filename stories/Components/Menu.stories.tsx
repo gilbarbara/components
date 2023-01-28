@@ -22,65 +22,69 @@ export default {
   },
 };
 
-export const Basic = (props: MenuProps) => {
-  const handleClick = (closeMenu: GenericFunction, name?: string) => {
-    return () => {
-      closeMenu();
+export const Basic = {
+  render: (props: MenuProps) => {
+    const handleClick = (closeMenu: GenericFunction, name?: string) => {
+      return () => {
+        closeMenu();
 
-      if (name) {
-        action(name)();
-      }
+        if (name) {
+          action(name)();
+        }
+      };
     };
-  };
 
-  return (
-    <Menu {...props}>
-      <>
-        <MenuItem disabled>Profile</MenuItem>
-        <MenuItem onClick={action('Configuration')}>
-          <ButtonBase>Configuration</ButtonBase>
+    return (
+      <Menu {...props}>
+        <>
+          <MenuItem disabled>Profile</MenuItem>
+          <MenuItem onClick={action('Configuration')}>
+            <ButtonBase>Configuration</ButtonBase>
+          </MenuItem>
+        </>
+        <MenuItem>
+          {({ closeMenu }) => (
+            <ButtonBase onClick={handleClick(closeMenu, 'Help')}>Help</ButtonBase>
+          )}
         </MenuItem>
-      </>
-      <MenuItem>
-        {({ closeMenu }) => <ButtonBase onClick={handleClick(closeMenu, 'Help')}>Help</ButtonBase>}
-      </MenuItem>
-      <MenuDivider />
-      <MenuItem onClick={action('Logout')} variant="red">
-        {({ closeMenu }) => (
-          <ButtonBase onClick={closeMenu}>
-            <a href="#logout">Logout</a>
-          </ButtonBase>
-        )}
-      </MenuItem>
-    </Menu>
-  );
+        <MenuDivider />
+        <MenuItem onClick={action('Logout')} variant="red">
+          {({ closeMenu }) => (
+            <ButtonBase onClick={closeMenu}>
+              <a href="#logout">Logout</a>
+            </ButtonBase>
+          )}
+        </MenuItem>
+      </Menu>
+    );
+  },
 };
 
-export const WithComponentAndHover = (props: MenuProps) => {
-  return (
-    <Menu
-      {...props}
-      component={
-        <Spacer gap="xxs">
-          <Icon name="add" /> Add Item
-        </Spacer>
-      }
-    >
-      <MenuItem>Profile</MenuItem>
-      <MenuItem>Configuration</MenuItem>
-      <MenuItem>Help</MenuItem>
-      <MenuDivider />
-      <MenuItem variant="red">
-        <a href="#logout">Logout</a>
-      </MenuItem>
-    </Menu>
-  );
-};
-
-WithComponentAndHover.args = {
-  trigger: 'hover',
-};
-
-WithComponentAndHover.argTypes = {
-  trigger: disableControl(),
+export const WithComponentAndHover = {
+  args: {
+    trigger: 'hover',
+  },
+  argTypes: {
+    trigger: disableControl(),
+  },
+  render: (props: MenuProps) => {
+    return (
+      <Menu
+        {...props}
+        component={
+          <Spacer gap="xxs">
+            <Icon name="add" /> Add Item
+          </Spacer>
+        }
+      >
+        <MenuItem>Profile</MenuItem>
+        <MenuItem>Configuration</MenuItem>
+        <MenuItem>Help</MenuItem>
+        <MenuDivider />
+        <MenuItem variant="red">
+          <a href="#logout">Logout</a>
+        </MenuItem>
+      </Menu>
+    );
+  },
 };

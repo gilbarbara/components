@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { grayMid } from 'src/modules/theme';
 import { ResponsiveMedia, ResponsiveMediaProps } from 'src/ResponsiveMedia';
@@ -19,24 +20,26 @@ export default {
     ...hideProps(),
     ...marginProps(),
   },
-} as ComponentMeta<typeof ResponsiveMedia>;
+} as Meta<typeof ResponsiveMedia>;
 
-export const Basic = (props: ResponsiveMediaProps) => {
-  const [showMedia, setShowMedia] = useState(false);
+export const Basic = {
+  render: (props: ResponsiveMediaProps) => {
+    const [showMedia, setShowMedia] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowMedia(true);
-    }, 2000);
-  }, []);
+    useEffect(() => {
+      setTimeout(() => {
+        setShowMedia(true);
+      }, 2000);
+    }, []);
 
-  return (
-    <ResponsiveMedia {...props} style={{ border: `1px dashed ${grayMid}` }}>
-      {showMedia ? (
-        <SVG src="https://cdn.svgporn.com/logos/storybook.svg" />
-      ) : (
-        <span>Loading...</span>
-      )}
-    </ResponsiveMedia>
-  );
+    return (
+      <ResponsiveMedia {...props} style={{ border: `1px dashed ${grayMid}` }}>
+        {showMedia ? (
+          <SVG src="https://cdn.svgporn.com/logos/storybook.svg" />
+        ) : (
+          <span>Loading...</span>
+        )}
+      </ResponsiveMedia>
+    );
+  },
 };

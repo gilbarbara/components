@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { MouseEvent, useState } from 'react';
 
 import { Button } from 'src';
@@ -16,29 +17,31 @@ export default {
   },
 };
 
-export const Basic = (props: ButtonGroupProps) => {
-  const [active, setActive] = useState('two');
+export const Basic = {
+  render: (props: ButtonGroupProps) => {
+    const [active, setActive] = useState('two');
 
-  const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {
-    if (target instanceof HTMLButtonElement) {
-      setActive(target.dataset.name || '');
-    }
-  };
+    const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {
+      if (target instanceof HTMLButtonElement) {
+        setActive(target.dataset.name || '');
+      }
+    };
 
-  return (
-    <ButtonGroup {...props}>
-      <Button data-name="one" invert={active !== 'one'} onClick={handleClick}>
-        First
-      </Button>
-      <Button data-name="two" invert={active !== 'two'} onClick={handleClick}>
-        Second
-      </Button>
-      <Button data-name="three" invert={active !== 'three'} onClick={handleClick}>
-        Third
-      </Button>
-      <Button data-name="four" invert={active !== 'four'} onClick={handleClick}>
-        Forth
-      </Button>
-    </ButtonGroup>
-  );
+    return (
+      <ButtonGroup {...props}>
+        <Button data-name="one" invert={active !== 'one'} onClick={handleClick}>
+          First
+        </Button>
+        <Button data-name="two" invert={active !== 'two'} onClick={handleClick}>
+          Second
+        </Button>
+        <Button data-name="three" invert={active !== 'three'} onClick={handleClick}>
+          Third
+        </Button>
+        <Button data-name="four" invert={active !== 'four'} onClick={handleClick}>
+          Forth
+        </Button>
+      </ButtonGroup>
+    );
+  },
 };

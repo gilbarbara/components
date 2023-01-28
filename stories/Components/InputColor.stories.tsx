@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { InputColor, InputColorProps } from 'src/InputColor';
+import { InputColor } from 'src/InputColor';
 
 import { hideProps } from '../__helpers__';
 
@@ -16,6 +16,6 @@ export default {
     height: { control: 'text' },
     width: { control: 'text' },
   },
-} as ComponentMeta<typeof InputColor>;
+} as Meta<typeof InputColor>;
 
-export const Basic = (props: InputColorProps) => <InputColor {...props} />;
+export const Basic = {};

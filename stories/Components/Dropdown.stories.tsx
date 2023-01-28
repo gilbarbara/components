@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Icon } from 'src';
 import { Dropdown } from 'src/Dropdown';
@@ -27,7 +28,7 @@ export default {
     },
     minHeight: 350,
   },
-} as ComponentMeta<typeof Dropdown>;
+} as Meta<typeof Dropdown>;
 
 const items: DropdownOption[] = [
   { value: 1, label: 'One', prefix: <Icon name="chevron-right" /> },
@@ -37,29 +38,32 @@ const items: DropdownOption[] = [
   { value: 5, label: 'Five', prefix: <Icon name="bolt" /> },
 ];
 
-export const Basic = (props: DropdownProps) => <Dropdown {...props} items={items} />;
-
-export const WithCreate = (props: DropdownProps) => {
-  const [controlledItems, setItems] = useState(items);
-  const [values, setValues] = useState<DropdownOption[]>([]);
-
-  const handleCreate = (value: string, close: () => void) => {
-    const newItem = {
-      prefix: <Icon name="math-plus" />,
-      label: value,
-      value,
-    };
-
-    action('onCreate')(value);
-    setItems([...controlledItems, newItem]);
-    setValues([...values, newItem]);
-    close();
-  };
-
-  return <Dropdown {...props} items={controlledItems} onCreate={handleCreate} values={values} />;
+export const Basic = {
+  render: (props: DropdownProps) => <Dropdown {...props} items={items} />,
 };
 
-WithCreate.args = {
-  allowCreate: true,
-  borderless: true,
+export const WithCreate = {
+  args: {
+    allowCreate: true,
+    borderless: true,
+  },
+  render: (props: DropdownProps) => {
+    const [controlledItems, setItems] = useState(items);
+    const [values, setValues] = useState<DropdownOption[]>([]);
+
+    const handleCreate = (value: string, close: () => void) => {
+      const newItem = {
+        prefix: <Icon name="math-plus" />,
+        label: value,
+        value,
+      };
+
+      action('onCreate')(value);
+      setItems([...controlledItems, newItem]);
+      setValues([...values, newItem]);
+      close();
+    };
+
+    return <Dropdown {...props} items={controlledItems} onCreate={handleCreate} values={values} />;
+  },
 };

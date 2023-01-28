@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { ProgressBar, ProgressBarProps } from 'src/ProgressBar';
+import { ProgressBar } from 'src/ProgressBar';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
 
@@ -18,6 +18,6 @@ export default {
     ...colorProps(),
     ...marginProps(),
   },
-} as ComponentMeta<typeof ProgressBar>;
+} as Meta<typeof ProgressBar>;
 
-export const Basic = (props: ProgressBarProps) => <ProgressBar {...props} />;
+export const Basic = {};

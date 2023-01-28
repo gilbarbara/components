@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { ButtonBase, ButtonBaseProps } from 'src/ButtonBase';
+import { ButtonBase } from 'src/ButtonBase';
 
 import { colorProps, hideProps, spacingProps } from '../__helpers__';
 
@@ -24,6 +24,6 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof ButtonBase>;
+} as Meta<typeof ButtonBase>;
 
-export const Basic = (props: ButtonBaseProps) => <ButtonBase {...props} />;
+export const Basic = {};

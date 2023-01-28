@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { FormGroup, Spacer } from 'src';
 import { Checkbox, CheckboxProps } from 'src/CheckboxAndRadio';
@@ -19,25 +19,26 @@ export default {
     label: { control: 'text' },
     onChange: { action: 'onChange', ...disableControl() },
   },
-} as ComponentMeta<typeof Checkbox>;
+} as Meta<typeof Checkbox>;
 
-export const Basic = (props: CheckboxProps) => <Checkbox {...props} />;
+export const Basic = {};
 
-export const Multiple = (props: CheckboxProps) => (
-  <FormGroup label="Options" width={480}>
-    <Spacer>
-      <Checkbox {...props} label="Hide e-mail" name="hideEmail" />
-      <Checkbox {...props} label="Hide picture" name="hidePicture" />
-      <Checkbox {...props} label="Hide location" name="hideLocation" />
-    </Spacer>
-  </FormGroup>
-);
-
-Multiple.args = {
-  label: '',
-  name: '',
-};
-Multiple.argTypes = {
-  label: disableControl(),
-  name: disableControl(),
+export const Multiple = {
+  args: {
+    label: '',
+    name: '',
+  },
+  argTypes: {
+    label: disableControl(),
+    name: disableControl(),
+  },
+  render: (props: CheckboxProps) => (
+    <FormGroup label="Options" width={480}>
+      <Spacer>
+        <Checkbox {...props} label="Hide e-mail" name="hideEmail" />
+        <Checkbox {...props} label="Hide picture" name="hidePicture" />
+        <Checkbox {...props} label="Hide location" name="hideLocation" />
+      </Spacer>
+    </FormGroup>
+  ),
 };

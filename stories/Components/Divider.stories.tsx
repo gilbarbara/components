@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Divider, DividerProps } from 'src/Divider';
 
@@ -16,22 +16,23 @@ export default {
     children: { control: 'text' },
     length: { control: 'text' },
   },
-} as ComponentMeta<typeof Divider>;
+} as Meta<typeof Divider>;
 
-export const Basic = (props: DividerProps) => <Divider {...props} />;
+export const Basic = {};
 
-export const Vertical = (props: DividerProps) => (
-  <Box height={100}>
-    <Divider {...props} />
-  </Box>
-);
-
-Vertical.args = {
-  direction: 'vertical',
+export const Vertical = {
+  args: {
+    direction: 'vertical',
+  },
+  render: (props: DividerProps) => (
+    <Box height={100}>
+      <Divider {...props} />
+    </Box>
+  ),
 };
 
-export const WithText = (props: DividerProps) => <Divider {...props} />;
-
-WithText.args = {
-  children: 'Title',
+export const WithText = {
+  args: {
+    children: 'Title',
+  },
 };

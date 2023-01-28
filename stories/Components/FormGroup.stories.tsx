@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Input, Select, Textarea } from 'src';
 import { FormGroup, FormGroupProps } from 'src/FormGroup';
@@ -23,42 +23,44 @@ export default {
     label: { control: 'text' },
     labelInfo: { control: 'text' },
   },
-} as ComponentMeta<typeof FormGroup>;
+} as Meta<typeof FormGroup>;
 
-export const Basic = (props: FormGroupProps) => (
-  <FormGroup {...props} required>
-    <Input name="name" placeholder="User Name" />
-  </FormGroup>
-);
-
-export const Elements = (props: FormGroupProps) => (
-  <>
-    <FormGroup {...props} assistiveText="The name is required..." required valid>
-      <Input defaultValue="Test User" name="name" placeholder="Name" />
+export const Basic = {
+  render: (props: FormGroupProps) => (
+    <FormGroup {...props} required>
+      <Input name="name" placeholder="User Name" />
     </FormGroup>
-    <FormGroup {...props} label="Gender">
-      <Select name="gender">
-        <option value="">Select your gender...</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-      </Select>
-    </FormGroup>
-    <FormGroup {...props} label="Description">
-      <Textarea name="description" placeholder="Tell us about yourself" />
-    </FormGroup>
-  </>
-);
-
-Elements.args = {
-  assistiveText: '',
+  ),
 };
 
-Elements.argTypes = {
-  assistiveText: disableControl(),
-  label: disableControl(),
-  labelId: disableControl(),
-  labelInfo: disableControl(),
-  required: disableControl(),
-  valid: disableControl(),
+export const Elements = {
+  args: {
+    assistiveText: '',
+  },
+  argTypes: {
+    assistiveText: disableControl(),
+    label: disableControl(),
+    labelId: disableControl(),
+    labelInfo: disableControl(),
+    required: disableControl(),
+    valid: disableControl(),
+  },
+  render: (props: FormGroupProps) => (
+    <>
+      <FormGroup {...props} assistiveText="The name is required..." required valid>
+        <Input defaultValue="Test User" name="name" placeholder="Name" />
+      </FormGroup>
+      <FormGroup {...props} label="Gender">
+        <Select name="gender">
+          <option value="">Select your gender...</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </Select>
+      </FormGroup>
+      <FormGroup {...props} label="Description">
+        <Textarea name="description" placeholder="Tell us about yourself" />
+      </FormGroup>
+    </>
+  ),
 };

@@ -90,7 +90,7 @@ const ThemeBlock = styled.div(
 function Preview(StoryFn: React.FC, context: any) {
   const {
     globals: { appearance, baseColor },
-    parameters: { maxWidth = 1024, minHeight, withoutPadding },
+    parameters: { align = 'center', justify = 'start', minWidth = 768, maxWidth = 1024, minHeight, withoutPadding },
     viewMode,
   } = context;
 
@@ -112,12 +112,13 @@ function Preview(StoryFn: React.FC, context: any) {
     return (
       <Box
         ref={docsRef}
-        align="center"
+        align={align}
         data-component-name="StoryDocs"
         direction="column"
         display="flex"
-        justify="start"
+        justify={justify}
         minHeight={minHeight}
+        minWidth={minWidth}
       >
         <StoryFn />
       </Box>
@@ -181,6 +182,7 @@ function Preview(StoryFn: React.FC, context: any) {
       <BoxCenter
         data-component-name="Story"
         maxWidth={maxWidth}
+        minWidth={minWidth}
         padding={withoutPadding ? undefined : 'md'}
         style={{ color: isDarkMode ? '#fff' : '#101010' }}
         width="100%"

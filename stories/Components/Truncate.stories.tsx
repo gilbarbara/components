@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { Truncate, TruncateProps } from 'src/Truncate';
+import { Truncate } from 'src/Truncate';
 
 import { hideProps } from '../__helpers__';
 
@@ -16,6 +16,6 @@ export default {
     ...hideProps(),
     maxWidth: { control: 'text' },
   },
-} as ComponentMeta<typeof Truncate>;
+} as Meta<typeof Truncate>;
 
-export const Basic = (props: TruncateProps) => <Truncate {...props} />;
+export const Basic = {};

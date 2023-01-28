@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
-import { Label, LabelProps } from 'src/Label';
+import { Label } from 'src/Label';
 
 import { hideProps } from '../__helpers__';
 
@@ -9,14 +9,13 @@ export default {
   component: Label,
   args: {
     ...Label.defaultProps,
+    children: 'Far far away, behind the word mountains there live the blind texts.',
     labelInfo: '*',
   },
   argTypes: {
     ...hideProps(),
     labelInfo: { control: 'text' },
   },
-} as ComponentMeta<typeof Label>;
+} as Meta<typeof Label>;
 
-export const Basic = (props: LabelProps) => (
-  <Label {...props}>Far far away, behind the word mountains there live the blind texts.</Label>
-);
+export const Basic = {};

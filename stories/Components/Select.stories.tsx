@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Select, SelectProps } from 'src/Select';
 
@@ -15,13 +15,15 @@ export default {
     ...hideProps(),
     width: { control: 'text' },
   },
-} as ComponentMeta<typeof Select>;
+} as Meta<typeof Select>;
 
-export const Basic = (props: SelectProps) => (
-  <Select {...props}>
-    <option value="">Select your gender...</option>
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-    <option value="other">Other</option>
-  </Select>
-);
+export const Basic = {
+  render: (props: SelectProps) => (
+    <Select {...props}>
+      <option value="">Select your gender...</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </Select>
+  ),
+};

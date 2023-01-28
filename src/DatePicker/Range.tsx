@@ -10,12 +10,7 @@ import styled from '@emotion/styled';
 import { formatDateLocale, omit } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 
-import {
-  DatePickerLayoutProps,
-  DatePickerProps,
-  DatePickerRangeClickHandler,
-  DatePickerRangeParameter,
-} from './types';
+import { DatePickerRangerProps } from './types';
 import { defaultProps, getFooter, getNumberOfMonths, getRange, getStyles } from './utils';
 
 import { BoxCenter } from '../Box';
@@ -25,25 +20,6 @@ import { getStyledOptions } from '../modules/system';
 import { Paragraph } from '../Paragraph';
 import { Spacer } from '../Spacer';
 import { Text } from '../Text';
-
-export interface DatePickerRangerProps
-  extends DatePickerProps<DatePickerRangeClickHandler, 'range'>,
-    DatePickerLayoutProps {
-  /**
-   * @default en-US
-   */
-  formatLocale?: string;
-  /**
-   * For internal use with DatePickerInput
-   * @private
-   * */
-  onApply?: (selected: DatePickerRangeParameter) => void;
-  /**
-   * For internal use with DatePickerInput
-   * @private
-   * */
-  showApply?: boolean;
-}
 
 const StyledDatePicker = styled(
   'div',

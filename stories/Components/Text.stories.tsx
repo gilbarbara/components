@@ -1,6 +1,6 @@
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Paragraph } from 'src';
 import { textSizes } from 'src/modules/options';
@@ -22,24 +22,25 @@ export default {
     children: { control: 'text' },
     size: { control: 'select' },
   },
-} as ComponentMeta<typeof Text>;
+} as Meta<typeof Text>;
 
-export const Basic = (props: TextProps) => <Text {...props} />;
+export const Basic = {};
 
-export const Sizes = (props: TextProps) => (
-  <div>
-    {textSizes.map(size => (
-      <Paragraph key={size}>
-        <Text onClick={action('clicked')} {...props} size={size}>
-          {capitalize(size)} mountains, far from the countries Vokalia and Consonantia, there live
-          the blind texts.
-        </Text>
-      </Paragraph>
-    ))}
-  </div>
-);
-
-Sizes.argTypes = {
-  children: disableControl(),
-  size: disableControl(),
+export const Sizes = {
+  argTypes: {
+    children: disableControl(),
+    size: disableControl(),
+  },
+  render: (props: TextProps) => (
+    <div>
+      {textSizes.map(size => (
+        <Paragraph key={size}>
+          <Text onClick={action('clicked')} {...props} size={size}>
+            {capitalize(size)} mountains, far from the countries Vokalia and Consonantia, there live
+            the blind texts.
+          </Text>
+        </Paragraph>
+      ))}
+    </div>
+  ),
 };

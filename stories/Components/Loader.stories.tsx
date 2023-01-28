@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Loader } from 'src/Loader';
 
@@ -15,34 +15,39 @@ export default {
     ...hideProps(),
     ...colorProps(),
   },
-} as ComponentMeta<typeof Loader>;
+} as Meta<typeof Loader>;
 
-export const Pill = (props: any) => <Loader {...props} />;
-Pill.args = {
-  type: 'pill',
+export const Pill = {
+  args: {
+    type: 'pill',
+  },
 };
 
-export const Grow = (props: any) => <Loader {...props} />;
-Grow.args = {
-  type: 'grow',
+export const Grow = {
+  args: {
+    type: 'grow',
+  },
 };
 
-export const Pride = (props: any) => <Loader {...props} />;
-Pride.args = {
-  type: 'pride',
-};
-Pride.argTypes = {
-  color: hideTable(),
-  shade: hideTable(),
-  variant: hideTable(),
-};
-
-export const Pulse = (props: any) => <Loader {...props} />;
-Pulse.args = {
-  type: 'pulse',
+export const Pride = {
+  args: {
+    type: 'pride',
+  },
+  argTypes: {
+    color: hideTable(),
+    shade: hideTable(),
+    variant: hideTable(),
+  },
 };
 
-export const Rotate = (props: any) => <Loader {...props} />;
-Rotate.args = {
-  type: 'rotate',
+export const Pulse = {
+  args: {
+    type: 'pulse',
+  },
+};
+
+export const Rotate = {
+  args: {
+    type: 'rotate',
+  },
 };

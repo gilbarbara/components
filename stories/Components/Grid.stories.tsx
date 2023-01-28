@@ -57,19 +57,21 @@ export default {
   },
 };
 
-export const Basic = (props: GridProps & { itemHeight: number; itemWidth: number }) => {
-  const { itemHeight, itemWidth, ...rest } = props;
+export const Basic = {
+  render: (props: GridProps & { itemHeight: number; itemWidth: number }) => {
+    const { itemHeight, itemWidth, ...rest } = props;
 
-  return (
-    <Grid {...rest} minHeight="90vh" shadow="high" variant="white" width="90%">
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="secondary" />
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="green" />
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="pink" />
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="purple" />
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="red" />
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="yellow" />
-      <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
-    </Grid>
-  );
+    return (
+      <Grid {...rest} minHeight="90vh" shadow="high" variant="white" width="90%">
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="secondary" />
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="green" />
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="pink" />
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="purple" />
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="red" />
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="yellow" />
+        <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
+      </Grid>
+    );
+  },
 };

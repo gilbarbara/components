@@ -1,12 +1,12 @@
 import { FieldValues, FormProvider, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
 import { AnyObject } from '@gilbarbara/types';
 
-export interface FormProps<T extends FieldValues = FieldValues> {
+export interface FormRenderProps<T extends FieldValues = FieldValues> {
   formMethods: UseFormReturn<T>;
 }
 
-interface Props<T extends FieldValues> extends UseFormProps<T> {
-  children: (props: FormProps<T>) => JSX.Element;
+export interface FormProps<T extends FieldValues> extends UseFormProps<T> {
+  children: (props: FormRenderProps<T>) => JSX.Element;
 }
 
 /**
@@ -47,7 +47,7 @@ interface Props<T extends FieldValues> extends UseFormProps<T> {
 export function Form<T extends AnyObject = AnyObject>({
   children,
   ...props
-}: Props<T>): JSX.Element {
+}: FormProps<T>): JSX.Element {
   const formMethods = useForm<T>({
     mode: 'onChange',
     ...props,
@@ -60,4 +60,4 @@ export function Form<T extends AnyObject = AnyObject>({
   );
 }
 
-export { SubmitHandler as FormSubmitHandler } from 'react-hook-form';
+export type { SubmitHandler as FormSubmitHandler } from 'react-hook-form';
