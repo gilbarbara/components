@@ -38,6 +38,12 @@ export const radius = {
   round: '50%',
 };
 
+export const dropShadow = {
+  low: 'drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))',
+  mid: 'drop-shadow(2px 4px 12px rgba(148, 148, 148, 0.6))',
+  high: 'drop-shadow(2px 4px 18px rgba(148, 148, 148, 0.8))',
+};
+
 export const shadow = {
   low: '2px 4px 16px 2px rgba(148, 148, 148, 0.16)',
   mid: '2px 4px 16px 4px rgba(148, 148, 148, 0.24)',

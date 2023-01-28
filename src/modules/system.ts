@@ -598,10 +598,21 @@ export function radiusStyles<T extends WithRadius & WithTheme>(props: T): CSSObj
   return {};
 }
 
-export function shadowStyles<T extends WithShadow & WithTheme>(props: T): CSSObject {
-  const { shadow } = getTheme(props);
+export function shadowStyles<T extends WithShadow & WithTheme>(
+  props: T,
+  useFilter = false,
+): CSSObject {
+  const { dropShadow, shadow } = getTheme(props);
 
   if (props.shadow) {
+    if (useFilter) {
+      return {
+        filter: isDarkMode(props)
+          ? dropShadow[props.shadow].replace(/148/g, '222')
+          : dropShadow[props.shadow],
+      };
+    }
+
     return {
       boxShadow: isDarkMode(props)
         ? shadow[props.shadow].replace(/148/g, '222')
