@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState } from 'react';
 import { Meta } from '@storybook/react';
 
-import { Box, Button, Icon, Paragraph, Spacer } from 'src';
+import { Box, Button, ButtonBase, Icon, Paragraph, Spacer } from 'src';
 import { Tooltip } from 'src/Tooltip';
 
 import { colorProps, hideNoControlsWarning, hideProps } from '../__helpers__';
@@ -27,6 +29,47 @@ export default {
 export const Basic = {
   args: {
     children: <Icon name="shape-rhombus" size={24} title={null} />,
+  },
+};
+
+export const Popconfirm = {
+  parameters: {
+    controls: hideNoControlsWarning(),
+  },
+  render: () => {
+    const [isOpen, setOpen] = useState(false);
+
+    const handleClick = () => {
+      setOpen(!isOpen);
+    };
+
+    return (
+      <Tooltip
+        ariaLabel="Delete"
+        content={
+          <Box open={isOpen} padding="sm">
+            <Paragraph mb="md">Are you sure you want to delete this?</Paragraph>
+            <Spacer distribution="end" gap="sm">
+              <Button invert onClick={handleClick} size="sm" variant="black">
+                Cancel
+              </Button>
+              <Button onClick={handleClick} size="sm" variant="red">
+                Delete
+              </Button>
+            </Spacer>
+          </Box>
+        }
+        open={isOpen}
+        position="top"
+        radius="md"
+        shadow="low"
+        variant="white"
+      >
+        <ButtonBase onClick={handleClick}>
+          <Icon name="trash" size={24} title={null} />
+        </ButtonBase>
+      </Tooltip>
+    );
   },
 };
 
