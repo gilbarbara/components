@@ -1,14 +1,14 @@
 import { Meta } from '@storybook/react';
 
-import { ButtonBase } from 'src/ButtonBase';
+import { ButtonUnstyled } from 'src/ButtonUnstyled';
 
 import { colorProps, hideProps, spacingProps } from '../__helpers__';
 
 export default {
-  title: 'Components/ButtonBase',
-  component: ButtonBase,
+  title: 'Components/ButtonUnstyled',
+  component: ButtonUnstyled,
   args: {
-    ...ButtonBase.defaultProps,
+    ...ButtonUnstyled.defaultProps,
     children: 'Button',
   },
   argTypes: {
@@ -24,6 +24,6 @@ export default {
       },
     },
   },
-} as Meta<typeof ButtonBase>;
+} as Meta<typeof ButtonUnstyled>;
 
 export const Basic = {};

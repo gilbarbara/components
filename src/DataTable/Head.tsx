@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import type { DataTableProps } from './index';
 
 import { Box } from '../Box';
-import { ButtonBase } from '../ButtonBase';
+import { ButtonUnstyled } from '../ButtonUnstyled';
 import { Icon } from '../Icon';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions } from '../modules/system';
@@ -19,7 +19,7 @@ interface Props extends Pick<DataTableProps, 'clean' | 'columns'> {
 }
 
 const Title = styled(
-  ButtonBase,
+  ButtonUnstyled,
   getStyledOptions(),
 )<{ disableSort?: boolean; isDisabled: boolean }>(props => {
   const { disableSort, isDisabled } = props;

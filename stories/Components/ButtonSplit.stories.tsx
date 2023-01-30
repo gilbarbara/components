@@ -4,7 +4,7 @@ import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
 import { Meta } from '@storybook/react';
 
-import { ButtonBase, Icon } from 'src';
+import { ButtonUnstyled, Icon } from 'src';
 import {
   ButtonSplit,
   ButtonSplitDivider,
@@ -66,14 +66,14 @@ export const Basic = {
     return (
       <ButtonSplit {...props} onClick={handleClick}>
         <ButtonSplitItem>
-          <ButtonBase disabled variant="primary">
+          <ButtonUnstyled disabled variant="primary">
             <Icon mr="xxs" name="add" />
             Sign up
-          </ButtonBase>
+          </ButtonUnstyled>
         </ButtonSplitItem>
         <ButtonSplitItem>
           {({ closeMenu }) => (
-            <ButtonBase
+            <ButtonUnstyled
               onClick={handleClickClosure(closeMenu, 'Schedule for later')}
               variant="primary"
             >
@@ -82,35 +82,35 @@ export const Basic = {
               {loading && actionName === 'Schedule for later' && (
                 <Icon ml="xxs" name="spinner" spin />
               )}
-            </ButtonBase>
+            </ButtonUnstyled>
           )}
         </ButtonSplitItem>
         <ButtonSplitItem>
           {({ closeMenu }) => (
-            <ButtonBase onClick={handleClickClosure(closeMenu, 'Save draft')} variant="primary">
+            <ButtonUnstyled onClick={handleClickClosure(closeMenu, 'Save draft')} variant="primary">
               <Icon mr="xxs" name="bookmark" />
               Save draft
               {loading && actionName === 'Save draft' && <Icon ml="xxs" name="spinner" spin />}
-            </ButtonBase>
+            </ButtonUnstyled>
           )}
         </ButtonSplitItem>
         <ButtonSplitItem>
           {({ closeMenu }) => (
-            <ButtonBase onClick={handleClickClosure(closeMenu, 'Snooze')} variant="primary">
+            <ButtonUnstyled onClick={handleClickClosure(closeMenu, 'Snooze')} variant="primary">
               <Icon mr="xxs" name="time" />
               Snooze
               {loading && actionName === 'Snooze' && <Icon ml="xxs" name="spinner" spin />}
-            </ButtonBase>
+            </ButtonUnstyled>
           )}
         </ButtonSplitItem>
         <ButtonSplitDivider />
         <ButtonSplitItem shade="mid" variant="red">
           {({ closeMenu }) => (
-            <ButtonBase onClick={handleClickClosure(closeMenu, 'Delete')} variant="red">
+            <ButtonUnstyled onClick={handleClickClosure(closeMenu, 'Delete')} variant="red">
               <Icon mr="xxs" name="trash" />
               Delete
               {loading && actionName === 'Delete' && <Icon ml="xxs" name="spinner" spin />}
-            </ButtonBase>
+            </ButtonUnstyled>
           )}
         </ButtonSplitItem>
       </ButtonSplit>

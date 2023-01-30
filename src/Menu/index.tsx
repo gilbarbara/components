@@ -8,7 +8,7 @@ import is from 'is-lite';
 
 import { MenuItem } from './Item';
 
-import { ButtonBase } from '../ButtonBase';
+import { ButtonUnstyled } from '../ButtonUnstyled';
 import { Icon } from '../Icon';
 import { getTheme, px, recursiveChildrenEnhancer } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
@@ -136,7 +136,7 @@ const StyledMenuItems = styled(
   `;
 });
 
-const StyledMenuButton = styled(ButtonBase)(props => {
+const StyledMenuButton = styled(ButtonUnstyled)(props => {
   const { spacing } = getTheme(props);
 
   return css`

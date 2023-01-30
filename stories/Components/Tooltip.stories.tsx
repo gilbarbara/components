@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Meta } from '@storybook/react';
 
-import { Box, Button, ButtonBase, Icon, Paragraph, Spacer } from 'src';
+import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from 'src';
 import { Tooltip } from 'src/Tooltip';
 
 import { colorProps, hideNoControlsWarning, hideProps } from '../__helpers__';
@@ -65,9 +65,9 @@ export const Popconfirm = {
         shadow="low"
         variant="white"
       >
-        <ButtonBase onClick={handleClick}>
+        <ButtonUnstyled onClick={handleClick}>
           <Icon name="trash" size={24} title={null} />
-        </ButtonBase>
+        </ButtonUnstyled>
       </Tooltip>
     );
   },

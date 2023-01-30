@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { ButtonBase } from '../ButtonBase';
+import { ButtonUnstyled } from '../ButtonUnstyled';
 import { getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { WithChildrenOptional } from '../types';
@@ -15,7 +15,7 @@ interface PaginationButtonProps extends WithChildrenOptional {
 }
 
 const StyledPaginationButton = styled(
-  ButtonBase,
+  ButtonUnstyled,
   getStyledOptions(),
 )<{ current: boolean; disabled: boolean }>(props => {
   const { current } = props;

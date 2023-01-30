@@ -4,7 +4,7 @@ export { Avatar } from './Avatar';
 export { Box, BoxCenter, BoxInline } from './Box';
 export type { BoxProps } from './Box';
 export { Button } from './Button';
-export { ButtonBase } from './ButtonBase';
+export { ButtonUnstyled } from './ButtonUnstyled';
 export { ButtonGroup } from './ButtonGroup';
 export { ButtonSplit, ButtonSplitDivider, ButtonSplitItem } from './ButtonSplit';
 export { Checkbox, Radio } from './CheckboxAndRadio';
