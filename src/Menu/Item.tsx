@@ -1,6 +1,7 @@
 import { Children, isValidElement, MouseEvent, MouseEventHandler, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { noop } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
 import { getColorVariant, getTheme } from '../modules/helpers';
@@ -21,7 +22,7 @@ export interface MenuItemProps extends ChildProps, WithColor {
 export const StyledMenuItem = styled(
   'div',
   getStyledOptions(),
-)<MenuItemProps>(props => {
+)<Omit<MenuItemProps, 'closeMenu'>>(props => {
   const { disabled, shade, variant = 'primary' } = props;
   const { grayDarker, grayScale, spacing, typography, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
@@ -65,7 +66,7 @@ export const StyledMenuItem = styled(
 
 export function MenuItem({
   children,
-  closeMenu,
+  closeMenu = noop,
   disabled,
   onClick,
   ...rest
@@ -84,12 +85,14 @@ export function MenuItem({
     }
   };
 
-  let content = children;
+  let content: ReactNode;
 
-  if (is.function(children) && closeMenu) {
+  if (is.function(children)) {
     content = children({ closeMenu });
   } else if (!Children.toArray(children).every(d => isValidElement(d))) {
     content = <Paragraph>{children}</Paragraph>;
+  } else {
+    content = children;
   }
 
   return (

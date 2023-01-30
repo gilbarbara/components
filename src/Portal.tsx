@@ -155,7 +155,7 @@ export function Portal(props: PortalProps) {
   const previousIsActive = usePrevious(isActive);
   const previousCloseOnEsc = usePrevious(closeOnEsc);
 
-  const handleKeyDown = useCallback(event => {
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (event.keyCode === 27) {
       event.stopPropagation();
       closePortal.current();
