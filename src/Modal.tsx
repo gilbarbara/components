@@ -5,7 +5,7 @@ import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 
 import { Box } from './Box';
-import { ButtonBase } from './ButtonBase';
+import { ButtonUnstyled } from './ButtonUnstyled';
 import { H3 } from './Headings';
 import { Icon } from './Icon';
 import { getTheme, px } from './modules/helpers';
@@ -103,9 +103,9 @@ export function Modal(props: ModalProps) {
       <Box align="center" display="flex" justify={title ? 'space-between' : 'flex-end'} mb="md">
         {title && <H3 style={{ marginBottom: 0 }}>{title}</H3>}
         {!hideCloseButton && (
-          <ButtonBase onClick={onClose}>
+          <ButtonUnstyled onClick={onClose}>
             <Icon color={darkMode ? white : black} name="close" size={26} />
-          </ButtonBase>
+          </ButtonUnstyled>
         )}
       </Box>
     );

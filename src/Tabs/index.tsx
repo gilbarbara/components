@@ -18,7 +18,7 @@ import { SetOptional } from 'type-fest';
 
 import { Tab, TabProps } from './Tab';
 
-import { ButtonBase } from '../ButtonBase';
+import { ButtonUnstyled } from '../ButtonUnstyled';
 import { Loader } from '../Loader';
 import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
@@ -94,7 +94,7 @@ const StyledMenu = styled(
 });
 
 const StyledMenuItem = styled(
-  ButtonBase,
+  ButtonUnstyled,
   getStyledOptions('disabled'),
 )<
   Pick<TabsProps, 'direction' | 'disableActiveBorderRadius' | 'shade' | 'variant'> & {

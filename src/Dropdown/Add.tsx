@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ComponentProps } from '@gilbarbara/react-dropdown';
 
-import { ButtonBase } from '../ButtonBase';
+import { ButtonUnstyled } from '../ButtonUnstyled';
 import { DropdownProps, WithColor } from '../types';
 
 interface Props extends WithColor, ComponentProps, Pick<DropdownProps, 'onCreate'> {}
@@ -34,9 +34,9 @@ function DropdownAdd(props: Props): JSX.Element {
 
   return (
     <StyledDropdownAdd data-component-name="DropdownAdd">
-      <ButtonBase onClick={handleClick} shade={shade} variant={variant}>
+      <ButtonUnstyled onClick={handleClick} shade={shade} variant={variant}>
         {getLabels().create.replace(/{search}/, `"${search}"`)}
-      </ButtonBase>
+      </ButtonUnstyled>
     </StyledDropdownAdd>
   );
 }

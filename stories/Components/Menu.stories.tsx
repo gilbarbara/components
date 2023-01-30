@@ -1,7 +1,7 @@
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
 
-import { ButtonBase, Icon, Spacer } from 'src';
+import { ButtonUnstyled, Icon, Spacer } from 'src';
 import { Menu, MenuDivider, MenuItem, MenuProps } from 'src/Menu';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
@@ -39,20 +39,20 @@ export const Basic = {
         <>
           <MenuItem disabled>Profile</MenuItem>
           <MenuItem onClick={action('Configuration')}>
-            <ButtonBase>Configuration</ButtonBase>
+            <ButtonUnstyled>Configuration</ButtonUnstyled>
           </MenuItem>
         </>
         <MenuItem>
           {({ closeMenu }) => (
-            <ButtonBase onClick={handleClick(closeMenu, 'Help')}>Help</ButtonBase>
+            <ButtonUnstyled onClick={handleClick(closeMenu, 'Help')}>Help</ButtonUnstyled>
           )}
         </MenuItem>
         <MenuDivider />
         <MenuItem onClick={action('Logout')} variant="red">
           {({ closeMenu }) => (
-            <ButtonBase onClick={closeMenu}>
+            <ButtonUnstyled onClick={closeMenu}>
               <a href="#logout">Logout</a>
-            </ButtonBase>
+            </ButtonUnstyled>
           )}
         </MenuItem>
       </Menu>

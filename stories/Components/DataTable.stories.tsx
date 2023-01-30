@@ -7,7 +7,7 @@ import {
   Anchor,
   Box,
   Button,
-  ButtonBase,
+  ButtonUnstyled,
   ComponentWrapper,
   Dialog,
   Dropdown,
@@ -221,9 +221,9 @@ export const Basic = () => {
           </Tag>
         ),
         action: (
-          <ButtonBase data-code={member.code} data-id={member.id} onClick={handleClickDelete}>
+          <ButtonUnstyled data-code={member.code} data-id={member.id} onClick={handleClickDelete}>
             <Icon name="trash" />
-          </ButtonBase>
+          </ButtonUnstyled>
         ),
       }));
   }, [handleClickDelete, search, status, team]);

@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 
-import { ButtonBase } from './ButtonBase';
+import { ButtonUnstyled } from './ButtonUnstyled';
 import { Icon } from './Icon';
 import { Menu, MenuProps } from './Menu';
 import { getTheme } from './modules/helpers';
@@ -55,7 +55,7 @@ export const StyledButtonSplit = styled(
     min-width: ${height[size]};
     width: ${block ? '100%' : 'auto'};
 
-    > [data-component-name='ButtonBase'] {
+    > [data-component-name='ButtonUnstyled'] {
       ${styles};
       border-bottom-left-radius: ${borderRadius[size]};
       border-right: 0;
@@ -117,9 +117,9 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
 
   return (
     <StyledButtonSplit data-component-name="ButtonSplit" {...wrapperProps}>
-      <ButtonBase busy={busy} disabled={disabled} onClick={onClick} {...buttonProps}>
+      <ButtonUnstyled busy={busy} disabled={disabled} onClick={onClick} {...buttonProps}>
         {label}
-      </ButtonBase>
+      </ButtonUnstyled>
       <Menu
         component={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={24} />}
         disabled={disabled || busy}

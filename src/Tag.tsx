@@ -3,7 +3,7 @@ import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
 
-import { ButtonBase } from './ButtonBase';
+import { ButtonUnstyled } from './ButtonUnstyled';
 import { Icon } from './Icon';
 import { getColorVariant, getTheme } from './modules/helpers';
 import {
@@ -86,9 +86,9 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
 
   if (iconBefore && onClickBefore) {
     icons.before = (
-      <ButtonBase mr="xxs" onClick={onClickBefore}>
+      <ButtonUnstyled mr="xxs" onClick={onClickBefore}>
         <Icon name={iconBefore} size={iconSize} />
-      </ButtonBase>
+      </ButtonUnstyled>
     );
   } else if (iconBefore) {
     icons.before = <Icon mr="xxs" name={iconBefore} size={iconSize} />;
@@ -96,9 +96,9 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
 
   if (iconAfter && onClickAfter) {
     icons.after = (
-      <ButtonBase ml="xxs" onClick={onClickAfter}>
+      <ButtonUnstyled ml="xxs" onClick={onClickAfter}>
         <Icon name={iconAfter} size={iconSize} />
-      </ButtonBase>
+      </ButtonUnstyled>
     );
   } else if (iconAfter) {
     icons.after = <Icon ml="xxs" name={iconAfter} size={iconSize} />;

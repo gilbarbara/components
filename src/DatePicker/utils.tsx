@@ -12,7 +12,7 @@ import {
 } from './types';
 
 import { Box } from '../Box';
-import { ButtonBase } from '../ButtonBase';
+import { ButtonUnstyled } from '../ButtonUnstyled';
 import { getTheme } from '../modules/helpers';
 import {
   borderStyles,
@@ -52,7 +52,7 @@ export function getFooter(setter: (date: Date) => void, label: ReactNode, apply?
       justify={apply ? 'space-between' : 'center'}
       mt="xs"
     >
-      <ButtonBase onClick={() => setter(new Date())}>{label}</ButtonBase>
+      <ButtonUnstyled onClick={() => setter(new Date())}>{label}</ButtonUnstyled>
       {apply}
     </Box>
   );
