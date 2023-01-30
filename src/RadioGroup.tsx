@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { usePrevious } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -51,13 +51,14 @@ export function RadioGroup(props: RadioGroupProps) {
   }, [previousProps, value]);
 
   const handleChange = useCallback(
-    ({ target }) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { target } = event;
       const numericValue = Number(target.value);
       const currentValue = !Number.isNaN(numericValue) ? numericValue : target.value;
 
       /* istanbul ignore else */
       if (onChange) {
-        onChange(currentValue);
+        onChange(event);
       }
 
       if (!value && !disabled) {

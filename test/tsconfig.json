@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
+    "allowJs": true,
     "baseUrl": "../src",
     "noUnusedLocals": false
   },

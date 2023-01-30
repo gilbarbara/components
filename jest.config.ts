@@ -15,9 +15,10 @@ module.exports = {
   testEnvironment: '@happy-dom/jest-environment',
   testRegex: 'test/.*?\\.(test|spec)\\.tsx?$',
   transform: {
-    '^.+\\.tsx?$': [
+    '^.+\\.m?[tj]sx?$': [
       'ts-jest',
       {
+        useESM: true,
         tsconfig: 'test/tsconfig.json',
         diagnostics: {
           ignoreCodes: ['TS151001'],
@@ -25,6 +26,7 @@ module.exports = {
       },
     ],
   },
+  transformIgnorePatterns: ['node_modules/(?!(react-merge-refs)/)'],
   verbose: false,
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
 };

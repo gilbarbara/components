@@ -31,18 +31,21 @@ export default {
 
 export const Basic = {
   render: (props: ListProps) => {
-    const items = [
-      {
-        content: 'The first item',
-        variant: 'primary',
-      },
-      'The second item',
-      'The third item',
-      'The forth item',
-      'The fifth item',
-    ];
-
-    return <List {...props} items={items} />;
+    return (
+      <List
+        {...props}
+        items={[
+          {
+            content: 'The first item',
+            variant: 'primary',
+          },
+          'The second item',
+          'The third item',
+          'The forth item',
+          'The fifth item',
+        ]}
+      />
+    );
   },
 };
 

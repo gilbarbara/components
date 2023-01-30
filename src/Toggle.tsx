@@ -1,5 +1,5 @@
 import { ChangeEvent, forwardRef, KeyboardEvent, ReactNode, useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
+import { mergeRefs } from 'react-merge-refs';
 import { usePrevious, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';

@@ -1,5 +1,5 @@
 import { forwardRef, ReactElement, useCallback, useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
+import { mergeRefs } from 'react-merge-refs';
 import { useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -167,8 +167,8 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
   const localRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = useCallback(
-    ({ target }) => {
-      if (localRef.current?.contains(target) || !active) {
+    ({ target }: MouseEvent) => {
+      if (target && (localRef.current?.contains(target as HTMLElement) || !active)) {
         return;
       }
 
