@@ -1,11 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
-import { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from 'src';
 import { Tooltip } from 'src/Tooltip';
 
-import { colorProps, hideNoControlsWarning, hideProps, textOptionsProps } from '../__helpers__';
+import {
+  colorProps,
+  hideNoControlsWarning,
+  hideProps,
+  hideTable,
+  textOptionsProps,
+} from '../__helpers__';
+
+type Story = StoryObj<typeof Tooltip>;
 
 export default {
   title: 'Components/Tooltip',
@@ -26,13 +34,16 @@ export default {
   },
 } as Meta<typeof Tooltip>;
 
-export const Basic = {
+export const Basic: Story = {
   args: {
     children: <Icon name="shape-rhombus" size={24} title={null} />,
   },
+  argTypes: {
+    children: hideTable(),
+  },
 };
 
-export const Popconfirm = {
+export const Popconfirm: Story = {
   parameters: {
     controls: hideNoControlsWarning(),
   },
@@ -73,7 +84,7 @@ export const Popconfirm = {
   },
 };
 
-export const Positions = {
+export const Positions: Story = {
   args: {
     content: undefined,
   },
