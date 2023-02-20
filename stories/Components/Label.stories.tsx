@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react';
 
 import { Label } from 'src/Label';
 
-import { hideProps } from '../__helpers__';
+import { hideProps, textOptionsProps } from '../__helpers__';
 
 export default {
   title: 'Components/Label',
@@ -14,6 +14,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...textOptionsProps(),
     labelInfo: { control: 'text' },
   },
 } as Meta<typeof Label>;
