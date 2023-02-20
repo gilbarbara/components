@@ -1,5 +1,6 @@
 export { Alert } from './Alert';
 export { Anchor } from './Anchor';
+export { AspectRatio } from './AspectRatio';
 export { Avatar } from './Avatar';
 export { Box, BoxCenter, BoxInline } from './Box';
 export type { BoxProps } from './Box';
@@ -42,7 +43,6 @@ export { Paragraph } from './Paragraph';
 export { Portal } from './Portal';
 export { ProgressBar } from './ProgressBar';
 export { RadioGroup } from './RadioGroup';
-export { ResponsiveMedia } from './ResponsiveMedia';
 export { Select } from './Select';
 export { Search } from './Search';
 export { Spacer } from './Spacer';
