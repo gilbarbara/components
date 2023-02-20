@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { Divider, DividerProps } from 'src/Divider';
 
 import { Box } from '../../src';
-import { colorProps, hideProps, marginProps } from '../__helpers__';
+import { colorProps, hideProps, marginProps, textOptionsProps } from '../__helpers__';
 
 export default {
   title: 'Components/Divider',
@@ -13,6 +13,7 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...marginProps(),
+    ...textOptionsProps(),
     children: { control: 'text' },
     length: { control: 'text' },
   },

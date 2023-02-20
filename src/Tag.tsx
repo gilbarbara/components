@@ -1,11 +1,13 @@
 import { CSSProperties, forwardRef, MouseEvent } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { omit } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 
 import { ButtonUnstyled } from './ButtonUnstyled';
 import { Icon } from './Icon';
 import { getColorVariant, getTheme } from './modules/helpers';
+import { textDefaultOptions } from './modules/options';
 import {
   backgroundStyles,
   baseStyles,
@@ -120,7 +122,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
 });
 
 Tag.defaultProps = {
-  bold: false,
+  ...omit(textDefaultOptions, 'size'),
   invert: false,
   size: 'mid',
   variant: 'primary',

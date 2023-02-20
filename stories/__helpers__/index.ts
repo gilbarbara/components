@@ -134,3 +134,16 @@ export function spacingProps() {
     ...paddingProps(),
   };
 }
+
+export function textOptionsProps() {
+  return {
+    bold: { control: 'boolean', table: { category: 'Text Options' } },
+    italic: { control: 'boolean', table: { category: 'Text Options' } },
+    letterSpacing: { control: 'text', table: { category: 'Text Options' } },
+    lineHeight: { control: 'text', table: { category: 'Text Options' } },
+    size: { control: 'select', table: { category: 'Text Options' } },
+    textDecoration: { control: 'text', table: { category: 'Text Options' } },
+    textTransform: { control: 'select', table: { category: 'Text Options' } },
+    wordSpacing: { control: 'text', table: { category: 'Text Options' } },
+  };
+}

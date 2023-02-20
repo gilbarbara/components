@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react';
 import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from 'src';
 import { Tooltip } from 'src/Tooltip';
 
-import { colorProps, hideNoControlsWarning, hideProps } from '../__helpers__';
+import { colorProps, hideNoControlsWarning, hideProps, textOptionsProps } from '../__helpers__';
 
 export default {
   title: 'Components/Tooltip',
@@ -17,8 +17,8 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...textOptionsProps(),
     content: { control: 'text' },
-    size: { control: 'select' },
   },
   parameters: {
     justify: 'center',

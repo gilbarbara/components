@@ -6,7 +6,7 @@ import { Paragraph } from 'src';
 import { textSizes } from 'src/modules/options';
 import { Text, TextProps } from 'src/Text';
 
-import { colorProps, disableControl, hideProps } from '../__helpers__';
+import { colorProps, disableControl, hideProps, textOptionsProps } from '../__helpers__';
 
 export default {
   title: 'Components/Text',
@@ -19,8 +19,8 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...textOptionsProps(),
     children: { control: 'text' },
-    size: { control: 'select' },
   },
 } as Meta<typeof Text>;
 
