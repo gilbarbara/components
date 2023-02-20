@@ -15,7 +15,6 @@ export default {
   args: {
     ...Toggle.defaultProps,
     label: 'Toggle',
-    name: 'toggle',
   },
   argTypes: {
     ...hideProps(),
@@ -25,6 +24,23 @@ export default {
 } as Meta<typeof Toggle>;
 
 export const Basic = {};
+
+export const Sizes = {
+  argTypes: {
+    label: disableControl(),
+    name: disableControl(),
+    size: disableControl(),
+  },
+  render: (props: ToggleProps) => {
+    return (
+      <Grid gap={30} templateColumns="repeat(3, 1fr)">
+        {(['sm', 'md', 'lg'] as const).map(size => (
+          <Toggle key={size} {...props} defaultChecked label={size} size={size} />
+        ))}
+      </Grid>
+    );
+  },
+};
 
 export const Variants = {
   argTypes: {
