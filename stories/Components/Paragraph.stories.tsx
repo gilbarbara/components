@@ -3,7 +3,13 @@ import { Meta } from '@storybook/react';
 import { Box, Text } from 'src';
 import { Paragraph, ParagraphProps } from 'src/Paragraph';
 
-import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  marginProps,
+  textOptionsProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/Paragraph',
@@ -16,6 +22,7 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...marginProps(),
+    ...textOptionsProps(),
     children: disableControl(),
   },
 } as Meta<typeof Paragraph>;

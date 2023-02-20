@@ -9,7 +9,13 @@ import { textSizes } from 'src/modules/options';
 import { Tag, TagProps } from 'src/Tag';
 import * as Types from 'src/types';
 
-import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  marginProps,
+  textOptionsProps,
+} from '../__helpers__';
 
 export default {
   title: 'Components/Tag',
@@ -19,8 +25,8 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...marginProps(),
+    ...textOptionsProps(),
     children: { control: 'text' },
-    size: { control: 'select' },
   },
 } as Meta<typeof Tag>;
 

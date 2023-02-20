@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { H1 } from 'src';
 import { Anchor, AnchorProps } from 'src/Anchor';
 
-import { colorProps, hideProps, spacingProps } from '../__helpers__';
+import { colorProps, hideProps, spacingProps, textOptionsProps } from '../__helpers__';
 
 export default {
   title: 'Components/Anchor',
@@ -19,6 +19,7 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...spacingProps(),
+    ...textOptionsProps(),
     children: { control: 'text' },
     display: { control: 'text' },
   },
