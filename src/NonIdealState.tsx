@@ -100,7 +100,7 @@ export function NonIdealState(props: NonIdealStateProps) {
 
   switch (type) {
     case 'error': {
-      template.icon = <Icon name="danger" size={iconSize[size]} />;
+      template.icon = <Icon name="danger-o" size={iconSize[size]} />;
       template.title = 'Something went wrong';
       template.description = 'An unexpected error has occurred. Try reloading the page.';
       break;

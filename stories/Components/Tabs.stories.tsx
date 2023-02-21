@@ -29,7 +29,7 @@ const TabItems = [
     id="one"
     title={
       <Spacer gap="xs" wrap={false}>
-        <Icon name="add" />
+        <Icon name="plus-o" />
         First tab
       </Spacer>
     }
