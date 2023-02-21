@@ -1,19 +1,23 @@
 import { Meta } from '@storybook/addon-docs';
+import { Unstyled } from '@storybook/blocks';
+
 import { Box, Grid, Spacer, Jumbo, Paragraph } from '../../src';
 import { spacing } from '../../src/modules/theme';
 
 <Meta title='Overview/Spacing' />
 
-<Jumbo>Spacing</Jumbo>
+<Unstyled>
+  <Jumbo>Spacing</Jumbo>
 
-<Grid display="inline-grid" gap={spacing.xl} templateColumns="repeat(3, 1fr)">
-  {Object.keys(spacing).map(d => (
-    <Spacer key={d}>
-      <Box width={spacing.xxl}>
-        <Paragraph>{d}</Paragraph>
-        <Paragraph mt={0} size="mid" variant="gray">{spacing[d]}</Paragraph>
-      </Box>
-      <Box height={spacing.xxl} variant="primary" width={spacing[d]} />
-    </Spacer>
-  ))}
-</Grid>
+  <Grid display="inline-grid" gap={spacing.xl} templateColumns="repeat(3, 1fr)">
+    {Object.keys(spacing).map(d => (
+      <Spacer key={d}>
+        <Box width={spacing.xxl}>
+          <Paragraph>{d}</Paragraph>
+          <Paragraph mt={0} size="mid" variant="gray">{spacing[d]}</Paragraph>
+        </Box>
+        <Box height={spacing.xxl} variant="primary" width={spacing[d]} />
+      </Spacer>
+    ))}
+  </Grid>
+</Unstyled>
