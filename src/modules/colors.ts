@@ -6,7 +6,7 @@ export function getColorScale(color: string) {
 
   const lightest = hsl2hex({ h, s, l: rangeLimit(l * 1.9, 92, 96) });
   const lighter = hsl2hex({ h, s, l: rangeLimit(l * 1.6, 82, 92) });
-  const light = hsl2hex({ h, s, l: rangeLimit(l * 1.4, 64, 72) });
+  const light = hsl2hex({ h, s, l: rangeLimit(l * 1.4, 64, 80) });
   const dark = hsl2hex({ h, s, l: rangeLimit(l * 0.7, 32) });
   const darker = hsl2hex({ h, s, l: rangeLimit(l * 0.45, 16) });
   const darkest = hsl2hex({ h, s, l: rangeLimit(l * 0.3, 8) });
