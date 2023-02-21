@@ -73,7 +73,7 @@ export const WithComponentAndHover = {
         {...props}
         component={
           <Spacer gap="xxs">
-            <Icon name="add" /> Add Item
+            <Icon name="plus-o" /> Add Item
           </Spacer>
         }
       >

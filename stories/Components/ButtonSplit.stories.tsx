@@ -67,7 +67,7 @@ export const Basic = {
       <ButtonSplit {...props} onClick={handleClick}>
         <ButtonSplitItem>
           <ButtonUnstyled disabled variant="primary">
-            <Icon mr="xxs" name="add" />
+            <Icon mr="xxs" name="plus-o" />
             Sign up
           </ButtonUnstyled>
         </ButtonSplitItem>

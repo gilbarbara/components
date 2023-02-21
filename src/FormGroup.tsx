@@ -146,7 +146,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   if (error && valid === false) {
     content.assistiveText = (
       <Error>
-        <Icon mr="xxs" name="danger" title="Invalid" />
+        <Icon mr="xxs" name="danger-o" title="Invalid" />
         <span>{error}</span>
       </Error>
     );
