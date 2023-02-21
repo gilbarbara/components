@@ -235,7 +235,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#70abff",
+        "bg": "#99c3ff",
         "color": "#000000",
       },
       "lighter": {
@@ -295,7 +295,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#90e097",
+        "bg": "#afe9b5",
         "color": "#000000",
       },
       "lighter": {
@@ -325,7 +325,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ffa570",
+        "bg": "#ffbf99",
         "color": "#000000",
       },
       "lighter": {
@@ -355,7 +355,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#f17eba",
+        "bg": "#f5a3cd",
         "color": "#000000",
       },
       "lighter": {
@@ -385,7 +385,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#7e7ef1",
+        "bg": "#9595f3",
         "color": "#000000",
       },
       "lighter": {
@@ -415,7 +415,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#a670ff",
+        "bg": "#c099ff",
         "color": "#000000",
       },
       "lighter": {
@@ -445,7 +445,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ff7070",
+        "bg": "#ff9999",
         "color": "#000000",
       },
       "lighter": {
@@ -505,7 +505,7 @@ exports[`getTheme should return the theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ffe370",
+        "bg": "#ffeb99",
         "color": "#000000",
       },
       "lighter": {
@@ -748,7 +748,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#70abff",
+        "bg": "#99c3ff",
         "color": "#000000",
       },
       "lighter": {
@@ -808,7 +808,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#90e097",
+        "bg": "#afe9b5",
         "color": "#000000",
       },
       "lighter": {
@@ -838,7 +838,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ffa570",
+        "bg": "#ffbf99",
         "color": "#000000",
       },
       "lighter": {
@@ -868,7 +868,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#f17eba",
+        "bg": "#f5a3cd",
         "color": "#000000",
       },
       "lighter": {
@@ -928,7 +928,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#a670ff",
+        "bg": "#c099ff",
         "color": "#000000",
       },
       "lighter": {
@@ -958,7 +958,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ff7070",
+        "bg": "#ff9999",
         "color": "#000000",
       },
       "lighter": {
@@ -1018,7 +1018,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ffe370",
+        "bg": "#ffeb99",
         "color": "#000000",
       },
       "lighter": {
@@ -1261,7 +1261,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#70abff",
+        "bg": "#99c3ff",
         "color": "#000000",
       },
       "lighter": {
@@ -1321,7 +1321,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#90e097",
+        "bg": "#afe9b5",
         "color": "#000000",
       },
       "lighter": {
@@ -1351,7 +1351,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ffa570",
+        "bg": "#ffbf99",
         "color": "#000000",
       },
       "lighter": {
@@ -1381,7 +1381,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#f17eba",
+        "bg": "#f5a3cd",
         "color": "#000000",
       },
       "lighter": {
@@ -1411,7 +1411,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#7e7ef1",
+        "bg": "#9595f3",
         "color": "#000000",
       },
       "lighter": {
@@ -1441,7 +1441,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#a670ff",
+        "bg": "#c099ff",
         "color": "#000000",
       },
       "lighter": {
@@ -1471,7 +1471,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ff7070",
+        "bg": "#ff9999",
         "color": "#000000",
       },
       "lighter": {
@@ -1531,7 +1531,7 @@ exports[`mergeTheme should return the default theme 1`] = `
         "color": "#ffffff",
       },
       "light": {
-        "bg": "#ffe370",
+        "bg": "#ffeb99",
         "color": "#000000",
       },
       "lighter": {

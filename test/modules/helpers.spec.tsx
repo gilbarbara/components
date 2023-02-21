@@ -42,7 +42,7 @@ describe('getColorVariant', () => {
     expect(getColorVariant('yellow')).toEqual({ bg: '#ffe166', color: '#000000' });
     expect(getColorVariant('yellow', 'lightest')).toEqual({ bg: '#fffbeb', color: '#000000' });
     expect(getColorVariant('yellow', 'lighter')).toEqual({ bg: '#fff7d6', color: '#000000' });
-    expect(getColorVariant('yellow', 'light')).toEqual({ bg: '#ffe370', color: '#000000' });
+    expect(getColorVariant('yellow', 'light')).toEqual({ bg: '#ffeb99', color: '#000000' });
     expect(getColorVariant('yellow', 'dark')).toEqual({ bg: '#fac900', color: '#000000' });
     expect(getColorVariant('yellow', 'darker')).toEqual({ bg: '#a18100', color: '#ffffff' });
     expect(getColorVariant('yellow', 'darkest')).toEqual({ bg: '#6b5600', color: '#ffffff' });
