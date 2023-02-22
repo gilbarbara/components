@@ -2,7 +2,15 @@ import { ReactNode } from 'react';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
-import { Alignment, BorderItem, BorderItemSide, Direction, Sizes, TextSizes } from './common';
+import {
+  Alignment,
+  BorderItem,
+  BorderItemSide,
+  Direction,
+  HeadingSizes,
+  Sizes,
+  TextSizes,
+} from './common';
 import { Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
 
 export interface WithAlign {
@@ -247,14 +255,15 @@ export interface WithTextColor {
   colorVariant?: Variants;
 }
 
-export interface WithTextSize {
+export interface WithTextSize<T = TextSizes> {
   /**
    * Text size
    */
-  size?: TextSizes;
+  size?: T;
 }
 
-export interface WithTextOptions extends WithTextSize {
+export interface WithTextOptions<T extends TextSizes | HeadingSizes = TextSizes>
+  extends WithTextSize<T> {
   /**
    * Bold text
    * @default false

@@ -9,6 +9,8 @@ import { getColorVariant, getTheme, px, responsive as responsiveHelper } from '.
 
 import {
   BorderItemSide,
+  HeadingSizes,
+  TextSizes,
   WithAlign,
   WithBorder,
   WithBorderless,
@@ -644,7 +646,7 @@ export function textColorStyles<T extends WithTextColor & WithTheme>(props: T): 
   return {};
 }
 
-export function textStyles<T extends WithTextOptions & WithTheme>(
+export function textStyles<T extends WithTextOptions<HeadingSizes | TextSizes> & WithTheme>(
   props: T,
   lineHeightCustom?: StringOrNumber,
 ): CSSObject {
@@ -658,7 +660,7 @@ export function textStyles<T extends WithTextOptions & WithTheme>(
     textTransform,
     wordSpacing,
   } = props;
-  const { typography } = getTheme(props);
+  const { fontWeights, typography } = getTheme(props);
 
   const styles: CSSObject = {
     fontWeight: bold ? 700 : undefined,
@@ -671,8 +673,8 @@ export function textStyles<T extends WithTextOptions & WithTheme>(
   };
 
   if (size) {
-    const { fontSize, lineHeight: typographyLineHeight, weight } = typography[size];
-    const fontWeight = bold ? weight[1] : weight[0];
+    const { fontSize, lineHeight: typographyLineHeight } = typography[size];
+    const fontWeight = bold ? fontWeights.bold : fontWeights.normal;
 
     return {
       ...styles,

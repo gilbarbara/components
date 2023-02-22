@@ -36,6 +36,8 @@ export interface GetElementPropertyOptions {
   type: string;
 }
 
+export type HeadingSizes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'jumbo';
+
 export type Icons = (typeof icons)[number]['name'];
 
 export type InputTypes = (typeof inputTypes)[number];
