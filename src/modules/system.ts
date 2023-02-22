@@ -146,7 +146,7 @@ export function backgroundStyles<T extends WithColor & WithInvert & WithTranspar
   return {};
 }
 
-export function baseStyles<T extends WithColor & WithTheme>(props: T): CSSObject {
+export function baseStyles<T extends WithTheme>(props: T): CSSObject {
   const { fontFamily } = getTheme(props);
 
   return {
@@ -299,9 +299,9 @@ export function flexItemStyles<T extends WithFlexItem>(props: T): CSSObject {
 }
 
 export function inputStyles<
-  T extends WithTheme &
-    WithBorderless &
-    WithElementSpacing & { large?: boolean; multiple?: boolean; width?: StringOrNumber },
+  T extends WithBorderless &
+    WithElementSpacing &
+    WithTheme & { large?: boolean; multiple?: boolean; width?: StringOrNumber },
 >(props: T, type: 'input' | 'select' | 'textarea') {
   const { borderless, large, multiple, prefixSpacing, suffixSpacing, width } = props;
   const darkMode = isDarkMode(props);
@@ -352,7 +352,7 @@ export function inputStyles<
   }
 
   const disabled = css`
-    ${!borderless && `background-color: ${darkMode ? grayDark : grayLightest}`};
+    ${!borderless && `background-color: ${darkMode ? grayDark : grayLightest};`}
     border-color: ${darkMode ? grayDark : grayLighter};
     color: ${darkMode ? grayLighter : grayDark};
     cursor: not-allowed;
@@ -379,16 +379,16 @@ export function inputStyles<
     line-height: 1.4;
     padding: ${paddingY} ${paddingRight} ${paddingY} ${paddingLeft};
     width: ${width ? px(width) : '100%'};
-    ${styles};
+    ${styles}
 
     &:focus {
-      ${!!borderless && `border-color: ${colors.primary}`};
-      box-shadow: ${borderless ? '' : `0 0 8px 1px ${rgba(colors.primary, 1)}`};
+      ${!!borderless && `border-color: ${colors.primary};`}
+      ${!borderless && `box-shadow: 0 0 8px 1px ${rgba(colors.primary, 1)};`}
       outline: none;
     }
 
     &:disabled {
-      ${disabled};
+      ${disabled}
     }
 
     ${!isSelect &&
@@ -402,39 +402,34 @@ export function inputStyles<
       }
 
       &:read-only {
-        ${disabled};
+        ${disabled}
       }
-    `};
+    `}
   `;
 }
 
 export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
-  const {
-    display,
-    height,
-    maxHeight,
-    maxWidth,
-    minHeight,
-    minWidth,
-    opacity,
-    overflow,
-    pointerEvents,
-    textAlign,
-    transform,
-    transformOrigin,
-    transition,
-    width,
-  } = props;
+  const { display, height, maxHeight, maxWidth, minHeight, minWidth, width } = props;
 
-  const output: CSSObject = {
-    opacity,
-    overflow,
-    pointerEvents,
-    textAlign,
-    transition,
-    transform,
-    transformOrigin,
-  };
+  const output: CSSObject = {};
+
+  (
+    [
+      'opacity',
+      'overflow',
+      'pointerEvents',
+      'textAlign',
+      'transition',
+      'transform',
+      'transformOrigin',
+    ] as const
+  ).forEach(prop => {
+    const value = props[prop];
+
+    if (!is.nullOrUndefined(value)) {
+      output[prop as keyof CSSObject] = value;
+    }
+  });
 
   if (!is.nullOrUndefined(display)) {
     output.display = display;
@@ -562,12 +557,17 @@ export function paddingStyles<T extends WithPadding>(props: T, force = false): C
 }
 
 export function positioningStyles<T extends WithPositioning>(props: T): CSSObject {
-  const { bottom, left, position, right, top, zIndex } = props;
+  const { bottom, left, right, top } = props;
 
-  const output: CSSObject = {
-    position,
-    zIndex,
-  };
+  const output: CSSObject = {};
+
+  (['position', 'zIndex'] as const).forEach(prop => {
+    const value = props[prop];
+
+    if (!is.nullOrUndefined(value)) {
+      output[prop as keyof CSSObject] = value;
+    }
+  });
 
   if (!is.nullOrUndefined(bottom)) {
     output.bottom = px(bottom);
@@ -650,39 +650,40 @@ export function textStyles<T extends WithTextOptions<HeadingSizes | TextSizes> &
   props: T,
   lineHeightCustom?: StringOrNumber,
 ): CSSObject {
-  const {
-    bold = false,
-    italic = false,
-    letterSpacing,
-    lineHeight,
-    size,
-    textDecoration,
-    textTransform,
-    wordSpacing,
-  } = props;
+  const { bold = false, italic = false, size } = props;
   const { fontWeights, typography } = getTheme(props);
 
-  const styles: CSSObject = {
-    fontWeight: bold ? 700 : undefined,
-    fontStyle: italic ? 'italic' : 'normal',
-    letterSpacing,
-    lineHeight,
-    textDecoration,
-    textTransform,
-    wordSpacing,
-  };
+  const output: CSSObject = {};
+
+  (
+    ['letterSpacing', 'lineHeight', 'textDecoration', 'textTransform', 'wordSpacing'] as const
+  ).forEach(prop => {
+    const value = props[prop];
+
+    if (!is.nullOrUndefined(value)) {
+      output[prop as keyof CSSObject] = value;
+    }
+  });
+
+  if (bold) {
+    output.fontWeight = fontWeights.bold;
+  }
+
+  if (italic) {
+    output.fontStyle = 'italic';
+  }
 
   if (size) {
     const { fontSize, lineHeight: typographyLineHeight } = typography[size];
     const fontWeight = bold ? fontWeights.bold : fontWeights.normal;
 
     return {
-      ...styles,
+      ...output,
       fontSize,
       fontWeight,
-      lineHeight: styles.lineHeight || lineHeightCustom || typographyLineHeight,
+      lineHeight: output.lineHeight || lineHeightCustom || typographyLineHeight,
     };
   }
 
-  return styles;
+  return output;
 }
