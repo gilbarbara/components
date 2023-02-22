@@ -42,6 +42,8 @@ export type Icons = (typeof icons)[number]['name'];
 
 export type InputTypes = (typeof inputTypes)[number];
 
+export type Placement = 'bottom' | 'left' | 'right' | 'top';
+
 export type PositionX = 'left-bottom' | 'left-top' | 'right-bottom' | 'right-top';
 
 export type PositionY = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';

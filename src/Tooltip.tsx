@@ -17,6 +17,7 @@ import {
 } from './modules/system';
 import { Text } from './Text';
 import {
+  Placement,
   Sizes,
   WithChildren,
   WithColor,
@@ -31,7 +32,7 @@ interface SharedProps {
   /** @default middle */
   align: 'start' | 'middle' | 'end';
   /** @default bottom */
-  position: 'bottom' | 'left' | 'right' | 'top';
+  position: Placement;
   /** Content wrapping */
   wrap?: Sizes;
   /** @default 100 */
