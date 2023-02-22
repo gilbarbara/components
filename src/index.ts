@@ -42,6 +42,7 @@ export { Pagination } from './Pagination';
 export { Paragraph } from './Paragraph';
 export { Portal } from './Portal';
 export { ProgressBar } from './ProgressBar';
+export { Quote } from './Quote';
 export { RadioGroup } from './RadioGroup';
 export { Select } from './Select';
 export { Search } from './Search';
