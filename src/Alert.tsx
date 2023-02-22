@@ -1,14 +1,13 @@
-import { forwardRef } from 'react';
+import { forwardRef, isValidElement } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { Icon } from './Icon';
-import { getTheme } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import {
   baseStyles,
   borderStyles,
   getStyledOptions,
-  isDarkMode,
   marginStyles,
   paddingStyles,
   radiusStyles,
@@ -21,6 +20,7 @@ import {
   Theme,
   WithBorder,
   WithChildren,
+  WithFlexBox,
   WithInvert,
   WithMargin,
   WithPadding,
@@ -31,6 +31,7 @@ export interface AlertKnownProps
   extends StyledProps,
     WithBorder,
     WithChildren,
+    Pick<WithFlexBox, 'align'>,
     WithInvert,
     WithMargin,
     WithPadding,
@@ -42,27 +43,39 @@ export interface AlertKnownProps
 
 export type AlertProps = ComponentProps<HTMLDivElement, AlertKnownProps>;
 
-function getOptions(type: AlertProps['type'], colors: Theme['colors'], darkMode: boolean) {
+function getVariantName(type: AlertProps['type']) {
+  const variants = {
+    success: 'green',
+    warning: 'orange',
+    error: 'red',
+    info: 'blue',
+    neutral: 'gray',
+  } as const;
+
+  return variants[type];
+}
+
+function getIconOptions(type: AlertProps['type'], variants: Theme['variants']) {
   const options = {
     success: {
-      color: colors.green,
-      icon: 'check-o',
+      color: variants.green.mid.bg,
+      icon: 'check-circle',
     },
     warning: {
-      color: darkMode ? colors.orange : colors.yellow,
-      icon: 'danger',
+      color: variants.orange.mid.bg,
+      icon: 'danger-circle',
     },
     error: {
-      color: colors.red,
-      icon: 'close-o',
+      color: variants.red.mid.bg,
+      icon: 'close-circle',
     },
     info: {
-      color: colors.blue,
-      icon: 'info',
+      color: variants.blue.mid.bg,
+      icon: 'info-circle',
     },
     neutral: {
-      color: darkMode ? '#000' : '#fff',
-      icon: 'data',
+      color: variants.gray.mid.bg,
+      icon: 'message-circle',
     },
   } as const;
 
@@ -73,20 +86,25 @@ export const StyledAlert = styled(
   'div',
   getStyledOptions('type'),
 )<AlertProps>(props => {
-  const { invert } = props;
-  const { grayDark, lightColor, spacing, white } = getTheme(props);
-  let backgroundColor = isDarkMode(props) ? lightColor : grayDark;
-  let color = isDarkMode(props) ? grayDark : white;
+  const { align = 'center', invert, type } = props;
+  const { spacing, variants, white } = getTheme(props);
+
+  const { bg, color } = getColorVariant(getVariantName(type), 'lighter', variants);
+  let backgroundColor = bg;
+  let borderColor = bg;
 
   if (invert) {
-    backgroundColor = isDarkMode(props) ? grayDark : lightColor;
-    color = isDarkMode(props) ? white : grayDark;
+    const variant = getColorVariant(getVariantName(type), 'mid', variants);
+
+    backgroundColor = white;
+    borderColor = variant.bg;
   }
 
   return css`
     ${baseStyles(props)};
-    align-items: center;
+    align-items: ${align};
     background-color: ${backgroundColor};
+    border: 1px solid ${borderColor};
     color: ${color};
     display: flex;
     overflow: hidden;
@@ -98,27 +116,28 @@ export const StyledAlert = styled(
     ${paddingStyles(props)};
     ${radiusStyles(props)};
 
-    [data-component-name='Text'] {
+    > [data-component-name='Text'] {
       margin-left: ${spacing.xs};
     }
   `;
 });
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
-  const { children, icon, invert, type } = props;
-  const { colors, darkMode } = getTheme({ theme: useTheme() });
+  const { children, icon, type } = props;
+  const { variants } = getTheme({ theme: useTheme() });
 
-  const selected = getOptions(type, colors, !!darkMode || !!invert);
+  const selected = getIconOptions(type, variants);
 
   return (
     <StyledAlert ref={ref} data-component-name="Alert" {...props}>
       <Icon color={selected.color} name={icon || selected.icon} size={20} />
-      <Text size="mid">{children}</Text>
+      {isValidElement(children) ? children : <Text size="mid">{children}</Text>}
     </StyledAlert>
   );
 });
 
 Alert.defaultProps = {
+  align: 'center',
   invert: false,
   padding: 'md',
   radius: 'xs',
