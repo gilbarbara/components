@@ -123,10 +123,9 @@ describe('mergeTheme', () => {
           sm: '100px',
         },
         darkColor: '#f04',
-        typography: {
-          small: {
-            weight: [300, 400],
-          },
+        fontWeights: {
+          normal: 300,
+          bold: 600,
         },
       }),
     ).toMatchSnapshot();

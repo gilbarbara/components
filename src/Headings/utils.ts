@@ -40,14 +40,14 @@ export type HeadingLargeProps = ComponentProps<
 
 export function getStyles(key: Typography, props: HeadingProps) {
   const { light } = props;
-  const { fontFamily, typography } = getTheme(props);
+  const { fontFamily, fontWeights, typography } = getTheme(props);
   const selected = typography[key];
 
   return css`
     ${baseStyles(props)};
     font-family: ${fontFamily};
     font-size: ${selected.fontSize};
-    font-weight: ${light ? 400 : selected.weight};
+    font-weight: ${light ? fontWeights.normal : fontWeights.bold};
     line-height: ${selected.lineHeight};
     margin-bottom: 0.5em;
     margin-top: 0;

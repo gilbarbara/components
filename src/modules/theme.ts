@@ -6,6 +6,10 @@ import { getColorScale, getGrayScale } from './colors';
 
 export const fontFamily = 'inherit';
 export const fontMonospace = 'Courier, monospace';
+export const fontWeights = {
+  normal: 400,
+  bold: 700,
+};
 
 export const breakpoints = {
   xxs: '320px',
@@ -66,62 +70,50 @@ export const typography = {
   small: {
     fontSize: '12px',
     lineHeight: 1.2,
-    weight: [400, 700],
   },
   mid: {
     fontSize: '14px',
     lineHeight: 1.2,
-    weight: [400, 700],
   },
   regular: {
     fontSize: '16px',
     lineHeight: 1.2,
-    weight: [400, 700],
   },
   large: {
     fontSize: '18px',
     lineHeight: 1.2,
-    weight: [400, 700],
   },
   h6: {
     fontSize: '16px',
     lineHeight: 1.2,
-    weight: 700,
   },
   h5: {
     fontSize: '18px',
     lineHeight: 1.2,
-    weight: 700,
   },
   h4: {
     fontSize: '20px',
     lineHeight: 1.2,
-    weight: 700,
   },
   h3: {
     fontSize: '24px',
     lineHeight: 1.2,
-    weight: 700,
   },
   h2: {
     fontSize: '28px',
     lineHeight: 1.2,
-    weight: 700,
   },
   h1: {
     fontSize: '32px',
     lineHeight: 1.2,
-    weight: 700,
   },
   jumbo: {
     fontSize: '48px',
     lineHeight: 1.2,
-    weight: 700,
   },
   jumboLarge: {
     fontSize: '64px',
     lineHeight: 1.2,
-    weight: 700,
   },
 };
 
