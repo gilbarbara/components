@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { DatePickerRange } from 'src/DatePicker/Range';
 
 import { disableControl, hideProps, hideTable, spacingProps } from '../__helpers__';
+
+type Story = StoryObj<typeof DatePickerRange>;
 
 export default {
   title: 'Components/DatePicker',
@@ -16,6 +18,6 @@ export default {
     onApply: hideTable(),
     showApply: hideTable(),
   },
-} as Meta<typeof DatePickerRange>;
+} satisfies Meta<typeof DatePickerRange>;
 
-export const Range = {};
+export const Range: Story = {};

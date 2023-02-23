@@ -162,4 +162,4 @@ Divider.defaultProps = {
   shade: 'light',
   size: 'regular',
   variant: 'gray',
-};
+} as const;

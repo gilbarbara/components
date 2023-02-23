@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon } from 'src';
 import { Dropdown } from 'src/Dropdown';
-import { DropdownOption, DropdownProps } from 'src/types';
+import { DropdownOption } from 'src/types';
 
 import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Dropdown>;
 
 export default {
   title: 'Components/Dropdown',
@@ -28,7 +30,7 @@ export default {
     },
     minHeight: 350,
   },
-} as Meta<typeof Dropdown>;
+} satisfies Meta<typeof Dropdown>;
 
 const items: DropdownOption[] = [
   { value: 1, label: 'One', prefix: <Icon name="chevron-right" /> },
@@ -38,16 +40,16 @@ const items: DropdownOption[] = [
   { value: 5, label: 'Five', prefix: <Icon name="bolt" /> },
 ];
 
-export const Basic = {
-  render: (props: DropdownProps) => <Dropdown {...props} items={items} />,
+export const Basic: Story = {
+  render: props => <Dropdown {...props} items={items} />,
 };
 
-export const WithCreate = {
+export const WithCreate: Story = {
   args: {
     allowCreate: true,
     borderless: true,
   },
-  render: (props: DropdownProps) => {
+  render: props => {
     const [controlledItems, setItems] = useState(items);
     const [values, setValues] = useState<DropdownOption[]>([]);
 

@@ -62,4 +62,4 @@ ButtonGroup.defaultProps = {
   shade: 'mid',
   size: 'md',
   variant: 'primary',
-};
+} as const;

@@ -2,22 +2,18 @@
 import { MouseEvent, useState } from 'react';
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonUnstyled, Icon } from 'src';
-import {
-  ButtonSplit,
-  ButtonSplitDivider,
-  ButtonSplitItem,
-  ButtonSplitProps,
-} from 'src/ButtonSplit';
+import { ButtonSplit, ButtonSplitDivider, ButtonSplitItem } from 'src/ButtonSplit';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof ButtonSplit>;
 
 export default {
   title: 'Components/ButtonSplit',
   component: ButtonSplit,
-  subcomponents: { ButtonSplitItem, ButtonSplitDivider },
   args: {
     ...ButtonSplit.defaultProps,
     label: 'Send',
@@ -32,10 +28,10 @@ export default {
   parameters: {
     minHeight: 250,
   },
-} as Meta<typeof ButtonSplit>;
+} satisfies Meta<typeof ButtonSplit>;
 
-export const Basic = {
-  render: (props: ButtonSplitProps) => {
+export const Basic: Story = {
+  render: props => {
     const [actionName, setActionName] = useState('');
     const [loading, setLoading] = useState(false);
 

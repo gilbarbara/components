@@ -1,7 +1,6 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { H1, H2, H3, H4, H5, H6 } from 'src/Headings';
-import { HeadingProps } from 'src/Headings/utils';
 
 import { colorProps, hideProps, marginProps } from '../../__helpers__';
 
@@ -19,33 +18,33 @@ export default {
     ...marginProps(),
     children: { control: 'text' },
   },
-} as Meta<typeof H1>;
+} satisfies Meta<typeof H1>;
 
-export const BasicH1 = {
+export const BasicH1: StoryObj<typeof H1> = {
   name: 'H1',
 };
 
-export const BasicH2 = {
+export const BasicH2: StoryObj<typeof H2> = {
   name: 'H2',
-  render: (props: HeadingProps) => <H2 {...props} />,
+  render: props => <H2 {...props} />,
 };
 
-export const BasicH3 = {
+export const BasicH3: StoryObj<typeof H3> = {
   name: 'H3',
-  render: (props: HeadingProps) => <H3 {...props} />,
+  render: props => <H3 {...props} />,
 };
 
-export const BasicH4 = {
+export const BasicH4: StoryObj<typeof H4> = {
   name: 'H4',
-  render: (props: HeadingProps) => <H4 {...props} />,
+  render: props => <H4 {...props} />,
 };
 
-export const BasicH5 = {
+export const BasicH5: StoryObj<typeof H5> = {
   name: 'H5',
-  render: (props: HeadingProps) => <H5 {...props} />,
+  render: props => <H5 {...props} />,
 };
 
-export const BasicH6 = {
+export const BasicH6: StoryObj<typeof H6> = {
   name: 'H6',
-  render: (props: HeadingProps) => <H6 {...props} />,
+  render: props => <H6 {...props} />,
 };

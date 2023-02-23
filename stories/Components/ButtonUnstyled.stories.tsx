@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonUnstyled } from 'src/ButtonUnstyled';
 
 import { colorProps, hideProps, spacingProps, textOptionsProps } from '../__helpers__';
+
+type Story = StoryObj<typeof ButtonUnstyled>;
 
 export default {
   title: 'Components/ButtonUnstyled',
@@ -25,6 +27,6 @@ export default {
       },
     },
   },
-} as Meta<typeof ButtonUnstyled>;
+} satisfies Meta<typeof ButtonUnstyled>;
 
-export const Basic = {};
+export const Basic: Story = {};

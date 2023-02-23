@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { DatePickerInput } from 'src/DatePicker/Input';
 
 import { disableControl, hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof DatePickerInput>;
 
 export default {
   title: 'Components/DatePicker',
@@ -17,6 +19,6 @@ export default {
   parameters: {
     minHeight: 450,
   },
-} as Meta<typeof DatePickerInput>;
+} satisfies Meta<typeof DatePickerInput>;
 
-export const Input = {};
+export const Input: Story = {};

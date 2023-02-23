@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useTheme } from '@emotion/react';
 import { capitalize } from '@gilbarbara/helpers';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Spacer } from 'src';
 import { getTheme } from 'src/modules/helpers';
 import { textSizes } from 'src/modules/options';
-import { Tag, TagProps } from 'src/Tag';
+import { Tag } from 'src/Tag';
 import * as Types from 'src/types';
 
 import {
@@ -16,6 +16,8 @@ import {
   marginProps,
   textOptionsProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof Tag>;
 
 export default {
   title: 'Components/Tag',
@@ -28,20 +30,20 @@ export default {
     ...textOptionsProps(),
     children: { control: 'text' },
   },
-} as Meta<typeof Tag>;
+} satisfies Meta<typeof Tag>;
 
-export const Basic = {
+export const Basic: Story = {
   args: {
     children: 'Tag',
   },
 };
 
-export const Variants = {
+export const Variants: Story = {
   argTypes: {
     variant: disableControl(),
   },
-  render: (props: TagProps) => {
-    const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
+  render: props => {
+    const { variants } = getTheme({ theme: useTheme() });
 
     return (
       <Grid gap={30} justifyItems="center" templateColumns="repeat(3, 1fr)">
@@ -57,13 +59,13 @@ export const Variants = {
   },
 };
 
-export const Shades = {
+export const Shades: Story = {
   argTypes: {
     color: disableControl(),
     shade: disableControl(),
   },
-  render: (props: TagProps) => {
-    const { variants } = getTheme({ theme: useTheme() }) as Types.Theme;
+  render: props => {
+    const { variants } = getTheme({ theme: useTheme() });
 
     return (
       <Spacer>
@@ -77,11 +79,11 @@ export const Shades = {
   },
 };
 
-export const Sizes = {
+export const Sizes: Story = {
   argTypes: {
     size: disableControl(),
   },
-  render: (props: TagProps) => (
+  render: props => (
     <Spacer>
       {textSizes.map(d => (
         <Tag key={d} {...props} size={d}>
@@ -92,8 +94,8 @@ export const Sizes = {
   ),
 };
 
-export const WithIcons = {
-  render: (props: TagProps) => (
+export const WithIcons: Story = {
+  render: props => (
     <Grid gap={20} templateColumns="repeat(4, 1fr)">
       <div>
         <Tag {...props} iconBefore="assign" variant="secondary">

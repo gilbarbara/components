@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Alert, AlertProps } from 'src/Alert';
+import { Alert } from 'src/Alert';
 
 import { Box, Paragraph } from '../../src';
 import { flexBoxProps, hideProps, hideTable, spacingProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Alert>;
 
 export default {
   title: 'Components/Alert',
@@ -19,18 +21,18 @@ export default {
     children: { control: 'text' },
     type: { control: 'select' },
   },
-} as Meta<typeof Alert>;
+} satisfies Meta<typeof Alert>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Types = {
+export const Types: Story = {
   argTypes: {
     align: hideTable(),
     children: hideTable(),
     icon: hideTable(),
     type: hideTable(),
   },
-  render: (props: AlertProps) => (
+  render: props => (
     <>
       {(
         [

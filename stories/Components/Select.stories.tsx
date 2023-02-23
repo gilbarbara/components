@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Select, SelectProps } from 'src/Select';
+import { Select } from 'src/Select';
 
 import { hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Select>;
 
 export default {
   title: 'Components/Select',
@@ -15,10 +17,10 @@ export default {
     ...hideProps(),
     width: { control: 'text' },
   },
-} as Meta<typeof Select>;
+} satisfies Meta<typeof Select>;
 
-export const Basic = {
-  render: (props: SelectProps) => (
+export const Basic: Story = {
+  render: props => (
     <Select {...props}>
       <option value="">Select your gender...</option>
       <option value="male">Male</option>

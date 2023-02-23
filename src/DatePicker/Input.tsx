@@ -255,4 +255,4 @@ DatePickerInput.defaultProps = {
   showRangeApply: false,
   variant: 'primary',
   width: 'auto',
-};
+} as const;

@@ -39,4 +39,4 @@ Loader.defaultProps = {
   shade: 'mid',
   type: 'pill',
   variant: 'primary',
-};
+} as const;

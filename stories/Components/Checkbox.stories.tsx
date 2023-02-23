@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { FormGroup, Spacer } from 'src';
-import { Checkbox, CheckboxProps } from 'src/CheckboxAndRadio';
+import { Checkbox } from 'src/CheckboxAndRadio';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Checkbox>;
 
 export default {
   title: 'Components/Checkbox',
@@ -19,11 +21,11 @@ export default {
     label: { control: 'text' },
     onChange: { action: 'onChange', ...disableControl() },
   },
-} as Meta<typeof Checkbox>;
+} satisfies Meta<typeof Checkbox>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Multiple = {
+export const Multiple: Story = {
   args: {
     label: '',
     name: '',
@@ -32,7 +34,7 @@ export const Multiple = {
     label: disableControl(),
     name: disableControl(),
   },
-  render: (props: CheckboxProps) => (
+  render: props => (
     <FormGroup label="Options" width={480}>
       <Spacer>
         <Checkbox {...props} label="Hide e-mail" name="hideEmail" />

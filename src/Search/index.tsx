@@ -222,4 +222,4 @@ Search.defaultProps = {
   noResultsLabel: 'Nothing found',
   placeholder: 'Search for...',
   showListOnFocus: true,
-};
+} as const;

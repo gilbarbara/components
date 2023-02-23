@@ -104,4 +104,4 @@ CopyToClipboard.defaultProps = {
   size: 16,
   tooltipCopiedText: 'Copied!',
   tooltipText: 'Copy',
-};
+} as const;

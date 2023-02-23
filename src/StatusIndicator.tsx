@@ -58,4 +58,4 @@ StatusIndicator.defaultProps = {
   shade: 'mid',
   size: 24,
   variant: 'green',
-};
+} as const;

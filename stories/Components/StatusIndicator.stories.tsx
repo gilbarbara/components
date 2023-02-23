@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Grid, Paragraph } from 'src';
-import { StatusIndicator, StatusIndicatorProps } from 'src/StatusIndicator';
+import { StatusIndicator } from 'src/StatusIndicator';
 
 import { colorProps, disableControl, hideProps, marginProps, variants } from '../__helpers__';
+
+type Story = StoryObj<typeof StatusIndicator>;
 
 export default {
   title: 'Components/StatusIndicator',
@@ -14,12 +16,15 @@ export default {
     ...colorProps(),
     ...marginProps(),
   },
-} as Meta<typeof StatusIndicator>;
+} satisfies Meta<typeof StatusIndicator>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Variants = {
-  render: (props: StatusIndicatorProps) => (
+export const Variants: Story = {
+  argTypes: {
+    variant: disableControl(),
+  },
+  render: props => (
     <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
       {variants.map(d => (
         <Box key={d} align="center" direction="column" display="flex">
@@ -29,8 +34,4 @@ export const Variants = {
       ))}
     </Grid>
   ),
-
-  argTypes: {
-    variant: disableControl(),
-  },
 };

@@ -187,6 +187,6 @@ Field.defaultProps = {
   required: false,
   skipValidation: false,
   type: 'text',
-};
+} as const;
 
 export type { FieldProps } from './types';

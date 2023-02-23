@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Quote } from 'src/Quote';
 
 import { colorProps, hideProps, textOptionsProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Quote>;
 
 export default {
   title: 'Components/Quote',
@@ -15,9 +17,9 @@ export default {
     attribution: { control: 'text' },
     children: { control: 'text' },
   },
-} as Meta<typeof Quote>;
+} satisfies Meta<typeof Quote>;
 
-export const Basic = {
+export const Basic: Story = {
   args: {
     attribution: 'Hommer Simpson',
     children: 'The quick brown fox jumps over the lazy dog',

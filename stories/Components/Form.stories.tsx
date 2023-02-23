@@ -1,20 +1,21 @@
 import { SubmitHandler } from 'react-hook-form';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, Divider, Field, Grid, H2, H3, Spacer } from 'src';
 import { Form, FormRenderProps } from 'src/Form';
 
 import { hideNoControlsWarning } from '../__helpers__';
 
+type Story = StoryObj<typeof Form>;
+
 export default {
   title: 'Components/Form',
   component: Form,
-  subcomponents: { Field },
   parameters: {
     controls: hideNoControlsWarning(),
   },
-} as Meta<typeof Form>;
+} satisfies Meta<typeof Form>;
 
 export interface FormData {
   area: string;
@@ -292,4 +293,6 @@ function EditForm({ formMethods }: FormRenderProps<FormData>) {
   );
 }
 
-export const Basic = () => <Form<FormData> defaultValues={defaultValues}>{EditForm}</Form>;
+export const Basic: Story = {
+  render: () => <Form<FormData> defaultValues={defaultValues}>{EditForm}</Form>,
+};

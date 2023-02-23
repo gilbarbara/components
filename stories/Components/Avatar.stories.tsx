@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { BoxCenter, Grid, Paragraph } from 'src';
-import { Avatar, AvatarProps } from 'src/Avatar';
+import { Avatar } from 'src/Avatar';
 
 import { colorProps, disableControl, flexItemProps, hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Avatar>;
 
 export default {
   title: 'Components/Avatar',
@@ -18,15 +20,15 @@ export default {
     ...colorProps(),
     ...flexItemProps(),
   },
-} as Meta<typeof Avatar>;
+} satisfies Meta<typeof Avatar>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Sizes = {
+export const Sizes: Story = {
   argTypes: {
     size: disableControl(),
   },
-  render: (props: AvatarProps) => (
+  render: props => (
     <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
       {(['xs', 'sm', 'md', 'lg', 'xl', 'jumbo'] as const).map(d => (
         <BoxCenter key={d}>
@@ -38,7 +40,7 @@ export const Sizes = {
   ),
 };
 
-export const WithoutImage = {
+export const WithoutImage: Story = {
   args: {
     image: undefined,
   },

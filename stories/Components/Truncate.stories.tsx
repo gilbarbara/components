@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Truncate } from 'src/Truncate';
 
 import { hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Truncate>;
 
 export default {
   title: 'Components/Truncate',
@@ -16,6 +18,6 @@ export default {
     ...hideProps(),
     maxWidth: { control: 'text' },
   },
-} as Meta<typeof Truncate>;
+} satisfies Meta<typeof Truncate>;
 
-export const Basic = {};
+export const Basic: Story = {};

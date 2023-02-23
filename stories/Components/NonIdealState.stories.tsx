@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { NonIdealState } from 'src/NonIdealState';
 
@@ -10,6 +10,8 @@ import {
   layoutProps,
   spacingProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof NonIdealState>;
 
 export default {
   title: 'Components/NonIdealState',
@@ -26,11 +28,11 @@ export default {
     title: { control: 'text' },
     type: { control: 'select' },
   },
-} as Meta<typeof NonIdealState>;
+} satisfies Meta<typeof NonIdealState>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Horizontal = {
+export const Horizontal: Story = {
   args: {
     direction: 'horizontal',
   },

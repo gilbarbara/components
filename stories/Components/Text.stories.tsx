@@ -1,12 +1,14 @@
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph } from 'src';
 import { textSizes } from 'src/modules/options';
-import { Text, TextProps } from 'src/Text';
+import { Text } from 'src/Text';
 
 import { colorProps, disableControl, hideProps, textOptionsProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Text>;
 
 export default {
   title: 'Components/Text',
@@ -22,16 +24,16 @@ export default {
     ...textOptionsProps(),
     children: { control: 'text' },
   },
-} as Meta<typeof Text>;
+} satisfies Meta<typeof Text>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Sizes = {
+export const Sizes: Story = {
   argTypes: {
     children: disableControl(),
     size: disableControl(),
   },
-  render: (props: TextProps) => (
+  render: props => (
     <div>
       {textSizes.map(size => (
         <Paragraph key={size}>

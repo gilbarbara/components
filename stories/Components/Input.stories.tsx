@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Input, InputProps } from 'src/Input';
+import { Input } from 'src/Input';
 import { inputTypes } from 'src/modules/options';
 
 import { disableControl, hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Input>;
 
 export default {
   title: 'Components/Input',
@@ -18,11 +20,11 @@ export default {
     type: { control: 'select', options: inputTypes },
     width: { control: 'text' },
   },
-} as Meta<typeof Input>;
+} satisfies Meta<typeof Input>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Variants = {
+export const Variants: Story = {
   args: {
     placeholder: '',
   },
@@ -31,7 +33,7 @@ export const Variants = {
     disabled: disableControl(),
     name: disableControl(),
   },
-  render: (props: InputProps) => (
+  render: props => (
     <>
       <Input {...props} name="normal" placeholder="normal" />
       <br />

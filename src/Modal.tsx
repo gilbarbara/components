@@ -142,4 +142,4 @@ Modal.defaultProps = {
   radius: 'lg',
   shadow: 'high',
   zIndex: 1000,
-};
+} as const;

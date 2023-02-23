@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Form } from 'src';
-import { Field, FieldProps } from 'src/Field';
+import { Field } from 'src/Field';
 
 import { hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Field>;
 
 export default {
   title: 'Components/Field',
@@ -16,8 +18,8 @@ export default {
     placeholder: 'Your name here...',
   },
   argTypes: hideProps(),
-} as Meta<typeof Field>;
+} satisfies Meta<typeof Field>;
 
-export const Basic = {
-  render: (props: FieldProps) => <Form>{() => <Field {...props} />}</Form>,
+export const Basic: Story = {
+  render: props => <Form>{() => <Field {...props} />}</Form>,
 };

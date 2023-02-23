@@ -1,15 +1,18 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Jumbo, Paragraph, Text } from 'src';
-import { Container, ContainerProps } from 'src/Container';
+import { Container } from 'src/Container';
 
 import {
   disableControl,
   flexBoxProps,
   flexItemProps,
   hideProps,
+  layoutProps,
   spacingProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof Container>;
 
 export default {
   title: 'Components/Container',
@@ -19,21 +22,21 @@ export default {
     ...hideProps(),
     ...flexBoxProps(),
     ...flexItemProps(),
+    ...layoutProps(),
     ...spacingProps(),
     children: disableControl(),
     fullScreenOffset: { control: 'text' },
-    verticalAlign: { control: 'select' },
   },
   parameters: {
     minHeight: 400,
   },
-} as Meta<typeof Container>;
+} satisfies Meta<typeof Container>;
 
-export const Basic = {
+export const Basic: Story = {
   args: {
     verticalPadding: true,
   },
-  render: (props: ContainerProps) => (
+  render: props => (
     <Container {...props} style={{ border: '1px solid #ccc' }}>
       <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
       <Paragraph>
@@ -47,11 +50,11 @@ export const Basic = {
   ),
 };
 
-export const WithParent = {
+export const WithParent: Story = {
   args: {
     justify: 'center',
   },
-  render: (props: ContainerProps) => (
+  render: props => (
     <Box flexBox minHeight={300} shade="lightest" variant="primary">
       <Container {...props}>
         <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>

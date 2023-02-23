@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Divider, DividerProps } from 'src/Divider';
+import { Divider } from 'src/Divider';
 
 import { Box } from '../../src';
 import { colorProps, hideProps, marginProps, textOptionsProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Divider>;
 
 export default {
   title: 'Components/Divider',
@@ -17,22 +19,22 @@ export default {
     children: { control: 'text' },
     length: { control: 'text' },
   },
-} as Meta<typeof Divider>;
+} satisfies Meta<typeof Divider>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Vertical = {
+export const Vertical: Story = {
   args: {
     direction: 'vertical',
   },
-  render: (props: DividerProps) => (
+  render: props => (
     <Box height={100}>
       <Divider {...props} />
     </Box>
   ),
 };
 
-export const WithText = {
+export const WithText: Story = {
   args: {
     children: 'Title',
   },

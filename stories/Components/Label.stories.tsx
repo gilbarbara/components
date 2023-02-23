@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Label } from 'src/Label';
 
 import { hideProps, textOptionsProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Label>;
 
 export default {
   title: 'Components/Label',
@@ -17,6 +19,6 @@ export default {
     ...textOptionsProps(),
     labelInfo: { control: 'text' },
   },
-} as Meta<typeof Label>;
+} satisfies Meta<typeof Label>;
 
-export const Basic = {};
+export const Basic: Story = {};

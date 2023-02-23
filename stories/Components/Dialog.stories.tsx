@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from 'src';
-import { Dialog, DialogProps } from 'src/Dialog';
+import { Dialog } from 'src/Dialog';
 
 import { disableControl, hideProps, paddingProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Dialog>;
 
 export default {
   title: 'Components/Dialog',
@@ -19,10 +22,10 @@ export default {
     ...paddingProps(),
     isActive: disableControl(),
   },
-};
+} satisfies Meta<typeof Dialog>;
 
-export const Basic = {
-  render: (props: DialogProps) => {
+export const Basic: Story = {
+  render: props => {
     const [isActive, setActive] = useState(false);
 
     const handleClicks = () => {
