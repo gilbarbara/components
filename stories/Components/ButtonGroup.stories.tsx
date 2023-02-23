@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { MouseEvent, useState } from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from 'src';
-import { ButtonGroup, ButtonGroupProps } from 'src/ButtonGroup';
+import { ButtonGroup } from 'src/ButtonGroup';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof ButtonGroup>;
 
 export default {
   title: 'Components/ButtonGroup',
@@ -15,10 +18,10 @@ export default {
     ...colorProps(),
     children: disableControl(),
   },
-};
+} satisfies Meta<typeof ButtonGroup>;
 
-export const Basic = {
-  render: (props: ButtonGroupProps) => {
+export const Basic: Story = {
+  render: props => {
     const [active, setActive] = useState('two');
 
     const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {

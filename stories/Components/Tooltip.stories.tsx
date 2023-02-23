@@ -32,7 +32,7 @@ export default {
     justify: 'center',
     minHeight: 200,
   },
-} as Meta<typeof Tooltip>;
+} satisfies Meta<typeof Tooltip>;
 
 export const Basic: Story = {
   args: {

@@ -1,7 +1,7 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Text } from 'src';
-import { Paragraph, ParagraphProps } from 'src/Paragraph';
+import { Paragraph } from 'src/Paragraph';
 
 import {
   colorProps,
@@ -10,6 +10,8 @@ import {
   marginProps,
   textOptionsProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof Paragraph>;
 
 export default {
   title: 'Components/Paragraph',
@@ -25,10 +27,10 @@ export default {
     ...textOptionsProps(),
     children: disableControl(),
   },
-} as Meta<typeof Paragraph>;
+} satisfies Meta<typeof Paragraph>;
 
-export const Basic = {
-  render: (props: ParagraphProps) => (
+export const Basic: Story = {
+  render: props => (
     <Box>
       <Paragraph {...props}>
         Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,

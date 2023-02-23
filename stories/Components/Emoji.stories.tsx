@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Emoji } from 'src/Emoji';
 
 import { hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Emoji>;
 
 export default {
   title: 'Components/Emoji',
@@ -13,6 +15,6 @@ export default {
     symbol: '🦄',
   },
   argTypes: hideProps(),
-} as Meta<typeof Emoji>;
+} satisfies Meta<typeof Emoji>;
 
-export const Basic = {};
+export const Basic: Story = {};

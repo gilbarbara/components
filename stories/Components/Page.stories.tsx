@@ -1,7 +1,7 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, H4, Jumbo, Paragraph } from 'src';
-import { Page, PageProps } from 'src/Page';
+import { Page } from 'src/Page';
 
 import {
   colorProps,
@@ -11,6 +11,8 @@ import {
   hideProps,
   paddingProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof Page>;
 
 export default {
   title: 'Components/Page',
@@ -36,10 +38,10 @@ export default {
     minHeight: 400,
     withoutPadding: true,
   },
-} as Meta<typeof Page>;
+} satisfies Meta<typeof Page>;
 
-export const Basic = {
-  render: (props: PageProps) => (
+export const Basic: Story = {
+  render: props => (
     <Page {...props}>
       <Box>
         <H4 light mb={0} variant="gray">

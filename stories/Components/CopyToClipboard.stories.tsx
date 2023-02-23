@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { CopyToClipboard } from 'src/CopyToClipboard';
 
 import { hideProps, marginProps } from '../__helpers__';
+
+type Story = StoryObj<typeof CopyToClipboard>;
 
 export default {
   title: 'Components/CopyToClipboard',
@@ -15,6 +17,6 @@ export default {
     ...hideProps(),
     ...marginProps(),
   },
-} as Meta<typeof CopyToClipboard>;
+} satisfies Meta<typeof CopyToClipboard>;
 
-export const Basic = {};
+export const Basic: Story = {};

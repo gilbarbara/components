@@ -1,16 +1,19 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Button, Spacer } from 'src';
-import { Icon, IconProps } from 'src/Icon';
+import { Icon } from 'src/Icon';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Icon>;
 
 export default {
   title: 'Components/Icon',
   component: Icon,
   args: {
     ...Icon.defaultProps,
-    name: 'check-o',
+    // @ts-expect-error
+    name: 'check',
     size: 24,
   },
   argTypes: {
@@ -20,15 +23,15 @@ export default {
     name: { control: 'select' },
     title: { control: 'text' },
   },
-} as Meta<typeof Icon>;
+} satisfies Meta<typeof Icon>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const IconWithButton = {
+export const IconWithButton: Story = {
   args: {
     size: 18,
   },
-  render: (props: IconProps) => (
+  render: props => (
     <Button>
       <Icon {...props} mr="xs" />
       Send
@@ -36,11 +39,11 @@ export const IconWithButton = {
   ),
 };
 
-export const IconWithText = {
+export const IconWithText: Story = {
   args: {
     size: 18,
   },
-  render: (props: IconProps) => (
+  render: props => (
     <Spacer gap="xxs">
       <Icon {...props} />
       Send

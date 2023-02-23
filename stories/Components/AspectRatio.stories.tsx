@@ -22,7 +22,7 @@ export default {
     ...marginProps(),
     children: hideTable(),
   },
-} as Meta<typeof AspectRatio>;
+} satisfies Meta<typeof AspectRatio>;
 
 export const Basic: Story = {
   args: {

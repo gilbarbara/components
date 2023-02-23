@@ -143,6 +143,6 @@ ButtonSplit.defaultProps = {
   shade: 'mid',
   size: 'md',
   variant: 'primary',
-};
+} as const;
 
 export { MenuDivider as ButtonSplitDivider, MenuItem as ButtonSplitItem } from './Menu';

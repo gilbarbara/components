@@ -480,4 +480,4 @@ Tooltip.defaultProps = {
   size: 'mid',
   variant: 'gray',
   zIndex: 100,
-};
+} as const;

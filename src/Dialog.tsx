@@ -159,4 +159,4 @@ Dialog.defaultProps = {
   textAlign: 'left',
   variant: 'primary',
   width: 380,
-};
+} as const;

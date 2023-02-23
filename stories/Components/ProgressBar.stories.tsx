@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { ProgressBar } from 'src/ProgressBar';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
+
+type Story = StoryObj<typeof ProgressBar>;
 
 export default {
   title: 'Components/ProgressBar',
@@ -18,6 +20,6 @@ export default {
     ...colorProps(),
     ...marginProps(),
   },
-} as Meta<typeof ProgressBar>;
+} satisfies Meta<typeof ProgressBar>;
 
-export const Basic = {};
+export const Basic: Story = {};

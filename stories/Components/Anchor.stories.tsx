@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { H1 } from 'src';
-import { Anchor, AnchorProps } from 'src/Anchor';
+import { Anchor } from 'src/Anchor';
 
 import { colorProps, hideProps, spacingProps, textOptionsProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Anchor>;
 
 export default {
   title: 'Components/Anchor',
@@ -23,17 +25,17 @@ export default {
     children: { control: 'text' },
     display: { control: 'text' },
   },
-} as Meta<typeof Anchor>;
+} satisfies Meta<typeof Anchor>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const WithH1 = {
+export const WithH1: Story = {
   name: 'With an H1 parent',
   args: {
     children: 'Check our docs',
     iconBefore: undefined,
   },
-  render: (props: AnchorProps) => (
+  render: props => (
     <H1>
       <Anchor {...props} />
     </H1>

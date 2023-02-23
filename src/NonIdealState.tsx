@@ -187,4 +187,4 @@ NonIdealState.defaultProps = {
   shadow: false,
   size: 'md',
   type: 'not-found',
-};
+} as const;

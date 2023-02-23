@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { InputColor } from 'src/InputColor';
 
 import { hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof InputColor>;
 
 export default {
   title: 'Components/InputColor',
@@ -16,6 +18,6 @@ export default {
     height: { control: 'text' },
     width: { control: 'text' },
   },
-} as Meta<typeof InputColor>;
+} satisfies Meta<typeof InputColor>;
 
-export const Basic = {};
+export const Basic: Story = {};

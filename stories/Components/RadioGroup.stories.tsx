@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph, Text } from 'src';
 import { RadioGroup } from 'src/RadioGroup';
 
 import { disableControl, hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof RadioGroup>;
 
 export default {
   title: 'Components/RadioGroup',
@@ -33,6 +35,6 @@ export default {
     onChange: { action: 'onChange', ...disableControl() },
     items: disableControl(),
   },
-} as Meta<typeof RadioGroup>;
+} satisfies Meta<typeof RadioGroup>;
 
-export const Basic = {};
+export const Basic: Story = {};

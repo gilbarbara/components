@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Textarea } from 'src/Textarea';
 
 import { hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Textarea>;
 
 export default {
   title: 'Components/Textarea',
@@ -16,6 +18,6 @@ export default {
     ...hideProps(),
     width: { control: 'text' },
   },
-} as Meta<typeof Textarea>;
+} satisfies Meta<typeof Textarea>;
 
-export const Basic = {};
+export const Basic: Story = {};

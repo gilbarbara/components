@@ -1,15 +1,17 @@
 import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonUnstyled, Icon, Spacer } from 'src';
-import { Menu, MenuDivider, MenuItem, MenuProps } from 'src/Menu';
+import { Menu, MenuDivider, MenuItem } from 'src/Menu';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Menu>;
 
 export default {
   title: 'Components/Menu',
   component: Menu,
-  subcomponents: { MenuItem, MenuDivider },
   args: Menu.defaultProps,
   argTypes: {
     ...hideProps(),
@@ -20,10 +22,10 @@ export default {
   parameters: {
     minHeight: 200,
   },
-};
+} satisfies Meta<typeof Menu>;
 
-export const Basic = {
-  render: (props: MenuProps) => {
+export const Basic: Story = {
+  render: props => {
     const handleClick = (closeMenu: GenericFunction, name?: string) => {
       return () => {
         closeMenu();
@@ -60,14 +62,14 @@ export const Basic = {
   },
 };
 
-export const WithComponentAndHover = {
+export const WithComponentAndHover: Story = {
   args: {
     trigger: 'hover',
   },
   argTypes: {
     trigger: disableControl(),
   },
-  render: (props: MenuProps) => {
+  render: props => {
     return (
       <Menu
         {...props}

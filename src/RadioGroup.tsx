@@ -99,4 +99,4 @@ RadioGroup.defaultProps = {
   disabled: false,
   inline: false,
   size: 'md',
-};
+} as const;

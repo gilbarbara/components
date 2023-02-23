@@ -1,6 +1,6 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { List, ListProps } from 'src/List';
+import { List } from 'src/List';
 
 import { Avatar, Box, H3, H6, Paragraph, Spacer } from '../../src';
 import {
@@ -11,6 +11,8 @@ import {
   layoutProps,
   marginProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof List>;
 
 export default {
   title: 'Components/List',
@@ -27,10 +29,10 @@ export default {
     ...marginProps(),
     items: disableControl(),
   },
-} as Meta<typeof List>;
+} satisfies Meta<typeof List>;
 
-export const Basic = {
-  render: (props: ListProps) => {
+export const Basic: Story = {
+  render: props => {
     return (
       <List
         {...props}
@@ -49,7 +51,7 @@ export const Basic = {
   },
 };
 
-export const Horizontal = {
+export const Horizontal: Story = {
   args: {
     direction: 'horizontal',
     radius: 'xl',
@@ -59,22 +61,22 @@ export const Horizontal = {
   argTypes: {
     direction: disableControl(),
   },
-  render: (props: ListProps) => {
+  render: props => {
     const items = ['Contrast: 4.1', 'Luminance: 2', 'Hue: 344', 'Saturation: 100', 'Lightness: 50'];
 
     return <List {...props} items={items} />;
   },
 };
 
-export const WithComponents = {
+export const WithComponents: Story = {
   args: {
     border: false,
     items: [
-      <Box>
+      <Box key="1">
         <H3 mb="xs">Brown Fox</H3>
         <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
       </Box>,
-      <Spacer>
+      <Spacer key="2">
         <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
         <Box>
           <H6 mb={0}>John Smith</H6>

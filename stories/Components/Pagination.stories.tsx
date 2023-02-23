@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { MouseEvent, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Pagination, PaginationProps } from 'src/Pagination';
+import { Pagination } from 'src/Pagination';
 
 import { disableControl, hideProps, spacingProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Pagination>;
 
 export default {
   title: 'Components/Pagination',
@@ -20,10 +22,10 @@ export default {
     currentPage: disableControl(),
     onClick: disableControl(),
   },
-} as Meta<typeof Pagination>;
+} satisfies Meta<typeof Pagination>;
 
-export const Basic = {
-  render: (props: PaginationProps) => {
+export const Basic: Story = {
+  render: props => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {

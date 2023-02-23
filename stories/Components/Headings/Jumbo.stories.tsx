@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Jumbo } from 'src/Headings';
 
 import { colorProps, hideProps, marginProps } from '../../__helpers__';
+
+type Story = StoryObj<typeof Jumbo>;
 
 export default {
   title: 'Components/Headings',
@@ -17,8 +19,8 @@ export default {
     ...colorProps(),
     ...marginProps(),
   },
-} as Meta<typeof Jumbo>;
+} satisfies Meta<typeof Jumbo>;
 
-export const BasicJumbo = {
+export const BasicJumbo: Story = {
   name: 'Jumbo',
 };

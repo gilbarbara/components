@@ -1,5 +1,7 @@
+import { Meta, StoryObj } from '@storybook/react';
+
 import { Box } from 'src';
-import { Grid, GridProps } from 'src/Grid';
+import { Grid } from 'src/Grid';
 
 import {
   colorProps,
@@ -13,6 +15,8 @@ import {
   spacingProps,
 } from '../__helpers__';
 
+type Story = StoryObj<typeof Grid>;
+
 export default {
   title: 'Components/Grid',
   component: Grid,
@@ -21,8 +25,6 @@ export default {
     alignItems: 'center',
     display: 'grid',
     gap: 16,
-    itemHeight: 100,
-    itemWidth: 100,
     justifyContent: 'space-evenly',
     justifyItems: 'center',
     templateColumns: 'repeat(3, auto)',
@@ -44,8 +46,6 @@ export default {
     display: { control: 'radio', options: ['grid', 'inline-grid'] },
     gap: { control: 'number' },
     grid: { control: 'text' },
-    itemHeight: { control: 'number', description: 'Storybook only' },
-    itemWidth: { control: 'number', description: 'Storybook only' },
     justifyContent: { options: flexContent },
     justifyItems: { options: flexItems },
     placeContent: { control: 'text' },
@@ -55,10 +55,21 @@ export default {
     templateAreas: { control: 'text' },
     templateRows: { control: 'text' },
   },
-};
+} satisfies Meta<typeof Grid>;
 
-export const Basic = {
-  render: (props: GridProps & { itemHeight: number; itemWidth: number }) => {
+export const Basic: Story = {
+  args: {
+    // @ts-expect-error - Storybook only
+    itemHeight: 100,
+    itemWidth: 100,
+  },
+  argTypes: {
+    // @ts-expect-error - Storybook only
+    itemHeight: { control: 'number', description: 'Storybook only' },
+    itemWidth: { control: 'number', description: 'Storybook only' },
+  },
+  render: props => {
+    // @ts-expect-error - Storybook only
     const { itemHeight, itemWidth, ...rest } = props;
 
     return (

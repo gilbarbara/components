@@ -1,9 +1,9 @@
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Icon, Spacer } from 'src';
-import { Button, ButtonProps } from 'src/Button';
+import { Button } from 'src/Button';
 import { sizes } from 'src/modules/options';
 import * as Types from 'src/types';
 
@@ -15,6 +15,8 @@ import {
   shades,
   variants,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof Button>;
 
 export default {
   title: 'Components/Button',
@@ -31,15 +33,15 @@ export default {
     onClick: { action: 'onClick' },
     size: { control: 'radio', options: sizes },
   },
-} as Meta<typeof Button>;
+} satisfies Meta<typeof Button>;
 
-export const Basic = {};
+export const Basic: Story = {};
 
-export const Sizes = {
+export const Sizes: Story = {
   argTypes: {
     size: disableControl(),
   },
-  render: (props: ButtonProps) => (
+  render: props => (
     <Spacer>
       {['sm', 'md', 'lg'].map(d => (
         <Button key={d} {...props} size={d as Types.Sizes}>
@@ -50,11 +52,11 @@ export const Sizes = {
   ),
 };
 
-export const Variants = {
+export const Variants: Story = {
   argTypes: {
     variant: disableControl(),
   },
-  render: (props: ButtonProps) => (
+  render: props => (
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
       {variants.map(d => (
         <Button key={d} {...props} variant={d}>
@@ -71,11 +73,11 @@ export const Variants = {
   ),
 };
 
-export const Shades = {
+export const Shades: Story = {
   argTypes: {
     shade: disableControl(),
   },
-  render: (props: ButtonProps) => (
+  render: props => (
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
       {shades.map(d => (
         <Button key={d} {...props} shade={d}>
@@ -86,11 +88,11 @@ export const Shades = {
   ),
 };
 
-export const Shapes = {
+export const Shapes: Story = {
   argTypes: {
     shape: disableControl(),
   },
-  render: (props: ButtonProps) => (
+  render: props => (
     <Grid gap={20} templateColumns="repeat(3, 1fr)">
       <Button {...props} shape="round">
         <Icon name="arrow-down" size={18} />

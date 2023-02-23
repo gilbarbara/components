@@ -50,8 +50,8 @@ export function colorProps() {
 
 export function flexBoxProps() {
   return {
-    alignContent: { control: 'select', options: ['', ...flexContent] },
     align: { control: 'select', options: ['', ...flexItems] },
+    alignContent: { control: 'select', options: ['', ...flexContent] },
     direction: {
       control: 'select',
       options: ['row', 'row-reverse', 'column', 'column-reverse'],

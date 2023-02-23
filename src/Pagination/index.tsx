@@ -170,4 +170,4 @@ Pagination.defaultProps = {
   align: 'end',
   disableEdgeNavigation: false,
   edgeNavigationLimit: 3,
-};
+} as const;

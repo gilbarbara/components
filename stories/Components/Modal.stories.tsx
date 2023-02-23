@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from 'src';
 import { Modal, ModalProps } from 'src/Modal';
 
 import { disableControl, hideProps, paddingProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Modal>;
 
 export default {
   title: 'Components/Modal',
@@ -21,9 +24,9 @@ export default {
     isActive: disableControl(),
     maxWidth: { control: 'text' },
   },
-};
+} satisfies Meta<typeof Modal>;
 
-export const Basic = {
+export const Basic: Story = {
   render: (props: ModalProps) => {
     const [isActive, setActive] = useState(false);
 

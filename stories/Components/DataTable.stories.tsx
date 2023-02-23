@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { ChangeEvent, forwardRef, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { useSetState } from 'react-use';
 import { removeAccents } from '@gilbarbara/helpers';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import {
   Anchor,
@@ -31,6 +32,8 @@ import {
   marginProps,
 } from '../__helpers__';
 
+type Story = StoryObj<typeof DataTable>;
+
 export default {
   title: 'Components/DataTable',
   component: DataTable,
@@ -44,7 +47,7 @@ export default {
   parameters: {
     controls: hideNoControlsWarning(),
   },
-} as Meta<typeof DataTable>;
+} satisfies Meta<typeof DataTable>;
 
 type Columns = 'email' | 'team' | 'status' | 'action';
 
@@ -148,128 +151,138 @@ const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element =
   );
 });
 
-export const Basic = () => {
-  const [{ loading, search, showDialog, status, team }, setState] =
-    useSetState<BaseState>(baseState);
-  const headerRef = useRef<HTMLDivElement>(null);
+export const Basic: Story = {
+  render: () => {
+    const [{ loading, search, showDialog, status, team }, setState] =
+      useSetState<BaseState>(baseState);
+    const headerRef = useRef<HTMLDivElement>(null);
 
-  const handleClickReset = useCallback(() => {
-    setState({ search: '', searchValue: '', status: '' });
-  }, [setState]);
+    const handleClickReset = useCallback(() => {
+      setState({ search: '', searchValue: '', status: '' });
+    }, [setState]);
 
-  const handleClickDelete = useCallback(() => {
-    setState({ showDialog: true });
-  }, [setState]);
+    const handleClickDelete = useCallback(() => {
+      setState({ showDialog: true });
+    }, [setState]);
 
-  const handleClickCancel = () => {
-    setState({ showDialog: false });
-  };
+    const handleClickCancel = () => {
+      setState({ showDialog: false });
+    };
 
-  const handleClickConfirmation = () => {
-    setState({ showDialog: false });
-  };
+    const handleClickConfirmation = () => {
+      setState({ showDialog: false });
+    };
 
-  const columns = useMemo<DataTableColumn<Columns>[]>(() => {
-    return [
-      { key: 'email', title: 'Nome / E-mail', size: 250 },
-      { key: 'team', title: 'Team', min: 150 },
-      { key: 'status', title: 'Status', min: 180 },
-      {
-        key: 'action',
-        disableSort: true,
-        size: 48,
-        title: null,
-      },
-    ];
-  }, []);
+    const columns = useMemo<DataTableColumn<Columns>[]>(() => {
+      return [
+        { key: 'email', title: 'Nome / E-mail', size: 250 },
+        { key: 'team', title: 'Team', min: 150 },
+        { key: 'status', title: 'Status', min: 180 },
+        {
+          key: 'action',
+          disableSort: true,
+          size: 48,
+          title: null,
+        },
+      ];
+    }, []);
 
-  const data = useMemo<Record<Columns, ReactNode>[]>(() => {
-    return members
-      .filter(d => {
-        const nameOrEmail = removeAccents(d.name || d.email).toLowerCase();
+    const data = useMemo<Record<Columns, ReactNode>[]>(() => {
+      return members
+        .filter(d => {
+          const nameOrEmail = removeAccents(d.name || d.email).toLowerCase();
 
-        const searchFilter = search
-          ? nameOrEmail.includes(removeAccents(search).toLowerCase())
-          : true;
-        let statusFilter = true;
-        const teamFilter = team ? d.team === team : true;
+          const searchFilter = search
+            ? nameOrEmail.includes(removeAccents(search).toLowerCase())
+            : true;
+          let statusFilter = true;
+          const teamFilter = team ? d.team === team : true;
 
-        if (status) {
-          statusFilter = status === 'invites' ? !!d.code : !!d.id;
-        }
+          if (status) {
+            statusFilter = status === 'invites' ? !!d.code : !!d.id;
+          }
 
-        return searchFilter && statusFilter && teamFilter;
-      })
-      .map(member => ({
-        id: member.id,
-        email: (
-          <>
-            <Text variant={!member.name ? 'gray' : undefined}>{member.name || 'Unnamed User'}</Text>
-            <Anchor href={`mailto:${member.email}`} size="mid">
-              {member.email}
-            </Anchor>
-          </>
-        ),
-        team: <Text size="mid">{member.team || '--'}</Text>,
-        status: (
-          <Tag
-            iconAfter={member.id ? 'check' : 'sand-clock'}
-            invert
-            variant={member.id ? 'green' : 'blue'}
-          >
-            {member.id ? 'Active' : 'Invite sent'}
-          </Tag>
-        ),
-        action: (
-          <ButtonUnstyled data-code={member.code} data-id={member.id} onClick={handleClickDelete}>
-            <Icon name="trash" />
-          </ButtonUnstyled>
-        ),
-      }));
-  }, [handleClickDelete, search, status, team]);
+          return searchFilter && statusFilter && teamFilter;
+        })
+        .map(member => ({
+          id: member.id,
+          email: (
+            <>
+              <Text variant={!member.name ? 'gray' : undefined}>
+                {member.name || 'Unnamed User'}
+              </Text>
+              <Anchor href={`mailto:${member.email}`} size="mid">
+                {member.email}
+              </Anchor>
+            </>
+          ),
+          team: <Text size="mid">{member.team || '--'}</Text>,
+          status: (
+            <Tag
+              iconAfter={member.id ? 'check' : 'sand-clock'}
+              invert
+              variant={member.id ? 'green' : 'blue'}
+            >
+              {member.id ? 'Active' : 'Invite sent'}
+            </Tag>
+          ),
+          action: (
+            <ButtonUnstyled data-code={member.code} data-id={member.id} onClick={handleClickDelete}>
+              <Icon name="trash" />
+            </ButtonUnstyled>
+          ),
+        }));
+    }, [handleClickDelete, search, status, team]);
 
-  const noResults = useMemo(() => {
-    if (!members.length) {
+    const noResults = useMemo(() => {
+      if (!members.length) {
+        return (
+          <NonIdealState
+            icon="info-o"
+            size="sm"
+            title="Você ainda não adicionou candidatos na vaga"
+          />
+        );
+      }
+
       return (
-        <NonIdealState
-          icon="info-o"
-          size="sm"
-          title="Você ainda não adicionou candidatos na vaga"
-        />
+        <NonIdealState icon="search" size="sm" title="Sua busca não retornou resultados!">
+          <Button onClick={handleClickReset} size="sm">
+            Reset filters
+          </Button>
+        </NonIdealState>
       );
-    }
+    }, [handleClickReset]);
 
     return (
-      <NonIdealState icon="search" size="sm" title="Sua busca não retornou resultados!">
-        <Button onClick={handleClickReset} size="sm">
-          Reset filters
-        </Button>
-      </NonIdealState>
-    );
-  }, [handleClickReset]);
-
-  return (
-    <Box mt="xl">
-      <H1>Members</H1>
-      <UserHeader ref={headerRef} search={search} setState={setState} status={status} team={team} />
-      <Box data-component-name="DataTableWrapper" minWidth={768}>
-        <DataTable
-          columns={columns}
-          data={data}
-          defaultColumn="email"
-          disableScroll
-          loading={loading}
-          noResults={noResults}
-          scrollElement={headerRef.current}
+      <Box mt="xl">
+        <H1>Members</H1>
+        <UserHeader
+          ref={headerRef}
+          search={search}
+          setState={setState}
+          status={status}
+          team={team}
+        />
+        <Box data-component-name="DataTableWrapper" minWidth={768}>
+          <DataTable
+            columns={columns}
+            data={data}
+            defaultColumn="email"
+            disableScroll
+            loading={loading}
+            noResults={noResults}
+            scrollElement={headerRef.current}
+          />
+        </Box>
+        <Dialog
+          content="Do you want to remove this user?"
+          isActive={showDialog}
+          onClickCancel={handleClickCancel}
+          onClickConfirmation={handleClickConfirmation}
+          title="Remove user"
         />
       </Box>
-      <Dialog
-        content="Do you want to remove this user?"
-        isActive={showDialog}
-        onClickCancel={handleClickCancel}
-        onClickConfirmation={handleClickConfirmation}
-        title="Remove user"
-      />
-    </Box>
-  );
+    );
+  },
 };

@@ -344,6 +344,6 @@ Tabs.defaultProps = {
   disableActiveBorderRadius: false,
   shade: 'mid',
   variant: 'primary',
-};
+} as const;
 
 export { Tab } from './Tab';

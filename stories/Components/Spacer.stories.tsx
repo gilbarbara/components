@@ -1,7 +1,7 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, H2, Icon, Input, Tag } from 'src';
-import { Spacer, SpacerProps } from 'src/Spacer';
+import { Spacer } from 'src/Spacer';
 
 import {
   disableControl,
@@ -10,6 +10,8 @@ import {
   layoutProps,
   spacingProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof Spacer>;
 
 export default {
   title: 'Components/Spacer',
@@ -22,10 +24,10 @@ export default {
     ...spacingProps(),
     children: disableControl(),
   },
-} as Meta<typeof Spacer>;
+} satisfies Meta<typeof Spacer>;
 
-export const Basic = {
-  render: (props: SpacerProps) => (
+export const Basic: Story = {
+  render: props => (
     <Spacer {...props}>
       <Button>Yes, add it</Button>
       <Button invert>No, cancel</Button>
@@ -33,7 +35,7 @@ export const Basic = {
   ),
 };
 
-export const Vertical = {
+export const Vertical: Story = {
   args: {
     direction: 'vertical',
     distribution: 'center',
@@ -44,7 +46,7 @@ export const Vertical = {
     direction: disableControl(),
     gap: disableControl(),
   },
-  render: (props: SpacerProps) => (
+  render: props => (
     <Spacer {...props}>
       <Button size="sm">Yes, add it</Button>
       <Button size="sm" variant="orange">
@@ -57,11 +59,11 @@ export const Vertical = {
   ),
 };
 
-export const WithGapVertical = {
+export const WithGapVertical: Story = {
   args: {
     gapVertical: 'sm',
   },
-  render: (props: SpacerProps) => (
+  render: props => (
     <Box width={480}>
       <Spacer {...props}>
         {['react', 'react-component', 'react-mixin', 'joyride', 'walkthroughs', 'tour'].map(tag => (
@@ -72,8 +74,8 @@ export const WithGapVertical = {
   ),
 };
 
-export const WithDifferentHeights = {
-  render: (props: SpacerProps) => (
+export const WithDifferentHeights: Story = {
+  render: props => (
     <Box width={600}>
       <Spacer {...props}>
         <H2 mb={0}>My Big Title</H2>
@@ -87,11 +89,11 @@ export const WithDifferentHeights = {
   ),
 };
 
-export const WithInput = {
+export const WithInput: Story = {
   args: {
     distribution: 'center',
   },
-  render: (props: SpacerProps) => (
+  render: props => (
     <Spacer {...props}>
       <Input name="name" placeholder="Type your name" width={200} />
       <Button shape="round">

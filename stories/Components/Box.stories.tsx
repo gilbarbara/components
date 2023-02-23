@@ -1,5 +1,7 @@
+import { Meta, StoryObj } from '@storybook/react';
+
 import { H3, Icon, Paragraph, Text } from 'src';
-import { Box, BoxCenter, BoxInline, BoxProps } from 'src/Box';
+import { Box, BoxCenter, BoxInline } from 'src/Box';
 
 import {
   colorProps,
@@ -11,6 +13,8 @@ import {
   positioningProps,
   spacingProps,
 } from '../__helpers__';
+
+type Story = StoryObj<typeof Box>;
 
 export default {
   title: 'Components/Box',
@@ -28,9 +32,9 @@ export default {
     ...positioningProps(),
     ...spacingProps(),
   },
-};
+} satisfies Meta<typeof Box>;
 
-export const Basic = {
+export const Basic: Story = {
   args: {
     padding: 'xl',
     radius: 'lg',
@@ -38,7 +42,7 @@ export const Basic = {
     variant: 'primary',
     width: '400',
   },
-  render: (props: BoxProps) => (
+  render: props => (
     <Box {...props}>
       <H3 mb="lg">Hello, I'm the Box!</H3>
       <Paragraph>
@@ -51,7 +55,7 @@ export const Basic = {
   ),
 };
 
-export const Composed = {
+export const Composed: Story = {
   name: 'Flex (Composed)',
   args: {
     align: 'center',
@@ -66,7 +70,7 @@ export const Composed = {
   argTypes: {
     children: disableControl(),
   },
-  render: (props: BoxProps) => (
+  render: props => (
     <Box {...props} minHeight={300} padding="xl" width={480}>
       <BoxCenter padding="lg" variant="blue" width="40%">
         Box 40%
@@ -84,7 +88,7 @@ export const Composed = {
   ),
 };
 
-export const Center = {
+export const Center: Story = {
   name: 'BoxCenter',
   args: {
     ...BoxCenter.defaultProps,
@@ -93,16 +97,16 @@ export const Center = {
   argTypes: {
     children: { control: 'text' },
   },
-  render: (props: BoxProps) => <BoxCenter minHeight={400} width={400} {...props} />,
+  render: props => <BoxCenter minHeight={400} width={400} {...props} />,
 };
 
-export const Inline = {
+export const Inline: Story = {
   name: 'BoxInline',
   args: BoxInline.defaultProps,
   argTypes: {
     children: disableControl(),
   },
-  render: (props: BoxProps) => (
+  render: props => (
     <BoxInline width={400} {...props}>
       <Icon mr="xs" name="stories" />
       <Text>This is a inline Box</Text>

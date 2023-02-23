@@ -26,7 +26,7 @@ import {
 export const defaultProps = {
   currentMonthLabel: 'Go to today',
   variant: 'primary',
-};
+} as const;
 
 export function getNumberOfMonths(fromDate?: Date | string, toDate?: Date | string): number {
   if (fromDate && toDate) {

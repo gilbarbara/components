@@ -1,8 +1,10 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { DatePicker } from 'src/DatePicker/Single';
 
 import { disableControl, hideProps, spacingProps } from '../__helpers__';
+
+type Story = StoryObj<typeof DatePicker>;
 
 export default {
   title: 'Components/DatePicker',
@@ -14,6 +16,6 @@ export default {
     currentMonthLabel: { control: 'text' },
     onSelect: disableControl(),
   },
-} as Meta<typeof DatePicker>;
+} satisfies Meta<typeof DatePicker>;
 
-export const Single = {};
+export const Single: Story = {};

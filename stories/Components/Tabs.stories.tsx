@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon, Paragraph, Spacer } from 'src';
-import { Tab, Tabs, TabsProps } from 'src/Tabs';
+import { Tab, Tabs } from 'src/Tabs';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Tabs>;
 
 export default {
   title: 'Components/Tabs',
   component: Tabs,
   args: {
     ...Tabs.defaultProps,
-    initialId: 'one',
+    defaultId: 'one',
   },
   argTypes: {
     ...hideProps(),
@@ -21,7 +23,7 @@ export default {
     maxHeight: { control: 'text' },
     minHeight: { control: 'text' },
   },
-} as Meta<typeof Tabs>;
+} satisfies Meta<typeof Tabs>;
 
 const TabItems = [
   <Tab
@@ -102,17 +104,17 @@ const TabItems = [
   </Tab>,
 ];
 
-export const Basic = {
+export const Basic: Story = {
   args: {
     children: TabItems,
   },
 };
 
-export const Controlled = {
+export const Controlled: Story = {
   argTypes: {
     id: { control: { disable: true } },
   },
-  render: (props: TabsProps) => {
+  render: props => {
     const [id, setId] = useState('two');
 
     const handleClick = (selectedId: string) => {

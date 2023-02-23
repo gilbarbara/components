@@ -151,4 +151,4 @@ DatePickerRange.defaultProps = {
   ...defaultProps,
   formatLocale: 'en-US',
   showApply: false,
-};
+} as const;

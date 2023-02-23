@@ -203,4 +203,4 @@ Dropdown.defaultProps = {
   shade: 'mid',
   variant: 'primary',
   width: 260,
-};
+} as const;

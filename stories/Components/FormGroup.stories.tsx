@@ -1,9 +1,11 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Input, Select, Textarea } from 'src';
-import { FormGroup, FormGroupProps } from 'src/FormGroup';
+import { FormGroup } from 'src/FormGroup';
 
 import { disableControl, hideProps, layoutProps, spacingProps } from '../__helpers__';
+
+type Story = StoryObj<typeof FormGroup>;
 
 export default {
   title: 'Components/FormGroup',
@@ -23,17 +25,17 @@ export default {
     label: { control: 'text' },
     labelInfo: { control: 'text' },
   },
-} as Meta<typeof FormGroup>;
+} satisfies Meta<typeof FormGroup>;
 
-export const Basic = {
-  render: (props: FormGroupProps) => (
+export const Basic: Story = {
+  render: props => (
     <FormGroup {...props} required>
       <Input name="name" placeholder="User Name" />
     </FormGroup>
   ),
 };
 
-export const Elements = {
+export const Elements: Story = {
   args: {
     assistiveText: '',
   },
@@ -45,7 +47,7 @@ export const Elements = {
     required: disableControl(),
     valid: disableControl(),
   },
-  render: (props: FormGroupProps) => (
+  render: props => (
     <>
       <FormGroup {...props} assistiveText="The name is required..." required valid>
         <Input defaultValue="Test User" name="name" placeholder="Name" />

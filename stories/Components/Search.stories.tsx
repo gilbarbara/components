@@ -1,10 +1,12 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Search } from 'src/Search';
 import { SearchItem } from 'src/types';
 
 import { Avatar, Box, Paragraph } from '../../src';
 import { disableControl, hideProps, marginProps } from '../__helpers__';
+
+type Story = StoryObj<typeof Search>;
 
 export default {
   title: 'Components/Search',
@@ -23,7 +25,7 @@ export default {
   parameters: {
     minHeight: 300,
   },
-} as Meta<typeof Search>;
+} satisfies Meta<typeof Search>;
 
 const users = [
   { name: 'John Smith', position: 'Admin', image: 'https://i.pravatar.cc/300?img=68' },
@@ -52,7 +54,7 @@ const items: SearchItem[] = users.map(d => ({
   value: d.name,
 }));
 
-export const Basic = {
+export const Basic: Story = {
   args: {
     items,
   },
