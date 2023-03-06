@@ -1,8 +1,8 @@
 import { ChangeEvent, forwardRef, KeyboardEvent, ReactNode, useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
 import { usePrevious, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useMergeRefs } from '@gilbarbara/hooks';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 import { SetRequired } from 'type-fest';
@@ -182,6 +182,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isActive, setActive] = useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
+  const mergedRefs = useMergeRefs(inputRef, ref);
 
   useUpdateEffect(() => {
     if (is.boolean(checked) && previousChecked !== checked) {
@@ -234,7 +235,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
       {...labelOptions}
     >
       <StyledInput
-        ref={mergeRefs([inputRef, ref])}
+        ref={mergedRefs}
         aria-checked={isActive}
         aria-label={!label ? name : undefined}
         disabled={disabled || is.boolean(checked)}

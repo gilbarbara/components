@@ -1,8 +1,8 @@
 import { forwardRef, ReactElement, useCallback, useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
 import { useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useMergeRefs } from '@gilbarbara/hooks';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
@@ -165,6 +165,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
   } = props;
   const [active, setActive] = useState(open ?? false);
   const localRef = useRef<HTMLDivElement>(null);
+  const mergedRefs = useMergeRefs(localRef, ref);
 
   const handleClickOutside = useCallback(
     ({ target }: MouseEvent) => {
@@ -205,7 +206,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
 
   return (
     <StyledMenu
-      ref={mergeRefs([localRef, ref])}
+      ref={mergedRefs}
       data-component-name="Menu"
       onMouseEnter={trigger === 'hover' ? handleToggleMenu : undefined}
       onMouseLeave={trigger === 'hover' ? handleToggleMenu : undefined}
