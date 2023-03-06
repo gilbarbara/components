@@ -1,8 +1,8 @@
 import { ChangeEvent, forwardRef, useCallback, useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
 import { useMount } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useMergeRefs } from '@gilbarbara/hooks';
 import is from 'is-lite';
 
 import { getTheme } from './modules/helpers';
@@ -85,6 +85,7 @@ export const StyledSelect = styled(
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
   const { defaultValue, name, onChange, value } = props;
   const localRef = useRef<HTMLSelectElement>(null);
+  const mergedRefs = useMergeRefs(localRef, ref);
   const [isFilled, setFilled] = useState(!!defaultValue || !!value);
 
   useMount(() => {
@@ -104,7 +105,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
 
   return (
     <StyledSelect
-      ref={mergeRefs([localRef, ref])}
+      ref={mergedRefs}
       data-component-name="Select"
       filled={isFilled}
       id={name}
