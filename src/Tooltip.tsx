@@ -33,6 +33,10 @@ interface SharedProps {
   align: 'start' | 'middle' | 'end';
   /** @default bottom */
   position: Placement;
+  /**
+   * Optional title for the tooltip.
+   */
+  title?: string;
   /** Content wrapping */
   wrap?: Sizes;
   /** @default 100 */
@@ -403,6 +407,7 @@ export function Tooltip(props: TooltipProps): JSX.Element {
     eventType = 'hover',
     open,
     shade,
+    title,
     variant = 'gray',
   } = props;
   const [isOpen, setOpen] = useState(open || false);
@@ -443,7 +448,7 @@ export function Tooltip(props: TooltipProps): JSX.Element {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       role="tooltip"
-      title={label}
+      title={title}
     >
       {children}
       {isOpen && (
