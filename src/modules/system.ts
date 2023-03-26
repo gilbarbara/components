@@ -254,7 +254,7 @@ export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
 }
 
 export function flexBoxStyles<T extends WithFlexBox>(props: T): CSSObject {
-  const { align, alignContent, direction, justify, wrap } = props;
+  const { align, alignContent, direction, justify, justifyItems, wrap } = props;
 
   return {
     alignContent,
@@ -262,6 +262,7 @@ export function flexBoxStyles<T extends WithFlexBox>(props: T): CSSObject {
     flexDirection: direction,
     flexWrap: wrap,
     justifyContent: justify,
+    justifyItems,
   };
 }
 
