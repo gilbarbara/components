@@ -105,6 +105,10 @@ export interface WithFlexBox {
    */
   justify?: StandardLonghandProperties['justifyContent'];
   /**
+   * How to align the contents when there is extra space in the main axis.
+   */
+  justifyItems?: StandardLonghandProperties['justifyItems'];
+  /**
    * Sets whether flex items are forced onto one line or can wrap onto multiple lines.
    */
   wrap?: StandardLonghandProperties['flexWrap'];
