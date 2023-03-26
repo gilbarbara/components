@@ -54,14 +54,14 @@ export function getRegisterOptions(
   props: RegisterOptionsProps,
 ): Partial<UseFormRegister<FieldValues>> {
   const {
+    formatter = '',
     getValues,
     maxLength,
     minLength,
     required,
-    formatter = '',
-    validations = [],
     setValueAs,
     type = 'text',
+    validations = [],
     value,
   } = props;
   const registerOptions = {} as AnyObject;
