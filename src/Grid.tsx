@@ -57,7 +57,7 @@ export interface GridKnownProps
   grid?: StandardShorthandProperties['grid'];
   justifyContent?: StandardLonghandProperties['justifyContent'];
   justifyItems?: StandardLonghandProperties['justifyItems'];
-  placeContent?: StandardLonghandProperties['placeContent'];
+  placeContent?: StandardShorthandProperties['placeContent'];
   placeItems?: StandardShorthandProperties['placeItems'];
   rowGap?: StringOrNumber;
   template?: StandardShorthandProperties['gridTemplate'];
