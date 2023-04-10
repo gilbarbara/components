@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonUnstyled, Icon } from 'src';
-import { ButtonSplit, ButtonSplitDivider, ButtonSplitItem } from 'src/ButtonSplit';
+import { ButtonSplit, ButtonSplitDivider, ButtonSplitItem, defaultProps } from 'src/ButtonSplit';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
 
@@ -15,7 +15,7 @@ export default {
   title: 'Components/ButtonSplit',
   component: ButtonSplit,
   args: {
-    ...ButtonSplit.defaultProps,
+    ...defaultProps,
     label: 'Send',
   },
   argTypes: {
@@ -60,7 +60,14 @@ export const Basic: Story = {
     };
 
     return (
-      <ButtonSplit {...props} onClick={handleClick}>
+      <ButtonSplit
+        {...props}
+        dataAttributes={{
+          'data-origin': 'X',
+          'data-value': 10,
+        }}
+        onClick={handleClick}
+      >
         <ButtonSplitItem>
           <ButtonUnstyled disabled variant="primary">
             <Icon mr="xxs" name="plus-o" />

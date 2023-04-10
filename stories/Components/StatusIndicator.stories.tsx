@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Grid, Paragraph } from 'src';
-import { StatusIndicator } from 'src/StatusIndicator';
+import { defaultProps, StatusIndicator } from 'src/StatusIndicator';
 
 import { colorProps, disableControl, hideProps, marginProps, variants } from '../__helpers__';
 
@@ -10,7 +10,7 @@ type Story = StoryObj<typeof StatusIndicator>;
 export default {
   title: 'Components/StatusIndicator',
   component: StatusIndicator,
-  args: StatusIndicator.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

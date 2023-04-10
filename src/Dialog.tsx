@@ -34,7 +34,9 @@ export interface DialogProps
     WithRadius,
     WithShadow,
     Omit<PortalProps, 'children' | 'isActive' | 'showCloseButton'> {
+  /** @default 'Cancel' */
   buttonCancelText?: string;
+  /** @default 'Confirm' */
   buttonConfirmText?: string;
   /** @default ltr */
   buttonOrder?: 'ltr' | 'rtl';
@@ -52,12 +54,30 @@ export interface DialogProps
   width?: StringOrNumber;
 }
 
+export const defaultProps = {
+  buttonCancelText: 'Cancel',
+  buttonConfirmText: 'Confirm',
+  buttonOrder: 'ltr',
+  closeOnClickOverlay: false,
+  closeOnEsc: true,
+  hideOverlay: false,
+  padding: 'xl',
+  radius: 'lg',
+  shadow: 'high',
+  textAlign: 'left',
+  variant: 'primary',
+  width: 380,
+} satisfies Omit<
+  DialogProps,
+  'content' | 'isActive' | 'onClickCancel' | 'onClickConfirmation' | 'title'
+>;
+
 const StyledDialog = styled(
   'div',
   getStyledOptions(),
 )<Omit<DialogProps, 'content' | 'isActive' | 'onClickCancel' | 'onClickConfirmation' | 'title'>>(
   props => {
-    const { textAlign = 'left', width = 380 } = props;
+    const { textAlign, width } = props;
     const { black, darkColor, white } = getTheme(props);
     const darkMode = isDarkMode(props);
 
@@ -81,7 +101,7 @@ export function Dialog(props: DialogProps) {
     buttonConfirmText,
     buttonOrder,
     closeOnClickOverlay,
-    closeOnEsc = true,
+    closeOnEsc,
     content,
     hideOverlay,
     isActive,
@@ -94,7 +114,7 @@ export function Dialog(props: DialogProps) {
     variant,
     zIndex,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
 
   const handlePortalClose = useCallback(() => {
     onClickCancel();
@@ -145,18 +165,3 @@ export function Dialog(props: DialogProps) {
     </Portal>
   );
 }
-
-Dialog.defaultProps = {
-  buttonCancelText: 'Cancel',
-  buttonConfirmText: 'Confirm',
-  buttonOrder: 'ltr',
-  closeOnClickOverlay: false,
-  closeOnEsc: false,
-  hideOverlay: false,
-  padding: 'xl',
-  radius: 'lg',
-  shadow: 'high',
-  textAlign: 'left',
-  variant: 'primary',
-  width: 380,
-} as const;

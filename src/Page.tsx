@@ -53,8 +53,16 @@ export interface PageKnownProps
 
 export type PageProps = ComponentProps<HTMLDivElement, PageKnownProps, 'wrap'>;
 
+export const defaultProps = {
+  centered: false,
+  isLoading: false,
+  minHeight: '100vh',
+  name: 'Page',
+  skipSpacing: false,
+} satisfies Omit<PageProps, 'children'>;
+
 export const StyledPage = styled(Box)<Omit<PageProps, 'name'>>(props => {
-  const { minHeight = '100vh', skipSpacing } = props;
+  const { minHeight, skipSpacing } = props;
 
   return css`
     ${paddingStyles(props, true)};
@@ -68,8 +76,10 @@ export const StyledPage = styled(Box)<Omit<PageProps, 'name'>>(props => {
 });
 
 export function Page(props: PageProps): JSX.Element {
-  const { align, centered, children, isLoading, justify, maxWidth, name, textAlign, ...rest } =
-    props;
+  const { align, centered, children, isLoading, justify, maxWidth, name, textAlign, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
 
   const textAlignMap: Partial<Record<Property.AlignItems, Alignment>> = {
     start: 'left',
@@ -107,11 +117,3 @@ export function Page(props: PageProps): JSX.Element {
     </StyledPage>
   );
 }
-
-Page.defaultProps = {
-  centered: false,
-  isLoading: false,
-  minHeight: '100vh',
-  name: 'Page',
-  skipSpacing: false,
-};

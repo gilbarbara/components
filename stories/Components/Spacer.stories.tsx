@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, H2, Icon, Input, Tag } from 'src';
-import { Spacer } from 'src/Spacer';
+import { defaultProps, Spacer } from 'src/Spacer';
 
 import {
   disableControl,
@@ -16,7 +16,7 @@ type Story = StoryObj<typeof Spacer>;
 export default {
   title: 'Components/Spacer',
   component: Spacer,
-  args: Spacer.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...flexItemProps(),

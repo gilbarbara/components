@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import styled from '@emotion/styled';
 
-import { getStyles, HeadingProps } from './utils';
+import { defaultProps, getStyles, HeadingProps } from './utils';
 
 import { getStyledOptions } from '../modules/system';
 
@@ -13,9 +13,5 @@ export const StyledH2 = styled(
 });
 
 export const H2 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
-  <StyledH2 ref={ref} data-component-name="H2" {...props} />
+  <StyledH2 ref={ref} data-component-name="H2" {...defaultProps} {...props} />
 ));
-
-H2.defaultProps = {
-  light: false,
-};

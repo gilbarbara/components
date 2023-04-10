@@ -1,6 +1,7 @@
 import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
+import { SetRequired } from 'type-fest';
 
 import { getColorVariant, getTheme, px } from './modules/helpers';
 import { textDefaultOptions } from './modules/options';
@@ -62,52 +63,66 @@ const borderSizes = {
   lg: '4px',
 };
 
+export const defaultProps = {
+  ...textDefaultOptions,
+  attributionGap: 'md',
+  attributionSize: 'mid',
+  border: 'left',
+  borderSize: 'md',
+  gap: 'xs',
+  shade: 'mid',
+  size: 'large',
+  variant: 'primary',
+} satisfies Omit<QuoteProps, 'children'>;
+
 export const StyledFigure = styled(
   'figure',
   getStyledOptions(),
-)<Omit<QuoteProps, 'attribution' | 'children'>>(props => {
-  const { border, borderSize = 'md', gap = 'xs', shade, variant = 'primary' } = props;
-  const { spacing, variants } = getTheme(props);
+)<SetRequired<Omit<QuoteProps, 'attribution' | 'children'>, 'borderSize' | 'gap' | 'variant'>>(
+  props => {
+    const { border, borderSize, gap, shade, variant } = props;
+    const { spacing, variants } = getTheme(props);
 
-  const { bg } = getColorVariant(variant, shade, variants);
+    const { bg } = getColorVariant(variant, shade, variants);
 
-  const styles: CSSObject = {};
+    const styles: CSSObject = {};
 
-  switch (border) {
-    case 'bottom': {
-      styles.borderBottom = `${borderSizes[borderSize]} solid ${bg}`;
-      styles.paddingBottom = px(spacing[gap]);
+    switch (border) {
+      case 'bottom': {
+        styles.borderBottom = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.paddingBottom = px(spacing[gap]);
 
-      break;
+        break;
+      }
+      case 'left': {
+        styles.borderLeft = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.paddingLeft = px(spacing[gap]);
+
+        break;
+      }
+      case 'right': {
+        styles.borderRight = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.paddingRight = px(spacing[gap]);
+
+        break;
+      }
+      case 'top': {
+        styles.borderTop = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.paddingTop = px(spacing[gap]);
+        break;
+      }
+      // no default
     }
-    case 'left': {
-      styles.borderLeft = `${borderSizes[borderSize]} solid ${bg}`;
-      styles.paddingLeft = px(spacing[gap]);
 
-      break;
-    }
-    case 'right': {
-      styles.borderRight = `${borderSizes[borderSize]} solid ${bg}`;
-      styles.paddingRight = px(spacing[gap]);
-
-      break;
-    }
-    case 'top': {
-      styles.borderTop = `${borderSizes[borderSize]} solid ${bg}`;
-      styles.paddingTop = px(spacing[gap]);
-      break;
-    }
-    // no default
-  }
-
-  return css`
-    ${baseStyles(props)};
-    ${styles};
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-  `;
-});
+    return css`
+      ${baseStyles(props)};
+      ${styles};
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    `;
+  },
+);
 
 export const StyledQuote = styled(
   'blockquote',
@@ -136,7 +151,10 @@ const StyledAttribution = styled(
 });
 
 export const Quote = forwardRef<HTMLElement, QuoteProps>((props, ref) => {
-  const { attribution, attributionGap = 'xs', attributionSize = 'mid', children, ...rest } = props;
+  const { attribution, attributionGap, attributionSize, children, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
 
   return (
     <StyledFigure ref={ref} data-component-name="Quote" {...rest}>
@@ -149,15 +167,3 @@ export const Quote = forwardRef<HTMLElement, QuoteProps>((props, ref) => {
     </StyledFigure>
   );
 });
-
-Quote.defaultProps = {
-  ...textDefaultOptions,
-  attributionGap: 'md',
-  attributionSize: 'mid',
-  border: 'left',
-  borderSize: 'md',
-  gap: 'xs',
-  shade: 'mid',
-  size: 'large',
-  variant: 'primary',
-};

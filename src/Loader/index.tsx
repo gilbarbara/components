@@ -9,8 +9,15 @@ import LoaderRotate from './Rotate';
 import { getTheme } from '../modules/helpers';
 import { LoaderProps } from '../types';
 
+export const defaultProps = {
+  block: false,
+  shade: 'mid',
+  type: 'pill',
+  variant: 'primary',
+} satisfies LoaderProps;
+
 export function Loader(props: LoaderProps) {
-  const { type, ...rest } = props;
+  const { type, ...rest } = { ...defaultProps, ...props };
   const theme = getTheme({ theme: useTheme() });
 
   switch (type) {
@@ -33,10 +40,3 @@ export function Loader(props: LoaderProps) {
     }
   }
 }
-
-Loader.defaultProps = {
-  block: false,
-  shade: 'mid',
-  type: 'pill',
-  variant: 'primary',
-} as const;

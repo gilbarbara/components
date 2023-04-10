@@ -4,6 +4,7 @@ import { css, useTheme } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 import is from 'is-lite';
+import { SetRequired } from 'type-fest';
 
 import { fadeIn } from './modules/animations';
 import { getColorVariant, getTheme, px } from './modules/helpers';
@@ -108,6 +109,25 @@ export interface TooltipProps
   eventType?: 'click' | 'hover';
   style?: CSSProperties;
 }
+
+export const defaultProps = {
+  ...omit(textDefaultOptions, 'size'),
+  align: 'middle',
+  arrowDistance: 4,
+  arrowMargin: 4,
+  arrowLength: 8,
+  delay: 180,
+  disabled: false,
+  duration: 260,
+  easing: 'ease-in-out',
+  eventType: 'hover',
+  position: 'bottom',
+  radius: 'xxs',
+  shade: 'dark',
+  size: 'mid',
+  variant: 'gray',
+  zIndex: 100,
+} satisfies Omit<TooltipProps, 'children' | 'content'>;
 
 const arrowSize = 6;
 
@@ -225,7 +245,7 @@ const StyledBody = styled(
       position,
       size,
       wrap,
-      zIndex = 100,
+      zIndex,
     } = props;
     const { spacing } = getTheme(props);
     const arrowSpacing = arrowLength + arrowDistance;
@@ -333,10 +353,13 @@ const StyledContent = styled(Text)`
 `;
 
 function TooltipBody(
-  props: Omit<TooltipProps, 'children' | 'open'> & AnimationProps & ArrowProps & ColorProps,
+  props: SetRequired<Omit<TooltipProps, 'children' | 'open'>, 'align' | 'position'> &
+    AnimationProps &
+    ArrowProps &
+    ColorProps,
 ) {
   const {
-    align = 'middle',
+    align,
     arrowDistance,
     arrowLength,
     arrowMargin,
@@ -345,10 +368,10 @@ function TooltipBody(
     color,
     content,
     italic,
-    position = 'right',
-    radius = 'xxs',
+    position,
+    radius,
     shadow,
-    size = 'mid',
+    size,
     style,
     wrap,
     ...rest
@@ -393,23 +416,10 @@ function TooltipBody(
 }
 
 export function Tooltip(props: TooltipProps): JSX.Element {
-  const {
-    ariaLabel,
-    arrowDistance = 4,
-    arrowLength = 8,
-    arrowMargin = 4,
-    children,
-    content,
-    delay = 180,
-    disabled = false,
-    duration = 260,
-    easing = 'ease-in-out',
-    eventType = 'hover',
-    open,
-    shade,
-    title,
-    variant = 'gray',
-  } = props;
+  const { ariaLabel, children, content, disabled, eventType, open, shade, title, variant } = {
+    ...defaultProps,
+    ...props,
+  };
   const [isOpen, setOpen] = useState(open || false);
 
   const { variants } = getTheme({ theme: useTheme() });
@@ -451,38 +461,7 @@ export function Tooltip(props: TooltipProps): JSX.Element {
       title={title}
     >
       {children}
-      {isOpen && (
-        <TooltipBody
-          {...props}
-          arrowDistance={arrowDistance}
-          arrowLength={arrowLength}
-          arrowMargin={arrowMargin}
-          bg={bg}
-          color={color}
-          delay={delay}
-          duration={duration}
-          easing={easing}
-        />
-      )}
+      {isOpen && <TooltipBody {...defaultProps} {...props} bg={bg} color={color} />}
     </StyledTooltip>
   );
 }
-
-Tooltip.defaultProps = {
-  ...omit(textDefaultOptions, 'size'),
-  align: 'middle',
-  arrowDistance: 4,
-  arrowMargin: 4,
-  arrowLength: 8,
-  delay: 180,
-  disabled: false,
-  duration: 260,
-  easing: 'ease-in-out',
-  eventType: 'hover',
-  position: 'bottom',
-  radius: 'xxs',
-  shade: 'dark',
-  size: 'mid',
-  variant: 'gray',
-  zIndex: 100,
-} as const;

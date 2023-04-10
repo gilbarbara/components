@@ -1,7 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { H3, Icon, Paragraph, Text } from 'src';
-import { Box, BoxCenter, BoxInline } from 'src/Box';
+import {
+  Box,
+  BoxCenter,
+  boxCenterDefaultProps,
+  boxDefaultProps,
+  BoxInline,
+  boxInlineDefaultProps,
+} from 'src/Box';
 
 import {
   colorProps,
@@ -20,7 +27,7 @@ export default {
   title: 'Components/Box',
   component: Box,
   args: {
-    ...Box.defaultProps,
+    ...boxDefaultProps,
     shadow: 'high',
   },
   argTypes: {
@@ -91,7 +98,7 @@ export const Composed: Story = {
 export const Center: Story = {
   name: 'BoxCenter',
   args: {
-    ...BoxCenter.defaultProps,
+    ...boxCenterDefaultProps,
     children: 'This is a centered Box',
   },
   argTypes: {
@@ -102,7 +109,7 @@ export const Center: Story = {
 
 export const Inline: Story = {
   name: 'BoxInline',
-  args: BoxInline.defaultProps,
+  args: boxInlineDefaultProps,
   argTypes: {
     children: disableControl(),
   },

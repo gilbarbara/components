@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactNode, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { AnyObject } from '@gilbarbara/types';
+import { SetRequired } from 'type-fest';
 
 import { ButtonUnstyled } from './ButtonUnstyled';
 import { Icon } from './Icon';
@@ -26,17 +26,29 @@ export interface ButtonSplitProps
     WithColor,
     WithComponentSize,
     WithInvert {
+  dataAttributes?: Record<`data-${string}`, string | number>;
   label: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
   /** @default bottom-right */
   position?: PositionY;
 }
 
+export const defaultProps = {
+  block: false,
+  busy: false,
+  disabled: false,
+  invert: false,
+  position: 'bottom-right',
+  shade: 'mid',
+  size: 'md',
+  variant: 'primary',
+} satisfies Omit<ButtonSplitProps, 'children' | 'label' | 'onClick'>;
+
 export const StyledButtonSplit = styled(
   'div',
   getStyledOptions(),
-)<Omit<ButtonSplitProps, 'label' | 'onClick'>>(props => {
-  const { block, disabled, invert, size = 'md' } = props;
+)<SetRequired<Omit<ButtonSplitProps, 'label' | 'onClick'>, keyof typeof defaultProps>>(props => {
+  const { block, disabled, invert, size } = props;
   const { button, grayLight, grayMid, spacing } = getTheme(props);
 
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
@@ -89,7 +101,10 @@ export const StyledButtonSplit = styled(
 });
 
 export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
-  const { busy, children, label, onClick, onToggle, position, ...rest } = props;
+  const { busy, children, dataAttributes, label, onClick, onToggle, position, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
   const { disabled, shade, variant } = rest;
   const [active, setActive] = useState(false);
 
@@ -104,20 +119,9 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
     [onToggle],
   );
 
-  const buttonProps: AnyObject = {};
-  const wrapperProps: AnyObject = {};
-
-  Object.entries(rest).forEach(([key, value]) => {
-    if (key.startsWith('data-')) {
-      buttonProps[key] = value;
-    } else {
-      wrapperProps[key] = value;
-    }
-  });
-
   return (
-    <StyledButtonSplit data-component-name="ButtonSplit" {...wrapperProps}>
-      <ButtonUnstyled busy={busy} disabled={disabled} onClick={onClick} {...buttonProps}>
+    <StyledButtonSplit busy={busy} data-component-name="ButtonSplit" position={position} {...rest}>
+      <ButtonUnstyled busy={busy} disabled={disabled} onClick={onClick} {...dataAttributes}>
         {label}
       </ButtonUnstyled>
       <Menu
@@ -133,16 +137,5 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
     </StyledButtonSplit>
   );
 }
-
-ButtonSplit.defaultProps = {
-  block: false,
-  busy: false,
-  disabled: false,
-  invert: false,
-  position: 'bottom-right',
-  shade: 'mid',
-  size: 'md',
-  variant: 'primary',
-} as const;
 
 export { MenuDivider as ButtonSplitDivider, MenuItem as ButtonSplitItem } from './Menu';

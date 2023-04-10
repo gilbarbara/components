@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from 'react-use';
@@ -26,6 +27,15 @@ export interface PortalProps extends StyledProps, WithChildren {
   /** @default 1000 */
   zIndex?: number;
 }
+
+export const defaultProps = {
+  closeOnClickOverlay: true,
+  closeOnEsc: true,
+  hideOverlay: false,
+  isActive: false,
+  showCloseButton: false,
+  zIndex: 1000,
+} satisfies Omit<PortalProps, 'children'>;
 
 function getPortalElement() {
   return document.querySelector('.__portal');
@@ -133,8 +143,8 @@ export function Portal(props: PortalProps) {
     onClose,
     onOpen,
     showCloseButton,
-    zIndex = 1000,
-  } = props;
+    zIndex,
+  } = { ...defaultProps, ...props };
   const [isReady, setReady] = useState(false);
   const portal = useRef<Element | null>(null);
   const { darkMode = false } = useTheme();
@@ -156,7 +166,7 @@ export function Portal(props: PortalProps) {
   const previousCloseOnEsc = usePrevious(closeOnEsc);
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    if (event.keyCode === 27) {
+    if (event.code === 'Escape') {
       event.stopPropagation();
       closePortal.current();
     }
@@ -256,12 +266,3 @@ export function Portal(props: PortalProps) {
     portal.current,
   );
 }
-
-Portal.defaultProps = {
-  closeOnClickOverlay: true,
-  closeOnEsc: true,
-  hideOverlay: false,
-  isActive: false,
-  showCloseButton: false,
-  zIndex: 1000,
-};

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Loader } from 'src/Loader';
+import { defaultProps, Loader } from 'src/Loader';
 
 import { colorProps, hideProps, hideTable } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/Loader',
   component: Loader,
   args: {
-    ...Loader.defaultProps,
+    ...defaultProps,
     size: 128,
   },
   argTypes: {

@@ -45,6 +45,15 @@ export interface AnchorKnownProps
 
 export type AnchorProps = ComponentProps<HTMLAnchorElement, AnchorKnownProps>;
 
+export const defaultProps = {
+  ...omit(textDefaultOptions, 'size'),
+  display: 'inline-flex',
+  external: false,
+  hideDecoration: false,
+  shade: 'mid',
+  variant: 'primary',
+} satisfies Omit<AnchorProps, 'children' | 'href'>;
+
 export const StyledAnchor = styled(
   'a',
   getStyledOptions(),
@@ -78,27 +87,18 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =>
     iconSize = parseInt(`${fontSize}`, 10);
   }
 
-  const addtionalProps: any = {};
+  const additionalProps: Record<string, any> = defaultProps;
 
   if (external) {
-    addtionalProps.rel = 'noopener noreferrer';
-    addtionalProps.target = '_blank';
+    additionalProps.rel = 'noopener noreferrer';
+    additionalProps.target = '_blank';
   }
 
   return (
-    <StyledAnchor ref={ref} data-component-name="Anchor" {...addtionalProps} {...props}>
+    <StyledAnchor ref={ref} data-component-name="Anchor" {...additionalProps} {...props}>
       {iconBefore && <Icon mr="xxs" name={iconBefore} size={iconSize} />}
       <span>{children}</span>
       {iconAfter && <Icon ml="xxs" name={iconAfter} size={iconSize} />}
     </StyledAnchor>
   );
 });
-
-Anchor.defaultProps = {
-  ...omit(textDefaultOptions, 'size'),
-  display: 'inline-flex',
-  external: false,
-  hideDecoration: false,
-  shade: 'mid',
-  variant: 'primary',
-};

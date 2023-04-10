@@ -10,8 +10,17 @@ import {
   StyledText,
 } from './utils';
 
+export const defaultProps = {
+  align: 'center',
+  disabled: false,
+  size: 'md',
+} satisfies Omit<CheckboxProps, 'name'>;
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const { align, checked, defaultChecked, id, label, name, size, style, ...rest } = props;
+  const { align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
   const inputId = id || name;
 
   return (
@@ -49,9 +58,3 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     </StyledLabel>
   );
 });
-
-Checkbox.defaultProps = {
-  align: 'center',
-  disabled: false,
-  size: 'md',
-};

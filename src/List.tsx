@@ -65,6 +65,17 @@ function getSpacing(size: Required<ListProps['size']>, spacing: Theme['spacing']
   }
 }
 
+export const defaultProps = {
+  border: true,
+  direction: 'vertical',
+  radius: 'xs',
+  shade: 'lighter',
+  shadow: false,
+  size: 'md',
+  split: true,
+  variant: 'gray',
+} satisfies Omit<ListProps, 'items'>;
+
 export const StyledList = styled(
   'ul',
   getStyledOptions(),
@@ -105,16 +116,7 @@ export const StyledListItem = styled(
   }
 >(props => {
   const { black, spacing, variants, white } = getTheme(props);
-  const {
-    border,
-    direction,
-    itemShade,
-    itemVariant,
-    shade = 'lighter',
-    size,
-    split,
-    variant = 'gray',
-  } = props;
+  const { border, direction, itemShade, itemVariant, shade, size, split, variant } = props;
   const [spacerMain, spacerCross] = getSpacing(size, spacing);
   let bgColor = white;
   let itemColor = black;
@@ -167,14 +169,14 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
     size = 'md',
     split = true,
     variant = 'gray',
-  } = props;
+  } = { ...defaultProps, ...props };
 
   if (!items.length) {
     return null;
   }
 
   return (
-    <StyledList ref={ref} data-component-name="List" {...props}>
+    <StyledList ref={ref} data-component-name="List" {...defaultProps} {...props}>
       {items.map((item, index) => {
         const key = `ListItem-${index}`;
         let content;
@@ -208,14 +210,3 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
     </StyledList>
   );
 });
-
-List.defaultProps = {
-  border: true,
-  direction: 'vertical',
-  radius: 'xs',
-  shade: 'lighter',
-  shadow: false,
-  size: 'md',
-  split: true,
-  variant: 'gray',
-};

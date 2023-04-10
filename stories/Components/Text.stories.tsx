@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph } from 'src';
-import { textSizes } from 'src/modules/options';
+import { textDefaultOptions, textSizes } from 'src/modules/options';
 import { Text } from 'src/Text';
 
 import { colorProps, disableControl, hideProps, textOptionsProps } from '../__helpers__';
@@ -14,7 +14,7 @@ export default {
   title: 'Components/Text',
   component: Text,
   args: {
-    ...Text.defaultProps,
+    ...textDefaultOptions,
     children:
       'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.',
   },

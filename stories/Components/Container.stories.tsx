@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Jumbo, Paragraph, Text } from 'src';
-import { Container } from 'src/Container';
+import { Container, defaultProps } from 'src/Container';
 
 import {
   disableControl,
@@ -17,7 +17,7 @@ type Story = StoryObj<typeof Container>;
 export default {
   title: 'Components/Container',
   component: Container,
-  args: Container.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...flexBoxProps(),

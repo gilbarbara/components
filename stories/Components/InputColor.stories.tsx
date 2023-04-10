@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { InputColor } from 'src/InputColor';
+import { defaultProps, InputColor } from 'src/InputColor';
 
 import { hideProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/InputColor',
   component: InputColor,
   args: {
-    ...InputColor.defaultProps,
+    ...defaultProps,
     name: 'color',
   },
   argTypes: {

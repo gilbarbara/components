@@ -32,6 +32,8 @@ export interface ParagraphKnownProps
 
 export type ParagraphProps = ComponentProps<HTMLParagraphElement, ParagraphKnownProps>;
 
+export const defaultProps = textDefaultOptions;
+
 export const StyledParagraph = styled(
   'p',
   getStyledOptions(),
@@ -53,7 +55,7 @@ export const StyledParagraph = styled(
 });
 
 export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
-  const { children, ...rest } = props;
+  const { children, ...rest } = { ...defaultProps, ...props };
 
   return (
     <StyledParagraph ref={ref} data-component-name="Paragraph" {...props}>
@@ -61,5 +63,3 @@ export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props
     </StyledParagraph>
   );
 });
-
-Paragraph.defaultProps = textDefaultOptions;

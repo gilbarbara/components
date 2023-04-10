@@ -3,7 +3,7 @@ import { MouseEvent, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from 'src';
-import { ButtonGroup } from 'src/ButtonGroup';
+import { ButtonGroup, defaultProps } from 'src/ButtonGroup';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
 
@@ -12,7 +12,7 @@ type Story = StoryObj<typeof ButtonGroup>;
 export default {
   title: 'Components/ButtonGroup',
   component: ButtonGroup,
-  args: ButtonGroup.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

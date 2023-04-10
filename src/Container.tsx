@@ -2,6 +2,7 @@ import { CSSProperties, forwardRef } from 'react';
 import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
+import { SetRequired } from 'type-fest';
 
 import { Box } from './Box';
 import { px } from './modules/helpers';
@@ -58,15 +59,17 @@ const flexMap = {
   stretch: 'stretch',
 };
 
-export const StyledContainer = styled(Box)<ContainerProps>(props => {
-  const {
-    align = 'left',
-    fullScreen,
-    fullScreenOffset,
-    responsive,
-    textAlign,
-    verticalPadding,
-  } = props;
+export const defaultProps = {
+  align: 'stretch',
+  fullScreen: false,
+  responsive: true,
+  textAlign: 'left',
+  justify: 'start',
+  verticalPadding: false,
+} satisfies Omit<ContainerProps, 'children'>;
+
+export const StyledContainer = styled(Box)<SetRequired<ContainerProps, 'align'>>(props => {
+  const { align, fullScreen, fullScreenOffset, responsive, textAlign, verticalPadding } = props;
   const styles: CSSObject = {
     alignItems: flexMap[align],
     textAlign,
@@ -95,14 +98,5 @@ export const StyledContainer = styled(Box)<ContainerProps>(props => {
 });
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>((props, ref) => {
-  return <StyledContainer ref={ref} data-component-name="Container" {...props} />;
+  return <StyledContainer ref={ref} data-component-name="Container" {...defaultProps} {...props} />;
 });
-
-Container.defaultProps = {
-  align: 'stretch',
-  fullScreen: false,
-  responsive: true,
-  textAlign: 'left',
-  justify: 'start',
-  verticalPadding: false,
-};

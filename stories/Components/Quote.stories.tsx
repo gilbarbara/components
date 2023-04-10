@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Quote } from 'src/Quote';
+import { defaultProps, Quote } from 'src/Quote';
 
 import { colorProps, hideProps, textOptionsProps } from '../__helpers__';
 
@@ -9,7 +9,7 @@ type Story = StoryObj<typeof Quote>;
 export default {
   title: 'Components/Quote',
   component: Quote,
-  args: Quote.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

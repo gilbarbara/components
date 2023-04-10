@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from 'src';
-import { Grid } from 'src/Grid';
+import { defaultProps, Grid } from 'src/Grid';
 
 import {
   colorProps,
@@ -21,9 +21,9 @@ export default {
   title: 'Components/Grid',
   component: Grid,
   args: {
+    ...defaultProps,
     alignContent: 'space-evenly',
     alignItems: 'center',
-    display: 'grid',
     gap: 16,
     justifyContent: 'space-evenly',
     justifyItems: 'center',

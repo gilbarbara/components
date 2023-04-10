@@ -34,6 +34,14 @@ interface MenuItemsProps extends Required<Pick<MenuProps, 'minWidth' | 'position
   active: boolean;
 }
 
+export const defaultProps = {
+  disabled: false,
+  minWidth: 200,
+  position: 'bottom-right',
+  trigger: 'click',
+  variant: 'primary',
+} satisfies Omit<MenuProps, 'children'>;
+
 const StyledMenu = styled.div`
   display: inline-flex;
   position: relative;
@@ -155,14 +163,14 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
     children,
     component = <Icon name="more-vertical-o" size={24} title={null} />,
     disabled,
-    minWidth = 200,
+    minWidth,
     onToggle,
     open,
-    position = 'bottom-right',
+    position,
     shade,
     trigger,
     variant,
-  } = props;
+  } = { ...defaultProps, ...props };
   const [active, setActive] = useState(open ?? false);
   const localRef = useRef<HTMLDivElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
@@ -238,14 +246,6 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
     </StyledMenu>
   );
 });
-
-Menu.defaultProps = {
-  disabled: false,
-  minWidth: 200,
-  position: 'bottom-right',
-  trigger: 'click',
-  variant: 'primary',
-};
 
 export { MenuDivider } from './Divider';
 export { MenuItem } from './Item';

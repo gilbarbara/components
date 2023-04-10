@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph, Text } from 'src';
-import { RadioGroup } from 'src/RadioGroup';
+import { defaultProps, RadioGroup } from 'src/RadioGroup';
 
-import { disableControl, hideProps } from '../__helpers__';
+import { disableControl, hideProps, marginProps } from '../__helpers__';
 
 type Story = StoryObj<typeof RadioGroup>;
 
@@ -11,7 +11,7 @@ export default {
   title: 'Components/RadioGroup',
   component: RadioGroup,
   args: {
-    ...RadioGroup.defaultProps,
+    ...defaultProps,
     defaultValue: 4,
     items: [
       { label: 'First', value: 1 },
@@ -31,6 +31,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...marginProps(),
     defaultValue: { control: 'number' },
     onChange: { action: 'onChange', ...disableControl() },
     items: disableControl(),

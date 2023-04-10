@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { SetRequired } from 'type-fest';
 
 import { getColorVariant, getTheme, px } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
@@ -14,11 +15,19 @@ export interface StatusIndicatorKnownProps extends StyledProps, WithColor, WithM
 
 export type StatusIndicatorProps = ComponentProps<HTMLDivElement, StatusIndicatorKnownProps>;
 
+export const defaultProps = {
+  centerShade: 'lighter',
+  ratio: 0.7,
+  shade: 'mid',
+  size: 24,
+  variant: 'green',
+} satisfies StatusIndicatorProps;
+
 const StyledStatusIndicator = styled(
   'div',
   getStyledOptions(),
-)<StatusIndicatorProps>(props => {
-  const { centerShade = 'lighter', ratio = 0.7, shade, size = 24, variant = 'green' } = props;
+)<SetRequired<StatusIndicatorProps, 'centerShade' | 'ratio' | 'size' | 'variant'>>(props => {
+  const { centerShade, ratio, shade, size, variant } = props;
   const { variants } = getTheme(props);
   const { bg } = getColorVariant(variant, shade, variants);
   const { bg: centerBg } = getColorVariant(variant, centerShade, variants);
@@ -49,13 +58,7 @@ const StyledStatusIndicator = styled(
 });
 
 export function StatusIndicator(props: StatusIndicatorProps) {
-  return <StyledStatusIndicator data-component-name="StatusIndicator" {...props} />;
+  return (
+    <StyledStatusIndicator data-component-name="StatusIndicator" {...defaultProps} {...props} />
+  );
 }
-
-StatusIndicator.defaultProps = {
-  centerShade: 'lighter',
-  ratio: 0.7,
-  shade: 'mid',
-  size: 24,
-  variant: 'green',
-} as const;

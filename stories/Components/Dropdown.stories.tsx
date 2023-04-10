@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon } from 'src';
-import { Dropdown } from 'src/Dropdown';
+import { defaultProps, Dropdown } from 'src/Dropdown';
 import { DropdownOption } from 'src/types';
 
 import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';
@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Dropdown>;
 export default {
   title: 'Components/Dropdown',
   component: Dropdown,
-  args: Dropdown.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

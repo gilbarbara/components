@@ -37,10 +37,17 @@ export interface ButtonUnstyledKnownProps
 
 export type ButtonUnstyledProps = ComponentProps<HTMLButtonElement, ButtonUnstyledKnownProps>;
 
+export const defaultProps = {
+  ...textDefaultOptions,
+  busy: false,
+  disabled: false,
+  type: 'button',
+} satisfies Omit<ButtonUnstyledProps, 'children'>;
+
 export const StyledButtonUnstyled = styled(
   'button',
   getStyledOptions(),
-)<ButtonUnstyledProps>(props => {
+)<Omit<ButtonUnstyledProps, 'children'>>(props => {
   const { busy } = props;
 
   return css`
@@ -73,20 +80,13 @@ export const StyledButtonUnstyled = styled(
 });
 
 export const ButtonUnstyled = forwardRef<HTMLButtonElement, ButtonUnstyledProps>((props, ref) => {
-  const { busy, children } = props;
+  const { busy, children, ...rest } = { ...defaultProps, ...props };
   const { fontSize = '16px' } = textStyles(props);
 
   return (
-    <StyledButtonUnstyled ref={ref} data-component-name="ButtonUnstyled" {...props}>
+    <StyledButtonUnstyled ref={ref} busy={busy} data-component-name="ButtonUnstyled" {...rest}>
       {children}
       {busy && <Icon ml="xxs" name="spinner" size={parseInt(`${fontSize}`, 10) + 2} spin />}
     </StyledButtonUnstyled>
   );
 });
-
-ButtonUnstyled.defaultProps = {
-  ...textDefaultOptions,
-  busy: false,
-  disabled: false,
-  type: 'button',
-};

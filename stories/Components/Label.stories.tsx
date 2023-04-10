@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Label } from 'src/Label';
+import { defaultProps, Label } from 'src/Label';
 
 import { hideProps, textOptionsProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/Label',
   component: Label,
   args: {
-    ...Label.defaultProps,
+    ...defaultProps,
     children: 'Far far away, behind the word mountains there live the blind texts.',
     labelInfo: '*',
   },

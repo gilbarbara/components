@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Input, Select, Textarea } from 'src';
-import { FormGroup } from 'src/FormGroup';
+import { defaultProps, FormGroup } from 'src/FormGroup';
 
 import { disableControl, hideProps, layoutProps, spacingProps } from '../__helpers__';
 
@@ -11,7 +11,7 @@ export default {
   title: 'Components/FormGroup',
   component: FormGroup,
   args: {
-    ...FormGroup.defaultProps,
+    ...defaultProps,
     assistiveText: 'Required',
     label: 'Name',
     maxWidth: 640,

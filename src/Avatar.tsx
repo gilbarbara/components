@@ -43,6 +43,12 @@ const sizes = {
   },
 };
 
+export const defaultProps = {
+  shade: 'mid',
+  size: 'md',
+  variant: 'primary',
+} satisfies Omit<AvatarProps, 'name'>;
+
 const Circle = styled(
   'div',
   getStyledOptions(),
@@ -64,8 +70,7 @@ const Circle = styled(
 });
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
-  const { image, name, shade = 'mid', size = 'md', variant = 'primary', ...rest } = props;
-
+  const { image, name, shade, size, variant, ...rest } = { ...defaultProps, ...props };
   const selectedSize = sizes[size];
 
   return (
@@ -88,9 +93,3 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     </BoxCenter>
   );
 });
-
-Avatar.defaultProps = {
-  shade: 'mid',
-  size: 'md',
-  variant: 'primary',
-};

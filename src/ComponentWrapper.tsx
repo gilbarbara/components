@@ -23,11 +23,16 @@ export interface ComponentWrapperProps extends StyledProps, WithChildren, WithMa
   width?: StringOrNumber;
 }
 
+export const defaultProps = {
+  size: 40,
+  width: '100%',
+} satisfies Omit<ComponentWrapperProps, 'children'>;
+
 const StyledComponentWrapper = styled(
   'div',
   getStyledOptions('prefix', 'suffix'),
-)<{ width?: StringOrNumber }>(props => {
-  const { width = '100%' } = props;
+)<Pick<ComponentWrapperProps, 'width'>>(props => {
+  const { width } = props;
 
   return css`
     position: relative;
@@ -37,7 +42,7 @@ const StyledComponentWrapper = styled(
 });
 
 export const ComponentWrapper = forwardRef<HTMLDivElement, ComponentWrapperProps>((props, ref) => {
-  const { children, prefix, size, suffix, ...rest } = props;
+  const { children, prefix, size, suffix, ...rest } = { ...defaultProps, ...props };
 
   const content: AnyObject = {};
   const height = is.array(size) ? size[1] : size;
@@ -67,8 +72,3 @@ export const ComponentWrapper = forwardRef<HTMLDivElement, ComponentWrapperProps
     </StyledComponentWrapper>
   );
 });
-
-ComponentWrapper.defaultProps = {
-  size: 40,
-  width: '100%',
-};

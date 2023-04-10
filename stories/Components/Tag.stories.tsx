@@ -6,7 +6,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Grid, Spacer } from 'src';
 import { getTheme } from 'src/modules/helpers';
 import { textSizes } from 'src/modules/options';
-import { Tag } from 'src/Tag';
+import { defaultProps, Tag } from 'src/Tag';
 import * as Types from 'src/types';
 
 import {
@@ -22,7 +22,7 @@ type Story = StoryObj<typeof Tag>;
 export default {
   title: 'Components/Tag',
   component: Tag,
-  args: Tag.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

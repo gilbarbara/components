@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { NonIdealState } from 'src/NonIdealState';
+import { defaultProps, NonIdealState } from 'src/NonIdealState';
 
 import {
   colorProps,
@@ -16,7 +16,7 @@ type Story = StoryObj<typeof NonIdealState>;
 export default {
   title: 'Components/NonIdealState',
   component: NonIdealState,
-  args: NonIdealState.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

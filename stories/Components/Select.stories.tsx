@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Select } from 'src/Select';
+import { defaultProps, Select } from 'src/Select';
 
 import { hideProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/Select',
   component: Select,
   args: {
-    ...Select.defaultProps,
+    ...defaultProps,
     name: 'gender',
   },
   argTypes: {

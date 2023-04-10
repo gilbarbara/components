@@ -21,6 +21,11 @@ import { Paragraph } from '../Paragraph';
 import { Spacer } from '../Spacer';
 import { Text } from '../Text';
 
+export const rangeDefaultProps = {
+  ...defaultProps,
+  showApply: false,
+} satisfies DatePickerRangerProps;
+
 const StyledDatePicker = styled(
   'div',
   getStyledOptions('onApply'),
@@ -39,7 +44,7 @@ export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
     toDate,
     variant,
     ...rest
-  } = props;
+  } = { ...rangeDefaultProps, ...props };
   const [month, setMonth] = useState<Date | undefined>(undefined);
   const [range, setRange] = useState<DateRange | undefined>(undefined);
   const { radius, spacing } = getTheme({ theme: useTheme() });
@@ -146,9 +151,3 @@ export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
     </StyledDatePicker>
   );
 }
-
-DatePickerRange.defaultProps = {
-  ...defaultProps,
-  formatLocale: 'en-US',
-  showApply: false,
-} as const;

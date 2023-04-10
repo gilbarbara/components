@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from 'src';
-import { Modal, ModalProps } from 'src/Modal';
+import { defaultProps, Modal } from 'src/Modal';
 
 import { disableControl, hideProps, paddingProps } from '../__helpers__';
 
@@ -13,7 +13,7 @@ export default {
   title: 'Components/Modal',
   component: Modal,
   args: {
-    ...Modal.defaultProps,
+    ...defaultProps,
     title: 'Add User',
     width: 600,
   },
@@ -27,7 +27,7 @@ export default {
 } satisfies Meta<typeof Modal>;
 
 export const Basic: Story = {
-  render: (props: ModalProps) => {
+  render: props => {
     const [isActive, setActive] = useState(false);
 
     const handleClick = () => {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import ReactDropdown, { ComponentProps, Option } from '@gilbarbara/react-dropdown';
+import { SetRequired } from 'type-fest';
 
 import Content from './Content';
 import Items from './Items';
@@ -10,15 +11,42 @@ import { getColorVariant, getTheme, px } from '../modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
 import { DropdownProps } from '../types';
 
+export const defaultProps = {
+  allowCreate: false,
+  autoFocus: false,
+  borderless: false,
+  closeOnScroll: false,
+  closeMultiOnSelect: false,
+  direction: 'ltr',
+  disabled: false,
+  keepSelectedInList: true,
+  labels: {
+    create: 'Create {search}',
+    noData: 'Nothing found',
+  },
+  large: false,
+  loading: false,
+  menuMaxHeight: 260,
+  multi: false,
+  placeholder: 'Select an option',
+  searchBy: 'label',
+  searchable: true,
+  showClearButton: false,
+  showSeparator: false,
+  shade: 'mid',
+  variant: 'primary',
+  width: 260,
+} satisfies Omit<DropdownProps, 'items'>;
+
 export const StyledDropdown = styled(
   'div',
   getStyledOptions('placeholder', 'onSearch'),
 )<
-  Omit<DropdownProps, 'items' | 'large' | 'onChange' | 'values'> & {
+  SetRequired<Omit<DropdownProps, 'items' | 'large' | 'onChange' | 'values'>, 'variant'> & {
     isFilled: boolean;
   }
 >(props => {
-  const { borderless, isFilled, multi, shade, variant = 'primary', width } = props;
+  const { borderless, isFilled, multi, shade, variant, width } = props;
   const { grayDark, grayDarker, grayMid, radius, spacing, variants, white } = getTheme(props);
   const { bg } = getColorVariant(variant, shade, variants);
 
@@ -137,7 +165,10 @@ export function Dropdown(props: DropdownProps) {
     showClearButton,
     values = [],
     ...rest
-  } = props;
+  } = {
+    ...defaultProps,
+    ...props,
+  };
   const [isFilled, setFilled] = useState(!!values.length);
 
   const { inputHeight, variants } = getTheme({ theme: useTheme() });
@@ -177,30 +208,3 @@ export function Dropdown(props: DropdownProps) {
     </StyledDropdown>
   );
 }
-
-Dropdown.defaultProps = {
-  allowCreate: false,
-  autoFocus: true,
-  borderless: false,
-  clearOnSelect: false,
-  closeOnScroll: false,
-  direction: 'ltr',
-  disabled: false,
-  height: 260,
-  keepSelectedInList: true,
-  labels: {
-    create: 'Create {search}',
-    noData: 'Nothing found',
-  },
-  large: false,
-  loading: false,
-  multi: false,
-  placeholder: 'Select an option',
-  searchBy: 'label',
-  searchable: true,
-  showClearButton: false,
-  showSeparator: false,
-  shade: 'mid',
-  variant: 'primary',
-  width: 260,
-} as const;

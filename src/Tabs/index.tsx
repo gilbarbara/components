@@ -14,7 +14,7 @@ import { omit, unique } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
-import { SetOptional } from 'type-fest';
+import { SetOptional, SetRequired } from 'type-fest';
 
 import { Tab, TabProps } from './Tab';
 
@@ -47,6 +47,13 @@ interface State {
   tabs: Omit<TabProps, 'children'>[];
   width: number | null;
 }
+
+export const defaultProps = {
+  direction: 'vertical',
+  disableActiveBorderRadius: false,
+  shade: 'mid',
+  variant: 'primary',
+} satisfies Omit<TabsProps, 'children'>;
 
 const StyledTabs = styled(
   'div',
@@ -97,19 +104,15 @@ const StyledMenuItem = styled(
   ButtonUnstyled,
   getStyledOptions('disabled'),
 )<
-  Pick<TabsProps, 'direction' | 'disableActiveBorderRadius' | 'shade' | 'variant'> & {
+  SetRequired<
+    Pick<TabsProps, 'direction' | 'disableActiveBorderRadius' | 'shade' | 'variant'>,
+    'variant'
+  > & {
     disabled: boolean;
     isActive: boolean;
   }
 >(props => {
-  const {
-    direction,
-    disableActiveBorderRadius,
-    disabled,
-    isActive,
-    shade,
-    variant = 'primary',
-  } = props;
+  const { direction, disableActiveBorderRadius, disabled, isActive, shade, variant } = props;
   const { grayDarker, grayMid, grayScale, spacing, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
 
@@ -184,7 +187,7 @@ export function Tabs(props: TabsProps) {
     shade,
     variant,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
   const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
     activeId: id || defaultId,
     error: false,
@@ -338,12 +341,5 @@ export function Tabs(props: TabsProps) {
     </StyledTabs>
   );
 }
-
-Tabs.defaultProps = {
-  direction: 'vertical',
-  disableActiveBorderRadius: false,
-  shade: 'mid',
-  variant: 'primary',
-} as const;
 
 export { Tab } from './Tab';

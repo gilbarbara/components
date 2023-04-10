@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Input } from 'src/Input';
+import { defaultProps, Input } from 'src/Input';
 import { inputTypes } from 'src/modules/options';
 
 import { disableControl, hideProps } from '../__helpers__';
@@ -11,7 +11,7 @@ export default {
   title: 'Components/Input',
   component: Input,
   args: {
-    ...Input.defaultProps,
+    ...defaultProps,
     name: 'name',
     placeholder: 'Your name here...',
   },

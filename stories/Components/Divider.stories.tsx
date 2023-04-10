@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Divider } from 'src/Divider';
+import { Box } from 'src';
+import { defaultProps, Divider } from 'src/Divider';
 
-import { Box } from '../../src';
 import { colorProps, hideProps, marginProps, textOptionsProps } from '../__helpers__';
 
 type Story = StoryObj<typeof Divider>;
@@ -10,7 +10,7 @@ type Story = StoryObj<typeof Divider>;
 export default {
   title: 'Components/Divider',
   component: Divider,
-  args: Divider.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

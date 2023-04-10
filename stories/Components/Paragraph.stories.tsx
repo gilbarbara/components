@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Text } from 'src';
-import { Paragraph } from 'src/Paragraph';
+import { defaultProps, Paragraph } from 'src/Paragraph';
 
 import {
   colorProps,
@@ -17,7 +17,7 @@ export default {
   title: 'Components/Paragraph',
   component: Paragraph,
   args: {
-    ...Paragraph.defaultProps,
+    ...defaultProps,
     align: 'left',
   },
   argTypes: {

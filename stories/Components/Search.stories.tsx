@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Search } from 'src/Search';
+import { Avatar, Box, Paragraph } from 'src';
+import { defaultProps, Search } from 'src/Search';
 import { SearchItem } from 'src/types';
 
-import { Avatar, Box, Paragraph } from '../../src';
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 
 type Story = StoryObj<typeof Search>;
@@ -12,7 +12,7 @@ export default {
   title: 'Components/Search',
   component: Search,
   args: {
-    ...Search.defaultProps,
+    ...defaultProps,
     width: 260,
   },
   argTypes: {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from 'src';
-import { Tooltip } from 'src/Tooltip';
+import { defaultProps, Tooltip } from 'src/Tooltip';
 
 import {
   colorProps,
@@ -19,7 +19,7 @@ export default {
   title: 'Components/Tooltip',
   component: Tooltip,
   args: {
-    ...Tooltip.defaultProps,
+    ...defaultProps,
     content: 'The quick brown fox jumps over the lazy dog',
   },
   argTypes: {

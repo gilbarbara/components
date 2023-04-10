@@ -24,7 +24,5 @@ export const StyledText = styled(
 });
 
 export const Text = forwardRef<HTMLSpanElement, TextProps>((props, ref) => (
-  <StyledText ref={ref} data-component-name="Text" {...props} />
+  <StyledText ref={ref} data-component-name="Text" {...textDefaultOptions} {...props} />
 ));
-
-Text.defaultProps = textDefaultOptions;

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, H4, Jumbo, Paragraph } from 'src';
-import { Page } from 'src/Page';
+import { defaultProps, Page } from 'src/Page';
 
 import {
   colorProps,
@@ -18,7 +18,7 @@ export default {
   title: 'Components/Page',
   component: Page,
   args: {
-    ...Page.defaultProps,
+    ...defaultProps,
     name: 'About',
     maxWidth: 1280,
     shade: 'lightest',

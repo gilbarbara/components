@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import styled from '@emotion/styled';
 
-import { getStyles, HeadingLargeProps } from './utils';
+import { getStyles, HeadingLargeProps, jumboDefaultProps } from './utils';
 
 import { getStyledOptions } from '../modules/system';
 
@@ -15,10 +15,5 @@ export const StyledJumbo = styled(
 });
 
 export const Jumbo = forwardRef<HTMLHeadingElement, HeadingLargeProps>((props, ref) => (
-  <StyledJumbo ref={ref} data-component-name="Jumbo" {...props} />
+  <StyledJumbo ref={ref} data-component-name="Jumbo" {...jumboDefaultProps} {...props} />
 ));
-
-Jumbo.defaultProps = {
-  large: false,
-  light: false,
-};
