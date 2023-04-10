@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { ForwardedRef, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
@@ -55,7 +55,7 @@ export interface ButtonKnownProps
   wide?: boolean;
 }
 
-export type ButtonProps = ComponentProps<HTMLButtonElement, ButtonKnownProps>;
+export type ButtonProps = ComponentProps<HTMLElement, ButtonKnownProps>;
 
 export const defaultProps = {
   block: false,
@@ -115,6 +115,7 @@ export const StyledButton = styled(
     overflow: hidden;
     padding: ${buttonPadding};
     position: relative;
+    text-decoration: none;
     transition: background-color 0.6s, border-color 0.6s;
     width: ${block ? '100%' : 'auto'};
     ${backgroundStyles(props)};
@@ -138,7 +139,7 @@ export const StyledButton = styled(
   `;
 });
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
   const { busy, children, shape, size } = { ...defaultProps, ...props };
   const {
     button: { fontSize },
@@ -155,7 +156,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   }
 
   return (
-    <StyledButton ref={ref} data-component-name="Button" {...defaultProps} {...props}>
+    <StyledButton
+      ref={ref as ForwardedRef<HTMLButtonElement>}
+      data-component-name="Button"
+      {...defaultProps}
+      {...props}
+    >
       {content.children}
       {content.icon}
     </StyledButton>

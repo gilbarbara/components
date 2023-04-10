@@ -1,3 +1,4 @@
+import { MouseEvent, useRef } from 'react';
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
@@ -105,4 +106,29 @@ export const Shapes: Story = {
       </Button>
     </Grid>
   ),
+};
+
+export const AsLink: Story = {
+  args: {
+    as: 'a',
+  },
+  argTypes: {
+    shape: disableControl(),
+  },
+  render: props => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const ref = useRef<HTMLAnchorElement>(null);
+
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      action('clicked')(event);
+    };
+
+    return (
+      <Button ref={ref} href="https://example.com" onClick={handleClick} {...props}>
+        Link
+      </Button>
+    );
+  },
 };
