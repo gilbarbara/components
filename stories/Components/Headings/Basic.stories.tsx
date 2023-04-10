@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { H1, H2, H3, H4, H5, H6 } from 'src/Headings';
+import { defaultProps } from 'src/Headings/utils';
 
 import { colorProps, hideProps, marginProps } from '../../__helpers__';
 
@@ -8,7 +9,7 @@ export default {
   title: 'Components/Headings',
   component: H1,
   args: {
-    ...H1.defaultProps,
+    ...defaultProps,
     align: 'center',
     children: 'The quick brown fox jumps over the lazy dog',
   },

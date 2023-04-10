@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { H1 } from 'src';
-import { Anchor } from 'src/Anchor';
+import { Anchor, defaultProps } from 'src/Anchor';
 
 import { colorProps, hideProps, spacingProps, textOptionsProps } from '../__helpers__';
 
@@ -11,7 +11,7 @@ export default {
   title: 'Components/Anchor',
   component: Anchor,
   args: {
-    ...Anchor.defaultProps,
+    ...defaultProps,
     children: 'Open in GitHub',
     external: true,
     href: 'https://github.com/gilbarbara/components',

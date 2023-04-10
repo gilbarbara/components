@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DatePickerInput } from 'src/DatePicker/Input';
+import { DatePickerInput, inputDefaultProps } from 'src/DatePicker/Input';
 
 import { disableControl, hideProps } from '../__helpers__';
 
@@ -9,7 +9,7 @@ type Story = StoryObj<typeof DatePickerInput>;
 export default {
   title: 'Components/DatePicker',
   component: DatePickerInput,
-  args: DatePickerInput.defaultProps,
+  args: inputDefaultProps,
   argTypes: {
     ...hideProps(),
     currentMonthLabel: { control: 'text' },

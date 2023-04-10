@@ -21,11 +21,20 @@ export type InputFileProps = ComponentProps<
   'name' | 'type' | 'width'
 >;
 
+export const defaultProps = {
+  disabled: false,
+  invert: true,
+  large: false,
+  placeholder: 'Upload a file',
+  readOnly: false,
+  width: '100%',
+} satisfies Omit<InputFileProps, 'name'>;
+
 export const StyledFileInput = styled(
   'div',
   getStyledOptions(),
 )<Partial<InputFileProps>>(props => {
-  const { width = '100%' } = props;
+  const { width } = props;
   const { spacing } = getTheme(props);
 
   return css`
@@ -55,7 +64,10 @@ export const StyledInput = styled('input', getStyledOptions())`
 `;
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, ref) => {
-  const { invert, large, name, onChange, placeholder, value, ...rest } = props;
+  const { invert, large, name, onChange, placeholder, value, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
   const [localValue, setLocalValue] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -80,12 +92,3 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
     </StyledFileInput>
   );
 });
-
-InputFile.defaultProps = {
-  disabled: false,
-  invert: true,
-  large: false,
-  placeholder: 'Upload a file',
-  readOnly: false,
-  width: '100%',
-};

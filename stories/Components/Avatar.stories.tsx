@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { BoxCenter, Grid, Paragraph } from 'src';
-import { Avatar } from 'src/Avatar';
+import { Avatar, defaultProps } from 'src/Avatar';
 
 import { colorProps, disableControl, flexItemProps, hideProps } from '../__helpers__';
 
@@ -11,7 +11,7 @@ export default {
   title: 'Components/Avatar',
   component: Avatar,
   args: {
-    ...Avatar.defaultProps,
+    ...defaultProps,
     image: 'https://images.unsplash.com/photo-1564164841584-391b5c7b590c?w=800',
     name: 'Test User',
   },

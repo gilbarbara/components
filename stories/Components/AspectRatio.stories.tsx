@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { Meta, StoryObj } from '@storybook/react';
 
+import { Paragraph } from 'src';
 import { AspectRatio } from 'src/AspectRatio';
 import { grayMid } from 'src/modules/theme';
 
-import { Paragraph } from '../../src';
 import { hideProps, hideTable, marginProps } from '../__helpers__';
 
 type Story = StoryObj<typeof AspectRatio>;

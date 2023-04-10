@@ -10,12 +10,21 @@ import {
   StyledText,
 } from './utils';
 
+export const defaultProps = {
+  align: 'center',
+  disabled: false,
+  size: 'md',
+} satisfies Omit<RadioProps, 'name' | 'value'>;
+
 /**
  * Use the RadioGroup component instead of this.
  * RadioGroup accepts an `items` prop that render this component in a group and is responsible for managing state and interactions.
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const { align, checked, defaultChecked, id, label, name, size, style, ...rest } = props;
+  const { align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
 
   return (
     <StyledLabel
@@ -42,7 +51,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
         onKeyDown={handleKeyDown}
         size={size}
         style={style}
-        tabIndex={props.disabled ? -1 : 0}
+        tabIndex={rest.disabled ? -1 : 0}
       />
       {label && (
         <StyledText category="radio" size={size}>
@@ -52,9 +61,3 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     </StyledLabel>
   );
 });
-
-Radio.defaultProps = {
-  align: 'center',
-  disabled: false,
-  size: 'md',
-};

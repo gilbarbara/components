@@ -80,40 +80,40 @@ export const StyledBox = styled(
   `;
 });
 
+export const boxDefaultProps = {
+  flexBox: false,
+} satisfies Omit<BoxProps, 'children'>;
+
 /**
  * A container that lays out its contents using "block" (default) or "flex" (with the display prop).
  */
-export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
-  const { children, ...rest } = props;
-
-  return (
-    <StyledBox ref={ref} data-component-name="Box" {...rest}>
-      {children}
-    </StyledBox>
-  );
-});
-
-Box.defaultProps = {
-  flexBox: false,
-};
-
-export const BoxCenter = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
-  <StyledBox ref={ref} data-component-name="BoxCenter" {...props} />
+export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
+  <StyledBox ref={ref} data-component-name="Box" {...boxDefaultProps} {...props} />
 ));
 
-BoxCenter.defaultProps = {
+export const boxCenterDefaultProps = {
   align: 'center',
   direction: 'column',
   display: 'flex',
   justify: 'center',
-};
+} satisfies Omit<BoxProps, 'children'>;
 
-export const BoxInline = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
-  <StyledBox ref={ref} as="span" data-component-name="BoxInline" {...props} />
+export const BoxCenter = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((props, ref) => (
+  <StyledBox ref={ref} data-component-name="BoxCenter" {...boxCenterDefaultProps} {...props} />
 ));
 
-BoxInline.defaultProps = {
+export const boxInlineDefaultProps = {
   align: 'center',
   direction: 'row',
   display: 'inline-flex',
-};
+} satisfies Omit<BoxProps, 'children'>;
+
+export const BoxInline = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((props, ref) => (
+  <StyledBox
+    ref={ref}
+    as="span"
+    data-component-name="BoxInline"
+    {...boxInlineDefaultProps}
+    {...props}
+  />
+));

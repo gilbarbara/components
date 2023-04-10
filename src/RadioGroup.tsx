@@ -17,6 +17,12 @@ export interface RadioGroupProps
   items: RadioItem[];
 }
 
+export const defaultProps = {
+  disabled: false,
+  inline: false,
+  size: 'md',
+} satisfies Omit<RadioGroupProps, 'items' | 'name' | 'value'>;
+
 const StyledRadioGroup = styled(
   'div',
   getStyledOptions(),
@@ -40,7 +46,10 @@ const StyledRadioGroup = styled(
 });
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } = props;
+  const { defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
   const [selectedValue, setSelectedValue] = useState(value ?? defaultValue);
   const previousProps = usePrevious(props);
 
@@ -94,9 +103,3 @@ export function RadioGroup(props: RadioGroupProps) {
     </StyledRadioGroup>
   );
 }
-
-RadioGroup.defaultProps = {
-  disabled: false,
-  inline: false,
-  size: 'md',
-} as const;

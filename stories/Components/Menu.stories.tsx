@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonUnstyled, Icon, Spacer } from 'src';
-import { Menu, MenuDivider, MenuItem } from 'src/Menu';
+import { defaultProps, Menu, MenuDivider, MenuItem } from 'src/Menu';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
 
@@ -12,7 +12,7 @@ type Story = StoryObj<typeof Menu>;
 export default {
   title: 'Components/Menu',
   component: Menu,
-  args: Menu.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(),

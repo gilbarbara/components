@@ -56,7 +56,7 @@ export interface DataTableKnownProps extends StyledProps, WithFlexItem, WithLayo
   scrollMargin?: number;
   style?: CSSProperties;
   /** @default window.innerWidth */
-  width?: StringOrNumber;
+  width?: number;
 }
 
 export type DataTableProps = ComponentProps<HTMLDivElement, DataTableKnownProps, 'data' | 'wrap'>;
@@ -79,30 +79,41 @@ function sortData(data: any[], sortBy: string, sortDirection: string) {
   });
 }
 
+export const defaultProps = {
+  breakpoint: 768,
+  clean: false,
+  loading: false,
+  maxRows: 10,
+  pagination: true,
+  responsive: false,
+  scrollDuration: 400,
+  scrollMargin: 16,
+} satisfies Omit<DataTableProps, 'columns' | 'data'>;
+
 export function DataTable(props: DataTableProps): JSX.Element {
   const {
-    breakpoint = 768,
+    breakpoint,
     clean,
     columns,
     data,
     defaultColumn,
     disableScroll,
-    loading = false,
-    maxRows = 10,
+    loading,
+    maxRows,
     noResults,
     onClickPage,
     onClickSort,
-    pagination = true,
+    pagination,
     paginationCurrentPage,
     paginationServer,
     paginationTotalPages,
-    responsive = false,
-    scrollDuration = 400,
+    responsive,
+    scrollDuration,
     scrollElement,
-    scrollMargin = 16,
+    scrollMargin,
     width,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
   const { darkMode = false } = useTheme();
   const element = useRef<HTMLDivElement>(null);
 
@@ -245,14 +256,3 @@ export function DataTable(props: DataTableProps): JSX.Element {
     </Box>
   );
 }
-
-DataTable.defaultProps = {
-  breakpoint: 768,
-  clean: false,
-  loading: false,
-  maxRows: 10,
-  pagination: true,
-  responsive: false,
-  scrollDuration: 400,
-  scrollMargin: 16,
-};

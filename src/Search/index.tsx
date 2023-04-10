@@ -14,6 +14,18 @@ import { getTheme, px } from '../modules/helpers';
 import { getStyledOptions, marginStyles } from '../modules/system';
 import { SearchProps } from '../types';
 
+export const defaultProps = {
+  borderless: false,
+  debounce: 0,
+  height: 230,
+  hideIcon: false,
+  icon: 'search',
+  loading: false,
+  noResultsLabel: 'Nothing found',
+  placeholder: 'Search for...',
+  showListOnFocus: true,
+} satisfies Omit<SearchProps, 'items' | 'onSelect'>;
+
 export const StyledSearch = styled(
   Box,
   getStyledOptions(),
@@ -31,9 +43,9 @@ export function Search(props: SearchProps): JSX.Element {
   const {
     borderless,
     debounce,
-    height = 230,
+    height,
     hideIcon,
-    icon = 'search',
+    icon,
     items,
     loading,
     onFocus,
@@ -43,7 +55,7 @@ export function Search(props: SearchProps): JSX.Element {
     placeholder,
     showListOnFocus,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
 
   const optionsRef = useRef<HTMLDivElement>(null);
   const isActive = useRef(false);
@@ -211,15 +223,3 @@ export function Search(props: SearchProps): JSX.Element {
     </StyledSearch>
   );
 }
-
-Search.defaultProps = {
-  borderless: false,
-  debounce: 0,
-  height: 230,
-  hideIcon: false,
-  icon: 'search',
-  loading: false,
-  noResultsLabel: 'Nothing found',
-  placeholder: 'Search for...',
-  showListOnFocus: true,
-} as const;

@@ -24,6 +24,7 @@ import {
 } from '../modules/system';
 
 export const defaultProps = {
+  formatLocale: 'en-US',
   currentMonthLabel: 'Go to today',
   variant: 'primary',
 } as const;

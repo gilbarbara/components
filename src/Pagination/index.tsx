@@ -35,6 +35,12 @@ interface Item {
   page?: number;
 }
 
+export const defaultProps = {
+  align: 'end',
+  disableEdgeNavigation: false,
+  edgeNavigationLimit: 3,
+} satisfies Omit<PaginationProps, 'currentPage' | 'onClick' | 'totalPages'>;
+
 const StyledPagination = styled(
   'div',
   getStyledOptions(),
@@ -59,7 +65,7 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
     onClick,
     totalPages,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
   const items: Item[] = [];
 
   if (totalPages <= 1) {
@@ -165,9 +171,3 @@ export function Pagination(props: PaginationProps): JSX.Element | null {
     </StyledPagination>
   );
 }
-
-Pagination.defaultProps = {
-  align: 'end',
-  disableEdgeNavigation: false,
-  edgeNavigationLimit: 3,
-} as const;

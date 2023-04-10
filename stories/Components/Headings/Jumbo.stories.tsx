@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Jumbo } from 'src/Headings';
+import { jumboDefaultProps } from 'src/Headings/utils';
 
 import { colorProps, hideProps, marginProps } from '../../__helpers__';
 
@@ -10,7 +11,7 @@ export default {
   title: 'Components/Headings',
   component: Jumbo,
   args: {
-    ...Jumbo.defaultProps,
+    ...jumboDefaultProps,
     align: 'center',
     children: 'The quick brown fox jumps over the lazy dog',
   },

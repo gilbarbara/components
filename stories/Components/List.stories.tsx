@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { List } from 'src/List';
+import { Avatar, Box, H3, H6, Paragraph, Spacer } from 'src';
+import { defaultProps, List } from 'src/List';
 
-import { Avatar, Box, H3, H6, Paragraph, Spacer } from '../../src';
 import {
   colorProps,
   disableControl,
@@ -18,7 +18,7 @@ export default {
   title: 'Components/List',
   component: List,
   args: {
-    ...List.defaultProps,
+    ...defaultProps,
     minWidth: 260,
   },
   argTypes: {
@@ -73,8 +73,8 @@ export const WithComponents: Story = {
     border: false,
     items: [
       <Box key="1">
-        <H3 mb="xs">Brown Fox</H3>
-        <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
+        <H3 mb="xs">Users</H3>
+        <Paragraph>The users inside this group</Paragraph>
       </Box>,
       <Spacer key="2">
         <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />

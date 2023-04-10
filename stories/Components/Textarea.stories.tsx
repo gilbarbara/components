@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Textarea } from 'src/Textarea';
+import { defaultProps, Textarea } from 'src/Textarea';
 
 import { hideProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/Textarea',
   component: Textarea,
   args: {
-    ...Textarea.defaultProps,
+    ...defaultProps,
     name: 'description',
     placeholder: 'Tell us something about yourself...',
   },

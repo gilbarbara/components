@@ -67,6 +67,14 @@ const styles = {
   },
 };
 
+export const defaultProps = {
+  defaultChecked: false,
+  disabled: false,
+  shade: 'mid',
+  size: 'md',
+  variant: 'primary',
+} satisfies ToggleProps;
+
 const StyledInput = styled('input')`
   bottom: 0;
   left: 0;
@@ -80,7 +88,7 @@ const StyledTrack = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { isActive, shade, variant = 'primary' } = props;
+  const { isActive, shade, variant } = props;
   const { grayDark, grayLighter, radius, variants } = getTheme(props);
 
   const { bg } = getColorVariant(variant, shade, variants);
@@ -167,18 +175,18 @@ export const StyledToggle = styled('div')<SetRequired<ToggleProps, 'size'>>(prop
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => {
   const {
     checked,
-    defaultChecked = false,
+    defaultChecked,
     disabled,
     label,
     labelOptions,
     name,
     onChange,
     onClick,
-    shade = 'mid',
-    size = 'md',
-    variant = 'primary',
+    shade,
+    size,
+    variant,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
   const inputRef = useRef<HTMLInputElement>(null);
   const [isActive, setActive] = useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
@@ -269,11 +277,3 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     </Label>
   );
 });
-
-Toggle.defaultProps = {
-  defaultChecked: false,
-  disabled: false,
-  shade: 'mid',
-  size: 'md',
-  variant: 'primary',
-};

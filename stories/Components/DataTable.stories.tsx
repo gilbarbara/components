@@ -20,7 +20,7 @@ import {
   Tag,
   Text,
 } from 'src';
-import { DataTable, DataTableColumn } from 'src/DataTable';
+import { DataTable, DataTableColumn, defaultProps } from 'src/DataTable';
 import { DropdownOption } from 'src/types';
 
 import { members } from '../__assets__/data';
@@ -37,7 +37,7 @@ type Story = StoryObj<typeof DataTable>;
 export default {
   title: 'Components/DataTable',
   component: DataTable,
-  args: DataTable.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...flexItemProps(),

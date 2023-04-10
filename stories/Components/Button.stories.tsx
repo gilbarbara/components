@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Icon, Spacer } from 'src';
-import { Button } from 'src/Button';
+import { Button, defaultProps } from 'src/Button';
 import { sizes } from 'src/modules/options';
 import * as Types from 'src/types';
 
@@ -22,7 +22,7 @@ export default {
   title: 'Components/Button',
   component: Button,
   args: {
-    ...Button.defaultProps,
+    ...defaultProps,
     children: 'Button',
   },
   argTypes: {

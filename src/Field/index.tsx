@@ -25,6 +25,18 @@ import { getDefaultValue, getError, getRegisterOptions } from './utils';
 
 import { FormGroup } from '../FormGroup';
 
+export const defaultProps = {
+  debug: false,
+  disabled: false,
+  hideAssistiveText: false,
+  inline: false,
+  label: '',
+  readOnly: false,
+  required: false,
+  skipValidation: false,
+  type: 'text',
+} satisfies Omit<FieldProps, 'name'>;
+
 export function Field<T extends FieldProps>(props: T) {
   const {
     assistiveText,
@@ -36,10 +48,10 @@ export function Field<T extends FieldProps>(props: T) {
     required,
     skipValidation,
     style,
-    type = 'text',
+    type,
     validations,
     value,
-  } = props;
+  } = { ...defaultProps, ...props };
   const [{ isActive, isDirty }, setStatus] = useSetState({
     isActive: false,
     isDirty: false,
@@ -176,17 +188,5 @@ export function Field<T extends FieldProps>(props: T) {
     </FormGroup>
   );
 }
-
-Field.defaultProps = {
-  debug: false,
-  disabled: false,
-  hideAssistiveText: false,
-  inline: false,
-  label: '',
-  readOnly: false,
-  required: false,
-  skipValidation: false,
-  type: 'text',
-} as const;
 
 export type { FieldProps } from './types';

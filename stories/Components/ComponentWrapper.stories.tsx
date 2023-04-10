@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon, Input, Select, Textarea } from 'src';
-import { ComponentWrapper } from 'src/ComponentWrapper';
+import { ComponentWrapper, defaultProps } from 'src/ComponentWrapper';
 
 import { hideProps, marginProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ type Story = StoryObj<typeof ComponentWrapper>;
 export default {
   title: 'Components/ComponentWrapper',
   component: ComponentWrapper,
-  args: ComponentWrapper.defaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...marginProps(),

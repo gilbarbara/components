@@ -27,10 +27,19 @@ export interface SelectKnownProps
 
 export type SelectProps = ComponentProps<HTMLSelectElement, SelectKnownProps>;
 
+export const defaultProps = {
+  borderless: false,
+  disabled: false,
+  large: false,
+  multiple: false,
+  prefixSpacing: false,
+  width: '100%',
+} satisfies Omit<SelectProps, 'children' | 'name'>;
+
 export const StyledSelect = styled(
   'select',
   getStyledOptions(),
-)<SelectProps & { filled: boolean }>(props => {
+)<Omit<SelectProps, 'name'> & { filled: boolean }>(props => {
   const { filled, large, multiple } = props;
   const { colors, darkColor, darkMode, grayMid, spacing, white } = getTheme(props);
 
@@ -83,7 +92,7 @@ export const StyledSelect = styled(
 });
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const { defaultValue, name, onChange, value } = props;
+  const { defaultValue, name, onChange, value, ...rest } = { ...defaultProps, ...props };
   const localRef = useRef<HTMLSelectElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
   const [isFilled, setFilled] = useState(!!defaultValue || !!value);
@@ -109,17 +118,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
       data-component-name="Select"
       filled={isFilled}
       id={name}
-      {...props}
+      {...rest}
       onChange={handleChange}
     />
   );
 });
-
-Select.defaultProps = {
-  borderless: false,
-  disabled: false,
-  large: false,
-  multiple: false,
-  prefixSpacing: false,
-  width: '100%',
-};

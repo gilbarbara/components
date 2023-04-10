@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from 'src';
-import { Dialog } from 'src/Dialog';
+import { defaultProps, Dialog } from 'src/Dialog';
 
 import { disableControl, hideProps, paddingProps } from '../__helpers__';
 
@@ -13,7 +13,7 @@ export default {
   title: 'Components/Dialog',
   component: Dialog,
   args: {
-    ...Dialog.defaultProps,
+    ...defaultProps,
     content: 'You are adding a partner',
     title: 'Do you really want to add it?',
   },

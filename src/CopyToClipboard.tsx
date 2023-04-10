@@ -24,6 +24,14 @@ export interface CopyToClipboardProps extends WithMargin {
   tooltipText?: string;
 }
 
+export const defaultProps = {
+  disableAnimation: false,
+  icon: 'copy',
+  size: 16,
+  tooltipCopiedText: 'Copied!',
+  tooltipText: 'Copy',
+} satisfies Omit<CopyToClipboardProps, 'text'>;
+
 const StyledCopyToClipboard = styled(
   'span',
   getStyledOptions(),
@@ -39,6 +47,7 @@ const StyledCopyToClipboard = styled(
 });
 
 const StyledIcon = styled(Icon)`
+  pointer-events: none;
   transition: transform 0.6s;
 
   &.will-animate {
@@ -51,16 +60,10 @@ const StyledIcon = styled(Icon)`
 `;
 
 export function CopyToClipboard(props: CopyToClipboardProps) {
-  const {
-    disableAnimation = false,
-    icon = 'copy',
-    onCopy,
-    size = 16,
-    text,
-    tooltipCopiedText = 'Copied!',
-    tooltipText = 'Copy',
-    ...rest
-  } = props;
+  const { disableAnimation, icon, onCopy, size, text, tooltipCopiedText, tooltipText, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
   const [content, setContent] = useState(tooltipText);
   const isActive = useRef(false);
   const theme = getTheme({ theme: useTheme() });
@@ -97,11 +100,3 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
     </StyledCopyToClipboard>
   );
 }
-
-CopyToClipboard.defaultProps = {
-  disableAnimation: false,
-  icon: 'copy',
-  size: 16,
-  tooltipCopiedText: 'Copied!',
-  tooltipText: 'Copy',
-} as const;

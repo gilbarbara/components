@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { StringOrNumber } from '@gilbarbara/types';
+import { SetRequired } from 'type-fest';
 
 import { getColorVariant, getTheme, px } from './modules/helpers';
 import { textDefaultOptions } from './modules/options';
@@ -59,21 +60,35 @@ const borderSizes = {
   lg: '4px',
 };
 
+export const defaultProps = {
+  ...textDefaultOptions,
+  align: 'center',
+  borderSize: 'sm',
+  borderStyle: 'solid',
+  direction: 'horizontal',
+  gap: 'xs',
+  length: '100%',
+  minBorderWidth: 50,
+  shade: 'light',
+  size: 'regular',
+  variant: 'gray',
+} satisfies DividerProps;
+
 const StyledDivider = styled(
   'div',
   getStyledOptions('type'),
-)<DividerProps>(props => {
+)<SetRequired<DividerProps, keyof typeof defaultProps>>(props => {
   const {
     align,
-    borderSize = 'sm',
+    borderSize,
     borderStyle,
     children,
     direction,
-    gap = 'xs',
-    length = '100%',
+    gap,
+    length,
     minBorderWidth,
     shade,
-    variant = 'gray',
+    variant,
   } = props;
   const { spacing, variants } = getTheme(props);
   const isHorizontal = direction === 'horizontal';
@@ -147,19 +162,7 @@ const StyledDivider = styled(
 });
 
 export function Divider(props: DividerProps): JSX.Element {
-  return <StyledDivider data-component-name="Divider" role="separator" {...props} />;
+  return (
+    <StyledDivider data-component-name="Divider" role="separator" {...defaultProps} {...props} />
+  );
 }
-
-Divider.defaultProps = {
-  ...textDefaultOptions,
-  align: 'center',
-  borderSize: 'sm',
-  borderStyle: 'solid',
-  direction: 'horizontal',
-  gap: 'xs',
-  length: '100%',
-  minBorderWidth: 50,
-  shade: 'light',
-  size: 'regular',
-  variant: 'gray',
-} as const;

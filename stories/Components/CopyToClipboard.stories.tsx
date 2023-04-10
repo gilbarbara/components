@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { CopyToClipboard } from 'src/CopyToClipboard';
+import { CopyToClipboard, defaultProps } from 'src/CopyToClipboard';
 
 import { hideProps, marginProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/CopyToClipboard',
   component: CopyToClipboard,
   args: {
-    ...CopyToClipboard.defaultProps,
+    ...defaultProps,
     text: 'test-user@example.com',
   },
   argTypes: {

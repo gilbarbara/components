@@ -19,23 +19,7 @@ export interface TextareaKnownProps
 
 export type TextareaProps = ComponentProps<HTMLTextAreaElement, TextareaKnownProps, 'name'>;
 
-export const StyledTextarea = styled(
-  'textarea',
-  getStyledOptions(),
-)<TextareaProps>(props => {
-  return css`
-    ${baseStyles(props)};
-    ${inputStyles(props, 'textarea')};
-  `;
-});
-
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
-  const { name } = props;
-
-  return <StyledTextarea ref={ref} data-component-name="Textarea" id={name} {...props} />;
-});
-
-Textarea.defaultProps = {
+export const defaultProps = {
   borderless: false,
   disabled: false,
   prefixSpacing: false,
@@ -43,4 +27,20 @@ Textarea.defaultProps = {
   rows: 3,
   suffixSpacing: false,
   width: '100%',
-};
+} satisfies Omit<TextareaProps, 'name'>;
+
+export const StyledTextarea = styled(
+  'textarea',
+  getStyledOptions(),
+)<Omit<TextareaProps, 'name'>>(props => {
+  return css`
+    ${baseStyles(props)};
+    ${inputStyles(props, 'textarea')};
+  `;
+});
+
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
+  const { name, ...rest } = { ...defaultProps, ...props };
+
+  return <StyledTextarea ref={ref} data-component-name="Textarea" id={name} {...rest} />;
+});

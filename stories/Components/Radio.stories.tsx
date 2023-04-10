@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Radio } from 'src/CheckboxAndRadio';
+import { Radio, radioDefaultProps } from 'src/CheckboxAndRadio';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/Radio',
   component: Radio,
   args: {
-    ...Radio.defaultProps,
+    ...radioDefaultProps,
     label: 'Skip Packaging',
     name: 'skipPackaging',
     value: 'skipPackaging',

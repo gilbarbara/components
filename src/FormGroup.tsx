@@ -54,6 +54,14 @@ export interface FormGroupKnownProps
 
 export type FormGroupProps = ComponentProps<HTMLElement, FormGroupKnownProps>;
 
+export const defaultProps = {
+  hideAssistiveText: false,
+  inline: false,
+  radius: false,
+  required: false,
+  skipIcon: false,
+} satisfies Omit<FormGroupProps, 'children'>;
+
 export const StyledFormGroup = styled(
   'div',
   getStyledOptions(),
@@ -138,7 +146,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     skipIcon,
     valid,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
   const content: AnyObject = {
     assistiveText,
   };
@@ -196,11 +204,3 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     </StyledFormGroup>
   );
 });
-
-FormGroup.defaultProps = {
-  hideAssistiveText: false,
-  inline: false,
-  radius: false,
-  required: false,
-  skipIcon: false,
-};

@@ -17,6 +17,12 @@ export interface LabelKnownProps extends StyledProps, WithChildren, WithInline, 
 
 export type LabelProps = ComponentProps<HTMLLabelElement, LabelKnownProps>;
 
+export const defaultProps = {
+  ...textDefaultOptions,
+  bold: true,
+  inline: false,
+} satisfies Omit<LabelProps, 'children'>;
+
 export const StyledLabel = styled(
   'label',
   getStyledOptions(),
@@ -44,7 +50,7 @@ export const StyledLabel = styled(
 });
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
-  const { children, labelId, labelInfo } = props;
+  const { children, labelId, labelInfo, ...rest } = { ...defaultProps, ...props };
 
   let info;
 
@@ -59,15 +65,9 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
   }
 
   return (
-    <StyledLabel ref={ref} data-component-name="Label" {...props} htmlFor={labelId}>
+    <StyledLabel ref={ref} data-component-name="Label" {...rest} htmlFor={labelId}>
       {children}
       {info}
     </StyledLabel>
   );
 });
-
-Label.defaultProps = {
-  ...textDefaultOptions,
-  bold: true,
-  inline: false,
-};

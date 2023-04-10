@@ -4,7 +4,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid } from 'src';
 import { getTheme } from 'src/modules/helpers';
-import { Toggle } from 'src/Toggle';
+import { defaultProps, Toggle } from 'src/Toggle';
 import * as Types from 'src/types';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
@@ -15,7 +15,7 @@ export default {
   title: 'Components/Toggle',
   component: Toggle,
   args: {
-    ...Toggle.defaultProps,
+    ...defaultProps,
     label: 'Toggle',
   },
   argTypes: {

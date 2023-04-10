@@ -38,6 +38,15 @@ export type HeadingLargeProps = ComponentProps<
   HeadingKnownProps & { large?: boolean }
 >;
 
+export const defaultProps = {
+  light: false,
+} satisfies Omit<HeadingProps, 'children'>;
+
+export const jumboDefaultProps = {
+  ...defaultProps,
+  large: false,
+} satisfies Omit<HeadingLargeProps, 'children'>;
+
 export function getStyles(key: Typography, props: HeadingProps) {
   const { light } = props;
   const { fontFamily, fontWeights, typography } = getTheme(props);

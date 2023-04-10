@@ -12,6 +12,10 @@ export interface TruncateProps extends StyledProps, WithChildren {
   maxWidth?: StringOrNumber;
 }
 
+export const defaultProps = {
+  lines: 2,
+} satisfies Omit<TruncateProps, 'children'>;
+
 const StyledTruncate = styled(
   'span',
   getStyledOptions(),
@@ -38,7 +42,7 @@ const StyledTruncate = styled(
 });
 
 export function Truncate(props: TruncateProps): JSX.Element {
-  const { children, ...rest } = props;
+  const { children, ...rest } = { ...defaultProps, ...props };
 
   return (
     <StyledTruncate data-component-name="Truncate" {...rest}>
@@ -46,7 +50,3 @@ export function Truncate(props: TruncateProps): JSX.Element {
     </StyledTruncate>
   );
 }
-
-Truncate.defaultProps = {
-  lines: 2,
-};

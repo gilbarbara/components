@@ -29,6 +29,18 @@ interface State {
   selected: DatePickerRangeParameter | string;
 }
 
+export const inputDefaultProps = {
+  ...defaultProps,
+  borderless: false,
+  large: false,
+  position: 'right',
+  separator: ' — ',
+  showRange: false,
+  showRangeApply: false,
+  variant: 'primary',
+  width: 'auto',
+} satisfies DatePickerInputProps;
+
 const StyledButton = styled(
   'div',
   getStyledOptions(),
@@ -37,7 +49,7 @@ const StyledButton = styled(
     isFilled: boolean;
   }
 >(props => {
-  const { borderless, isFilled, large, variant = 'primary', width } = props;
+  const { borderless, isFilled, large, variant = inputDefaultProps.variant, width } = props;
   const {
     darkColor,
     grayDark,
@@ -137,13 +149,13 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
     onSelect,
     open,
     placeholder,
-    position = 'right',
-    separator = ' — ',
-    showRange = false,
+    position,
+    separator,
+    showRange,
     showRangeApply,
     width,
     ...rest
-  } = props;
+  } = { ...inputDefaultProps, ...props };
   const [{ isActive, isFilled, selected }, setState] = useSetState<State>({
     isActive: open || false,
     isFilled: false,
@@ -243,16 +255,3 @@ export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
     </Box>
   );
 }
-
-DatePickerInput.defaultProps = {
-  ...defaultProps,
-  borderless: false,
-  formatLocale: 'en-US',
-  large: false,
-  position: 'right',
-  separator: ' — ',
-  showRange: false,
-  showRangeApply: false,
-  variant: 'primary',
-  width: 'auto',
-} as const;

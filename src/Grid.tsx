@@ -68,6 +68,10 @@ export interface GridKnownProps
 
 export type GridProps = ComponentProps<HTMLDivElement, GridKnownProps>;
 
+export const defaultProps = {
+  display: 'grid',
+} satisfies Omit<GridProps, 'children'>;
+
 export const StyledGrid = styled(
   'div',
   getStyledOptions(),
@@ -126,9 +130,5 @@ export const StyledGrid = styled(
 });
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => (
-  <StyledGrid ref={ref} data-component-name="Grid" {...props} />
+  <StyledGrid ref={ref} data-component-name="Grid" {...defaultProps} {...props} />
 ));
-
-Grid.defaultProps = {
-  display: 'grid',
-};

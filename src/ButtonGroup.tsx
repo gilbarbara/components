@@ -13,6 +13,12 @@ export interface ButtonGroupKnownProps
 
 export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
 
+export const defaultProps = {
+  shade: 'mid',
+  size: 'md',
+  variant: 'primary',
+} satisfies Omit<ButtonGroupProps, 'children'>;
+
 export const StyledButtonGroup = styled(
   'div',
   getStyledOptions(),
@@ -44,7 +50,7 @@ export const StyledButtonGroup = styled(
 );
 
 export function ButtonGroup(props: ButtonGroupProps) {
-  const { children, shade, size, variant, ...rest } = props;
+  const { children, shade, size, variant, ...rest } = { ...defaultProps, ...props };
   const buttonProps = {
     shade,
     size,
@@ -57,9 +63,3 @@ export function ButtonGroup(props: ButtonGroupProps) {
     </StyledButtonGroup>
   );
 }
-
-ButtonGroup.defaultProps = {
-  shade: 'mid',
-  size: 'md',
-  variant: 'primary',
-} as const;

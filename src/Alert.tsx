@@ -82,13 +82,20 @@ function getIconOptions(type: AlertProps['type'], variants: Theme['variants']) {
   return options[type];
 }
 
+export const defaultProps = {
+  align: 'center',
+  invert: false,
+  padding: 'md',
+  radius: 'xs',
+  type: 'success',
+} satisfies Omit<AlertProps, 'children'>;
+
 export const StyledAlert = styled(
   'div',
   getStyledOptions('type'),
 )<AlertProps>(props => {
-  const { align = 'center', invert, type } = props;
+  const { align, invert, type } = props;
   const { spacing, variants, white } = getTheme(props);
-
   const { bg, color } = getColorVariant(getVariantName(type), 'lighter', variants);
   let backgroundColor = bg;
   let borderColor = bg;
@@ -123,23 +130,15 @@ export const StyledAlert = styled(
 });
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
-  const { children, icon, type } = props;
+  const { children, icon, type, ...rest } = { ...defaultProps, ...props };
   const { variants } = getTheme({ theme: useTheme() });
 
   const selected = getIconOptions(type, variants);
 
   return (
-    <StyledAlert ref={ref} data-component-name="Alert" {...props}>
+    <StyledAlert ref={ref} data-component-name="Alert" type={type} {...rest}>
       <Icon color={selected.color} name={icon || selected.icon} size={20} />
       {isValidElement(children) ? children : <Text size="mid">{children}</Text>}
     </StyledAlert>
   );
 });
-
-Alert.defaultProps = {
-  align: 'center',
-  invert: false,
-  padding: 'md',
-  radius: 'xs',
-  type: 'success',
-};

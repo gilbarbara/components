@@ -44,6 +44,11 @@ const loadBarSound = keyframes`
   100% {transform: scaleY(1) }
 `;
 
+export const defaultProps = {
+  size: 16,
+  spin: false,
+} satisfies Omit<IconProps, 'name' | 'url'>;
+
 export const StyledIcon = styled(
   'span',
   getStyledOptions(),
@@ -108,7 +113,7 @@ export const StyledIcon = styled(
 });
 
 export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
-  const { name, size = 16, title, url, ...rest } = props;
+  const { name, size = 16, title, url, ...rest } = { ...defaultProps, ...props };
   let iconURL = '';
 
   if (name) {
@@ -133,8 +138,3 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
     </StyledIcon>
   );
 });
-
-Icon.defaultProps = {
-  size: 16,
-  spin: false,
-};

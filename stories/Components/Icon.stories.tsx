@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button, Spacer } from 'src';
-import { Icon } from 'src/Icon';
+import { defaultProps, Icon } from 'src/Icon';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
 
@@ -11,8 +11,7 @@ export default {
   title: 'Components/Icon',
   component: Icon,
   args: {
-    ...Icon.defaultProps,
-    // @ts-expect-error
+    ...defaultProps,
     name: 'check',
     size: 24,
   },

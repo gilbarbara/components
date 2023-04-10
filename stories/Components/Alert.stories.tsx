@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Alert } from 'src/Alert';
+import { Box, Paragraph } from 'src';
+import { Alert, defaultProps } from 'src/Alert';
 
-import { Box, Paragraph } from '../../src';
 import { flexBoxProps, hideProps, hideTable, spacingProps } from '../__helpers__';
 
 type Story = StoryObj<typeof Alert>;
@@ -11,7 +11,7 @@ export default {
   title: 'Components/Alert',
   component: Alert,
   args: {
-    ...Alert.defaultProps,
+    ...defaultProps,
     children: 'Registration completed!',
   },
   argTypes: {

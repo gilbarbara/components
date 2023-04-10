@@ -36,6 +36,19 @@ export interface ModalProps
   width?: StringOrNumber;
 }
 
+export const defaultProps = {
+  closeOnClickOverlay: true,
+  closeOnEsc: true,
+  hideCloseButton: false,
+  hideOverlay: false,
+  maxHeight: '80vh',
+  maxWidth: '100vw',
+  padding: 'lg',
+  radius: 'lg',
+  shadow: 'high',
+  zIndex: 1000,
+} satisfies Omit<ModalProps, 'children' | 'isActive'>;
+
 const StyledModal = styled(
   'div',
   getStyledOptions(),
@@ -79,15 +92,15 @@ export function Modal(props: ModalProps) {
     hideCloseButton,
     hideOverlay,
     isActive,
-    maxHeight = '80vh',
+    maxHeight,
     onClose,
     onOpen,
     style,
     title,
     zIndex,
     ...rest
-  } = props;
-  const { padding = 'lg' } = rest;
+  } = { ...defaultProps, ...props };
+  const { padding } = rest;
   const { black, darkMode, white } = getTheme({ theme: useTheme() });
 
   const handlePortalClose = useCallback(() => {
@@ -130,16 +143,3 @@ export function Modal(props: ModalProps) {
     </Portal>
   );
 }
-
-Modal.defaultProps = {
-  closeOnClickOverlay: true,
-  closeOnEsc: true,
-  hideCloseButton: false,
-  hideOverlay: false,
-  maxHeight: '80vh',
-  maxWidth: '100vw',
-  padding: 'lg',
-  radius: 'lg',
-  shadow: 'high',
-  zIndex: 1000,
-} as const;

@@ -7,6 +7,7 @@ import is from 'is-lite';
 import { Box } from './Box';
 import { getTheme, px } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
+import * as theme from './modules/theme';
 import { Text } from './Text';
 import { ComponentProps, StyledProps, WithFormElements } from './types';
 
@@ -20,6 +21,13 @@ export type InputColorProps = ComponentProps<
   InputColorKnownProps,
   'name' | 'type' | 'width'
 >;
+
+export const defaultProps = {
+  disabled: false,
+  height: theme.spacing.xl,
+  readOnly: false,
+  width: theme.spacing.xl,
+} satisfies Omit<InputColorProps, 'name'>;
 
 const StyledColorGroup = styled(
   'div',
@@ -55,7 +63,14 @@ const StyledColorGroup = styled(
 
 export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, ref) => {
   const { spacing } = getTheme({ theme: useTheme() });
-  const { height = spacing.xl, name, onChange, value, width = spacing.xl, ...rest } = props;
+  const {
+    height = spacing.xl,
+    name,
+    onChange,
+    value,
+    width = spacing.xl,
+    ...rest
+  } = { ...defaultProps, ...props };
   const [localValue, setLocalValue] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -75,10 +90,3 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
     </StyledColorGroup>
   );
 });
-
-InputColor.defaultProps = {
-  disabled: false,
-  height: '32px',
-  readOnly: false,
-  width: '32px',
-};

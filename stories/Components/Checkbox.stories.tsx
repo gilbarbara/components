@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { FormGroup, Spacer } from 'src';
-import { Checkbox } from 'src/CheckboxAndRadio';
+import { Checkbox, checkboxDefaultProps } from 'src/CheckboxAndRadio';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 
@@ -11,7 +11,7 @@ export default {
   title: 'Components/Checkbox',
   component: Checkbox,
   args: {
-    ...Checkbox.defaultProps,
+    ...checkboxDefaultProps,
     label: 'Skip Packaging',
     name: 'skipPackaging',
   },

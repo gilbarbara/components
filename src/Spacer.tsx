@@ -76,6 +76,17 @@ export interface SpacerKnownProps
 
 export type SpacerProps = ComponentProps<HTMLDivElement, SpacerKnownProps>;
 
+export const defaultProps = {
+  direction: 'horizontal',
+  distribution: 'start',
+  gap: 'sm',
+  grow: false,
+  radius: false,
+  shadow: false,
+  verticalAlign: 'center',
+  wrap: true,
+} satisfies Omit<SpacerProps, 'children'>;
+
 export const StyledSpacer = styled(
   'div',
   getStyledOptions('fill'),
@@ -133,7 +144,7 @@ const StyledSpacerItem = styled(
  * You can use a "data-flex" property on the children to grow or shrink to fit the space available.
  */
 export const Spacer = forwardRef<HTMLDivElement, SpacerProps>((props, ref) => {
-  const { children, ...rest } = props;
+  const { children, ...rest } = { ...defaultProps, ...props };
 
   const nodes = Children.toArray(children).map((child, index) => {
     const key = `SpacerItem-${index}`;
@@ -152,14 +163,3 @@ export const Spacer = forwardRef<HTMLDivElement, SpacerProps>((props, ref) => {
     </StyledSpacer>
   );
 });
-
-Spacer.defaultProps = {
-  direction: 'horizontal',
-  distribution: 'start',
-  gap: 'sm',
-  grow: false,
-  radius: false,
-  shadow: false,
-  verticalAlign: 'center',
-  wrap: true,
-};

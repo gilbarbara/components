@@ -42,6 +42,13 @@ export interface TagProps
   style?: CSSProperties;
 }
 
+export const defaultProps = {
+  ...omit(textDefaultOptions, 'size'),
+  invert: false,
+  size: 'mid',
+  variant: 'primary',
+} satisfies Omit<TagProps, 'children'>;
+
 export const StyledTag = styled(
   'span',
   getStyledOptions(),
@@ -80,7 +87,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
     onClickBefore,
     shade,
     ...rest
-  } = props;
+  } = { ...defaultProps, ...props };
   const { typography } = getTheme({ theme: useTheme() });
 
   const iconSize = rest.size ? parseInt(typography[rest.size].fontSize, 10) : undefined;
@@ -120,10 +127,3 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
     </StyledTag>
   );
 });
-
-Tag.defaultProps = {
-  ...omit(textDefaultOptions, 'size'),
-  invert: false,
-  size: 'mid',
-  variant: 'primary',
-};

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ButtonUnstyled } from 'src/ButtonUnstyled';
+import { ButtonUnstyled, defaultProps } from 'src/ButtonUnstyled';
 
 import { colorProps, hideProps, spacingProps, textOptionsProps } from '../__helpers__';
 
@@ -10,7 +10,7 @@ export default {
   title: 'Components/ButtonUnstyled',
   component: ButtonUnstyled,
   args: {
-    ...ButtonUnstyled.defaultProps,
+    ...defaultProps,
     children: 'Button',
   },
   argTypes: {

@@ -63,6 +63,17 @@ export interface NonIdealStateKnownProps
 
 export type NonIdealStateProps = ComponentProps<HTMLDivElement, NonIdealStateKnownProps, 'wrap'>;
 
+export const defaultProps = {
+  direction: 'vertical',
+  hideIcon: false,
+  maxWidth: '600px',
+  padding: 'md',
+  radius: false,
+  shadow: false,
+  size: 'md',
+  type: 'not-found',
+} satisfies NonIdealStateProps;
+
 export const StyledNonIdealState = styled(
   'div',
   getStyledOptions('type'),
@@ -88,7 +99,10 @@ export const StyledNonIdealState = styled(
 });
 
 export function NonIdealState(props: NonIdealStateProps) {
-  const { children, description, direction, hideIcon, icon, size = 'md', title, type } = props;
+  const { children, description, direction, hideIcon, icon, size, title, type } = {
+    ...defaultProps,
+    ...props,
+  };
   const iconSize = {
     sm: 48,
     md: 64,
@@ -177,14 +191,3 @@ export function NonIdealState(props: NonIdealStateProps) {
     </StyledNonIdealState>
   );
 }
-
-NonIdealState.defaultProps = {
-  direction: 'vertical',
-  hideIcon: false,
-  maxWidth: '600px',
-  padding: 'md',
-  radius: false,
-  shadow: false,
-  size: 'md',
-  type: 'not-found',
-} as const;

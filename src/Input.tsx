@@ -30,6 +30,17 @@ export type InputProps = ComponentProps<
   'name' | 'type' | 'width'
 >;
 
+export const defaultProps = {
+  borderless: false,
+  disabled: false,
+  large: false,
+  prefixSpacing: false,
+  readOnly: false,
+  suffixSpacing: false,
+  type: 'text',
+  width: '100%',
+} satisfies Omit<InputProps, 'name'>;
+
 export const StyledInput = styled(
   'input',
   getStyledOptions(),
@@ -43,16 +54,7 @@ export const StyledInput = styled(
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { name } = props;
 
-  return <StyledInput ref={ref} data-component-name="Input" id={name} {...props} />;
+  return (
+    <StyledInput ref={ref} data-component-name="Input" id={name} {...defaultProps} {...props} />
+  );
 });
-
-Input.defaultProps = {
-  borderless: false,
-  disabled: false,
-  large: false,
-  prefixSpacing: false,
-  readOnly: false,
-  suffixSpacing: false,
-  type: 'text',
-  width: '100%',
-};

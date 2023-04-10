@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnyObject } from '@gilbarbara/types';
+import { SetRequired } from 'type-fest';
 
 import { Icon } from './Icon';
 import { getColorVariant, getTheme, px } from './modules/helpers';
@@ -56,11 +57,25 @@ export interface ButtonKnownProps
 
 export type ButtonProps = ComponentProps<HTMLButtonElement, ButtonKnownProps>;
 
+export const defaultProps = {
+  block: false,
+  busy: false,
+  disabled: false,
+  invert: false,
+  light: false,
+  shade: 'mid',
+  size: 'md',
+  transparent: false,
+  type: 'button',
+  variant: 'primary',
+  wide: false,
+} satisfies Omit<ButtonProps, 'children'>;
+
 export const StyledButton = styled(
   'button',
   getStyledOptions(),
-)<ButtonProps>(props => {
-  const { block, busy, light, shade, shape, size = 'md', variant = 'primary', wide } = props;
+)<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
+  const { block, busy, light, shade, shape, size, variant, wide } = props;
   const { button, grayLighter, grayMid, radius, spacing, variants } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
   let buttonPadding = `${padding[size][0]} ${
@@ -124,7 +139,7 @@ export const StyledButton = styled(
 });
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { busy = false, children, shape, size = 'md' } = props;
+  const { busy, children, shape, size } = { ...defaultProps, ...props };
   const {
     button: { fontSize },
   } = getTheme(props);
@@ -140,23 +155,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   }
 
   return (
-    <StyledButton ref={ref} data-component-name="Button" {...props}>
+    <StyledButton ref={ref} data-component-name="Button" {...defaultProps} {...props}>
       {content.children}
       {content.icon}
     </StyledButton>
   );
 });
-
-Button.defaultProps = {
-  block: false,
-  busy: false,
-  disabled: false,
-  invert: false,
-  light: false,
-  shade: 'mid',
-  size: 'md',
-  transparent: false,
-  type: 'button',
-  variant: 'primary',
-  wide: false,
-};
