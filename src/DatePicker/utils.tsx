@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { css } from '@emotion/react';
-import isSameMonth from 'date-fns/isSameMonth';
+import { isSameMonth } from 'date-fns';
 import is from 'is-lite';
 
 import {

@@ -12,15 +12,17 @@
   },
   "homepage": "https://github.com/gilbarbara/components",
   "license": "MIT",
-  "main": "lib/index.js",
-  "module": "esm/index.js",
-  "types": "./lib",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
+  },
   "files": [
-    "esm",
-    "lib",
-    "emotion.d.ts",
+    "dist",
     "src"
   ],
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "keywords": [],
   "peerDependencies": {
@@ -100,15 +102,15 @@
     "storybook": "^7.0.2",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
+    "tsup": "^6.7.0",
     "typescript": "^5.0.4",
     "vite": "^4.2.1",
     "vite-tsconfig-paths": "^4.1.0"
   },
   "scripts": {
-    "build": "npm run clean && npm run build:cjs && npm run build:esm",
-    "build:cjs": "tsc",
-    "build:esm": "tsc -m es6 --outDir esm",
-    "clean": "del lib/* && del esm/*",
+    "build": "npm run clean && tsup",
+    "clean": "del dist/*",
+    "watch": "tsup --watch",
     "lint": "eslint --fix src stories test",
     "test": "jest",
     "test:watch": "jest --watchAll --verbose",
@@ -120,6 +122,18 @@
     "storybook:build": "storybook build -o build",
     "prepublishOnly": "npm run validate",
     "prepare": "husky install"
+  },
+  "tsup": {
+    "dts": true,
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "sourcemap": true,
+    "splitting": false
   },
   "eslintConfig": {
     "extends": [
@@ -139,13 +153,13 @@
   "prettier": "@gilbarbara/prettier-config",
   "size-limit": [
     {
-      "name": "lib",
-      "path": "./lib/*.js",
+      "name": "commonjs",
+      "path": "./dist/index.js",
       "limit": "160 KB"
     },
     {
       "name": "esm",
-      "path": "./esm/**/*.js",
+      "path": "./dist/index.mjs",
       "limit": "100 KB"
     }
   ]
