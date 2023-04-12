@@ -52,14 +52,17 @@ export { Toggle } from './Toggle';
 export { Tooltip } from './Tooltip';
 export { Truncate } from './Truncate';
 
-export type { BoxProps } from './Box';
-export type { DataTableColumn } from './DataTable';
-export type { FormProps, FormRenderProps, FormSubmitHandler } from './Form';
-export type { GridProps } from './Grid';
-
+// Modules
 export { animateIcon, fadeIn, fadeOut, fadeInOut, rotate } from './modules/animations';
 export { icons } from './modules/options';
 export { mergeTheme, px, responsive } from './modules/helpers';
 export * as theme from './modules/theme';
 export { getContainerStyles } from './modules/system';
+
+// Types
+export type { BoxProps } from './Box';
+export type { DataTableColumn } from './DataTable';
+export type { FormProps, FormRenderProps, FormSubmitHandler } from './Form';
+export type { GridProps } from './Grid';
+export type { Theme } from './types';
 export * as Types from './types';
