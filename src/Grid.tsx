@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
-import { px } from './modules/helpers';
 import {
   backgroundStyles,
   baseStyles,

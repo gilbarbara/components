@@ -1,10 +1,11 @@
 import { ChangeEvent, forwardRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 
 import { BoxInline } from './Box';
 import { Button } from './Button';
-import { getTheme, px } from './modules/helpers';
+import { getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions } from './modules/system';
 import { Truncate } from './Truncate';
 import { ComponentProps, StyledProps, WithFormElements, WithInvert } from './types';

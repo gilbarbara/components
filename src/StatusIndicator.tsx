@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { SetRequired } from 'type-fest';
 
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, Shades, StyledProps, WithColor, WithMargin } from './types';
 

@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { rangeLimit, round } from '@gilbarbara/helpers';
+import { px, rangeLimit, round } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetRequired } from 'type-fest';
 
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from './modules/system';
 import { Paragraph } from './Paragraph';
 import { ComponentProps, Shades, StyledProps, WithColor, WithMargin } from './types';

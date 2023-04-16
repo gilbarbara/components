@@ -2,13 +2,14 @@ import { ChangeEvent, forwardRef, KeyboardEvent, ReactNode, useRef, useState } f
 import { usePrevious, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { useMergeRefs } from '@gilbarbara/hooks';
 import { AnyObject } from '@gilbarbara/types';
 import is from 'is-lite';
 import { SetRequired } from 'type-fest';
 
 import { Label } from './Label';
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import { baseStyles, getStyledOptions, isDarkMode } from './modules/system';
 import {
   ComponentProps,

@@ -1,6 +1,7 @@
 import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 
@@ -8,7 +9,7 @@ import { Box } from './Box';
 import { ButtonUnstyled } from './ButtonUnstyled';
 import { H3 } from './Headings';
 import { Icon } from './Icon';
-import { getTheme, px } from './modules/helpers';
+import { getTheme } from './modules/helpers';
 import {
   borderStyles,
   getStyledOptions,

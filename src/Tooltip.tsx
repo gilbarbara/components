@@ -2,12 +2,12 @@ import { CSSProperties, isValidElement, ReactNode, useEffect, useMemo, useState 
 import innerText from 'react-innertext';
 import { css, useTheme } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
-import { omit } from '@gilbarbara/helpers';
+import { omit, px } from '@gilbarbara/helpers';
 import is from 'is-lite';
 import { SetRequired } from 'type-fest';
 
 import { fadeIn } from './modules/animations';
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import { textDefaultOptions } from './modules/options';
 import {
   baseStyles,

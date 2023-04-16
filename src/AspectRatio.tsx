@@ -1,9 +1,8 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { round } from '@gilbarbara/helpers';
+import { px, round } from '@gilbarbara/helpers';
 
-import { px } from './modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { ComponentProps, StyledProps, WithChildren, WithMargin } from './types';
 

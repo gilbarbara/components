@@ -1,11 +1,11 @@
 import isPropValid from '@emotion/is-prop-valid';
 import { css, CSSObject } from '@emotion/react';
-import { capitalize } from '@gilbarbara/helpers';
+import { capitalize, px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 import { rgba } from 'polished';
 
-import { getColorVariant, getTheme, px, responsive as responsiveHelper } from './helpers';
+import { getColorVariant, getTheme, responsive as responsiveHelper } from './helpers';
 
 import {
   BorderItemSide,

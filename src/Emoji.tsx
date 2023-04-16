@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 
-import { px } from './modules/helpers';
 import { baseStyles, getStyledOptions } from './modules/system';
 import { ComponentProps, StyledProps } from './types';
 

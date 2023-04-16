@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { formatDateLocale, omit } from '@gilbarbara/helpers';
+import { formatDateLocale, omit, px } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
 import { DatePickerRange } from './Range';
@@ -18,7 +18,7 @@ import { defaultProps, getNumberOfMonths } from './utils';
 import { Box } from '../Box';
 import { ClickOutside } from '../ClickOutside';
 import { Icon } from '../Icon';
-import { getColorVariant, getTheme, px } from '../modules/helpers';
+import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { Text } from '../Text';
 import { Alignment } from '../types';

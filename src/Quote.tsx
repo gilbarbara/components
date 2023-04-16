@@ -1,9 +1,10 @@
 import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { SetRequired } from 'type-fest';
 
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import { textDefaultOptions } from './modules/options';
 import { baseStyles, getStyledOptions, textStyles } from './modules/system';
 import {

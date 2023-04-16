@@ -1,8 +1,9 @@
 import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 
-import { getTheme, px } from './modules/helpers';
+import { getTheme } from './modules/helpers';
 import { textDefaultOptions } from './modules/options';
 import {
   alignStyles,

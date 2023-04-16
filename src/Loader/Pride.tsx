@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 
 import { rotate } from '../modules/animations';
-import { getTheme, px } from '../modules/helpers';
+import { getTheme } from '../modules/helpers';
 import { getStyledOptions } from '../modules/system';
 import { LoaderProps } from '../types';
 

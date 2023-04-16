@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetRequired } from 'type-fest';
 
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import { textDefaultOptions } from './modules/options';
 import { baseStyles, getStyledOptions, marginStyles, textStyles } from './modules/system';
 import {

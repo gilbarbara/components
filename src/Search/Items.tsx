@@ -1,11 +1,12 @@
 import { forwardRef, MouseEventHandler, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 
 import Item from './Item';
 
-import { getTheme, px } from '../modules/helpers';
+import { getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { SearchItem, SearchProps, Theme } from '../types';
 

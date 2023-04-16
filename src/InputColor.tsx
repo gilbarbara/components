@@ -1,11 +1,12 @@
 import { ChangeEvent, forwardRef, useState } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { Box } from './Box';
-import { getTheme, px } from './modules/helpers';
+import { getTheme } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
 import * as theme from './modules/theme';
 import { Text } from './Text';
