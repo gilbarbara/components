@@ -1,12 +1,12 @@
 import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { Property } from 'csstype';
 
 import { Box } from './Box';
 import { Loader } from './Loader';
-import { px } from './modules/helpers';
 import { getContainerStyles, paddingStyles } from './modules/system';
 import {
   Alignment,

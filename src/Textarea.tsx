@@ -40,7 +40,15 @@ export const StyledTextarea = styled(
 });
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
-  const { name, ...rest } = { ...defaultProps, ...props };
+  const { name } = props;
 
-  return <StyledTextarea ref={ref} data-component-name="Textarea" id={name} {...rest} />;
+  return (
+    <StyledTextarea
+      ref={ref}
+      data-component-name="Textarea"
+      id={name}
+      {...defaultProps}
+      {...props}
+    />
+  );
 });

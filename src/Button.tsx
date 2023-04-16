@@ -1,11 +1,12 @@
 import { ForwardedRef, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 import { SetRequired } from 'type-fest';
 
 import { Icon } from './Icon';
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import {
   appearanceStyles,
   backgroundStyles,

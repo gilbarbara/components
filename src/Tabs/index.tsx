@@ -10,7 +10,7 @@ import {
 import { useMeasure, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { omit, unique } from '@gilbarbara/helpers';
+import { omit, px, unique } from '@gilbarbara/helpers';
 import { AnyObject } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
@@ -20,7 +20,7 @@ import { Tab, TabProps } from './Tab';
 
 import { ButtonUnstyled } from '../ButtonUnstyled';
 import { Loader } from '../Loader';
-import { getColorVariant, getTheme, px } from '../modules/helpers';
+import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
 import { NonIdealState } from '../NonIdealState';
 import { Direction, StyledProps, WithChildren, WithColor, WithMargin } from '../types';

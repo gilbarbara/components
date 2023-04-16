@@ -2,6 +2,7 @@ import { forwardRef, ReactElement, useCallback, useRef, useState } from 'react';
 import { useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { useMergeRefs } from '@gilbarbara/hooks';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
@@ -10,7 +11,7 @@ import { MenuItem } from './Item';
 
 import { ButtonUnstyled } from '../ButtonUnstyled';
 import { Icon } from '../Icon';
-import { getTheme, px, recursiveChildrenEnhancer } from '../modules/helpers';
+import { getTheme, recursiveChildrenEnhancer } from '../modules/helpers';
 import { getStyledOptions, isDarkMode } from '../modules/system';
 import { easing } from '../modules/theme';
 import { ComponentProps, Position, StyledProps, WithChildren, WithColor, WithOpen } from '../types';

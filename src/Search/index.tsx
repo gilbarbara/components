@@ -2,6 +2,7 @@ import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, useEffect, useRef }
 import { useSetState } from 'react-use';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 
 import Options from './Items';
 
@@ -10,7 +11,7 @@ import { ClickOutside } from '../ClickOutside';
 import { ComponentWrapper } from '../ComponentWrapper';
 import { Icon } from '../Icon';
 import { Input } from '../Input';
-import { getTheme, px } from '../modules/helpers';
+import { getTheme } from '../modules/helpers';
 import { getStyledOptions, marginStyles } from '../modules/system';
 import { SearchProps } from '../types';
 

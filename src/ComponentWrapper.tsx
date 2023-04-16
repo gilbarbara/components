@@ -1,12 +1,12 @@
 import { CSSProperties, forwardRef, ReactElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { AnyObject, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { BoxCenter } from './Box';
 import { Icon } from './Icon';
-import { px } from './modules/helpers';
 import { getStyledOptions, marginStyles } from './modules/system';
 import { Icons, StyledProps, WithChildren, WithMargin } from './types';
 

@@ -1,11 +1,11 @@
 import { CSSProperties, forwardRef } from 'react';
 import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetRequired } from 'type-fest';
 
 import { Box } from './Box';
-import { px } from './modules/helpers';
 import {
   baseStyles,
   flexBoxStyles,

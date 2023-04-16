@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { px } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
 import { StyledProps, WithChildren } from './types';
 

@@ -3,11 +3,12 @@ import SVG from 'react-inlinesvg';
 import innerText from 'react-innertext';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import is from 'is-lite';
 import { RequireExactlyOne, SetRequired } from 'type-fest';
 
 import { rotate } from './modules/animations';
-import { getColorVariant, getTheme, px } from './modules/helpers';
+import { getColorVariant, getTheme } from './modules/helpers';
 import { iconsCustom } from './modules/options';
 import { baseStyles, getStyledOptions, marginStyles } from './modules/system';
 import { Icons, StyledProps, WithColor, WithMargin } from './types';

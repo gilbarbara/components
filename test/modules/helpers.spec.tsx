@@ -10,7 +10,6 @@ import {
   getTheme,
   isCSSUnit,
   mergeTheme,
-  px,
   recursiveChildrenEnhancer,
   responsive,
 } from 'modules/helpers';
@@ -133,18 +132,6 @@ describe('mergeTheme', () => {
 
   it('should return the default theme', () => {
     expect(mergeTheme()).toMatchSnapshot();
-  });
-});
-
-describe('px', () => {
-  it.each([
-    { value: undefined, expected: undefined },
-    { value: '10', expected: '10px' },
-    { value: '15px', expected: '15px' },
-    { value: '20rem', expected: '20rem' },
-    { value: 30, expected: '30px' },
-  ])('should return $expected for $value', ({ expected, value }) => {
-    expect(px(value)).toBe(expected);
   });
 });
 

@@ -1,7 +1,7 @@
 import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
-import { omit } from '@gilbarbara/helpers';
-import { AnyObject, StringOrNumber } from '@gilbarbara/types';
+import { omit, px } from '@gilbarbara/helpers';
+import { AnyObject } from '@gilbarbara/types';
 import { deepmergeCustom, DeepMergeLeafURI } from 'deepmerge-ts';
 import is from 'is-lite';
 import { PartialDeep } from 'type-fest';
@@ -161,14 +161,6 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
     ...nextTheme,
     variants: deepmerge(baseVariants, customTheme.variants || {}) as Theme['variants'],
   };
-}
-
-export function px(value: undefined): undefined;
-export function px(value: StringOrNumber): string;
-export function px(value: StringOrNumber | undefined): string | undefined;
-// eslint-disable-next-line padding-line-between-statements
-export function px(value: StringOrNumber | undefined): string | undefined {
-  return is.number(value) || is.numericString(value) ? `${value}px` : value;
 }
 
 export function recursiveChildrenEnhancer(

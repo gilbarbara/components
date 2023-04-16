@@ -1,11 +1,12 @@
 import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 
 import { Button } from './Button';
 import { H3 } from './Headings';
-import { getTheme, px } from './modules/helpers';
+import { getTheme } from './modules/helpers';
 import {
   borderStyles,
   getStyledOptions,

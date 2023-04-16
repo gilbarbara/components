@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { px } from '@gilbarbara/helpers';
 import ReactDropdown, { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 import { SetRequired } from 'type-fest';
 
 import Content from './Content';
 import Items from './Items';
 
-import { getColorVariant, getTheme, px } from '../modules/helpers';
+import { getColorVariant, getTheme } from '../modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '../modules/system';
 import { DropdownProps } from '../types';
 
