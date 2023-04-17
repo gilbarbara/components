@@ -38,7 +38,7 @@ export const defaultProps = {
 export const StyledSelect = styled(
   'select',
   getStyledOptions(),
-)<Omit<SelectProps, 'name'> & { filled: boolean }>(props => {
+)<SelectProps & { filled: boolean }>(props => {
   const { filled, large, multiple } = props;
   const { colors, darkColor, darkMode, grayMid, spacing, white } = getTheme(props);
 
@@ -91,7 +91,7 @@ export const StyledSelect = styled(
 });
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const { onChange, ...rest } = { ...defaultProps, ...props };
+  const { name, onChange, ...rest } = { ...defaultProps, ...props };
   const localRef = useRef<HTMLSelectElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
   const [isFilled, setFilled] = useState(!!rest.defaultValue || !!rest.value);
@@ -114,7 +114,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
       ref={mergedRefs}
       data-component-name="Select"
       filled={isFilled}
-      id={rest.name}
+      id={name}
+      name={name}
       onChange={handleChange}
       {...rest}
     />

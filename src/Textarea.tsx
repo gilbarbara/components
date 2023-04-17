@@ -32,7 +32,7 @@ export const defaultProps = {
 export const StyledTextarea = styled(
   'textarea',
   getStyledOptions(),
-)<Omit<TextareaProps, 'name'>>(props => {
+)<TextareaProps>(props => {
   return css`
     ${baseStyles(props)};
     ${inputStyles(props, 'textarea')};
@@ -40,15 +40,9 @@ export const StyledTextarea = styled(
 });
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
-  const { name } = props;
+  const { name, ...rest } = { ...defaultProps, ...props };
 
   return (
-    <StyledTextarea
-      ref={ref}
-      data-component-name="Textarea"
-      id={name}
-      {...defaultProps}
-      {...props}
-    />
+    <StyledTextarea ref={ref} data-component-name="Textarea" id={name} name={name} {...rest} />
   );
 });
