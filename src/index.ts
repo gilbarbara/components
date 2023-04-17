@@ -42,6 +42,7 @@ export { Quote } from './Quote';
 export { RadioGroup } from './RadioGroup';
 export { Select } from './Select';
 export { Search } from './Search';
+export * from './Skeleton';
 export { Spacer } from './Spacer';
 export { StatusIndicator } from './StatusIndicator';
 export { Tab, Tabs } from './Tabs';
