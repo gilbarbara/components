@@ -7,7 +7,7 @@ import { useGlobals } from '@storybook/client-api';
 import { colors as themeColors } from '../src/modules/theme';
 import { Theme } from '../src/types';
 
-import { Box, BoxCenter } from '../src';
+import { Box } from '../src';
 import { useEffect, useRef } from "react";
 
 export const parameters = {
@@ -90,7 +90,7 @@ const ThemeBlock = styled.div(
 function Preview(StoryFn: React.FC, context: any) {
   const {
     globals: { appearance, baseColor },
-    parameters: { align = 'center', justify = 'start', minWidth = 768, maxWidth = 1024, minHeight, withoutPadding },
+    parameters: { align = 'center', direction = 'column', display = 'flex', justify = 'start', minWidth = 768, maxWidth = 1024, minHeight, withoutPadding },
     viewMode,
   } = context;
 
@@ -114,8 +114,8 @@ function Preview(StoryFn: React.FC, context: any) {
         ref={docsRef}
         align={align}
         data-component-name="StoryDocs"
-        direction="column"
-        display="flex"
+        direction={direction}
+        display={display}
         justify={justify}
         minHeight={minHeight}
         minWidth={minWidth}
@@ -139,15 +139,19 @@ function Preview(StoryFn: React.FC, context: any) {
           }}
         >
           <ThemeBlock data-side="left" side="left">
-            <BoxCenter
+            <Box
+              align={align}
               data-component-name="Story-Left"
+              direction={direction}
+              display={display}
+              justify={justify}
               maxWidth={maxWidth}
               minHeight="100vh"
               padding={withoutPadding ? undefined : 'md'}
               width="100%"
             >
               <StoryFn />
-            </BoxCenter>
+            </Box>
           </ThemeBlock>
         </ThemeProvider>
         <ThemeProvider
@@ -157,15 +161,19 @@ function Preview(StoryFn: React.FC, context: any) {
           }}
         >
           <ThemeBlock data-side="right" side="right">
-            <BoxCenter
+            <Box
+              align={align}
               data-component-name="Story-Right"
+              direction={direction}
+              display={display}
+              justify={justify}
               maxWidth={maxWidth}
               minHeight="100vh"
               padding={withoutPadding ? undefined : 'md'}
               width="100%"
             >
               <StoryFn />
-            </BoxCenter>
+            </Box>
           </ThemeBlock>
         </ThemeProvider>
       </>
@@ -179,8 +187,12 @@ function Preview(StoryFn: React.FC, context: any) {
         colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
       }}
     >
-      <BoxCenter
+      <Box
+        align={align}
         data-component-name="Story"
+        direction={direction}
+        display={display}
+        justify={justify}
         maxWidth={maxWidth}
         minWidth={minWidth}
         padding={withoutPadding ? undefined : 'md'}
@@ -188,7 +200,7 @@ function Preview(StoryFn: React.FC, context: any) {
         width="100%"
       >
         <StoryFn />
-      </BoxCenter>
+      </Box>
     </ThemeProvider>
   );
 }
