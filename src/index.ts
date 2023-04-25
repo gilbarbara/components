@@ -62,9 +62,9 @@ export { getContainerStyles } from './modules/system';
 export { px } from '@gilbarbara/helpers';
 
 // Types
-export type { BoxProps } from './Box';
+export type { BoxKnownProps, BoxProps } from './Box';
 export type { DataTableColumn } from './DataTable';
 export type { FormProps, FormRenderProps, FormSubmitHandler } from './Form';
-export type { GridProps } from './Grid';
+export type { GridKnownProps, GridProps } from './Grid';
 export type { Theme } from './types';
 export * as Types from './types';
