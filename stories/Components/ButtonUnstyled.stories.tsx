@@ -2,7 +2,16 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonUnstyled, defaultProps } from 'src/ButtonUnstyled';
 
-import { colorProps, hideProps, spacingProps, textOptionsProps } from '../__helpers__';
+import { Icon } from '../../src';
+import {
+  colorProps,
+  flexContent,
+  flexItems,
+  hideProps,
+  layoutProps,
+  spacingProps,
+  textOptionsProps,
+} from '../__helpers__';
 
 type Story = StoryObj<typeof ButtonUnstyled>;
 
@@ -16,8 +25,11 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...layoutProps(),
     ...spacingProps(),
     ...textOptionsProps(),
+    align: { control: 'select', options: ['', ...flexItems] },
+    justify: { control: 'select', options: ['', ...flexContent] },
     children: { control: 'text' },
   },
   parameters: {
@@ -30,3 +42,18 @@ export default {
 } satisfies Meta<typeof ButtonUnstyled>;
 
 export const Basic: Story = {};
+
+export const Custom: Story = {
+  args: {
+    border: { size: 4, shade: 'mid', variant: 'primary' },
+    children: <Icon name="flash" size={48} />,
+    height: 64,
+    justify: 'center',
+    radius: 'round',
+    variant: 'primary',
+    width: 64,
+  },
+  argTypes: {
+    children: { control: 'none' },
+  },
+};
