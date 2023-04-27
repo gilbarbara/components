@@ -7,30 +7,44 @@ import { textDefaultOptions } from './modules/options';
 import {
   appearanceStyles,
   baseStyles,
+  borderStyles,
   colorStyles,
+  displayStyles,
   getStyledOptions,
+  layoutStyles,
   marginStyles,
   paddingStyles,
+  radiusStyles,
   textStyles,
 } from './modules/system';
 import {
   ComponentProps,
   StyledProps,
+  WithBorder,
   WithBusy,
   WithChildren,
   WithColor,
+  WithDisplay,
+  WithFlexBox,
+  WithLayout,
   WithMargin,
   WithPadding,
+  WithRadius,
   WithTextOptions,
 } from './types';
 
 export interface ButtonUnstyledKnownProps
   extends StyledProps,
+    WithBorder,
     WithBusy,
     WithChildren,
     WithColor,
+    WithDisplay,
+    Pick<WithFlexBox, 'align' | 'justify'>,
+    WithLayout,
     WithMargin,
     WithPadding,
+    WithRadius,
     WithTextOptions {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
@@ -39,6 +53,7 @@ export type ButtonUnstyledProps = ComponentProps<HTMLButtonElement, ButtonUnstyl
 
 export const defaultProps = {
   ...textDefaultOptions,
+  align: 'center',
   busy: false,
   disabled: false,
   type: 'button',
@@ -48,23 +63,28 @@ export const StyledButtonUnstyled = styled(
   'button',
   getStyledOptions(),
 )<Omit<ButtonUnstyledProps, 'children'>>(props => {
-  const { busy } = props;
+  const { align, busy, justify } = props;
 
   return css`
     ${appearanceStyles};
     ${baseStyles(props)};
-    align-items: center;
+    align-items: ${align};
     background-color: transparent;
     border: 0;
     color: inherit;
     cursor: pointer;
     display: inline-flex;
     font-family: inherit;
+    justify-content: ${justify};
     line-height: 1;
     padding: 0;
+    ${borderStyles(props)};
     ${colorStyles(props)};
+    ${displayStyles(props)};
+    ${layoutStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};
+    ${radiusStyles(props)};
     ${textStyles(props)};
 
     :disabled {
