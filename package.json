@@ -155,12 +155,12 @@
     {
       "name": "commonjs",
       "path": "./dist/index.js",
-      "limit": "160 KB"
+      "limit": "165 KB"
     },
     {
       "name": "esm",
       "path": "./dist/index.mjs",
-      "limit": "100 KB"
+      "limit": "60 KB"
     }
   ]
 }
