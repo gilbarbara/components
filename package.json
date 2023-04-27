@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.0",
-    "@gilbarbara/helpers": "^0.7.1",
+    "@gilbarbara/helpers": "^0.7.2",
     "@gilbarbara/hooks": "^0.6.4",
     "@gilbarbara/react-dropdown": "^0.1.0",
     "colorizr": "^2.1.1",
@@ -48,7 +48,7 @@
     "react-use": "^17.4.0",
     "scroll": "^3.0.1",
     "scrollparent": "^2.0.1",
-    "type-fest": "^3.8.0"
+    "type-fest": "^3.9.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.4",
@@ -79,9 +79,9 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.5.1",
-    "@types/node": "^18.16.0",
+    "@types/node": "^18.16.1",
     "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
+    "@types/react-dom": "^18.2.1",
     "@types/react-syntax-highlighter": "^15.5.6",
     "@types/scroll": "^3.0.1",
     "@types/scrollparent": "^2.0.1",
@@ -104,7 +104,7 @@
     "ts-node": "^10.9.1",
     "tsup": "^6.7.0",
     "typescript": "^5.0.4",
-    "vite": "^4.3.1",
+    "vite": "^4.3.3",
     "vite-tsconfig-paths": "^4.2.0"
   },
   "scripts": {
