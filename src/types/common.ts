@@ -20,10 +20,25 @@ export type BorderItemSide =
 
 export interface BorderItem {
   color?: string;
+  /**
+   * @default lighter
+   */
   shade?: Shades;
-  side: BorderItemSide;
+  /**
+   * @default all
+   */
+  side?: BorderItemSide;
+  /**
+   * @default 1px
+   */
   size?: StandardShorthandProperties['borderWidth'] | number;
+  /**
+   * @default solid
+   */
   style?: StandardShorthandProperties['borderStyle'];
+  /**
+   * @default gray
+   */
   variant?: Variants;
 }
 
