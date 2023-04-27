@@ -8,6 +8,7 @@ import { rgba } from 'polished';
 import { getColorVariant, getTheme, responsive as responsiveHelper } from './helpers';
 
 import {
+  BorderItem,
   BorderItemSide,
   HeadingSizes,
   TextSizes,
@@ -183,6 +184,22 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
     return item;
   };
 
+  const getBorderItem = (item: BorderItem) => {
+    const {
+      color,
+      shade = 'lighter',
+      side = 'all',
+      size = '1px',
+      style = 'solid',
+      variant = 'gray',
+    } = item;
+
+    ({ bg: borderColor } = getColorVariant(variant, shade, variants));
+    const value = `${px(size)} ${style} ${color || borderColor}`;
+
+    return getBorderValue(side, value);
+  };
+
   if (is.nullOrUndefined(border)) {
     return output;
   }
@@ -195,19 +212,7 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
     const items: CSSObject[] = [];
 
     border.forEach(item => {
-      const {
-        color,
-        shade = 'lighter',
-        side,
-        size = '1px',
-        style = 'solid',
-        variant = 'gray',
-      } = item;
-
-      ({ bg: borderColor } = getColorVariant(variant, shade, variants));
-      const value = `${px(size)} ${style} ${color || borderColor}`;
-
-      items.push(getBorderValue(side, value));
+      items.push(getBorderItem(item));
     });
 
     output = items.reduce<CSSObject>((acc, item) => {
@@ -217,6 +222,8 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
 
       return acc;
     }, {});
+  } else {
+    output = getBorderItem(border);
   }
 
   return output;

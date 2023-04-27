@@ -29,7 +29,7 @@ export interface WithBlock {
 }
 
 export interface WithBorder {
-  border?: boolean | BorderItemSide | BorderItem[];
+  border?: boolean | BorderItemSide | BorderItem | BorderItem[];
 }
 
 export interface WithBorderless {
