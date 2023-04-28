@@ -9,6 +9,7 @@ export { ButtonGroup } from './ButtonGroup';
 export { ButtonSplit, ButtonSplitDivider, ButtonSplitItem } from './ButtonSplit';
 export { Checkbox, Radio } from './CheckboxAndRadio';
 export { ClickOutside } from './ClickOutside';
+export { Collapse } from './Collapse';
 export { ComponentWrapper } from './ComponentWrapper';
 export { Container } from './Container';
 export { CopyToClipboard } from './CopyToClipboard';
