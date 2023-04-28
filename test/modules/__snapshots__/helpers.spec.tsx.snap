@@ -31,22 +31,26 @@ exports[`getTheme should return the theme 1`] = `
       "lg": "8px",
       "md": "8px",
       "sm": "8px",
+      "xs": "4px",
     },
     "fontSize": {
       "lg": "18px",
       "md": "16px",
       "sm": "14px",
+      "xs": "12px",
     },
     "fontWeight": 700,
     "height": {
       "lg": "48px",
       "md": "40px",
       "sm": "32px",
+      "xs": "24px",
     },
     "lineHeight": {
       "lg": 1.4,
       "md": 1.3,
       "sm": 1.2,
+      "xs": 1.2,
     },
     "padding": {
       "lg": [
@@ -60,6 +64,10 @@ exports[`getTheme should return the theme 1`] = `
       "sm": [
         "6px",
         "12px",
+      ],
+      "xs": [
+        "4px",
+        "8px",
       ],
     },
   },
@@ -524,22 +532,26 @@ exports[`mergeTheme should return a modified theme 1`] = `
       "lg": "8px",
       "md": "8px",
       "sm": "8px",
+      "xs": "4px",
     },
     "fontSize": {
       "lg": "18px",
       "md": "16px",
       "sm": "14px",
+      "xs": "12px",
     },
     "fontWeight": 700,
     "height": {
       "lg": "48px",
       "md": "40px",
       "sm": "32px",
+      "xs": "24px",
     },
     "lineHeight": {
       "lg": 1.4,
       "md": 1.3,
       "sm": 1.2,
+      "xs": 1.2,
     },
     "padding": {
       "lg": [
@@ -553,6 +565,10 @@ exports[`mergeTheme should return a modified theme 1`] = `
       "sm": [
         "6px",
         "12px",
+      ],
+      "xs": [
+        "4px",
+        "8px",
       ],
     },
   },
@@ -1017,22 +1033,26 @@ exports[`mergeTheme should return the default theme 1`] = `
       "lg": "8px",
       "md": "8px",
       "sm": "8px",
+      "xs": "4px",
     },
     "fontSize": {
       "lg": "18px",
       "md": "16px",
       "sm": "14px",
+      "xs": "12px",
     },
     "fontWeight": 700,
     "height": {
       "lg": "48px",
       "md": "40px",
       "sm": "32px",
+      "xs": "24px",
     },
     "lineHeight": {
       "lg": 1.4,
       "md": 1.3,
       "sm": 1.2,
+      "xs": 1.2,
     },
     "padding": {
       "lg": [
@@ -1046,6 +1066,10 @@ exports[`mergeTheme should return the default theme 1`] = `
       "sm": [
         "6px",
         "12px",
+      ],
+      "xs": [
+        "4px",
+        "8px",
       ],
     },
   },

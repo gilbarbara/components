@@ -12,19 +12,19 @@ import {
   PositionY,
   WithBlock,
   WithBusy,
+  WithButtonSize,
   WithChildren,
   WithColor,
-  WithComponentSize,
   WithInvert,
 } from './types';
 
 export interface ButtonSplitProps
   extends Pick<MenuProps, 'disabled' | 'onToggle'>,
     WithBlock,
+    WithButtonSize,
     WithBusy,
     WithChildren,
     WithColor,
-    WithComponentSize,
     WithInvert {
   dataAttributes?: Record<`data-${string}`, string | number>;
   label: ReactNode;
@@ -94,7 +94,7 @@ export const StyledButtonSplit = styled(
     [data-component-name='MenuButton'] {
       height: 100%;
       opacity: 1;
-      padding: 0 ${spacing.xs};
+      padding: 0 ${spacing[size === 'xs' ? 'xxs' : 'xs']};
       width: 100%;
     }
   `;
@@ -105,7 +105,7 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
     ...defaultProps,
     ...props,
   };
-  const { disabled, shade, variant } = rest;
+  const { disabled, shade, size, variant } = rest;
   const [active, setActive] = useState(false);
 
   const handleToggle = useCallback(
@@ -125,7 +125,9 @@ export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
         {label}
       </ButtonUnstyled>
       <Menu
-        component={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={24} />}
+        component={
+          <Icon name={active ? 'chevron-up' : 'chevron-down'} size={size === 'xs' ? 18 : 24} />
+        }
         disabled={disabled || busy}
         onToggle={handleToggle}
         position={position}

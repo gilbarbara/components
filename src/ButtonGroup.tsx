@@ -3,13 +3,13 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { baseStyles, getStyledOptions } from './modules/system';
-import { ComponentProps, StyledProps, WithChildren, WithColor, WithComponentSize } from './types';
+import { ComponentProps, StyledProps, WithButtonSize, WithChildren, WithColor } from './types';
 
 export interface ButtonGroupKnownProps
   extends StyledProps,
+    WithButtonSize,
     WithChildren,
-    WithColor,
-    WithComponentSize {}
+    WithColor {}
 
 export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
 

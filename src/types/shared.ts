@@ -37,6 +37,14 @@ export interface WithBorderless {
   borderless?: boolean;
 }
 
+export interface WithButtonSize {
+  /**
+   * Button size
+   * @default md
+   */
+  size?: 'xs' | Sizes;
+}
+
 export interface WithBusy {
   /**
    * Add an animated icon

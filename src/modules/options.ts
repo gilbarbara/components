@@ -790,6 +790,7 @@ export const inputTypes = [
 ] as const;
 
 export const sizes = ['sm', 'md', 'lg'] as const;
+export const sizesButton = ['xs', ...sizes] as const;
 
 export const textSizes = ['small', 'mid', 'regular', 'large'] as const;
 
