@@ -194,27 +194,32 @@ export const variants = {
 
 export const button = {
   borderRadius: {
+    xs: '4px',
     sm: '8px',
     md: '8px',
     lg: '8px',
   },
   fontSize: {
+    xs: '12px',
     sm: '14px',
     md: '16px',
     lg: '18px',
   },
   fontWeight: 700,
   height: {
+    xs: '24px',
     sm: '32px',
     md: '40px',
     lg: '48px',
   },
   lineHeight: {
+    xs: 1.2,
     sm: 1.2,
     md: 1.3,
     lg: 1.4,
   },
   padding: {
+    xs: ['4px', '8px'],
     sm: ['6px', '12px'],
     md: ['8px', '16px'],
     lg: ['10px', '20px'],

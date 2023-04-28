@@ -7,6 +7,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { ButtonUnstyled, Icon } from 'src';
 import { ButtonSplit, ButtonSplitDivider, ButtonSplitItem, defaultProps } from 'src/ButtonSplit';
 
+import { sizesButton } from '../../src/modules/options';
 import { colorProps, disableControl, hideProps } from '../__helpers__';
 
 type Story = StoryObj<typeof ButtonSplit>;
@@ -24,6 +25,7 @@ export default {
     children: disableControl(),
     label: { control: 'text' },
     onClick: disableControl(),
+    size: { control: 'radio', options: sizesButton },
   },
   parameters: {
     minHeight: 250,
