@@ -8,7 +8,6 @@ import { colors as themeColors } from '../src/modules/theme';
 import { Theme } from '../src/types';
 
 import { Box } from '../src';
-import { useEffect, useRef } from "react";
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -37,24 +36,22 @@ export const parameters = {
 
 export const globalTypes = {
   appearance: {
-    name: 'appearance',
-    description: 'Appearance',
+    description: 'The appearance of the components',
     defaultValue: 'light',
     toolbar: {
       icon: 'circlehollow',
       items: [
-        { value: 'light', icon: 'circlehollow', title: 'light' },
-        { value: 'dark', icon: 'circle', title: 'dark' },
-        { value: 'side-by-side', icon: 'sidebar', title: 'side by side' },
+        { value: 'light', icon: 'sun', title: 'light' },
+        { value: 'dark', icon: 'moon', title: 'dark' },
+        { value: 'side-by-side', icon: 'sidebyside', title: 'side by side' },
       ],
     },
   },
-  baseColor: {
-    name: 'baseColor',
-    description: 'Base color',
+  variant: {
+    description: 'The variant color used by the components',
     defaultValue: 'primary',
     toolbar: {
-      icon: 'beaker',
+      icon: 'paintbrush',
       items: Object.keys(themeColors),
     },
   },
@@ -78,30 +75,43 @@ const ThemeBlock = styled.div(
   ({ side }: any) =>
     side === 'left'
       ? {
-        left: 0,
-        right: '50vw',
-      }
+          left: 0,
+          right: '50vw',
+        }
       : {
-        right: 0,
-        left: '50vw',
-      },
+          right: 0,
+          left: '50vw',
+        },
 );
 
 function Preview(StoryFn: React.FC, context: any) {
   const {
-    globals: { appearance, baseColor },
-    parameters: { align = 'center', direction = 'column', display = 'flex', justify = 'start', minWidth = 768, maxWidth = 1024, minHeight, withoutPadding },
+    globals: { appearance, variant },
+    parameters: {
+      align = 'center',
+      centered,
+      direction = 'column',
+      display = 'flex',
+      justify = 'start',
+      minWidth = 768,
+      maxWidth = 1024,
+      minHeight,
+      padding = 'md',
+      paddingDocs = 0,
+    },
     viewMode,
   } = context;
 
-  const docsRef = useRef<HTMLDivElement>(null)
+  const docsRef = React.useRef<HTMLDivElement>(null);
   const previousAppearance = usePrevious(appearance);
   const [, updateGlobals] = useGlobals();
   const isDarkMode = appearance === 'dark';
   const isSideBySide = appearance === 'side-by-side';
 
-  useEffect(() => {
-    const target = docsRef.current?.closest('.docs-story')?.querySelector('[scale="1"]') as HTMLDivElement;
+  React.useEffect(() => {
+    const target = docsRef.current
+      ?.closest('.docs-story')
+      ?.querySelector('[scale="1"]') as HTMLDivElement;
 
     if (target) {
       target.style.width = '100%';
@@ -119,6 +129,7 @@ function Preview(StoryFn: React.FC, context: any) {
         justify={justify}
         minHeight={minHeight}
         minWidth={minWidth}
+        padding={paddingDocs}
       >
         <StoryFn />
       </Box>
@@ -134,7 +145,7 @@ function Preview(StoryFn: React.FC, context: any) {
       <>
         <ThemeProvider
           theme={{
-            colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
+            colors: { primary: themeColors[variant as keyof Theme['colors']] },
             darkMode: false,
           }}
         >
@@ -147,7 +158,7 @@ function Preview(StoryFn: React.FC, context: any) {
               justify={justify}
               maxWidth={maxWidth}
               minHeight="100vh"
-              padding={withoutPadding ? undefined : 'md'}
+              padding={padding}
               width="100%"
             >
               <StoryFn />
@@ -156,7 +167,7 @@ function Preview(StoryFn: React.FC, context: any) {
         </ThemeProvider>
         <ThemeProvider
           theme={{
-            colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
+            colors: { primary: themeColors[variant as keyof Theme['colors']] },
             darkMode: true,
           }}
         >
@@ -169,7 +180,7 @@ function Preview(StoryFn: React.FC, context: any) {
               justify={justify}
               maxWidth={maxWidth}
               minHeight="100vh"
-              padding={withoutPadding ? undefined : 'md'}
+              padding={padding}
               width="100%"
             >
               <StoryFn />
@@ -184,7 +195,7 @@ function Preview(StoryFn: React.FC, context: any) {
     <ThemeProvider
       theme={{
         darkMode: isDarkMode,
-        colors: { primary: themeColors[baseColor as keyof Theme['colors']] },
+        colors: { primary: themeColors[variant as keyof Theme['colors']] },
       }}
     >
       <Box
@@ -195,7 +206,8 @@ function Preview(StoryFn: React.FC, context: any) {
         justify={justify}
         maxWidth={maxWidth}
         minWidth={minWidth}
-        padding={withoutPadding ? undefined : 'md'}
+        mx={centered ? 'auto' : undefined}
+        padding={padding}
         style={{ color: isDarkMode ? '#fff' : '#101010' }}
         width="100%"
       >
