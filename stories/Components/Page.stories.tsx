@@ -36,7 +36,8 @@ export default {
   parameters: {
     maxWidth: '100%',
     minHeight: 400,
-    withoutPadding: true,
+    padding: 0,
+    layout: 'fullscreen',
   },
 } satisfies Meta<typeof Page>;
 

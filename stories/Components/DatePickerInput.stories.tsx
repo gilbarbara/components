@@ -18,6 +18,7 @@ export default {
   },
   parameters: {
     minHeight: 450,
+    layout: 'fullscreen',
   },
 } satisfies Meta<typeof DatePickerInput>;
 

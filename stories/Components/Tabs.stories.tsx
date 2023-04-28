@@ -23,6 +23,9 @@ export default {
     maxHeight: { control: 'text' },
     minHeight: { control: 'text' },
   },
+  parameters: {
+    layout: 'fullscreen',
+  },
 } satisfies Meta<typeof Tabs>;
 
 const TabItems = [
@@ -114,7 +117,7 @@ export const Controlled: Story = {
   argTypes: {
     id: { control: { disable: true } },
   },
-  render: props => {
+  render: function Render(props) {
     const [id, setId] = useState('two');
 
     const handleClick = (selectedId: string) => {

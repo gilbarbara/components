@@ -31,7 +31,7 @@ export default {
 } satisfies Meta<typeof ButtonSplit>;
 
 export const Basic: Story = {
-  render: props => {
+  render: function Render(props) {
     const [actionName, setActionName] = useState('');
     const [loading, setLoading] = useState(false);
 

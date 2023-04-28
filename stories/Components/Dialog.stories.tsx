@@ -25,7 +25,7 @@ export default {
 } satisfies Meta<typeof Dialog>;
 
 export const Basic: Story = {
-  render: props => {
+  render: function Render(props) {
     const [isActive, setActive] = useState(false);
 
     const handleClicks = () => {

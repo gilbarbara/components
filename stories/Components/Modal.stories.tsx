@@ -27,7 +27,7 @@ export default {
 } satisfies Meta<typeof Modal>;
 
 export const Basic: Story = {
-  render: props => {
+  render: function Render(props) {
     const [isActive, setActive] = useState(false);
 
     const handleClick = () => {

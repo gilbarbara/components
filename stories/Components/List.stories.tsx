@@ -32,23 +32,21 @@ export default {
 } satisfies Meta<typeof List>;
 
 export const Basic: Story = {
-  render: props => {
-    return (
-      <List
-        {...props}
-        items={[
-          {
-            content: 'The first item',
-            variant: 'primary',
-          },
-          'The second item',
-          'The third item',
-          'The forth item',
-          'The fifth item',
-        ]}
-      />
-    );
-  },
+  render: props => (
+    <List
+      {...props}
+      items={[
+        {
+          content: 'The first item',
+          variant: 'primary',
+        },
+        'The second item',
+        'The third item',
+        'The forth item',
+        'The fifth item',
+      ]}
+    />
+  ),
 };
 
 export const Horizontal: Story = {
@@ -61,11 +59,12 @@ export const Horizontal: Story = {
   argTypes: {
     direction: disableControl(),
   },
-  render: props => {
-    const items = ['Contrast: 4.1', 'Luminance: 2', 'Hue: 344', 'Saturation: 100', 'Lightness: 50'];
-
-    return <List {...props} items={items} />;
-  },
+  render: props => (
+    <List
+      {...props}
+      items={['Contrast: 4.1', 'Luminance: 2', 'Hue: 344', 'Saturation: 100', 'Lightness: 50']}
+    />
+  ),
 };
 
 export const WithComponents: Story = {
