@@ -115,7 +115,7 @@ export const AsLink: Story = {
   argTypes: {
     shape: disableControl(),
   },
-  render: props => {
+  render: function Render(props) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const ref = useRef<HTMLAnchorElement>(null);
 

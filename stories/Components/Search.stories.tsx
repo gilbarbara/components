@@ -23,6 +23,7 @@ export default {
     onFocus: disableControl(),
   },
   parameters: {
+    layout: 'fullscreen',
     minHeight: 300,
   },
 } satisfies Meta<typeof Search>;

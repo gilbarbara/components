@@ -33,15 +33,13 @@ export const Sizes: Story = {
     name: disableControl(),
     size: disableControl(),
   },
-  render: props => {
-    return (
-      <Grid gap={30} templateColumns="repeat(3, 1fr)">
-        {(['sm', 'md', 'lg'] as const).map(size => (
-          <Toggle key={size} {...props} defaultChecked label={size} size={size} />
-        ))}
-      </Grid>
-    );
-  },
+  render: props => (
+    <Grid gap={30} templateColumns="repeat(3, 1fr)">
+      {(['sm', 'md', 'lg'] as const).map(size => (
+        <Toggle key={size} {...props} defaultChecked label={size} size={size} />
+      ))}
+    </Grid>
+  ),
 };
 
 export const Variants: Story = {

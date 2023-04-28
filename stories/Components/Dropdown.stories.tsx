@@ -28,6 +28,7 @@ export default {
     actions: {
       argTypesRegex: '^on[A-Z].*',
     },
+    layout: 'fullscreen',
     minHeight: 350,
   },
 } satisfies Meta<typeof Dropdown>;
@@ -49,7 +50,7 @@ export const WithCreate: Story = {
     allowCreate: true,
     borderless: true,
   },
-  render: props => {
+  render: function Render(props) {
     const [controlledItems, setItems] = useState(items);
     const [values, setValues] = useState<DropdownOption[]>([]);
 

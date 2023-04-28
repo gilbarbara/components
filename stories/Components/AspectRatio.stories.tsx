@@ -28,7 +28,7 @@ export const Basic: Story = {
   args: {
     maxWidth: 400,
   },
-  render: props => {
+  render: function Render(props) {
     const [showMedia, setShowMedia] = useState(false);
 
     useEffect(() => {

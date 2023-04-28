@@ -255,7 +255,7 @@ export const Basic: Story = {
     }, [handleClickReset]);
 
     return (
-      <Box mt="xl">
+      <Box>
         <H1>Members</H1>
         <UserHeader
           ref={headerRef}

@@ -25,7 +25,7 @@ export default {
 } satisfies Meta<typeof Pagination>;
 
 export const Basic: Story = {
-  render: props => {
+  render: function Render(props) {
     const [currentPage, setCurrentPage] = useState(1);
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {

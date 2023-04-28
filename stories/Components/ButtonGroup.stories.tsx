@@ -21,7 +21,7 @@ export default {
 } satisfies Meta<typeof ButtonGroup>;
 
 export const Basic: Story = {
-  render: props => {
+  render: function Render(props) {
     const [active, setActive] = useState('two');
 
     const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {

@@ -25,7 +25,7 @@ export default {
 } satisfies Meta<typeof Menu>;
 
 export const Basic: Story = {
-  render: props => {
+  render: function Render(props) {
     const handleClick = (closeMenu: GenericFunction, name?: string) => {
       return () => {
         closeMenu();
@@ -69,24 +69,22 @@ export const WithComponentAndHover: Story = {
   argTypes: {
     trigger: disableControl(),
   },
-  render: props => {
-    return (
-      <Menu
-        {...props}
-        component={
-          <Spacer gap="xxs">
-            <Icon name="plus-o" /> Add Item
-          </Spacer>
-        }
-      >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>Configuration</MenuItem>
-        <MenuItem>Help</MenuItem>
-        <MenuDivider />
-        <MenuItem variant="red">
-          <a href="#logout">Logout</a>
-        </MenuItem>
-      </Menu>
-    );
-  },
+  render: props => (
+    <Menu
+      {...props}
+      component={
+        <Spacer gap="xxs">
+          <Icon name="plus-o" /> Add Item
+        </Spacer>
+      }
+    >
+      <MenuItem>Profile</MenuItem>
+      <MenuItem>Configuration</MenuItem>
+      <MenuItem>Help</MenuItem>
+      <MenuDivider />
+      <MenuItem variant="red">
+        <a href="#logout">Logout</a>
+      </MenuItem>
+    </Menu>
+  ),
 };
