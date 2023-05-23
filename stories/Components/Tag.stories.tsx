@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { MouseEvent } from 'react';
 import { useTheme } from '@emotion/react';
 import { capitalize } from '@gilbarbara/helpers';
+import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Spacer } from 'src';
@@ -95,35 +97,70 @@ export const Sizes: Story = {
 };
 
 export const WithIcons: Story = {
-  render: props => (
-    <Grid gap={20} templateColumns="repeat(4, 1fr)">
-      <div>
-        <Tag {...props} iconBefore="assign" variant="secondary">
-          add
-        </Tag>
-      </div>
-      <div>
-        <Tag {...props} iconBefore="math-plus">
-          add
-        </Tag>
-      </div>
-      <div>
-        <Tag {...props} colorShade="mid" iconAfter="close" invert variant="blue">
-          remove
-        </Tag>
-      </div>
-      <div>
-        <Tag
-          {...props}
-          color="white"
-          iconAfter="chevron-right"
-          shade="dark"
-          size="regular"
-          variant="red"
-        >
-          continue
-        </Tag>
-      </div>
-    </Grid>
-  ),
+  render: props => {
+    const handleClickBefore = (event: MouseEvent<HTMLButtonElement>) => {
+      action('onClickBefore')(
+        (event.currentTarget as HTMLButtonElement).parentElement?.dataset.name,
+      );
+    };
+
+    const handleClickAfter = (event: MouseEvent<HTMLElement>) => {
+      action('onClickBefore')(
+        (event.currentTarget as HTMLButtonElement).parentElement?.dataset.name,
+      );
+    };
+
+    return (
+      <Grid gap={20} templateColumns="repeat(4, 1fr)">
+        <div>
+          <Tag
+            {...props}
+            data-name="assign"
+            iconBefore="assign"
+            onClickBefore={handleClickBefore}
+            variant="secondary"
+          >
+            assign
+          </Tag>
+        </div>
+        <div>
+          <Tag
+            {...props}
+            data-name="math-plus"
+            iconBefore="math-plus"
+            onClickBefore={handleClickBefore}
+          >
+            add
+          </Tag>
+        </div>
+        <div>
+          <Tag
+            {...props}
+            colorShade="mid"
+            data-name="close"
+            iconAfter="close"
+            invert
+            onClickAfter={handleClickAfter}
+            variant="blue"
+          >
+            remove
+          </Tag>
+        </div>
+        <div>
+          <Tag
+            {...props}
+            color="white"
+            data-name="chevron-right"
+            iconAfter="chevron-right"
+            onClickAfter={handleClickAfter}
+            shade="dark"
+            size="regular"
+            variant="red"
+          >
+            continue
+          </Tag>
+        </div>
+      </Grid>
+    );
+  },
 };
