@@ -40,3 +40,5 @@ export function Loader(props: LoaderProps) {
     }
   }
 }
+
+Loader.displayName = 'Loader';

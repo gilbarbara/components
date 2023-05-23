@@ -342,4 +342,6 @@ export function Tabs(props: TabsProps) {
   );
 }
 
+Tabs.displayName = 'Tabs';
+
 export { Tab } from './Tab';

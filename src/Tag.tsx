@@ -127,3 +127,5 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
     </StyledTag>
   );
 });
+
+Tag.displayName = 'Tag';

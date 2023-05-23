@@ -125,4 +125,6 @@ function DropdownContent(props: ComponentProps) {
   return <Placeholder>{placeholder}</Placeholder>;
 }
 
+DropdownContent.displayName = 'DropdownContent';
+
 export default DropdownContent;

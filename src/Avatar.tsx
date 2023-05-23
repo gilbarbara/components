@@ -93,3 +93,5 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     </BoxCenter>
   );
 });
+
+Avatar.displayName = 'Avatar';

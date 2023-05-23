@@ -50,3 +50,5 @@ export function Truncate(props: TruncateProps) {
     </StyledTruncate>
   );
 }
+
+Truncate.displayName = 'Truncate';

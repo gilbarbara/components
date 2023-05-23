@@ -25,3 +25,5 @@ export const SkeletonCircle = forwardRef<HTMLDivElement, SkeletonCircleProps>((p
     />
   );
 });
+
+SkeletonCircle.displayName = 'SkeletonCircle';

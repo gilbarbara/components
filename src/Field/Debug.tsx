@@ -47,4 +47,6 @@ function FieldDebug(props: Props) {
   );
 }
 
+FieldDebug.displayName = 'FieldDebug';
+
 export default FieldDebug;

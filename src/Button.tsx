@@ -168,3 +168,5 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
     </StyledButton>
   );
 });
+
+Button.displayName = 'Button';

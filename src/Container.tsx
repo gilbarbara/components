@@ -100,3 +100,5 @@ export const StyledContainer = styled(Box)<SetRequired<ContainerProps, 'align'>>
 export const Container = forwardRef<HTMLDivElement, ContainerProps>((props, ref) => {
   return <StyledContainer ref={ref} data-component-name="Container" {...defaultProps} {...props} />;
 });
+
+Container.displayName = 'Container';

@@ -204,3 +204,5 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     </StyledFormGroup>
   );
 });
+
+FormGroup.displayName = 'FormGroup';

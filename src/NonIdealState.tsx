@@ -191,3 +191,5 @@ export function NonIdealState(props: NonIdealStateProps) {
     </StyledNonIdealState>
   );
 }
+
+NonIdealState.displayName = 'NonIdealState';

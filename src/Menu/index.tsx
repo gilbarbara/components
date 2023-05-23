@@ -248,5 +248,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
   );
 });
 
+Menu.displayName = 'Menu';
+
 export { MenuDivider } from './Divider';
 export { MenuItem } from './Item';

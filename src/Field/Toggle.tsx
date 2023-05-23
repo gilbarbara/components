@@ -45,4 +45,6 @@ function FieldToggle(props: Props) {
   );
 }
 
+FieldToggle.displayName = 'FieldToggle';
+
 export default FieldToggle;

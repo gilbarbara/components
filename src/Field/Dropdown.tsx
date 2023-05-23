@@ -64,4 +64,6 @@ function FieldDropdown(props: Props) {
   );
 }
 
+FieldDropdown.displayName = 'FieldDropdown';
+
 export default FieldDropdown;

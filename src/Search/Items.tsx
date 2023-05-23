@@ -107,4 +107,6 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
   );
 });
 
+SearchItems.displayName = 'SearchItems';
+
 export default SearchItems;

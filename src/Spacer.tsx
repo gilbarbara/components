@@ -163,3 +163,5 @@ export const Spacer = forwardRef<HTMLDivElement, SpacerProps>((props, ref) => {
     </StyledSpacer>
   );
 });
+
+Spacer.displayName = 'Spacer';

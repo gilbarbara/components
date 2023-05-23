@@ -102,3 +102,5 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =>
     </StyledAnchor>
   );
 });
+
+Anchor.displayName = 'Anchor';

@@ -91,6 +91,8 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
   <StyledBox ref={ref} data-component-name="Box" {...boxDefaultProps} {...props} />
 ));
 
+Box.displayName = 'Box';
+
 export const boxCenterDefaultProps = {
   align: 'center',
   direction: 'column',
@@ -101,6 +103,8 @@ export const boxCenterDefaultProps = {
 export const BoxCenter = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((props, ref) => (
   <StyledBox ref={ref} data-component-name="BoxCenter" {...boxCenterDefaultProps} {...props} />
 ));
+
+BoxCenter.displayName = 'BoxCenter';
 
 export const boxInlineDefaultProps = {
   align: 'center',
@@ -117,3 +121,5 @@ export const BoxInline = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((
     {...props}
   />
 ));
+
+BoxInline.displayName = 'BoxInline';

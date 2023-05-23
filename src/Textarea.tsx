@@ -46,3 +46,5 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     <StyledTextarea ref={ref} data-component-name="Textarea" id={name} name={name} {...rest} />
   );
 });
+
+Textarea.displayName = 'Textarea';

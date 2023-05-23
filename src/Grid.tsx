@@ -132,3 +132,5 @@ export const StyledGrid = styled(
 export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => (
   <StyledGrid ref={ref} data-component-name="Grid" {...defaultProps} {...props} />
 ));
+
+Grid.displayName = 'Grid';

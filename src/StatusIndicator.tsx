@@ -63,3 +63,5 @@ export function StatusIndicator(props: StatusIndicatorProps) {
     <StyledStatusIndicator data-component-name="StatusIndicator" {...defaultProps} {...props} />
   );
 }
+
+StatusIndicator.displayName = 'StatusIndicator';

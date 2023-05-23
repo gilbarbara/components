@@ -131,4 +131,6 @@ function FieldInput(props: Props) {
   return content;
 }
 
+FieldInput.displayName = 'FieldInput';
+
 export default FieldInput;

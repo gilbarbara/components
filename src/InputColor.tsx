@@ -91,3 +91,5 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
     </StyledColorGroup>
   );
 });
+
+InputColor.displayName = 'InputColor';

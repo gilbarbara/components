@@ -144,3 +144,5 @@ export function Modal(props: ModalProps) {
     </Portal>
   );
 }
+
+Modal.displayName = 'Modal';

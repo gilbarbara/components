@@ -151,3 +151,5 @@ export function DatePickerRange(props: DatePickerRangerProps) {
     </StyledDatePicker>
   );
 }
+
+DatePickerRange.displayName = 'DatePickerRange';

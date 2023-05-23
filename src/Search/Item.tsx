@@ -53,7 +53,7 @@ export const StyledSearchItem = styled(
   `;
 });
 
-export default function SearchItem({ children, isSelected, onClick, value }: SearchItemProps) {
+function SearchItem({ children, isSelected, onClick, value }: SearchItemProps) {
   return (
     <StyledSearchItem
       data-component-name="SearchItem"
@@ -66,3 +66,7 @@ export default function SearchItem({ children, isSelected, onClick, value }: Sea
     </StyledSearchItem>
   );
 }
+
+SearchItem.displayName = 'SearchItem';
+
+export default SearchItem;

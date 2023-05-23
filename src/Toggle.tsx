@@ -277,3 +277,5 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     </Label>
   );
 });
+
+Toggle.displayName = 'Toggle';

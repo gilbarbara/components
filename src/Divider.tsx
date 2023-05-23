@@ -167,3 +167,5 @@ export function Divider(props: DividerProps) {
     <StyledDivider data-component-name="Divider" role="separator" {...defaultProps} {...props} />
   );
 }
+
+Divider.displayName = 'Divider';

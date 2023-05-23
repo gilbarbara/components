@@ -166,3 +166,5 @@ export function Dialog(props: DialogProps) {
     </Portal>
   );
 }
+
+Dialog.displayName = 'Dialog';

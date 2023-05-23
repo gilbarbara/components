@@ -256,3 +256,5 @@ export function DataTable(props: DataTableProps) {
     </Box>
   );
 }
+
+DataTable.displayName = 'DataTable';

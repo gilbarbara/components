@@ -61,3 +61,5 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     </StyledLabel>
   );
 });
+
+Radio.displayName = 'Radio';

@@ -56,3 +56,5 @@ export default function PaginationButton(props: PaginationButtonProps) {
     </StyledPaginationButton>
   );
 }
+
+PaginationButton.displayName = 'PaginationButton';

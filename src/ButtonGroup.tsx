@@ -63,3 +63,5 @@ export function ButtonGroup(props: ButtonGroupProps) {
     </StyledButtonGroup>
   );
 }
+
+ButtonGroup.displayName = 'ButtonGroup';

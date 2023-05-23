@@ -189,4 +189,6 @@ export function Field<T extends FieldProps>(props: T) {
   );
 }
 
+Field.displayName = 'Field';
+
 export type { FieldProps } from './types';

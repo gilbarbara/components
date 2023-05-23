@@ -106,3 +106,5 @@ export function MenuItem({
     </StyledMenuItem>
   );
 }
+
+MenuItem.displayName = 'MenuItem';

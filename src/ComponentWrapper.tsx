@@ -72,3 +72,5 @@ export const ComponentWrapper = forwardRef<HTMLDivElement, ComponentWrapperProps
     </StyledComponentWrapper>
   );
 });
+
+ComponentWrapper.displayName = 'ComponentWrapper';

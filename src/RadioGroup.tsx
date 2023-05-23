@@ -103,3 +103,5 @@ export function RadioGroup(props: RadioGroupProps) {
     </StyledRadioGroup>
   );
 }
+
+RadioGroup.displayName = 'RadioGroup';

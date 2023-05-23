@@ -15,3 +15,5 @@ export const StyledH1 = styled(
 export const H1 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
   <StyledH1 ref={ref} data-component-name="H1" {...defaultProps} {...props} />
 ));
+
+H1.displayName = 'H1';
