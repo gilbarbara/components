@@ -67,6 +67,8 @@ export type Position = PositionX | PositionY;
 
 export type Sizes = (typeof sizes)[number];
 
+export type SortDirection = 'asc' | 'desc';
+
 export type TextSizes = (typeof textSizes)[number];
 
 // Responsive

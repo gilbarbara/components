@@ -6,13 +6,13 @@ import { Box, BoxCenter } from '../Box';
 import { Loader } from '../Loader';
 import { Paragraph } from '../Paragraph';
 
-interface Props
-  extends Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'defaultColumn' | 'loading'> {
+interface Props extends Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'loading'> {
   isResponsive: boolean;
+  sortColumn?: string;
 }
 
 function DataTableBody(props: Props) {
-  const { clean, columns, data, defaultColumn, isResponsive, loading } = props;
+  const { clean, columns, data, isResponsive, loading, sortColumn } = props;
   const isInitialLoad = loading && !data.length;
 
   return (
@@ -31,7 +31,7 @@ function DataTableBody(props: Props) {
             ({ hideOnResponsive, isAction, key, max, min, size, title }, columnIndex) => {
               let maxWidth = max || size;
 
-              if (isResponsive && defaultColumn === key) {
+              if (isResponsive && sortColumn === key) {
                 maxWidth = undefined;
               }
 

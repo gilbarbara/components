@@ -265,10 +265,10 @@ export const Basic: Story = {
           team={team}
         />
         <Box data-component-name="DataTableWrapper" minWidth={768}>
-          <DataTable
+          <DataTable<Columns>
             columns={columns}
             data={data}
-            defaultColumn="email"
+            defaultSortColumn="email"
             disableScroll
             loading={loading}
             noResults={noResults}
