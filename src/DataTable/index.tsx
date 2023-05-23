@@ -12,7 +12,14 @@ import { scrollTo } from '../modules/animations';
 import { getElementProperty } from '../modules/helpers';
 import { Pagination } from '../Pagination';
 import { Text } from '../Text';
-import { ComponentProps, StyledProps, WithFlexItem, WithLayout, WithMargin } from '../types';
+import {
+  ComponentProps,
+  SortDirection,
+  StyledProps,
+  WithFlexItem,
+  WithLayout,
+  WithMargin,
+} from '../types';
 
 export interface DataTableColumn<T = string> {
   disableSort?: boolean;
@@ -25,7 +32,11 @@ export interface DataTableColumn<T = string> {
   title: ReactNode;
 }
 
-export interface DataTableKnownProps extends StyledProps, WithFlexItem, WithLayout, WithMargin {
+export interface DataTableKnownProps<T extends string>
+  extends StyledProps,
+    WithFlexItem,
+    WithLayout,
+    WithMargin {
   /** @default 768 */
   breakpoint?: number;
   /**
@@ -33,9 +44,14 @@ export interface DataTableKnownProps extends StyledProps, WithFlexItem, WithLayo
    * @default false
    */
   clean?: boolean;
-  columns: DataTableColumn[];
+  columns: DataTableColumn<T>[];
   data: AnyObject[];
+  /**
+   * @deprecated Use `defaultSortColumn` instead
+   */
   defaultColumn?: string;
+  defaultSortColumn?: T;
+  defaultSortDirection?: SortDirection;
   disableScroll?: boolean;
   /** @default false */
   loading?: boolean;
@@ -59,7 +75,11 @@ export interface DataTableKnownProps extends StyledProps, WithFlexItem, WithLayo
   width?: number;
 }
 
-export type DataTableProps = ComponentProps<HTMLDivElement, DataTableKnownProps, 'data' | 'wrap'>;
+export type DataTableProps<T extends string = string> = ComponentProps<
+  HTMLDivElement,
+  DataTableKnownProps<T>,
+  'data' | 'wrap'
+>;
 
 function sortData(data: any[], sortBy: string, sortDirection: string) {
   return [...data].sort((a, b) => {
@@ -90,13 +110,15 @@ export const defaultProps = {
   scrollMargin: 16,
 } satisfies Omit<DataTableProps, 'columns' | 'data'>;
 
-export function DataTable(props: DataTableProps) {
+export function DataTable<T extends string = string>(props: DataTableProps<T>) {
   const {
     breakpoint,
     clean,
     columns,
     data,
     defaultColumn,
+    defaultSortColumn,
+    defaultSortDirection = 'asc',
     disableScroll,
     loading,
     maxRows,
@@ -117,12 +139,10 @@ export function DataTable(props: DataTableProps) {
   const { darkMode = false } = useTheme();
   const element = useRef<HTMLDivElement>(null);
 
-  const sortByDefault = defaultColumn || columns?.[0].key;
-
   const [{ currentPage, sortBy, sortDirection }, setState] = useSetState({
     currentPage: 1,
-    sortBy: sortByDefault,
-    sortDirection: 'asc',
+    sortBy: defaultSortColumn || defaultColumn || columns?.[0].key,
+    sortDirection: defaultSortDirection,
   });
 
   useUpdateEffect(() => {
@@ -158,7 +178,7 @@ export function DataTable(props: DataTableProps) {
 
   const handleClickSort = (event: MouseEvent<HTMLButtonElement>) => {
     const { direction, name = '' } = event.currentTarget.dataset;
-    const reverseDirection = direction === 'asc' ? 'desc' : 'asc';
+    const reverseDirection: SortDirection = direction === 'asc' ? 'desc' : 'asc';
     const nextDirection = sortBy === name ? reverseDirection : 'asc';
 
     const options = {
@@ -198,9 +218,9 @@ export function DataTable(props: DataTableProps) {
         clean={clean}
         columns={columns}
         data={rows.slice(maxRows * (currentPage - 1), maxRows * currentPage)}
-        defaultColumn={defaultColumn}
         isResponsive={isResponsive}
         loading={loading}
+        sortColumn={defaultSortColumn ?? defaultColumn}
       />
     );
   }, [
@@ -208,6 +228,7 @@ export function DataTable(props: DataTableProps) {
     columns,
     currentPage,
     defaultColumn,
+    defaultSortColumn,
     isEmpty,
     isResponsive,
     loading,
