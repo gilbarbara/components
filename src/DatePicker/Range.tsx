@@ -33,7 +33,7 @@ const StyledDatePicker = styled(
   return getStyles(props);
 });
 
-export function DatePickerRange(props: DatePickerRangerProps): JSX.Element {
+export function DatePickerRange(props: DatePickerRangerProps) {
   const {
     currentMonthLabel,
     formatLocale,

@@ -31,7 +31,7 @@ const Title = styled(
   `;
 });
 
-function DataTableHead(props: Props): JSX.Element | null {
+function DataTableHead(props: Props) {
   const { clean, columns, isDisabled, isResponsive, onClick, sortBy, sortDirection } = props;
   const { colors } = getTheme({ theme: useTheme() });
 

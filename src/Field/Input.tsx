@@ -18,7 +18,7 @@ interface Props extends FieldInputProps {
   setStatus: (status: { isActive?: boolean; isDirty?: boolean }) => void;
 }
 
-function FieldInput(props: Props): JSX.Element {
+function FieldInput(props: Props) {
   const {
     currentValue,
     formatter,

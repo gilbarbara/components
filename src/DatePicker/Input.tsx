@@ -142,7 +142,7 @@ const StyledContent = styled(
   `;
 });
 
-export function DatePickerInput(props: DatePickerInputProps): JSX.Element {
+export function DatePickerInput(props: DatePickerInputProps) {
   const {
     borderless,
     large,

@@ -89,7 +89,7 @@ const statuses = [
   { label: 'Users', value: 'users' },
 ];
 
-const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element => {
+const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { setState, status, team } = props;
   const [searchValue, setSearchValue] = useState('');
   const debounceTimeout = useRef<number>();

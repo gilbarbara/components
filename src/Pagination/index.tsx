@@ -57,7 +57,7 @@ const StyledPagination = styled(
   `;
 });
 
-export function Pagination(props: PaginationProps): JSX.Element | null {
+export function Pagination(props: PaginationProps) {
   const {
     currentPage,
     disableEdgeNavigation,

@@ -162,7 +162,7 @@ const StyledDivider = styled(
   `;
 });
 
-export function Divider(props: DividerProps): JSX.Element {
+export function Divider(props: DividerProps) {
   return (
     <StyledDivider data-component-name="Divider" role="separator" {...defaultProps} {...props} />
   );

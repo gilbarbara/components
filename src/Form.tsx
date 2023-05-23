@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { FieldValues, FormProvider, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
 import { AnyObject } from '@gilbarbara/types';
 
@@ -44,10 +45,7 @@ export interface FormProps<T extends FieldValues> extends UseFormProps<T> {
  }
  ```
  */
-export function Form<T extends AnyObject = AnyObject>({
-  children,
-  ...props
-}: FormProps<T>): JSX.Element {
+export function Form<T extends AnyObject = AnyObject>({ children, ...props }: FormProps<T>) {
   const formMethods = useForm<T>({
     mode: 'onChange',
     ...props,

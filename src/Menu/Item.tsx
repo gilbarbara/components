@@ -70,7 +70,7 @@ export function MenuItem({
   disabled,
   onClick,
   ...rest
-}: MenuItemProps): JSX.Element {
+}: MenuItemProps) {
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (disabled) {
       return;

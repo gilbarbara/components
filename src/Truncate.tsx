@@ -41,7 +41,7 @@ const StyledTruncate = styled(
   `;
 });
 
-export function Truncate(props: TruncateProps): JSX.Element {
+export function Truncate(props: TruncateProps) {
   const { children, ...rest } = { ...defaultProps, ...props };
 
   return (

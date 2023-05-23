@@ -6,7 +6,7 @@ import CodeBlock from './CodeBlock';
 
 import packageJson from '../../../package.json';
 
-function OverviewAbout(): JSX.Element {
+function OverviewAbout() {
   return (
     <Box>
       <Jumbo>@gilbarbara/components</Jumbo>

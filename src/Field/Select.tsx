@@ -12,7 +12,7 @@ interface Props extends FieldSelectProps {
   setStatus: (status: { isActive?: boolean; isDirty?: boolean }) => void;
 }
 
-function FieldSelect(props: Props): JSX.Element {
+function FieldSelect(props: Props) {
   const { children, id, isDirty, name, onBlur, onChange, onFocus, registration, setStatus } = props;
   const handleBlur = useCallback(
     (event: FocusEvent<HTMLSelectElement>) => {

@@ -8,7 +8,7 @@ const style = { ...atomOneLight };
 style.hljs.background = grayScale['4'];
 style.hljs.padding = spacing.md;
 
-function CodeBlock(props: SyntaxHighlighterProps): JSX.Element {
+function CodeBlock(props: SyntaxHighlighterProps) {
   return <SyntaxHighlighter style={atomOneLight} {...props} />;
 }
 

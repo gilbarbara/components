@@ -415,7 +415,7 @@ function TooltipBody(
   );
 }
 
-export function Tooltip(props: TooltipProps): JSX.Element {
+export function Tooltip(props: TooltipProps) {
   const { ariaLabel, children, content, disabled, eventType, open, shade, title, variant } = {
     ...defaultProps,
     ...props,

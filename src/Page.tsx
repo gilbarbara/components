@@ -75,7 +75,7 @@ export const StyledPage = styled(Box)<Omit<PageProps, 'name'>>(props => {
   `;
 });
 
-export function Page(props: PageProps): JSX.Element {
+export function Page(props: PageProps) {
   const { align, centered, children, isLoading, justify, maxWidth, name, textAlign, ...rest } = {
     ...defaultProps,
     ...props,

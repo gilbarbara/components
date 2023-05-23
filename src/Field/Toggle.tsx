@@ -10,7 +10,7 @@ interface Props extends FieldToggleProps {
   setValue: UseFormSetValue<FieldValues>;
 }
 
-function FieldToggle(props: Props): JSX.Element {
+function FieldToggle(props: Props) {
   const { disabled, name, onChange, required, setValue } = props;
 
   const handleClickToggle = useCallback(

@@ -40,7 +40,7 @@ export const StyledSearch = styled(
   `;
 });
 
-export function Search(props: SearchProps): JSX.Element {
+export function Search(props: SearchProps) {
   const {
     borderless,
     debounce,
