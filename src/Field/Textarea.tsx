@@ -12,7 +12,7 @@ interface Props extends FieldTextareaProps {
   setStatus: (status: { isActive?: boolean; isDirty?: boolean }) => void;
 }
 
-function FieldTextarea(props: Props): JSX.Element {
+function FieldTextarea(props: Props) {
   const { id, isDirty, name, onBlur, onChange, onFocus, registration, setStatus, skipValidation } =
     props;
   const handleBlur = useCallback(

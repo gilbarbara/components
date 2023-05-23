@@ -10,7 +10,7 @@ interface Props extends FieldRadioProps {
   registration: UseFormRegisterReturn;
 }
 
-function FieldRadio(props: Props): JSX.Element {
+function FieldRadio(props: Props) {
   const { items = [], registration } = props;
 
   return (

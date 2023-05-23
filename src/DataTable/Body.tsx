@@ -11,7 +11,7 @@ interface Props
   isResponsive: boolean;
 }
 
-function DataTableBody(props: Props): JSX.Element {
+function DataTableBody(props: Props) {
   const { clean, columns, data, defaultColumn, isResponsive, loading } = props;
   const isInitialLoad = loading && !data.length;
 

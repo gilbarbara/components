@@ -42,7 +42,7 @@ const StyledPaginationButton = styled(
   `;
 });
 
-export default function PaginationButton(props: PaginationButtonProps): JSX.Element {
+export default function PaginationButton(props: PaginationButtonProps) {
   const { children, currentPage, disabled, onClick, page } = props;
 
   return (

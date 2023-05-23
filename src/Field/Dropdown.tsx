@@ -14,7 +14,7 @@ interface Props extends FieldDropdownProps {
   setValue: SetFieldValue<FieldValues>;
 }
 
-function FieldDropdown(props: Props): JSX.Element {
+function FieldDropdown(props: Props) {
   const { currentValue, dropdownProps = {}, items = [], name, onChange, setValue } = props;
 
   const handleChangeDropdown = useCallback(

@@ -2,7 +2,7 @@ import { Box, Paragraph } from 'src';
 
 import CodeBlock from './CodeBlock';
 
-function OverviewTheming(): JSX.Element {
+function OverviewTheming() {
   return (
     <Box>
       <Paragraph>You can customize the theme in your app.</Paragraph>

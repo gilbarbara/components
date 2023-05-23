@@ -15,7 +15,7 @@ const StyledDatePicker = styled(
   return getStyles(props);
 });
 
-export function DatePicker(props: DatePickerSingleProps): JSX.Element {
+export function DatePicker(props: DatePickerSingleProps) {
   const { currentMonthLabel, fromDate, onSelect, toDate, variant, ...rest } = {
     ...defaultProps,
     ...props,

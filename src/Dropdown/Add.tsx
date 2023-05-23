@@ -17,7 +17,7 @@ const StyledDropdownAdd = styled.div`
   }
 `;
 
-function DropdownAdd(props: Props): JSX.Element {
+function DropdownAdd(props: Props) {
   const {
     methods: { getLabels, setStatus },
     onCreate,

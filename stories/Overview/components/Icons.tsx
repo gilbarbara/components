@@ -22,7 +22,7 @@ function Item({ name }: any) {
   );
 }
 
-function Icons(): JSX.Element | null {
+function Icons() {
   const [showCategories, setShowCategories] = useState(true);
 
   const handleClick = () => setShowCategories(!showCategories);
@@ -56,7 +56,7 @@ function Icons(): JSX.Element | null {
 
             <Box direction="row" display="flex" wrap="wrap">
               {items.map(icon => (
-                <Item name={icon.name} />
+                <Item key={icon.name} name={icon.name} />
               ))}
             </Box>
           </Box>

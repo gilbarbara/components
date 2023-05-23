@@ -90,7 +90,7 @@ export const defaultProps = {
   scrollMargin: 16,
 } satisfies Omit<DataTableProps, 'columns' | 'data'>;
 
-export function DataTable(props: DataTableProps): JSX.Element {
+export function DataTable(props: DataTableProps) {
   const {
     breakpoint,
     clean,

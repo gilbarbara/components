@@ -100,7 +100,7 @@ export const StyledButtonSplit = styled(
   `;
 });
 
-export function ButtonSplit(props: ButtonSplitProps): JSX.Element {
+export function ButtonSplit(props: ButtonSplitProps) {
   const { busy, children, dataAttributes, label, onClick, onToggle, position, ...rest } = {
     ...defaultProps,
     ...props,
