@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -27,6 +28,21 @@ export default {
 
 export const Basic: Story = {};
 
+export const Controlled: Story = {
+  args: {
+    label: 'Controlled',
+  },
+  render: function Render(props) {
+    const [checked, setChecked] = useState(false);
+
+    const handleClick = () => {
+      setChecked(!checked);
+    };
+
+    return <Toggle {...props} checked={checked} onClick={handleClick} />;
+  },
+};
+
 export const Sizes: Story = {
   argTypes: {
     label: disableControl(),
@@ -48,7 +64,7 @@ export const Variants: Story = {
     name: disableControl(),
     variant: disableControl(),
   },
-  render: props => {
+  render: function Render(props) {
     const { variants } = getTheme({ theme: useTheme() });
 
     return (
