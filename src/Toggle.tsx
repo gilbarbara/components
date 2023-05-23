@@ -83,6 +83,7 @@ const StyledInput = styled('input')`
   position: absolute;
   right: 0;
   top: 0;
+  z-index: -1;
 `;
 
 const StyledTrack = styled(
@@ -204,15 +205,12 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
 
     setActive(target.checked);
 
-    /* istanbul ignore else */
-    if (onChange) {
-      onChange(target.checked);
-    }
+    onChange?.(target.checked);
   };
 
   const handleClick = () => {
-    if (onClick && !disabled) {
-      onClick(inputRef.current?.checked || false);
+    if (!disabled) {
+      onClick?.(inputRef.current?.checked || false);
     }
   };
 
@@ -240,6 +238,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     <Label
       data-component-name="Toggle"
       inline
+      onClick={is.boolean(checked) ? handleClick : undefined}
       style={{ cursor: disabled ? 'default' : 'pointer' }}
       {...labelOptions}
     >
