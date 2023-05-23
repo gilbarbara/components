@@ -14,3 +14,5 @@ export function Tab(props: TabProps) {
 
   return <div data-component-name="Tab">{children}</div>;
 }
+
+Tab.displayName = 'Tab';

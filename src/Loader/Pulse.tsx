@@ -72,3 +72,5 @@ export default function LoaderPulse(props: LoaderProps) {
     </StyledLoaderPulse>
   );
 }
+
+LoaderPulse.displayName = 'LoaderPulse';

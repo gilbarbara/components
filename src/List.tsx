@@ -184,7 +184,7 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
         let itemVariant: Variants | undefined;
 
         if (isListItem(item)) {
-          content = (item as ListItem).content;
+          content = item.content;
           itemShade = item.shade;
           itemVariant = item.variant;
         } else {
@@ -210,3 +210,5 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
     </StyledList>
   );
 });
+
+List.displayName = 'List';

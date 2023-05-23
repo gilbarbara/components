@@ -53,3 +53,5 @@ export const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>((props
     </div>
   );
 });
+
+SkeletonText.displayName = 'SkeletonText';

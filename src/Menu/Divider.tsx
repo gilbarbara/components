@@ -21,3 +21,5 @@ const StyledMenuDivider = styled(
 export function MenuDivider() {
   return <StyledMenuDivider data-component-name="MenuDivider" />;
 }
+
+MenuDivider.displayName = 'MenuDivider';

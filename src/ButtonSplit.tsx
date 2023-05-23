@@ -141,3 +141,5 @@ export function ButtonSplit(props: ButtonSplitProps) {
 }
 
 export { MenuDivider as ButtonSplitDivider, MenuItem as ButtonSplitItem } from './Menu';
+
+ButtonSplit.displayName = 'ButtonSplit';

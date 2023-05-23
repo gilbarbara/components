@@ -266,3 +266,5 @@ export function Portal(props: PortalProps) {
     portal.current,
   );
 }
+
+Portal.displayName = 'Portal';

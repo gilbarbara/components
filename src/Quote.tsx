@@ -168,3 +168,5 @@ export const Quote = forwardRef<HTMLElement, QuoteProps>((props, ref) => {
     </StyledFigure>
   );
 });
+
+Quote.displayName = 'Quote';

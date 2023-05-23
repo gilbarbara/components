@@ -209,3 +209,5 @@ export function Dropdown(props: DropdownProps) {
     </StyledDropdown>
   );
 }
+
+Dropdown.displayName = 'Dropdown';

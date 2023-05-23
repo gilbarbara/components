@@ -58,3 +58,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     <StyledInput ref={ref} data-component-name="Input" id={name} {...defaultProps} {...props} />
   );
 });
+
+Input.displayName = 'Input';

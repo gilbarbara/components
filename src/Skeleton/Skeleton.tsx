@@ -103,3 +103,5 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) =
     </StyledSkeleton>
   );
 });
+
+Skeleton.displayName = 'Skeleton';

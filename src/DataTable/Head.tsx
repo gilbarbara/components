@@ -89,4 +89,6 @@ function DataTableHead(props: Props) {
   );
 }
 
+DataTableHead.displayName = 'DataTableHead';
+
 export default memo(DataTableHead);

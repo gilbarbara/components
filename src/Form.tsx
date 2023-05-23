@@ -58,4 +58,6 @@ export function Form<T extends AnyObject = AnyObject>({ children, ...props }: Fo
   );
 }
 
+Form.displayName = 'Form';
+
 export type { SubmitHandler as FormSubmitHandler } from 'react-hook-form';

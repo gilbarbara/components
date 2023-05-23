@@ -224,3 +224,5 @@ export function Search(props: SearchProps) {
     </StyledSearch>
   );
 }
+
+Search.displayName = 'Search';

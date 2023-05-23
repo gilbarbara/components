@@ -186,3 +186,5 @@ export function Collapse(props: CollapseProps) {
     </StyledCollapse>
   );
 }
+
+Collapse.displayName = 'Collapse';

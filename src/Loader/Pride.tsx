@@ -187,3 +187,5 @@ export default function LoaderPride(props: LoaderPrideProps) {
     </StyledLoaderPride>
   );
 }
+
+LoaderPride.displayName = 'LoaderPride';

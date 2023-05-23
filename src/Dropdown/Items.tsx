@@ -301,4 +301,6 @@ function DropdownOptions({
   );
 }
 
+DropdownOptions.displayName = 'DropdownOptions';
+
 export default DropdownOptions;

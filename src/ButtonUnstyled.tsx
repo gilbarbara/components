@@ -110,3 +110,5 @@ export const ButtonUnstyled = forwardRef<HTMLButtonElement, ButtonUnstyledProps>
     </StyledButtonUnstyled>
   );
 });
+
+ButtonUnstyled.displayName = 'ButtonUnstyled';

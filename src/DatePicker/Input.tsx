@@ -255,3 +255,5 @@ export function DatePickerInput(props: DatePickerInputProps) {
     </Box>
   );
 }
+
+DatePickerInput.displayName = 'DatePickerInput';

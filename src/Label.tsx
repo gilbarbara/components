@@ -71,3 +71,5 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
     </StyledLabel>
   );
 });
+
+Label.displayName = 'Label';

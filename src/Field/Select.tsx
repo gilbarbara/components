@@ -64,4 +64,6 @@ function FieldSelect(props: Props) {
   );
 }
 
+FieldSelect.displayName = 'FieldSelect';
+
 export default FieldSelect;

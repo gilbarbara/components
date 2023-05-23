@@ -142,3 +142,5 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
     </StyledAlert>
   );
 });
+
+Alert.displayName = 'Alert';

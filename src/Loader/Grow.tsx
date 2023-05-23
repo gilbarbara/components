@@ -67,3 +67,5 @@ export default function LoaderGrow(props: LoaderProps) {
     </StyledLoaderGrow>
   );
 }
+
+LoaderGrow.displayName = 'LoaderGrow';

@@ -117,3 +117,5 @@ export function Page(props: PageProps) {
     </StyledPage>
   );
 }
+
+Page.displayName = 'Page';

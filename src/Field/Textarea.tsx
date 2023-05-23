@@ -61,4 +61,6 @@ function FieldTextarea(props: Props) {
   return <Textarea {...registration} {...input} suffixSpacing={!skipValidation} />;
 }
 
+FieldTextarea.displayName = 'FieldTextarea';
+
 export default FieldTextarea;

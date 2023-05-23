@@ -171,3 +171,5 @@ export function Pagination(props: PaginationProps) {
     </StyledPagination>
   );
 }
+
+Pagination.displayName = 'Pagination';

@@ -100,3 +100,5 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
     </StyledCopyToClipboard>
   );
 }
+
+CopyToClipboard.displayName = 'CopyToClipboard';

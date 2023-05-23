@@ -69,3 +69,5 @@ export function ClickOutside(props: ClickOutsideProps) {
 }
 
 export const ClickOutsideMemo = memo(ClickOutside);
+
+ClickOutsideMemo.displayName = 'ClickOutside';

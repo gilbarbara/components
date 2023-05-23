@@ -139,3 +139,5 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
     </StyledIcon>
   );
 });
+
+Icon.displayName = 'Icon';

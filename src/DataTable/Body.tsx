@@ -87,4 +87,6 @@ function DataTableBody(props: Props) {
   );
 }
 
+DataTableBody.displayName = 'DataTableBody';
+
 export default memo(DataTableBody);

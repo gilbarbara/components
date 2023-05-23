@@ -60,3 +60,5 @@ export const AspectRatio = forwardRef<HTMLDivElement, AspectRatioProps>((props, 
     </StyledAspectRatio>
   );
 });
+
+AspectRatio.displayName = 'AspectRatio';

@@ -22,4 +22,6 @@ function FieldRadio(props: Props) {
   );
 }
 
+FieldRadio.displayName = 'FieldRadio';
+
 export default FieldRadio;

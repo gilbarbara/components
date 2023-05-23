@@ -41,4 +41,6 @@ function DropdownAdd(props: Props) {
   );
 }
 
+DropdownAdd.displayName = 'DropdownAdd';
+
 export default DropdownAdd;

@@ -52,4 +52,6 @@ function FieldCheckbox(props: Props) {
   );
 }
 
+FieldCheckbox.displayName = 'FieldCheckbox';
+
 export default FieldCheckbox;

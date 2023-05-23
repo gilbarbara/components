@@ -465,3 +465,5 @@ export function Tooltip(props: TooltipProps) {
     </StyledTooltip>
   );
 }
+
+Tooltip.displayName = 'Tooltip';

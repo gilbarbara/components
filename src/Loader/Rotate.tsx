@@ -87,3 +87,5 @@ export default function LoaderRotate(props: LoaderProps) {
     </StyledLoaderRotate>
   );
 }
+
+LoaderRotate.displayName = 'LoaderRotate';
