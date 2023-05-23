@@ -37,8 +37,8 @@ export interface TagProps
   iconAfter?: Icons;
   iconBefore?: Icons;
   invert?: boolean;
-  onClickAfter?: (event: MouseEvent) => void;
-  onClickBefore?: (event: MouseEvent) => void;
+  onClickAfter?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClickBefore?: (event: MouseEvent<HTMLButtonElement>) => void;
   style?: CSSProperties;
 }
 
