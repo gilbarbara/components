@@ -51,8 +51,8 @@ export const StyledButtonSplit = styled(
   const { block, disabled, invert, size } = props;
   const { button, grayLight, grayMid, spacing } = getTheme(props);
 
-  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
-  const buttonPadding = `${padding[size][0]} ${padding[size][1]}`;
+  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
+  const buttonPadding = `${padding[0]} ${padding[1]}`;
   const styles = backgroundStyles(props);
 
   if (disabled) {
@@ -63,21 +63,21 @@ export const StyledButtonSplit = styled(
 
   return css`
     display: inline-flex;
-    min-height: ${height[size]};
-    min-width: ${height[size]};
+    min-height: ${height};
+    min-width: ${height};
     width: ${block ? '100%' : 'auto'};
 
     > [data-component-name='ButtonUnstyled'] {
       ${styles};
-      border-bottom-left-radius: ${borderRadius[size]};
+      border-bottom-left-radius: ${borderRadius};
       border-right: 0;
-      border-top-left-radius: ${borderRadius[size]};
+      border-top-left-radius: ${borderRadius};
       display: flex;
       flex: 1;
-      font-size: ${fontSize[size]};
+      font-size: ${fontSize};
       font-weight: ${fontWeight};
       justify-content: center;
-      line-height: ${lineHeight[size]};
+      line-height: ${lineHeight};
       opacity: 1;
       padding: ${buttonPadding};
     }
@@ -86,8 +86,8 @@ export const StyledButtonSplit = styled(
       ${styles};
       align-items: center;
       border-left: ${invert ? styles.border : `1px solid ${styles.color}`};
-      border-top-right-radius: ${borderRadius[size]};
-      border-bottom-right-radius: ${borderRadius[size]};
+      border-top-right-radius: ${borderRadius};
+      border-bottom-right-radius: ${borderRadius};
       display: flex;
     }
 

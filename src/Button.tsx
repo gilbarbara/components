@@ -78,11 +78,9 @@ export const StyledButton = styled(
 )<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
   const { block, busy, light, shade, shape, size, variant, wide } = props;
   const { button, grayLighter, grayMid, radius, spacing, variants } = getTheme(props);
-  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button;
-  let buttonPadding = `${padding[size][0]} ${
-    wide ? px(parseInt(padding[size][1], 10) * 2) : padding[size][1]
-  }`;
-  let selectedRadius = borderRadius[size];
+  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
+  let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
+  let selectedRadius = borderRadius;
 
   if (shape) {
     buttonPadding = spacing.xxs;
@@ -107,12 +105,12 @@ export const StyledButton = styled(
     box-shadow: none;
     cursor: pointer;
     display: inline-flex;
-    font-size: ${fontSize[size]};
+    font-size: ${fontSize};
     font-weight: ${light ? 400 : fontWeight};
-    min-height: ${height[size]};
-    min-width: ${height[size]};
+    min-height: ${height};
+    min-width: ${height};
     justify-content: center;
-    line-height: ${lineHeight[size]};
+    line-height: ${lineHeight};
     overflow: hidden;
     padding: ${buttonPadding};
     position: relative;
@@ -144,17 +142,16 @@ export const StyledButton = styled(
 
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
   const { busy, children, shape, size } = { ...defaultProps, ...props };
-  const {
-    button: { fontSize },
-  } = getTheme(props);
+  const { button } = getTheme(props);
+  const { fontSize } = button[size];
 
   const content: PlainObject<ReactNode> = {
     children,
-    icon: busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />,
+    icon: busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize, 10) + 4} spin />,
   };
 
   if (shape && busy) {
-    content.children = <Icon name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />;
+    content.children = <Icon name="spinner" size={parseInt(fontSize, 10) + 4} spin />;
     content.icon = '';
   }
 
