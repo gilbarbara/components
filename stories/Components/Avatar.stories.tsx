@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { BoxCenter, Grid, Paragraph } from 'src';
+import { BoxCenter, Paragraph, Spacer } from 'src';
 import { Avatar, defaultProps } from 'src/Avatar';
+import { avatar } from 'src/modules/theme';
 
+import { AvatarSize } from '../../src/types';
 import { colorProps, disableControl, flexItemProps, hideProps } from '../__helpers__';
 
 type Story = StoryObj<typeof Avatar>;
@@ -29,14 +31,14 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
-      {(['xs', 'sm', 'md', 'lg', 'xl', 'jumbo'] as const).map(d => (
+    <Spacer gap="xl">
+      {(Object.keys(avatar) as AvatarSize[]).map(d => (
         <BoxCenter key={d}>
           <Avatar key={d} {...props} size={d} />
           <Paragraph mt="xs">{d}</Paragraph>
         </BoxCenter>
       ))}
-    </Grid>
+    </Spacer>
   ),
 };
 

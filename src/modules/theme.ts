@@ -192,6 +192,37 @@ export const variants = {
  * Components
  */
 
+export const avatar = {
+  xxs: {
+    size: '16px',
+    fontSize: '8px',
+  },
+  xs: {
+    size: '24px',
+    fontSize: '12px',
+  },
+  sm: {
+    size: '32px',
+    fontSize: '14px',
+  },
+  md: {
+    size: '48px',
+    fontSize: '18px',
+  },
+  lg: {
+    size: '64px',
+    fontSize: '24px',
+  },
+  xl: {
+    size: '96px',
+    fontSize: '40px',
+  },
+  jumbo: {
+    size: '128px',
+    fontSize: '52px',
+  },
+};
+
 export const button = {
   borderRadius: {
     xs: '4px',
