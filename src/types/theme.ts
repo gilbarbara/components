@@ -8,6 +8,8 @@ export type BaseTheme = MapLiteralToPrimitive<typeof theme>;
 
 export type Breakpoints = keyof typeof theme.breakpoints;
 
+export type ButtonSizes = keyof typeof theme.button;
+
 export type Colors = keyof typeof theme.colors;
 
 export type ColorVariants = keyof typeof theme.colors | 'gray';

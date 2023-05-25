@@ -11,7 +11,7 @@ import {
   Sizes,
   TextSizes,
 } from './common';
-import { Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
+import { ButtonSizes, Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
 
 export interface WithAlign {
   /**
@@ -42,7 +42,7 @@ export interface WithButtonSize {
    * Button size
    * @default md
    */
-  size?: 'xs' | Sizes;
+  size?: ButtonSizes;
 }
 
 export interface WithBusy {

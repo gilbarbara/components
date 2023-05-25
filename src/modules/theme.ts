@@ -224,36 +224,37 @@ export const avatar = {
 };
 
 export const button = {
-  borderRadius: {
-    xs: '4px',
-    sm: '8px',
-    md: '8px',
-    lg: '8px',
+  xs: {
+    borderRadius: '4px',
+    fontSize: '12px',
+    fontWeight: 700,
+    height: '24px',
+    lineHeight: 1.2,
+    padding: ['4px', '8px'],
   },
-  fontSize: {
-    xs: '12px',
-    sm: '14px',
-    md: '16px',
-    lg: '18px',
+  sm: {
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: 700,
+    height: '32px',
+    lineHeight: 1.2,
+    padding: ['6px', '12px'],
   },
-  fontWeight: 700,
-  height: {
-    xs: '24px',
-    sm: '32px',
-    md: '40px',
-    lg: '48px',
+  md: {
+    borderRadius: '8px',
+    fontSize: '16px',
+    fontWeight: 700,
+    height: '40px',
+    lineHeight: 1.3,
+    padding: ['8px', '16px'],
   },
-  lineHeight: {
-    xs: 1.2,
-    sm: 1.2,
-    md: 1.3,
-    lg: 1.4,
-  },
-  padding: {
-    xs: ['4px', '8px'],
-    sm: ['6px', '12px'],
-    md: ['8px', '16px'],
-    lg: ['10px', '20px'],
+  lg: {
+    borderRadius: '8px',
+    fontSize: '18px',
+    fontWeight: 700,
+    height: '48px',
+    lineHeight: 1.4,
+    padding: ['10px', '20px'],
   },
 };
 
