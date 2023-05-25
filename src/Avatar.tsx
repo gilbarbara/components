@@ -6,42 +6,15 @@ import { getInitials } from '@gilbarbara/helpers';
 import { BoxCenter } from './Box';
 import { getColorVariant, getTheme } from './modules/helpers';
 import { getStyledOptions } from './modules/system';
-import { StyledProps, WithBorder, WithColor, WithFlexItem } from './types';
+import { AvatarSize, StyledProps, WithBorder, WithColor, WithFlexItem } from './types';
 
 export interface AvatarProps extends StyledProps, WithBorder, WithColor, WithFlexItem {
   image?: string;
   name: string;
   /** @default md */
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'jumbo';
+  size?: AvatarSize;
   style?: CSSProperties;
 }
-
-const sizes = {
-  xs: {
-    size: '24px',
-    fontSize: '12px',
-  },
-  sm: {
-    size: '32px',
-    fontSize: '14px',
-  },
-  md: {
-    size: '40px',
-    fontSize: '16px',
-  },
-  lg: {
-    size: '48px',
-    fontSize: '18px',
-  },
-  xl: {
-    size: '56px',
-    fontSize: '20px',
-  },
-  jumbo: {
-    size: '96px',
-    fontSize: '40px',
-  },
-};
 
 export const defaultProps = {
   shade: 'mid',
@@ -54,9 +27,9 @@ const Circle = styled(
   getStyledOptions(),
 )<Required<Pick<AvatarProps, 'shade' | 'size' | 'variant'>>>(props => {
   const { shade, size, variant } = props;
-  const { variants } = getTheme(props);
+  const { avatar, variants } = getTheme(props);
   const { bg, color } = getColorVariant(variant, shade, variants);
-  const selectedSize = sizes[size];
+  const selectedSize = avatar[size];
 
   return css`
     background-color: ${bg};
@@ -71,7 +44,9 @@ const Circle = styled(
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
   const { image, name, shade, size, variant, ...rest } = { ...defaultProps, ...props };
-  const selectedSize = sizes[size];
+
+  const { avatar } = getTheme(props);
+  const selectedSize = avatar[size];
 
   return (
     <BoxCenter

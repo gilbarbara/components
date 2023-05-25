@@ -15,6 +15,36 @@ exports[`getMediaQueries should return properly 1`] = `
 
 exports[`getTheme should return the theme 1`] = `
 {
+  "avatar": {
+    "jumbo": {
+      "fontSize": "52px",
+      "size": "128px",
+    },
+    "lg": {
+      "fontSize": "24px",
+      "size": "64px",
+    },
+    "md": {
+      "fontSize": "18px",
+      "size": "48px",
+    },
+    "sm": {
+      "fontSize": "14px",
+      "size": "32px",
+    },
+    "xl": {
+      "fontSize": "40px",
+      "size": "96px",
+    },
+    "xs": {
+      "fontSize": "12px",
+      "size": "24px",
+    },
+    "xxs": {
+      "fontSize": "8px",
+      "size": "16px",
+    },
+  },
   "black": "#000",
   "breakpoints": {
     "lg": "1024px",
@@ -516,6 +546,36 @@ exports[`getTheme should return the theme 1`] = `
 
 exports[`mergeTheme should return a modified theme 1`] = `
 {
+  "avatar": {
+    "jumbo": {
+      "fontSize": "52px",
+      "size": "128px",
+    },
+    "lg": {
+      "fontSize": "24px",
+      "size": "64px",
+    },
+    "md": {
+      "fontSize": "18px",
+      "size": "48px",
+    },
+    "sm": {
+      "fontSize": "14px",
+      "size": "32px",
+    },
+    "xl": {
+      "fontSize": "40px",
+      "size": "96px",
+    },
+    "xs": {
+      "fontSize": "12px",
+      "size": "24px",
+    },
+    "xxs": {
+      "fontSize": "8px",
+      "size": "16px",
+    },
+  },
   "black": "#000",
   "breakpoints": {
     "lg": "1024px",
@@ -1017,6 +1077,36 @@ exports[`mergeTheme should return a modified theme 1`] = `
 
 exports[`mergeTheme should return the default theme 1`] = `
 {
+  "avatar": {
+    "jumbo": {
+      "fontSize": "52px",
+      "size": "128px",
+    },
+    "lg": {
+      "fontSize": "24px",
+      "size": "64px",
+    },
+    "md": {
+      "fontSize": "18px",
+      "size": "48px",
+    },
+    "sm": {
+      "fontSize": "14px",
+      "size": "32px",
+    },
+    "xl": {
+      "fontSize": "40px",
+      "size": "96px",
+    },
+    "xs": {
+      "fontSize": "12px",
+      "size": "24px",
+    },
+    "xxs": {
+      "fontSize": "8px",
+      "size": "16px",
+    },
+  },
   "black": "#000",
   "breakpoints": {
     "lg": "1024px",
