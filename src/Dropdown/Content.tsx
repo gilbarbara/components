@@ -62,11 +62,11 @@ const Placeholder = styled(
   'div',
   getStyledOptions(),
 )(props => {
-  const { darkMode, grayLight, grayMid } = getTheme(props);
+  const { grayMid } = getTheme(props);
 
   return css`
     align-items: center;
-    color: ${darkMode ? grayLight : grayMid};
+    color: ${grayMid};
     display: flex;
   `;
 });
