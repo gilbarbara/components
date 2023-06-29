@@ -48,7 +48,7 @@ export const StyledDropdown = styled(
   }
 >(props => {
   const { borderless, isFilled, multi, shade, variant, width } = props;
-  const { grayDark, grayDarker, grayMid, radius, spacing, variants, white } = getTheme(props);
+  const { grayDark, grayMid, radius, spacing, variants } = getTheme(props);
   const { bg } = getColorVariant(variant, shade, variants);
 
   const darkMode = isDarkMode(props);
@@ -66,7 +66,6 @@ export const StyledDropdown = styled(
         padding: 0 !important;
       `
     : css`
-        background-color: ${darkMode ? grayDarker : white};
         border: 1px solid ${borderColor};
         border-radius: ${radius.xs};
         padding-left: ${multi ? 0 : spacing.xs} !important;
@@ -172,7 +171,7 @@ export function Dropdown(props: DropdownProps) {
   };
   const [isFilled, setFilled] = useState(!!values.length);
 
-  const { inputHeight, variants } = getTheme({ theme: useTheme() });
+  const { darkMode, grayDarker, inputHeight, variants, white } = getTheme({ theme: useTheme() });
   const { bg } = getColorVariant(rest.variant || 'primary', rest.shade, variants);
 
   const handleChange = (value: Option[]) => {
@@ -197,6 +196,7 @@ export function Dropdown(props: DropdownProps) {
         options={items}
         showClearButton={showClearButton}
         styles={{
+          bgColor: darkMode ? grayDarker : white,
           color: bg,
           gap: 0,
           minHeight: parseInt(large ? inputHeight.large : inputHeight.normal, 10),
