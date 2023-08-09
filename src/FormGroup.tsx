@@ -1,7 +1,7 @@
 import { CSSProperties, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { Box } from './Box';
@@ -147,7 +147,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     valid,
     ...rest
   } = { ...defaultProps, ...props };
-  const content: AnyObject = {
+  const content: PlainObject<ReactNode> = {
     assistiveText,
   };
 

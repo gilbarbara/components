@@ -1,6 +1,6 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { omit } from '@gilbarbara/helpers';
-import { AnyObject, StringOrNumber } from '@gilbarbara/types';
+import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { FieldProps, RegisterOptionsProps } from './types';
@@ -13,7 +13,7 @@ import {
   validatePhoneBR,
 } from '../modules/validations';
 
-export function getError(name: string, errors: AnyObject) {
+export function getError(name: string, errors: PlainObject<any>) {
   const { message, type } = errors[name] || {};
 
   if (message) {
@@ -64,7 +64,7 @@ export function getRegisterOptions(
     validations = [],
     value,
   } = props;
-  const registerOptions = {} as AnyObject;
+  const registerOptions = {} as PlainObject;
 
   if (!is.undefined(value) || ['checkbox', 'toggle'].includes(type)) {
     registerOptions.value = getDefaultValue(value, type);
@@ -152,7 +152,7 @@ export function getRegisterOptions(
       };
 
       return acc;
-    }, {} as AnyObject);
+    }, {} as PlainObject);
   }
 
   return registerOptions;

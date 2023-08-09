@@ -1,7 +1,7 @@
 import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import { omit, px } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 import { deepmergeCustom, DeepMergeLeafURI } from 'deepmerge-ts';
 import is from 'is-lite';
 import { PartialDeep } from 'type-fest';
@@ -114,7 +114,7 @@ export function getElementProperty(
 export function getMediaQueries(): MediaQueries {
   return Object.keys(breakpoints)
     .filter(d => Number.isNaN(parseInt(d, 10)))
-    .reduce((acc: AnyObject, d) => {
+    .reduce((acc: PlainObject, d) => {
       acc[d] = `@media screen and (min-width: ${px(breakpoints[d as Breakpoints])})`;
 
       return acc;
@@ -140,22 +140,25 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
 
   const baseVariants = Object.entries({ ...nextTheme.colors, gray: nextTheme.gray })
     .filter(([key]) => !['black', 'white'].includes(key))
-    .reduce((acc, [key, value]) => {
-      acc[key as keyof Theme['variants']] =
-        key === 'gray'
-          ? getGrayScale(
-              grayLightest,
-              grayLighter,
-              grayLight,
-              gray,
-              grayDark,
-              grayDarker,
-              grayDarkest,
-            )
-          : getColorScale(value);
+    .reduce(
+      (acc, [key, value]) => {
+        acc[key as keyof Theme['variants']] =
+          key === 'gray'
+            ? getGrayScale(
+                grayLightest,
+                grayLighter,
+                grayLight,
+                gray,
+                grayDark,
+                grayDarker,
+                grayDarkest,
+              )
+            : getColorScale(value);
 
-      return acc;
-    }, {} as Theme['variants']);
+        return acc;
+      },
+      {} as Theme['variants'],
+    );
 
   return {
     ...nextTheme,
@@ -165,7 +168,7 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
 
 export function recursiveChildrenEnhancer(
   children: ReactNode,
-  props: AnyObject,
+  props: PlainObject,
   options: RecursiveChildrenEnhancerOptions,
 ): ReactNode {
   const { componentType, overrideProps } = options;
@@ -203,7 +206,7 @@ export function recursiveChildrenEnhancer(
  * Helper to generate responsive media queries
  */
 export function responsive(rules: ResponsiveInput) {
-  const entries: AnyObject = {};
+  const entries: PlainObject<any> = {};
   const mediaQueries = getMediaQueries();
 
   for (const rule in rules) {

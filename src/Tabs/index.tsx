@@ -11,7 +11,7 @@ import { useMeasure, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit, px, unique } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
 import { SetOptional, SetRequired } from 'type-fest';
@@ -265,7 +265,7 @@ export function Tabs(props: TabsProps) {
     return null;
   }
 
-  const content: AnyObject = {};
+  const content: PlainObject<ReactNode> = {};
 
   if (isReady) {
     if (tabs.length) {

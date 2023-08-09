@@ -2,8 +2,8 @@
   "extends": "@gilbarbara/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "./lib",
-    "target": "ESNext"
+    "noEmit": true,
+    "target": "ES2020"
   },
   "include": ["src/**/*", "*.d.ts"]
 }

@@ -1,8 +1,8 @@
-import { CSSProperties, forwardRef, ReactElement } from 'react';
+import { CSSProperties, forwardRef, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { AnyObject, StringOrNumber } from '@gilbarbara/types';
+import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { BoxCenter } from './Box';
@@ -44,7 +44,7 @@ const StyledComponentWrapper = styled(
 export const ComponentWrapper = forwardRef<HTMLDivElement, ComponentWrapperProps>((props, ref) => {
   const { children, prefix, size, suffix, ...rest } = { ...defaultProps, ...props };
 
-  const content: AnyObject = {};
+  const content: PlainObject<ReactNode> = {};
   const height = is.array(size) ? size[1] : size;
   const width = is.array(size) ? size[0] : size;
 

@@ -74,6 +74,7 @@ export type TextSizes = (typeof textSizes)[number];
 // Responsive
 export interface MediaQueries {
   [key: string]: any;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   _: string;
   lg: string;
   md: string;

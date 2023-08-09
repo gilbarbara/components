@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useSetState, useUnmount } from 'react-use';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 
 import FieldCheckbox from './Checkbox';
 import FieldDebug from './Debug';
@@ -83,7 +83,7 @@ export function Field<T extends FieldProps>(props: T) {
   const showError = !!error && errorType !== 'revalidate' && (!isActive || isDirty);
   const isValid = !!currentValue && !error && (required || validations?.length);
 
-  const groupProps: AnyObject = {
+  const groupProps: PlainObject = {
     assistiveText,
     hideAssistiveText,
     inline,
@@ -92,7 +92,7 @@ export function Field<T extends FieldProps>(props: T) {
     required,
     style,
   };
-  const output: AnyObject = { error };
+  const output: PlainObject<ReactNode> = { error };
 
   /* istanbul ignore else */
   if (!skipValidation) {

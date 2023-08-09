@@ -8,7 +8,7 @@ import {
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { formatDateLocale, omit } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 
 import { DatePickerRangerProps } from './types';
 import { defaultProps, getFooter, getNumberOfMonths, getRange, getStyles } from './utils';
@@ -77,7 +77,7 @@ export function DatePickerRange(props: DatePickerRangerProps) {
   const { from, to } = range || {};
 
   const modifiers = { from: from || false, to: to || false };
-  const content: AnyObject<ReactNode> = {
+  const content: PlainObject<ReactNode> = {
     header: <Paragraph>Select the initial date</Paragraph>,
   };
 

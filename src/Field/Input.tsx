@@ -1,7 +1,7 @@
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { formatMoney, formatPhoneBR } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 
 import { FieldInputProps } from './types';
 import { getInputParameters } from './utils';
@@ -105,7 +105,7 @@ function FieldInput(props: Props) {
       break;
     }
     default: {
-      const parameters: AnyObject<string> = {};
+      const parameters: PlainObject<string> = {};
 
       if (currentValue) {
         if (formatter === 'money') {

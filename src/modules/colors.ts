@@ -1,15 +1,15 @@
-import { rangeLimit } from '@gilbarbara/helpers';
+import { clamp } from '@gilbarbara/helpers';
 import { hex2hsl, hsl2hex, textColor } from 'colorizr';
 
 export function getColorScale(color: string) {
   const { h, l, s } = hex2hsl(color);
 
-  const lightest = hsl2hex({ h, s, l: rangeLimit(l * 1.9, 92, 96) });
-  const lighter = hsl2hex({ h, s, l: rangeLimit(l * 1.6, 82, 92) });
-  const light = hsl2hex({ h, s, l: rangeLimit(l * 1.4, 64, 80) });
-  const dark = hsl2hex({ h, s, l: rangeLimit(l * 0.7, 32) });
-  const darker = hsl2hex({ h, s, l: rangeLimit(l * 0.45, 16) });
-  const darkest = hsl2hex({ h, s, l: rangeLimit(l * 0.3, 8) });
+  const lightest = hsl2hex({ h, s, l: clamp(l * 1.9, 92, 96) });
+  const lighter = hsl2hex({ h, s, l: clamp(l * 1.6, 82, 92) });
+  const light = hsl2hex({ h, s, l: clamp(l * 1.4, 64, 80) });
+  const dark = hsl2hex({ h, s, l: clamp(l * 0.7, 32) });
+  const darker = hsl2hex({ h, s, l: clamp(l * 0.45, 16) });
+  const darkest = hsl2hex({ h, s, l: clamp(l * 0.3, 8) });
 
   return {
     lightest: { bg: lightest, color: textColor(lightest) },
