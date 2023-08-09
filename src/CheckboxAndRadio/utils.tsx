@@ -130,7 +130,9 @@ export const StyledElement = styled(
     margin-right: ${label ? '6px' : '0'};
     overflow: hidden;
     position: relative;
-    transition: background-color 0.2s, border-color 0.2s;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s;
     width: ${px(dimensions)};
 
     &:focus {

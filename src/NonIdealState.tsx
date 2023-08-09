@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 
 import { Box } from './Box';
 import { H1, H2, H3 } from './Headings';
@@ -109,8 +109,8 @@ export function NonIdealState(props: NonIdealStateProps) {
     lg: 96,
   };
   const isVertical = direction === 'vertical';
-  const template: AnyObject = {};
-  const output: AnyObject = {};
+  const template: PlainObject<ReactNode> = {};
+  const output: PlainObject<ReactNode> = {};
 
   switch (type) {
     case 'error': {

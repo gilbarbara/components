@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { useMergeRefs } from '@gilbarbara/hooks';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 import is from 'is-lite';
 import { SetRequired } from 'type-fest';
 
@@ -145,7 +145,9 @@ const StyledButton = styled(
     opacity: ${disabled ? 0.7 : 1};
     position: absolute;
     top: ${px(space)};
-    transition: background-color 0.4s, left 0.2s ease;
+    transition:
+      background-color 0.4s,
+      left 0.2s ease;
     width: ${px(height - 4)};
   `;
 });
@@ -226,7 +228,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
   };
 
   const value = isActive ? 'on' : 'off';
-  const checkStatus: AnyObject = {};
+  const checkStatus: PlainObject<boolean> = {};
 
   if (is.boolean(checked)) {
     checkStatus.checked = checked;

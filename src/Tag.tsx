@@ -1,8 +1,8 @@
-import { CSSProperties, forwardRef, MouseEvent } from 'react';
+import { CSSProperties, forwardRef, MouseEvent, ReactNode } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 
 import { ButtonUnstyled } from './ButtonUnstyled';
 import { Icon } from './Icon';
@@ -91,7 +91,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
   const { typography } = getTheme({ theme: useTheme() });
 
   const iconSize = rest.size ? parseInt(typography[rest.size].fontSize, 10) : undefined;
-  const icons: AnyObject = {};
+  const icons: PlainObject<ReactNode> = {};
 
   if (iconBefore && onClickBefore) {
     icons.before = (

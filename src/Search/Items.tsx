@@ -1,8 +1,8 @@
-import { forwardRef, MouseEventHandler, useEffect, useRef } from 'react';
+import { forwardRef, MouseEventHandler, ReactNode, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { AnyObject, StringOrNumber } from '@gilbarbara/types';
+import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
 import Item from './Item';
 
@@ -81,7 +81,7 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
     };
   }, []);
 
-  const content: AnyObject = {};
+  const content: PlainObject<ReactNode> = {};
 
   content.items = !items.length ? (
     <Empty>{noResultsLabel}</Empty>

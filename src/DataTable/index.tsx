@@ -2,7 +2,7 @@ import { CSSProperties, MouseEvent, ReactNode, useMemo, useRef } from 'react';
 import innerText from 'react-innertext';
 import { useSetState, useUpdateEffect } from 'react-use';
 import { useTheme } from '@emotion/react';
-import { AnyObject, StringOrNumber } from '@gilbarbara/types';
+import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
 import Body from './Body';
 import Head from './Head';
@@ -45,7 +45,7 @@ export interface DataTableKnownProps<T extends string>
    */
   clean?: boolean;
   columns: DataTableColumn<T>[];
-  data: AnyObject[];
+  data: PlainObject<any>[];
   /**
    * @deprecated Use `defaultSortColumn` instead
    */
@@ -237,7 +237,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     rows,
   ]);
 
-  const styles: AnyObject = {};
+  const styles: PlainObject = {};
 
   if (!clean) {
     styles.padding = 'md';

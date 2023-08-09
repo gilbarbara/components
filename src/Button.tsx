@@ -1,8 +1,8 @@
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 import { SetRequired } from 'type-fest';
 
 import { Icon } from './Icon';
@@ -117,7 +117,9 @@ export const StyledButton = styled(
     padding: ${buttonPadding};
     position: relative;
     text-decoration: none;
-    transition: background-color 0.6s, border-color 0.6s;
+    transition:
+      background-color 0.6s,
+      border-color 0.6s;
     width: ${block ? '100%' : 'auto'};
     ${backgroundStyles(props)};
     ${paddingStyles(props)}
@@ -146,7 +148,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
     button: { fontSize },
   } = getTheme(props);
 
-  const content: AnyObject = {
+  const content: PlainObject<ReactNode> = {
     children,
     icon: busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize[size], 10) + 4} spin />,
   };

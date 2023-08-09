@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px, rangeLimit, round } from '@gilbarbara/helpers';
+import { clamp, px, round } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { SetRequired } from 'type-fest';
 
@@ -78,8 +78,8 @@ const StyledProgressTrack = styled(
 
 export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>((props, ref) => {
   const { hideText, step, steps, ...rest } = { ...defaultProps, ...props };
-  const percentage = round(rangeLimit((step / steps) * 100));
-  const stepLimit = rangeLimit(step, 0, steps);
+  const percentage = round(clamp((step / steps) * 100));
+  const stepLimit = clamp(step, 0, steps);
 
   return (
     <StyledProgressBar

@@ -1,4 +1,4 @@
-import { AnyObject } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 
 import { variants as themeVariants } from 'src/modules/theme';
 import { Shades, Variants } from 'src/types';
@@ -23,7 +23,7 @@ export function hideNoControlsWarning() {
 }
 
 export function hideProps(...props: string[]) {
-  const fields: AnyObject = {
+  const fields: PlainObject = {
     as: hideTable(),
     theme: hideTable(),
   };
@@ -55,6 +55,9 @@ export function flexBoxProps() {
     direction: {
       control: 'select',
       options: ['row', 'row-reverse', 'column', 'column-reverse'],
+    },
+    gap: {
+      control: 'text',
     },
     justify: { control: 'select', options: ['', ...flexContent] },
     wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },

@@ -1,8 +1,8 @@
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, ReactNode, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentProps } from '@gilbarbara/react-dropdown';
-import { AnyObject, StringOrNumber } from '@gilbarbara/types';
+import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
 import Add from './Add';
 
@@ -269,7 +269,7 @@ function DropdownOptions({
       );
     });
 
-  const output: AnyObject = {
+  const output: PlainObject<ReactNode> = {
     options: availableOptions,
   };
 
