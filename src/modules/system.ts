@@ -261,13 +261,14 @@ export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
 }
 
 export function flexBoxStyles<T extends WithFlexBox>(props: T): CSSObject {
-  const { align, alignContent, direction, justify, justifyItems, wrap } = props;
+  const { align, alignContent, direction, gap, justify, justifyItems, wrap } = props;
 
   return {
     alignContent,
     alignItems: align,
     flexDirection: direction,
     flexWrap: wrap,
+    gap: px(gap),
     justifyContent: justify,
     justifyItems,
   };

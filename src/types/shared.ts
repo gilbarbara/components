@@ -108,6 +108,11 @@ export interface WithFlexBox {
    */
   direction?: StandardLonghandProperties['flexDirection'];
   /**
+   * The gap CSS property sets the gaps (gutters) between rows and columns.
+   * It is a shorthand for row-gap and column-gap.
+   */
+  gap?: StringOrNumber;
+  /**
    * How to align the contents along the main axis.<br />
    * Any 'justify-content' valid CSS value is accepted.
    */

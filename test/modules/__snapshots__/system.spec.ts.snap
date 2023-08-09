@@ -75,6 +75,7 @@ exports[`flexBoxStyles should return an empty object without any "flexBox" props
   "alignItems": undefined,
   "flexDirection": undefined,
   "flexWrap": undefined,
+  "gap": undefined,
   "justifyContent": undefined,
   "justifyItems": undefined,
 }
@@ -86,6 +87,7 @@ exports[`flexBoxStyles should return properly 1`] = `
   "alignItems": "center",
   "flexDirection": "column",
   "flexWrap": "wrap",
+  "gap": "20px",
   "justifyContent": undefined,
   "justifyItems": undefined,
 }

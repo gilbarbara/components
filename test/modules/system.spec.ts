@@ -99,7 +99,9 @@ describe('displayStyles', () => {
 
 describe('flexBoxStyles', () => {
   it('should return properly', () => {
-    expect(flexBoxStyles({ align: 'center', direction: 'column', wrap: 'wrap' })).toMatchSnapshot();
+    expect(
+      flexBoxStyles({ align: 'center', direction: 'column', gap: 20, wrap: 'wrap' }),
+    ).toMatchSnapshot();
   });
 
   it('should return an empty object without any "flexBox" props', () => {
