@@ -77,7 +77,7 @@ export function Pagination(props: PaginationProps) {
       key: 'first',
       disabled: currentPage === 1,
       page: 1,
-      content: <Icon name="chevron-double-left" size={24} />,
+      content: <Icon name="chevron-double-left" size={18} />,
     });
   }
 
@@ -85,7 +85,7 @@ export function Pagination(props: PaginationProps) {
     key: 'previous',
     disabled: currentPage === 1,
     page: currentPage - 1,
-    content: <Icon name="chevron-left" size={24} />,
+    content: <Icon name="chevron-left" size={18} />,
   });
 
   if (disableEdgeNavigation && totalPages > 6) {
@@ -139,7 +139,7 @@ export function Pagination(props: PaginationProps) {
     key: 'next',
     disabled: currentPage === totalPages,
     page: currentPage + 1,
-    content: <Icon name="chevron-right" size={24} />,
+    content: <Icon name="chevron-right" size={18} />,
   });
 
   if (!disableEdgeNavigation && totalPages > edgeNavigationLimit) {
@@ -147,7 +147,7 @@ export function Pagination(props: PaginationProps) {
       key: 'last',
       disabled: currentPage === totalPages,
       page: totalPages,
-      content: <Icon name="chevron-double-right" size={24} />,
+      content: <Icon name="chevron-double-right" size={18} />,
     });
   }
 

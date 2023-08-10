@@ -36,7 +36,7 @@ export default {
 
 export const Basic: Story = {
   args: {
-    children: <Icon name="shape-rhombus" size={24} title={null} />,
+    children: <Icon name="diamond" size={24} title={null} />,
   },
   argTypes: {
     children: hideTable(),

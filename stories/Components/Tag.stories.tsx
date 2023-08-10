@@ -99,15 +99,11 @@ export const Sizes: Story = {
 export const WithIcons: Story = {
   render: props => {
     const handleClickBefore = (event: MouseEvent<HTMLButtonElement>) => {
-      action('onClickBefore')(
-        (event.currentTarget as HTMLButtonElement).parentElement?.dataset.name,
-      );
+      action('onClickBefore')(event.currentTarget.parentElement?.dataset.name);
     };
 
-    const handleClickAfter = (event: MouseEvent<HTMLElement>) => {
-      action('onClickBefore')(
-        (event.currentTarget as HTMLButtonElement).parentElement?.dataset.name,
-      );
+    const handleClickAfter = (event: MouseEvent<HTMLButtonElement>) => {
+      action('onClickBefore')(event.currentTarget.parentElement?.dataset.name);
     };
 
     return (
@@ -116,8 +112,9 @@ export const WithIcons: Story = {
           <Tag
             {...props}
             data-name="assign"
-            iconBefore="assign"
+            iconBefore="focus"
             onClickBefore={handleClickBefore}
+            size="small"
             variant="secondary"
           >
             assign
@@ -126,9 +123,10 @@ export const WithIcons: Story = {
         <div>
           <Tag
             {...props}
-            data-name="math-plus"
-            iconBefore="math-plus"
+            data-name="add"
+            iconBefore="plus"
             onClickBefore={handleClickBefore}
+            size="mid"
           >
             add
           </Tag>
@@ -137,10 +135,11 @@ export const WithIcons: Story = {
           <Tag
             {...props}
             colorShade="mid"
-            data-name="close"
+            data-name="remove"
             iconAfter="close"
             invert
             onClickAfter={handleClickAfter}
+            size="regular"
             variant="blue"
           >
             remove
@@ -150,11 +149,11 @@ export const WithIcons: Story = {
           <Tag
             {...props}
             color="white"
-            data-name="chevron-right"
+            data-name="continue"
             iconAfter="chevron-right"
             onClickAfter={handleClickAfter}
             shade="dark"
-            size="regular"
+            size="large"
             variant="red"
           >
             continue

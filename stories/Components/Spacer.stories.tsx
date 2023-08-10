@@ -97,7 +97,7 @@ export const WithInput: Story = {
     <Spacer {...props}>
       <Input name="name" placeholder="Type your name" width={200} />
       <Button shape="round">
-        <Icon name="check" size={24} />
+        <Icon name="check" />
       </Button>
     </Spacer>
   ),

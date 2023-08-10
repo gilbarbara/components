@@ -219,7 +219,7 @@ export const Basic: Story = {
           team: <Text size="mid">{member.team || '--'}</Text>,
           status: (
             <Tag
-              iconAfter={member.id ? 'check' : 'sand-clock'}
+              iconAfter={member.id ? 'check' : 'hourglass'}
               invert
               variant={member.id ? 'green' : 'blue'}
             >

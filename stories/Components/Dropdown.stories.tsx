@@ -36,9 +36,9 @@ export default {
 const items: DropdownOption[] = [
   { value: 1, label: 'One', prefix: <Icon name="chevron-right" /> },
   { value: 2, label: 'Two', prefix: <Icon name="anchor" />, suffix: <Icon name="asterisk" /> },
-  { value: 3, label: 'Three', disabled: true, prefix: <Icon name="awards" /> },
+  { value: 3, label: 'Three', disabled: true, prefix: <Icon name="award" /> },
   { value: 4, label: 'Four', prefix: <Icon name="image" />, suffix: <Icon name="asterisk" /> },
-  { value: 5, label: 'Five', prefix: <Icon name="bolt" /> },
+  { value: 5, label: 'Five', prefix: <Icon name="flash" /> },
 ];
 
 export const Basic: Story = {
@@ -56,7 +56,7 @@ export const WithCreate: Story = {
 
     const handleCreate = (value: string, close: () => void) => {
       const newItem = {
-        prefix: <Icon name="math-plus" />,
+        prefix: <Icon name="plus" />,
         label: value,
         value,
       };
