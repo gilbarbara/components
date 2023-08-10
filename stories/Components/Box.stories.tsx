@@ -115,7 +115,7 @@ export const Inline: Story = {
   args: boxInlineDefaultProps,
   render: props => (
     <BoxInline width={400} {...props}>
-      <Icon mr="xs" name="stories" />
+      <Icon mr="xs" name="template" />
       <Text>This is a inline Box</Text>
     </BoxInline>
   ),

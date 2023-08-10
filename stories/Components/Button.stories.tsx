@@ -99,7 +99,7 @@ export const Shapes: Story = {
         <Icon name="arrow-down" size={18} />
       </Button>
       <Button {...props} shape="circle">
-        <Icon name="check" size={28} />
+        <Icon name="check" size={18} />
       </Button>
       <Button {...props} shape="square">
         <Icon name="trash" size={18} />

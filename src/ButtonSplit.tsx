@@ -119,15 +119,33 @@ export function ButtonSplit(props: ButtonSplitProps) {
     [onToggle],
   );
 
+  let iconSize = 14;
+
+  switch (size) {
+    case 'sm': {
+      iconSize = 16;
+      break;
+    }
+    case 'md': {
+      iconSize = 18;
+      break;
+    }
+    case 'lg': {
+      iconSize = 22;
+      break;
+    }
+    default: {
+      // noop
+    }
+  }
+
   return (
     <StyledButtonSplit busy={busy} data-component-name="ButtonSplit" position={position} {...rest}>
       <ButtonUnstyled busy={busy} disabled={disabled} onClick={onClick} {...dataAttributes}>
         {label}
       </ButtonUnstyled>
       <Menu
-        component={
-          <Icon name={active ? 'chevron-up' : 'chevron-down'} size={size === 'xs' ? 18 : 24} />
-        }
+        component={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={iconSize} />}
         disabled={disabled || busy}
         onToggle={handleToggle}
         position={position}

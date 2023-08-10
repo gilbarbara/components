@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, ReactNode } from 'react';
+import { CSSProperties, forwardRef, ReactNode, useMemo } from 'react';
 import SVG from 'react-inlinesvg';
 import innerText from 'react-innertext';
 import { css, keyframes } from '@emotion/react';
@@ -115,22 +115,29 @@ export const StyledIcon = styled(
 
 export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
   const { name, size = 16, title, url, ...rest } = { ...defaultProps, ...props };
-  let iconURL = '';
 
-  if (name) {
-    const urlPrefix = iconsCustom.some(d => d.name === name)
-      ? 'https://files.gilbarbara.dev/icons/'
-      : 'https://cdn.jsdelivr.net/npm/css.gg/icons/svg/';
+  const iconURL = useMemo(() => {
+    if (name) {
+      const urlPrefix = iconsCustom.some(d => d.name === name)
+        ? 'https://files.gilbarbara.dev/icons/'
+        : 'https://cdn.jsdelivr.net/npm/css.gg/icons/svg/';
 
-    iconURL = `${urlPrefix}${name}.svg`;
-  } else if (url) {
-    iconURL = url;
-  }
+      return `${urlPrefix}${name}.svg`;
+    } else if (url) {
+      return url;
+    }
+
+    return '';
+  }, [name, url]);
 
   let titleString = name as string;
 
   if (!is.undefined(title)) {
     titleString = is.string(title) ? title : innerText(title);
+  }
+
+  if (!iconURL) {
+    return null;
   }
 
   return (

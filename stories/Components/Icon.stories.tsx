@@ -12,8 +12,7 @@ export default {
   component: Icon,
   args: {
     ...defaultProps,
-    name: 'check',
-    size: 24,
+    name: 'send',
   },
   argTypes: {
     ...hideProps(),
@@ -24,12 +23,13 @@ export default {
   },
 } satisfies Meta<typeof Icon>;
 
-export const Basic: Story = {};
+export const Basic: Story = {
+  args: {
+    size: 32,
+  },
+};
 
 export const IconWithButton: Story = {
-  args: {
-    size: 18,
-  },
   render: props => (
     <Button>
       <Icon {...props} mr="xs" />
@@ -39,9 +39,6 @@ export const IconWithButton: Story = {
 };
 
 export const IconWithText: Story = {
-  args: {
-    size: 18,
-  },
   render: props => (
     <Spacer gap="xxs">
       <Icon {...props} />

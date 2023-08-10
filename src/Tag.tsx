@@ -90,7 +90,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
   } = { ...defaultProps, ...props };
   const { typography } = getTheme({ theme: useTheme() });
 
-  const iconSize = rest.size ? parseInt(typography[rest.size].fontSize, 10) : undefined;
+  const iconSize = rest.size ? parseInt(typography[rest.size].fontSize, 10) - 2 : undefined;
   const icons: PlainObject<ReactNode> = {};
 
   if (iconBefore && onClickBefore) {
