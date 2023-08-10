@@ -127,14 +127,13 @@ export const darkColor = '#101010';
 export const lightColor = '#f5f5f5';
 
 export const gray = '#808080';
-
-export const grayLightest = lightColor;
+export const grayLightest = '#f5f5f5';
 export const grayLighter = '#e0e0e0';
 export const grayLight = '#c0c0c0';
 export const grayMid = '#767676';
 export const grayDark = '#484848';
 export const grayDarker = '#242424';
-export const grayDarkest = darkColor;
+export const grayDarkest = '#101010';
 
 export const grayScale = {
   '1': '#fcfcfc',
