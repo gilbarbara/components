@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, Textarea } from 'src/Textarea';
+import { defaultProps, Textarea } from 'src/components/Textarea';
 
 import { hideProps } from '../__helpers__';
 

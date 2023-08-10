@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon } from 'src';
-import { defaultProps, Dropdown } from 'src/Dropdown';
+import { defaultProps, Dropdown } from 'src/components/Dropdown';
 import { DropdownOption } from 'src/types';
 
 import { colorProps, disableControl, hideProps, marginProps } from '../__helpers__';

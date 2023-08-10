@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, ProgressBar } from 'src/ProgressBar';
+import { defaultProps, ProgressBar } from 'src/components/ProgressBar';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
 

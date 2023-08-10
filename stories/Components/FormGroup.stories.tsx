@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Input, Select, Textarea } from 'src';
-import { defaultProps, FormGroup } from 'src/FormGroup';
+import { defaultProps, FormGroup } from 'src/components/FormGroup';
 
 import { disableControl, hideProps, layoutProps, spacingProps } from '../__helpers__';
 

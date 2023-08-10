@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon, Paragraph, Spacer } from 'src';
-import { defaultProps, Tab, Tabs } from 'src/Tabs';
+import { defaultProps, Tab, Tabs } from 'src/components/Tabs';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
 

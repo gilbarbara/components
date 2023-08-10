@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, H4, Jumbo, Paragraph } from 'src';
-import { defaultProps, Page } from 'src/Page';
+import { defaultProps, Page } from 'src/components/Page';
 
 import {
   colorProps,

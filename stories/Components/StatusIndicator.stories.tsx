@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Grid, Paragraph } from 'src';
-import { defaultProps, StatusIndicator } from 'src/StatusIndicator';
+import { defaultProps, StatusIndicator } from 'src/components/StatusIndicator';
 
 import { colorProps, disableControl, hideProps, marginProps, variants } from '../__helpers__';
 

@@ -3,7 +3,7 @@ import { MouseEvent, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from 'src';
-import { ButtonGroup, defaultProps } from 'src/ButtonGroup';
+import { ButtonGroup, defaultProps } from 'src/components/ButtonGroup';
 
 import { sizesButton } from '../../src/modules/options';
 import { colorProps, disableControl, hideProps } from '../__helpers__';

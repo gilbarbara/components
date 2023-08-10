@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, Box, Paragraph } from 'src';
-import { defaultProps, Search } from 'src/Search';
+import { defaultProps, Search } from 'src/components/Search';
 import { SearchItem } from 'src/types';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, Select } from 'src/Select';
+import { defaultProps, Select } from 'src/components/Select';
 
 import { hideProps } from '../__helpers__';
 

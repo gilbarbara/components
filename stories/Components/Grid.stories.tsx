@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from 'src';
-import { defaultProps, Grid } from 'src/Grid';
+import { defaultProps, Grid } from 'src/components/Grid';
 
 import {
   colorProps,

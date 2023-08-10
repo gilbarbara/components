@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon, Input, Select, Textarea } from 'src';
-import { ComponentWrapper, defaultProps } from 'src/ComponentWrapper';
+import { ComponentWrapper, defaultProps } from 'src/components/ComponentWrapper';
 
 import { hideProps, marginProps } from '../__helpers__';
 

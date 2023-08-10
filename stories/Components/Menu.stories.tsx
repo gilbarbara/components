@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonUnstyled, Icon, Spacer } from 'src';
-import { defaultProps, Menu, MenuDivider, MenuItem } from 'src/Menu';
+import { defaultProps, Menu, MenuDivider, MenuItem } from 'src/components/Menu';
 
 import { colorProps, disableControl, hideProps } from '../__helpers__';
 

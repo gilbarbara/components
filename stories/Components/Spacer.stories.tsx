@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, H2, Icon, Input, Tag } from 'src';
-import { defaultProps, Spacer } from 'src/Spacer';
+import { defaultProps, Spacer } from 'src/components/Spacer';
 
 import {
   disableControl,

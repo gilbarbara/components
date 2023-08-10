@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, InputFile } from 'src/InputFile';
+import { defaultProps, InputFile } from 'src/components/InputFile';
 
 import { hideProps } from '../__helpers__';
 

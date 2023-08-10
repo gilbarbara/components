@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Radio, radioDefaultProps } from 'src/CheckboxAndRadio';
+import { Radio, radioDefaultProps } from 'src/components/CheckboxAndRadio';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 

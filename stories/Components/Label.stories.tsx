@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, Label } from 'src/Label';
+import { defaultProps, Label } from 'src/components/Label';
 
 import { hideProps, textOptionsProps } from '../__helpers__';
 

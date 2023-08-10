@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { H1, H2, H3, H4, H5, H6 } from 'src/Headings';
-import { defaultProps } from 'src/Headings/utils';
+import { H1, H2, H3, H4, H5, H6 } from 'src/components/Headings';
+import { defaultProps } from 'src/components/Headings/utils';
 
 import { colorProps, hideProps, marginProps } from '../../__helpers__';
 

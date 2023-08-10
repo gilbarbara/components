@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { FormGroup, Spacer } from 'src';
-import { Checkbox, checkboxDefaultProps } from 'src/CheckboxAndRadio';
+import { Checkbox, checkboxDefaultProps } from 'src/components/CheckboxAndRadio';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 

@@ -8,7 +8,7 @@ import {
   boxDefaultProps,
   BoxInline,
   boxInlineDefaultProps,
-} from 'src/Box';
+} from 'src/components/Box';
 
 import {
   colorProps,

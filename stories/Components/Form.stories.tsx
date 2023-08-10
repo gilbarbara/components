@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, Divider, Field, Grid, H2, H3, Spacer } from 'src';
-import { Form, FormRenderProps } from 'src/Form';
+import { Form, FormRenderProps } from 'src/components/Form';
 
 import { hideNoControlsWarning } from '../__helpers__';
 

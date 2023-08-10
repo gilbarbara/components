@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DatePickerRange, rangeDefaultProps } from 'src/DatePicker/Range';
+import { DatePickerRange, rangeDefaultProps } from 'src/components/DatePicker/Range';
 
 import { disableControl, hideProps, hideTable, spacingProps } from '../__helpers__';
 

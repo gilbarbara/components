@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, SkeletonText } from 'src/Skeleton/SkeletonText';
+import { defaultProps, SkeletonText } from 'src/components/Skeleton/SkeletonText';
 
 import { hideProps, layoutProps, spacingProps } from '../__helpers__';
 
