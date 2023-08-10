@@ -36,23 +36,35 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Cache Packages
-        id: cache
-        uses: actions/cache@v3
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install Packages
-        run: npm ci
+        run: pnpm install
         timeout-minutes: 3
 
       - name: Validate and Build
         if: "!startsWith(github.ref, 'refs/tags/')"
-        run: npm run validate
+        run: pnpm run validate
         timeout-minutes: 3
 
       - name: Publish to Chromatic
@@ -65,13 +77,13 @@ jobs:
 
       - name: Publish Package
         if: startsWith(github.ref, 'refs/tags/')
-        run: npm publish
+        run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Storybook
         if: startsWith(github.ref, 'refs/tags/')
-        run: npm run storybook:build
+        run: pnpm run storybook:build
 
       - name: Send Storybook to S3
         if: startsWith(github.ref, 'refs/tags/')
