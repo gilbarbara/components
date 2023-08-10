@@ -1,6 +1,6 @@
 {
   "name": "@gilbarbara/components",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "A collection of imperfect React components",
   "author": "Gil Barbara <gilbarbara@gmail.com>",
   "repository": {
@@ -161,7 +161,9 @@
       "name": "commonjs",
       "path": "./dist/index.js",
       "limit": "170 KB",
-      "ignore": ["date-fns"]
+      "ignore": [
+        "date-fns"
+      ]
     },
     {
       "name": "esm",
