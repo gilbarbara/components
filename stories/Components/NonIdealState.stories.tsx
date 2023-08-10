@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, NonIdealState } from 'src/NonIdealState';
+import { defaultProps, NonIdealState } from 'src/components/NonIdealState';
 
 import {
   colorProps,

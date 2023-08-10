@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, Box, H3, H6, Paragraph, Spacer } from 'src';
-import { defaultProps, List } from 'src/List';
+import { defaultProps, List } from 'src/components/List';
 
 import {
   colorProps,

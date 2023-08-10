@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Icon, Spacer } from 'src';
-import { Button, defaultProps } from 'src/Button';
+import { Button, defaultProps } from 'src/components/Button';
 import { sizesButton } from 'src/modules/options';
 import * as Types from 'src/types';
 

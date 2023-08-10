@@ -3,7 +3,7 @@ import { MouseEvent, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, Pagination } from 'src/Pagination';
+import { defaultProps, Pagination } from 'src/components/Pagination';
 
 import { disableControl, hideProps, spacingProps } from '../__helpers__';
 

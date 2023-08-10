@@ -11,7 +11,7 @@ import {
   ButtonSplitItem,
   ButtonSplitProps,
   defaultProps,
-} from 'src/ButtonSplit';
+} from 'src/components/ButtonSplit';
 
 import { sizesButton } from '../../src/modules/options';
 import { colorProps, disableControl, hideProps } from '../__helpers__';

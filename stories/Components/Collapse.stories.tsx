@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Collapse, defaultProps } from 'src/Collapse';
+import { Collapse, defaultProps } from 'src/components/Collapse';
 
 import { Box, Button } from '../../src';
 import {

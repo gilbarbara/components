@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { CopyToClipboard, defaultProps } from 'src/CopyToClipboard';
+import { CopyToClipboard, defaultProps } from 'src/components/CopyToClipboard';
 
 import { hideProps, marginProps } from '../__helpers__';
 

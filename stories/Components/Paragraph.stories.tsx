@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Text } from 'src';
-import { defaultProps, Paragraph } from 'src/Paragraph';
+import { defaultProps, Paragraph } from 'src/components/Paragraph';
 
 import {
   colorProps,

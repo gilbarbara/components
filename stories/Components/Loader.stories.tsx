@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, Loader } from 'src/Loader';
+import { defaultProps, Loader } from 'src/components/Loader';
 
 import { colorProps, hideProps, hideTable } from '../__helpers__';
 

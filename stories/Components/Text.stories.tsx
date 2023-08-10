@@ -3,8 +3,8 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph } from 'src';
+import { Text } from 'src/components/Text';
 import { textDefaultOptions, textSizes } from 'src/modules/options';
-import { Text } from 'src/Text';
 
 import { colorProps, disableControl, hideProps, textOptionsProps } from '../__helpers__';
 

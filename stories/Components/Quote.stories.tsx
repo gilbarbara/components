@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, Quote } from 'src/Quote';
+import { defaultProps, Quote } from 'src/components/Quote';
 
 import { colorProps, hideProps, textOptionsProps } from '../__helpers__';
 

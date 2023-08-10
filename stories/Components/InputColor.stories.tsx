@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, InputColor } from 'src/InputColor';
+import { defaultProps, InputColor } from 'src/components/InputColor';
 
 import { hideProps } from '../__helpers__';
 

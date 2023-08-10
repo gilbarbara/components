@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button, Spacer } from 'src';
-import { defaultProps, Icon } from 'src/Icon';
+import { defaultProps, Icon } from 'src/components/Icon';
 
 import { colorProps, hideProps, marginProps } from '../__helpers__';
 

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from 'src';
-import { defaultProps, Divider } from 'src/Divider';
+import { defaultProps, Divider } from 'src/components/Divider';
 
 import { colorProps, hideProps, marginProps, textOptionsProps } from '../__helpers__';
 

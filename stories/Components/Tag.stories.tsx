@@ -6,9 +6,9 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Spacer } from 'src';
+import { defaultProps, Tag } from 'src/components/Tag';
 import { getTheme } from 'src/modules/helpers';
 import { textSizes } from 'src/modules/options';
-import { defaultProps, Tag } from 'src/Tag';
 import * as Types from 'src/types';
 
 import {

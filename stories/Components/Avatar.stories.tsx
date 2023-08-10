@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { BoxCenter, Paragraph, Spacer } from 'src';
-import { Avatar, defaultProps } from 'src/Avatar';
+import { Avatar, defaultProps } from 'src/components/Avatar';
 import { avatar } from 'src/modules/theme';
 
 import { AvatarSize } from '../../src/types';

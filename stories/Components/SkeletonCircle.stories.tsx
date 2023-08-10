@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar } from 'src';
-import { defaultProps, SkeletonCircle } from 'src/Skeleton/SkeletonCircle';
+import { defaultProps, SkeletonCircle } from 'src/components/Skeleton/SkeletonCircle';
 
 import { hideProps, hideTable, layoutProps, spacingProps } from '../__helpers__';
 

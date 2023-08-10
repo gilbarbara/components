@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph, Text } from 'src';
-import { defaultProps, RadioGroup } from 'src/RadioGroup';
+import { defaultProps, RadioGroup } from 'src/components/RadioGroup';
 
 import { disableControl, hideProps, marginProps } from '../__helpers__';
 

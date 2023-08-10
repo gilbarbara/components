@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Emoji } from 'src/Emoji';
+import { Emoji } from 'src/components/Emoji';
 
 import { hideProps } from '../__helpers__';
 

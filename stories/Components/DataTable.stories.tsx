@@ -20,7 +20,7 @@ import {
   Tag,
   Text,
 } from 'src';
-import { DataTable, DataTableColumn, defaultProps } from 'src/DataTable';
+import { DataTable, DataTableColumn, defaultProps } from 'src/components/DataTable';
 import { DropdownOption } from 'src/types';
 
 import { members } from '../__assets__/data';

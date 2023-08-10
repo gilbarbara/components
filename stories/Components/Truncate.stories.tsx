@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { defaultProps, Truncate } from 'src/Truncate';
+import { defaultProps, Truncate } from 'src/components/Truncate';
 
 import { hideProps } from '../__helpers__';
 

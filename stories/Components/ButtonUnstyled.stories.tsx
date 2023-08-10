@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ButtonUnstyled, defaultProps } from 'src/ButtonUnstyled';
+import { ButtonUnstyled, defaultProps } from 'src/components/ButtonUnstyled';
 
 import { Icon } from '../../src';
 import {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from 'src';
-import { defaultProps, Modal } from 'src/Modal';
+import { defaultProps, Modal } from 'src/components/Modal';
 
 import { disableControl, hideProps, paddingProps } from '../__helpers__';
 

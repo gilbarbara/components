@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Jumbo, Paragraph, Text } from 'src';
-import { Container, defaultProps } from 'src/Container';
+import { Container, defaultProps } from 'src/components/Container';
 
 import {
   disableControl,

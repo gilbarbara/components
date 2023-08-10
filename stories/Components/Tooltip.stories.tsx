@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from 'src';
-import { defaultProps, Tooltip } from 'src/Tooltip';
+import { defaultProps, Tooltip } from 'src/components/Tooltip';
 
 import {
   colorProps,

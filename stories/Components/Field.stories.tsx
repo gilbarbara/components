@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Form } from 'src';
-import { defaultProps, Field } from 'src/Field';
+import { defaultProps, Field } from 'src/components/Field';
 
 import { hideProps } from '../__helpers__';
 

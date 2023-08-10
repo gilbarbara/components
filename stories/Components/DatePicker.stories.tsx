@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DatePicker, defaultProps } from 'src/DatePicker/Single';
+import { DatePicker, defaultProps } from 'src/components/DatePicker/Single';
 
 import { disableControl, hideProps, spacingProps } from '../__helpers__';
 

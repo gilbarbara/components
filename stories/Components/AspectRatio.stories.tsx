@@ -4,7 +4,7 @@ import SVG from 'react-inlinesvg';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph } from 'src';
-import { AspectRatio } from 'src/AspectRatio';
+import { AspectRatio } from 'src/components/AspectRatio';
 import { grayMid } from 'src/modules/theme';
 
 import { hideProps, hideTable, marginProps } from '../__helpers__';

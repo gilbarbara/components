@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Paragraph } from 'src';
-import { Alert, defaultProps } from 'src/Alert';
+import { Alert, defaultProps } from 'src/components/Alert';
 
 import { flexBoxProps, hideProps, hideTable, spacingProps } from '../__helpers__';
 

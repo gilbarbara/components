@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { H1 } from 'src';
-import { Anchor, defaultProps } from 'src/Anchor';
+import { Anchor, defaultProps } from 'src/components/Anchor';
 
 import { colorProps, hideProps, spacingProps, textOptionsProps } from '../__helpers__';
 

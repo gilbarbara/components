@@ -1,6 +1,6 @@
 import { Children, isValidElement } from 'react';
-import { Box } from 'Box';
-import { MenuDivider, MenuItem } from 'Menu';
+import { Box } from 'components/Box';
+import { MenuDivider, MenuItem } from 'components/Menu';
 import {
   clearNumber,
   createMediaQuery,

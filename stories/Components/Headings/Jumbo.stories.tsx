@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Jumbo } from 'src/Headings';
-import { jumboDefaultProps } from 'src/Headings/utils';
+import { Jumbo } from 'src/components/Headings';
+import { jumboDefaultProps } from 'src/components/Headings/utils';
 
 import { colorProps, hideProps, marginProps } from '../../__helpers__';
 
