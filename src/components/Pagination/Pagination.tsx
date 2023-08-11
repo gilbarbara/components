@@ -158,13 +158,13 @@ export function Pagination(props: PaginationProps) {
       {items.map((d, index) =>
         !is.undefined(d.page) ? (
           <PaginationButton
-            key={d.key || d.page || index}
+            key={d.key ?? d.page ?? index}
             currentPage={currentPage}
-            disabled={d.disabled || false}
+            disabled={d.disabled ?? false}
             onClick={onClick}
             page={d.page}
           >
-            {d.content || d.page}
+            {d.content ?? d.page}
           </PaginationButton>
         ) : (
           <span key={d.key}>...</span>

@@ -55,15 +55,15 @@ export function DatePickerRange(props: DatePickerRangerProps) {
 
     if (onSelect) {
       onSelect([
-        selectedRange?.from?.toISOString() || undefined,
-        selectedRange?.to?.toISOString() || undefined,
+        selectedRange?.from?.toISOString() ?? undefined,
+        selectedRange?.to?.toISOString() ?? undefined,
       ]);
     }
   };
 
   const handleClickApply = () => {
     if (onApply) {
-      onApply([range?.from?.toISOString() || undefined, range?.to?.toISOString() || undefined]);
+      onApply([range?.from?.toISOString() ?? undefined, range?.to?.toISOString() ?? undefined]);
     }
   };
 
@@ -75,9 +75,9 @@ export function DatePickerRange(props: DatePickerRangerProps) {
     }
   };
 
-  const { from, to } = range || {};
+  const { from, to } = range ?? {};
 
-  const modifiers = { from: from || false, to: to || false };
+  const modifiers = { from: from ?? false, to: to ?? false };
   const content: PlainObject<ReactNode> = {
     header: <Paragraph>Select the initial date</Paragraph>,
   };

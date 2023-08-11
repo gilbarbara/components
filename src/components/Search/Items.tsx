@@ -89,7 +89,7 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
   ) : (
     items.map((data, index) => (
       <Item key={data.value} isSelected={cursor === index} onClick={onSelect} value={data.value}>
-        {data.label || data.value}
+        {data.label ?? data.value}
       </Item>
     ))
   );

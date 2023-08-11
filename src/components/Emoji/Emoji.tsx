@@ -42,7 +42,7 @@ export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
     <StyledEmoji
       ref={ref}
       aria-hidden={label ? 'false' : 'true'}
-      aria-label={label || ''}
+      aria-label={label ?? ''}
       data-component-name="Emoji"
       size={size}
     >

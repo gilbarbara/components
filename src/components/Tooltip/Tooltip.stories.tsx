@@ -48,7 +48,7 @@ export const Popconfirm: Story = {
   parameters: {
     controls: hideNoControlsWarning(),
   },
-  render: () => {
+  render: function Render() {
     const [isOpen, setOpen] = useState(false);
 
     const handleClick = () => {

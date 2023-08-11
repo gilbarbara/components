@@ -142,7 +142,7 @@ const List = styled(
     background-color: ${darkMode ? grayDarker : white};
     color: ${darkMode ? grayLight : grayDark};
     cursor: default;
-    max-height: ${maxHeight || 'none'};
+    max-height: ${maxHeight ?? 'none'};
     overflow-y: auto;
   `;
 });
@@ -238,7 +238,7 @@ function DropdownOptions({
   };
 
   const availableOptions = options
-    .filter(item => regexp.test(`${item.label || item.value}`))
+    .filter(item => regexp.test(`${item.label ?? item.value}`))
     .map((option, index) => {
       const { disabled, label, prefix, suffix, value } = option;
       const isSelected = values.includes(option);
@@ -261,7 +261,7 @@ function DropdownOptions({
               {prefix}
             </BoxInline>
           )}
-          <BoxInline flex="grow">{label || value}</BoxInline>
+          <BoxInline flex="grow">{label ?? value}</BoxInline>
           {suffix && (
             <BoxInline data-component-name="DropdownOptionSuffix" ml="xxs">
               {suffix}

@@ -91,7 +91,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
         </Button>
         <StyledInput ref={ref} id={name} name={name} onChange={handleChange} type="file" />
       </BoxInline>
-      <Truncate maxWidth="100%">{value || localValue}</Truncate>
+      <Truncate maxWidth="100%">{value ?? localValue}</Truncate>
     </StyledFileInput>
   );
 });

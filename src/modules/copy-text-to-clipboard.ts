@@ -41,6 +41,7 @@ export default function copyTextToClipboard(
   let isSuccess = false;
 
   try {
+    // TODO: Replace with the Clipboard API
     isSuccess = document.execCommand('copy');
   } catch {
     // noop

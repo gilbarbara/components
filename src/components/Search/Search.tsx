@@ -165,7 +165,7 @@ export function Search(props: SearchProps) {
       const { dataset } = optionElement.children[cursor] as HTMLDivElement;
 
       updateState({ active: false, value: '' });
-      onSelect(dataset.value || '');
+      onSelect(dataset.value ?? '');
     }
 
     updateState({ cursor: nextCursor });
@@ -179,7 +179,7 @@ export function Search(props: SearchProps) {
     const { dataset } = event.currentTarget;
 
     updateState({ active: false, value: '' });
-    onSelect(dataset.value || '');
+    onSelect(dataset.value ?? '');
   };
 
   let prefixSpacing = borderless ? 32 : true;

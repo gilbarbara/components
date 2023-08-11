@@ -49,7 +49,7 @@ const StyledLoaderGrow = styled(
 
     > div {
       animation: ${grow(props)} 1.15s infinite cubic-bezier(0.2, 0.6, 0.36, 1);
-      border: 0 solid ${color || variantColor};
+      border: 0 solid ${color ?? variantColor};
       border-radius: 50%;
       height: 0;
       left: 50%;

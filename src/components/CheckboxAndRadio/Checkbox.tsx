@@ -21,7 +21,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     ...defaultProps,
     ...props,
   };
-  const inputId = id || name;
+  const inputId = id ?? name;
 
   return (
     <StyledLabel
@@ -33,7 +33,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     >
       <StyledCheckboxRadioInput
         ref={ref}
-        aria-checked={checked || defaultChecked}
+        aria-checked={checked ?? defaultChecked}
         checked={checked}
         defaultChecked={defaultChecked}
         id={inputId}

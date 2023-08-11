@@ -422,7 +422,7 @@ export function Tooltip(props: TooltipProps) {
     ...defaultProps,
     ...props,
   };
-  const [isOpen, setOpen] = useState(open || false);
+  const [isOpen, setOpen] = useState(open ?? false);
 
   const { variants } = getTheme({ theme: useTheme() });
 
@@ -431,7 +431,7 @@ export function Tooltip(props: TooltipProps) {
   const { bg, color } = getColorVariant(variant, shade, variants);
 
   useEffect(() => {
-    setOpen(open || false);
+    setOpen(open ?? false);
   }, [open]);
 
   const handleClick = () => {

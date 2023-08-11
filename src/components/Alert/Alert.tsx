@@ -139,7 +139,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
 
   return (
     <StyledAlert ref={ref} data-component-name="Alert" type={type} {...rest}>
-      <Icon color={selected.color} name={icon || selected.icon} size={20} />
+      <Icon color={selected.color} name={icon ?? selected.icon} size={20} />
       {isValidElement(children) ? children : <Text size="mid">{children}</Text>}
     </StyledAlert>
   );

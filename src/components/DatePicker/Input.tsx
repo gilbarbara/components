@@ -159,7 +159,7 @@ export function DatePickerInput(props: DatePickerInputProps) {
     ...rest
   } = { ...inputDefaultProps, ...props };
   const [{ isActive, isFilled, selected }, setState] = useSetState<State>({
-    isActive: open || false,
+    isActive: open ?? false,
     isFilled: false,
     selected: showRange ? [undefined, undefined] : '',
   });

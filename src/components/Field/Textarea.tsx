@@ -52,7 +52,7 @@ function FieldTextarea(props: Props) {
 
   const input = {
     ...getInputParameters(props, 'isDirty', 'registration', 'setStatus'),
-    id: id || name,
+    id: id ?? name,
     onBlur: handleBlur,
     onChange: handleChange,
     onFocus: handleFocus,

@@ -50,7 +50,7 @@ export const StyledLoaderPill = styled(
 
     div {
       animation: ${animation} 2s infinite ease-in-out;
-      background-color: ${color || variantColor};
+      background-color: ${color ?? variantColor};
       border-radius: ${borderRadius};
       content: '';
       bottom: 0;
@@ -64,13 +64,13 @@ export const StyledLoaderPill = styled(
 
     div:nth-of-type(2) {
       animation-delay: 0.04s;
-      background-color: ${rgba(color || variantColor, 0.3)};
+      background-color: ${rgba(color ?? variantColor, 0.3)};
       z-index: 5;
     }
 
     div:nth-of-type(3) {
       animation-delay: 0.05s;
-      background-color: ${rgba(color || variantColor, 0.2)};
+      background-color: ${rgba(color ?? variantColor, 0.2)};
       z-index: 4;
     }
   `;

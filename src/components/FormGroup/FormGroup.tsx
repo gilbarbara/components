@@ -123,7 +123,7 @@ const AssistiveContent = styled(
   `;
 });
 
-const Error = styled.div(props => {
+const ErrorComponent = styled.div(props => {
   const { colors } = getTheme(props);
 
   return css`
@@ -155,10 +155,10 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
 
   if (error && valid === false) {
     content.assistiveText = (
-      <Error>
+      <ErrorComponent>
         <Icon mr="xxs" name="danger-o" title="Invalid" />
         <span>{error}</span>
-      </Error>
+      </ErrorComponent>
     );
   }
 

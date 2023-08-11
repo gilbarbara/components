@@ -73,8 +73,8 @@ export const StyledDropdown = styled(
       `;
 
   return css`
-    min-width: ${px(width || 260)};
-    width: ${px(width) || 'auto'};
+    min-width: ${px(width ?? 260)};
+    width: ${px(width) ?? 'auto'};
     ${marginStyles(props)};
 
     .react-dropdown {
@@ -173,7 +173,7 @@ export function Dropdown(props: DropdownProps) {
   const [isFilled, setFilled] = useState(!!values.length);
 
   const { darkMode, grayDarker, inputHeight, variants, white } = getTheme({ theme: useTheme() });
-  const { bg } = getColorVariant(rest.variant || 'primary', rest.shade, variants);
+  const { bg } = getColorVariant(rest.variant ?? 'primary', rest.shade, variants);
 
   const handleChange = (value: Option[]) => {
     setFilled(!!value.length);

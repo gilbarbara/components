@@ -30,7 +30,7 @@ export const Basic: Story = {
 
     const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {
       if (target instanceof HTMLButtonElement) {
-        setActive(target.dataset.name || '');
+        setActive(target.dataset.name ?? '');
       }
     };
 
