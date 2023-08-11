@@ -14,7 +14,7 @@ import {
 import { FieldProps, RegisterOptionsProps } from './types';
 
 export function getError(name: string, errors: PlainObject<any>) {
-  const { message, type } = errors[name] || {};
+  const { message, type } = errors[name] ?? {};
 
   if (message) {
     return [message, type];
@@ -160,9 +160,9 @@ export function getRegisterOptions(
 
 export function getDefaultValue(value: any, type: FieldProps['type']) {
   if (type === 'checkbox') {
-    return value || [];
+    return value ?? [];
   } else if (type === 'toggle') {
-    return value || false;
+    return value ?? false;
   }
 
   return value;

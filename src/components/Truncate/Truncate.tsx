@@ -38,7 +38,7 @@ const StyledTruncate = styled(
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: ${lines || 2};
+    -webkit-line-clamp: ${lines ?? 2};
   `;
 });
 

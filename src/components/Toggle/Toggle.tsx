@@ -214,7 +214,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
 
   const handleClick = () => {
     if (!disabled) {
-      onClick?.(inputRef.current?.checked || false);
+      onClick?.(inputRef.current?.checked ?? false);
     }
   };
 
@@ -250,7 +250,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         ref={mergedRefs}
         aria-checked={isActive}
         aria-label={!label ? name : undefined}
-        disabled={disabled || is.boolean(checked)}
+        disabled={disabled ?? is.boolean(checked)}
         name={name}
         onChange={handleChange}
         role="switch"

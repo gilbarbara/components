@@ -122,7 +122,7 @@ export function getMediaQueries(): MediaQueries {
 }
 
 export function getTheme(props: BaseProps): Theme {
-  return mergeTheme(props?.theme || {});
+  return mergeTheme(props?.theme ?? {});
 }
 
 export function isCSSUnit(value: unknown): value is string {
@@ -162,7 +162,7 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
 
   return {
     ...nextTheme,
-    variants: deepmerge(baseVariants, customTheme.variants || {}) as Theme['variants'],
+    variants: deepmerge(baseVariants, customTheme.variants ?? {}) as Theme['variants'],
   };
 }
 
@@ -212,11 +212,10 @@ export function responsive(rules: ResponsiveInput) {
   for (const rule in rules) {
     /* istanbul ignore else */
     if ({}.hasOwnProperty.call(rules, rule)) {
-      const breakpoint = rule as ResponsiveSizes;
       const styles = rules[rule];
-      const query = createMediaQuery(breakpoint, mediaQueries);
+      const query = createMediaQuery(rule, mediaQueries);
 
-      if (breakpoint === '_') {
+      if (rule === '_') {
         Object.entries(styles).forEach(([k, v]) => {
           entries[k] = v;
         });

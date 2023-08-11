@@ -77,7 +77,7 @@ export default function LoaderRotate(props: LoaderProps) {
     <StyledLoaderRotate data-component-name="LoaderRotate" {...props}>
       <StyledLoaderRotateSVG size={size} viewBox="25 25 50 50">
         <StyledLoaderRotateCircle
-          color={color || variantColor}
+          color={color ?? variantColor}
           cx="50"
           cy="50"
           fill="none"

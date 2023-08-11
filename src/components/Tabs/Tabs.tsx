@@ -191,7 +191,7 @@ export function Tabs(props: TabsProps) {
     ...rest
   } = { ...defaultProps, ...props };
   const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
-    activeId: id || defaultId,
+    activeId: id ?? defaultId,
     error: false,
     isReady: false,
     tabs: [],
@@ -327,12 +327,12 @@ export function Tabs(props: TabsProps) {
         </StyledContent>
       );
     } else {
-      content.main = noContent || (
+      content.main = noContent ?? (
         <NonIdealState description="Content not available" icon="danger-o" size="sm" />
       );
     }
   } else {
-    content.main = loader || <Loader />;
+    content.main = loader ?? <Loader />;
   }
 
   return (

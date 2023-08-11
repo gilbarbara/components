@@ -65,9 +65,9 @@ function DataTableHead(props: Props) {
             data-component-name="DataTableHeadColumn"
             direction="row"
             flex="grow"
-            maxWidth={max || size}
+            maxWidth={max ?? size}
             mb="sm"
-            minWidth={min || size}
+            minWidth={min ?? size}
             pr={clean ? 'sm' : undefined}
             px={!clean ? 'md' : undefined}
           >

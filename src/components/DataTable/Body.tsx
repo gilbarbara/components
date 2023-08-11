@@ -19,7 +19,7 @@ function DataTableBody(props: Props) {
     <Box data-component-name="DataTableBody" minHeight={55} position="relative">
       {data.map((item, index) => (
         <Box
-          key={item.id || index}
+          key={item.id ?? index}
           data-component-name="DataTableBodyRow"
           display="flex"
           mb="sm"
@@ -29,7 +29,7 @@ function DataTableBody(props: Props) {
         >
           {columns.map(
             ({ hideOnResponsive, isAction, key, max, min, size, title }, columnIndex) => {
-              let maxWidth = max || size;
+              let maxWidth = max ?? size;
 
               if (isResponsive && sortColumn === key) {
                 maxWidth = undefined;
@@ -45,7 +45,7 @@ function DataTableBody(props: Props) {
                   display="flex"
                   flex="grow"
                   maxWidth={maxWidth}
-                  minWidth={min || size}
+                  minWidth={min ?? size}
                   order={isAction ? 1 : columnIndex + 1}
                   padding={!clean ? 'md' : undefined}
                   pt={clean ? 'sm' : undefined}

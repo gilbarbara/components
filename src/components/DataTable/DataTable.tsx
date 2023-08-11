@@ -89,8 +89,8 @@ function sortData(data: any[], sortBy: string, sortDirection: string) {
     let right = innerText(b[sortBy]);
 
     if (sortBy === 'date') {
-      left = getElementProperty(a[sortBy], { type: 'time', property: 'dateTime' }) || left;
-      right = getElementProperty(b[sortBy], { type: 'time', property: 'dateTime' }) || right;
+      left = getElementProperty(a[sortBy], { type: 'time', property: 'dateTime' }) ?? left;
+      right = getElementProperty(b[sortBy], { type: 'time', property: 'dateTime' }) ?? right;
     }
 
     if (sortDirection === 'desc') {
@@ -143,7 +143,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
 
   const [{ currentPage, sortBy, sortDirection }, setState] = useSetState({
     currentPage: 1,
-    sortBy: defaultSortColumn || defaultColumn || columns?.[0].key,
+    sortBy: defaultSortColumn ?? defaultColumn ?? columns?.[0].key,
     sortDirection: defaultSortDirection,
   });
 
@@ -161,10 +161,10 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
   const handleClickPage = (event: MouseEvent<HTMLButtonElement>) => {
     const { page } = event.currentTarget.dataset;
     const pageNumber = Number(page);
-    const scrollTarget = scrollElement || element.current;
+    const scrollTarget = scrollElement ?? element.current;
 
     if (onClickPage) {
-      onClickPage(pageNumber, paginationTotalPages || totalPages);
+      onClickPage(pageNumber, paginationTotalPages ?? totalPages);
     }
 
     if (scrollTarget && !disableScroll) {
@@ -210,7 +210,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     if (isEmpty) {
       return (
         <BoxCenter padding="md" radius="sm" variant="white" width="100%">
-          {noResults || <Text bold>Nothing found</Text>}
+          {noResults ?? <Text bold>Nothing found</Text>}
         </BoxCenter>
       );
     }
@@ -260,7 +260,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
       <Head
         clean={clean}
         columns={columns}
-        isDisabled={loading || isEmpty}
+        isDisabled={loading ?? isEmpty}
         isResponsive={isResponsive}
         onClick={handleClickSort}
         sortBy={sortBy}
@@ -270,9 +270,9 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
       {pagination && (
         <Box border={clean ? [{ side: 'top' }] : undefined} pt={clean ? 'sm' : undefined}>
           <Pagination
-            currentPage={paginationCurrentPage || currentPage}
+            currentPage={paginationCurrentPage ?? currentPage}
             onClick={handleClickPage}
-            totalPages={paginationTotalPages || totalPages}
+            totalPages={paginationTotalPages ?? totalPages}
           />
         </Box>
       )}

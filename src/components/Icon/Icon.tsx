@@ -57,7 +57,7 @@ export const StyledIcon = styled(
 )<SetRequired<Omit<IconProps, 'url'>, 'size'>>(props => {
   const { color, name = '', shade, size, spin, variant } = props;
   const { variants } = getTheme(props);
-  let iconColor = color || 'inherit';
+  let iconColor = color ?? 'inherit';
 
   if (!color && variant) {
     const { bg } = getColorVariant(variant, shade, variants);

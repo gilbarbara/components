@@ -46,7 +46,7 @@ export const Variants: Story = {
   argTypes: {
     variant: disableControl(),
   },
-  render: props => {
+  render: function Render(props) {
     const { variants } = getTheme({ theme: useTheme() });
 
     return (
@@ -68,7 +68,7 @@ export const Shades: Story = {
     color: disableControl(),
     shade: disableControl(),
   },
-  render: props => {
+  render: function Render(props) {
     const { variants } = getTheme({ theme: useTheme() });
 
     return (

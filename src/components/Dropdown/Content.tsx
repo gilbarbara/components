@@ -105,7 +105,7 @@ function DropdownContent(props: ComponentProps) {
                   {prefix}
                 </BoxInline>
               )}
-              <span>{label || value}</span>
+              <span>{label ?? value}</span>
               {!!suffix && (
                 <BoxInline data-component-name="ContentItemSuffix" ml="xxs">
                   {suffix}

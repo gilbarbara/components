@@ -36,7 +36,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     >
       <StyledCheckboxRadioInput
         ref={ref}
-        aria-checked={!!(checked || defaultChecked)}
+        aria-checked={!!(checked ?? defaultChecked)}
         checked={checked}
         defaultChecked={defaultChecked}
         id={id}

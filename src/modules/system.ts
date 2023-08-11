@@ -39,7 +39,7 @@ interface GetContainerStylesOptions {
 }
 
 export function getContainerStyles(props: WithTheme, options?: GetContainerStylesOptions) {
-  const { responsive = true, verticalPadding = false } = options || {};
+  const { responsive = true, verticalPadding = false } = options ?? {};
   const { spacing } = getTheme(props);
 
   return css`
@@ -195,7 +195,7 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
     } = item;
 
     ({ bg: borderColor } = getColorVariant(variant, shade, variants));
-    const value = `${px(size)} ${style} ${color || borderColor}`;
+    const value = `${px(size)} ${style} ${color ?? borderColor}`;
 
     return getBorderValue(side, value);
   };
@@ -690,7 +690,7 @@ export function textStyles<T extends WithTextOptions<HeadingSizes | TextSizes> &
       ...output,
       fontSize,
       fontWeight,
-      lineHeight: output.lineHeight || lineHeightCustom || typographyLineHeight,
+      lineHeight: output.lineHeight ?? lineHeightCustom ?? typographyLineHeight,
     };
   }
 

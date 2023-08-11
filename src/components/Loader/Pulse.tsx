@@ -48,7 +48,7 @@ const StyledLoaderPulse = styled(
 
     > div {
       animation: ${pulse(props)} 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-      border: ${px(Math.round(size / 16))} solid ${color || variantColor};
+      border: ${px(Math.round(size / 16))} solid ${color ?? variantColor};
       border-radius: 50%;
       height: 0;
       left: ${px(size / 2)};

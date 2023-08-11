@@ -59,7 +59,7 @@ export const StyledTag = styled(
   const { radius, spacing, variants } = getTheme(props);
 
   const selectedColor =
-    color || (variant && !['black', 'white'].includes(variant) ? variant : undefined);
+    color ?? (variant && !['black', 'white'].includes(variant) ? variant : undefined);
   let colorProp: string | undefined;
 
   if (selectedColor) {
@@ -120,8 +120,8 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
       ref={ref}
       data-component-name="Tag"
       {...rest}
-      colorShade={rest.invert && !colorShade ? 'mid' : colorShade || 'dark'}
-      shade={rest.invert && !shade ? 'mid' : shade || 'lightest'}
+      colorShade={rest.invert && !colorShade ? 'mid' : colorShade ?? 'dark'}
+      shade={rest.invert && !shade ? 'mid' : shade ?? 'lightest'}
     >
       {icons.before}
       <span>{children}</span>

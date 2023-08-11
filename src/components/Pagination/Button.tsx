@@ -54,7 +54,7 @@ export default function PaginationButton(props: PaginationButtonProps) {
       disabled={disabled}
       onClick={onClick}
     >
-      {children || page}
+      {children ?? page}
     </StyledPaginationButton>
   );
 }

@@ -13,6 +13,8 @@ import {
 } from './common';
 import { ButtonSizes, Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
 
+type SpacingAuto = Spacing | 0 | 'auto';
+
 export interface WithAlign {
   /**
    * Text alignment
@@ -206,15 +208,15 @@ export interface WithMargin {
   /** Also accepts the shortcuts: mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical) */
   margin?: Spacing | 0;
   /** margin-bottom */
-  mb?: Spacing | 0 | 'auto';
+  mb?: SpacingAuto;
   /** margin-left */
-  ml?: Spacing | 0 | 'auto';
+  ml?: SpacingAuto;
   /** margin-right */
-  mr?: Spacing | 0 | 'auto';
+  mr?: SpacingAuto;
   /** margin-top */
-  mt?: Spacing | 0 | 'auto';
+  mt?: SpacingAuto;
   /** margin horizontal axis */
-  mx?: Spacing | 0 | 'auto';
+  mx?: SpacingAuto;
   /** margin vertical axis */
   my?: Spacing | 0;
 }

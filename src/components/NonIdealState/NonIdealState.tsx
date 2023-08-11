@@ -141,7 +141,7 @@ export function NonIdealState(props: NonIdealStateProps) {
     }
   }
 
-  if (!hideIcon && (icon || template.icon)) {
+  if (!hideIcon && (icon ?? template.icon)) {
     output.icon = (
       <Box align="center" flexBox justify="center">
         {icon ? <Icon name={icon} size={iconSize[size]} /> : template.icon}
@@ -150,7 +150,7 @@ export function NonIdealState(props: NonIdealStateProps) {
   }
 
   if (title !== null && (title || template.title)) {
-    const content = title || template.title;
+    const content = title ?? template.title;
 
     switch (size) {
       case 'sm': {
@@ -171,14 +171,14 @@ export function NonIdealState(props: NonIdealStateProps) {
   if (description !== null && (description || template.description)) {
     output.description = (
       <Paragraph mt={output.title ? 'xxs' : undefined}>
-        {description || template.description}
+        {description ?? template.description}
       </Paragraph>
     );
   }
 
   if (children) {
     output.content = (
-      <Box mt={output.title || output.description ? 'xl' : undefined}>{children}</Box>
+      <Box mt={output.title ?? output.description ? 'xl' : undefined}>{children}</Box>
     );
   }
 

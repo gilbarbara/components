@@ -79,7 +79,7 @@ export function RadioGroup(props: RadioGroupProps) {
     [disabled, onChange, value],
   );
 
-  if (!items || !items.length) {
+  if (!items?.length) {
     return null;
   }
 
@@ -93,7 +93,7 @@ export function RadioGroup(props: RadioGroupProps) {
           align="start"
           checked={d.value === currentValue}
           disabled={disabled || d.disabled}
-          label={d.label || d.value}
+          label={d.label ?? d.value}
           mb="xxs"
           name={name}
           onChange={handleChange}

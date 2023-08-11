@@ -153,7 +153,7 @@ const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
 });
 
 export const Basic: Story = {
-  render: () => {
+  render: function Render() {
     const [{ loading, search, showDialog, status, team }, setState] =
       useSetState<BaseState>(baseState);
     const headerRef = useRef<HTMLDivElement>(null);

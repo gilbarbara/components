@@ -72,7 +72,7 @@ export function Field<T extends FieldProps>(props: T) {
 
   const currentValue = useWatch({
     name,
-    defaultValue: getDefaultValue(value || getValues()[name], type),
+    defaultValue: getDefaultValue(value ?? getValues()[name], type),
   });
   const [error, errorType = ''] = getError(name, errors);
 
@@ -81,14 +81,14 @@ export function Field<T extends FieldProps>(props: T) {
   });
 
   const showError = !!error && errorType !== 'revalidate' && (!isActive || isDirty);
-  const isValid = !!currentValue && !error && (required || validations?.length);
+  const isValid = !!currentValue && !error && (required ?? validations?.length);
 
   const groupProps: PlainObject = {
     assistiveText,
     hideAssistiveText,
     inline,
     label,
-    labelId: id || name,
+    labelId: id ?? name,
     required,
     style,
   };
