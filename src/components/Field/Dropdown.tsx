@@ -2,11 +2,12 @@ import { useCallback } from 'react';
 import { FieldValues, SetFieldValue, UseFormRegisterReturn } from 'react-hook-form';
 import is from 'is-lite';
 
+import { Dropdown } from '~/components/Dropdown';
+
+import { DropdownOption } from '~/types';
+
 import { FieldDropdownProps } from './types';
 import { getInputParameters } from './utils';
-
-import { DropdownOption } from '../../types';
-import { Dropdown } from '../Dropdown';
 
 interface Props extends FieldDropdownProps {
   currentValue: any;

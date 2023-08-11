@@ -4,10 +4,12 @@ import styled from '@emotion/styled';
 import { noop } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
-import { getColorVariant, getTheme } from '../../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../../modules/system';
-import { WithColor } from '../../types';
-import { Paragraph } from '../Paragraph';
+import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getStyledOptions, isDarkMode } from '~/modules/system';
+
+import { Paragraph } from '~/components/Paragraph';
+
+import { WithColor } from '~/types';
 
 interface ChildProps {
   closeMenu?: () => void;

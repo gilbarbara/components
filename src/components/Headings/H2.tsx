@@ -1,9 +1,9 @@
 import { forwardRef } from 'react';
 import styled from '@emotion/styled';
 
-import { defaultProps, getStyles, HeadingProps } from './utils';
+import { getStyledOptions } from '~/modules/system';
 
-import { getStyledOptions } from '../../modules/system';
+import { defaultProps, getStyles, HeadingProps } from './utils';
 
 export const StyledH2 = styled(
   'h2',

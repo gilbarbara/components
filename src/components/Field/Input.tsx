@@ -3,13 +3,14 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { formatMoney, formatPhoneBR } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
+import { clearNumber } from '~/modules/helpers';
+
+import { Input } from '~/components/Input';
+import { InputColor } from '~/components/InputColor';
+import { InputFile } from '~/components/InputFile';
+
 import { FieldInputProps } from './types';
 import { getInputParameters } from './utils';
-
-import { clearNumber } from '../../modules/helpers';
-import { Input } from '../Input';
-import { InputColor } from '../InputColor';
-import { InputFile } from '../InputFile';
 
 interface Props extends FieldInputProps {
   currentValue: any;

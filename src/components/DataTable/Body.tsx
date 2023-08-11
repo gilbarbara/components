@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
-import type { DataTableProps } from './index';
+import { Box, BoxCenter } from '~/components/Box';
+import { Loader } from '~/components/Loader';
+import { Paragraph } from '~/components/Paragraph';
 
-import { Box, BoxCenter } from '../Box';
-import { Loader } from '../Loader';
-import { Paragraph } from '../Paragraph';
+import type { DataTableProps } from './DataTable';
 
 interface Props extends Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'loading'> {
   isResponsive: boolean;

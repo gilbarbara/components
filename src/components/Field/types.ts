@@ -1,8 +1,9 @@
 import { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
 
-import { CheckboxItem, DropdownOption, DropdownProps, InputTypes, RadioItem } from '../../types';
-import { FormGroupProps } from '../FormGroup';
+import { FormGroupProps } from '~/components/FormGroup/FormGroup';
+
+import { CheckboxItem, DropdownOption, DropdownProps, InputTypes, RadioItem } from '~/types';
 
 export interface RegisterOptionsProps extends FieldBaseProps {
   formatter?: FieldInputProps['formatter'];

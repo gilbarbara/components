@@ -1,10 +1,10 @@
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
+import { Textarea } from '~/components/Textarea';
+
 import { FieldTextareaProps } from './types';
 import { getInputParameters } from './utils';
-
-import { Textarea } from '../Textarea';
 
 interface Props extends FieldTextareaProps {
   isDirty: boolean;

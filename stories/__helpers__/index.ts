@@ -1,7 +1,8 @@
 import { PlainObject } from '@gilbarbara/types';
 
-import { variants as themeVariants } from 'src/modules/theme';
-import { Shades, Variants } from 'src/types';
+import { variants as themeVariants } from '~/modules/theme';
+
+import { Shades, Variants } from '~/types';
 
 const base = ['normal', 'stretch'];
 const contentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];

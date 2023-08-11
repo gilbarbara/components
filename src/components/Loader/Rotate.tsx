@@ -2,10 +2,11 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
-import { rotate } from '../../modules/animations';
-import { getColorVariant, getTheme } from '../../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../../modules/system';
-import { LoaderProps } from '../../types';
+import { rotate } from '~/modules/animations';
+import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getStyledOptions, isDarkMode } from '~/modules/system';
+
+import { LoaderProps } from '~/types';
 
 const dash = keyframes`
   0% {

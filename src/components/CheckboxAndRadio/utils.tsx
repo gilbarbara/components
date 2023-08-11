@@ -3,14 +3,15 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { pick, px } from '@gilbarbara/helpers';
 
-import { getTheme } from '../../modules/helpers';
+import { getTheme } from '~/modules/helpers';
 import {
   baseStyles,
   getStyledOptions,
   isDarkMode,
   marginStyles,
   outlineStyles,
-} from '../../modules/system';
+} from '~/modules/system';
+
 import {
   CheckboxItem,
   ComponentProps,
@@ -19,7 +20,7 @@ import {
   WithComponentSize,
   WithFlexBox,
   WithMargin,
-} from '../../types';
+} from '~/types';
 
 export interface SharedProps extends StyledProps, WithComponentSize, WithMargin {
   /** @default center */

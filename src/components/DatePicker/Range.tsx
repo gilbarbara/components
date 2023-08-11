@@ -10,16 +10,17 @@ import styled from '@emotion/styled';
 import { formatDateLocale, omit } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
+import { getTheme } from '~/modules/helpers';
+import { getStyledOptions } from '~/modules/system';
+
+import { BoxCenter } from '~/components/Box';
+import { Button } from '~/components/Button';
+import { Paragraph } from '~/components/Paragraph';
+import { Spacer } from '~/components/Spacer';
+import { Text } from '~/components/Text';
+
 import { DatePickerRangerProps } from './types';
 import { defaultProps, getFooter, getNumberOfMonths, getRange, getStyles } from './utils';
-
-import { getTheme } from '../../modules/helpers';
-import { getStyledOptions } from '../../modules/system';
-import { BoxCenter } from '../Box';
-import { Button } from '../Button';
-import { Paragraph } from '../Paragraph';
-import { Spacer } from '../Spacer';
-import { Text } from '../Text';
 
 export const rangeDefaultProps = {
   ...defaultProps,

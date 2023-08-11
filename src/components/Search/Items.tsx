@@ -4,11 +4,12 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
-import Item from './Item';
+import { getTheme } from '~/modules/helpers';
+import { getStyledOptions, isDarkMode } from '~/modules/system';
 
-import { getTheme } from '../../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../../modules/system';
-import { SearchItem, SearchProps, Theme } from '../../types';
+import { SearchItem, SearchProps, Theme } from '~/types';
+
+import Item from './Item';
 
 interface SearchItemsProps extends Pick<SearchProps, 'noResultsLabel'> {
   active: boolean;

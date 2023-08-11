@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { ComponentProps } from '@gilbarbara/react-dropdown';
 
-import { DropdownProps, WithColor } from '../../types';
-import { ButtonUnstyled } from '../ButtonUnstyled';
+import { ButtonUnstyled } from '~/components/ButtonUnstyled';
+
+import { DropdownProps, WithColor } from '~/types';
 
 interface Props extends WithColor, ComponentProps, Pick<DropdownProps, 'onCreate'> {}
 

@@ -20,7 +20,7 @@ import {
   shadowStyles,
   textColorStyles,
   textStyles,
-} from 'modules/system';
+} from '~/modules/system';
 
 describe('alignStyles', () => {
   it('should return properly', () => {
