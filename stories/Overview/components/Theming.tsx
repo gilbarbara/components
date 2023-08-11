@@ -1,4 +1,4 @@
-import { Box, Paragraph } from 'src';
+import { Box, Paragraph } from '~';
 
 import CodeBlock from './CodeBlock';
 

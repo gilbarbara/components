@@ -4,12 +4,14 @@ import styled from '@emotion/styled';
 import { ComponentProps } from '@gilbarbara/react-dropdown';
 import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
-import Add from './Add';
+import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getStyledOptions, isDarkMode } from '~/modules/system';
 
-import { getColorVariant, getTheme } from '../../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../../modules/system';
-import { DropdownProps, Theme, WithColor } from '../../types';
-import { BoxInline } from '../Box';
+import { BoxInline } from '~/components/Box';
+
+import { DropdownProps, Theme, WithColor } from '~/types';
+
+import Add from './Add';
 
 interface DropdownOptionsProps
   extends WithColor,

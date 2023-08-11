@@ -4,16 +4,16 @@ import styled from '@emotion/styled';
 import { useIsFirstRun } from '@gilbarbara/hooks';
 import { SetRequired } from 'type-fest';
 
-import { baseDefaultProps, SkeletonProps } from './utils';
-
-import { fadeIn } from '../../modules/animations';
+import { fadeIn } from '~/modules/animations';
 import {
   baseStyles,
   getStyledOptions,
   layoutStyles,
   marginStyles,
   radiusStyles,
-} from '../../modules/system';
+} from '~/modules/system';
+
+import { baseDefaultProps, SkeletonProps } from './utils';
 
 const bgAnimation = keyframes`
   0% {

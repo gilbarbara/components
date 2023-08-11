@@ -13,7 +13,7 @@ import {
   WithPadding,
   WithRadius,
   WithShadow,
-} from '../../types';
+} from '~/types';
 
 export type DatePickerRangeParameter = [string | undefined, string | undefined];
 

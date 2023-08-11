@@ -4,14 +4,7 @@ import { css } from '@emotion/react';
 import { isSameMonth } from 'date-fns';
 import is from 'is-lite';
 
-import {
-  DatePickerBaseProps,
-  DatePickerLayoutProps,
-  DatePickerRangeClickHandler,
-  DatePickerSingleClickHandler,
-} from './types';
-
-import { getTheme } from '../../modules/helpers';
+import { getTheme } from '~/modules/helpers';
 import {
   borderStyles,
   isDarkMode,
@@ -19,9 +12,17 @@ import {
   paddingStyles,
   radiusStyles,
   shadowStyles,
-} from '../../modules/system';
-import { Box } from '../Box';
-import { ButtonUnstyled } from '../ButtonUnstyled';
+} from '~/modules/system';
+
+import { Box } from '~/components/Box';
+import { ButtonUnstyled } from '~/components/ButtonUnstyled';
+
+import {
+  DatePickerBaseProps,
+  DatePickerLayoutProps,
+  DatePickerRangeClickHandler,
+  DatePickerSingleClickHandler,
+} from './types';
 
 export const defaultProps = {
   formatLocale: 'en-US',

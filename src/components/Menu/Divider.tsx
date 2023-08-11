@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { getTheme } from '../../modules/helpers';
-import { getStyledOptions } from '../../modules/system';
+import { getTheme } from '~/modules/helpers';
+import { getStyledOptions } from '~/modules/system';
 
 const StyledMenuDivider = styled(
   'div',

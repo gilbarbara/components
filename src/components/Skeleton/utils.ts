@@ -1,6 +1,7 @@
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { grayLighter, grayLightest } from '../../modules/theme';
+import { grayLighter, grayLightest } from '~/modules/theme';
+
 import {
   ComponentProps,
   Spacing,
@@ -9,7 +10,7 @@ import {
   WithLayout,
   WithMargin,
   WithRadius,
-} from '../../types';
+} from '~/types';
 
 export interface SkeletonKnownProps
   extends StyledProps,

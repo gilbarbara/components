@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { Controller, FieldValues, UseFormSetValue } from 'react-hook-form';
 import is from 'is-lite';
 
-import { FieldToggleProps } from './types';
+import { Toggle } from '~/components/Toggle';
 
-import { Toggle } from '../Toggle';
+import { FieldToggleProps } from './types';
 
 interface Props extends FieldToggleProps {
   setValue: UseFormSetValue<FieldValues>;

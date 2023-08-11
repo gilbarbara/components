@@ -2,10 +2,10 @@ import { ChangeEvent, useRef } from 'react';
 import { FieldValues, SetFieldValue } from 'react-hook-form';
 import { useUpdateEffect } from 'react-use';
 
-import { FieldCheckboxProps } from './types';
+import { Checkbox } from '~/components/CheckboxAndRadio';
+import { Spacer } from '~/components/Spacer';
 
-import { Checkbox } from '../CheckboxAndRadio';
-import { Spacer } from '../Spacer';
+import { FieldCheckboxProps } from './types';
 
 interface Props extends FieldCheckboxProps {
   currentValue: string[];

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-import { getTheme } from '../../modules/helpers';
+import { getTheme } from '~/modules/helpers';
 import {
   alignStyles,
   baseStyles,
@@ -8,7 +8,8 @@ import {
   colorStyles,
   marginStyles,
   textStyles,
-} from '../../modules/system';
+} from '~/modules/system';
+
 import {
   ComponentProps,
   StyledProps,
@@ -20,7 +21,7 @@ import {
   WithLight,
   WithMargin,
   WithTextOptions,
-} from '../../types';
+} from '~/types';
 
 export interface HeadingKnownProps
   extends StyledProps,

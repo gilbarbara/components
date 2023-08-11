@@ -10,6 +10,9 @@ module.exports = {
     },
   },
   moduleDirectories: ['node_modules', 'src'],
+  moduleNameMapper: {
+    '^~/(.*)$': '<rootDir>/src/$1',
+  },
   snapshotSerializers: ['@emotion/jest/serializer'],
   setupFilesAfterEnv: ['<rootDir>/test/__setup__/setupFilesAfterEnv.ts'],
   testEnvironment: '@happy-dom/jest-environment',
@@ -19,7 +22,6 @@ module.exports = {
       'ts-jest',
       {
         useESM: true,
-        tsconfig: 'test/tsconfig.json',
         diagnostics: {
           ignoreCodes: ['TS151001'],
         },

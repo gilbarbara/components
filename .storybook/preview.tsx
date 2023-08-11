@@ -29,6 +29,12 @@ export const parameters = {
     sort: 'requiredFirst',
   },
   layout: 'centered',
+  options: {
+    storySort: {
+      method: 'alphabetical',
+      order: ['Overview', 'Components'],
+    },
+  },
   sidebar: {
     showRoots: true,
   },

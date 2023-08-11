@@ -3,10 +3,10 @@ import { DayPicker, DayPickerSingleProps, SelectSingleEventHandler } from 'react
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 
+import { getStyledOptions } from '~/modules/system';
+
 import { DatePickerSingleProps } from './types';
 import { defaultProps, getFooter, getRange, getStyles } from './utils';
-
-import { getStyledOptions } from '../../modules/system';
 
 const StyledDatePicker = styled(
   'div',

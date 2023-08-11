@@ -1,10 +1,11 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import { FieldRadioProps } from './types';
+import { Radio } from '~/components/CheckboxAndRadio';
+import { Spacer } from '~/components/Spacer';
 
-import { RadioItem } from '../../types';
-import { Radio } from '../CheckboxAndRadio';
-import { Spacer } from '../Spacer';
+import { RadioItem } from '~/types';
+
+import { FieldRadioProps } from './types';
 
 interface Props extends FieldRadioProps {
   registration: UseFormRegisterReturn;

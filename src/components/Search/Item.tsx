@@ -2,9 +2,10 @@ import { MouseEventHandler } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { getTheme } from '../../modules/helpers';
-import { getStyledOptions } from '../../modules/system';
-import { WithChildren } from '../../types';
+import { getTheme } from '~/modules/helpers';
+import { getStyledOptions } from '~/modules/system';
+
+import { WithChildren } from '~/types';
 
 export interface SearchItemProps extends WithChildren {
   isSelected: boolean;

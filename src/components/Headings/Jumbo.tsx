@@ -1,9 +1,9 @@
 import { forwardRef } from 'react';
 import styled from '@emotion/styled';
 
-import { getStyles, HeadingLargeProps, jumboDefaultProps } from './utils';
+import { getStyledOptions } from '~/modules/system';
 
-import { getStyledOptions } from '../../modules/system';
+import { getStyles, HeadingLargeProps, jumboDefaultProps } from './utils';
 
 export const StyledJumbo = styled(
   'h1',

@@ -1,6 +1,6 @@
 import SVG from 'react-inlinesvg';
 
-import { Box, H2, H3, Jumbo, Paragraph, Spacer } from 'src';
+import { Box, H2, H3, Jumbo, Paragraph, Spacer } from '~';
 
 import CodeBlock from './CodeBlock';
 

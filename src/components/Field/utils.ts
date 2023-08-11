@@ -3,15 +3,15 @@ import { omit } from '@gilbarbara/helpers';
 import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { FieldProps, RegisterOptionsProps } from './types';
-
-import { clearNumber } from '../../modules/helpers';
+import { clearNumber } from '~/modules/helpers';
 import {
   validateEmail,
   validateMatchField,
   validatePassword,
   validatePhoneBR,
-} from '../../modules/validations';
+} from '~/modules/validations';
+
+import { FieldProps, RegisterOptionsProps } from './types';
 
 export function getError(name: string, errors: PlainObject<any>) {
   const { message, type } = errors[name] || {};

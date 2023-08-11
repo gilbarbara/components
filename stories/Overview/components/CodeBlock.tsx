@@ -1,7 +1,7 @@
 import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-import { grayScale, spacing } from 'src/modules/theme';
+import { grayScale, spacing } from '~/modules/theme';
 
 const style = { ...atomOneLight };
 

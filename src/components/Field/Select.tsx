@@ -1,10 +1,10 @@
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
+import { Select } from '~/components/Select';
+
 import { FieldSelectProps } from './types';
 import { getInputParameters } from './utils';
-
-import { Select } from '../Select';
 
 interface Props extends FieldSelectProps {
   isDirty: boolean;

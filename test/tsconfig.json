@@ -1,9 +1,4 @@
 {
   "extends": "../tsconfig",
-  "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": "../src",
-    "noUnusedLocals": false
-  },
-  "include": ["../*.d.ts", "**/*"]
+  "include": ["**/*"]
 }

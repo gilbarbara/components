@@ -3,10 +3,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 
-import { getTheme } from '../../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../../modules/system';
-import { BoxInline } from '../Box';
-import { Icon } from '../Icon';
+import { getTheme } from '~/modules/helpers';
+import { getStyledOptions, isDarkMode } from '~/modules/system';
+
+import { BoxInline } from '~/components/Box';
+import { Icon } from '~/components/Icon';
 
 export const StyledContent = styled('div', getStyledOptions())`
   align-items: center;

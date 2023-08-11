@@ -2,13 +2,14 @@ import { memo, MouseEventHandler, ReactNode } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import type { DataTableProps } from './index';
+import { getTheme } from '~/modules/helpers';
+import { getStyledOptions } from '~/modules/system';
 
-import { getTheme } from '../../modules/helpers';
-import { getStyledOptions } from '../../modules/system';
-import { Box } from '../Box';
-import { ButtonUnstyled } from '../ButtonUnstyled';
-import { Icon } from '../Icon';
+import { Box } from '~/components/Box';
+import { ButtonUnstyled } from '~/components/ButtonUnstyled';
+import { Icon } from '~/components/Icon';
+
+import type { DataTableProps } from './DataTable';
 
 interface Props extends Pick<DataTableProps, 'clean' | 'columns'> {
   isDisabled: boolean;

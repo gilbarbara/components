@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { rgba } from 'polished';
 
-import { getColorVariant, getTheme } from '../../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../../modules/system';
-import { LoaderProps } from '../../types';
+import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getStyledOptions, isDarkMode } from '~/modules/system';
+
+import { LoaderProps } from '~/types';
 
 const animation = keyframes`
   0% {

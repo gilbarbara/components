@@ -5,6 +5,16 @@ import styled from '@emotion/styled';
 import { formatDateLocale, omit, px } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
+import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getStyledOptions, isDarkMode } from '~/modules/system';
+
+import { Box } from '~/components/Box';
+import { ClickOutside } from '~/components/ClickOutside';
+import { Icon } from '~/components/Icon';
+import { Text } from '~/components/Text';
+
+import { Alignment } from '~/types';
+
 import { DatePickerRange } from './Range';
 import { DatePicker } from './Single';
 import {
@@ -14,14 +24,6 @@ import {
   DatePickerSingleClickHandler,
 } from './types';
 import { defaultProps, getNumberOfMonths } from './utils';
-
-import { getColorVariant, getTheme } from '../../modules/helpers';
-import { getStyledOptions, isDarkMode } from '../../modules/system';
-import { Alignment } from '../../types';
-import { Box } from '../Box';
-import { ClickOutside } from '../ClickOutside';
-import { Icon } from '../Icon';
-import { Text } from '../Text';
 
 interface State {
   isActive: boolean;
