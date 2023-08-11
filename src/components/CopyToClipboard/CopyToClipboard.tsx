@@ -3,7 +3,6 @@ import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { animateIcon, fadeInOut } from '~/modules/animations';
-import copy from '~/modules/copy-text-to-clipboard';
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
@@ -78,20 +77,24 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
     };
   }, []);
 
-  const handleClick = (event: MouseEvent<HTMLSpanElement>) => {
+  const handleClick = async (event: MouseEvent<HTMLSpanElement>) => {
     if (!disableAnimation) {
       animateIcon(event.currentTarget, 'primary', theme);
     }
 
-    copy(text);
+    try {
+      await navigator.clipboard.writeText(text);
 
-    setContent(tooltipCopiedText);
+      setContent(tooltipCopiedText);
 
-    setTimeout(() => {
-      if (isActive.current) {
-        setContent(tooltipText);
-      }
-    }, 2000);
+      setTimeout(() => {
+        if (isActive.current) {
+          setContent(tooltipText);
+        }
+      }, 2000);
+    } catch (error: any) {
+      setContent(error.message);
+    }
   };
 
   return (
