@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useArgs } from '@storybook/addons';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, Paragraph } from '~';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  hideTable,
-  layoutProps,
-  spacingProps,
-} from '~/stories/__helpers__';
+import { colorProps, hideProps, hideTable, layoutProps, spacingProps } from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonCircle } from './SkeletonCircle';
+import { SkeletonCircleProps } from './utils';
 
 type Story = StoryObj<typeof SkeletonCircle>;
 
@@ -34,17 +29,14 @@ export const Circle: Story = {
     size: 64,
     width: 64,
   },
-  argTypes: {
-    isLoaded: disableControl(),
-  },
   render: function Render(props) {
-    const [isLoaded, setLoaded] = useState(false);
+    const [{ isLoaded }, updateArguments] = useArgs<SkeletonCircleProps>();
 
     useEffect(() => {
       setTimeout(() => {
-        setLoaded(true);
+        updateArguments({ isLoaded: true });
       }, 2000);
-    }, []);
+    }, [updateArguments]);
 
     return (
       <>
@@ -56,7 +48,7 @@ export const Circle: Story = {
           />
         </SkeletonCircle>
         <Paragraph color="gray.300" mt="md">
-          isLoaded: {isLoaded.toString()}
+          isLoaded: {isLoaded?.toString()}
         </Paragraph>
       </>
     );

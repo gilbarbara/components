@@ -82,7 +82,6 @@ export const defaultProps = {
   distribution: 'start',
   gap: 'sm',
   grow: false,
-  radius: false,
   shadow: false,
   verticalAlign: 'center',
   wrap: true,

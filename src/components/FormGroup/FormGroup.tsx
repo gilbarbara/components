@@ -59,7 +59,6 @@ export type FormGroupProps = ComponentProps<HTMLElement, FormGroupKnownProps>;
 export const defaultProps = {
   hideAssistiveText: false,
   inline: false,
-  radius: false,
   required: false,
   skipIcon: false,
 } satisfies Omit<FormGroupProps, 'children'>;

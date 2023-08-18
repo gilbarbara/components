@@ -44,13 +44,14 @@ export const defaultProps = {
   closeOnEsc: true,
   hideCloseButton: false,
   hideOverlay: false,
+  isActive: false,
   maxHeight: '80vh',
   maxWidth: '100vw',
   padding: 'lg',
   radius: 'lg',
   shadow: 'high',
   zIndex: 1000,
-} satisfies Omit<ModalProps, 'children' | 'isActive'>;
+} satisfies Omit<ModalProps, 'children'>;
 
 const StyledModal = styled(
   'div',

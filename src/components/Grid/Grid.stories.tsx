@@ -11,6 +11,7 @@ import {
   hideProps,
   layoutProps,
   positioningProps,
+  radiusProps,
   spacingProps,
 } from '~/stories/__helpers__';
 
@@ -36,6 +37,7 @@ export default {
     ...flexItemProps(),
     ...layoutProps({ display: 'grid' }),
     ...positioningProps(),
+    ...radiusProps(),
     ...spacingProps(),
     alignContent: { options: flexContent },
     alignItems: { options: flexItems },

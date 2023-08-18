@@ -2,7 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Input, Select, Textarea } from '~';
 
-import { disableControl, hideProps, layoutProps, spacingProps } from '~/stories/__helpers__';
+import {
+  disableControl,
+  hideProps,
+  layoutProps,
+  radiusProps,
+  spacingProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, FormGroup } from './FormGroup';
 
@@ -20,6 +26,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...layoutProps(),
+    ...radiusProps(),
     ...spacingProps(),
     assistiveText: { control: 'text' },
     error: { control: 'text' },

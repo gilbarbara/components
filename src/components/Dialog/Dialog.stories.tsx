@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useArgs } from '@storybook/addons';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '~';
 
-import { colorProps, disableControl, hideProps, paddingProps } from '~/stories/__helpers__';
+import { colorProps, hideProps, paddingProps, radiusProps } from '~/stories/__helpers__';
 
-import { defaultProps, Dialog } from './Dialog';
+import { defaultProps, Dialog, DialogProps } from './Dialog';
 
 type Story = StoryObj<typeof Dialog>;
 
@@ -21,28 +21,23 @@ export default {
     ...hideProps(),
     ...colorProps(['accent']),
     ...paddingProps(),
-    isActive: disableControl(),
+    ...radiusProps(),
   },
 } satisfies Meta<typeof Dialog>;
 
 export const Basic: Story = {
   render: function Render(props) {
-    const [isActive, setActive] = useState(false);
+    const [{ isActive }, updateArguments] = useArgs<DialogProps>();
 
     const handleClicks = () => {
-      setActive(v => !v);
+      updateArguments({ isActive: !isActive });
     };
 
     return (
       <div className="flex-center">
         <Button onClick={handleClicks}>Open Dialog</Button>
 
-        <Dialog
-          {...props}
-          isActive={isActive}
-          onClickCancel={handleClicks}
-          onClickConfirmation={handleClicks}
-        />
+        <Dialog {...props} onClickCancel={handleClicks} onClickConfirmation={handleClicks} />
       </div>
     );
   },

@@ -64,15 +64,13 @@ export const defaultProps = {
   closeOnClickOverlay: false,
   closeOnEsc: true,
   hideOverlay: false,
+  isActive: false,
   padding: 'xl',
   radius: 'lg',
   shadow: 'high',
   textAlign: 'left',
   width: 380,
-} satisfies Omit<
-  DialogProps,
-  'content' | 'isActive' | 'onClickCancel' | 'onClickConfirmation' | 'title'
->;
+} satisfies Omit<DialogProps, 'content' | 'onClickCancel' | 'onClickConfirmation' | 'title'>;
 
 const StyledDialog = styled(
   'div',

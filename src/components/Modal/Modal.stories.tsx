@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useArgs } from '@storybook/addons';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from '~';
 
-import { disableControl, hideProps, paddingProps } from '~/stories/__helpers__';
+import { disableControl, hideProps, paddingProps, radiusProps } from '~/stories/__helpers__';
 
-import { defaultProps, Modal } from './Modal';
+import { defaultProps, Modal, ModalProps } from './Modal';
 
 type Story = StoryObj<typeof Modal>;
 
@@ -20,25 +20,25 @@ export default {
   argTypes: {
     ...hideProps(),
     ...paddingProps(),
+    ...radiusProps(),
     children: disableControl(),
-    isActive: disableControl(),
     maxWidth: { control: 'text' },
   },
 } satisfies Meta<typeof Modal>;
 
 export const Basic: Story = {
   render: function Render(props) {
-    const [isActive, setActive] = useState(false);
+    const [{ isActive }, updateArguments] = useArgs<ModalProps>();
 
     const handleClick = () => {
-      setActive(v => !v);
+      updateArguments({ isActive: !isActive });
     };
 
     return (
       <div className="flex-center">
         {!isActive && <Button onClick={handleClick}>Open Modal</Button>}
 
-        <Modal {...props} isActive={isActive} onClose={handleClick}>
+        <Modal {...props} onClose={handleClick}>
           <FormGroup label="Name" required>
             <Input name="name" placeholder="Name" />
           </FormGroup>

@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useArgs } from '@storybook/addons';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph } from '~';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  layoutProps,
-  spacingProps,
-} from '~/stories/__helpers__';
+import { colorProps, hideProps, layoutProps, spacingProps } from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonText } from './SkeletonText';
+import { SkeletonTextProps } from './utils';
 
 type Story = StoryObj<typeof SkeletonText>;
 
@@ -34,17 +30,14 @@ export const Text: Story = {
   args: {
     lines: 2,
   },
-  argTypes: {
-    isLoaded: disableControl(),
-  },
   render: function Render(props) {
-    const [isLoaded, setLoaded] = useState(false);
+    const [{ isLoaded }, updateArguments] = useArgs<SkeletonTextProps>();
 
     useEffect(() => {
       setTimeout(() => {
-        setLoaded(true);
+        updateArguments({ isLoaded: true });
       }, 2000);
-    }, []);
+    }, [updateArguments]);
 
     return (
       <>
@@ -52,7 +45,7 @@ export const Text: Story = {
           The quick brown fox jumps over the lazy dog
         </SkeletonText>
         <Paragraph color="gray.300" mt="md">
-          isLoaded: {isLoaded.toString()}
+          isLoaded: {isLoaded?.toString()}
         </Paragraph>
       </>
     );
