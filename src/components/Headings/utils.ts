@@ -17,7 +17,7 @@ import {
   WithAlign,
   WithBorder,
   WithChildren,
-  WithColor,
+  WithColors,
   WithLight,
   WithMargin,
   WithTextOptions,
@@ -27,7 +27,7 @@ export interface HeadingKnownProps
   extends StyledProps,
     WithAlign,
     WithBorder,
-    WithColor,
+    Pick<WithColors, 'color'>,
     WithChildren,
     WithLight,
     WithMargin,
@@ -62,8 +62,8 @@ export function getStyles(key: Typography, props: HeadingProps) {
     margin-bottom: 0.5em;
     margin-top: 0;
     ${alignStyles(props)};
-    ${borderStyles(props)};
     ${colorStyles(props)};
+    ${borderStyles(props)};
     ${marginStyles(props)};
     ${textStyles(props)};
   `;

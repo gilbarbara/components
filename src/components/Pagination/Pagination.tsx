@@ -7,11 +7,11 @@ import { borderStyles, getStyledOptions, marginStyles, paddingStyles } from '~/m
 
 import { Icon } from '~/components/Icon';
 
-import { WithBorder, WithMargin, WithPadding } from '~/types';
+import { WithAccent, WithBorder, WithMargin, WithPadding } from '~/types';
 
 import PaginationButton from './Button';
 
-export interface PaginationProps extends WithBorder, WithMargin, WithPadding {
+export interface PaginationProps extends WithAccent, WithBorder, WithMargin, WithPadding {
   /** @default end */
   align?: 'start' | 'center' | 'end';
   currentPage: number;
@@ -38,6 +38,7 @@ interface Item {
 }
 
 export const defaultProps = {
+  accent: 'primary',
   align: 'end',
   disableEdgeNavigation: false,
   edgeNavigationLimit: 3,
@@ -61,6 +62,7 @@ const StyledPagination = styled(
 
 export function Pagination(props: PaginationProps) {
   const {
+    accent,
     currentPage,
     disableEdgeNavigation,
     edgeNavigationLimit = 3,
@@ -79,7 +81,7 @@ export function Pagination(props: PaginationProps) {
       key: 'first',
       disabled: currentPage === 1,
       page: 1,
-      content: <Icon name="chevron-double-left" size={18} />,
+      content: <Icon name="chevron-double-left" />,
     });
   }
 
@@ -87,7 +89,7 @@ export function Pagination(props: PaginationProps) {
     key: 'previous',
     disabled: currentPage === 1,
     page: currentPage - 1,
-    content: <Icon name="chevron-left" size={18} />,
+    content: <Icon name="chevron-left" />,
   });
 
   if (disableEdgeNavigation && totalPages > 6) {
@@ -141,7 +143,7 @@ export function Pagination(props: PaginationProps) {
     key: 'next',
     disabled: currentPage === totalPages,
     page: currentPage + 1,
-    content: <Icon name="chevron-right" size={18} />,
+    content: <Icon name="chevron-right" />,
   });
 
   if (!disableEdgeNavigation && totalPages > edgeNavigationLimit) {
@@ -149,7 +151,7 @@ export function Pagination(props: PaginationProps) {
       key: 'last',
       disabled: currentPage === totalPages,
       page: totalPages,
-      content: <Icon name="chevron-double-right" size={18} />,
+      content: <Icon name="chevron-double-right" />,
     });
   }
 
@@ -159,6 +161,7 @@ export function Pagination(props: PaginationProps) {
         !is.undefined(d.page) ? (
           <PaginationButton
             key={d.key ?? d.page ?? index}
+            accent={accent}
             currentPage={currentPage}
             disabled={d.disabled ?? false}
             onClick={onClick}

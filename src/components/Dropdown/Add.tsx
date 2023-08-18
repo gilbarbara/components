@@ -3,9 +3,9 @@ import { ComponentProps } from '@gilbarbara/react-dropdown';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
-import { DropdownProps, WithColor } from '~/types';
+import { DropdownProps, WithAccent } from '~/types';
 
-interface Props extends WithColor, ComponentProps, Pick<DropdownProps, 'onCreate'> {}
+interface Props extends WithAccent, ComponentProps, Pick<DropdownProps, 'onCreate'> {}
 
 const StyledDropdownAdd = styled.div`
   width: 100%;
@@ -20,11 +20,10 @@ const StyledDropdownAdd = styled.div`
 
 function DropdownAdd(props: Props) {
   const {
+    accent = 'primary',
     methods: { getLabels, setStatus },
     onCreate,
-    shade,
     state: { search },
-    variant = 'primary',
   } = props;
 
   const handleClick = () => {
@@ -35,7 +34,7 @@ function DropdownAdd(props: Props) {
 
   return (
     <StyledDropdownAdd data-component-name="DropdownAdd">
-      <ButtonUnstyled onClick={handleClick} shade={shade} variant={variant}>
+      <ButtonUnstyled color={accent} onClick={handleClick}>
         {getLabels().create.replace(/{search}/, `"${search}"`)}
       </ButtonUnstyled>
     </StyledDropdownAdd>

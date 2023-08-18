@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
 import { rotate } from '~/modules/animations';
-import { getColorVariant, getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
+import { getStyledOptions } from '~/modules/system';
 
 import { LoaderProps } from '~/types';
 
@@ -63,21 +64,16 @@ const StyledLoaderRotateCircle = styled('circle', getStyledOptions())<{ color: s
 `;
 
 export default function LoaderRotate(props: LoaderProps) {
-  const { color, shade, size = 32, variant } = props;
-  const { darkColor, lightColor, variants } = getTheme(props);
-  const darkMode = isDarkMode(props);
+  const { color = 'primary', size = 32 } = props;
+  const { darkColor, lightColor, ...theme } = getTheme(props);
 
-  let variantColor = darkMode ? lightColor : darkColor;
-
-  if (variant) {
-    variantColor = getColorVariant(variant, shade, variants).bg;
-  }
+  const { mainColor } = getColorTokens(color, null, theme);
 
   return (
     <StyledLoaderRotate data-component-name="LoaderRotate" {...props}>
       <StyledLoaderRotateSVG size={size} viewBox="25 25 50 50">
         <StyledLoaderRotateCircle
-          color={color ?? variantColor}
+          color={mainColor}
           cx="50"
           cy="50"
           fill="none"

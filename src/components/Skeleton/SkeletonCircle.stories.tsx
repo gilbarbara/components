@@ -1,8 +1,16 @@
+import { useEffect, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Avatar } from '~';
+import { Avatar, Paragraph } from '~';
 
-import { hideProps, hideTable, layoutProps, spacingProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideTable,
+  layoutProps,
+  spacingProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonCircle } from './SkeletonCircle';
 
@@ -14,6 +22,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent', 'bg']),
     ...layoutProps(),
     ...spacingProps(),
     radius: hideTable(),
@@ -22,12 +31,34 @@ export default {
 
 export const Circle: Story = {
   args: {
-    children: (
-      <Avatar
-        image="https://images.unsplash.com/photo-1564164841584-391b5c7b590c?w=800"
-        name="User"
-        size="lg"
-      />
-    ),
+    size: 64,
+    width: 64,
+  },
+  argTypes: {
+    isLoaded: disableControl(),
+  },
+  render: function Render(props) {
+    const [isLoaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 2000);
+    }, []);
+
+    return (
+      <>
+        <SkeletonCircle {...props} isLoaded={isLoaded}>
+          <Avatar
+            image="https://images.unsplash.com/photo-1564164841584-391b5c7b590c?w=800"
+            name="User"
+            size="lg"
+          />
+        </SkeletonCircle>
+        <Paragraph color="gray.300" mt="md">
+          isLoaded: {isLoaded.toString()}
+        </Paragraph>
+      </>
+    );
   },
 };

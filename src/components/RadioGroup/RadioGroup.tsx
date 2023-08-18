@@ -20,6 +20,7 @@ export interface RadioGroupProps
 }
 
 export const defaultProps = {
+  accent: 'primary',
   disabled: false,
   inline: false,
   size: 'md',
@@ -48,7 +49,7 @@ const StyledRadioGroup = styled(
 });
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } = {
+  const { accent, defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } = {
     ...defaultProps,
     ...props,
   };
@@ -87,19 +88,20 @@ export function RadioGroup(props: RadioGroupProps) {
 
   return (
     <StyledRadioGroup inline={inline} {...rest} data-component-name="RadioGroup" role="radiogroup">
-      {items.map(d => (
+      {items.map(item => (
         <Radio
-          key={d.value}
+          key={item.value}
+          accent={item.accent ?? accent}
           align="start"
-          checked={d.value === currentValue}
-          disabled={disabled || d.disabled}
-          label={d.label ?? d.value}
+          checked={item.value === currentValue}
+          disabled={disabled || item.disabled}
+          label={item.label ?? item.value}
           mb="xxs"
           name={name}
           onChange={handleChange}
           size={size}
           type="radio"
-          value={d.value}
+          value={item.value}
         />
       ))}
     </StyledRadioGroup>

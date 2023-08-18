@@ -1,43 +1,62 @@
-import { clamp } from '@gilbarbara/helpers';
-import { hex2hsl, hsl2hex, textColor } from 'colorizr';
+import { objectKeys } from '@gilbarbara/helpers';
+import { StringOrNull } from '@gilbarbara/types';
+import { hex2hsl, hsl2hex, parseCSS, textColor as contrastingColor } from 'colorizr';
 
-export function getColorScale(color: string) {
-  const { h, l, s } = hex2hsl(color);
+import * as theme from '~/modules/theme';
 
-  const lightest = hsl2hex({ h, s, l: clamp(l * 1.9, 92, 96) });
-  const lighter = hsl2hex({ h, s, l: clamp(l * 1.6, 82, 92) });
-  const light = hsl2hex({ h, s, l: clamp(l * 1.4, 64, 80) });
-  const dark = hsl2hex({ h, s, l: clamp(l * 0.7, 32) });
-  const darker = hsl2hex({ h, s, l: clamp(l * 0.45, 16) });
-  const darkest = hsl2hex({ h, s, l: clamp(l * 0.3, 8) });
+import { Color, ColorTone, Theme } from '~/types';
 
-  return {
-    lightest: { bg: lightest, color: textColor(lightest) },
-    lighter: { bg: lighter, color: textColor(lighter) },
-    light: { bg: light, color: textColor(light) },
-    mid: { bg: color, color: textColor(color) },
-    dark: { bg: dark, color: textColor(dark) },
-    darker: { bg: darker, color: textColor(darker) },
-    darkest: { bg: darkest, color: textColor(darkest) },
-  };
+export function getColorWithTone(color: string, tone: ColorTone) {
+  const hsl = hex2hsl(parseCSS(color));
+  const lightness = 100 - parseInt(tone, 10) / 10;
+
+  return hsl2hex({ ...hsl, l: lightness });
 }
 
-export function getGrayScale(
-  lightest: string,
-  lighter: string,
-  light: string,
-  mid: string,
-  dark: string,
-  darker: string,
-  darkest: string,
-) {
-  return {
-    lightest: { bg: lightest, color: textColor(lightest) },
-    lighter: { bg: lighter, color: textColor(lighter) },
-    light: { bg: light, color: textColor(light) },
-    mid: { bg: mid, color: textColor(mid) },
-    dark: { bg: dark, color: textColor(dark) },
-    darker: { bg: darker, color: textColor(darker) },
-    darkest: { bg: darkest, color: textColor(darkest) },
-  };
+/**
+ * Get color from theme
+ */
+export function getColorTokens(
+  mainColor: string,
+  textColor?: StringOrNull,
+  { colors, variants }: Pick<Theme, 'colors' | 'variants'> = theme,
+): { mainColor: string; textColor: string; variant?: Color } {
+  try {
+    const variantKeys = objectKeys(variants);
+
+    const selectedTextColor =
+      textColor && variantKeys.some(d => textColor.startsWith(d))
+        ? getColorTokens(textColor, undefined, { colors, variants })?.mainColor
+        : textColor;
+
+    switch (mainColor) {
+      case 'black': {
+        return { mainColor: theme.black, textColor: selectedTextColor ?? theme.white };
+      }
+      case 'white': {
+        return { mainColor: theme.white, textColor: selectedTextColor ?? theme.black };
+      }
+      default: {
+        if (variantKeys.some(d => mainColor.startsWith(d))) {
+          const [variant, tone] = mainColor.split('.') as [Color, ColorTone];
+
+          const selectedMainColor = tone ? variants[variant][tone] : colors[variant];
+
+          return {
+            mainColor: selectedMainColor,
+            textColor: selectedTextColor || contrastingColor(selectedMainColor),
+            variant,
+          };
+        }
+
+        return { mainColor, textColor: selectedTextColor || contrastingColor(mainColor) };
+      }
+    }
+  } catch {
+    return {
+      mainColor: colors.primary,
+      textColor: contrastingColor(colors.primary),
+      variant: 'primary',
+    };
+  }
 }

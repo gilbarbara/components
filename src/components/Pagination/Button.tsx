@@ -2,14 +2,15 @@ import { MouseEventHandler } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
-import { WithChildrenOptional } from '~/types';
+import { WithAccent, WithChildrenOptional } from '~/types';
 
-interface PaginationButtonProps extends WithChildrenOptional {
+interface PaginationButtonProps extends WithAccent, WithChildrenOptional {
   currentPage: number;
   disabled: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -19,16 +20,17 @@ interface PaginationButtonProps extends WithChildrenOptional {
 const StyledPaginationButton = styled(
   ButtonUnstyled,
   getStyledOptions(),
-)<{ current: boolean; disabled: boolean }>(props => {
-  const { current } = props;
-  const { black, spacing, typography, variants, white } = getTheme(props);
+)<WithAccent & { current: boolean; disabled: boolean }>(props => {
+  const { accent = 'primary', current } = props;
+  const { black, spacing, typography, white, ...theme } = getTheme(props);
   const color = isDarkMode(props) ? white : black;
+  const { mainColor, textColor } = getColorTokens(accent, null, theme);
 
   return css`
     align-items: center;
     border-radius: 50%;
-    background-color: ${current ? variants.primary.mid.bg : 'transparent'};
-    color: ${current ? variants.primary.mid.color : color};
+    background-color: ${current ? mainColor : 'transparent'};
+    color: ${current ? textColor : color};
     display: flex;
     font-size: ${typography.mid.fontSize};
     font-weight: ${700};
@@ -45,10 +47,11 @@ const StyledPaginationButton = styled(
 });
 
 export default function PaginationButton(props: PaginationButtonProps) {
-  const { children, currentPage, disabled, onClick, page } = props;
+  const { accent, children, currentPage, disabled, onClick, page } = props;
 
   return (
     <StyledPaginationButton
+      accent={accent}
       current={page === currentPage && children === page}
       data-page={page}
       disabled={disabled}

@@ -1,20 +1,19 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { isValidElement, ReactNode, useEffect, useRef, useState } from 'react';
 import { usePrevious } from 'react-use';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
-import { SetRequired } from 'type-fest';
+import { SetRequired, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
-import { baseStyles, marginStyles, textStyles } from '~/modules/system';
+import { baseStyles, marginStyles } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
 import { Paragraph } from '~/components/Paragraph';
 
-import { WithMargin, WithTextOptions } from '~/types';
+import { WithMargin } from '~/types';
 
-export interface CollapseProps extends WithMargin, WithTextOptions {
+export interface CollapseProps extends WithMargin {
   /**
    * The duration of the animation when the content is sliding down in seconds.
    * @default 0.3
@@ -45,7 +44,6 @@ export interface CollapseProps extends WithMargin, WithTextOptions {
 export const defaultProps = {
   animationEnterDuration: 0.3,
   animationExitDuration: 0.3,
-  bold: true,
   defaultOpen: false,
   hideToggle: false,
   initialHeight: 0,
@@ -68,7 +66,6 @@ export const StyledCollapse = styled('div')<Omit<CollapseProps, 'children'>>(pro
     display: flex;
     flex-direction: column;
     ${marginStyles(props)};
-    ${textStyles(props)};
   `;
 });
 
@@ -87,6 +84,7 @@ interface ContentProps
     >,
     'animationEnterDuration' | 'animationExitDuration' | 'initialHeight' | 'maxHeight'
   > {
+  hasTitle: boolean;
   isOpen: boolean;
   scrollHeight: number;
   shouldAnimate: boolean;
@@ -96,6 +94,7 @@ const Content = styled('div')<ContentProps>(props => {
   const {
     animationEnterDuration,
     animationExitDuration,
+    hasTitle,
     initialHeight,
     isOpen,
     maxHeight,
@@ -125,7 +124,7 @@ const Content = styled('div')<ContentProps>(props => {
     ${animation};
     height: ${px(height)};
     overflow: hidden;
-    margin-top: ${px(spacing.xs)};
+    ${hasTitle && `margin-top: ${px(spacing.xs)}`};
   `;
 });
 
@@ -167,16 +166,17 @@ export function Collapse(props: CollapseProps) {
   };
 
   return (
-    <StyledCollapse data-component-name="Collapse">
+    <StyledCollapse data-component-name="Collapse" {...rest}>
       {Boolean(title) && (
         <Header data-component-name="CollapseHeader" onClick={handleClickToggle}>
-          <Paragraph {...rest}>{title}</Paragraph>
+          {isValidElement(title) ? title : <Paragraph>{title}</Paragraph>}
           {!hideToggle && isOpen ? <Icon name="chevron-up" /> : <Icon name="chevron-down" />}
         </Header>
       )}
       <Content
         ref={contentRef}
         data-component-name="CollapseContent"
+        hasTitle={Boolean(title)}
         isOpen={isOpen}
         onAnimationEnd={handleAnimationEnd}
         scrollHeight={contentRef.current?.scrollHeight ?? 0}

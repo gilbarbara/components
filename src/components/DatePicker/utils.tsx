@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { css } from '@emotion/react';
+import { textColor } from 'colorizr';
 import { isSameMonth } from 'date-fns';
 import is from 'is-lite';
 
@@ -25,9 +26,9 @@ import {
 } from './types';
 
 export const defaultProps = {
+  accent: 'primary',
   formatLocale: 'en-US',
   currentMonthLabel: 'Go to today',
-  variant: 'primary',
 } as const;
 
 export function getNumberOfMonths(fromDate?: Date | string, toDate?: Date | string): number {
@@ -110,12 +111,13 @@ export function getStyles(
   props: DatePickerBaseProps<DatePickerSingleClickHandler | DatePickerRangeClickHandler> &
     DatePickerLayoutProps,
 ) {
-  const { variant = 'primary' } = props;
-  const { grayLight, grayMid, spacing, typography, variants } = getTheme(props);
+  const { accent = 'primary' } = props;
+  const { colors, grayLight, grayMid, spacing, typography, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   const className = 'rdp';
-  const colorVariant = variants[variant];
+  const colorMain = colors[accent];
+  const colorVariant = variants[accent];
   const cellSize = '40px';
   const disabledDays = darkMode ? grayMid : grayLight;
 
@@ -173,11 +175,11 @@ export function getStyles(
 
       &:focus,
       &:active {
-        background-color: ${colorVariant.lighter.bg};
+        background-color: ${colorVariant['50']};
       }
 
       &:hover:not([aria-disabled='true']) {
-        background-color: ${colorVariant.lighter.bg};
+        background-color: ${colorVariant[50]};
       }
     }
 
@@ -336,9 +338,9 @@ export function getStyles(
         + .${className}-caption_label,
         &:active:not([disabled])
         + .${className}-caption_label {
-        background-color: ${colorVariant.light.bg};
+        background-color: ${colorVariant['200']};
         border-radius: 6px;
-        border: 2px solid ${colorVariant.mid.bg};
+        border: 2px solid ${colorMain};
       }
     }
 
@@ -398,7 +400,7 @@ export function getStyles(
     }
 
     .${className}-day_today:not(.${className}-day_outside) {
-      color: ${colorVariant.mid.bg};
+      color: ${colorMain};
       font-weight: bold;
     }
 
@@ -406,12 +408,12 @@ export function getStyles(
     .${className}-day_selected:focus:not([aria-disabled='true']),
     .${className}-day_selected:active:not([aria-disabled='true']),
     .${className}-day_selected:hover:not([aria-disabled='true']) {
-      background-color: ${colorVariant.mid.bg};
-      color: ${colorVariant.mid.color};
+      background-color: ${colorMain};
+      color: ${textColor(colorMain)};
     }
 
     .${className}-day_selected:focus:not([aria-disabled='true']) {
-      border: 2px solid ${colorVariant.mid.bg};
+      border: 2px solid ${colorMain};
     }
 
     .${className}:not([dir='rtl']) {
@@ -444,8 +446,8 @@ export function getStyles(
 
     .${className}-day_range_middle {
       border-radius: 0;
-      background-color: ${colorVariant.lighter.bg} !important;
-      color: ${colorVariant.lighter.color} !important;
+      background-color: ${colorVariant[50]} !important;
+      color: ${variants.gray['900']} !important;
     }
   `;
 }

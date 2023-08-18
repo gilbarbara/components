@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { Meta, StoryObj } from '@storybook/react';
@@ -48,7 +47,7 @@ export const Basic: Story = {
             <span>Loading...</span>
           )}
         </AspectRatio>
-        <Paragraph italic mt="xs" shade="light" variant="gray">
+        <Paragraph color="gray.400" italic mt="xs">
           The border and loading are visual guides
         </Paragraph>
       </>

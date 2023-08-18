@@ -1,6 +1,15 @@
+import { useEffect, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { hideProps, layoutProps, spacingProps } from '~/stories/__helpers__';
+import { Paragraph } from '~';
+
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  layoutProps,
+  spacingProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonText } from './SkeletonText';
 
@@ -12,6 +21,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent', 'bg']),
     ...layoutProps(),
     ...spacingProps(),
   },
@@ -22,6 +32,29 @@ export default {
 
 export const Text: Story = {
   args: {
-    children: 'The quick brown fox jumps over the lazy dog',
+    lines: 2,
+  },
+  argTypes: {
+    isLoaded: disableControl(),
+  },
+  render: function Render(props) {
+    const [isLoaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 2000);
+    }, []);
+
+    return (
+      <>
+        <SkeletonText {...props} isLoaded={isLoaded}>
+          The quick brown fox jumps over the lazy dog
+        </SkeletonText>
+        <Paragraph color="gray.300" mt="md">
+          isLoaded: {isLoaded.toString()}
+        </Paragraph>
+      </>
+    );
   },
 };

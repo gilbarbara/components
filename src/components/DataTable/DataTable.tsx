@@ -209,7 +209,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
   const body = useMemo(() => {
     if (isEmpty) {
       return (
-        <BoxCenter padding="md" radius="sm" variant="white" width="100%">
+        <BoxCenter bg="white" padding="md" radius="sm" width="100%">
           {noResults ?? <Text bold>Nothing found</Text>}
         </BoxCenter>
       );
@@ -242,9 +242,8 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
   const styles: PlainObject = {};
 
   if (!clean) {
+    styles.bg = darkMode ? 'gray.800' : 'gray.50';
     styles.padding = 'md';
-    styles.shade = darkMode ? 'darker' : 'lightest';
-    styles.variant = 'gray';
   }
 
   return (

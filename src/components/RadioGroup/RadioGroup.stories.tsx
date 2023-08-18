@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph, Text } from '~';
 
-import { disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { defaultProps, RadioGroup } from './RadioGroup';
 
@@ -15,7 +15,7 @@ export default {
     ...defaultProps,
     defaultValue: 4,
     items: [
-      { label: 'First', value: 1 },
+      { accent: 'red', label: 'First', value: 1 },
       { label: 'Second', value: 2 },
       { label: 'Third', value: 3, disabled: true },
       {
@@ -32,6 +32,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent']),
     ...marginProps(),
     defaultValue: { control: 'number' },
     onChange: { action: 'onChange', ...disableControl() },

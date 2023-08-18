@@ -4,17 +4,18 @@ import styled from '@emotion/styled';
 import { ComponentProps } from '@gilbarbara/react-dropdown';
 import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { BoxInline } from '~/components/Box';
 
-import { DropdownProps, Theme, WithColor } from '~/types';
+import { DropdownProps, Theme, WithAccent } from '~/types';
 
 import Add from './Add';
 
 interface DropdownOptionsProps
-  extends WithColor,
+  extends WithAccent,
     ComponentProps,
     Pick<DropdownProps, 'allowCreate' | 'onCreate' | 'onSearch'> {}
 
@@ -55,16 +56,16 @@ const Empty = styled(
 const Input = styled(
   'input',
   getStyledOptions(),
-)<WithColor>(props => {
-  const { shade, variant = 'primary' } = props;
-  const { radius, variants } = getTheme(props);
-  const { bg } = getColorVariant(variant, shade, variants);
+)<WithAccent>(props => {
+  const { accent = 'primary' } = props;
+  const { radius, ...theme } = getTheme(props);
+  const { mainColor } = getColorTokens(accent, null, theme);
 
   return css`
     border-radius: ${radius.xs};
 
     :focus {
-      filter: drop-shadow(0 0 2px ${bg});
+      filter: drop-shadow(0 0 2px ${mainColor});
       outline: none;
     }
   `;
@@ -73,8 +74,8 @@ const Input = styled(
 const Item = styled(
   'div',
   getStyledOptions(),
-)<WithColor & { disabled?: boolean; hovered: boolean; selected: boolean }>(props => {
-  const { disabled, hovered, selected, shade, variant = 'primary' } = props;
+)<WithAccent & { disabled?: boolean; hovered: boolean; selected: boolean }>(props => {
+  const { accent = 'primary', disabled, hovered, selected } = props;
   const {
     darkMode,
     grayDark,
@@ -84,16 +85,20 @@ const Item = styled(
     grayLightest,
     grayMid,
     spacing,
-    variants,
     white,
+    ...theme
   } = getTheme(props);
-  const { bg, color } = getColorVariant(variant, shade, variants);
-  const { bg: bgHoverLight, color: colorHoverLight } = getColorVariant(
-    variant,
-    'lightest',
-    variants,
+  const { mainColor, textColor } = getColorTokens(accent, null, theme);
+  const { mainColor: bgHoverLight, textColor: colorHoverLight } = getColorTokens(
+    `${accent}.50`,
+    null,
+    theme,
   );
-  const { bg: bgHoverDark, color: colorHoverDark } = getColorVariant(variant, 'darker', variants);
+  const { mainColor: bgHoverDark, textColor: colorHoverDark } = getColorTokens(
+    `${accent}.800`,
+    null,
+    theme,
+  );
 
   let itemBgColor = darkMode ? grayDarker : white;
   let itemColor = darkMode ? grayLighter : grayDarker;
@@ -113,8 +118,8 @@ const Item = styled(
     pointer-events: ${disabled ? 'none' : undefined};
     ${selected &&
     css`
-      background-color: ${bg};
-      color: ${color};
+      background-color: ${mainColor};
+      color: ${textColor};
     `};
     ${hovered &&
     !disabled &&
@@ -188,13 +193,12 @@ const Search = styled(
 });
 
 function DropdownOptions({
+  accent,
   methods,
   onCreate,
   onSearch,
   props,
-  shade,
   state,
-  variant,
 }: DropdownOptionsProps) {
   const { addItem, getLabels, getStyles, removeItem, setSearch } = methods;
   const { autoFocus, create, options, searchable } = props;
@@ -206,14 +210,7 @@ function DropdownOptions({
 
   if (create) {
     children = (
-      <Add
-        methods={methods}
-        onCreate={onCreate}
-        props={props}
-        shade={shade}
-        state={state}
-        variant={variant}
-      />
+      <Add accent={accent} methods={methods} onCreate={onCreate} props={props} state={state} />
     );
   }
 
@@ -247,14 +244,13 @@ function DropdownOptions({
       return (
         <Item
           key={option.value}
+          accent={accent}
           data-component-name="DropdownItem"
           disabled={disabled}
           hovered={isHovered}
           onClick={() => (isSelected ? removeItem(null, option, false) : addItem(option))}
           role="listitem"
           selected={isSelected}
-          shade={shade}
-          variant={variant}
         >
           {prefix && (
             <BoxInline data-component-name="DropdownOptionPrefix" mr="xxs">
@@ -289,11 +285,10 @@ function DropdownOptions({
         <Search data-component-name="DropdownOptionsSearch">
           <Input
             ref={searchInput}
+            accent={accent}
             onChange={handleSearch}
-            shade={shade}
             type="text"
             value={search}
-            variant={variant}
           />
         </Search>
       )}

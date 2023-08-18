@@ -11,10 +11,9 @@ import LoaderPulse from './Pulse';
 import LoaderRotate from './Rotate';
 
 export const defaultProps = {
+  color: 'primary',
   block: false,
-  shade: 'mid',
   type: 'pill',
-  variant: 'primary',
 } satisfies LoaderProps;
 
 export function Loader(props: LoaderProps) {

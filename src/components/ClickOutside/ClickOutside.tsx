@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from 'react';
-import { ValueOf } from 'type-fest';
+import { ValueOf } from '@gilbarbara/types';
 
 import { WithChildren } from '~/types';
 

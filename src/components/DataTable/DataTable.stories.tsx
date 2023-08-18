@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { ChangeEvent, forwardRef, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { useSetState } from 'react-use';
 import { removeAccents } from '@gilbarbara/helpers';
@@ -209,9 +208,7 @@ export const Basic: Story = {
           id: member.id,
           email: (
             <>
-              <Text variant={!member.name ? 'gray' : undefined}>
-                {member.name || 'Unnamed User'}
-              </Text>
+              <Text color={!member.name ? 'gray' : undefined}>{member.name || 'Unnamed User'}</Text>
               <Anchor href={`mailto:${member.email}`} size="mid">
                 {member.email}
               </Anchor>
@@ -220,9 +217,9 @@ export const Basic: Story = {
           team: <Text size="mid">{member.team || '--'}</Text>,
           status: (
             <Tag
+              bg={member.id ? 'green' : 'blue'}
               iconAfter={member.id ? 'check' : 'hourglass'}
               invert
-              variant={member.id ? 'green' : 'blue'}
             >
               {member.id ? 'Active' : 'Invite sent'}
             </Tag>

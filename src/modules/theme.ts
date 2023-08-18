@@ -1,4 +1,4 @@
-import { getColorScale, getGrayScale } from './colors';
+import { generatePalette } from './palette';
 
 /**
  * Basics
@@ -126,65 +126,72 @@ export const white = '#fff';
 export const darkColor = '#101010';
 export const lightColor = '#f5f5f5';
 
-export const gray = '#808080';
-export const grayLightest = '#f5f5f5';
-export const grayLighter = '#e0e0e0';
-export const grayLight = '#c0c0c0';
-export const grayMid = '#767676';
-export const grayDark = '#484848';
-export const grayDarker = '#242424';
-export const grayDarkest = '#101010';
-
 export const grayScale = {
-  '1': '#fcfcfc',
-  '2': '#fafafa',
-  '3': '#f7f7f7',
-  '4': '#f5f5f5',
-  '5': '#f2f2f2',
-  '10': '#e6e6e6',
-  '15': '#d9d9d9',
-  '20': '#cccccc',
-  '30': '#b3b3b3',
-  '40': '#999999',
-  '50': '#808080',
-  '60': '#666666',
-  '70': '#4d4d4d',
-  '80': '#333333',
-  '90': '#1a1a1a',
-  '95': '#0d0d0d',
+  '10': '#fcfcfc',
+  '20': '#fafafa',
+  '30': '#f7f7f7',
+  /** Lightest */
+  '40': '#f5f5f5',
+  '50': '#f2f2f2',
+  /** Lighter */
+  '100': '#e6e6e6',
+  '150': '#d9d9d9',
+  /** Light */
+  '200': '#cccccc',
+  '300': '#b3b3b3',
+  '400': '#999999',
+  /** Mid */
+  '500': '#808080',
+  '600': '#666666',
+  /** Dark */
+  '700': '#4d4d4d',
+  '750': '#404040',
+  /** Darker */
+  '800': '#333333',
+  '850': '#262626',
+  /** Darkest */
+  '900': '#1a1a1a',
+  '950': '#0d0d0d',
 };
+
+export const grayLightest = grayScale['40'];
+export const grayLighter = grayScale['100'];
+export const grayLight = grayScale['200'];
+export const grayMid = grayScale['500'];
+export const grayDark = grayScale['700'];
+export const grayDarker = grayScale['800'];
+export const grayDarkest = grayScale['900'];
 
 export const colors = {
   primary: '#3030e8',
-  secondary: '#2A5D65',
-  blue: '#66a5ff',
-  green: '#58d063',
-  orange: '#ff995d',
-  pink: '#ee63ab',
-  purple: '#ad7bff',
+  secondary: '#2a5d65',
+  gray: '#999999',
   red: '#ff5e5e',
+  orange: '#ff995d',
   yellow: '#ffe166',
+  green: '#58d063',
+  teal: '#38b2ac',
+  cyan: '#0bc5ea',
+  blue: '#66a5ff',
+  indigo: '#8a8fff',
+  purple: '#ad7bff',
+  pink: '#ee63ab',
 };
 
 export const variants = {
-  primary: getColorScale(colors.primary),
-  secondary: getColorScale(colors.secondary),
-  blue: getColorScale(colors.blue),
-  gray: getGrayScale(
-    grayLightest,
-    grayLighter,
-    grayLight,
-    grayMid,
-    grayDark,
-    grayDarker,
-    grayDarkest,
-  ),
-  green: getColorScale(colors.green),
-  orange: getColorScale(colors.orange),
-  pink: getColorScale(colors.pink),
-  purple: getColorScale(colors.purple),
-  red: getColorScale(colors.red),
-  yellow: getColorScale(colors.yellow),
+  primary: generatePalette(colors.primary),
+  secondary: generatePalette(colors.secondary),
+  gray: generatePalette(colors.gray, true),
+  red: generatePalette(colors.red),
+  orange: generatePalette(colors.orange),
+  yellow: generatePalette(colors.yellow),
+  green: generatePalette(colors.green),
+  teal: generatePalette(colors.teal),
+  cyan: generatePalette(colors.cyan),
+  blue: generatePalette(colors.blue),
+  indigo: generatePalette(colors.indigo),
+  purple: generatePalette(colors.purple),
+  pink: generatePalette(colors.pink),
 };
 
 /**

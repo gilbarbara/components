@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { MouseEvent } from 'react';
 import { useTheme } from '@emotion/react';
-import { capitalize } from '@gilbarbara/helpers';
+import { capitalize, objectKeys } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -17,7 +16,6 @@ import {
   marginProps,
   textOptionsProps,
 } from '~/stories/__helpers__';
-import * as Types from '~/types';
 
 import { defaultProps, Tag } from './Tag';
 
@@ -29,7 +27,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...marginProps(),
     ...textOptionsProps(),
     children: { control: 'text' },
@@ -42,19 +40,19 @@ export const Basic: Story = {
   },
 };
 
-export const Variants: Story = {
+export const Colors: Story = {
   argTypes: {
-    variant: disableControl(),
+    bg: disableControl(),
   },
   render: function Render(props) {
     const { variants } = getTheme({ theme: useTheme() });
 
     return (
       <Grid gap={30} justifyItems="center" templateColumns="repeat(3, 1fr)">
-        {[...Object.keys(variants), 'black', 'white'].map(color => (
-          <div key={color}>
-            <Tag {...props} variant={color as Types.Colors}>
-              {capitalize(color)}
+        {objectKeys(variants).map(variant => (
+          <div key={variant}>
+            <Tag {...props} bg={`${variant}.50`}>
+              {capitalize(variant)}
             </Tag>
           </div>
         ))}
@@ -63,18 +61,17 @@ export const Variants: Story = {
   },
 };
 
-export const Shades: Story = {
+export const Tones: Story = {
   argTypes: {
-    color: disableControl(),
-    shade: disableControl(),
+    bg: disableControl(),
   },
   render: function Render(props) {
     const { variants } = getTheme({ theme: useTheme() });
 
     return (
       <Spacer>
-        {(Object.keys(variants.primary) as Types.Shades[]).map(d => (
-          <Tag key={d} {...props} color={d.startsWith('light') ? 'primary' : 'white'} shade={d}>
+        {objectKeys(variants.primary).map(d => (
+          <Tag key={d} {...props} bg={`primary.${d}`}>
             {capitalize(d)}
           </Tag>
         ))}
@@ -113,11 +110,11 @@ export const WithIcons: Story = {
         <div>
           <Tag
             {...props}
+            bg="secondary.50"
             data-name="assign"
             iconBefore="focus"
             onClickBefore={handleClickBefore}
             size="small"
-            variant="secondary"
           >
             assign
           </Tag>
@@ -136,13 +133,12 @@ export const WithIcons: Story = {
         <div>
           <Tag
             {...props}
-            colorShade="mid"
+            bg="blue"
             data-name="remove"
             iconAfter="close"
             invert
             onClickAfter={handleClickAfter}
             size="regular"
-            variant="blue"
           >
             remove
           </Tag>
@@ -150,13 +146,12 @@ export const WithIcons: Story = {
         <div>
           <Tag
             {...props}
+            bg="red.500"
             color="white"
             data-name="continue"
             iconAfter="chevron-right"
             onClickAfter={handleClickAfter}
-            shade="dark"
             size="large"
-            variant="red"
           >
             continue
           </Tag>

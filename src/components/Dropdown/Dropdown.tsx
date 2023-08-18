@@ -3,9 +3,10 @@ import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import ReactDropdown, { ComponentProps, Option } from '@gilbarbara/react-dropdown';
-import { SetRequired } from 'type-fest';
+import { SetRequired } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
 
 import { DropdownProps } from '~/types';
@@ -14,6 +15,7 @@ import Content from './Content';
 import Items from './Items';
 
 export const defaultProps = {
+  accent: 'primary',
   allowCreate: false,
   autoFocus: false,
   borderless: false,
@@ -35,8 +37,6 @@ export const defaultProps = {
   searchable: true,
   showClearButton: false,
   showSeparator: false,
-  shade: 'mid',
-  variant: 'primary',
   width: 260,
 } satisfies Omit<DropdownProps, 'items'>;
 
@@ -44,19 +44,19 @@ export const StyledDropdown = styled(
   'div',
   getStyledOptions('placeholder', 'onSearch'),
 )<
-  SetRequired<Omit<DropdownProps, 'items' | 'large' | 'onChange' | 'values'>, 'variant'> & {
+  SetRequired<Omit<DropdownProps, 'items' | 'large' | 'onChange' | 'values'>, 'accent'> & {
     isFilled: boolean;
   }
 >(props => {
-  const { borderless, isFilled, multi, shade, variant, width } = props;
-  const { grayDark, grayMid, radius, spacing, variants } = getTheme(props);
-  const { bg } = getColorVariant(variant, shade, variants);
+  const { accent, borderless, isFilled, multi, width } = props;
+  const { grayDark, grayMid, radius, spacing, ...theme } = getTheme(props);
+  const { mainColor } = getColorTokens(accent, null, theme);
 
   const darkMode = isDarkMode(props);
   let borderColor = darkMode ? grayDark : grayMid;
 
   if (isFilled) {
-    borderColor = bg;
+    borderColor = mainColor;
   }
 
   const styles = borderless
@@ -82,11 +82,11 @@ export const StyledDropdown = styled(
 
       &:focus,
       &:focus-within {
-        border-color: ${bg} !important;
-        box-shadow: ${borderless ? 'none' : `0 0 8px 1px ${bg}`} !important;
+        border-color: ${mainColor} !important;
+        box-shadow: ${borderless ? 'none' : `0 0 8px 1px ${mainColor}`} !important;
 
         .react-dropdown-separator {
-          background-color: ${bg};
+          background-color: ${mainColor};
         }
       }
 
@@ -100,7 +100,7 @@ export const StyledDropdown = styled(
 
       &-clear {
         &:hover {
-          color: ${variants.red.mid.bg};
+          color: ${theme.colors.red};
         }
       }
 
@@ -144,9 +144,7 @@ export const StyledDropdown = styled(
   `;
 });
 
-function getDropdownComponent(
-  props: Pick<DropdownProps, 'allowCreate' | 'onSearch' | 'shade' | 'variant'>,
-) {
+function getDropdownComponent(props: Pick<DropdownProps, 'accent' | 'allowCreate' | 'onSearch'>) {
   return function DropdownRenderer(renderer: ComponentProps) {
     return <Items {...renderer} {...props} />;
   };
@@ -172,8 +170,8 @@ export function Dropdown(props: DropdownProps) {
   };
   const [isFilled, setFilled] = useState(!!values.length);
 
-  const { darkMode, grayDarker, inputHeight, variants, white } = getTheme({ theme: useTheme() });
-  const { bg } = getColorVariant(rest.variant ?? 'primary', rest.shade, variants);
+  const { darkMode, grayDarker, inputHeight, white, ...theme } = getTheme({ theme: useTheme() });
+  const { mainColor } = getColorTokens(rest.accent ?? 'primary', null, theme);
 
   const handleChange = (value: Option[]) => {
     setFilled(!!value.length);
@@ -198,7 +196,7 @@ export function Dropdown(props: DropdownProps) {
         showClearButton={showClearButton}
         styles={{
           bgColor: darkMode ? grayDarker : white,
-          color: bg,
+          color: mainColor,
           gap: 0,
           minHeight: parseInt(large ? inputHeight.large : inputHeight.normal, 10),
           menuMaxHeight,

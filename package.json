@@ -49,8 +49,7 @@
     "react-innertext": "^1.1.5",
     "react-use": "^17.4.0",
     "scroll": "^3.0.1",
-    "scrollparent": "^2.1.0",
-    "type-fest": "^4.3.1"
+    "scrollparent": "^2.1.0"
   },
   "devDependencies": {
     "@emotion/jest": "^11.11.0",

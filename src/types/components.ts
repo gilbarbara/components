@@ -1,10 +1,16 @@
-import { CSSProperties, ElementType, HTMLProps, ReactNode } from 'react';
+import { ElementType, HTMLProps, ReactNode } from 'react';
 import { HiddenInput, Option, Props } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { Icons } from './common';
-import { WithBlock, WithBorderless, WithColor, WithMargin, WithOpen } from './shared';
-import { Theme } from './theme';
+import {
+  WithAccent,
+  WithBlock,
+  WithBorderless,
+  WithColorsDefaultColor,
+  WithMargin,
+  WithOpen,
+} from './shared';
+import { Theme, VariantWithTones } from './theme';
 
 export interface BaseProps {
   [hey: string]: any;
@@ -58,8 +64,8 @@ export type DropdownBaseProps = Omit<
 
 export interface DropdownProps
   extends StyledProps,
+    WithAccent,
     WithBorderless,
-    WithColor,
     WithMargin,
     WithOpen,
     DropdownBaseProps {
@@ -83,59 +89,19 @@ export interface DropdownProps
   width?: StringOrNumber;
 }
 
-export interface ListItem extends WithColor {
-  content: ReactNode;
-}
-
 export interface LoaderProps
-  extends ComponentProps<HTMLDivElement, StyledProps & WithBlock & WithColor> {
-  color?: string;
+  extends ComponentProps<
+    HTMLDivElement,
+    StyledProps & WithBlock & Pick<WithColorsDefaultColor, 'color'>
+  > {
   size?: number;
   /** @default pill */
   type?: 'grow' | 'pill' | 'pride' | 'pulse' | 'rotate';
 }
 
 export interface RadioItem {
+  accent?: VariantWithTones;
   disabled?: boolean;
   label?: ReactNode;
   value: StringOrNumber;
-}
-
-export interface SearchItem {
-  label?: ReactNode;
-  value: string;
-}
-
-export interface SearchProps extends StyledProps, WithBorderless, WithMargin {
-  /** @default 0 */
-  debounce?: number;
-  height?: StringOrNumber;
-  /** @default false */
-  hideIcon?: boolean;
-  /** @default search */
-  icon?: Icons;
-  items: SearchItem[];
-  loading?: boolean;
-  noResultsLabel?: ReactNode;
-  onFocus?: (value: string) => void;
-  /**
-   * Fires after the "debounce" delay
-   */
-  onSearch?: (value: string) => void;
-  onSelect: (value: string) => void;
-  /**
-   * Fires immediately when the user types
-   */
-  onType?: (value: string) => void;
-  /** @default Search for... */
-  placeholder?: string;
-  /**
-   * Show the options on focus (if available)
-   *
-   * @default true
-   */
-  showListOnFocus?: boolean;
-  style?: CSSProperties;
-  /** @default 100% */
-  width?: StringOrNumber;
 }

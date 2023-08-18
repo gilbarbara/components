@@ -5,9 +5,13 @@ import styled from '@emotion/styled';
 import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules/system';
 
-import { ComponentProps, StyledProps, WithChildren, WithColor, WithTextOptions } from '~/types';
+import { ComponentProps, StyledProps, WithChildren, WithColors, WithTextOptions } from '~/types';
 
-export interface TextKnownProps extends StyledProps, WithChildren, WithColor, WithTextOptions {}
+export interface TextKnownProps
+  extends StyledProps,
+    WithChildren,
+    Pick<WithColors, 'color'>,
+    WithTextOptions {}
 
 export type TextProps = ComponentProps<HTMLSpanElement, TextKnownProps>;
 

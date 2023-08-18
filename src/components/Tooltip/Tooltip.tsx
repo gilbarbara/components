@@ -3,11 +3,12 @@ import innerText from 'react-innertext';
 import { css, useTheme } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import { omit, px } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
-import { SetRequired } from 'type-fest';
 
 import { fadeIn } from '~/modules/animations';
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
 import {
   baseStyles,
@@ -23,7 +24,7 @@ import {
   Placement,
   Sizes,
   WithChildren,
-  WithColor,
+  WithColors,
   WithOpen,
   WithRadius,
   WithShadow,
@@ -54,12 +55,12 @@ interface AnimationProps {
   delay: number;
   /**
    * The duration of the animation in milliseconds.
-   * default 260
+   * @default 260
    */
   duration: number;
   /**
    * The easing function.
-   * @default 'ease-in-out'
+   * @default ease-in-out
    */
   easing: string;
 }
@@ -88,7 +89,7 @@ export interface TooltipProps
     Partial<AnimationProps>,
     Partial<ArrowProps>,
     WithChildren,
-    WithColor,
+    WithColors,
     WithOpen,
     WithRadius,
     WithShadow,
@@ -118,6 +119,7 @@ export const defaultProps = {
   arrowDistance: 4,
   arrowMargin: 4,
   arrowLength: 8,
+  bg: 'gray.700',
   delay: 180,
   disabled: false,
   duration: 260,
@@ -125,9 +127,7 @@ export const defaultProps = {
   eventType: 'hover',
   position: 'bottom',
   radius: 'xxs',
-  shade: 'dark',
   size: 'mid',
-  variant: 'gray',
   zIndex: 100,
 } satisfies Omit<TooltipProps, 'children' | 'content'>;
 
@@ -418,17 +418,17 @@ function TooltipBody(
 }
 
 export function Tooltip(props: TooltipProps) {
-  const { ariaLabel, children, content, disabled, eventType, open, shade, title, variant } = {
+  const { ariaLabel, bg, children, color, content, disabled, eventType, open, title } = {
     ...defaultProps,
     ...props,
   };
   const [isOpen, setOpen] = useState(open ?? false);
 
-  const { variants } = getTheme({ theme: useTheme() });
+  const theme = getTheme({ theme: useTheme() });
 
   const label = useMemo(() => ariaLabel ?? innerText(content), [ariaLabel, content]);
 
-  const { bg, color } = getColorVariant(variant, shade, variants);
+  const { mainColor, textColor } = getColorTokens(bg, color, theme);
 
   useEffect(() => {
     setOpen(open ?? false);
@@ -463,7 +463,7 @@ export function Tooltip(props: TooltipProps) {
       title={title}
     >
       {children}
-      {isOpen && <TooltipBody {...defaultProps} {...props} bg={bg} color={color} />}
+      {isOpen && <TooltipBody {...defaultProps} {...props} bg={mainColor} color={textColor} />}
     </StyledTooltip>
   );
 }

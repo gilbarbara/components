@@ -125,7 +125,6 @@ function EditForm({ formMethods }: FormRenderProps<FormData>) {
   } = formMethods;
   const area = watch('area');
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const handleFormSubmit: SubmitHandler<FormData> = formData => {
     action('handleFormSubmit')(formData);
   };

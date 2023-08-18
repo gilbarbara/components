@@ -5,7 +5,9 @@ import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 import { rgba } from 'polished';
 
-import { getColorVariant, getTheme, responsive as responsiveHelper } from './helpers';
+import { getColorTokens } from '~/modules/colors';
+
+import { getTheme, responsive as responsiveHelper } from './helpers';
 
 import {
   BorderItem,
@@ -15,7 +17,8 @@ import {
   WithAlign,
   WithBorder,
   WithBorderless,
-  WithColor,
+  WithChildrenOptional,
+  WithColors,
   WithDisplay,
   WithElementSpacing,
   WithFlexBox,
@@ -27,7 +30,6 @@ import {
   WithPositioning,
   WithRadius,
   WithShadow,
-  WithTextColor,
   WithTextOptions,
   WithTheme,
   WithTransparent,
@@ -76,6 +78,7 @@ export function getStyledOptions(...exclude: string[]) {
     shouldForwardProp: (prop: string) =>
       isPropValid(prop) &&
       ![
+        'bg',
         'color',
         'direction',
         'display',
@@ -122,29 +125,39 @@ export const appearanceStyles: CSSObject = {
   appearance: 'none',
 };
 
-export function backgroundStyles<T extends WithColor & WithInvert & WithTransparent & WithTheme>(
+export function colorStyles<T extends WithColors & WithInvert & WithTransparent & WithTheme>(
   props: T,
   withBorder = true,
 ): CSSObject {
-  const { variants } = getTheme(props);
-  const { invert, shade = 'mid', transparent, variant } = props;
+  const theme = getTheme(props);
+  const { bg, color, invert, transparent } = props;
 
-  if (variant) {
-    const { bg, color } = getColorVariant(variant, shade, variants);
+  const styles: CSSObject = {};
 
-    const styles: CSSObject = {
-      backgroundColor: invert || transparent ? 'transparent' : bg,
-      color: invert || transparent ? bg : color,
-    };
+  if (bg) {
+    const { mainColor, textColor } = getColorTokens(bg, color, theme);
+
+    styles.backgroundColor = invert || transparent ? 'transparent' : mainColor;
+    styles.color = invert || transparent ? mainColor : textColor;
+
+    if (color) {
+      styles.color = textColor;
+    }
 
     if (withBorder) {
-      styles.border = transparent ? 0 : `1px solid ${bg}`;
+      styles.border = transparent ? 0 : `1px solid ${mainColor}`;
     }
 
     return styles;
   }
 
-  return {};
+  if (color) {
+    const { mainColor } = getColorTokens(color, null, theme);
+
+    styles.color = mainColor;
+  }
+
+  return styles;
 }
 
 export function baseStyles<T extends WithTheme>(props: T): CSSObject {
@@ -158,9 +171,9 @@ export function baseStyles<T extends WithTheme>(props: T): CSSObject {
 
 export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObject {
   const { border } = props;
-  const { variants } = getTheme(props);
+  const theme = getTheme(props);
 
-  let { bg: borderColor } = getColorVariant('gray', 'lighter', variants);
+  let { mainColor: borderColor } = getColorTokens('gray.100', null, theme);
   const defaultBorder = `1px solid ${borderColor}`;
   let output: CSSObject = {};
 
@@ -185,17 +198,10 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
   };
 
   const getBorderItem = (item: BorderItem) => {
-    const {
-      color,
-      shade = 'lighter',
-      side = 'all',
-      size = '1px',
-      style = 'solid',
-      variant = 'gray',
-    } = item;
+    const { color = 'gray.100', side = 'all', size = '1px', style = 'solid' } = item;
 
-    ({ bg: borderColor } = getColorVariant(variant, shade, variants));
-    const value = `${px(size)} ${style} ${color ?? borderColor}`;
+    ({ mainColor: borderColor } = getColorTokens(color, null, theme));
+    const value = `${px(size)} ${style} ${borderColor}`;
 
     return getBorderValue(side, value);
   };
@@ -229,26 +235,40 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
   return output;
 }
 
+export function boxStyles<
+  T extends WithBorder &
+    WithChildrenOptional &
+    WithColors &
+    WithFlexBox &
+    WithFlexItem &
+    WithLayout &
+    WithMargin &
+    WithPadding &
+    WithPositioning &
+    WithRadius &
+    WithShadow &
+    WithTheme,
+>(props: T) {
+  return css`
+    ${baseStyles(props)};
+    ${colorStyles(props, false)};
+    ${borderStyles(props)};
+    ${flexBoxStyles(props)};
+    ${flexItemStyles(props)};
+    ${layoutStyles(props)};
+    ${marginStyles(props)};
+    ${paddingStyles(props)};
+    ${positioningStyles(props)};
+    ${radiusStyles(props)};
+    ${shadowStyles(props)};
+  `;
+}
+
 export const buttonStyles: CSSObject = {
   ...appearanceStyles,
   backgroundColor: 'transparent',
   border: 0,
 };
-
-export function colorStyles<T extends WithColor & WithTheme>(props: T): CSSObject {
-  const { shade = 'mid', variant } = props;
-  const { variants } = getTheme(props);
-
-  if (variant) {
-    const { bg } = getColorVariant(variant, shade, variants);
-
-    return {
-      color: bg,
-    };
-  }
-
-  return {};
-}
 
 export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
   const { display } = props;
@@ -599,14 +619,29 @@ export function positioningStyles<T extends WithPositioning>(props: T): CSSObjec
 
 export function radiusStyles<T extends WithRadius & WithTheme>(props: T): CSSObject {
   const { radius } = getTheme(props);
+  const output: CSSObject = {};
 
-  if (props.radius) {
-    return {
-      borderRadius: radius[props.radius],
-    };
+  if (is.plainObject(props.radius)) {
+    const { bottom, left, right, top } = props.radius;
+
+    if (top) {
+      output.borderTopLeftRadius = radius[top];
+      output.borderTopRightRadius = radius[top];
+    } else if (right) {
+      output.borderTopRightRadius = radius[right];
+      output.borderBottomRightRadius = radius[right];
+    } else if (bottom) {
+      output.borderBottomRightRadius = radius[bottom];
+      output.borderBottomLeftRadius = radius[bottom];
+    } else if (left) {
+      output.borderBottomLeftRadius = radius[left];
+      output.borderTopLeftRadius = radius[left];
+    }
+  } else if (props.radius) {
+    output.borderRadius = radius[props.radius];
   }
 
-  return {};
+  return output;
 }
 
 export function shadowStyles<T extends WithShadow & WithTheme>(
@@ -628,27 +663,6 @@ export function shadowStyles<T extends WithShadow & WithTheme>(
       boxShadow: isDarkMode(props)
         ? shadow[props.shadow].replace(/148/g, '222')
         : shadow[props.shadow],
-    };
-  }
-
-  return {};
-}
-
-export function textColorStyles<T extends WithTextColor & WithTheme>(props: T): CSSObject {
-  const { color, colorShade = 'mid', colorVariant } = props;
-  const { variants } = getTheme(props);
-
-  if (color) {
-    return {
-      color,
-    };
-  }
-
-  if (colorVariant) {
-    const { bg } = getColorVariant(colorVariant, colorShade, variants);
-
-    return {
-      color: bg,
     };
   }
 

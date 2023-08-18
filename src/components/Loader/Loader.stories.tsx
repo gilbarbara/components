@@ -37,8 +37,6 @@ export const Pride: Story = {
   },
   argTypes: {
     color: hideTable(),
-    shade: hideTable(),
-    variant: hideTable(),
   },
 };
 

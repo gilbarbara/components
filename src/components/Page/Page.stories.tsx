@@ -20,14 +20,13 @@ export default {
   component: Page,
   args: {
     ...defaultProps,
+    bg: 'primary.50',
     name: 'About',
     maxWidth: 1280,
-    shade: 'lightest',
-    variant: 'primary',
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...paddingProps(),
     align: { control: 'select', options: ['', ...flexItems] },
     justify: { control: 'select', options: ['', ...flexContent] },
@@ -46,7 +45,7 @@ export const Basic: Story = {
   render: props => (
     <Page {...props}>
       <Box>
-        <H4 light mb={0} variant="gray">
+        <H4 color="gray" light mb={0}>
           ABOUT
         </H4>
         <Jumbo mb="lg">How it works</Jumbo>

@@ -1,8 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, Jumbo, Paragraph, Text } from '~';
+import { Box, Jumbo, Paragraph } from '~';
 
 import {
+  colorProps,
   disableControl,
   flexBoxProps,
   flexItemProps,
@@ -21,6 +22,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
+    ...colorProps(['bg', 'color']),
     ...flexBoxProps(),
     ...flexItemProps(),
     ...layoutProps(),
@@ -38,16 +40,19 @@ export const Basic: Story = {
     verticalPadding: true,
   },
   render: props => (
-    <Container {...props} style={{ border: '1px solid #ccc' }}>
-      <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
-      <Paragraph>
-        I'm a wrapper that holds any type of component with a pre-defined horizontal padding and an
-        optional vertical padding
-      </Paragraph>
-      <Text size="small" variant="gray">
+    <Box>
+      <Container {...props} style={{ border: '1px solid #ccc' }}>
+        <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
+        <Paragraph>
+          I'm a wrapper that holds any type of component with a pre-defined horizontal padding and
+          an optional vertical padding
+        </Paragraph>
+      </Container>
+
+      <Paragraph color="gray" size="small">
         *The border is just for visualization...
-      </Text>
-    </Container>
+      </Paragraph>
+    </Box>
   ),
 };
 
@@ -56,7 +61,7 @@ export const WithParent: Story = {
     justify: 'center',
   },
   render: props => (
-    <Box flexBox minHeight={300} shade="lightest" variant="primary">
+    <Box bg="primary.100" flexBox minHeight={300}>
       <Container {...props}>
         <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
         <Paragraph>

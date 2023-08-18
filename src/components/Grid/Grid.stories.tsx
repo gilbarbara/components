@@ -32,7 +32,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...flexItemProps(),
     ...layoutProps({ display: 'grid' }),
     ...positioningProps(),
@@ -60,6 +60,7 @@ export default {
 
 export const Basic: Story = {
   args: {
+    bg: 'white',
     // @ts-expect-error - Storybook only
     itemHeight: 100,
     itemWidth: 100,
@@ -74,15 +75,16 @@ export const Basic: Story = {
     const { itemHeight, itemWidth, ...rest } = props;
 
     return (
-      <Grid {...rest} minHeight="90vh" shadow="high" variant="white" width="90%">
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="secondary" />
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="green" />
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="pink" />
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="purple" />
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="red" />
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="yellow" />
-        <Box minHeight={itemHeight} minWidth={itemWidth} variant="primary" />
+      <Grid minHeight="90vh" shadow="high" width="90%" {...rest}>
+        <Box bg="red" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="orange" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="yellow" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="green" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="teal" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="cyan" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="blue" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="purple" minHeight={itemHeight} minWidth={itemWidth} />
+        <Box bg="pink" minHeight={itemHeight} minWidth={itemWidth} />
       </Grid>
     );
   },

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { defaultProps, Radio } from './Radio';
 
@@ -17,6 +17,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent']),
     ...marginProps(),
     label: { control: 'text' },
     onChange: { action: 'onChange', ...disableControl() },

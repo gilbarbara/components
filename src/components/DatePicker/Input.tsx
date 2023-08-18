@@ -5,7 +5,8 @@ import styled from '@emotion/styled';
 import { formatDateLocale, omit, px } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { Box } from '~/components/Box';
@@ -34,12 +35,12 @@ interface State {
 export const inputDefaultProps = {
   ...defaultProps,
   borderless: false,
+  accent: 'primary',
   large: false,
   position: 'right',
   separator: ' — ',
   showRange: false,
   showRangeApply: false,
-  variant: 'primary',
   width: 'auto',
 } satisfies DatePickerInputProps;
 
@@ -47,11 +48,11 @@ const StyledButton = styled(
   'div',
   getStyledOptions(),
 )<
-  Pick<DatePickerInputProps, 'large' | 'borderless' | 'theme' | 'variant' | 'width'> & {
+  Pick<DatePickerInputProps, 'accent' | 'borderless' | 'large' | 'theme' | 'width'> & {
     isFilled: boolean;
   }
 >(props => {
-  const { borderless, isFilled, large, variant = inputDefaultProps.variant, width } = props;
+  const { accent = inputDefaultProps.accent, borderless, isFilled, large, width } = props;
   const {
     darkColor,
     grayDark,
@@ -61,17 +62,17 @@ const StyledButton = styled(
     lightColor,
     radius,
     spacing,
-    variants,
     white,
+    ...theme
   } = getTheme(props);
   const darkMode = isDarkMode(props);
 
-  const { bg } = getColorVariant(variant, 'mid', variants);
+  const { mainColor } = getColorTokens(accent, null, theme);
   let borderColor = darkMode ? grayDark : grayMid;
   let textColor = grayMid;
 
   if (isFilled) {
-    borderColor = bg;
+    borderColor = mainColor;
     textColor = darkMode ? lightColor : darkColor;
   }
 

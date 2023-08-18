@@ -14,11 +14,11 @@ import { easing } from '~/modules/theme';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
 
-import { ComponentProps, Position, StyledProps, WithChildren, WithColor, WithOpen } from '~/types';
+import { ComponentProps, Position, StyledProps, WithAccent, WithChildren, WithOpen } from '~/types';
 
 import { MenuItem } from './Item';
 
-export interface MenuKnownProps extends StyledProps, WithChildren, WithColor, WithOpen {
+export interface MenuKnownProps extends StyledProps, WithAccent, WithChildren, WithOpen {
   /** @default An Icon with more-vertical-o */
   component?: ReactElement;
   disabled?: boolean;
@@ -38,11 +38,12 @@ interface MenuItemsProps extends Required<Pick<MenuProps, 'minWidth' | 'position
 }
 
 export const defaultProps = {
+  accent: 'primary',
+  component: <Icon name="more-vertical-o" size={24} title={null} />,
   disabled: false,
   minWidth: 200,
   position: 'bottom-right',
   trigger: 'click',
-  variant: 'primary',
 } satisfies Omit<MenuProps, 'children'>;
 
 const StyledMenu = styled.div`
@@ -120,7 +121,7 @@ const StyledMenuItems = styled(
       background-color: ${darkMode ? grayDarker : white};
       border-radius: ${radius.xxs};
       box-shadow: ${shadow.low};
-      color: ${darkMode ? grayScale['20'] : grayDarker};
+      color: ${darkMode ? grayScale['200'] : grayDarker};
       min-width: ${px(minWidth)};
       overflow: hidden;
 
@@ -162,18 +163,10 @@ const StyledMenuButton = styled(ButtonUnstyled)(props => {
 });
 
 export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
-  const {
-    children,
-    component = <Icon name="more-vertical-o" size={24} title={null} />,
-    disabled,
-    minWidth,
-    onToggle,
-    open,
-    position,
-    shade,
-    trigger,
-    variant,
-  } = { ...defaultProps, ...props };
+  const { accent, children, component, disabled, minWidth, onToggle, open, position, trigger } = {
+    ...defaultProps,
+    ...props,
+  };
   const [active, setActive] = useState(open ?? false);
   const localRef = useRef<HTMLDivElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
@@ -241,7 +234,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
         <div data-component-name="MenuItemsWrapper">
           {recursiveChildrenEnhancer(
             children,
-            { closeMenu: handleToggleMenu, shade, variant },
+            { closeMenu: handleToggleMenu, accent },
             { componentType: MenuItem },
           )}
         </div>
@@ -251,6 +244,3 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
 });
 
 Menu.displayName = 'Menu';
-
-export { MenuDivider } from './Divider';
-export { MenuItem } from './Item';

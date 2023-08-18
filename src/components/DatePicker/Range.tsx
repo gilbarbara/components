@@ -36,6 +36,7 @@ const StyledDatePicker = styled(
 
 export function DatePickerRange(props: DatePickerRangerProps) {
   const {
+    accent,
     currentMonthLabel,
     formatLocale,
     fromDate,
@@ -43,7 +44,6 @@ export function DatePickerRange(props: DatePickerRangerProps) {
     onSelect,
     showApply,
     toDate,
-    variant,
     ...rest
   } = { ...rangeDefaultProps, ...props };
   const [month, setMonth] = useState<Date | undefined>(undefined);
@@ -87,10 +87,10 @@ export function DatePickerRange(props: DatePickerRangerProps) {
       setMonth,
       currentMonthLabel,
       <Spacer>
-        <Button disabled={!from} invert onClick={handleClickReset} size="sm" variant={variant}>
+        <Button bg={accent} disabled={!from} invert onClick={handleClickReset} size="sm">
           Reset
         </Button>
-        <Button disabled={!to} onClick={handleClickApply} size="sm" variant={variant}>
+        <Button bg={accent} disabled={!to} onClick={handleClickApply} size="sm">
           Apply
         </Button>
       </Spacer>,
@@ -99,6 +99,7 @@ export function DatePickerRange(props: DatePickerRangerProps) {
     content.footer = getFooter(setMonth, currentMonthLabel);
     content.reset = (
       <Button
+        bg={accent}
         invert
         onClick={handleClickReset}
         size="sm"
@@ -107,7 +108,6 @@ export function DatePickerRange(props: DatePickerRangerProps) {
           minHeight: 24,
           padding: `${spacing.xxs} ${spacing.xs}`,
         }}
-        variant={variant}
       >
         Reset
       </Button>
@@ -130,8 +130,8 @@ export function DatePickerRange(props: DatePickerRangerProps) {
 
   return (
     <StyledDatePicker
+      accent={accent}
       data-component-name="DatePickerRange"
-      variant={variant}
       {...omit(props, 'hidden', 'onSelect')}
     >
       <BoxCenter mb="md" minHeight={30}>

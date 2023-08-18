@@ -12,7 +12,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['accent']),
     ...textOptionsProps(),
     attribution: { control: 'text' },
     children: { control: 'text' },
@@ -21,7 +21,7 @@ export default {
 
 export const Basic: Story = {
   args: {
-    attribution: 'Hommer Simpson',
+    attribution: 'Homer Simpson',
     children: 'The quick brown fox jumps over the lazy dog',
   },
 };

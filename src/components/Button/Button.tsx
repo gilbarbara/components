@@ -2,14 +2,14 @@ import { ForwardedRef, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { PlainObject } from '@gilbarbara/types';
-import { SetRequired } from 'type-fest';
+import { PlainObject, SetRequired } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import {
   appearanceStyles,
-  backgroundStyles,
   baseStyles,
+  colorStyles,
   getStyledOptions,
   paddingStyles,
 } from '~/modules/system';
@@ -24,7 +24,7 @@ import {
   WithBusy,
   WithButtonSize,
   WithChildren,
-  WithColor,
+  WithColorsDefaultBg,
   WithInvert,
   WithLight,
   WithPadding,
@@ -36,7 +36,7 @@ export interface ButtonKnownProps
     WithBlock,
     WithBusy,
     WithChildren,
-    WithColor,
+    WithColorsDefaultBg,
     WithButtonSize,
     WithInvert,
     WithLight,
@@ -61,16 +61,15 @@ export interface ButtonKnownProps
 export type ButtonProps = ComponentProps<HTMLElement, ButtonKnownProps>;
 
 export const defaultProps = {
+  bg: 'primary',
   block: false,
   busy: false,
   disabled: false,
   invert: false,
   light: false,
-  shade: 'mid',
   size: 'md',
   transparent: false,
   type: 'button',
-  variant: 'primary',
   wide: false,
 } satisfies Omit<ButtonProps, 'children'>;
 
@@ -78,8 +77,8 @@ export const StyledButton = styled(
   'button',
   getStyledOptions(),
 )<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
-  const { block, busy, light, shade, shape, size, variant, wide } = props;
-  const { button, grayLighter, grayMid, radius, spacing, variants } = getTheme(props);
+  const { bg, block, busy, color, light, shape, size, wide } = props;
+  const { button, grayLighter, grayMid, radius, spacing, ...theme } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
   let selectedRadius = borderRadius;
@@ -121,7 +120,7 @@ export const StyledButton = styled(
       background-color 0.6s,
       border-color 0.6s;
     width: ${block ? '100%' : 'auto'};
-    ${backgroundStyles(props)};
+    ${colorStyles(props)};
     ${paddingStyles(props)}
 
     &:disabled {
@@ -132,7 +131,7 @@ export const StyledButton = styled(
     }
 
     &:focus {
-      outline-color: ${getColorVariant(variant, shade, variants).bg};
+      outline-color: ${getColorTokens(bg, color, theme).mainColor};
     }
 
     ${!!busy &&

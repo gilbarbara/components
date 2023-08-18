@@ -1,13 +1,36 @@
 import * as React from 'react';
 import { usePrevious } from 'react-use';
 import styled from '@emotion/styled';
+import { DocsContainer } from '@storybook/addon-docs';
+
 import { ThemeProvider } from '@emotion/react';
 import { useGlobals } from '@storybook/client-api';
+import CacheProvider from 'react-inlinesvg/provider';
 
 import { colors as themeColors } from '../src/modules/theme';
 import { Theme } from '../src/types';
 
 import { Box } from '../src';
+
+interface Context {
+  globals: {
+    color: keyof Theme['colors'];
+    appearance: 'light' | 'dark' | 'side-by-side';
+  };
+  parameters: {
+    align: string;
+    direction: string;
+    display: string;
+    justify: string;
+    layout: string;
+    minWidth: number;
+    maxWidth: number;
+    minHeight?: string;
+    padding: string;
+    paddingDocs: number;
+  };
+  viewMode: string;
+}
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -27,6 +50,13 @@ export const parameters = {
       date: /Date$/,
     },
     sort: 'requiredFirst',
+  },
+  docs: {
+    container: ({ children, context }: React.ComponentProps<typeof DocsContainer>) => (
+      <DocsContainer context={context}>
+        <CacheProvider name="@gilbarbara/components">{children}</CacheProvider>
+      </DocsContainer>
+    ),
   },
   layout: 'centered',
   options: {
@@ -53,8 +83,8 @@ export const globalTypes = {
       ],
     },
   },
-  variant: {
-    description: 'The variant color used by the components',
+  color: {
+    description: 'The color used by the components',
     defaultValue: 'primary',
     toolbar: {
       icon: 'paintbrush',
@@ -90,15 +120,15 @@ const ThemeBlock = styled.div(
         },
 );
 
-function Preview(StoryFn: React.FC, context: any) {
+function Preview(StoryFn: React.FC, context: Context) {
   const {
-    globals: { appearance, variant },
+    globals: { appearance, color },
     parameters: {
       align = 'center',
-      centered,
       direction = 'column',
       display = 'flex',
       justify = 'start',
+      layout,
       minWidth = 768,
       maxWidth = 1024,
       minHeight,
@@ -151,7 +181,7 @@ function Preview(StoryFn: React.FC, context: any) {
       <>
         <ThemeProvider
           theme={{
-            colors: { primary: themeColors[variant as keyof Theme['colors']] },
+            colors: { primary: themeColors[color] },
             darkMode: false,
           }}
         >
@@ -161,7 +191,7 @@ function Preview(StoryFn: React.FC, context: any) {
               data-component-name="Story-Left"
               direction={direction}
               display={display}
-              justify={justify}
+              justify={layout === 'centered' ? 'center' : justify}
               maxWidth={maxWidth}
               minHeight="100vh"
               padding={padding}
@@ -173,7 +203,7 @@ function Preview(StoryFn: React.FC, context: any) {
         </ThemeProvider>
         <ThemeProvider
           theme={{
-            colors: { primary: themeColors[variant as keyof Theme['colors']] },
+            colors: { primary: themeColors[color] },
             darkMode: true,
           }}
         >
@@ -183,7 +213,7 @@ function Preview(StoryFn: React.FC, context: any) {
               data-component-name="Story-Right"
               direction={direction}
               display={display}
-              justify={justify}
+              justify={layout === 'centered' ? 'center' : justify}
               maxWidth={maxWidth}
               minHeight="100vh"
               padding={padding}
@@ -201,7 +231,7 @@ function Preview(StoryFn: React.FC, context: any) {
     <ThemeProvider
       theme={{
         darkMode: isDarkMode,
-        colors: { primary: themeColors[variant as keyof Theme['colors']] },
+        colors: { primary: themeColors[color] },
       }}
     >
       <Box
@@ -212,7 +242,7 @@ function Preview(StoryFn: React.FC, context: any) {
         justify={justify}
         maxWidth={maxWidth}
         minWidth={minWidth}
-        mx={centered ? 'auto' : undefined}
+        mx="auto"
         padding={padding}
         style={{ color: isDarkMode ? '#fff' : '#101010' }}
         width="100%"
@@ -223,4 +253,8 @@ function Preview(StoryFn: React.FC, context: any) {
   );
 }
 
-export const decorators = [Preview];
+export const decorators = [
+  (StoryFn: React.FC, context: Context) => (
+    <CacheProvider name="@gilbarbara/components">{Preview(StoryFn, context)}</CacheProvider>
+  ),
+];

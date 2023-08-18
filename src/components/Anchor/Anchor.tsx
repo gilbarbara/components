@@ -22,7 +22,7 @@ import {
   Icons,
   StyledProps,
   WithChildren,
-  WithColor,
+  WithColorsDefaultColor,
   WithDisplay,
   WithMargin,
   WithPadding,
@@ -32,7 +32,7 @@ import {
 export interface AnchorKnownProps
   extends StyledProps,
     WithChildren,
-    WithColor,
+    Pick<WithColorsDefaultColor, 'color'>,
     WithDisplay,
     WithMargin,
     WithPadding,
@@ -49,11 +49,10 @@ export type AnchorProps = ComponentProps<HTMLAnchorElement, AnchorKnownProps>;
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),
+  color: 'primary',
   display: 'inline-flex',
   external: false,
   hideDecoration: false,
-  shade: 'mid',
-  variant: 'primary',
 } satisfies Omit<AnchorProps, 'children' | 'href'>;
 
 export const StyledAnchor = styled(

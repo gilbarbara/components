@@ -5,7 +5,7 @@ import { grayScale, spacing } from '~/modules/theme';
 
 const style = { ...atomOneLight };
 
-style.hljs.background = grayScale['4'];
+style.hljs.background = grayScale['40'];
 style.hljs.padding = spacing.md;
 
 function CodeBlock(props: SyntaxHighlighterProps) {

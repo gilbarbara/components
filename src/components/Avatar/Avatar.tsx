@@ -3,14 +3,14 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { getInitials } from '@gilbarbara/helpers';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
-import { getStyledOptions } from '~/modules/system';
+import { getTheme } from '~/modules/helpers';
+import { colorStyles, getStyledOptions } from '~/modules/system';
 
 import { BoxCenter } from '~/components/Box';
 
-import { AvatarSize, StyledProps, WithBorder, WithColor, WithFlexItem } from '~/types';
+import { AvatarSize, StyledProps, WithBorder, WithColorsDefaultBg, WithFlexItem } from '~/types';
 
-export interface AvatarProps extends StyledProps, WithBorder, WithColor, WithFlexItem {
+export interface AvatarProps extends StyledProps, WithBorder, WithColorsDefaultBg, WithFlexItem {
   image?: string;
   name: string;
   /** @default md */
@@ -19,33 +19,30 @@ export interface AvatarProps extends StyledProps, WithBorder, WithColor, WithFle
 }
 
 export const defaultProps = {
-  shade: 'mid',
+  bg: 'primary',
   size: 'md',
-  variant: 'primary',
 } satisfies Omit<AvatarProps, 'name'>;
 
 const Circle = styled(
   'div',
   getStyledOptions(),
-)<Required<Pick<AvatarProps, 'shade' | 'size' | 'variant'>>>(props => {
-  const { shade, size, variant } = props;
-  const { avatar, variants } = getTheme(props);
-  const { bg, color } = getColorVariant(variant, shade, variants);
+)<Required<Pick<AvatarProps, 'bg' | 'size'>>>(props => {
+  const { size } = props;
+  const { avatar } = getTheme(props);
   const selectedSize = avatar[size];
 
   return css`
-    background-color: ${bg};
-    color: ${color};
     height: ${selectedSize.size};
     font-size: ${selectedSize.fontSize};
     line-height: ${selectedSize.size};
     text-align: center;
     width: ${selectedSize.size};
+    ${colorStyles(props)};
   `;
 });
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
-  const { image, name, shade, size, variant, ...rest } = { ...defaultProps, ...props };
+  const { image, name, size, ...rest } = { ...defaultProps, ...props };
 
   const { avatar } = getTheme(props);
   const selectedSize = avatar[size];
@@ -63,7 +60,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
       {image ? (
         <img alt={name} height={selectedSize.size} src={image} width={selectedSize.size} />
       ) : (
-        <Circle shade={shade} size={size} variant={variant}>
+        <Circle size={size} {...rest}>
           {getInitials(name).toUpperCase()}
         </Circle>
       )}

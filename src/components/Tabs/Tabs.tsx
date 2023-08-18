@@ -11,23 +11,23 @@ import { useMeasure, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit, px, unique } from '@gilbarbara/helpers';
-import { PlainObject } from '@gilbarbara/types';
+import { PlainObject, SetOptional, SetRequired } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
-import { SetOptional, SetRequired } from 'type-fest';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Loader } from '~/components/Loader';
 import { NonIdealState } from '~/components/NonIdealState';
 
-import { Direction, StyledProps, WithChildren, WithColor, WithMargin } from '~/types';
+import { Direction, StyledProps, WithAccent, WithChildren, WithMargin } from '~/types';
 
 import { Tab, TabProps } from './Tab';
 
-export interface TabsProps extends StyledProps, WithChildren, WithColor, WithMargin {
+export interface TabsProps extends StyledProps, WithAccent, WithChildren, WithMargin {
   defaultId?: string;
   /** @default vertical */
   direction?: Direction;
@@ -51,10 +51,9 @@ interface State {
 }
 
 export const defaultProps = {
+  accent: 'primary',
   direction: 'vertical',
   disableActiveBorderRadius: false,
-  shade: 'mid',
-  variant: 'primary',
 } satisfies Omit<TabsProps, 'children'>;
 
 const StyledTabs = styled(
@@ -106,27 +105,24 @@ const StyledMenuItem = styled(
   ButtonUnstyled,
   getStyledOptions('disabled'),
 )<
-  SetRequired<
-    Pick<TabsProps, 'direction' | 'disableActiveBorderRadius' | 'shade' | 'variant'>,
-    'variant'
-  > & {
+  SetRequired<Pick<TabsProps, 'accent' | 'direction' | 'disableActiveBorderRadius'>, 'accent'> & {
     disabled: boolean;
     isActive: boolean;
   }
 >(props => {
-  const { direction, disableActiveBorderRadius, disabled, isActive, shade, variant } = props;
-  const { grayDarker, grayMid, grayScale, spacing, variants } = getTheme(props);
+  const { accent, direction, disableActiveBorderRadius, disabled, isActive } = props;
+  const { grayDarker, grayMid, grayScale, spacing, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
 
-  const { bg } = getColorVariant(variant, shade, variants);
-  let color = darkMode ? grayScale['20'] : grayDarker;
+  const { mainColor } = getColorTokens(accent, null, theme);
+  let color = darkMode ? grayScale['200'] : grayDarker;
   const isVertical = direction === 'vertical';
   const isHorizontal = direction === 'horizontal';
 
   if (disabled) {
     color = grayMid;
   } else if (isActive) {
-    color = bg;
+    color = mainColor;
   }
 
   return css`
@@ -141,7 +137,7 @@ const StyledMenuItem = styled(
     ${isActive &&
     css`
       &:before {
-        background-color: ${bg};
+        background-color: ${mainColor};
         bottom: ${isVertical ? '-1px' : 0};
         content: '';
         display: block;
@@ -178,6 +174,7 @@ const StyledContent = styled(
 
 export function Tabs(props: TabsProps) {
   const {
+    accent,
     children,
     defaultId = '',
     id,
@@ -186,8 +183,6 @@ export function Tabs(props: TabsProps) {
     minHeight,
     noContent,
     onClick,
-    shade,
-    variant,
     ...rest
   } = { ...defaultProps, ...props };
   const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
@@ -282,6 +277,7 @@ export function Tabs(props: TabsProps) {
             {tabs.map(d => (
               <StyledMenuItem
                 key={d.id}
+                accent={accent}
                 aria-controls={`panel-${uniqueId.current}-${d.id}`}
                 aria-selected={d.id === activeId}
                 data-component-name="TabsMenuItem"
@@ -293,8 +289,6 @@ export function Tabs(props: TabsProps) {
                 isActive={d.id === activeId}
                 onClick={handleClickItem}
                 role="tab"
-                shade={shade}
-                variant={variant}
               >
                 {d.title}
               </StyledMenuItem>

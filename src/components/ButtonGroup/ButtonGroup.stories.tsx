@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { MouseEvent, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -18,7 +17,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     children: disableControl(),
     size: { control: 'radio', options: sizesButton },
   },

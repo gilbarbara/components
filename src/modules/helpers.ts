@@ -1,28 +1,26 @@
 import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
-import { omit, px } from '@gilbarbara/helpers';
-import { PlainObject } from '@gilbarbara/types';
+import { objectEntries, omit, px } from '@gilbarbara/helpers';
+import { PartialDeep, PlainObject } from '@gilbarbara/types';
 import { deepmergeCustom, DeepMergeLeafURI } from 'deepmerge-ts';
 import is from 'is-lite';
-import { PartialDeep } from 'type-fest';
 
-import { getColorScale, getGrayScale } from './colors';
-import * as theme from './theme';
+import * as theme from '~/modules/theme';
+
+import { generatePalette } from './palette';
 
 import {
   BaseProps,
-  Breakpoints,
+  Breakpoint,
   GetElementPropertyOptions,
   MediaQueries,
   RecursiveChildrenEnhancerOptions,
   ResponsiveInput,
   ResponsiveSizes,
-  Shades,
   Theme,
-  Variants,
 } from '../types';
 
-const { black, breakpoints, white } = theme;
+const { breakpoints } = theme;
 
 const deepmerge = deepmergeCustom<{
   DeepMergeArraysURI: DeepMergeLeafURI; // <-- Needed for correct output type.
@@ -43,31 +41,6 @@ export function createMediaQuery(size: ResponsiveSizes, mediaQueries: MediaQueri
   }
 
   return mediaQueries[size];
-}
-
-/**
- * Get color from theme
- */
-export function getColorVariant(
-  variant: Variants,
-  shade: Shades = 'mid',
-  variants: Theme['variants'] = theme.variants,
-) {
-  try {
-    switch (variant) {
-      case 'black': {
-        return { bg: black, color: white };
-      }
-      case 'white': {
-        return { bg: white, color: black };
-      }
-      default: {
-        return variants[variant][shade];
-      }
-    }
-  } catch {
-    return variants.primary.mid;
-  }
 }
 
 export function getElementProperty(
@@ -115,7 +88,7 @@ export function getMediaQueries(): MediaQueries {
   return Object.keys(breakpoints)
     .filter(d => Number.isNaN(parseInt(d, 10)))
     .reduce((acc: PlainObject, d) => {
-      acc[d] = `@media screen and (min-width: ${px(breakpoints[d as Breakpoints])})`;
+      acc[d] = `@media screen and (min-width: ${px(breakpoints[d as Breakpoint])})`;
 
       return acc;
     }, {}) as MediaQueries;
@@ -135,30 +108,14 @@ export function isCSSUnit(value: unknown): value is string {
 export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
   const nextTheme = deepmerge({ ...theme }, customTheme) as Theme;
 
-  const { gray, grayDark, grayDarker, grayDarkest, grayLight, grayLighter, grayLightest } =
-    nextTheme;
+  const baseVariants = objectEntries(nextTheme.colors).reduce(
+    (acc, [key, value]) => {
+      acc[key] = generatePalette(value, key === 'gray');
 
-  const baseVariants = Object.entries({ ...nextTheme.colors, gray: nextTheme.gray })
-    .filter(([key]) => !['black', 'white'].includes(key))
-    .reduce(
-      (acc, [key, value]) => {
-        acc[key as keyof Theme['variants']] =
-          key === 'gray'
-            ? getGrayScale(
-                grayLightest,
-                grayLighter,
-                grayLight,
-                gray,
-                grayDark,
-                grayDarker,
-                grayDarkest,
-              )
-            : getColorScale(value);
-
-        return acc;
-      },
-      {} as Theme['variants'],
-    );
+      return acc;
+    },
+    {} as Theme['variants'],
+  );
 
   return {
     ...nextTheme,

@@ -21,7 +21,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...flexItemProps(),
   },
 } satisfies Meta<typeof Avatar>;

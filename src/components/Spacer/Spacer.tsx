@@ -66,12 +66,12 @@ export interface SpacerKnownProps
   /**
    * The vertical alignment of the children.
    * @default center
-   * */
+   */
   verticalAlign?: 'center' | 'end' | 'start' | 'stretch';
   /**
    * Wrap the children if they don't fit in the container.
    * @default true
-   * */
+   */
   wrap?: boolean;
 }
 

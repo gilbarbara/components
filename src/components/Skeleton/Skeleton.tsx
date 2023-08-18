@@ -2,9 +2,11 @@ import { forwardRef, isValidElement } from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useIsFirstRun } from '@gilbarbara/hooks';
-import { SetRequired } from 'type-fest';
+import { SetRequired } from '@gilbarbara/types';
 
 import { fadeIn } from '~/modules/animations';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import {
   baseStyles,
   getStyledOptions,
@@ -24,7 +26,10 @@ const bgAnimation = keyframes`
   }
 `;
 
-export const defaultProps = baseDefaultProps;
+export const defaultProps = {
+  ...baseDefaultProps,
+  fitContent: false,
+};
 
 export const StyledSkeleton = styled(
   'div',
@@ -32,16 +37,19 @@ export const StyledSkeleton = styled(
 )<
   SetRequired<
     SkeletonProps,
-    'accentColor' | 'animationDelay' | 'animationDuration' | 'baseColor' | 'fitContent'
+    'accent' | 'animationDelay' | 'animationDuration' | 'bg' | 'fitContent'
   >
 >(props => {
-  const { accentColor, animationDelay, animationDuration, baseColor, fitContent } = props;
+  const { accent, animationDelay, animationDuration, bg, fitContent } = props;
+  const theme = getTheme(props);
+  const { mainColor: accentColor } = getColorTokens(accent, null, theme);
+  const { mainColor: bgColor } = getColorTokens(bg, null, theme);
 
   return css`
     ${baseStyles(props)};
     animation: ${bgAnimation} ${animationDuration}s infinite ease-in-out;
     animation-delay: ${animationDelay}s;
-    background: ${baseColor} linear-gradient(90deg, ${baseColor} 0, ${baseColor} 10%, ${accentColor} 25%, ${baseColor} 40%, ${baseColor} 100%);
+    background: ${bgColor} linear-gradient(90deg, ${bgColor} 0, ${bgColor} 10%, ${accentColor} 25%, ${bgColor} 40%, ${bgColor} 100%);
     background-position: 60% 0;
     background-repeat: no-repeat;
     background-size: 200% 100%;

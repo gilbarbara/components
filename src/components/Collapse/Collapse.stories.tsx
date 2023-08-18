@@ -1,15 +1,9 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, Button } from '~';
+import { Button } from '~';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  marginProps,
-  textOptionsProps,
-} from '~/stories/__helpers__';
+import { disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { Collapse, defaultProps } from './Collapse';
 
@@ -25,15 +19,12 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
     ...marginProps(),
-    ...textOptionsProps(),
     children: { control: 'text' },
     maxHeight: { control: 'number' },
   },
   parameters: {
     align: 'start',
-    centered: true,
     layout: 'fullscreen',
     minHeight: 300,
     paddingDocs: 'md',
@@ -62,9 +53,7 @@ export const LoadMore: Story = {
 
     return (
       <>
-        <Box border="bottom" mb="xxs" pb="xs">
-          <Collapse {...props} open={open} />
-        </Box>
+        <Collapse mb="md" {...props} open={open} />
         <Button onClick={handleClick} size="sm">
           {open ? 'Hide' : 'Load more'}
         </Button>

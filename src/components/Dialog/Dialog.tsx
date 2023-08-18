@@ -22,8 +22,8 @@ import { Spacer } from '~/components/Spacer';
 
 import {
   Alignment,
-  ColorVariants,
   StyledProps,
+  WithAccent,
   WithBorder,
   WithPadding,
   WithRadius,
@@ -32,6 +32,7 @@ import {
 
 export interface DialogProps
   extends StyledProps,
+    WithAccent,
     WithBorder,
     WithPadding,
     WithRadius,
@@ -51,13 +52,12 @@ export interface DialogProps
   /** @default left */
   textAlign?: Alignment;
   title: ReactNode;
-  /** @default primary */
-  variant?: ColorVariants;
   /** @default 380 */
   width?: StringOrNumber;
 }
 
 export const defaultProps = {
+  accent: 'primary',
   buttonCancelText: 'Cancel',
   buttonConfirmText: 'Confirm',
   buttonOrder: 'ltr',
@@ -68,7 +68,6 @@ export const defaultProps = {
   radius: 'lg',
   shadow: 'high',
   textAlign: 'left',
-  variant: 'primary',
   width: 380,
 } satisfies Omit<
   DialogProps,
@@ -100,6 +99,7 @@ const StyledDialog = styled(
 
 export function Dialog(props: DialogProps) {
   const {
+    accent,
     buttonCancelText,
     buttonConfirmText,
     buttonOrder,
@@ -114,7 +114,6 @@ export function Dialog(props: DialogProps) {
     onOpen,
     style,
     title,
-    variant,
     zIndex,
     ...rest
   } = { ...defaultProps, ...props };
@@ -128,12 +127,12 @@ export function Dialog(props: DialogProps) {
   }, [onClickCancel, onClose]);
 
   const actionButton = (
-    <Button data-test-id="confirm" onClick={onClickConfirmation} variant={variant}>
+    <Button bg={accent} data-test-id="confirm" onClick={onClickConfirmation}>
       {buttonConfirmText}
     </Button>
   );
   const cancelButton = (
-    <Button data-test-id="cancel" invert onClick={onClickCancel} variant={variant}>
+    <Button bg={accent} data-test-id="cancel" invert onClick={onClickCancel}>
       {buttonCancelText}
     </Button>
   );

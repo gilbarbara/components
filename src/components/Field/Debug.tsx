@@ -1,8 +1,11 @@
+import { sortByLocaleCompare } from '@gilbarbara/helpers';
 import is from 'is-lite';
+
+import { Box } from '~/components/Box';
+import { Paragraph } from '~/components/Paragraph';
 
 interface Props {
   debug?: boolean;
-  name: string;
 }
 
 /**
@@ -29,21 +32,23 @@ function primitiveToString(value: any, key: string): string {
 }
 
 function FieldDebug(props: Props) {
-  const { debug, name } = props;
+  const { debug } = props;
 
   if (!debug) {
     return null;
   }
 
   return (
-    <code style={{ backgroundColor: '#eee', fontSize: 12, padding: 8 }}>
-      <h4>{name}</h4>
-      {Object.entries(props).map(([key, value]) => (
-        <div key={key}>
-          <b>{key}</b>: {primitiveToString(value, key)}
-        </div>
-      ))}
-    </code>
+    <Box as="code" bg="gray.50" display="block" padding="md">
+      {Object.entries(props)
+        .filter(([key]) => key !== 'debug')
+        .sort(sortByLocaleCompare('0'))
+        .map(([key, value]) => (
+          <Paragraph key={key} skipMarginTop>
+            <b>{key}</b>: {primitiveToString(value, key)}
+          </Paragraph>
+        ))}
+    </Box>
   );
 }
 

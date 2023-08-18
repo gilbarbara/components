@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import { useTheme } from '@emotion/react';
+import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid } from '~';
@@ -8,7 +8,6 @@ import { Grid } from '~';
 import { getTheme } from '~/modules/helpers';
 
 import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
-import * as Types from '~/types';
 
 import { defaultProps, Toggle } from './Toggle';
 
@@ -23,7 +22,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['accent']),
     label: { control: 'text' },
   },
 } satisfies Meta<typeof Toggle>;
@@ -60,26 +59,19 @@ export const Sizes: Story = {
   ),
 };
 
-export const Variants: Story = {
+export const Colors: Story = {
   argTypes: {
+    accent: disableControl(),
     label: disableControl(),
     name: disableControl(),
-    variant: disableControl(),
   },
   render: function Render(props) {
     const { variants } = getTheme({ theme: useTheme() });
 
     return (
       <Grid gap={30} templateColumns="repeat(3, 1fr)">
-        {[...Object.keys(variants), 'black', 'white'].map(color => (
-          <Toggle
-            key={color}
-            {...props}
-            defaultChecked
-            label={color}
-            name={color}
-            variant={color as Types.Variants}
-          />
+        {([...objectKeys(variants), 'black', 'white'] as const).map(color => (
+          <Toggle key={color} {...props} accent={color} defaultChecked label={color} name={color} />
         ))}
       </Grid>
     );

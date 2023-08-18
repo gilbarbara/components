@@ -12,10 +12,9 @@ import {
   disableControl,
   hideProps,
   paddingProps,
-  shades,
+  tones,
   variants,
 } from '~/stories/__helpers__';
-import * as Types from '~/types';
 
 import { Button, defaultProps } from './Button';
 
@@ -30,7 +29,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...paddingProps(),
     children: { control: 'text' },
     onClick: { action: 'onClick' },
@@ -47,7 +46,7 @@ export const Sizes: Story = {
   render: props => (
     <Spacer>
       {sizesButton.map(d => (
-        <Button key={d} {...props} size={d as Types.Sizes}>
+        <Button key={d} {...props} size={d}>
           Button {capitalize(d)}
         </Button>
       ))}
@@ -55,35 +54,29 @@ export const Sizes: Story = {
   ),
 };
 
-export const Variants: Story = {
+export const Colors: Story = {
   argTypes: {
-    variant: disableControl(),
+    bg: disableControl(),
   },
   render: props => (
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
       {variants.map(d => (
-        <Button key={d} {...props} variant={d}>
+        <Button key={d} {...props} bg={d}>
           Button {capitalize(d)}
         </Button>
       ))}
-      <Button onClick={action('clicked')} {...props} variant="black">
-        Button Black
-      </Button>
-      <Button onClick={action('clicked')} {...props} variant="white">
-        Button White
-      </Button>
     </Grid>
   ),
 };
 
-export const Shades: Story = {
+export const Tones: Story = {
   argTypes: {
-    shade: disableControl(),
+    bg: disableControl(),
   },
   render: props => (
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {shades.map(d => (
-        <Button key={d} {...props} shade={d}>
+      {tones.map(d => (
+        <Button key={d} {...props} bg={`primary.${d}`}>
           Button {capitalize(d)}
         </Button>
       ))}
@@ -114,11 +107,7 @@ export const AsLink: Story = {
   args: {
     as: 'a',
   },
-  argTypes: {
-    shape: disableControl(),
-  },
   render: function Render(props) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const ref = useRef<HTMLAnchorElement>(null);
 
     const handleClick = (event: MouseEvent<HTMLElement>) => {

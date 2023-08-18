@@ -11,13 +11,14 @@ import {
 } from './utils';
 
 export const defaultProps = {
+  accent: 'primary',
   align: 'center',
   disabled: false,
   size: 'md',
 } satisfies Omit<CheckboxProps, 'name'>;
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const { align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
+  const { accent, align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
     ...defaultProps,
     ...props,
   };
@@ -43,6 +44,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
         {...rest}
       />
       <StyledElement
+        accent={accent}
         category="checkbox"
         label={label}
         onKeyDown={handleKeyDown}

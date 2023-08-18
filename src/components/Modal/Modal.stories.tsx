@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -40,7 +39,7 @@ export const Basic: Story = {
         {!isActive && <Button onClick={handleClick}>Open Modal</Button>}
 
         <Modal {...props} isActive={isActive} onClose={handleClick}>
-          <FormGroup label="Name *">
+          <FormGroup label="Name" required>
             <Input name="name" placeholder="Name" />
           </FormGroup>
           <FormGroup label="Description">
