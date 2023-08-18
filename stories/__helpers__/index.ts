@@ -148,6 +148,15 @@ export function positioningProps() {
   };
 }
 
+export function radiusProps() {
+  return {
+    radius: {
+      control: 'select',
+      options: ['', false, 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'round'],
+    },
+  };
+}
+
 export function spacingProps() {
   return {
     ...marginProps(),

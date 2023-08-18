@@ -8,6 +8,7 @@ import {
   flexItems,
   hideProps,
   layoutProps,
+  radiusProps,
   spacingProps,
   textOptionsProps,
 } from '~/stories/__helpers__';
@@ -27,6 +28,7 @@ export default {
     ...hideProps(),
     ...colorProps(),
     ...layoutProps(),
+    ...radiusProps(),
     ...spacingProps(),
     ...textOptionsProps(),
     align: { control: 'select', options: ['', ...flexItems] },

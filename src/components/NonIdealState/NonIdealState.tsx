@@ -70,7 +70,6 @@ export const defaultProps = {
   hideIcon: false,
   maxWidth: '600px',
   padding: 'md',
-  radius: false,
   shadow: false,
   size: 'md',
   type: 'not-found',

@@ -7,6 +7,7 @@ import {
   flexItemProps,
   hideProps,
   layoutProps,
+  radiusProps,
   spacingProps,
 } from '~/stories/__helpers__';
 
@@ -22,6 +23,7 @@ export default {
     ...hideProps(),
     ...flexItemProps(),
     ...layoutProps({ display: 'flex' }),
+    ...radiusProps(),
     ...spacingProps(),
     children: disableControl(),
   },

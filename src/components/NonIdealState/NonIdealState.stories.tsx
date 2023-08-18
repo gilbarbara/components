@@ -6,6 +6,7 @@ import {
   flexItemProps,
   hideProps,
   layoutProps,
+  radiusProps,
   spacingProps,
 } from '~/stories/__helpers__';
 
@@ -22,6 +23,7 @@ export default {
     ...colorProps(['bg', 'color']),
     ...flexItemProps(),
     ...layoutProps(),
+    ...radiusProps(),
     ...spacingProps(),
     children: { control: 'text' },
     description: { control: 'text' },

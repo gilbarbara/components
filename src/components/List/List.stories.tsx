@@ -8,6 +8,7 @@ import {
   hideProps,
   layoutProps,
   marginProps,
+  radiusProps,
 } from '~/stories/__helpers__';
 
 import { ListItem } from './Item';
@@ -27,6 +28,7 @@ export default {
     ...colorProps(['borderColor']),
     ...layoutProps({ display: 'flex' }),
     ...marginProps(),
+    ...radiusProps(),
     children: disableControl(),
   },
 } satisfies Meta<typeof List>;

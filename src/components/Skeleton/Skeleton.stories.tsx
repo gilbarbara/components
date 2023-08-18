@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useArgs } from '@storybook/addons';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, Box, H3, H6, Paragraph, Spacer } from '~';
 
 import {
   colorProps,
-  disableControl,
   hideProps,
   layoutProps,
+  radiusProps,
   spacingProps,
 } from '~/stories/__helpers__';
 
 import { defaultProps, Skeleton } from './Skeleton';
+import { SkeletonProps } from './utils';
 
 type Story = StoryObj<typeof Skeleton>;
 
@@ -23,22 +25,20 @@ export default {
     ...hideProps(),
     ...colorProps(['accent', 'bg']),
     ...layoutProps(),
+    ...radiusProps(),
     ...spacingProps(),
   },
 } satisfies Meta<typeof Skeleton>;
 
 export const Basic: Story = {
-  argTypes: {
-    isLoaded: disableControl(),
-  },
   render: function Render(props) {
-    const [isLoaded, setLoaded] = useState(false);
+    const [{ isLoaded }, updateArguments] = useArgs<SkeletonProps>();
 
     useEffect(() => {
       setTimeout(() => {
-        setLoaded(true);
+        updateArguments({ isLoaded: true });
       }, 2000);
-    }, []);
+    }, [updateArguments]);
 
     return (
       <>
@@ -57,7 +57,7 @@ export const Basic: Story = {
           </Box>
         </Skeleton>
         <Paragraph color="gray.300" mt="md">
-          isLoaded: {isLoaded.toString()}
+          isLoaded: {isLoaded?.toString()}
         </Paragraph>
       </>
     );

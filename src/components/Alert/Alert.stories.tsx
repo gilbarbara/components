@@ -2,7 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Paragraph } from '~';
 
-import { flexBoxProps, hideProps, hideTable, spacingProps } from '~/stories/__helpers__';
+import {
+  flexBoxProps,
+  hideProps,
+  hideTable,
+  radiusProps,
+  spacingProps,
+} from '~/stories/__helpers__';
 
 import { Alert, defaultProps } from './Alert';
 
@@ -17,6 +23,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...radiusProps(),
     ...spacingProps(),
     align: flexBoxProps().align,
     children: { control: 'text' },

@@ -9,6 +9,7 @@ import {
   hideNoControlsWarning,
   hideProps,
   hideTable,
+  radiusProps,
   textOptionsProps,
 } from '~/stories/__helpers__';
 
@@ -23,6 +24,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
+    ...radiusProps(),
     ...textOptionsProps(),
     content: { control: 'text' },
   },
