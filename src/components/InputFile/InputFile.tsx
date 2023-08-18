@@ -2,6 +2,7 @@ import { ChangeEvent, forwardRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import { StringOrNull } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, getStyledOptions } from '~/modules/system';
@@ -10,9 +11,14 @@ import { BoxInline } from '~/components/Box';
 import { Button } from '~/components/Button';
 import { Truncate } from '~/components/Truncate';
 
-import { ComponentProps, StyledProps, WithFormElements, WithInvert } from '~/types';
+import { ComponentProps, StyledProps, WithAccent, WithFormElements } from '~/types';
 
-export interface InputFileKnownProps extends StyledProps, WithFormElements, WithInvert {
+export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormElements {
+  /**
+   * Invert background
+   * @default true
+   */
+  invert?: boolean;
   /** @default false */
   large?: boolean;
   value?: string;
@@ -25,6 +31,7 @@ export type InputFileProps = ComponentProps<
 >;
 
 export const defaultProps = {
+  accent: 'primary',
   disabled: false,
   invert: true,
   large: false,
@@ -58,20 +65,28 @@ export const StyledFileInput = styled(
 });
 
 export const StyledInput = styled('input', getStyledOptions())`
-  font-size: 48px;
+  bottom: 0;
+  font-size: 24px;
   left: 0;
   opacity: 0;
   position: absolute;
+  right: 0;
   top: 0;
   z-index: 1;
+
+  &::file-selector-button {
+    cursor: pointer;
+  }
 `;
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, ref) => {
-  const { invert, large, name, onChange, placeholder, value, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
-  const [localValue, setLocalValue] = useState('');
+  const { accent, disabled, invert, large, name, onChange, placeholder, readOnly, value, ...rest } =
+    {
+      ...defaultProps,
+      ...props,
+    };
+  const [localValue, setLocalValue] = useState<StringOrNull>(null);
+  const isDisabled = disabled || readOnly;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -86,12 +101,18 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
   return (
     <StyledFileInput data-component-name="InputFile" {...rest}>
       <BoxInline overflow="hidden" position="relative">
-        <Button invert={invert} size={large ? 'lg' : 'md'}>
+        <Button
+          bg={accent}
+          disabled={isDisabled}
+          invert={invert}
+          size={large ? 'lg' : 'md'}
+          style={{ zIndex: isDisabled ? 2 : 1 }}
+        >
           {placeholder}
         </Button>
         <StyledInput ref={ref} id={name} name={name} onChange={handleChange} type="file" />
       </BoxInline>
-      <Truncate maxWidth="100%">{value ?? localValue}</Truncate>
+      <Truncate maxWidth="100%">{localValue ?? value}</Truncate>
     </StyledFileInput>
   );
 });

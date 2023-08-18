@@ -4,12 +4,14 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useMergeRefs } from '@gilbarbara/hooks';
 
+import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { appearanceStyles, baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
 import {
   ComponentProps,
   StyledProps,
+  WithAccent,
   WithBorderless,
   WithChildren,
   WithElementSpacing,
@@ -18,6 +20,7 @@ import {
 
 export interface SelectKnownProps
   extends StyledProps,
+    WithAccent,
     WithBorderless,
     WithChildren,
     Omit<WithElementSpacing, 'suffixSpacing'>,
@@ -28,6 +31,7 @@ export interface SelectKnownProps
 export type SelectProps = ComponentProps<HTMLSelectElement, SelectKnownProps>;
 
 export const defaultProps = {
+  accent: 'primary',
   borderless: false,
   disabled: false,
   large: false,
@@ -40,8 +44,9 @@ export const StyledSelect = styled(
   'select',
   getStyledOptions(),
 )<SelectProps & { filled: boolean }>(props => {
-  const { filled, large, multiple } = props;
-  const { colors, darkColor, darkMode, grayMid, spacing, white } = getTheme(props);
+  const { accent = defaultProps.accent, filled, large, multiple } = props;
+  const { darkColor, darkMode, grayMid, spacing, white, ...theme } = getTheme(props);
+  const { mainColor } = getColorTokens(accent, null, theme);
 
   let color = grayMid;
   const paddingY = large ? spacing.sm : spacing.xs;
@@ -68,7 +73,7 @@ export const StyledSelect = styled(
 
     ${filled &&
     css`
-      border-color: ${colors.primary};
+      border-color: ${mainColor};
     `};
 
     &[multiple] {
@@ -82,7 +87,7 @@ export const StyledSelect = styled(
         }
 
         &:checked {
-          background: ${`${colors.primary} linear-gradient(0deg, ${colors.primary} 0%, ${colors.primary} 100%)`};
+          background: ${`${mainColor} linear-gradient(0deg, ${mainColor} 0%, ${mainColor} 100%)`};
           color: ${white};
           font-weight: bold;
         }

@@ -127,7 +127,7 @@ export const StyledButton = styled(
       background-color: ${grayLighter};
       border-color: ${grayLighter};
       color: ${grayMid};
-      pointer-events: none;
+      cursor: not-allowed;
     }
 
     &:focus {

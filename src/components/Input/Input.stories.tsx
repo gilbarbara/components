@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { inputTypes } from '~/modules/options';
 
-import { disableControl, hideProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, Input } from './Input';
 
@@ -18,6 +18,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent']),
     type: { control: 'select', options: inputTypes },
     width: { control: 'text' },
   },

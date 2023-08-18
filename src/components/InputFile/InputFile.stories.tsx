@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { hideProps } from '~/stories/__helpers__';
+import { colorProps, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, InputFile } from './InputFile';
 
@@ -14,7 +14,10 @@ export default {
     name: 'file',
     width: 480,
   },
-  argTypes: hideProps(),
+  argTypes: {
+    ...hideProps(),
+    ...colorProps(['accent']),
+  },
 } satisfies Meta<typeof InputFile>;
 
 export const Basic: Story = {};
