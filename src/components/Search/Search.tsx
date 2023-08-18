@@ -1,10 +1,9 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, useEffect, useRef } from 'react';
 import { useSetState } from 'react-use';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
 import { Box } from '~/components/Box';
@@ -72,7 +71,6 @@ export function Search(props: SearchProps) {
     value: '',
   });
   const timeout = useRef(0);
-  const { colors } = getTheme({ theme: useTheme() });
 
   useEffect(() => {
     isActive.current = true;
@@ -195,13 +193,14 @@ export function Search(props: SearchProps) {
         <ComponentWrapper
           prefix={
             hideIcon ? undefined : (
-              <Icon color={focus || value ? colors.primary : undefined} name={icon} size={24} />
+              <Icon color={focus || value ? accent : undefined} name={icon} size={24} />
             )
           }
           size={borderless ? [24, 40] : 40}
           suffix={typing || loading ? <Icon name="spinner" spin /> : undefined}
         >
           <Input
+            accent={accent}
             autoComplete="off"
             borderless={borderless}
             name="search"

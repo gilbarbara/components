@@ -8,6 +8,7 @@ import {
   ComponentProps,
   InputTypes,
   StyledProps,
+  WithAccent,
   WithBorderless,
   WithElementSpacing,
   WithFormElements,
@@ -15,6 +16,7 @@ import {
 
 export interface InputKnownProps
   extends StyledProps,
+    WithAccent,
     WithBorderless,
     WithElementSpacing,
     WithFormElements {
@@ -32,6 +34,7 @@ export type InputProps = ComponentProps<
 >;
 
 export const defaultProps = {
+  accent: 'primary',
   borderless: false,
   disabled: false,
   large: false,

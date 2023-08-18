@@ -7,13 +7,12 @@ import { rgba } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
 
-import { getTheme, responsive as responsiveHelper } from './helpers';
-
 import {
   BorderItem,
   BorderItemSide,
   HeadingSizes,
   TextSizes,
+  WithAccent,
   WithAlign,
   WithBorder,
   WithBorderless,
@@ -33,7 +32,9 @@ import {
   WithTextOptions,
   WithTheme,
   WithTransparent,
-} from '../types';
+} from '~/types';
+
+import { getTheme, responsive as responsiveHelper } from './helpers';
 
 interface GetContainerStylesOptions {
   responsive?: boolean;
@@ -328,14 +329,22 @@ export function flexItemStyles<T extends WithFlexItem>(props: T): CSSObject {
 }
 
 export function inputStyles<
-  T extends WithBorderless &
+  T extends WithAccent &
+    WithBorderless &
     WithElementSpacing &
     WithTheme & { large?: boolean; multiple?: boolean; width?: StringOrNumber },
 >(props: T, type: 'input' | 'select' | 'textarea') {
-  const { borderless, large, multiple, prefixSpacing, suffixSpacing, width } = props;
+  const {
+    accent = 'primary',
+    borderless,
+    large,
+    multiple,
+    prefixSpacing,
+    suffixSpacing,
+    width,
+  } = props;
   const darkMode = isDarkMode(props);
   const {
-    colors,
     darkColor,
     fontFamily,
     grayDark,
@@ -349,8 +358,9 @@ export function inputStyles<
     spacing,
     typography,
     white,
+    ...theme
   } = getTheme(props);
-
+  const { mainColor } = getColorTokens(accent, null, theme);
   const isSelect = is.boolean(multiple);
   const placeholderColor = grayMid;
 
@@ -411,8 +421,8 @@ export function inputStyles<
     ${styles}
 
     &:focus {
-      ${!!borderless && `border-color: ${colors.primary};`}
-      ${!borderless && `box-shadow: 0 0 8px 1px ${rgba(colors.primary, 1)};`}
+      ${!!borderless && `border-color: ${mainColor};`}
+      ${!borderless && `box-shadow: 0 0 8px 1px ${rgba(mainColor, 1)};`}
       outline: none;
     }
 
@@ -427,7 +437,7 @@ export function inputStyles<
       }
 
       &:not(:placeholder-shown) {
-        border-color: ${colors.primary};
+        border-color: ${mainColor};
       }
 
       &:read-only {

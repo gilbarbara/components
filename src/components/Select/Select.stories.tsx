@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { hideProps } from '~/stories/__helpers__';
+import { colorProps, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, Select } from './Select';
 
@@ -15,6 +15,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent']),
     width: { control: 'text' },
   },
 } satisfies Meta<typeof Select>;

@@ -7,6 +7,7 @@ import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 import {
   ComponentProps,
   StyledProps,
+  WithAccent,
   WithBorderless,
   WithElementSpacing,
   WithFormElements,
@@ -14,6 +15,7 @@ import {
 
 export interface TextareaKnownProps
   extends StyledProps,
+    WithAccent,
     WithBorderless,
     WithElementSpacing,
     WithFormElements {}
@@ -21,6 +23,7 @@ export interface TextareaKnownProps
 export type TextareaProps = ComponentProps<HTMLTextAreaElement, TextareaKnownProps, 'name'>;
 
 export const defaultProps = {
+  accent: 'primary',
   borderless: false,
   disabled: false,
   prefixSpacing: false,
