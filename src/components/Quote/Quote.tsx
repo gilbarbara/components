@@ -2,9 +2,10 @@ import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { SetRequired } from 'type-fest';
+import { SetRequired } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, getStyledOptions, textStyles } from '~/modules/system';
 
@@ -16,14 +17,14 @@ import {
   Spacing,
   StyledProps,
   TextSizes,
+  WithAccent,
   WithChildren,
-  WithColor,
   WithTextOptions,
 } from '~/types';
 
 type TextOptions = WithTextOptions<HeadingSizes | TextSizes>;
 
-export interface QuoteKnownProps extends StyledProps, WithChildren, WithColor, TextOptions {
+export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, TextOptions {
   attribution?: ReactNode;
   /**
    * The distance between the quote and citation
@@ -67,49 +68,48 @@ const borderSizes = {
 
 export const defaultProps = {
   ...textDefaultOptions,
+  accent: 'primary',
   attributionGap: 'md',
   attributionSize: 'mid',
   border: 'left',
   borderSize: 'md',
   gap: 'xs',
-  shade: 'mid',
   size: 'large',
-  variant: 'primary',
 } satisfies Omit<QuoteProps, 'children'>;
 
 export const StyledFigure = styled(
   'figure',
   getStyledOptions(),
-)<SetRequired<Omit<QuoteProps, 'attribution' | 'children'>, 'borderSize' | 'gap' | 'variant'>>(
+)<SetRequired<Omit<QuoteProps, 'attribution' | 'children'>, 'accent' | 'borderSize' | 'gap'>>(
   props => {
-    const { border, borderSize, gap, shade, variant } = props;
-    const { spacing, variants } = getTheme(props);
+    const { accent, border, borderSize, gap } = props;
+    const { spacing, ...theme } = getTheme(props);
 
-    const { bg } = getColorVariant(variant, shade, variants);
+    const { mainColor } = getColorTokens(accent, null, theme);
 
     const styles: CSSObject = {};
 
     switch (border) {
       case 'bottom': {
-        styles.borderBottom = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.borderBottom = `${borderSizes[borderSize]} solid ${mainColor}`;
         styles.paddingBottom = px(spacing[gap]);
 
         break;
       }
       case 'left': {
-        styles.borderLeft = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.borderLeft = `${borderSizes[borderSize]} solid ${mainColor}`;
         styles.paddingLeft = px(spacing[gap]);
 
         break;
       }
       case 'right': {
-        styles.borderRight = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.borderRight = `${borderSizes[borderSize]} solid ${mainColor}`;
         styles.paddingRight = px(spacing[gap]);
 
         break;
       }
       case 'top': {
-        styles.borderTop = `${borderSizes[borderSize]} solid ${bg}`;
+        styles.borderTop = `${borderSizes[borderSize]} solid ${mainColor}`;
         styles.paddingTop = px(spacing[gap]);
         break;
       }

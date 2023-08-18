@@ -20,11 +20,11 @@ function DataTableBody(props: Props) {
       {data.map((item, index) => (
         <Box
           key={item.id ?? index}
+          bg={clean ? undefined : 'white'}
           data-component-name="DataTableBodyRow"
           display="flex"
           mb="sm"
           radius={clean ? undefined : 'sm'}
-          variant={clean ? undefined : 'white'}
           wrap={isResponsive ? 'wrap' : 'nowrap'}
         >
           {columns.map(
@@ -53,10 +53,10 @@ function DataTableBody(props: Props) {
                 >
                   {isResponsive && !hideOnResponsive && (
                     <Paragraph
+                      color="gray"
                       mb="xxs"
                       size="small"
                       style={{ textTransform: 'uppercase' }}
-                      variant="gray"
                     >
                       {title}
                     </Paragraph>
@@ -70,6 +70,7 @@ function DataTableBody(props: Props) {
       ))}
       {loading && (
         <BoxCenter
+          bg={!isInitialLoad ? 'gray' : undefined}
           bottom={0}
           left={0}
           opacity={isInitialLoad ? 1 : 0.5}
@@ -77,7 +78,6 @@ function DataTableBody(props: Props) {
           position="absolute"
           right={0}
           top={0}
-          variant={!isInitialLoad ? 'gray' : undefined}
           zIndex={10}
         >
           <Loader />

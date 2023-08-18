@@ -1,31 +1,27 @@
-import { MouseEventHandler } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { WithChildren } from '~/types';
-
-export interface SearchItemProps extends WithChildren {
-  isSelected: boolean;
-  onClick: MouseEventHandler;
-  value: string;
-}
+import { SearchItemProps } from './types';
 
 export const StyledSearchItem = styled(
   'div',
   getStyledOptions(),
-)<{ isSelected: boolean }>(props => {
-  const { isSelected } = props;
-  const { darkMode, grayDark, spacing, typography, variants, white } = getTheme(props);
+)<Pick<SearchItemProps, 'accent' | 'isSelected'>>(props => {
+  const { accent, isSelected } = props;
+  const { darkMode, grayDark, spacing, typography, white, ...theme } = getTheme(props);
+
+  const { mainColor, textColor } = getColorTokens(accent, null, theme);
 
   const selected = css`
-    background-color: ${variants.primary.mid.bg};
-    color: ${variants.primary.mid.color};
+    background-color: ${mainColor};
+    color: ${textColor};
 
     a {
-      color: ${variants.primary.mid.color};
+      color: ${textColor};
     }
   `;
 
@@ -54,9 +50,10 @@ export const StyledSearchItem = styled(
   `;
 });
 
-function SearchItem({ children, isSelected, onClick, value }: SearchItemProps) {
+function SearchItem({ accent, children, isSelected, onClick, value }: SearchItemProps) {
   return (
     <StyledSearchItem
+      accent={accent}
       data-component-name="SearchItem"
       data-value={value}
       isSelected={isSelected}

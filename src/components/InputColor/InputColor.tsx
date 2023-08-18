@@ -60,6 +60,10 @@ const StyledColorGroup = styled(
       margin: -8px;
       padding: 0;
       width: ${px(innerWidth)};
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
   `;
 });

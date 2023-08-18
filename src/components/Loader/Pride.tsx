@@ -8,7 +8,7 @@ import { getStyledOptions } from '~/modules/system';
 
 import { LoaderProps } from '~/types';
 
-type LoaderPrideProps = Omit<LoaderProps, 'color' | 'shade' | 'variant'>;
+type LoaderPrideProps = Omit<LoaderProps, 'color'>;
 
 const StyledLoaderPride = styled(
   'div',

@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
 import {
-  backgroundStyles,
   baseStyles,
+  colorStyles,
   getStyledOptions,
   marginStyles,
   textStyles,
@@ -19,11 +19,10 @@ import { Icon } from '~/components/Icon';
 
 import {
   Icons,
-  Shades,
   StyledProps,
-  Variants,
+  VariantWithTones,
   WithChildren,
-  WithColor,
+  WithColors,
   WithMargin,
   WithTextOptions,
 } from '~/types';
@@ -31,11 +30,11 @@ import {
 export interface TagProps
   extends StyledProps,
     WithChildren,
-    WithColor,
+    WithColors,
     WithMargin,
     WithTextOptions {
-  color?: Variants;
-  colorShade?: Shades;
+  /** @default primary.50 */
+  bg?: VariantWithTones;
   iconAfter?: Icons;
   iconBefore?: Icons;
   invert?: boolean;
@@ -46,50 +45,34 @@ export interface TagProps
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),
+  bg: 'primary.50',
   invert: false,
   size: 'mid',
-  variant: 'primary',
 } satisfies Omit<TagProps, 'children'>;
 
 export const StyledTag = styled(
   'span',
   getStyledOptions(),
 )<TagProps>(props => {
-  const { color, colorShade, variant } = props;
-  const { radius, spacing, variants } = getTheme(props);
-
-  const selectedColor =
-    color ?? (variant && !['black', 'white'].includes(variant) ? variant : undefined);
-  let colorProp: string | undefined;
-
-  if (selectedColor) {
-    colorProp = getColorVariant(selectedColor, colorShade, variants).bg;
-  }
+  const { radius, spacing } = getTheme(props);
 
   return css`
     ${baseStyles(props)};
     align-items: center;
     border-radius: ${radius.xs};
-    color: ${colorProp};
     display: inline-flex;
     padding: ${spacing.xxs} ${spacing.sm};
-    ${backgroundStyles(props)};
+    ${colorStyles(props)};
     ${marginStyles(props)};
     ${textStyles(props, 1)};
   `;
 });
 
 export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
-  const {
-    children,
-    colorShade,
-    iconAfter,
-    iconBefore,
-    onClickAfter,
-    onClickBefore,
-    shade,
-    ...rest
-  } = { ...defaultProps, ...props };
+  const { children, iconAfter, iconBefore, onClickAfter, onClickBefore, ...rest } = {
+    ...defaultProps,
+    ...props,
+  };
   const { typography } = getTheme({ theme: useTheme() });
 
   const iconSize = rest.size ? parseInt(typography[rest.size].fontSize, 10) - 2 : undefined;
@@ -116,13 +99,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
   }
 
   return (
-    <StyledTag
-      ref={ref}
-      data-component-name="Tag"
-      {...rest}
-      colorShade={rest.invert && !colorShade ? 'mid' : colorShade ?? 'dark'}
-      shade={rest.invert && !shade ? 'mid' : shade ?? 'lightest'}
-    >
+    <StyledTag ref={ref} data-component-name="Tag" {...rest}>
       {icons.before}
       <span>{children}</span>
       {icons.after}

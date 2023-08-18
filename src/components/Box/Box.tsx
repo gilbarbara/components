@@ -2,28 +2,14 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import {
-  backgroundStyles,
-  baseStyles,
-  borderStyles,
-  flexBoxStyles,
-  flexItemStyles,
-  getStyledOptions,
-  layoutStyles,
-  marginStyles,
-  paddingStyles,
-  positioningStyles,
-  radiusStyles,
-  shadowStyles,
-  textColorStyles,
-} from '~/modules/system';
+import { boxStyles, getStyledOptions } from '~/modules/system';
 
 import {
   ComponentProps,
   StyledProps,
   WithBorder,
   WithChildrenOptional,
-  WithColor,
+  WithColors,
   WithFlexBox,
   WithFlexItem,
   WithLayout,
@@ -32,14 +18,13 @@ import {
   WithPositioning,
   WithRadius,
   WithShadow,
-  WithTextColor,
 } from '~/types';
 
 export interface BoxKnownProps
   extends StyledProps,
     WithBorder,
     WithChildrenOptional,
-    WithColor,
+    WithColors,
     WithFlexBox,
     WithFlexItem,
     WithLayout,
@@ -47,8 +32,7 @@ export interface BoxKnownProps
     WithPadding,
     WithPositioning,
     WithRadius,
-    WithShadow,
-    WithTextColor {
+    WithShadow {
   /**
    * Set the display to flex.
    * @default false
@@ -56,7 +40,7 @@ export interface BoxKnownProps
   flexBox?: boolean;
 }
 
-export type BoxProps = ComponentProps<HTMLDivElement, BoxKnownProps>;
+export type BoxProps<T = HTMLDivElement> = ComponentProps<T, BoxKnownProps>;
 
 export const StyledBox = styled(
   'div',
@@ -66,18 +50,7 @@ export const StyledBox = styled(
 
   return css`
     display: ${flexBox ? 'flex' : undefined};
-    ${baseStyles(props)};
-    ${backgroundStyles(props, false)};
-    ${borderStyles(props)};
-    ${flexBoxStyles(props)};
-    ${flexItemStyles(props)};
-    ${layoutStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${positioningStyles(props)};
-    ${radiusStyles(props)};
-    ${shadowStyles(props)};
-    ${textColorStyles(props)};
+    ${boxStyles(props)};
   `;
 });
 

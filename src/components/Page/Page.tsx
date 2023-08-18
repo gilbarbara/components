@@ -14,18 +14,16 @@ import {
   Alignment,
   ComponentProps,
   StyledProps,
-  WithColor,
+  WithColors,
   WithFlexBox,
   WithPadding,
-  WithTextColor,
 } from '~/types';
 
 export interface PageKnownProps
   extends StyledProps,
-    WithColor,
+    WithColors,
     Pick<WithFlexBox, 'align' | 'justify'>,
-    WithPadding,
-    WithTextColor {
+    WithPadding {
   /**
    * Override `align` and `justify` to "center"
    *

@@ -13,7 +13,7 @@ export default {
   component: Icon,
   args: {
     ...defaultProps,
-    name: 'send',
+    name: 'send-alt',
   },
   argTypes: {
     ...hideProps(),

@@ -4,20 +4,25 @@ import styled from '@emotion/styled';
 
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
-import { ComponentProps, StyledProps, WithButtonSize, WithChildren, WithColor } from '~/types';
+import {
+  ComponentProps,
+  StyledProps,
+  WithButtonSize,
+  WithChildren,
+  WithColorsDefaultBg,
+} from '~/types';
 
 export interface ButtonGroupKnownProps
   extends StyledProps,
     WithButtonSize,
     WithChildren,
-    WithColor {}
+    WithColorsDefaultBg {}
 
 export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
 
 export const defaultProps = {
-  shade: 'mid',
+  bg: 'primary',
   size: 'md',
-  variant: 'primary',
 } satisfies Omit<ButtonGroupProps, 'children'>;
 
 export const StyledButtonGroup = styled(
@@ -51,11 +56,11 @@ export const StyledButtonGroup = styled(
 );
 
 export function ButtonGroup(props: ButtonGroupProps) {
-  const { children, shade, size, variant, ...rest } = { ...defaultProps, ...props };
+  const { bg, children, color, size, ...rest } = { ...defaultProps, ...props };
   const buttonProps = {
-    shade,
+    bg,
+    color,
     size,
-    variant,
   };
 
   return (

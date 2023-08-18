@@ -2,7 +2,7 @@ import { CSSProperties, JSXElementConstructor } from 'react';
 import { SerializedStyles } from '@emotion/react';
 import { StandardShorthandProperties } from 'csstype';
 
-import { Breakpoints, Shades, Variants } from './theme';
+import { Breakpoint, VariantWithTones } from './theme';
 
 import { icons, inputTypes, sizes, textSizes } from '../modules/options';
 
@@ -19,11 +19,10 @@ export type BorderItemSide =
   | Direction;
 
 export interface BorderItem {
-  color?: string;
   /**
-   * @default lighter
+   * @default gray.100
    */
-  shade?: Shades;
+  color?: VariantWithTones;
   /**
    * @default all
    */
@@ -36,10 +35,6 @@ export interface BorderItem {
    * @default solid
    */
   style?: StandardShorthandProperties['borderStyle'];
-  /**
-   * @default gray
-   */
-  variant?: Variants;
 }
 
 export type ButtonTypes = 'button' | 'submit' | 'reset';
@@ -88,7 +83,7 @@ export interface RecursiveChildrenEnhancerOptions {
   overrideProps?: boolean;
 }
 
-export type ResponsiveSizes = '_' | Breakpoints | string;
+export type ResponsiveSizes = '_' | Breakpoint | string;
 
 export type ResponsiveInput = {
   [key: ResponsiveSizes]: CSSProperties | SerializedStyles;

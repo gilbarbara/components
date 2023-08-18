@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '~';
 
-import { disableControl, hideProps, paddingProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, paddingProps } from '~/stories/__helpers__';
 
 import { defaultProps, Dialog } from './Dialog';
 
@@ -20,6 +19,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent']),
     ...paddingProps(),
     isActive: disableControl(),
   },

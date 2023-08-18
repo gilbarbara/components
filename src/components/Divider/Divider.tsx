@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
-import { SetRequired } from 'type-fest';
+import { SetRequired, StringOrNumber } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, getStyledOptions, marginStyles, textStyles } from '~/modules/system';
 
@@ -14,9 +14,9 @@ import {
   Sizes,
   Spacing,
   StyledProps,
+  VariantWithTones,
   WithAlign,
   WithChildrenOptional,
-  WithColor,
   WithMargin,
   WithTextOptions,
 } from '~/types';
@@ -25,13 +25,17 @@ export interface DividerKnownProps
   extends StyledProps,
     WithAlign,
     WithChildrenOptional,
-    WithColor,
     WithMargin,
     WithTextOptions {
   /** @default sm */
   borderSize?: Sizes;
   /** @default solid */
   borderStyle?: 'solid' | 'dashed' | 'dotted';
+  /**
+   * Component color
+   * @default gray.200
+   */
+  color?: VariantWithTones;
   /** @default horizontal */
   direction?: Direction;
   /**
@@ -67,13 +71,12 @@ export const defaultProps = {
   align: 'center',
   borderSize: 'sm',
   borderStyle: 'solid',
+  color: 'gray.200',
   direction: 'horizontal',
   gap: 'xs',
   length: '100%',
   minBorderWidth: 50,
-  shade: 'light',
   size: 'regular',
-  variant: 'gray',
 } satisfies DividerProps;
 
 const StyledDivider = styled(
@@ -85,17 +88,16 @@ const StyledDivider = styled(
     borderSize,
     borderStyle,
     children,
+    color,
     direction,
     gap,
     length,
     minBorderWidth,
-    shade,
-    variant,
   } = props;
-  const { spacing, variants } = getTheme(props);
+  const { spacing, ...theme } = getTheme(props);
   const isHorizontal = direction === 'horizontal';
 
-  const { bg } = getColorVariant(variant, shade, variants);
+  const { mainColor } = getColorTokens(color, null, theme);
 
   const selectedDimension = borderSizes[borderSize];
   const margin = isHorizontal
@@ -122,7 +124,7 @@ const StyledDivider = styled(
     return css`
       ${baseStyles(props)};
       align-items: center;
-      color: ${bg};
+      color: ${mainColor};
       display: flex;
       flex-direction: row;
       line-height: 1;
@@ -135,7 +137,7 @@ const StyledDivider = styled(
 
       &:before,
       &:after {
-        border-top: ${borderSizes[borderSize]} ${borderStyle} ${bg};
+        border-top: ${borderSizes[borderSize]} ${borderStyle} ${mainColor};
         content: '';
         display: inline-flex;
         min-width: ${px(minBorderWidth)};
@@ -153,8 +155,8 @@ const StyledDivider = styled(
   }
 
   return css`
-    border-bottom: ${isHorizontal ? `${selectedDimension} ${borderStyle} ${bg}` : undefined};
-    border-left: ${isHorizontal ? undefined : `${selectedDimension} ${borderStyle} ${bg}`};
+    border-bottom: ${isHorizontal ? `${selectedDimension} ${borderStyle} ${mainColor}` : undefined};
+    border-left: ${isHorizontal ? undefined : `${selectedDimension} ${borderStyle} ${mainColor}`};
     height: ${isHorizontal ? undefined : px(length)};
     ${margin};
     text-indent: -9999px;

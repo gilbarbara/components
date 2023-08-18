@@ -1,49 +1,53 @@
 import { ChangeEvent, ReactNode, useMemo, useRef } from 'react';
 import { useSetState } from 'react-use';
-import { capitalize, sortByLocaleCompare } from '@gilbarbara/helpers';
+import { capitalize, objectKeys, sortByLocaleCompare } from '@gilbarbara/helpers';
 
-import { Box, BoxCenter, Dropdown, H2, H3, Icon, Input, Jumbo, Paragraph, Spacer, Text } from '~';
+import { Box, Dropdown, H2, H3, Icon, Input, Jumbo, Paragraph, Spacer, Text } from '~';
 
 import { icons } from '~/modules/options';
 import { avatar, variants } from '~/modules/theme';
 
-import type { DropdownOption, Icons, Variants } from '~/types';
+import type { DropdownOption, Icons, Variant } from '~/types';
 
 interface ItemProps {
+  color: Variant;
   name: Icons;
   size: number;
-  variant: Variants;
 }
 
 interface State {
   category: string;
+  color: Variant;
   search: string;
   size: number;
-  variant: Variants;
 }
 
-function Item({ name, size, variant }: ItemProps) {
+function Item({ color, name, size }: ItemProps) {
   return (
-    <BoxCenter
+    <div
       data-component-name="IconWrapper"
-      justify="start"
-      minHeight={size * 2}
-      minWidth={160}
-      padding="xs"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minHeight: size * 2,
+        minWidth: 160,
+        padding: 8,
+      }}
     >
-      <Box mb="xs" minHeight={size}>
-        <Icon name={name} size={size} variant={variant} />
-      </Box>
-      <Text size="small">{name}</Text>
-    </BoxCenter>
+      <div style={{ marginBottom: 8, minHeight: size }}>
+        <Icon color={color} name={name} size={size} />
+      </div>
+      <span style={{ fontSize: 12 }}>{name}</span>
+    </div>
   );
 }
 
 function Icons() {
-  const [{ category, search, size, variant }, setState] = useSetState<State>({
+  const [{ category, color, search, size }, setState] = useSetState<State>({
     category: '',
+    color: 'black',
     size: 64,
-    variant: 'black',
     search: '',
   });
   const debounceRef = useRef<number>();
@@ -71,7 +75,7 @@ function Icons() {
   const handleChangeVariants = (values: DropdownOption[]) => {
     const [selected] = values;
 
-    setState({ variant: selected.value as Variants });
+    setState({ color: selected.value as Variant });
   };
 
   const sizesOptions = useMemo(
@@ -85,7 +89,7 @@ function Icons() {
 
   const variantsOptions = useMemo(
     () =>
-      [...Object.keys(variants), 'black', 'white'].map(d => ({
+      [...objectKeys(variants), 'black', 'white'].map(d => ({
         label: d,
         value: d,
       })),
@@ -139,7 +143,7 @@ function Icons() {
 
                 <Box direction="row" display="flex" wrap="wrap">
                   {items.map(icon => (
-                    <Item key={icon.name} name={icon.name} size={size} variant={variant} />
+                    <Item key={icon.name} color={color} name={icon.name} size={size} />
                   ))}
                 </Box>
               </Box>
@@ -159,7 +163,7 @@ function Icons() {
             return nameSearch && categorySearch;
           })
           .map(icon => (
-            <Item key={icon.name} name={icon.name} size={size} variant={variant} />
+            <Item key={icon.name} color={color} name={icon.name} size={size} />
           ))}
       </Box>
     );
@@ -199,7 +203,7 @@ function Icons() {
           items={variantsOptions}
           onChange={handleChangeVariants}
           placeholder="Variant"
-          values={variantsOptions.filter(d => d.value === variant)}
+          values={variantsOptions.filter(d => d.value === color)}
           width={160}
         />
         <Dropdown

@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon, Paragraph, Spacer } from '~';
 
-import { colorProps, hideProps, marginProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { Tab } from './Tab';
 import { defaultProps, Tabs } from './Tabs';
@@ -20,7 +19,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['accent']),
     ...marginProps(),
     maxHeight: { control: 'text' },
     minHeight: { control: 'text' },
@@ -117,7 +116,7 @@ export const Basic: Story = {
 
 export const Controlled: Story = {
   argTypes: {
-    id: { control: { disable: true } },
+    id: disableControl(),
   },
   render: function Render(props) {
     const [id, setId] = useState('two');

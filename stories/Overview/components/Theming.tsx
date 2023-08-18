@@ -5,9 +5,12 @@ import CodeBlock from './CodeBlock';
 function OverviewTheming() {
   return (
     <Box>
-      <Paragraph>You can customize the theme in your app.</Paragraph>
+      <Paragraph>
+        The theme object is where you define your application's colors, typography, breakpoints and
+        more.
+      </Paragraph>
       <Paragraph mt={0}>
-        Check the default{' '}
+        You can check the default{' '}
         <a
           href="https://github.com/gilbarbara/components/blob/main/src/modules/theme.ts"
           rel="noopener noreferrer"
@@ -17,10 +20,16 @@ function OverviewTheming() {
         </a>{' '}
         for more information.
       </Paragraph>
+      <Paragraph mt="lg">
+        We will generate a palette that ranges from 50 to 900 for each color you define.
+      </Paragraph>
+      <Paragraph mt={0}>
+        You can access them using the <code style={{ color: 'red' }}>variants</code> property.
+      </Paragraph>
       <CodeBlock language="tsx">{`import { ThemeProvider } from '@emotion/react';
-import { mergeTheme } from '@by-intera/components';
+import { mergeTheme } from '@gilbarbara/components';
 
-const theme = mergeTheme({
+export const theme = mergeTheme({
   colors: {
     primary: '#ff0044',
   },

@@ -4,18 +4,18 @@ import innerText from 'react-innertext';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import { RequireExactlyOne, SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
-import { RequireExactlyOne, SetRequired } from 'type-fest';
 
 import { rotate } from '~/modules/animations';
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { iconsCustom } from '~/modules/options';
 import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
-import { Icons, StyledProps, WithColor, WithMargin } from '~/types';
+import { Icons, StyledProps, WithColors, WithMargin } from '~/types';
 
-export interface IconKnownProps extends StyledProps, WithColor, WithMargin {
-  color?: string;
+export interface IconKnownProps extends StyledProps, Pick<WithColors, 'color'>, WithMargin {
   name: Icons;
   /** @default 16 */
   size?: number;
@@ -55,14 +55,14 @@ export const StyledIcon = styled(
   'span',
   getStyledOptions(),
 )<SetRequired<Omit<IconProps, 'url'>, 'size'>>(props => {
-  const { color, name = '', shade, size, spin, variant } = props;
-  const { variants } = getTheme(props);
+  const { color, name = '', size, spin } = props;
+  const theme = getTheme(props);
   let iconColor = color ?? 'inherit';
 
-  if (!color && variant) {
-    const { bg } = getColorVariant(variant, shade, variants);
+  if (color) {
+    const { mainColor } = getColorTokens(color, null, theme);
 
-    iconColor = bg;
+    iconColor = mainColor;
   }
 
   return css`

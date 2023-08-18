@@ -1,11 +1,10 @@
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { grayLighter, grayLightest } from '~/modules/theme';
-
 import {
   ComponentProps,
   Spacing,
   StyledProps,
+  VariantWithTones,
   WithChildrenOptional,
   WithLayout,
   WithMargin,
@@ -20,10 +19,10 @@ export interface SkeletonKnownProps
     WithRadius {
   /**
    *
-   * The color of the animated gradient
-   * @default grayLightest
+   * The accent color of the animation
+   * @default white
    */
-  accentColor?: string;
+  accent?: VariantWithTones;
   /**
    * The animation delay in seconds
    * @default 0
@@ -41,10 +40,10 @@ export interface SkeletonKnownProps
    */
   appearDuration?: number;
   /**
-   * The color at the animation end
-   * @default grayLighter
+   * The background color of the animation
+   * @default gray.50
    */
-  baseColor?: string;
+  bg?: VariantWithTones;
   /**
    *  Take the width of its children
    *  @default false
@@ -81,11 +80,10 @@ export interface SkeletonCircleProps extends Omit<SkeletonProps, 'fitContent'> {
 }
 
 export const baseDefaultProps = {
-  accentColor: grayLightest,
+  accent: 'white',
   animationDelay: 0,
-  animationDuration: 1.5,
+  animationDuration: 1.2,
   appearDuration: 0.4,
-  baseColor: grayLighter,
-  fitContent: false,
+  bg: 'gray.50',
   isLoaded: false,
 } satisfies SkeletonProps;

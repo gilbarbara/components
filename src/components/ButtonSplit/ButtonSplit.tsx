@@ -1,10 +1,10 @@
 import { MouseEventHandler, ReactNode, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { SetRequired } from 'type-fest';
+import { SetRequired } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
-import { backgroundStyles, getStyledOptions } from '~/modules/system';
+import { colorStyles, getStyledOptions } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
@@ -16,7 +16,7 @@ import {
   WithBusy,
   WithButtonSize,
   WithChildren,
-  WithColor,
+  WithColorsDefaultBg,
   WithInvert,
 } from '~/types';
 
@@ -26,7 +26,7 @@ export interface ButtonSplitProps
     WithButtonSize,
     WithBusy,
     WithChildren,
-    WithColor,
+    WithColorsDefaultBg,
     WithInvert {
   dataAttributes?: Record<`data-${string}`, string | number>;
   label: ReactNode;
@@ -36,14 +36,13 @@ export interface ButtonSplitProps
 }
 
 export const defaultProps = {
+  bg: 'primary',
   block: false,
   busy: false,
   disabled: false,
   invert: false,
   position: 'bottom-right',
-  shade: 'mid',
   size: 'md',
-  variant: 'primary',
 } satisfies Omit<ButtonSplitProps, 'children' | 'label' | 'onClick'>;
 
 export const StyledButtonSplit = styled(
@@ -55,7 +54,7 @@ export const StyledButtonSplit = styled(
 
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   const buttonPadding = `${padding[0]} ${padding[1]}`;
-  const styles = backgroundStyles(props);
+  const styles = colorStyles(props);
 
   if (disabled) {
     styles.backgroundColor = grayLight;
@@ -107,7 +106,7 @@ export function ButtonSplit(props: ButtonSplitProps) {
     ...defaultProps,
     ...props,
   };
-  const { disabled, shade, size, variant } = rest;
+  const { bg, disabled, size } = rest;
   const [active, setActive] = useState(false);
 
   const handleToggle = useCallback(
@@ -147,12 +146,11 @@ export function ButtonSplit(props: ButtonSplitProps) {
         {label}
       </ButtonUnstyled>
       <Menu
+        accent={bg}
         component={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={iconSize} />}
         disabled={disabled || busy}
         onToggle={handleToggle}
         position={position}
-        shade={shade}
-        variant={variant}
       >
         {children}
       </Menu>
@@ -160,9 +158,6 @@ export function ButtonSplit(props: ButtonSplitProps) {
   );
 }
 
-export {
-  MenuDivider as ButtonSplitDivider,
-  MenuItem as ButtonSplitItem,
-} from '~/components/Menu/Menu';
+export { MenuDivider as ButtonSplitDivider, MenuItem as ButtonSplitItem } from '~/components/Menu';
 
 ButtonSplit.displayName = 'ButtonSplit';

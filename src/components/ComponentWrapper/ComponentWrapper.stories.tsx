@@ -26,7 +26,7 @@ export const Basic: Story = {
     <>
       <ComponentWrapper
         mb="xl"
-        prefix={<Icon name="check-o" size={24} variant="green" />}
+        prefix={<Icon color="green" name="check-o" size={24} />}
         suffix="toggle-square"
       >
         <Input
@@ -36,12 +36,15 @@ export const Basic: Story = {
           suffixSpacing
         />
       </ComponentWrapper>
-      <ComponentWrapper mb="xl" prefix={<Icon name="check-o" size={24} variant="red" />}>
-        <Select name="A" prefixSpacing>
-          <option>Select an option...</option>
+      <ComponentWrapper mb="xl" prefix={<Icon color="red" name="check-o" size={24} />}>
+        <Select name="A" prefixSpacing value="">
+          <option value="">Select your gender...</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
         </Select>
       </ComponentWrapper>
-      <ComponentWrapper prefix={<Icon name="check-o" size={24} variant="red" />} suffix="check-o">
+      <ComponentWrapper prefix={<Icon color="red" name="check-o" size={24} />} suffix="check-o">
         <Textarea
           name="A"
           placeholder="The quick brown fox jumps over the lazy dog"

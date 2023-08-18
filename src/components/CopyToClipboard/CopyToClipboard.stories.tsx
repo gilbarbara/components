@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { hideProps, marginProps } from '~/stories/__helpers__';
+import { colorProps, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { CopyToClipboard, defaultProps } from './CopyToClipboard';
 
@@ -15,6 +15,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(),
     ...marginProps(),
   },
 } satisfies Meta<typeof CopyToClipboard>;

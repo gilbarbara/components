@@ -1,4 +1,4 @@
-import { forwardRef, MouseEventHandler, ReactNode, useEffect, useRef } from 'react';
+import { forwardRef, ReactNode, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
@@ -7,17 +7,10 @@ import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
-import { SearchItem, SearchProps, Theme } from '~/types';
+import { Theme } from '~/types';
 
 import Item from './Item';
-
-interface SearchItemsProps extends Pick<SearchProps, 'noResultsLabel'> {
-  active: boolean;
-  cursor: number;
-  height: StringOrNumber;
-  items: SearchItem[];
-  onSelect: MouseEventHandler;
-}
+import { SearchItemsProps } from './types';
 
 const StyledSearchItems = styled(
   'div',
@@ -71,7 +64,7 @@ const Empty = styled(
 });
 
 const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) => {
-  const { active, cursor, height, items, noResultsLabel, onSelect } = props;
+  const { accent, active, cursor, height, items, noResultsLabel, onSelect } = props;
   const isActive = useRef(false);
 
   useEffect(() => {
@@ -88,7 +81,13 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
     <Empty>{noResultsLabel}</Empty>
   ) : (
     items.map((data, index) => (
-      <Item key={data.value} isSelected={cursor === index} onClick={onSelect} value={data.value}>
+      <Item
+        key={data.value}
+        accent={data.accent || accent}
+        isSelected={cursor === index}
+        onClick={onSelect}
+        value={data.value}
+      >
         {data.label ?? data.value}
       </Item>
     ))

@@ -17,7 +17,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['accent', 'backgroundColor']),
     ...marginProps(),
   },
 } satisfies Meta<typeof ProgressBar>;

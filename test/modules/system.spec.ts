@@ -1,6 +1,5 @@
 import {
   alignStyles,
-  backgroundStyles,
   baseStyles,
   borderStyles,
   colorStyles,
@@ -18,7 +17,6 @@ import {
   positioningStyles,
   radiusStyles,
   shadowStyles,
-  textColorStyles,
   textStyles,
 } from '~/modules/system';
 
@@ -29,16 +27,6 @@ describe('alignStyles', () => {
 
   it('should return an empty object without the "align" prop', () => {
     expect(alignStyles({})).toMatchSnapshot();
-  });
-});
-
-describe('backgroundStyles', () => {
-  it('should return properly', () => {
-    expect(backgroundStyles({ variant: 'primary', shade: 'mid' })).toMatchSnapshot();
-  });
-
-  it('should return an empty object without any "background" props', () => {
-    expect(backgroundStyles({})).toMatchSnapshot();
   });
 });
 
@@ -65,7 +53,7 @@ describe('borderStyles', () => {
     expect(
       borderStyles({
         border: [
-          { side: 'left', size: 4, variant: 'primary' },
+          { side: 'left', size: 4, color: 'primary.100' },
           { side: 'top', size: 2, color: '#f04' },
         ],
       }),
@@ -79,10 +67,10 @@ describe('borderStyles', () => {
 
 describe('colorStyles', () => {
   it('should return properly', () => {
-    expect(colorStyles({ variant: 'green' })).toMatchSnapshot();
+    expect(colorStyles({ bg: 'primary' })).toMatchSnapshot();
   });
 
-  it('should return an empty object without the "color" prop', () => {
+  it('should return an empty object without any "background" props', () => {
     expect(colorStyles({})).toMatchSnapshot();
   });
 });
@@ -241,20 +229,6 @@ describe('shadowStyles', () => {
 
   it('should return an empty object without any "shadow" props', () => {
     expect(shadowStyles({})).toMatchSnapshot();
-  });
-});
-
-describe('textColorStyles', () => {
-  it('should return a custom "color" prop', () => {
-    expect(textColorStyles({ color: '#f04' })).toMatchSnapshot();
-  });
-
-  it('should return a variant "color" prop', () => {
-    expect(textColorStyles({ colorVariant: 'red', colorShade: 'light' })).toMatchSnapshot();
-  });
-
-  it('should return an empty object without the "color" prop', () => {
-    expect(textColorStyles({})).toMatchSnapshot();
   });
 });
 

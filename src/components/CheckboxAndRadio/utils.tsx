@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { pick, px } from '@gilbarbara/helpers';
 
+import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import {
   baseStyles,
@@ -17,12 +18,13 @@ import {
   ComponentProps,
   RadioItem,
   StyledProps,
+  WithAccent,
   WithComponentSize,
   WithFlexBox,
   WithMargin,
 } from '~/types';
 
-export interface SharedProps extends StyledProps, WithComponentSize, WithMargin {
+export interface SharedProps extends StyledProps, WithAccent, WithComponentSize, WithMargin {
   /** @default center */
   align?: WithFlexBox['align'];
   name: string;
@@ -64,9 +66,10 @@ export const StyledElement = styled(
   'span',
   getStyledOptions('label'),
 )<InnerProps>(props => {
-  const { category = 'checkbox', label, size } = props;
-  const { colors, grayDark, grayDarker, grayLighter, radius, white } = getTheme(props);
+  const { accent = 'primary', category = 'checkbox', label, size } = props;
+  const { grayDark, grayDarker, grayLighter, radius, white, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
+  const { mainColor } = getColorTokens(accent, null, theme);
 
   let after;
   let dimensions = 18;
@@ -94,8 +97,8 @@ export const StyledElement = styled(
     }
 
     after = css`
-      border-bottom: 2px solid ${colors.primary};
-      border-left: 2px solid ${colors.primary};
+      border-bottom: 2px solid ${mainColor};
+      border-left: 2px solid ${mainColor};
       height: ${px(height)};
       transform: rotate(-45deg) translateY(-100%);
       width: ${px(width)};
@@ -112,7 +115,7 @@ export const StyledElement = styled(
     }
 
     after = css`
-      background-color: ${colors.primary};
+      background-color: ${mainColor};
       border-radius: 50%;
       height: ${px(innerDimensions)};
       transform: translate(-50%, -50%);
@@ -137,7 +140,7 @@ export const StyledElement = styled(
     width: ${px(dimensions)};
 
     &:focus {
-      filter: drop-shadow(0 0 2px ${colors.primary});
+      filter: drop-shadow(0 0 2px ${mainColor});
       outline: none;
     }
 
@@ -151,7 +154,7 @@ export const StyledElement = styled(
     }
 
     input:checked ~ & {
-      border-color: ${colors.primary};
+      border-color: ${mainColor};
 
       &:after {
         display: inline-block;
@@ -213,5 +216,5 @@ export function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
     return;
   }
 
-  input.checked = !input.checked;
+  input.click();
 }

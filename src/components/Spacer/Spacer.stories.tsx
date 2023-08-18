@@ -50,10 +50,10 @@ export const Vertical: Story = {
   render: props => (
     <Spacer {...props}>
       <Button size="sm">Yes, add it</Button>
-      <Button size="sm" variant="orange">
+      <Button bg="orange" size="sm">
         Maybe?
       </Button>
-      <Button invert size="sm" variant="red">
+      <Button bg="red" invert size="sm">
         No, cancel
       </Button>
     </Spacer>

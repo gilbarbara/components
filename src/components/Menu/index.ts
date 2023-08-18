@@ -1,1 +1,3 @@
-export { Menu, MenuDivider, MenuItem } from './Menu';
+export { Menu } from './Menu';
+export { MenuDivider } from './Divider';
+export { MenuItem } from './Item';

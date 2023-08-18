@@ -33,7 +33,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...flexBoxProps(),
     ...flexItemProps(),
     ...layoutProps(),
@@ -45,6 +45,7 @@ export default {
 
 export const Basic: Story = {
   args: {
+    bg: 'primary',
     children: (
       <>
         <H3 mb="lg">Hello, I'm the Box!</H3>
@@ -58,8 +59,6 @@ export const Basic: Story = {
     ),
     padding: 'xl',
     radius: 'lg',
-    shade: 'mid',
-    variant: 'primary',
     width: '400',
   },
   argTypes: {
@@ -71,18 +70,19 @@ export const Composed: Story = {
   name: 'Flex (Composed)',
   args: {
     align: 'center',
+    bg: 'white',
     children: (
       <>
-        <BoxCenter padding="lg" variant="blue" width="40%">
+        <BoxCenter bg="blue" padding="lg" width="40%">
           Box 40%
         </BoxCenter>
-        <BoxCenter padding="lg" variant="green" width="60%">
+        <BoxCenter bg="green" padding="lg" width="60%">
           Box 60%
         </BoxCenter>
-        <BoxCenter padding="lg" variant="orange" width="30%">
+        <BoxCenter bg="orange" padding="lg" width="30%">
           Box 30%
         </BoxCenter>
-        <BoxCenter padding="lg" variant="yellow" width="70%">
+        <BoxCenter bg="yellow" padding="lg" width="70%">
           Box 70%
         </BoxCenter>
       </>
@@ -93,7 +93,6 @@ export const Composed: Story = {
     minHeight: 300,
     padding: 'xl',
     shadow: 'high',
-    variant: 'white',
     width: 480,
     wrap: 'wrap',
   },

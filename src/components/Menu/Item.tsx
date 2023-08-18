@@ -4,18 +4,19 @@ import styled from '@emotion/styled';
 import { noop } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { Paragraph } from '~/components/Paragraph';
 
-import { WithColor } from '~/types';
+import { WithAccent, WithColors } from '~/types';
 
 interface ChildProps {
   closeMenu?: () => void;
 }
 
-export interface MenuItemProps extends ChildProps, WithColor {
+export interface MenuItemProps extends ChildProps, WithColors {
   children: ((props: Required<ChildProps>) => ReactNode) | ReactNode;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
@@ -24,14 +25,14 @@ export interface MenuItemProps extends ChildProps, WithColor {
 export const StyledMenuItem = styled(
   'div',
   getStyledOptions(),
-)<Omit<MenuItemProps, 'closeMenu'>>(props => {
-  const { disabled, shade, variant = 'primary' } = props;
-  const { grayDarker, grayScale, spacing, typography, variants } = getTheme(props);
+)<Omit<MenuItemProps, 'closeMenu'> & WithAccent>(props => {
+  const { accent = 'primary', bg, color, disabled } = props;
+  const { grayDarker, grayScale, spacing, typography, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
 
-  const themeColor = darkMode ? grayScale['20'] : grayDarker;
+  const themeColor = darkMode ? grayScale['200'] : grayDarker;
 
-  const { bg, color } = getColorVariant(variant, shade, variants);
+  const { mainColor, textColor } = getColorTokens(bg || accent, color, theme);
 
   return css`
     color: ${themeColor};
@@ -43,11 +44,11 @@ export const StyledMenuItem = styled(
     css`
       &:hover,
       &:active {
-        background-color: ${bg};
-        color: ${color};
+        background-color: ${mainColor};
+        color: ${textColor};
 
         * {
-          color: ${color};
+          color: ${textColor};
         }
       }
     `};

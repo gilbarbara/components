@@ -2,11 +2,13 @@ import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ButtonUnstyled, Icon, Spacer } from '~';
+import { Avatar, Box, ButtonUnstyled, H6, Icon, Paragraph, Spacer } from '~';
 
 import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
-import { defaultProps, Menu, MenuDivider, MenuItem } from './Menu';
+import { MenuDivider } from './Divider';
+import { MenuItem } from './Item';
+import { defaultProps, Menu } from './Menu';
 
 type Story = StoryObj<typeof Menu>;
 
@@ -16,7 +18,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['accent']),
     children: disableControl(),
     component: disableControl(),
   },
@@ -40,18 +42,28 @@ export const Basic: Story = {
     return (
       <Menu {...props}>
         <>
-          <MenuItem disabled>Profile</MenuItem>
+          <MenuItem disabled>
+            <Spacer>
+              <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
+              <Box>
+                <H6 mb={0}>John Smith</H6>
+                <Paragraph>Admin</Paragraph>
+              </Box>
+            </Spacer>
+          </MenuItem>
+          <MenuDivider />
+          <MenuItem>Profile</MenuItem>
           <MenuItem onClick={action('Configuration')}>
             <ButtonUnstyled>Configuration</ButtonUnstyled>
           </MenuItem>
         </>
-        <MenuItem>
+        <MenuItem bg="green">
           {({ closeMenu }) => (
             <ButtonUnstyled onClick={handleClick(closeMenu, 'Help')}>Help</ButtonUnstyled>
           )}
         </MenuItem>
         <MenuDivider />
-        <MenuItem onClick={action('Logout')} variant="red">
+        <MenuItem bg="red" onClick={action('Logout')}>
           {({ closeMenu }) => (
             <ButtonUnstyled onClick={closeMenu}>
               <a href="#logout">Logout</a>
@@ -65,6 +77,7 @@ export const Basic: Story = {
 
 export const WithComponentAndHover: Story = {
   args: {
+    position: 'bottom-left',
     trigger: 'hover',
   },
   argTypes: {
@@ -83,7 +96,7 @@ export const WithComponentAndHover: Story = {
       <MenuItem>Configuration</MenuItem>
       <MenuItem>Help</MenuItem>
       <MenuDivider />
-      <MenuItem variant="red">
+      <MenuItem bg="red">
         <a href="#logout">Logout</a>
       </MenuItem>
     </Menu>

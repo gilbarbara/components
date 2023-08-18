@@ -25,7 +25,7 @@ export default {
 
 export const Basic: Story = {};
 
-export const Variants: Story = {
+export const Types: Story = {
   args: {
     placeholder: '',
   },

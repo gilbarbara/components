@@ -69,6 +69,11 @@ function App() {
       </Box>
 
       <Box mb="md">
+        <Paragraph bold>generatePalette</Paragraph>
+        <Paragraph mt={0}>Generate a palette that ranges from 50 to 900. </Paragraph>
+      </Box>
+
+      <Box mb="md">
         <Paragraph bold>getContainerStyles</Paragraph>
         <Paragraph mt={0}>Add responsive padding to a component.</Paragraph>
       </Box>

@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { MouseEvent, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { disableControl, hideProps, spacingProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, spacingProps } from '~/stories/__helpers__';
 
 import { defaultProps, Pagination } from './Pagination';
 
@@ -18,6 +17,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent']),
     ...spacingProps(),
     currentPage: disableControl(),
     onClick: disableControl(),

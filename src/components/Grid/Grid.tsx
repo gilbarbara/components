@@ -6,9 +6,9 @@ import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
 import {
-  backgroundStyles,
   baseStyles,
   borderStyles,
+  colorStyles,
   displayStyles,
   flexItemStyles,
   getStyledOptions,
@@ -25,7 +25,7 @@ import {
   StyledProps,
   WithBorder,
   WithChildren,
-  WithColor,
+  WithColors,
   WithFlexItem,
   WithLayout,
   WithMargin,
@@ -39,7 +39,7 @@ export interface GridKnownProps
   extends StyledProps,
     WithBorder,
     WithChildren,
-    WithColor,
+    WithColors,
     WithFlexItem,
     WithLayout,
     WithMargin,
@@ -117,7 +117,7 @@ export const StyledGrid = styled(
     row-gap: ${rowGap && px(rowGap)};
 
     ${baseStyles(props)};
-    ${backgroundStyles(props, false)};
+    ${colorStyles(props, false)};
     ${borderStyles(props)};
     ${displayStyles(props)};
     ${flexItemStyles(props)};

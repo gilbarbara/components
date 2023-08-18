@@ -5,13 +5,25 @@ import is from 'is-lite';
 
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
-import { baseStyles, getStyledOptions, textStyles } from '~/modules/system';
+import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules/system';
 
 import { Text } from '~/components/Text';
 
-import { ComponentProps, StyledProps, WithChildren, WithInline, WithTextOptions } from '~/types';
+import {
+  ComponentProps,
+  StyledProps,
+  WithChildren,
+  WithColors,
+  WithInline,
+  WithTextOptions,
+} from '~/types';
 
-export interface LabelKnownProps extends StyledProps, WithChildren, WithInline, WithTextOptions {
+export interface LabelKnownProps
+  extends StyledProps,
+    Pick<WithColors, 'color'>,
+    WithChildren,
+    WithInline,
+    WithTextOptions {
   /** For the htmlFor attribute */
   labelId?: string;
   labelInfo?: ReactNode;
@@ -42,6 +54,7 @@ export const StyledLabel = styled(
     ${!inline ? `margin-bottom: ${spacing.sm}` : ''};
     position: relative;
     white-space: nowrap;
+    ${colorStyles(props)};
     ${textStyles(props)};
 
     [data-component-name='Text'] {
@@ -58,7 +71,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
 
   if (labelInfo) {
     info = is.string(labelInfo) ? (
-      <Text size="mid" variant="gray">
+      <Text color={rest.color} size="mid">
         {labelInfo}
       </Text>
     ) : (

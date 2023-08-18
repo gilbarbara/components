@@ -16,7 +16,7 @@ const StyledDatePicker = styled(
 });
 
 export function DatePicker(props: DatePickerSingleProps) {
-  const { currentMonthLabel, fromDate, onSelect, toDate, variant, ...rest } = {
+  const { currentMonthLabel, fromDate, onSelect, toDate, ...rest } = {
     ...defaultProps,
     ...props,
   };

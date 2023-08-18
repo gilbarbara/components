@@ -3,7 +3,6 @@ import { Children, isValidElement } from 'react';
 import {
   clearNumber,
   createMediaQuery,
-  getColorVariant,
   getElementProperty,
   getMediaQueries,
   getTheme,
@@ -15,7 +14,7 @@ import {
 
 import { Box } from '~/components/Box';
 
-import { MenuDivider, MenuItem } from '../../src/components/Menu/Menu';
+import { MenuDivider, MenuItem } from '../../src/components/Menu';
 
 describe('clearNumber', () => {
   it('should return properly', () => {
@@ -30,26 +29,6 @@ describe('createMediaQuery', () => {
     expect(createMediaQuery('_', mediaQueries)).toBeUndefined();
     expect(createMediaQuery('sm', mediaQueries)).toBe('@media screen and (min-width: 400px)');
     expect(createMediaQuery('600px', mediaQueries)).toBe('@media screen and (min-width: 600px)');
-  });
-});
-
-describe('getColorVariant', () => {
-  it('should return properly', () => {
-    expect(getColorVariant('black')).toEqual({ bg: '#000', color: '#fff' });
-    expect(getColorVariant('black', 'lightest')).toEqual({ bg: '#000', color: '#fff' });
-
-    expect(getColorVariant('white')).toEqual({ bg: '#fff', color: '#000' });
-    expect(getColorVariant('white', 'darkest')).toEqual({ bg: '#fff', color: '#000' });
-
-    expect(getColorVariant('yellow')).toEqual({ bg: '#ffe166', color: '#000000' });
-    expect(getColorVariant('yellow', 'lightest')).toEqual({ bg: '#fffbeb', color: '#000000' });
-    expect(getColorVariant('yellow', 'lighter')).toEqual({ bg: '#fff7d6', color: '#000000' });
-    expect(getColorVariant('yellow', 'light')).toEqual({ bg: '#ffeb99', color: '#000000' });
-    expect(getColorVariant('yellow', 'dark')).toEqual({ bg: '#fac900', color: '#000000' });
-    expect(getColorVariant('yellow', 'darker')).toEqual({ bg: '#a18100', color: '#ffffff' });
-    expect(getColorVariant('yellow', 'darkest')).toEqual({ bg: '#6b5600', color: '#ffffff' });
-    // @ts-ignore
-    expect(getColorVariant()).toEqual({ bg: '#3030e8', color: '#ffffff' });
   });
 });
 

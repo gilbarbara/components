@@ -56,6 +56,13 @@ export function Field<T extends FieldProps>(props: T) {
     isActive: false,
     isDirty: false,
   });
+  const formContext = useFormContext();
+
+  if (!formContext) {
+    throw new Error(
+      'could not find the "form" context value; please ensure the component is wrapped in a <Form>',
+    );
+  }
 
   const {
     formState: { dirtyFields, errors },
@@ -63,7 +70,7 @@ export function Field<T extends FieldProps>(props: T) {
     register,
     setValue,
     unregister,
-  } = useFormContext();
+  } = formContext;
   const registerOptions = useMemo(
     () => getRegisterOptions({ ...props, getValues }),
     [getValues, props],

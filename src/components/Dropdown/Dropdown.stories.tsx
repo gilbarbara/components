@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
@@ -18,7 +17,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['accent']),
     ...marginProps(),
     inputOptions: disableControl(),
     items: disableControl(),

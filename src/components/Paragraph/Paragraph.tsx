@@ -20,7 +20,7 @@ import {
   StyledProps,
   WithAlign,
   WithChildren,
-  WithColor,
+  WithColors,
   WithMargin,
   WithTextOptions,
 } from '~/types';
@@ -29,18 +29,28 @@ export interface ParagraphKnownProps
   extends StyledProps,
     WithAlign,
     WithChildren,
-    WithColor,
+    Pick<WithColors, 'color'>,
     WithMargin,
-    WithTextOptions {}
+    WithTextOptions {
+  /**
+   * Skip the top margin for adjacent paragraphs.
+   * @default false
+   */
+  skipMarginTop?: boolean;
+}
 
 export type ParagraphProps = ComponentProps<HTMLParagraphElement, ParagraphKnownProps>;
 
-export const defaultProps = textDefaultOptions;
+export const defaultProps = {
+  skipMarginTop: false,
+  ...textDefaultOptions,
+};
 
 export const StyledParagraph = styled(
   'p',
   getStyledOptions(),
 )<ParagraphProps>(props => {
+  const { skipMarginTop } = props;
   const { spacing } = getTheme(props);
 
   return css`
@@ -51,9 +61,12 @@ export const StyledParagraph = styled(
     ${colorStyles(props)};
     ${marginStyles(props)};
 
-    & + & {
-      margin-top: ${px(spacing.sm)};
-    }
+    ${!skipMarginTop &&
+    css`
+      & + & {
+        margin-top: ${px(spacing.sm)};
+      }
+    `};
   `;
 });
 

@@ -11,6 +11,7 @@ import {
 } from './utils';
 
 export const defaultProps = {
+  accent: 'primary',
   align: 'center',
   disabled: false,
   size: 'md',
@@ -21,7 +22,7 @@ export const defaultProps = {
  * RadioGroup accepts an `items` prop that render this component in a group and is responsible for managing state and interactions.
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const { align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
+  const { accent, align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
     ...defaultProps,
     ...props,
   };
@@ -46,6 +47,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
         {...rest}
       />
       <StyledElement
+        accent={accent}
         category="radio"
         label={label}
         onKeyDown={handleKeyDown}

@@ -2,19 +2,22 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { clamp, px, round } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
-import { SetRequired } from 'type-fest';
+import { SetRequired, StringOrNumber } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
 
 import { Paragraph } from '~/components/Paragraph';
 
-import { ComponentProps, Shades, StyledProps, WithColor, WithMargin } from '~/types';
+import { ComponentProps, StyledProps, VariantWithTones, WithAccent, WithMargin } from '~/types';
 
-export interface ProgressBarKnownProps extends StyledProps, WithColor, WithMargin {
-  /** @default light */
-  backgroundShade?: Shades;
+export interface ProgressBarKnownProps extends StyledProps, WithAccent, WithMargin {
+  /**
+   * Component track color
+   * @default 'gray.200'
+   */
+  backgroundColor?: VariantWithTones;
   /** @default false */
   hideText?: boolean;
   /** @default false */
@@ -28,11 +31,10 @@ export interface ProgressBarKnownProps extends StyledProps, WithColor, WithMargi
 export type ProgressBarProps = ComponentProps<HTMLDivElement, ProgressBarKnownProps>;
 
 export const defaultProps = {
-  backgroundShade: 'light',
+  accent: 'primary',
+  backgroundColor: 'gray.200',
   hideText: false,
   large: false,
-  shade: 'mid',
-  variant: 'primary',
   width: '100%',
 } satisfies Omit<ProgressBarProps, 'step' | 'steps'>;
 
@@ -55,22 +57,23 @@ export const StyledProgressBar = styled(
 const StyledProgressTrack = styled(
   'div',
   getStyledOptions(),
-)<SetRequired<ProgressBarProps, 'backgroundShade' | 'variant'>>(props => {
-  const { backgroundShade, large, shade, variant } = props;
-  const { radius, variants } = getTheme(props);
-  const { bg } = getColorVariant(variant, shade, variants);
+)<SetRequired<ProgressBarProps, 'accent' | 'backgroundColor'>>(props => {
+  const { accent, backgroundColor, large } = props;
+  const { radius, ...theme } = getTheme(props);
+  const { mainColor } = getColorTokens(accent, null, theme);
+  const { mainColor: bgColor } = getColorTokens(backgroundColor, null, theme);
 
   const height = large ? '8px' : '4px';
 
   return css`
-    background-color: ${variants.gray[backgroundShade].bg};
+    background-color: ${bgColor};
     border-radius: ${large ? radius.xs : radius.xxs};
     line-height: 1;
     height: ${height};
     overflow: hidden;
 
     > div {
-      background-color: ${bg};
+      background-color: ${mainColor};
       height: ${height};
       transition: width 0.4s;
       width: 0;

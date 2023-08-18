@@ -1,8 +1,9 @@
+import { objectKeys } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
 import { variants as themeVariants } from '~/modules/theme';
 
-import { Shades, Variants } from '~/types';
+import { VariantWithTones } from '~/types';
 
 const base = ['normal', 'stretch'];
 const contentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];
@@ -10,8 +11,20 @@ const contentPosition = ['center', 'end', 'flex-end', 'flex-start', 'start'];
 
 export const flexItems = ['baseline', ...base, ...contentPosition];
 export const flexContent = [...base, ...contentDistribution, ...contentPosition];
-export const shades = Object.keys(themeVariants.primary) as Shades[];
-export const variants = Object.keys(themeVariants) as Variants[];
+export const tones = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'] as const;
+export const variants = [...objectKeys(themeVariants), 'black', 'white'] as const;
+export const variantsWithTones = [...objectKeys(themeVariants), 'black', 'white'].reduce<
+  Array<string>
+>(
+  (acc, variant) => {
+    if (variant === 'black' || variant === 'white') {
+      return [...acc, variant];
+    }
+
+    return [...acc, variant, ...tones.map(tone => `${variant}.${tone}`)];
+  },
+  [''],
+) as VariantWithTones[];
 
 export function disableControl() {
   return { control: false };
@@ -42,11 +55,14 @@ export function hideTable() {
   };
 }
 
-export function colorProps() {
-  return {
-    shade: { control: 'select', table: { category: 'Color' } },
-    variant: { control: 'select', table: { category: 'Color' } },
-  };
+export function colorProps(
+  props: Array<'accent' | 'backgroundColor' | 'bg' | 'borderColor' | 'color'> = ['color'],
+) {
+  return props.reduce<PlainObject>((acc, prop) => {
+    acc[prop] = { control: 'select', options: variantsWithTones };
+
+    return acc;
+  }, {});
 }
 
 export function flexBoxProps() {

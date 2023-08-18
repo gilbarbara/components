@@ -2,10 +2,10 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, Box, Paragraph } from '~';
 
-import { disableControl, hideProps, marginProps } from '~/stories/__helpers__';
-import { SearchItem } from '~/types';
+import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { defaultProps, Search } from './Search';
+import { SearchItem } from './types';
 
 type Story = StoryObj<typeof Search>;
 
@@ -18,6 +18,7 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['accent']),
     ...marginProps(),
     items: disableControl(),
     noResultsLabel: { control: 'text' },
@@ -26,13 +27,18 @@ export default {
   parameters: {
     layout: 'fullscreen',
     minHeight: 300,
+    paddingDocs: 'md',
   },
 } satisfies Meta<typeof Search>;
 
 const users = [
   { name: 'John Smith', position: 'Admin', image: 'https://i.pravatar.cc/300?img=68' },
-  { name: 'Maria Garcia', position: 'Admin', image: 'https://i.pravatar.cc/300?img=19' },
-  { name: 'William Brown Jones', position: 'Manager' },
+  {
+    name: 'Maria Garcia',
+    position: 'Admin',
+    image: 'https://i.pravatar.cc/300?img=19',
+  },
+  { accent: 'green', name: 'William Brown Jones', position: 'Manager' },
   { name: 'Martha Johnson', position: 'Manager', image: 'https://i.pravatar.cc/300?img=49' },
   { name: 'Sarah Goldstein', position: 'Member', image: 'https://i.pravatar.cc/300?img=38' },
   { name: 'Robert Rodriguez', position: 'Member', image: 'https://i.pravatar.cc/300?img=18' },
@@ -40,13 +46,14 @@ const users = [
 ];
 
 const items: SearchItem[] = users.map(d => ({
+  accent: d.accent,
   label: (
     <Box display="flex">
-      <Avatar image={d.image} name={d.name} />
+      <Avatar bg={d.accent} image={d.image} name={d.name} />
       <Box ml="xs">
         <Paragraph bold>{d.name}</Paragraph>
         {d.position && (
-          <Paragraph shade="mid" size="mid" variant="gray">
+          <Paragraph size="mid" skipMarginTop>
             {d.position}
           </Paragraph>
         )}

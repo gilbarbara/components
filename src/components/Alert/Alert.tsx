@@ -1,8 +1,9 @@
 import { forwardRef, isValidElement } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import {
   baseStyles,
   borderStyles,
@@ -19,7 +20,6 @@ import {
   ComponentProps,
   Icons,
   StyledProps,
-  Theme,
   WithBorder,
   WithChildren,
   WithFlexBox,
@@ -45,38 +45,38 @@ export interface AlertKnownProps
 
 export type AlertProps = ComponentProps<HTMLDivElement, AlertKnownProps>;
 
-function getVariantName(type: AlertProps['type']) {
-  const variants = {
-    success: 'green',
-    warning: 'orange',
-    error: 'red',
-    info: 'blue',
-    neutral: 'gray',
+function getColor(type: AlertProps['type'], invert?: boolean) {
+  const types = {
+    success: invert ? 'green' : 'green.50',
+    warning: invert ? 'orange' : 'orange.50',
+    error: invert ? 'red' : 'red.50',
+    info: invert ? 'blue' : 'blue.50',
+    neutral: invert ? 'gray' : 'gray.50',
   } as const;
 
-  return variants[type];
+  return types[type];
 }
 
-function getIconOptions(type: AlertProps['type'], variants: Theme['variants']) {
+function getIconOptions(type: AlertProps['type']) {
   const options = {
     success: {
-      color: variants.green.mid.bg,
+      color: 'green',
       icon: 'check-circle',
     },
     warning: {
-      color: variants.orange.mid.bg,
+      color: 'orange',
       icon: 'danger-circle',
     },
     error: {
-      color: variants.red.mid.bg,
+      color: 'red',
       icon: 'close-circle',
     },
     info: {
-      color: variants.blue.mid.bg,
+      color: 'blue',
       icon: 'info-circle',
     },
     neutral: {
-      color: variants.gray.mid.bg,
+      color: 'gray',
       icon: 'message-circle',
     },
   } as const;
@@ -97,16 +97,16 @@ export const StyledAlert = styled(
   getStyledOptions('type'),
 )<AlertProps>(props => {
   const { align, invert, type } = props;
-  const { spacing, variants, white } = getTheme(props);
-  const { bg, color } = getColorVariant(getVariantName(type), 'lighter', variants);
-  let backgroundColor = bg;
-  let borderColor = bg;
+  const { spacing, white, ...theme } = getTheme(props);
+  const { mainColor, textColor } = getColorTokens(getColor(type), null, theme);
+  let backgroundColor = mainColor;
+  let borderColor = mainColor;
 
   if (invert) {
-    const variant = getColorVariant(getVariantName(type), 'mid', variants);
+    const variant = getColorTokens(getColor(type, true), null, theme);
 
     backgroundColor = white;
-    borderColor = variant.bg;
+    borderColor = variant.mainColor;
   }
 
   return css`
@@ -114,7 +114,7 @@ export const StyledAlert = styled(
     align-items: ${align};
     background-color: ${backgroundColor};
     border: 1px solid ${borderColor};
-    color: ${color};
+    color: ${textColor};
     display: flex;
     overflow: hidden;
     position: relative;
@@ -133,9 +133,7 @@ export const StyledAlert = styled(
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   const { children, icon, type, ...rest } = { ...defaultProps, ...props };
-  const { variants } = getTheme({ theme: useTheme() });
-
-  const selected = getIconOptions(type, variants);
+  const selected = getIconOptions(type);
 
   return (
     <StyledAlert ref={ref} data-component-name="Alert" type={type} {...rest}>

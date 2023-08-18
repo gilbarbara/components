@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -6,6 +5,7 @@ import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from '~';
 
 import {
   colorProps,
+  disableControl,
   hideNoControlsWarning,
   hideProps,
   hideTable,
@@ -19,13 +19,10 @@ type Story = StoryObj<typeof Tooltip>;
 export default {
   title: 'Components/Tooltip',
   component: Tooltip,
-  args: {
-    ...defaultProps,
-    content: 'The quick brown fox jumps over the lazy dog',
-  },
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...textOptionsProps(),
     content: { control: 'text' },
   },
@@ -38,6 +35,7 @@ export default {
 export const Basic: Story = {
   args: {
     children: <Icon name="diamond" size={24} title={null} />,
+    content: 'The quick brown fox jumps over the lazy dog',
   },
   argTypes: {
     children: hideTable(),
@@ -58,14 +56,15 @@ export const Popconfirm: Story = {
     return (
       <Tooltip
         ariaLabel="Delete"
+        bg="white"
         content={
           <Box open={isOpen} padding="sm">
             <Paragraph mb="md">Are you sure you want to delete this?</Paragraph>
             <Spacer distribution="end" gap="sm">
-              <Button invert onClick={handleClick} size="sm" variant="black">
+              <Button bg="black" invert onClick={handleClick} size="sm">
                 Cancel
               </Button>
-              <Button onClick={handleClick} size="sm" variant="red">
+              <Button bg="red" onClick={handleClick} size="sm">
                 Delete
               </Button>
             </Spacer>
@@ -75,7 +74,6 @@ export const Popconfirm: Story = {
         position="top"
         radius="md"
         shadow="low"
-        variant="white"
       >
         <ButtonUnstyled onClick={handleClick}>
           <Icon name="trash" size={24} title={null} />
@@ -86,16 +84,18 @@ export const Popconfirm: Story = {
 };
 
 export const Positions: Story = {
-  args: {
-    content: undefined,
+  argTypes: {
+    align: disableControl(),
+    content: disableControl(),
+    position: disableControl(),
+    size: disableControl(),
+    wrap: disableControl(),
   },
-  parameters: {
-    controls: hideNoControlsWarning(),
-  },
-  render: () => (
+  render: props => (
     <Spacer direction="vertical" gap="xxl" grow minWidth={480}>
       <Box display="flex" justify="space-between">
         <Tooltip
+          {...props}
           align="start"
           content="Its me. I am a leftist with large text. Get it?"
           position="top"
@@ -105,6 +105,7 @@ export const Positions: Story = {
         </Tooltip>
 
         <Tooltip
+          {...props}
           align="middle"
           content="I continue in single line unless you specify a size"
           position="top"
@@ -112,12 +113,13 @@ export const Positions: Story = {
           <Button size="sm">Top</Button>
         </Tooltip>
 
-        <Tooltip align="end" content="Emoji? No problem 😎" position="top">
+        <Tooltip {...props} align="end" content="Emoji? No problem 😎" position="top">
           <Button size="sm">Top End</Button>
         </Tooltip>
       </Box>
       <Box display="flex" justify="space-between">
         <Tooltip
+          {...props}
           content={
             <Paragraph>
               I'm a tooltip with <b>wrap="lg"</b> and a Paragraph. I am who I am from my head to my
@@ -130,6 +132,7 @@ export const Positions: Story = {
           <Button size="sm">Left</Button>
         </Tooltip>
         <Tooltip
+          {...props}
           content="I'm using a medium wrap and regular size text. Use me for slightly longer messages"
           position="right"
           size="regular"
@@ -139,15 +142,26 @@ export const Positions: Story = {
         </Tooltip>
       </Box>
       <Box display="flex" justify="space-between">
-        <Tooltip align="start" content="I am in the bottom left" position="bottom">
+        <Tooltip {...props} align="start" content="I am in the bottom left" position="bottom">
           <Button size="sm">Bottom Start</Button>
         </Tooltip>
 
-        <Tooltip align="middle" content="I have a small wrap" position="bottom" wrap="sm">
+        <Tooltip
+          {...props}
+          align="middle"
+          content="I have a small wrap"
+          position="bottom"
+          wrap="sm"
+        >
           <Button size="sm">Bottom</Button>
         </Tooltip>
 
-        <Tooltip align="end" content="Look, its me at the bottom right" position="bottom">
+        <Tooltip
+          {...props}
+          align="end"
+          content="Look, its me at the bottom right"
+          position="bottom"
+        >
           <Button size="sm">Bottom End</Button>
         </Tooltip>
       </Box>

@@ -1,9 +1,11 @@
 import { keyframes } from '@emotion/react';
-import * as scroll from 'scroll';
+import scroll from 'scroll';
+
+import { getColorTokens } from '~/modules/colors';
 
 import * as baseTheme from './theme';
 
-import { Theme, Variants } from '../types';
+import { Theme, VariantWithTones } from '../types';
 
 interface ScrollToOptions {
   element?: HTMLElement;
@@ -12,10 +14,10 @@ interface ScrollToOptions {
 
 export function animateIcon(
   target: HTMLElement,
-  color: Variants = 'primary',
+  color: VariantWithTones,
   theme: Theme = baseTheme,
 ) {
-  const { black, colors, gray, white } = theme;
+  const { mainColor } = getColorTokens(color, null, theme);
 
   /* istanbul ignore else */
   if (target) {
@@ -25,32 +27,13 @@ export function animateIcon(
       return;
     }
 
-    const getColor = (variant: Variants) => {
-      switch (variant) {
-        case 'black': {
-          return black;
-        }
-        case 'white': {
-          return white;
-        }
-        case 'gray': {
-          return gray;
-        }
-        // No default
-      }
-
-      return colors[variant];
-    };
-
     const iconClone = document.createElement('span');
 
     iconClone.innerHTML = icon.innerHTML;
     iconClone.classList.add(icon.className, 'will-animate');
     iconClone.setAttribute(
       'style',
-      `color: ${getColor(color)}; position: absolute; top: ${icon.offsetTop}px; left: ${
-        icon.offsetLeft
-      }px`,
+      `color: ${mainColor}; position: absolute; top: ${icon.offsetTop}px; left: ${icon.offsetLeft}px`,
     );
     target.appendChild(iconClone);
 

@@ -8,16 +8,6 @@ exports[`alignStyles should return properly 1`] = `
 }
 `;
 
-exports[`backgroundStyles should return an empty object without any "background" props 1`] = `{}`;
-
-exports[`backgroundStyles should return properly 1`] = `
-{
-  "backgroundColor": "#3030e8",
-  "border": "1px solid #3030e8",
-  "color": "#ffffff",
-}
-`;
-
 exports[`baseStyles should return properly 1`] = `
 {
   "boxSizing": "border-box",
@@ -29,35 +19,37 @@ exports[`borderStyles should return an empty object without the "border" prop 1`
 
 exports[`borderStyles should return properly for "horizontal" 1`] = `
 {
-  "borderBottom": "1px solid #e0e0e0",
-  "borderTop": "1px solid #e0e0e0",
+  "borderBottom": "1px solid #e6e6e6",
+  "borderTop": "1px solid #e6e6e6",
 }
 `;
 
 exports[`borderStyles should return properly for "left" 1`] = `
 {
-  "borderLeft": "1px solid #e0e0e0",
+  "borderLeft": "1px solid #e6e6e6",
 }
 `;
 
 exports[`borderStyles should return properly for \`true\` 1`] = `
 {
-  "border": "1px solid #e0e0e0",
+  "border": "1px solid #e6e6e6",
 }
 `;
 
 exports[`borderStyles should return properly with an array 1`] = `
 {
-  "borderLeft": "4px solid #c7c7f9",
+  "borderLeft": "4px solid #cdcdfe",
   "borderTop": "2px solid #f04",
 }
 `;
 
-exports[`colorStyles should return an empty object without the "color" prop 1`] = `{}`;
+exports[`colorStyles should return an empty object without any "background" props 1`] = `{}`;
 
 exports[`colorStyles should return properly 1`] = `
 {
-  "color": "#58d063",
+  "backgroundColor": "#3030e8",
+  "border": "1px solid #3030e8",
+  "color": "#ffffff",
 }
 `;
 
@@ -169,7 +161,7 @@ exports[`inputStyles should return custom styles for "input" 1`] = `
     
         background-color: transparent;
         border: 0;
-        border-bottom: 1px solid #767676;
+        border-bottom: 1px solid #808080;
       ;
 
     &:focus {
@@ -181,15 +173,15 @@ exports[`inputStyles should return custom styles for "input" 1`] = `
     &:disabled {
       
     
-    border-color: #e0e0e0;
-    color: #484848;
+    border-color: #e6e6e6;
+    color: #4d4d4d;
     cursor: not-allowed;
   ;
     }
 
     
       &::placeholder {
-        color: #767676;
+        color: #808080;
       }
 
       &:not(:placeholder-shown) {
@@ -199,8 +191,8 @@ exports[`inputStyles should return custom styles for "input" 1`] = `
       &:read-only {
         
     
-    border-color: #e0e0e0;
-    color: #484848;
+    border-color: #e6e6e6;
+    color: #4d4d4d;
     cursor: not-allowed;
   ;
       }
@@ -220,7 +212,7 @@ exports[`inputStyles should return the default styles for "select" 1`] = `
     width: 100%;
     
         background-color: #fff;
-        border: 1px solid #767676;
+        border: 1px solid #808080;
         border-radius: 8px;
       ;
 
@@ -233,15 +225,15 @@ exports[`inputStyles should return the default styles for "select" 1`] = `
     &:disabled {
       
     background-color: #f5f5f5;
-    border-color: #e0e0e0;
-    color: #484848;
+    border-color: #e6e6e6;
+    color: #4d4d4d;
     cursor: not-allowed;
   ;
     }
 
     
       &::placeholder {
-        color: #767676;
+        color: #808080;
       }
 
       &:not(:placeholder-shown) {
@@ -251,8 +243,8 @@ exports[`inputStyles should return the default styles for "select" 1`] = `
       &:read-only {
         
     background-color: #f5f5f5;
-    border-color: #e0e0e0;
-    color: #484848;
+    border-color: #e6e6e6;
+    color: #4d4d4d;
     cursor: not-allowed;
   ;
       }
@@ -326,20 +318,6 @@ exports[`shadowStyles should return a "filter" prop 1`] = `
 `;
 
 exports[`shadowStyles should return an empty object without any "shadow" props 1`] = `{}`;
-
-exports[`textColorStyles should return a custom "color" prop 1`] = `
-{
-  "color": "#f04",
-}
-`;
-
-exports[`textColorStyles should return a variant "color" prop 1`] = `
-{
-  "color": "#ff9999",
-}
-`;
-
-exports[`textColorStyles should return an empty object without the "color" prop 1`] = `{}`;
 
 exports[`textStyles should return an empty object without any "textStyles" prop 1`] = `{}`;
 

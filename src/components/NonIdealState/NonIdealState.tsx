@@ -5,9 +5,9 @@ import { omit } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
 import {
-  backgroundStyles,
   baseStyles,
   borderStyles,
+  colorStyles,
   flexItemStyles,
   getStyledOptions,
   layoutStyles,
@@ -30,7 +30,7 @@ import {
   StyledProps,
   WithBorder,
   WithChildrenOptional,
-  WithColor,
+  WithColors,
   WithFlexItem,
   WithLayout,
   WithMargin,
@@ -42,7 +42,7 @@ import {
 export interface NonIdealStateKnownProps
   extends StyledProps,
     WithBorder,
-    WithColor,
+    WithColors,
     WithChildrenOptional,
     WithFlexItem,
     WithLayout,
@@ -89,7 +89,7 @@ export const StyledNonIdealState = styled(
     text-align: ${direction === 'horizontal' ? 'left' : 'center'};
     width: 100%;
     ${baseStyles(props)};
-    ${backgroundStyles(props, false)};
+    ${colorStyles(props, false)};
     ${borderStyles(props)};
     ${flexItemStyles(props)};
     ${layoutStyles(props)};

@@ -80,7 +80,7 @@ export const StyledFormGroup = styled(
     ${paddingStyles(props)};
     ${radiusStyles(props)};
 
-    [data-component-name='Box'] {
+    [data-component-name='FormGroupContent'] {
       > * {
         margin-bottom: 0;
         margin-top: 0;
@@ -176,7 +176,9 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     content.label = (
       <Label
         labelId={labelId}
-        labelInfo={labelInfo || (required && <Icon name="asterisk" variant="red" />)}
+        labelInfo={
+          labelInfo || (required && <Icon color="red" ml="xxs" name="asterisk" size={12} />)
+        }
         style={labelStyles}
       >
         {label}
@@ -197,7 +199,11 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   );
 
   if (inline) {
-    content.main = <Box display="flex">{content.main}</Box>;
+    content.main = (
+      <Box data-component-name="FormGroupContent" display="flex">
+        {content.main}
+      </Box>
+    );
   }
 
   return (

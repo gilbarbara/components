@@ -19,7 +19,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(),
+    ...colorProps(['bg', 'color']),
     ...flexItemProps(),
     ...layoutProps(),
     ...spacingProps(),

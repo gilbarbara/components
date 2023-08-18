@@ -12,12 +12,12 @@ import { ClickOutside } from '~/components/ClickOutside';
 import { ComponentWrapper } from '~/components/ComponentWrapper';
 import { Icon } from '~/components/Icon';
 import { Input } from '~/components/Input';
+import { SearchProps } from '~/components/Search/types';
 
-import { SearchProps } from '~/types';
-
-import Options from './Items';
+import Items from './Items';
 
 export const defaultProps = {
+  accent: 'primary',
   borderless: false,
   debounce: 0,
   height: 230,
@@ -44,6 +44,7 @@ export const StyledSearch = styled(
 
 export function Search(props: SearchProps) {
   const {
+    accent,
     borderless,
     debounce,
     height,
@@ -213,8 +214,9 @@ export function Search(props: SearchProps) {
             value={value}
           />
         </ComponentWrapper>
-        <Options
+        <Items
           ref={optionsRef}
+          accent={accent}
           active={active}
           cursor={cursor}
           height={height}

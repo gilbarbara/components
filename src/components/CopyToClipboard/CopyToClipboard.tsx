@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 
 import { animateIcon, fadeInOut } from '~/modules/animations';
 import { getTheme } from '~/modules/helpers';
-import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
+import { baseStyles, colorStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
 import { Tooltip } from '~/components/Tooltip';
 
-import { Icons, WithMargin } from '~/types';
+import { Icons, WithColors, WithMargin } from '~/types';
 
-export interface CopyToClipboardProps extends WithMargin {
+export interface CopyToClipboardProps extends Pick<WithColors, 'color'>, WithMargin {
   disableAnimation?: boolean;
   /** @default copy */
   icon?: Icons;
@@ -43,6 +43,7 @@ const StyledCopyToClipboard = styled(
     display: inline-flex;
     line-height: 1;
     position: relative;
+    ${colorStyles(props)};
     ${marginStyles(props)};
   `;
 });
@@ -79,7 +80,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 
   const handleClick = async (event: MouseEvent<HTMLSpanElement>) => {
     if (!disableAnimation) {
-      animateIcon(event.currentTarget, 'primary', theme);
+      animateIcon(event.currentTarget, rest.color || 'primary', theme);
     }
 
     try {

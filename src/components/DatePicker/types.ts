@@ -4,8 +4,9 @@ import { StringOrNumber } from '@gilbarbara/types';
 
 import {
   Alignment,
-  ColorVariants,
+  Color,
   StyledProps,
+  WithAccent,
   WithBorder,
   WithBorderless,
   WithMargin,
@@ -33,7 +34,8 @@ export type DatePickerOmitProps =
 
 export interface DatePickerBaseProps<
   T extends DatePickerSingleClickHandler | DatePickerRangeClickHandler,
-> extends StyledProps {
+> extends StyledProps,
+    WithAccent<Color> {
   /**
    * @default Go to today
    */
@@ -41,8 +43,6 @@ export interface DatePickerBaseProps<
   fromDate?: string | Date;
   onSelect?: T;
   toDate?: string | Date;
-  /** @default primary */
-  variant?: ColorVariants;
 }
 
 export interface DatePickerLayoutProps
@@ -72,12 +72,12 @@ export interface DatePickerRangerProps
   /**
    * For internal use with DatePickerInput
    * @private
-   * */
+   */
   onApply?: (selected: DatePickerRangeParameter) => void;
   /**
    * For internal use with DatePickerInput
    * @private
-   * */
+   */
   showApply?: boolean;
 }
 

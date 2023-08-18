@@ -1,44 +1,52 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { SetRequired } from 'type-fest';
+import { SetRequired } from '@gilbarbara/types';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens, getColorWithTone } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
-import { ComponentProps, Shades, StyledProps, WithColor, WithMargin } from '~/types';
+import { ComponentProps, StyledProps, Tone, Variant, WithMargin } from '~/types';
 
-export interface StatusIndicatorKnownProps extends StyledProps, WithColor, WithMargin {
-  /** @default lighter */
-  centerShade?: Shades;
+export interface StatusIndicatorKnownProps extends StyledProps, WithMargin {
+  /** Component color */
+  color?: Variant | string;
   ratio?: number;
   size?: number;
+  /** @default 100 */
+  tone?: Tone;
 }
 
 export type StatusIndicatorProps = ComponentProps<HTMLDivElement, StatusIndicatorKnownProps>;
 
 export const defaultProps = {
-  centerShade: 'lighter',
+  color: 'green',
+  tone: '100',
   ratio: 0.7,
-  shade: 'mid',
   size: 24,
-  variant: 'green',
 } satisfies StatusIndicatorProps;
 
 const StyledStatusIndicator = styled(
   'div',
   getStyledOptions(),
-)<SetRequired<StatusIndicatorProps, 'centerShade' | 'ratio' | 'size' | 'variant'>>(props => {
-  const { centerShade, ratio, shade, size, variant } = props;
-  const { variants } = getTheme(props);
-  const { bg } = getColorVariant(variant, shade, variants);
-  const { bg: centerBg } = getColorVariant(variant, centerShade, variants);
+)<SetRequired<StatusIndicatorProps, 'color' | 'ratio' | 'size' | 'tone'>>(props => {
+  const { color, ratio, size, tone } = props;
+  const { white, ...theme } = getTheme(props);
+  const { mainColor, variant } = getColorTokens(color, null, theme);
+  let centerBg: string;
+
+  if (variant) {
+    ({ mainColor: centerBg } = getColorTokens(`${variant}.${tone}`, null, theme));
+  } else {
+    centerBg = getColorWithTone(mainColor, tone);
+  }
 
   const innerSize = size * ratio < size ? size * ratio : size;
 
   return css`
     align-items: center;
-    background-color: ${bg};
+    background-color: ${mainColor};
     border-radius: 50%;
     display: inline-flex;
     height: ${px(size)};

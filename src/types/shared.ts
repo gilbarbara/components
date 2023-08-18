@@ -11,9 +11,17 @@ import {
   Sizes,
   TextSizes,
 } from './common';
-import { ButtonSizes, Radius, Shades, Shadow, Spacing, Theme, Variants } from './theme';
+import { ButtonSize, Radius, Shadow, Spacing, Theme, VariantWithTones } from './theme';
 
 type SpacingAuto = Spacing | 0 | 'auto';
+
+export interface WithAccent<T = VariantWithTones> {
+  /**
+   * Component accent color
+   * @default primary
+   */
+  accent?: T;
+}
 
 export interface WithAlign {
   /**
@@ -44,7 +52,7 @@ export interface WithButtonSize {
    * Button size
    * @default md
    */
-  size?: ButtonSizes;
+  size?: ButtonSize;
 }
 
 export interface WithBusy {
@@ -65,14 +73,25 @@ export interface WithChildrenOptional {
   children?: ReactNode;
 }
 
-export interface WithColor {
+export interface WithColors {
   /**
-   * Component shade
-   * @default mid
+   * Component background color
    */
-  shade?: Shades;
-  /** Component color */
-  variant?: Variants;
+  bg?: VariantWithTones;
+  /**
+   * Component color
+   */
+  color?: VariantWithTones;
+}
+
+export interface WithColorsDefaultBg extends WithColors {
+  /** @default primary */
+  bg?: VariantWithTones;
+}
+
+export interface WithColorsDefaultColor extends WithColors {
+  /** @default primary */
+  color?: VariantWithTones;
 }
 
 export interface WithComponentSize {
@@ -177,7 +196,7 @@ export interface WithInvert {
   /**
    * Invert background
    * @default false
-   * */
+   */
   invert?: boolean;
 }
 
@@ -256,22 +275,19 @@ export interface WithPositioning {
 }
 
 export interface WithRadius {
-  radius?: Radius | false;
+  radius?:
+    | Radius
+    | {
+        bottom?: Radius;
+        left?: Radius;
+        right?: Radius;
+        top?: Radius;
+      }
+    | false;
 }
 
 export interface WithShadow {
   shadow?: Shadow | false;
-}
-
-export interface WithTextColor {
-  color?: string;
-  /**
-   * Component shade
-   * @default mid
-   */
-  colorShade?: Shades;
-  /** Component color */
-  colorVariant?: Variants;
 }
 
 export interface WithTextSize<T = TextSizes> {

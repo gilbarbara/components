@@ -4,11 +4,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { useMergeRefs } from '@gilbarbara/hooks';
-import { PlainObject } from '@gilbarbara/types';
+import { PlainObject, SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
-import { SetRequired } from 'type-fest';
 
-import { getColorVariant, getTheme } from '~/modules/helpers';
+import { getColorTokens, getColorWithTone } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { baseStyles, getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { Label } from '~/components/Label';
@@ -16,12 +16,12 @@ import { Label } from '~/components/Label';
 import {
   ComponentProps,
   StyledProps,
-  WithColor,
+  WithAccent,
   WithComponentSize,
   WithTextOptions,
 } from '~/types';
 
-export interface ToggleKnownProps extends StyledProps, WithColor, WithComponentSize {
+export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponentSize {
   /**
    * Initial status (uncontrolled mode)
    * @default false
@@ -45,7 +45,7 @@ export interface ToggleKnownProps extends StyledProps, WithColor, WithComponentS
 
 export type ToggleProps = ComponentProps<HTMLDivElement, ToggleKnownProps>;
 
-interface InnerProps extends SetRequired<ToggleProps, 'shade' | 'size' | 'variant'> {
+interface InnerProps extends SetRequired<ToggleProps, 'accent' | 'size'> {
   isActive: boolean;
 }
 
@@ -71,11 +71,10 @@ const styles = {
 };
 
 export const defaultProps = {
+  accent: 'primary',
   defaultChecked: false,
   disabled: false,
-  shade: 'mid',
   size: 'md',
-  variant: 'primary',
 } satisfies ToggleProps;
 
 const StyledInput = styled('input')`
@@ -92,14 +91,14 @@ const StyledTrack = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { isActive, shade, variant } = props;
-  const { grayDark, grayLighter, radius, variants } = getTheme(props);
+  const { accent, isActive } = props;
+  const { grayDark, grayLighter, radius, ...theme } = getTheme(props);
 
-  const { bg } = getColorVariant(variant, shade, variants);
+  const { mainColor } = getColorTokens(accent, null, theme);
   let backgroundColor = isDarkMode(props) ? grayDark : grayLighter;
 
   if (isActive) {
-    backgroundColor = bg;
+    backgroundColor = mainColor;
   }
 
   return css`
@@ -118,23 +117,16 @@ const StyledButton = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { disabled, isActive, shade, size, variant } = props;
-  const { grayDarker, variants, white } = getTheme(props);
+  const { accent, disabled, isActive, size } = props;
+  const { grayDarker, white, ...theme } = getTheme(props);
+  const { mainColor } = getColorTokens(accent, null, theme);
 
-  let backgroundColor;
+  let backgroundColor = white;
 
-  if (variant === 'black') {
-    backgroundColor = white;
-  } else if (variant === 'white') {
+  if (accent === 'white' && isActive) {
     backgroundColor = grayDarker;
-  } else {
-    const currentVariant = variants[variant];
-
-    if (['lighter', 'lightest'].includes(shade)) {
-      backgroundColor = isActive ? currentVariant.light.bg : white;
-    } else {
-      backgroundColor = isActive ? currentVariant.lightest.bg : white;
-    }
+  } else if (isActive) {
+    backgroundColor = getColorWithTone(mainColor, '50');
   }
 
   const { height, space } = styles[size];
@@ -180,6 +172,7 @@ export const StyledToggle = styled('div')<SetRequired<ToggleProps, 'size'>>(prop
 
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => {
   const {
+    accent,
     checked,
     defaultChecked,
     disabled,
@@ -188,9 +181,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     name,
     onChange,
     onClick,
-    shade,
     size,
-    variant,
     ...rest
   } = { ...defaultProps, ...props };
   const inputRef = useRef<HTMLInputElement>(null);
@@ -268,14 +259,8 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         tabIndex={0}
         {...rest}
       >
-        <StyledTrack isActive={isActive} shade={shade} size={size} variant={variant} />
-        <StyledButton
-          disabled={disabled}
-          isActive={isActive}
-          shade={shade}
-          size={size}
-          variant={variant}
-        />
+        <StyledTrack accent={accent} isActive={isActive} size={size} />
+        <StyledButton accent={accent} disabled={disabled} isActive={isActive} size={size} />
       </StyledToggle>
       {label}
     </Label>

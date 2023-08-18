@@ -46,12 +46,12 @@ export const Basic: Story = {};
 
 export const Custom: Story = {
   args: {
-    border: { size: 4, shade: 'mid', variant: 'primary' },
+    border: { size: 4, color: 'primary' },
     children: <Icon name="flash" size={48} />,
+    color: 'primary',
     height: 64,
     justify: 'center',
     radius: 'round',
-    variant: 'primary',
     width: 64,
   },
   argTypes: {
