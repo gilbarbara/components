@@ -7,9 +7,9 @@ import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
+import { getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
 
-import { Box } from '~/components/Box';
+import { Box, BoxCenter } from '~/components/Box';
 import { ClickOutside } from '~/components/ClickOutside';
 import { Icon } from '~/components/Icon';
 import { Text } from '~/components/Text';
@@ -19,9 +19,9 @@ import { Alignment } from '~/types';
 import { DatePickerRange } from './Range';
 import { DatePicker } from './Single';
 import {
-  DatePickerInputProps,
   DatePickerRangeClickHandler,
   DatePickerRangeParameter,
+  DatePickerSelectorProps,
   DatePickerSingleClickHandler,
 } from './types';
 import { defaultProps, getNumberOfMonths } from './utils';
@@ -29,30 +29,30 @@ import { defaultProps, getNumberOfMonths } from './utils';
 interface State {
   isActive: boolean;
   isFilled: boolean;
-  selected: DatePickerRangeParameter | string;
+  selectedDates: DatePickerRangeParameter | string;
 }
 
-export const inputDefaultProps = {
+export const selectorDefaultProps = {
   ...defaultProps,
   borderless: false,
   accent: 'primary',
   large: false,
+  mode: 'single',
   position: 'right',
   separator: ' — ',
-  showRange: false,
   showRangeApply: false,
   width: 'auto',
-} satisfies DatePickerInputProps;
+} satisfies DatePickerSelectorProps;
 
 const StyledButton = styled(
   'div',
   getStyledOptions(),
 )<
-  Pick<DatePickerInputProps, 'accent' | 'borderless' | 'large' | 'theme' | 'width'> & {
+  Pick<DatePickerSelectorProps, 'accent' | 'borderless' | 'large' | 'theme' | 'width'> & {
     isFilled: boolean;
   }
 >(props => {
-  const { accent = inputDefaultProps.accent, borderless, isFilled, large, width } = props;
+  const { accent = selectorDefaultProps.accent, borderless, isFilled, large, width } = props;
   const {
     darkColor,
     grayDark,
@@ -66,8 +66,8 @@ const StyledButton = styled(
     ...theme
   } = getTheme(props);
   const darkMode = isDarkMode(props);
-
   const { mainColor } = getColorTokens(accent, null, theme);
+
   let borderColor = darkMode ? grayDark : grayMid;
   let textColor = grayMid;
 
@@ -78,15 +78,14 @@ const StyledButton = styled(
 
   const styles = borderless
     ? css`
-        border: 0 !important;
-        border-bottom: 1px solid ${borderColor} !important;
+        border-bottom: 1px solid ${borderColor};
         border-radius: 0 !important;
-        padding: ${spacing.xxs} 0 !important;
+        padding: ${spacing.xxs} 0;
       `
     : css`
         border: 1px solid ${borderColor};
         border-radius: ${radius.xs};
-        padding: 0 ${spacing.md} !important;
+        padding-left: ${spacing.md};
       `;
 
   return css`
@@ -97,9 +96,10 @@ const StyledButton = styled(
     display: flex;
     justify-content: space-between;
     min-height: ${large ? inputHeight.large : inputHeight.normal};
-    min-width: 240px;
+    min-width: 200px;
     width: ${width ? px(width) : 'auto'};
     ${styles};
+    ${marginStyles(props)};
   `;
 });
 
@@ -145,25 +145,29 @@ const StyledContent = styled(
   `;
 });
 
-export function DatePickerInput(props: DatePickerInputProps) {
+export function DatePickerSelector(props: DatePickerSelectorProps) {
   const {
     borderless,
+    formatLocale,
     large,
-    onSelect,
+    mode,
+    name,
+    onChange,
     open,
     placeholder,
     position,
+    selected,
     separator,
-    showRange,
     showRangeApply,
     width,
     ...rest
-  } = { ...inputDefaultProps, ...props };
-  const [{ isActive, isFilled, selected }, setState] = useSetState<State>({
+  } = { ...selectorDefaultProps, ...props };
+  const [{ isActive, isFilled, selectedDates }, setState] = useSetState<State>({
     isActive: open ?? false,
     isFilled: false,
-    selected: showRange ? [undefined, undefined] : '',
+    selectedDates: mode === 'range' ? selected ?? [undefined, undefined] : selected ?? '',
   });
+  const isRange = mode === 'range';
 
   const toggle = () => {
     if (is.boolean(open)) {
@@ -174,21 +178,21 @@ export function DatePickerInput(props: DatePickerInputProps) {
   };
 
   const handleApply = (isoDate: DatePickerRangeParameter) => {
-    if (onSelect) {
-      onSelect(isoDate);
+    if (onChange) {
+      (onChange as DatePickerRangeClickHandler)(isoDate);
     }
 
     toggle();
   };
 
-  const handleSelect = (isoDate: DatePickerRangeParameter | string) => {
+  const handleSelect = (isoDate: DatePickerRangeParameter & string) => {
     setState({
       isFilled: is.array(isoDate) ? isoDate.some(Boolean) : !!isoDate,
-      selected: isoDate,
+      selectedDates: isoDate,
     });
 
-    if (onSelect && !showRangeApply) {
-      onSelect(isoDate);
+    if (onChange && !showRangeApply) {
+      onChange(isoDate);
     }
 
     if (
@@ -199,64 +203,80 @@ export function DatePickerInput(props: DatePickerInputProps) {
     }
   };
 
-  const picker = showRange ? (
+  const picker = isRange ? (
     <DatePickerRange
       {...rest}
       onApply={handleApply}
-      onSelect={handleSelect as DatePickerRangeClickHandler}
+      onChange={handleSelect as DatePickerRangeClickHandler}
+      selected={selectedDates as DatePickerRangeParameter}
       showApply={showRangeApply}
     />
   ) : (
-    <DatePicker {...rest} onSelect={handleSelect as DatePickerSingleClickHandler} />
+    <DatePicker
+      {...rest}
+      onChange={handleSelect as DatePickerSingleClickHandler}
+      selected={selectedDates as string}
+    />
   );
 
-  let title: ReactNode = showRange ? 'Select a date range' : 'Select a date';
+  let title: ReactNode = isRange ? 'Select a date range' : 'Select a date';
 
   if (placeholder) {
     title = placeholder;
   }
 
-  if (is.array(selected) && selected.some(Boolean)) {
-    const dates = selected.reduce((acc, d, index) => {
-      acc.push(d ? formatDateLocale(d) : '???');
+  if (is.array(selectedDates) && selectedDates.some(Boolean)) {
+    const dates = selectedDates.reduce<string[]>((acc, d, index) => {
+      acc.push(d ? formatDateLocale(d, { locale: formatLocale }) : '???');
 
       if (index === 0) {
         acc.push(separator);
       }
 
       return acc;
-    }, [] as string[]);
+    }, []);
 
     title = <Text>{dates.map(d => d)}</Text>;
-  } else if (!is.array(selected) && selected) {
-    title = formatDateLocale(selected);
+  } else if (!is.array(selectedDates) && selectedDates) {
+    title = formatDateLocale(selectedDates, { locale: formatLocale });
   }
 
   const numberOfMonths = getNumberOfMonths(rest.fromDate, rest.toDate);
 
   return (
-    <Box data-component-name="DatePickerInput" position="relative">
+    <Box data-component-name="DatePickerSelector" position="relative">
       <ClickOutside active={isActive} onClick={toggle}>
         <StyledButton
-          data-component-name="DatePickerInputButton"
+          data-component-name="DatePickerSelectorButton"
           isFilled={isFilled}
           onClick={toggle}
-          {...omit(props, 'onSelect')}
+          {...omit(props, 'hidden', 'onChange')}
         >
           {title}
-          <Icon name="calendar" />
+          <BoxCenter width={borderless ? undefined : 40}>
+            <Icon name="calendar" />
+          </BoxCenter>
         </StyledButton>
         <StyledContent
-          data-component-name="DatePickerInputContent"
+          data-component-name="DatePickerSelectorContent"
           isActive={isActive}
           position={position}
-          wide={showRange && numberOfMonths > 1}
+          wide={isRange && numberOfMonths > 1}
         >
           {picker}
         </StyledContent>
+        {name && (
+          <input
+            name={name}
+            type="hidden"
+            value={
+              is.array(selectedDates) ? selectedDates.filter(Boolean).join(',') : selectedDates
+            }
+          />
+        )}
       </ClickOutside>
     </Box>
   );
 }
 
-DatePickerInput.displayName = 'DatePickerInput';
+DatePickerSelector.displayName = 'DatePickerSelector';
