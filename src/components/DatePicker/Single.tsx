@@ -16,43 +16,44 @@ const StyledDatePicker = styled(
 });
 
 export function DatePicker(props: DatePickerSingleProps) {
-  const { currentMonthLabel, fromDate, onSelect, toDate, ...rest } = {
+  const { currentMonthLabel, fromDate, month, onChange, selected, toDate, ...rest } = {
     ...defaultProps,
     ...props,
   };
-  const [selected, setSelected] = useState<Date | undefined>(undefined);
-  const [month, setMonth] = useState<Date | undefined>(undefined);
+  const [selectedDate, setSelectedDate] = useState<string | undefined>(selected);
+  const selectedDateObject = selectedDate ? new Date(selectedDate) : undefined;
+  const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(month ?? selectedDateObject);
 
   const handleSelect: SelectSingleEventHandler = (_day, selectedDay, modifiers) => {
     if (modifiers.disabled || modifiers.outside) {
       return;
     }
 
-    let nextDate: Date | undefined = selectedDay;
+    let nextDate: string | undefined = selectedDay.toISOString();
 
-    if (selected && selected.toISOString() === selectedDay.toISOString()) {
+    if (selectedDate && selectedDate === selectedDay.toISOString()) {
       nextDate = undefined;
     }
 
-    setSelected(nextDate);
+    setSelectedDate(nextDate);
 
-    if (onSelect) {
-      onSelect(nextDate ? selectedDay.toISOString() : '');
+    if (onChange) {
+      onChange(nextDate ? selectedDay.toISOString() : '');
     }
   };
 
   return (
     <StyledDatePicker
       data-component-name="DatePicker"
-      {...omit(props, 'hidden', 'onDayClick', 'onSelect')}
+      {...omit(props, 'hidden', 'onDayClick', 'onChange')}
     >
       <DayPicker
-        footer={getFooter(setMonth, currentMonthLabel)}
+        footer={getFooter(setSelectedMonth, currentMonthLabel)}
         mode="single"
-        month={month}
-        onMonthChange={setMonth}
+        month={selectedMonth}
+        onMonthChange={setSelectedMonth}
         onSelect={handleSelect}
-        selected={selected}
+        selected={selectedDateObject}
         {...getRange<DayPickerSingleProps>(fromDate, toDate)}
         {...rest}
       />

@@ -1,10 +1,5 @@
 import { ReactNode, useState } from 'react';
-import {
-  DateRange,
-  DayPicker,
-  DayPickerRangeProps,
-  SelectRangeEventHandler,
-} from 'react-day-picker';
+import { DayPicker, DayPickerRangeProps, SelectRangeEventHandler } from 'react-day-picker';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { formatDateLocale, omit } from '@gilbarbara/helpers';
@@ -19,42 +14,56 @@ import { Paragraph } from '~/components/Paragraph';
 import { Spacer } from '~/components/Spacer';
 import { Text } from '~/components/Text';
 
-import { DatePickerRangerProps } from './types';
+import { DatePickerRangeParameter, DatePickerRangeProps } from './types';
 import { defaultProps, getFooter, getNumberOfMonths, getRange, getStyles } from './utils';
 
 export const rangeDefaultProps = {
   ...defaultProps,
   showApply: false,
-} satisfies DatePickerRangerProps;
+} satisfies DatePickerRangeProps;
 
 const StyledDatePicker = styled(
   'div',
   getStyledOptions('onApply'),
-)<DatePickerRangerProps>(props => {
+)<DatePickerRangeProps>(props => {
   return getStyles(props);
 });
 
-export function DatePickerRange(props: DatePickerRangerProps) {
+export function DatePickerRange(props: DatePickerRangeProps) {
   const {
     accent,
     currentMonthLabel,
     formatLocale,
     fromDate,
+    month,
     onApply,
-    onSelect,
+    onChange,
+    selected,
     showApply,
     toDate,
     ...rest
   } = { ...rangeDefaultProps, ...props };
-  const [month, setMonth] = useState<Date | undefined>(undefined);
-  const [range, setRange] = useState<DateRange | undefined>(undefined);
+  const [selectedDates, setSelectedDates] = useState<DatePickerRangeParameter | undefined>(
+    selected,
+  );
+
+  let initialDate: Date | undefined;
+  let endDate: Date | undefined;
+
+  if (selectedDates) {
+    initialDate = selectedDates[0] ? new Date(selectedDates[0]) : undefined;
+    endDate = selectedDates[1] ? new Date(selectedDates[1]) : undefined;
+  }
+
+  const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(month ?? initialDate);
+
   const { radius, spacing } = getTheme({ theme: useTheme() });
 
   const handleClickSelect: SelectRangeEventHandler = selectedRange => {
-    setRange(selectedRange);
+    setSelectedDates([selectedRange?.from?.toISOString(), selectedRange?.to?.toISOString()]);
 
-    if (onSelect) {
-      onSelect([
+    if (onChange) {
+      onChange([
         selectedRange?.from?.toISOString() ?? undefined,
         selectedRange?.to?.toISOString() ?? undefined,
       ]);
@@ -63,40 +72,41 @@ export function DatePickerRange(props: DatePickerRangerProps) {
 
   const handleClickApply = () => {
     if (onApply) {
-      onApply([range?.from?.toISOString() ?? undefined, range?.to?.toISOString() ?? undefined]);
+      onApply([selectedDates?.[0], selectedDates?.[1]]);
     }
   };
 
   const handleClickReset = () => {
-    setRange({ from: undefined, to: undefined });
+    setSelectedDates([undefined, undefined]);
 
-    if (onSelect) {
-      onSelect([undefined, undefined]);
+    if (onChange) {
+      onChange([undefined, undefined]);
     }
   };
 
-  const { from, to } = range ?? {};
-
-  const modifiers = { from: from ?? false, to: to ?? false };
+  const modifiers = {
+    from: initialDate ? new Date(initialDate) : false,
+    to: endDate ? new Date(endDate) : false,
+  };
   const content: PlainObject<ReactNode> = {
     header: <Paragraph>Select the initial date</Paragraph>,
   };
 
   if (showApply) {
     content.footer = getFooter(
-      setMonth,
+      setSelectedMonth,
       currentMonthLabel,
       <Spacer>
-        <Button bg={accent} disabled={!from} invert onClick={handleClickReset} size="sm">
+        <Button bg={accent} disabled={!initialDate} invert onClick={handleClickReset} size="sm">
           Reset
         </Button>
-        <Button bg={accent} disabled={!to} onClick={handleClickApply} size="sm">
+        <Button bg={accent} disabled={!endDate} onClick={handleClickApply} size="sm">
           Apply
         </Button>
       </Spacer>,
     );
   } else {
-    content.footer = getFooter(setMonth, currentMonthLabel);
+    content.footer = getFooter(setSelectedMonth, currentMonthLabel);
     content.reset = (
       <Button
         bg={accent}
@@ -114,17 +124,17 @@ export function DatePickerRange(props: DatePickerRangerProps) {
     );
   }
 
-  if (from && to) {
+  if (initialDate && endDate) {
     content.header = (
       <Spacer distribution="center">
         <Text>
-          From {formatDateLocale(from.toISOString(), { locale: formatLocale })} to{' '}
-          {formatDateLocale(to.toISOString(), { locale: formatLocale })}
+          From {formatDateLocale(initialDate.toISOString(), { locale: formatLocale })} to{' '}
+          {formatDateLocale(endDate.toISOString(), { locale: formatLocale })}
         </Text>
         {content.reset}
       </Spacer>
     );
-  } else if (from) {
+  } else if (initialDate) {
     content.header = <Paragraph>Select the final date</Paragraph>;
   }
 
@@ -132,7 +142,7 @@ export function DatePickerRange(props: DatePickerRangerProps) {
     <StyledDatePicker
       accent={accent}
       data-component-name="DatePickerRange"
-      {...omit(props, 'hidden', 'onSelect')}
+      {...omit(props, 'hidden', 'onChange')}
     >
       <BoxCenter mb="md" minHeight={30}>
         {content.header}
@@ -140,11 +150,11 @@ export function DatePickerRange(props: DatePickerRangerProps) {
       <DayPicker
         mode="range"
         modifiers={modifiers}
-        month={month}
+        month={selectedMonth}
         numberOfMonths={getNumberOfMonths(fromDate, toDate)}
-        onMonthChange={setMonth}
+        onMonthChange={setSelectedMonth}
         onSelect={handleClickSelect}
-        selected={range}
+        selected={{ from: initialDate, to: endDate }}
         {...getRange<DayPickerRangeProps>(fromDate, toDate)}
         {...rest}
       />

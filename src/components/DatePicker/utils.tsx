@@ -18,12 +18,7 @@ import {
 import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
-import {
-  DatePickerBaseProps,
-  DatePickerLayoutProps,
-  DatePickerRangeClickHandler,
-  DatePickerSingleClickHandler,
-} from './types';
+import { DatePickerBaseProps, DatePickerLayoutProps } from './types';
 
 export const defaultProps = {
   accent: 'primary',
@@ -107,10 +102,7 @@ export function getRange<T extends DayPickerProps>(
   return additionalProps;
 }
 
-export function getStyles(
-  props: DatePickerBaseProps<DatePickerSingleClickHandler | DatePickerRangeClickHandler> &
-    DatePickerLayoutProps,
-) {
+export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
   const { accent = 'primary' } = props;
   const { colors, grayLight, grayMid, spacing, typography, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
@@ -190,11 +182,11 @@ export function getStyles(
     .${className}-month {
       margin: 0 ${spacing.xs};
 
-      &:first-child {
+      &:first-of-type {
         margin-left: 0;
       }
 
-      &:last-child {
+      &:last-of-type {
         margin-right: 0;
       }
     }
@@ -332,15 +324,6 @@ export function getStyles(
       &[disabled] {
         color: unset;
         opacity: unset;
-      }
-
-      &:focus:not([disabled])
-        + .${className}-caption_label,
-        &:active:not([disabled])
-        + .${className}-caption_label {
-        background-color: ${colorVariant['200']};
-        border-radius: 6px;
-        border: 2px solid ${colorMain};
       }
     }
 

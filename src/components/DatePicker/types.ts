@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { DayPickerRangeProps, DayPickerSingleProps } from 'react-day-picker';
+import { DayPickerBase, DayPickerRangeProps, DayPickerSingleProps } from 'react-day-picker';
 import { StringOrNumber } from '@gilbarbara/types';
 
 import {
@@ -16,32 +16,17 @@ import {
   WithShadow,
 } from '~/types';
 
-export type DatePickerRangeParameter = [string | undefined, string | undefined];
+export type DatePickerRangeParameter = [from?: string, to?: string];
 
-export type DatePickerClickHandler = (isoString: string | DatePickerRangeParameter) => void;
-export type DatePickerRangeClickHandler = (isoStrings: DatePickerRangeParameter) => void;
-export type DatePickerSingleClickHandler = (isoString: string) => void;
+export type DatePickerRangeClickHandler = (range: DatePickerRangeParameter) => void;
+export type DatePickerSingleClickHandler = (isoDate: string) => void;
 
-export type DatePickerOmitProps =
-  | 'fromDate'
-  | 'mode'
-  | 'modifiers'
-  | 'month'
-  | 'onMonthChange'
-  | 'onSelect'
-  | 'selected'
-  | 'toDate';
-
-export interface DatePickerBaseProps<
-  T extends DatePickerSingleClickHandler | DatePickerRangeClickHandler,
-> extends StyledProps,
-    WithAccent<Color> {
+export interface DatePickerBaseProps extends StyledProps, WithAccent<Color> {
   /**
    * @default Go to today
    */
   currentMonthLabel?: ReactNode;
   fromDate?: string | Date;
-  onSelect?: T;
   toDate?: string | Date;
 }
 
@@ -52,20 +37,12 @@ export interface DatePickerLayoutProps
     WithRadius,
     WithShadow {}
 
-export type DatePickerProps<
-  T extends DatePickerSingleClickHandler | DatePickerRangeClickHandler,
-  M extends 'single' | 'range',
-> = DatePickerBaseProps<T> &
-  Omit<M extends 'single' ? DayPickerSingleProps : DayPickerRangeProps, DatePickerOmitProps>;
-
-export interface DatePickerSingleProps
-  extends DatePickerProps<DatePickerSingleClickHandler, 'single'>,
-    DatePickerLayoutProps {}
-
-export interface DatePickerRangerProps
-  extends DatePickerProps<DatePickerRangeClickHandler, 'range'>,
-    DatePickerLayoutProps {
+export interface DatePickerRangeProps
+  extends DatePickerBaseProps,
+    DatePickerLayoutProps,
+    Omit<DayPickerRangeProps, 'fromDate' | 'mode' | 'selected' | 'onSelect' | 'toDate'> {
   /**
+   * The date format to use when displaying the dates.
    * @default en-US
    */
   formatLocale?: string;
@@ -74,6 +51,11 @@ export interface DatePickerRangerProps
    * @private
    */
   onApply?: (selected: DatePickerRangeParameter) => void;
+  onChange?: DatePickerRangeClickHandler;
+  /**
+   * The initial date.
+   */
+  selected?: DatePickerRangeParameter;
   /**
    * For internal use with DatePickerInput
    * @private
@@ -81,18 +63,78 @@ export interface DatePickerRangerProps
   showApply?: boolean;
 }
 
-export interface DatePickerInputProps
-  extends WithBorderless,
+export interface DatePickerSingleProps
+  extends DatePickerBaseProps,
+    DatePickerLayoutProps,
+    Omit<DayPickerSingleProps, 'fromDate' | 'mode' | 'onSelect' | 'selected' | 'toDate'> {
+  onChange?: DatePickerSingleClickHandler;
+  /**
+   * The initial date.
+   */
+  selected?: string;
+}
+
+export interface DatePickerSelectorBaseProps
+  extends DatePickerBaseProps,
+    Omit<DayPickerBase, 'fromDate' | 'mode' | 'selected' | 'toDate'>,
+    WithBorderless,
     WithOpen,
-    DatePickerBaseProps<DatePickerClickHandler> {
-  /**  @default en-US */
+    WithMargin {
+  /**
+   * The date format to use when displaying the dates.
+   * @default en-US
+   */
   formatLocale?: string;
   large?: boolean;
+  /**
+   * Whether to show the calendar in range or single mode.
+   * @default single
+   */
+  mode?: 'range' | 'single';
+  /**
+   * Add a hidden input with the given name.
+   */
+  name?: string;
+  /**
+   * For internal use with DatePickerSelector
+   * @private
+   */
+  onApply?: (selected: DatePickerRangeParameter) => void;
   placeholder?: string;
-  /** @default right */
+  /**
+   * The position of the calendar relative to the input.
+   * @default right
+   */
   position?: Alignment;
+  /**
+   * The initial date.
+   */
+  selected?: DatePickerRangeParameter | string;
+  /**
+   * The separator for date ranges.
+   * @default ' — '
+   */
   separator?: string;
-  showRange?: boolean;
+  /**
+   * Show a button to apply the selected range.
+   * @default false
+   */
   showRangeApply?: boolean;
+  /**
+   * The width of the selector.
+   * It has a min-width of 200px.
+   */
   width?: StringOrNumber;
 }
+
+export type DatePickerSelectorProps = DatePickerSelectorBaseProps &
+  (
+    | {
+        mode: 'range';
+        onChange?: DatePickerRangeClickHandler;
+      }
+    | {
+        mode: 'single';
+        onChange?: DatePickerSingleClickHandler;
+      }
+  );

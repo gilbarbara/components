@@ -1,6 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { disableControl, hideProps, hideTable, spacingProps } from '~/stories/__helpers__';
+import {
+  disableControl,
+  hideProps,
+  hideTable,
+  radiusProps,
+  spacingProps,
+} from '~/stories/__helpers__';
 
 import { DatePickerRange, rangeDefaultProps } from './Range';
 
@@ -12,10 +18,11 @@ export default {
   args: rangeDefaultProps,
   argTypes: {
     ...hideProps(),
+    ...radiusProps(),
     ...spacingProps(),
     currentMonthLabel: { control: 'text' },
-    onSelect: disableControl(),
     onApply: hideTable(),
+    onChange: disableControl(),
     showApply: hideTable(),
   },
 } satisfies Meta<typeof DatePickerRange>;
