@@ -20,7 +20,7 @@ import {
   Text,
 } from '~';
 
-import { members } from '~/stories/__assets__/data';
+import { users } from '~/stories/__fixtures__';
 import {
   flexItemProps,
   hideNoControlsWarning,
@@ -73,11 +73,11 @@ const baseState = {
   status: '',
 };
 
-const teams = members.reduce((acc, member) => {
-  if (member.team && !acc.some(d => member.team === d.label)) {
+const teams = users.reduce((acc, user) => {
+  if (user.team && !acc.some(d => user.team === d.label)) {
     acc.push({
-      label: member.team,
-      value: member.team,
+      label: user.team,
+      value: user.team,
     });
   }
 
@@ -188,7 +188,7 @@ export const Basic: Story = {
     }, []);
 
     const data = useMemo<Record<Columns, ReactNode>[]>(() => {
-      return members
+      return users
         .filter(d => {
           const nameOrEmail = removeAccents(d.name || d.email).toLowerCase();
 
@@ -204,28 +204,24 @@ export const Basic: Story = {
 
           return searchFilter && statusFilter && teamFilter;
         })
-        .map(member => ({
-          id: member.id,
+        .map(user => ({
+          id: user.id,
           email: (
             <>
-              <Text color={!member.name ? 'gray' : undefined}>{member.name || 'Unnamed User'}</Text>
-              <Anchor href={`mailto:${member.email}`} size="mid">
-                {member.email}
+              <Text color={!user.name ? 'gray' : undefined}>{user.name || 'Unnamed User'}</Text>
+              <Anchor href={`mailto:${user.email}`} size="mid">
+                {user.email}
               </Anchor>
             </>
           ),
-          team: <Text size="mid">{member.team || '--'}</Text>,
+          team: <Text size="mid">{user.team || '--'}</Text>,
           status: (
-            <Tag
-              bg={member.id ? 'green' : 'blue'}
-              iconAfter={member.id ? 'check' : 'hourglass'}
-              invert
-            >
-              {member.id ? 'Active' : 'Invite sent'}
+            <Tag bg={user.id ? 'green' : 'blue'} iconAfter={user.id ? 'check' : 'hourglass'} invert>
+              {user.id ? 'Active' : 'Invite sent'}
             </Tag>
           ),
           action: (
-            <ButtonUnstyled data-code={member.code} data-id={member.id} onClick={handleClickDelete}>
+            <ButtonUnstyled data-code={user.code} data-id={user.id} onClick={handleClickDelete}>
               <Icon name="trash" />
             </ButtonUnstyled>
           ),
@@ -233,7 +229,7 @@ export const Basic: Story = {
     }, [handleClickDelete, search, status, team]);
 
     const noResults = useMemo(() => {
-      if (!members.length) {
+      if (!users.length) {
         return (
           <NonIdealState
             icon="info-o"

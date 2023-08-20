@@ -4,6 +4,14 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, Divider, Field, Grid, H2, H3, Spacer } from '~';
 
+import {
+  areas,
+  contractTypes,
+  frameworks,
+  languages,
+  seniorities,
+  specializations,
+} from '~/stories/__fixtures__';
 import { hideNoControlsWarning } from '~/stories/__helpers__';
 
 import { Form, FormRenderProps } from './Form';
@@ -41,57 +49,6 @@ export interface FormData {
   seniority?: string;
   specialization: string;
 }
-
-const areas = [
-  { label: 'Data', value: 'data' },
-  { label: 'Design', value: 'design' },
-  { label: 'Engineering', value: 'engineering' },
-  { label: 'Product', value: 'product' },
-];
-
-const contractTypes = [
-  { label: 'Full-time', name: 'full-time' },
-  { label: 'Part-time', name: 'part-time' },
-  { label: 'Freelance', name: 'freelance' },
-];
-
-const frameworks = [
-  { label: '.Net', value: 'dotnet' },
-  { label: 'Angular', value: 'angular' },
-  { label: 'Flutter', value: 'flutter' },
-  { label: 'React', value: 'react' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Vue', value: 'vue' },
-];
-
-const languages = [
-  { label: 'C#', value: 'csharp' },
-  { label: 'Dart', value: 'dart' },
-  { label: 'Go', value: 'go' },
-  { label: 'Java', value: 'java' },
-  { label: 'JavaScript', value: 'javascript' },
-  { label: 'Kotlin (Java)', value: 'kotlin' },
-  { label: 'Node.js', value: 'nodejs' },
-  { label: 'PHP', value: 'php' },
-  { label: 'Python', value: 'python' },
-  { label: 'Swift', value: 'swift' },
-  { label: 'TypeScript', value: 'typescript' },
-];
-
-const specializations = [
-  { label: 'Back-End', value: 'back-end' },
-  { label: 'DevOps', value: 'devops' },
-  { label: 'Front-End', value: 'front-end' },
-  { label: 'Full Stack', value: 'full-stack' },
-];
-
-const seniorities = [
-  { label: 'Junior', value: 'junior' },
-  { label: 'Mid-Level', value: 'mid-level' },
-  { label: 'Senior', value: 'senior' },
-  { label: 'Specialist', value: 'specialist' },
-  { label: 'Leadership', value: 'leadership' },
-];
 
 const defaultValues: FormData = {
   area: 'engineering',
