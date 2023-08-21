@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { objectKeys } from '@gilbarbara/helpers';
+import { useArgs } from '@storybook/addons';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid } from '~';
@@ -9,7 +9,7 @@ import { getTheme } from '~/modules/helpers';
 
 import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
-import { defaultProps, Toggle } from './Toggle';
+import { defaultProps, Toggle, ToggleProps } from './Toggle';
 
 type Story = StoryObj<typeof Toggle>;
 
@@ -24,6 +24,7 @@ export default {
     ...hideProps(),
     ...colorProps(['accent']),
     label: { control: 'text' },
+    onToggle: { action: 'onToggle' },
   },
 } satisfies Meta<typeof Toggle>;
 
@@ -31,16 +32,17 @@ export const Basic: Story = {};
 
 export const Controlled: Story = {
   args: {
+    checked: false,
     label: 'Controlled',
   },
   render: function Render(props) {
-    const [checked, setChecked] = useState(false);
+    const [{ checked }, updateArguments] = useArgs<ToggleProps>();
 
-    const handleClick = () => {
-      setChecked(!checked);
+    const handleToggle = () => {
+      updateArguments({ checked: !checked });
     };
 
-    return <Toggle {...props} checked={checked} onClick={handleClick} />;
+    return <Toggle {...props} onToggle={handleToggle} />;
   },
 };
 
