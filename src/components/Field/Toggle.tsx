@@ -13,17 +13,15 @@ interface Props extends FieldToggleProps {
 function FieldToggle(props: Props) {
   const { disabled, name, onChange, required, setValue } = props;
 
-  const handleClickToggle = useCallback(
+  const handleToggle = useCallback(
     (status: boolean) => {
-      const nextValue = !status;
-
-      setValue(name, nextValue, {
+      setValue(name, status, {
         shouldDirty: true,
         shouldValidate: true,
       });
 
       if (onChange) {
-        onChange(nextValue);
+        onChange(status);
       }
     },
     [name, onChange, setValue],
@@ -37,7 +35,7 @@ function FieldToggle(props: Props) {
           checked={is.undefined(field.value) ? false : field.value}
           disabled={disabled}
           name={name}
-          onClick={handleClickToggle}
+          onToggle={handleToggle}
         />
       )}
       rules={{ required }}

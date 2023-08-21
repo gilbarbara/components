@@ -29,7 +29,7 @@ function FieldDropdown(props: Props) {
         setValue(name, values, setValueOptions);
 
         if (onChange && (!currentValue || currentValue !== values)) {
-          onChange(data);
+          onChange(values);
         }
       } else {
         const [selected] = data;
@@ -39,7 +39,7 @@ function FieldDropdown(props: Props) {
           setValue(name, selected.value, setValueOptions);
 
           if (onChange && (!currentValue || currentValue !== selected.value)) {
-            onChange(data);
+            onChange(selected.value);
           }
         } else {
           setValue(name, undefined, setValueOptions);

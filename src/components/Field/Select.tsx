@@ -43,7 +43,7 @@ function FieldSelect(props: Props) {
       registration.onChange(event);
 
       if (onChange) {
-        onChange(event);
+        onChange(event.target.value);
       }
     },
     [onChange, registration],

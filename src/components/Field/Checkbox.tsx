@@ -13,7 +13,7 @@ interface Props extends FieldCheckboxProps {
 }
 
 function FieldCheckbox(props: Props) {
-  const { currentValue, items = [], name = 'CheckboxGroup', setValue } = props;
+  const { currentValue, items = [], name = 'CheckboxGroup', onChange, setValue } = props;
   const ref = useRef<HTMLDivElement>(null);
 
   useUpdateEffect(() => {
@@ -34,6 +34,10 @@ function FieldCheckbox(props: Props) {
       : currentValue?.filter(d => d !== target.name);
 
     setValue(name, nextValue, { shouldDirty: true, shouldValidate: true });
+
+    if (onChange) {
+      onChange(nextValue);
+    }
   };
 
   return (

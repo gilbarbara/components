@@ -6,6 +6,7 @@ import { PlainObject } from '@gilbarbara/types';
 import { FormGroup } from '~/components/FormGroup';
 
 import FieldCheckbox from './Checkbox';
+import FieldDatePicker from './DatePicker';
 import FieldDebug from './Debug';
 import FieldDropdown from './Dropdown';
 import FieldInput from './Input';
@@ -15,8 +16,10 @@ import FieldTextarea from './Textarea';
 import FieldToggle from './Toggle';
 import {
   FieldCheckboxProps,
+  FieldDatePickerProps,
   FieldDropdownProps,
   FieldInputProps,
+  FieldPasswordProps,
   FieldProps,
   FieldRadioProps,
   FieldSelectProps,
@@ -26,6 +29,7 @@ import {
 import { getDefaultValue, getError, getRegisterOptions } from './utils';
 
 export const defaultProps = {
+  accent: 'primary',
   debug: false,
   disabled: false,
   hideAssistiveText: false,
@@ -103,7 +107,14 @@ export function Field<T extends FieldProps>(props: T) {
 
   /* istanbul ignore else */
   if (!skipValidation) {
-    groupProps.skipIcon = ['checkbox', 'dropdown', 'radio', 'select', 'toggle'].includes(type);
+    groupProps.skipIcon = [
+      'checkbox',
+      'datePicker',
+      'dropdown',
+      'radio',
+      'select',
+      'toggle',
+    ].includes(type);
 
     if (showError) {
       groupProps.error = error;
@@ -125,6 +136,18 @@ export function Field<T extends FieldProps>(props: T) {
 
       break;
     }
+    case 'datePicker': {
+      output.content = (
+        <FieldDatePicker
+          currentValue={currentValue}
+          registration={registration}
+          setValue={setValue}
+          {...(props as FieldDatePickerProps)}
+        />
+      );
+
+      break;
+    }
     case 'dropdown': {
       output.content = (
         <FieldDropdown
@@ -132,6 +155,19 @@ export function Field<T extends FieldProps>(props: T) {
           registration={registration}
           setValue={setValue}
           {...(props as FieldDropdownProps)}
+        />
+      );
+
+      break;
+    }
+    case 'password': {
+      output.content = (
+        <FieldInput
+          currentValue={currentValue}
+          isDirty={!!dirtyFields[name]}
+          registration={registration}
+          setStatus={setStatus}
+          {...(props as FieldPasswordProps)}
         />
       );
 

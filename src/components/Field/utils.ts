@@ -8,7 +8,7 @@ import {
   validateEmail,
   validateMatchField,
   validatePassword,
-  validatePhoneBR,
+  validatePhone,
 } from '~/modules/validations';
 
 import { FieldProps, RegisterOptionsProps } from './types';
@@ -23,7 +23,7 @@ export function getError(name: string, errors: PlainObject<any>) {
   return [null];
 }
 
-export function getInputParameters(props: FieldProps, ...extra: any[]) {
+export function getInputParameters(props: FieldProps, ...exclude: any[]) {
   return omit(
     props,
     'assistiveText',
@@ -39,14 +39,13 @@ export function getInputParameters(props: FieldProps, ...extra: any[]) {
     'onBlur',
     'onChange',
     'onFocus',
-    'options',
     'required',
     'setValueAs',
     'skipValidation',
     'type',
     'validations',
     'value',
-    ...extra,
+    ...exclude,
   );
 }
 
@@ -61,6 +60,7 @@ export function getRegisterOptions(
     required,
     setValueAs,
     type = 'text',
+    validationOptions,
     validations = [],
     value,
   } = props;
@@ -114,8 +114,8 @@ export function getRegisterOptions(
         result = validatePassword;
       }
 
-      if (d === 'phoneBR') {
-        result = validatePhoneBR;
+      if (d.startsWith('phone')) {
+        result = validatePhone;
       }
 
       if (d.startsWith('equalsTo:')) {
@@ -141,7 +141,7 @@ export function getRegisterOptions(
         let response;
 
         if (is.function(validation)) {
-          response = validation(input);
+          response = validation(input, validationOptions);
         } else if (validation.field && is.function(validation.fn)) {
           const actualValues = getValues();
 

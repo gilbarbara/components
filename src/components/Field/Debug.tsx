@@ -1,4 +1,4 @@
-import { sortByLocaleCompare } from '@gilbarbara/helpers';
+import { objectEntries, sortByLocaleCompare } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
 import { Box } from '~/components/Box';
@@ -40,7 +40,7 @@ function FieldDebug(props: Props) {
 
   return (
     <Box as="code" bg="gray.50" display="block" padding="md">
-      {Object.entries(props)
+      {objectEntries(props)
         .filter(([key]) => key !== 'debug')
         .sort(sortByLocaleCompare('0'))
         .map(([key, value]) => (
