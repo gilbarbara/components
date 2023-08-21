@@ -1,10 +1,9 @@
-import { ChangeEvent, forwardRef, KeyboardEvent, ReactNode, useRef, useState } from 'react';
+import { ChangeEvent, forwardRef, KeyboardEvent, MouseEvent, ReactNode, useState } from 'react';
 import { usePrevious, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { useMergeRefs } from '@gilbarbara/hooks';
-import { PlainObject, SetRequired } from '@gilbarbara/types';
+import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
@@ -22,28 +21,28 @@ import {
 } from '~/types';
 
 export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponentSize {
+  /** Status (controlled mode) */
+  checked?: boolean;
   /**
    * Initial status (uncontrolled mode)
    * @default false
    */
-  /** Status (controlled mode) */
-  checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
   label?: ReactNode;
-  labelOptions?: WithTextOptions;
+  labelOptions?: Simplify<WithTextOptions>;
   name?: string;
   /**
    * Callback when the status changes (uncontrolled mode)
    */
   onChange?: (value: boolean) => void;
   /**
-   * Callback when clicking the toggle (controlled mode)
+   * Callback when clicking/key down the toggle
    */
-  onClick?: (value: boolean) => void;
+  onToggle?: (value: boolean) => void;
 }
 
-export type ToggleProps = ComponentProps<HTMLDivElement, ToggleKnownProps>;
+export type ToggleProps = Simplify<ComponentProps<HTMLDivElement, ToggleKnownProps>>;
 
 interface InnerProps extends SetRequired<ToggleProps, 'accent' | 'size'> {
   isActive: boolean;
@@ -146,29 +145,31 @@ const StyledButton = styled(
   `;
 });
 
-export const StyledToggle = styled('div')<SetRequired<ToggleProps, 'size'>>(props => {
-  const { disabled, label, size } = props;
-  const { colors } = getTheme(props);
+export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggle'>, 'size'>>(
+  props => {
+    const { disabled, label, size } = props;
+    const { colors } = getTheme(props);
 
-  const { height, width } = styles[size];
+    const { height, width } = styles[size];
 
-  return css`
-    ${baseStyles(props)};
-    cursor: ${disabled ? 'default' : 'pointer'};
-    height: ${px(height)};
-    margin-right: ${label ? '8px' : 0};
-    opacity: ${disabled ? 0.8 : 1};
-    position: relative;
-    user-select: none;
-    vertical-align: middle;
-    width: ${px(width)};
+    return css`
+      ${baseStyles(props)};
+      cursor: ${disabled ? 'default' : 'pointer'};
+      height: ${px(height)};
+      margin-right: ${label ? '8px' : 0};
+      opacity: ${disabled ? 0.8 : 1};
+      position: relative;
+      user-select: none;
+      vertical-align: middle;
+      width: ${px(width)};
 
-    &:focus {
-      filter: drop-shadow(0 0 4px ${colors.primary});
-      outline: none;
-    }
-  `;
-});
+      &:focus {
+        filter: drop-shadow(0 0 4px ${colors.primary});
+        outline: none;
+      }
+    `;
+  },
+);
 
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => {
   const {
@@ -180,14 +181,12 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     labelOptions,
     name,
     onChange,
-    onClick,
+    onToggle,
     size,
     ...rest
   } = { ...defaultProps, ...props };
-  const inputRef = useRef<HTMLInputElement>(null);
   const [isActive, setActive] = useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
-  const mergedRefs = useMergeRefs(inputRef, ref);
 
   useUpdateEffect(() => {
     if (is.boolean(checked) && previousChecked !== checked) {
@@ -196,6 +195,10 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
   }, [checked, previousChecked]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (is.boolean(checked)) {
+      return;
+    }
+
     const { target } = event;
 
     setActive(target.checked);
@@ -203,21 +206,31 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     onChange?.(target.checked);
   };
 
-  const handleClick = () => {
+  const handleClickLabel = () => {
     if (!disabled) {
-      onClick?.(inputRef.current?.checked ?? false);
+      onToggle?.(!isActive);
     }
   };
 
+  const handleClickInput = (event: MouseEvent) => {
+    event.stopPropagation();
+  };
+
   const handleKeyDown = (event: KeyboardEvent<HTMLSpanElement>) => {
-    if (disabled || !inputRef.current || ![' ', 'Enter'].includes(event.key)) {
+    if (disabled || ![' ', 'Enter'].includes(event.key)) {
       return;
     }
 
     const status = !isActive;
 
-    inputRef.current.checked = status;
+    onToggle?.(status);
+
+    if (is.boolean(checked)) {
+      return;
+    }
+
     setActive(status);
+    onChange?.(status);
   };
 
   const value = isActive ? 'on' : 'off';
@@ -233,17 +246,18 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     <Label
       data-component-name="Toggle"
       inline
-      onClick={is.boolean(checked) ? handleClick : undefined}
+      onClick={handleClickLabel}
       style={{ cursor: disabled ? 'default' : 'pointer' }}
       {...labelOptions}
     >
       <StyledInput
-        ref={mergedRefs}
+        ref={ref}
         aria-checked={isActive}
         aria-label={!label ? name : undefined}
-        disabled={disabled ?? is.boolean(checked)}
+        disabled={disabled}
         name={name}
         onChange={handleChange}
+        onClick={handleClickInput}
         role="switch"
         type="checkbox"
         value={value}
@@ -253,7 +267,6 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         disabled={disabled}
         label={label}
         name={name}
-        onClick={handleClick}
         onKeyDown={handleKeyDown}
         size={size}
         tabIndex={0}
