@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Radio } from '~/components/CheckboxAndRadio';
@@ -12,12 +13,20 @@ interface Props extends FieldRadioProps {
 }
 
 function FieldRadio(props: Props) {
-  const { items = [], registration } = props;
+  const { items = [], onChange, registration } = props;
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { target } = event;
+
+    if (onChange) {
+      onChange(target.value);
+    }
+  };
 
   return (
     <Spacer mb="xs">
       {items.map((d: RadioItem) => (
-        <Radio key={d.value} {...d} {...registration} size="sm" />
+        <Radio key={d.value} {...d} {...registration} onChange={handleChange} size="sm" />
       ))}
     </Spacer>
   );

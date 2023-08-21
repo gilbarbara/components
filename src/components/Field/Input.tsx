@@ -1,6 +1,6 @@
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { formatMoney, formatPhoneBR } from '@gilbarbara/helpers';
+import { formatMoney, formatPhoneBR, formatPhoneUS } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
 import { clearNumber } from '~/modules/helpers';
@@ -9,20 +9,24 @@ import { Input } from '~/components/Input';
 import { InputColor } from '~/components/InputColor';
 import { InputFile } from '~/components/InputFile';
 
+import { InputTypes, ValidatePasswordOptions } from '~/types';
+
 import { FieldInputProps } from './types';
 import { getInputParameters } from './utils';
 
-interface Props extends FieldInputProps {
+interface Props extends Omit<FieldInputProps, 'type' | 'validationOptions'> {
   currentValue: any;
   isDirty: boolean;
   registration: UseFormRegisterReturn;
   setStatus: (status: { isActive?: boolean; isDirty?: boolean }) => void;
+  type: InputTypes;
+  validationOptions?: ValidatePasswordOptions;
 }
 
 function FieldInput(props: Props) {
   const {
     currentValue,
-    formatter,
+    formatter = '',
     id,
     isDirty,
     name,
@@ -61,23 +65,32 @@ function FieldInput(props: Props) {
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      if (formatter === 'phoneBR') {
-        event.target.value = clearNumber(event.target.value).slice(0, 11);
+      const { value } = event.target;
+
+      if (['phoneBR', 'phoneUS'].includes(formatter)) {
+        event.target.value = clearNumber(value).slice(0, 11);
       } else if (formatter) {
-        event.target.value = clearNumber(event.target.value);
+        event.target.value = clearNumber(value);
       }
 
       registration.onChange(event);
 
       if (onChange) {
-        onChange(event);
+        onChange(value);
       }
     },
     [formatter, onChange, registration],
   );
 
   const input = {
-    ...getInputParameters(props, 'currentValue', 'inline', 'isDirty', 'registration', 'setStatus'),
+    ...getInputParameters(
+      props as FieldInputProps,
+      'currentValue',
+      'inline',
+      'isDirty',
+      'registration',
+      'setStatus',
+    ),
     id: id ?? name,
     onBlur: handleBlur,
     onChange: handleChange,
@@ -109,10 +122,22 @@ function FieldInput(props: Props) {
       const parameters: PlainObject<string> = {};
 
       if (currentValue) {
-        if (formatter === 'money') {
-          parameters.value = formatMoney(currentValue);
-        } else if (formatter === 'phoneBR') {
-          parameters.value = formatPhoneBR(`${currentValue}`);
+        switch (formatter) {
+          case 'money': {
+            parameters.value = formatMoney(currentValue);
+
+            break;
+          }
+          case 'phoneBR': {
+            parameters.value = formatPhoneBR(`${currentValue}`);
+
+            break;
+          }
+          case 'phoneUS': {
+            parameters.value = formatPhoneUS(`${currentValue}`);
+
+            break;
+          }
         }
       }
 

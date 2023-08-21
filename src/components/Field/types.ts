@@ -1,25 +1,47 @@
 import { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
+import { DatePickerSelectorProps } from '~/components/DatePicker';
+import { DatePickerRangeParameter } from '~/components/DatePicker/types';
 import { FormGroupProps } from '~/components/FormGroup/FormGroup';
 
-import { CheckboxItem, DropdownOption, DropdownProps, InputTypes, RadioItem } from '~/types';
+import {
+  CheckboxItem,
+  DropdownOption,
+  DropdownProps,
+  InputTypes,
+  RadioItem,
+  ValidatePasswordOptions,
+  WithAccent,
+} from '~/types';
 
-export interface RegisterOptionsProps extends FieldBaseProps {
-  formatter?: FieldInputProps['formatter'];
+export type RegisterOptionsProps = FieldBaseProps & {
   getValues: UseFormGetValues<FieldValues>;
-}
+} & (
+    | {
+        formatter?: FieldInputProps['formatter'];
+        type: Exclude<FieldTypes, 'password'>;
+        validationOptions?: never;
+      }
+    | {
+        formatter?: never;
+        type: 'password';
+        validationOptions?: ValidatePasswordOptions;
+      }
+  );
 
 export type FieldTypes =
   | InputTypes
   | 'checkbox'
+  | 'datePicker'
   | 'dropdown'
   | 'radio'
   | 'select'
   | 'toggle'
   | 'textarea';
 
-export type FieldValidations = 'email' | `equalsTo:${string}` | 'password' | 'phoneBR';
+export type FieldValidations = 'email' | `equalsTo:${string}` | 'password' | 'phoneBR' | 'phoneUS';
 
 export interface FieldInputHandlers<
   T extends HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
@@ -29,11 +51,23 @@ export interface FieldInputHandlers<
   onFocus?: FocusEventHandler<T>;
 }
 
+interface FieldExcludedProps {
+  children?: never;
+  datePickerProps?: never;
+  dropdownProps?: never;
+  formatter?: never;
+  items?: never;
+  onBlur?: never;
+  onFocus?: never;
+  validationOptions?: never;
+}
+
 export interface FieldBaseProps
   extends Pick<
-    FormGroupProps,
-    'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
-  > {
+      FormGroupProps,
+      'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
+    >,
+    WithAccent {
   autoComplete?: string;
   clearError?: () => void;
   debug?: boolean;
@@ -46,77 +80,89 @@ export interface FieldBaseProps
   readOnly?: boolean;
   setValueAs?: (value: any) => any;
   skipValidation?: boolean;
-  type: FieldTypes;
   validations?: FieldValidations[];
   value?: any;
 }
 
-export interface FieldCheckboxProps extends FieldBaseProps, FieldInputHandlers<HTMLInputElement> {
-  children?: never;
-  dropdownProps?: never;
+export interface FieldCheckboxProps extends FieldBaseProps, Omit<FieldExcludedProps, 'items'> {
   items: CheckboxItem[];
+  onChange?: (value: Array<string>) => void;
   type: 'checkbox';
 }
 
-export interface FieldDropdownProps extends FieldBaseProps {
-  children?: never;
+export interface FieldDatePickerProps
+  extends FieldBaseProps,
+    Omit<FieldExcludedProps, 'datePickerProps'> {
+  datePickerProps?: Simplify<Omit<DatePickerSelectorProps, 'placeholder'>>;
+  onChange?: (selection: DatePickerRangeParameter | string) => void;
+  type: 'datePicker';
+}
+
+export interface FieldDropdownProps
+  extends FieldBaseProps,
+    Omit<FieldExcludedProps, 'dropdownProps' | 'items'> {
   dropdownProps?: Omit<
     DropdownProps,
     'disabled' | 'inputOptions' | 'items' | 'onChange' | 'placeholder' | 'width'
   >;
   items: DropdownOption[];
-  onBlur?: never;
-  onChange?: (value: DropdownOption[]) => void;
-  onFocus?: never;
+  onChange?: (value: StringOrNumber | Array<StringOrNumber>) => void;
   type: 'dropdown';
 }
 
-export interface FieldInputProps extends FieldBaseProps, FieldInputHandlers<HTMLInputElement> {
-  children?: never;
-  dropdownProps?: never;
-  formatter?: 'money' | 'number' | 'phoneBR';
-  items?: never;
-  type: InputTypes;
+export interface FieldInputProps
+  extends FieldBaseProps,
+    Omit<FieldExcludedProps, 'formatter' | 'onBlur' | 'onFocus'>,
+    Omit<FieldInputHandlers<HTMLInputElement>, 'onChange'> {
+  formatter?: 'money' | 'number' | 'phoneBR' | 'phoneUS';
+  onChange?: (value: string) => void;
+  type: Exclude<InputTypes, 'password'>;
 }
 
-export interface FieldRadioProps extends FieldBaseProps, FieldInputHandlers<HTMLInputElement> {
-  children?: never;
-  dropdownProps?: never;
+export interface FieldPasswordProps
+  extends FieldBaseProps,
+    Omit<FieldExcludedProps, 'onBlur' | 'onFocus' | 'validationOptions'>,
+    Omit<FieldInputHandlers<HTMLInputElement>, 'onChange'> {
+  onChange?: (value: string) => void;
+  type: 'password';
+  validationOptions?: ValidatePasswordOptions;
+}
+
+export interface FieldRadioProps extends FieldBaseProps, Omit<FieldExcludedProps, 'items'> {
   items: RadioItem[];
+  onChange?: (value: string) => void;
   type: 'radio';
 }
 
-export interface FieldSelectProps extends FieldBaseProps, FieldInputHandlers<HTMLSelectElement> {
+export interface FieldSelectProps
+  extends FieldBaseProps,
+    Omit<FieldExcludedProps, 'children' | 'onBlur' | 'onFocus'>,
+    Omit<FieldInputHandlers<HTMLSelectElement>, 'onChange'> {
   children: ReactNode[];
-  dropdownProps?: never;
-  items?: never;
+  onChange?: (value: string) => void;
   type: 'select';
 }
 
 export interface FieldTextareaProps
   extends FieldBaseProps,
-    FieldInputHandlers<HTMLTextAreaElement> {
-  children?: never;
-  dropdownProps?: never;
-  items?: never;
+    Omit<FieldExcludedProps, 'onBlur' | 'onFocus'>,
+    Omit<FieldInputHandlers<HTMLTextAreaElement>, 'onChange'> {
+  onChange?: (value: string) => void;
   rows?: number;
   type: 'textarea';
 }
 
-export interface FieldToggleProps extends FieldBaseProps {
-  children?: never;
-  dropdownProps?: never;
-  items?: never;
-  onBlur?: never;
+export interface FieldToggleProps extends FieldBaseProps, FieldExcludedProps {
   onChange?: (value: boolean) => void;
-  onFocus?: never;
   type: 'toggle';
 }
 
 export type FieldProps =
   | FieldCheckboxProps
+  | FieldDatePickerProps
   | FieldDropdownProps
   | FieldInputProps
+  | FieldPasswordProps
   | FieldRadioProps
   | FieldSelectProps
   | FieldTextareaProps

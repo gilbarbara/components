@@ -1,5 +1,6 @@
 import { CSSProperties, JSXElementConstructor } from 'react';
 import { SerializedStyles } from '@emotion/react';
+import { validatePassword } from '@gilbarbara/helpers';
 import { StandardShorthandProperties } from 'csstype';
 
 import { Breakpoint, VariantWithTones } from './theme';
@@ -88,3 +89,5 @@ export type ResponsiveSizes = '_' | Breakpoint | string;
 export type ResponsiveInput = {
   [key: ResponsiveSizes]: CSSProperties | SerializedStyles;
 };
+
+export type ValidatePasswordOptions = Parameters<typeof validatePassword>[1];

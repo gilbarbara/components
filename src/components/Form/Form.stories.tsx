@@ -29,6 +29,7 @@ export default {
 export interface FormData {
   area: string;
   availability: boolean;
+  birthday?: string;
   color?: string;
   contractType: string[];
   email: string;
@@ -53,6 +54,7 @@ export interface FormData {
 const defaultValues: FormData = {
   area: 'engineering',
   availability: true,
+  birthday: '1990-10-03',
   color: '#d00000',
   contractType: ['full-time'],
   email: 'test-user@example.com',
@@ -170,6 +172,20 @@ function EditForm({ formMethods }: FormRenderProps<FormData>) {
       <Grid gap={20} templateColumns="repeat(2, 1fr)">
         <Field label="Picture" name="picture" type="file" />
         <Field label="Profile color" name="color" type="color" />
+      </Grid>
+
+      <Grid gap={20} templateColumns="repeat(2, 1fr)">
+        <Field
+          datePickerProps={{
+            captionLayout: 'dropdown-buttons',
+            fromYear: 1900,
+            toYear: new Date().getFullYear(),
+            mode: 'single',
+          }}
+          label="Birthday"
+          name="birthday"
+          type="datePicker"
+        />
       </Grid>
 
       <Divider mb="xl" mt="md" />

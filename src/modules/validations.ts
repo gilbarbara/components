@@ -1,4 +1,6 @@
-import { isValidEmail, validatePassword as checkPassword } from '@gilbarbara/helpers';
+import { isValidEmail, validatePassword as validatePasswordHelper } from '@gilbarbara/helpers';
+
+import { ValidatePasswordOptions } from '~/types';
 
 import { clearNumber } from './helpers';
 
@@ -14,9 +16,9 @@ export function validateMatchField(
   return compare === value || message;
 }
 
-export function validatePassword(value: string) {
+export function validatePassword(value: string, options?: ValidatePasswordOptions) {
   try {
-    checkPassword(value);
+    validatePasswordHelper(value, options);
 
     return true;
   } catch (error: any) {
@@ -27,7 +29,7 @@ export function validatePassword(value: string) {
 /**
  * Validate phone
  */
-export function validatePhoneBR(value?: string) {
+export function validatePhone(value?: string) {
   if (!value) {
     return undefined;
   }
