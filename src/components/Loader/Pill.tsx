@@ -7,7 +7,7 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
-import { LoaderProps } from '~/types';
+import { LoaderProps } from './types';
 
 const animation = keyframes`
   0% {

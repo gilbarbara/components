@@ -2,14 +2,7 @@ import { ElementType, HTMLProps, ReactNode } from 'react';
 import { HiddenInput, Option, Props } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import {
-  WithAccent,
-  WithBlock,
-  WithBorderless,
-  WithColorsDefaultColor,
-  WithMargin,
-  WithOpen,
-} from './shared';
+import { WithAccent, WithBorderless, WithMargin, WithOpen } from './shared';
 import { Theme, VariantWithTones } from './theme';
 
 export interface BaseProps {
@@ -87,16 +80,6 @@ export interface DropdownProps
   onSearch?: (value: string) => void;
   /** @default 260 */
   width?: StringOrNumber;
-}
-
-export interface LoaderProps
-  extends ComponentProps<
-    HTMLDivElement,
-    StyledProps & WithBlock & Pick<WithColorsDefaultColor, 'color'>
-  > {
-  size?: number;
-  /** @default pill */
-  type?: 'grow' | 'pill' | 'pride' | 'pulse' | 'rotate';
 }
 
 export interface RadioItem {

@@ -6,7 +6,7 @@ import { rotate } from '~/modules/animations';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderProps } from '~/types';
+import { LoaderProps } from './types';
 
 type LoaderPrideProps = Omit<LoaderProps, 'color'>;
 
