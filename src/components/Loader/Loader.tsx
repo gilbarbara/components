@@ -2,13 +2,12 @@ import { useTheme } from '@emotion/react';
 
 import { getTheme } from '~/modules/helpers';
 
-import { LoaderProps } from '~/types';
-
 import LoaderGrow from './Grow';
 import LoaderPill from './Pill';
 import LoaderPride from './Pride';
 import LoaderPulse from './Pulse';
 import LoaderRotate from './Rotate';
+import { LoaderProps } from './types';
 
 export const defaultProps = {
   color: 'primary',

@@ -7,7 +7,7 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderProps } from '~/types';
+import { LoaderProps } from './types';
 
 const dash = keyframes`
   0% {
