@@ -1,30 +1,44 @@
 import { memo } from 'react';
 
 import { Box, BoxCenter } from '~/components/Box';
+import { getBorder, getRowContent, getRowKey } from '~/components/DataTable/utils';
 import { Loader } from '~/components/Loader';
 import { Paragraph } from '~/components/Paragraph';
 
-import type { DataTableProps } from './DataTable';
+import { DataTableBodyProps } from './types';
 
-interface Props extends Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'loading'> {
-  isResponsive: boolean;
-  sortColumn?: string;
-}
-
-function DataTableBody(props: Props) {
-  const { clean, columns, data, isResponsive, loading, sortColumn } = props;
+function DataTableBody(props: DataTableBodyProps) {
+  const {
+    accent,
+    clean,
+    columns,
+    darkMode,
+    data,
+    isResponsive,
+    loaderSize,
+    loaderType,
+    loading,
+    sortColumn,
+  } = props;
   const isInitialLoad = loading && !data.length;
 
   return (
-    <Box data-component-name="DataTableBody" minHeight={55} position="relative">
+    <Box
+      data-component-name="DataTableBody"
+      minHeight={55}
+      mt={!clean ? 'sm' : undefined}
+      pb={!clean ? 'sm' : undefined}
+      position="relative"
+    >
       {data.map((item, index) => (
         <Box
-          key={item.id ?? index}
-          bg={clean ? undefined : 'white'}
+          key={getRowKey(item, index)}
+          bg={darkMode ? 'gray.900' : 'white'}
+          border={isResponsive ? getBorder(darkMode) : undefined}
           data-component-name="DataTableBodyRow"
           display="flex"
-          mb="sm"
-          radius={clean ? undefined : 'sm'}
+          mt={!clean && index > 0 ? 'sm' : undefined}
+          radius={clean ? undefined : 'xs'}
           wrap={isResponsive ? 'wrap' : 'nowrap'}
         >
           {columns.map(
@@ -39,7 +53,7 @@ function DataTableBody(props: Props) {
                 <Box
                   key={key}
                   align="flex-start"
-                  border={clean ? [{ side: 'top' }] : undefined}
+                  border={clean && !isResponsive ? getBorder(darkMode) : undefined}
                   data-component-name="DataTableBodyColumn"
                   direction="column"
                   display="flex"
@@ -47,8 +61,8 @@ function DataTableBody(props: Props) {
                   maxWidth={maxWidth}
                   minWidth={min ?? size}
                   order={isAction ? 1 : columnIndex + 1}
-                  padding={!clean ? 'md' : undefined}
-                  pt={clean ? 'sm' : undefined}
+                  px={clean ? 'sm' : 'md'}
+                  py={clean ? 'sm' : 'md'}
                   wrap="wrap"
                 >
                   {isResponsive && !hideOnResponsive && (
@@ -61,7 +75,7 @@ function DataTableBody(props: Props) {
                       {title}
                     </Paragraph>
                   )}
-                  {item[key]}
+                  {getRowContent(item, key)}
                 </Box>
               );
             },
@@ -70,17 +84,16 @@ function DataTableBody(props: Props) {
       ))}
       {loading && (
         <BoxCenter
-          bg={!isInitialLoad ? 'gray' : undefined}
+          bg={!isInitialLoad ? 'rgba(200, 200, 200, 0.5)' : undefined}
           bottom={0}
           left={0}
-          opacity={isInitialLoad ? 1 : 0.5}
           pointerEvents="fill"
           position="absolute"
           right={0}
           top={0}
           zIndex={10}
         >
-          <Loader />
+          <Loader color={accent} size={loaderSize} type={loaderType} />
         </BoxCenter>
       )}
     </Box>

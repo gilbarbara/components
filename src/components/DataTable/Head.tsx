@@ -1,23 +1,14 @@
-import { memo, MouseEventHandler, ReactNode } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { memo, ReactNode } from 'react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { Box } from '~/components/Box';
+import { Box, BoxProps } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
 
-import type { DataTableProps } from './DataTable';
-
-interface Props extends Pick<DataTableProps, 'clean' | 'columns'> {
-  isDisabled: boolean;
-  isResponsive: boolean;
-  onClick: MouseEventHandler;
-  sortBy: string;
-  sortDirection: string;
-}
+import type { DataTableHeadProps } from './types';
 
 const Title = styled(
   ButtonUnstyled,
@@ -32,16 +23,38 @@ const Title = styled(
   `;
 });
 
-function DataTableHead(props: Props) {
-  const { clean, columns, isDisabled, isResponsive, onClick, sortBy, sortDirection } = props;
-  const { colors } = getTheme({ theme: useTheme() });
+function DataTableHead(props: DataTableHeadProps) {
+  const {
+    accent,
+    clean,
+    columns,
+    darkMode,
+    isDisabled,
+    isResponsive,
+    onClick,
+    sortBy,
+    sortDirection,
+    stickyHeader,
+  } = props;
 
   if (isResponsive) {
     return null;
   }
 
+  const wrapperProps: BoxProps = {
+    bg: darkMode ? 'gray.900' : 'white',
+    display: 'flex',
+    radius: !clean ? 'xs' : undefined,
+  };
+
+  if (stickyHeader) {
+    wrapperProps.position = 'sticky';
+    wrapperProps.top = 0;
+    wrapperProps.zIndex = 1;
+  }
+
   return (
-    <Box data-component-name="DataTableHead" display="flex">
+    <Box data-component-name="DataTableHead" {...wrapperProps}>
       {columns.map(({ disableSort, key, max, min, size, title }) => {
         let icon: ReactNode;
 
@@ -51,9 +64,9 @@ function DataTableHead(props: Props) {
           if (key === sortBy) {
             icon =
               sortDirection === 'asc' ? (
-                <Icon color={colors.primary} ml="xxs" name="sort-asc" size={20} />
+                <Icon color={accent} ml="xxs" name="sort-asc" size={20} />
               ) : (
-                <Icon color={colors.primary} ml="xxs" name="sort-desc" size={20} />
+                <Icon color={accent} ml="xxs" name="sort-desc" size={20} />
               );
           }
         }
@@ -66,10 +79,9 @@ function DataTableHead(props: Props) {
             direction="row"
             flex="grow"
             maxWidth={max ?? size}
-            mb="sm"
             minWidth={min ?? size}
-            pr={clean ? 'sm' : undefined}
-            px={!clean ? 'md' : undefined}
+            my="xs"
+            px={clean ? 'sm' : 'md'}
           >
             {title && (
               <Title
