@@ -1,4 +1,4 @@
-import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react';
+import { Children, cloneElement, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import { objectEntries, omit, px } from '@gilbarbara/helpers';
 import { PartialDeep, PlainObject } from '@gilbarbara/types';
@@ -12,7 +12,6 @@ import { generatePalette } from './palette';
 import {
   BaseProps,
   Breakpoint,
-  GetElementPropertyOptions,
   MediaQueries,
   RecursiveChildrenEnhancerOptions,
   ResponsiveInput,
@@ -41,47 +40,6 @@ export function createMediaQuery(size: ResponsiveSizes, mediaQueries: MediaQueri
   }
 
   return mediaQueries[size];
-}
-
-export function getElementProperty(
-  element: ReactElement,
-  options: GetElementPropertyOptions,
-): string | null {
-  const { children } = element.props;
-  const { property, type } = options;
-
-  const getValue = (input: ReactElement) => {
-    const { props } = input;
-
-    if (input.type === type) {
-      if (property) {
-        return props?.[property] || null;
-      }
-
-      return props.children || null;
-    }
-
-    return null;
-  };
-
-  for (const child of Children.toArray(children)) {
-    if (!isValidElement(child)) {
-      return getValue(element);
-    }
-
-    const childrenElement = child.props?.children?.type === type ? child.props.children : undefined;
-    const selectedElement = child.type === type ? child : childrenElement;
-
-    if (selectedElement) {
-      return getValue(selectedElement);
-    }
-
-    if (is.array(child.props.children)) {
-      return getElementProperty(child, options);
-    }
-  }
-
-  return null;
 }
 
 export function getMediaQueries(): MediaQueries {

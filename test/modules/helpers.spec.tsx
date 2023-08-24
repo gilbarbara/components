@@ -3,7 +3,6 @@ import { Children, isValidElement } from 'react';
 import {
   clearNumber,
   createMediaQuery,
-  getElementProperty,
   getMediaQueries,
   getTheme,
   isCSSUnit,
@@ -11,8 +10,6 @@ import {
   recursiveChildrenEnhancer,
   responsive,
 } from '~/modules/helpers';
-
-import { Box } from '~/components/Box';
 
 import { MenuDivider, MenuItem } from '../../src/components/Menu';
 
@@ -29,45 +26,6 @@ describe('createMediaQuery', () => {
     expect(createMediaQuery('_', mediaQueries)).toBeUndefined();
     expect(createMediaQuery('sm', mediaQueries)).toBe('@media screen and (min-width: 400px)');
     expect(createMediaQuery('600px', mediaQueries)).toBe('@media screen and (min-width: 600px)');
-  });
-});
-
-describe('getElementProperty', () => {
-  it.each([
-    {
-      input: (
-        <Box>
-          <div>
-            <span>hey</span>
-            <time dateTime="2020-01-01">01/01/2020</time>
-          </div>
-        </Box>
-      ),
-      options: { type: 'time', property: 'dateTime' },
-      expected: '2020-01-01',
-    },
-    {
-      input: <div data-name="John Smith">John</div>,
-      options: { type: 'div', property: 'data-name' },
-      expected: 'John Smith',
-    },
-    {
-      input: <div>John</div>,
-      options: { type: 'div' },
-      expected: 'John',
-    },
-    {
-      input: <div>John</div>,
-      options: { type: 'span' },
-      expected: null,
-    },
-    {
-      input: <div />,
-      options: { type: 'div' },
-      expected: null,
-    },
-  ])('should return $expected', ({ expected, input, options }) => {
-    expect(getElementProperty(input, options)).toBe(expected);
   });
 });
 
