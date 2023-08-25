@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactNode, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { SetRequired } from '@gilbarbara/types';
+import { SetRequired, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { colorStyles, getStyledOptions } from '~/modules/system';
@@ -28,7 +28,7 @@ export interface ButtonSplitProps
     WithChildren,
     WithColorsDefaultBg,
     WithInvert {
-  dataAttributes?: Record<`data-${string}`, string | number>;
+  dataAttributes?: Record<`data-${string}`, StringOrNumber>;
   label: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
   /** @default bottom-right */
@@ -50,16 +50,16 @@ export const StyledButtonSplit = styled(
   getStyledOptions(),
 )<SetRequired<Omit<ButtonSplitProps, 'label' | 'onClick'>, keyof typeof defaultProps>>(props => {
   const { block, disabled, invert, size } = props;
-  const { button, grayLight, grayMid, spacing } = getTheme(props);
+  const { button, grayScale, spacing } = getTheme(props);
 
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   const buttonPadding = `${padding[0]} ${padding[1]}`;
   const styles = colorStyles(props);
 
   if (disabled) {
-    styles.backgroundColor = grayLight;
-    styles.borderColor = grayLight;
-    styles.color = grayMid;
+    styles.backgroundColor = grayScale['100'];
+    styles.borderColor = grayScale['100'];
+    styles.color = grayScale['500'];
   }
 
   return css`

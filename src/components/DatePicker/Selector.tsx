@@ -53,23 +53,13 @@ const StyledButton = styled(
   }
 >(props => {
   const { accent = selectorDefaultProps.accent, borderless, isFilled, large, width } = props;
-  const {
-    darkColor,
-    grayDark,
-    grayDarker,
-    grayMid,
-    inputHeight,
-    lightColor,
-    radius,
-    spacing,
-    white,
-    ...theme
-  } = getTheme(props);
+  const { darkColor, grayScale, inputHeight, lightColor, radius, spacing, white, ...theme } =
+    getTheme(props);
   const darkMode = isDarkMode(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
-  let borderColor = darkMode ? grayDark : grayMid;
-  let textColor = grayMid;
+  let borderColor = darkMode ? grayScale['700'] : grayScale['500'];
+  let textColor = grayScale['500'];
 
   if (isFilled) {
     borderColor = mainColor;
@@ -90,7 +80,7 @@ const StyledButton = styled(
 
   return css`
     align-items: center;
-    background-color: ${darkMode ? grayDarker : white};
+    background-color: ${darkMode ? grayScale['800'] : white};
     color: ${textColor};
     cursor: pointer;
     display: flex;
@@ -108,7 +98,7 @@ const StyledContent = styled(
   getStyledOptions(),
 )<{ isActive: boolean; position: Alignment; wide: boolean }>(props => {
   const { isActive, position, wide } = props;
-  const { grayDarker, radius, shadow, spacing, white } = getTheme(props);
+  const { grayScale, radius, shadow, spacing, white } = getTheme(props);
   const darkMode = isDarkMode(props);
   let left = position === 'left' ? 0 : 'auto';
   let translateX = '';
@@ -119,7 +109,7 @@ const StyledContent = styled(
   }
 
   return css`
-    background-color: ${darkMode ? grayDarker : white};
+    background-color: ${darkMode ? grayScale['800'] : white};
     border-radius: ${radius.xxs};
     box-shadow: ${shadow.mid};
     display: flex;

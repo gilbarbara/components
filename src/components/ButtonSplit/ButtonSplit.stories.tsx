@@ -1,5 +1,4 @@
 import { MouseEvent, useState } from 'react';
-import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -49,7 +48,7 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
     action('onClick')(id);
   };
 
-  const handleClickClosure = (closeMenu: GenericFunction, name?: string) => {
+  const handleClickClosure = (closeMenu: () => void, name?: string) => {
     return () => {
       setLoading(true);
 

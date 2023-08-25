@@ -104,14 +104,14 @@ export function getRange<T extends DayPickerProps>(
 
 export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
   const { accent = 'primary' } = props;
-  const { colors, grayLight, grayMid, spacing, typography, variants } = getTheme(props);
+  const { colors, grayScale, spacing, typography, variants } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   const className = 'rdp';
   const colorMain = colors[accent];
   const colorVariant = variants[accent];
   const cellSize = '40px';
-  const disabledDays = darkMode ? grayMid : grayLight;
+  const disabledDays = darkMode ? grayScale['500'] : grayScale['200'];
 
   return css`
     ${borderStyles(props)};
@@ -340,7 +340,7 @@ export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
     }
 
     .${className}-head_cell {
-      color: ${grayMid};
+      color: ${grayScale['500']};
       font-size: ${typography.mid.fontSize};
       font-weight: normal;
       height: 24px;

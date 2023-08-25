@@ -1,5 +1,5 @@
 import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
-import { Simplify, StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNull, StringOrNumber } from '@gilbarbara/types';
 
 import { LoaderType } from '~/components/Loader';
 
@@ -58,7 +58,7 @@ export interface DataTableColumn<T = string> {
 export type DataTableRowContent = ReactNode | { label: ReactNode; value: string };
 
 export type DataTableRow<T extends string> = Simplify<
-  Record<T, DataTableRowContent> & { id?: string | number }
+  Record<T, DataTableRowContent> & { id?: StringOrNumber }
 >;
 
 export interface DataTableKnownProps<T extends string>
@@ -184,7 +184,7 @@ export interface DataTableHeadProps extends WithAccent, Pick<DataTableProps, 'cl
   isDisabled: boolean;
   isResponsive: boolean;
   onClick: MouseEventHandler;
-  sortBy: string | null;
+  sortBy: StringOrNull;
   sortDirection: SortDirection;
   stickyHeader: boolean;
 }

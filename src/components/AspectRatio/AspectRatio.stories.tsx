@@ -4,7 +4,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph } from '~';
 
-import { grayMid } from '~/modules/theme';
+import { grayScale } from '~/modules/theme';
 
 import { hideProps, hideTable, marginProps } from '~/stories/__helpers__';
 
@@ -40,7 +40,7 @@ export const Basic: Story = {
 
     return (
       <>
-        <AspectRatio {...props} style={{ border: `1px dashed ${grayMid}` }}>
+        <AspectRatio {...props} style={{ border: `1px dashed ${grayScale['500']}` }}>
           {showMedia ? (
             <SVG src="https://cdn.svgporn.com/logos/storybook.svg" />
           ) : (

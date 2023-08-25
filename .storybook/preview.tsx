@@ -2,13 +2,14 @@ import * as React from 'react';
 import { usePrevious } from 'react-use';
 import styled from '@emotion/styled';
 import { DocsContainer } from '@storybook/addon-docs';
+import { objectKeys } from '@gilbarbara/helpers';
 
 import { ThemeProvider } from '@emotion/react';
 import { useGlobals } from '@storybook/client-api';
 import CacheProvider from 'react-inlinesvg/provider';
 
 import { colors as themeColors } from '../src/modules/theme';
-import { Theme } from '../src/types';
+import {Theme, WithFlexBox, WithPadding} from '../src/types';
 
 import { Box } from '../src';
 
@@ -19,15 +20,15 @@ interface Context {
   };
   parameters: {
     align: string;
-    direction: string;
+    direction: WithFlexBox['direction'];
     display: string;
     justify: string;
     layout: string;
     minWidth: number;
     maxWidth: number;
     minHeight?: string;
-    padding: string;
-    paddingDocs: number;
+    padding: WithPadding['padding'];
+    paddingDocs: WithPadding['padding'];
   };
   viewMode: string;
 }
@@ -54,7 +55,7 @@ export const parameters = {
   docs: {
     container: ({ children, context }: React.ComponentProps<typeof DocsContainer>) => (
       <DocsContainer context={context}>
-        <CacheProvider name="@gilbarbara/components">{children}</CacheProvider>
+        <CacheProvider name="@gilbarbara/components"><>{children}</></CacheProvider>
       </DocsContainer>
     ),
   },
@@ -88,7 +89,7 @@ export const globalTypes = {
     defaultValue: 'primary',
     toolbar: {
       icon: 'paintbrush',
-      items: Object.keys(themeColors),
+      items: objectKeys(themeColors),
     },
   },
 };

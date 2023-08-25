@@ -154,14 +154,6 @@ export const grayScale = {
   '950': '#0d0d0d',
 };
 
-export const grayLightest = grayScale['40'];
-export const grayLighter = grayScale['100'];
-export const grayLight = grayScale['200'];
-export const grayMid = grayScale['500'];
-export const grayDark = grayScale['700'];
-export const grayDarker = grayScale['800'];
-export const grayDarkest = grayScale['900'];
-
 export const colors = {
   primary: '#3030e8',
   secondary: '#2a5d65',

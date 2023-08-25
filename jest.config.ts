@@ -1,4 +1,6 @@
-module.exports = {
+import { Config } from 'jest';
+
+const config: Config = {
   collectCoverage: false,
   collectCoverageFrom: ['src/modules/**/*'],
   coverageThreshold: {
@@ -15,7 +17,7 @@ module.exports = {
   },
   snapshotSerializers: ['@emotion/jest/serializer'],
   setupFilesAfterEnv: ['<rootDir>/test/__setup__/setupFilesAfterEnv.ts'],
-  testEnvironment: '@happy-dom/jest-environment',
+  testEnvironment: 'jsdom',
   testRegex: 'test/.*?\\.(test|spec)\\.tsx?$',
   transform: {
     '^.+\\.m?[tj]sx?$': [
@@ -33,3 +35,5 @@ module.exports = {
   watchPathIgnorePatterns: ['<rootDir>/node_modules/'],
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
 };
+
+export default config;

@@ -1,4 +1,3 @@
-import { GenericFunction } from '@gilbarbara/types';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -29,7 +28,7 @@ export default {
 
 export const Basic: Story = {
   render: function Render(props) {
-    const handleClick = (closeMenu: GenericFunction, name?: string) => {
+    const handleClick = (closeMenu: () => void, name?: string) => {
       return () => {
         closeMenu();
 

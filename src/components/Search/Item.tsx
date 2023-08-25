@@ -12,7 +12,7 @@ export const StyledSearchItem = styled(
   getStyledOptions(),
 )<Pick<SearchItemProps, 'accent' | 'isSelected'>>(props => {
   const { accent, isSelected } = props;
-  const { darkMode, grayDark, spacing, typography, white, ...theme } = getTheme(props);
+  const { darkMode, grayScale, spacing, typography, white, ...theme } = getTheme(props);
 
   const { mainColor, textColor } = getColorTokens(accent, null, theme);
 
@@ -26,7 +26,7 @@ export const StyledSearchItem = styled(
   `;
 
   return css`
-    color: ${darkMode ? white : grayDark};
+    color: ${darkMode ? white : grayScale['700']};
     cursor: pointer;
     font-size: ${typography.regular.fontSize};
     padding: ${spacing.sm} ${spacing.md};
@@ -40,7 +40,7 @@ export const StyledSearchItem = styled(
     ${isSelected && selected},
 
     a {
-      color: ${grayDark};
+      color: ${grayScale['700']};
       text-decoration: none;
     }
 

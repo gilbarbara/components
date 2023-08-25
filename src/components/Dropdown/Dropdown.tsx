@@ -49,11 +49,11 @@ export const StyledDropdown = styled(
   }
 >(props => {
   const { accent, borderless, isFilled, multi, width } = props;
-  const { grayDark, grayMid, radius, spacing, ...theme } = getTheme(props);
+  const { grayScale, radius, spacing, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
   const darkMode = isDarkMode(props);
-  let borderColor = darkMode ? grayDark : grayMid;
+  let borderColor = darkMode ? grayScale['700'] : grayScale['500'];
 
   if (isFilled) {
     borderColor = mainColor;
@@ -94,7 +94,7 @@ export const StyledDropdown = styled(
         opacity: 1 !important;
 
         .react-dropdown-content {
-          color: ${grayMid};
+          color: ${grayScale['500']};
         }
       }
 
@@ -170,7 +170,7 @@ export function Dropdown(props: DropdownProps) {
   };
   const [isFilled, setFilled] = useState(!!values.length);
 
-  const { darkMode, grayDarker, inputHeight, white, ...theme } = getTheme({ theme: useTheme() });
+  const { darkMode, grayScale, inputHeight, white, ...theme } = getTheme({ theme: useTheme() });
   const { mainColor } = getColorTokens(rest.accent ?? 'primary', null, theme);
 
   const handleChange = (value: Option[]) => {
@@ -195,7 +195,7 @@ export function Dropdown(props: DropdownProps) {
         options={items}
         showClearButton={showClearButton}
         styles={{
-          bgColor: darkMode ? grayDarker : white,
+          bgColor: darkMode ? grayScale['700'] : white,
           color: mainColor,
           gap: 0,
           minHeight: parseInt(large ? inputHeight.large : inputHeight.normal, 10),

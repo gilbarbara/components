@@ -91,10 +91,10 @@ const StyledTrack = styled(
   getStyledOptions(),
 )<InnerProps>(props => {
   const { accent, isActive } = props;
-  const { grayDark, grayLighter, radius, ...theme } = getTheme(props);
+  const { grayScale, radius, ...theme } = getTheme(props);
 
   const { mainColor } = getColorTokens(accent, null, theme);
-  let backgroundColor = isDarkMode(props) ? grayDark : grayLighter;
+  let backgroundColor = isDarkMode(props) ? grayScale['700'] : grayScale['100'];
 
   if (isActive) {
     backgroundColor = mainColor;
@@ -117,13 +117,13 @@ const StyledButton = styled(
   getStyledOptions(),
 )<InnerProps>(props => {
   const { accent, disabled, isActive, size } = props;
-  const { grayDarker, white, ...theme } = getTheme(props);
+  const { grayScale, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
   let backgroundColor = white;
 
   if (accent === 'white' && isActive) {
-    backgroundColor = grayDarker;
+    backgroundColor = grayScale['800'];
   } else if (isActive) {
     backgroundColor = getColorWithTone(mainColor, '50');
   }

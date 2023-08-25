@@ -27,10 +27,10 @@ export const StyledMenuItem = styled(
   getStyledOptions(),
 )<Omit<MenuItemProps, 'closeMenu'> & WithAccent>(props => {
   const { accent = 'primary', bg, color, disabled } = props;
-  const { grayDarker, grayScale, spacing, typography, ...theme } = getTheme(props);
+  const { grayScale, spacing, typography, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
 
-  const themeColor = darkMode ? grayScale['200'] : grayDarker;
+  const themeColor = darkMode ? grayScale['200'] : grayScale['800'];
 
   const { mainColor, textColor } = getColorTokens(bg || accent, color, theme);
 

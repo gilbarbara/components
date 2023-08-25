@@ -45,10 +45,10 @@ export const StyledSelect = styled(
   getStyledOptions(),
 )<SelectProps & { filled: boolean }>(props => {
   const { accent = defaultProps.accent, filled, large, multiple } = props;
-  const { darkColor, darkMode, grayMid, spacing, white, ...theme } = getTheme(props);
+  const { darkColor, darkMode, grayScale, spacing, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
-  let color = grayMid;
+  let color = grayScale['500'];
   const paddingY = large ? spacing.sm : spacing.xs;
 
   if (filled) {
@@ -56,7 +56,7 @@ export const StyledSelect = styled(
   }
 
   if (multiple) {
-    color = grayMid;
+    color = grayScale['500'];
   }
 
   return css`

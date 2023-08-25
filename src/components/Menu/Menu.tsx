@@ -59,7 +59,7 @@ const StyledMenuItems = styled(
   const { active, minWidth, position } = props;
   const [positionMain, positionCross] = position.split('-');
 
-  const { grayDarker, grayScale, radius, shadow, spacing, white } = getTheme(props);
+  const { grayScale, radius, shadow, spacing, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   return css`
@@ -118,10 +118,10 @@ const StyledMenuItems = styled(
     `}
 
   > div {
-      background-color: ${darkMode ? grayDarker : white};
+      background-color: ${darkMode ? grayScale['800'] : white};
       border-radius: ${radius.xxs};
       box-shadow: ${shadow.low};
-      color: ${darkMode ? grayScale['200'] : grayDarker};
+      color: ${darkMode ? grayScale['200'] : grayScale['800']};
       min-width: ${px(minWidth)};
       overflow: hidden;
 
@@ -158,6 +158,7 @@ const StyledMenuButton = styled(ButtonUnstyled)(props => {
 
     :disabled {
       cursor: not-allowed;
+      opacity: 0.6;
     }
   `;
 });

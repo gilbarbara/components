@@ -31,11 +31,11 @@ const Centered = styled(
   getStyledOptions(),
 )<{ withBorder: boolean }>(props => {
   const { withBorder } = props;
-  const { grayLight, spacing } = getTheme(props);
+  const { grayScale, spacing } = getTheme(props);
 
   return css`
     ${getSharedStyles(spacing)};
-    border-top: ${withBorder ? `1px solid ${grayLight}` : 0};
+    border-top: ${withBorder ? `1px solid ${grayScale['200']}` : 0};
     justify-content: center;
     padding: 0;
   `;
@@ -76,18 +76,7 @@ const Item = styled(
   getStyledOptions(),
 )<WithAccent & { disabled?: boolean; hovered: boolean; selected: boolean }>(props => {
   const { accent = 'primary', disabled, hovered, selected } = props;
-  const {
-    darkMode,
-    grayDark,
-    grayDarker,
-    grayLight,
-    grayLighter,
-    grayLightest,
-    grayMid,
-    spacing,
-    white,
-    ...theme
-  } = getTheme(props);
+  const { darkMode, grayScale, spacing, white, ...theme } = getTheme(props);
   const { mainColor, textColor } = getColorTokens(accent, null, theme);
   const { mainColor: bgHoverLight, textColor: colorHoverLight } = getColorTokens(
     `${accent}.50`,
@@ -100,14 +89,14 @@ const Item = styled(
     theme,
   );
 
-  let itemBgColor = darkMode ? grayDarker : white;
-  let itemColor = darkMode ? grayLighter : grayDarker;
+  let itemBgColor = darkMode ? grayScale['800'] : white;
+  let itemColor = darkMode ? grayScale['100'] : grayScale['800'];
   const bgHover = darkMode ? bgHoverDark : bgHoverLight;
   const colorHover = darkMode ? colorHoverDark : colorHoverLight;
 
   if (disabled) {
-    itemBgColor = darkMode ? grayDark : grayLightest;
-    itemColor = darkMode ? grayLight : grayMid;
+    itemBgColor = darkMode ? grayScale['700'] : grayScale['40'];
+    itemColor = darkMode ? grayScale['200'] : grayScale['500'];
   }
 
   return css`
@@ -140,12 +129,12 @@ const List = styled(
   getStyledOptions(),
 )<{ maxHeight?: StringOrNumber }>(props => {
   const { maxHeight } = props;
-  const { grayDark, grayDarker, grayLight, white } = getTheme(props);
+  const { grayScale, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   return css`
-    background-color: ${darkMode ? grayDarker : white};
-    color: ${darkMode ? grayLight : grayDark};
+    background-color: ${darkMode ? grayScale['800'] : white};
+    color: ${darkMode ? grayScale['200'] : grayScale['700']};
     cursor: default;
     max-height: ${maxHeight ?? 'none'};
     overflow-y: auto;
@@ -156,12 +145,12 @@ const Items = styled(
   'div',
   getStyledOptions(),
 )(props => {
-  const { grayDark, grayDarker, grayLight, white } = getTheme(props);
+  const { grayScale, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   return css`
-    background-color: ${darkMode ? grayDarker : white};
-    color: ${darkMode ? grayLight : grayDark};
+    background-color: ${darkMode ? grayScale['800'] : white};
+    color: ${darkMode ? grayScale['200'] : grayScale['700']};
   `;
 });
 
@@ -169,20 +158,19 @@ const Search = styled(
   'div',
   getStyledOptions(),
 )(props => {
-  const { darkColor, grayDarker, grayLight, grayMid, lightColor, spacing, typography, white } =
-    getTheme(props);
+  const { darkColor, grayScale, lightColor, spacing, typography, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   return css`
     ${getSharedStyles(spacing)};
-    background-color: ${darkMode ? grayDarker : white};
+    background-color: ${darkMode ? grayScale['800'] : white};
     padding: ${spacing.sm};
     position: sticky;
     top: 0;
 
     input {
-      background-color: ${darkMode ? grayDarker : white};
-      border: 1px solid ${darkMode ? grayMid : grayLight};
+      background-color: ${darkMode ? grayScale['800'] : white};
+      border: 1px solid ${darkMode ? grayScale['500'] : grayScale['200']};
       color: ${darkMode ? lightColor : darkColor};
       font-size: ${typography.regular.fontSize};
       line-height: 1.6;

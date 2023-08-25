@@ -18,7 +18,19 @@ export const defaultProps = {
 } satisfies Omit<CheckboxProps, 'name'>;
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const { accent, align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
+  const {
+    accent,
+    align,
+    checked,
+    defaultChecked,
+    disabled,
+    id,
+    label,
+    name,
+    size,
+    style,
+    ...rest
+  } = {
     ...defaultProps,
     ...props,
   };
@@ -28,6 +40,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     <StyledLabel
       align={align}
       data-component-name="Checkbox"
+      disabled={disabled}
       htmlFor={inputId}
       size={size}
       {...getMarginProps(props)}
@@ -37,15 +50,16 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
         aria-checked={checked ?? defaultChecked}
         checked={checked}
         defaultChecked={defaultChecked}
+        disabled={disabled}
         id={inputId}
         name={name}
-        role="checkbox"
         type="checkbox"
         {...rest}
       />
       <StyledElement
         accent={accent}
         category="checkbox"
+        data-component-name="CheckboxElement"
         label={label}
         onKeyDown={handleKeyDown}
         size={size}

@@ -1,6 +1,6 @@
 import { Children, cloneElement, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
-import { objectEntries, omit, px } from '@gilbarbara/helpers';
+import { objectEntries, objectKeys, omit, px } from '@gilbarbara/helpers';
 import { PartialDeep, PlainObject } from '@gilbarbara/types';
 import { deepmergeCustom, DeepMergeLeafURI } from 'deepmerge-ts';
 import is from 'is-lite';
@@ -43,7 +43,7 @@ export function createMediaQuery(size: ResponsiveSizes, mediaQueries: MediaQueri
 }
 
 export function getMediaQueries(): MediaQueries {
-  return Object.keys(breakpoints)
+  return objectKeys(breakpoints)
     .filter(d => Number.isNaN(parseInt(d, 10)))
     .reduce((acc: PlainObject, d) => {
       acc[d] = `@media screen and (min-width: ${px(breakpoints[d as Breakpoint])})`;

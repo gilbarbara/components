@@ -78,7 +78,7 @@ export const StyledButton = styled(
   getStyledOptions(),
 )<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
   const { bg, block, busy, color, light, shape, size, wide } = props;
-  const { button, grayLighter, grayMid, radius, spacing, ...theme } = getTheme(props);
+  const { button, grayScale, radius, spacing, ...theme } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
   let selectedRadius = borderRadius;
@@ -124,9 +124,9 @@ export const StyledButton = styled(
     ${paddingStyles(props)}
 
     &:disabled {
-      background-color: ${grayLighter};
-      border-color: ${grayLighter};
-      color: ${grayMid};
+      background-color: ${grayScale['100']};
+      border-color: ${grayScale['100']};
+      color: ${grayScale['500']};
       cursor: not-allowed;
     }
 

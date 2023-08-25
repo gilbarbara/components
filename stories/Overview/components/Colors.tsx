@@ -122,7 +122,7 @@ export function Grayscale() {
       <H2>Grayscale</H2>
 
       <Grid gap={32} justifyContent="start" templateColumns="repeat(6, auto)">
-        {Object.entries(grayScale).map(([key, color]) => (
+        {objectEntries(grayScale).map(([key, color]) => (
           <Swatch key={key} bg={color} color={color} content={key} footer={color} />
         ))}
       </Grid>
@@ -171,7 +171,7 @@ export function Variants() {
           <Box key={variant}>
             <H3 light>{capitalize(variant)}</H3>
             <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
-              {Object.entries(tonesMap).map(([tone, value]) => {
+              {objectEntries(tonesMap).map(([tone, value]) => {
                 return (
                   <Swatch
                     key={tone}
