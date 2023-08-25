@@ -17,11 +17,11 @@ const StyledSearchItems = styled(
   getStyledOptions(),
 )<{ active: boolean; height: StringOrNumber }>(props => {
   const { active, height } = props;
-  const { grayDarker, radius, shadow, spacing, white } = getTheme(props);
+  const { grayScale, radius, shadow, spacing, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   return css`
-    background-color: ${darkMode ? grayDarker : white};
+    background-color: ${darkMode ? grayScale['800'] : white};
     border-radius: ${radius.xxs};
     box-shadow: ${shadow.mid};
     left: 0;

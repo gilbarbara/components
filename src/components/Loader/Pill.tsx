@@ -28,14 +28,14 @@ export const StyledLoaderPill = styled(
   getStyledOptions(),
 )<Omit<LoaderProps, 'type'>>(props => {
   const { block, color = 'primary', size = 128 } = props;
-  const { darkColor, grayDark, grayLighter, lightColor, spacing, ...theme } = getTheme(props);
+  const { darkColor, grayScale, lightColor, spacing, ...theme } = getTheme(props);
 
   const ratio = 0.16;
   const borderRadius = px(size / 2);
   const { mainColor } = getColorTokens(color, null, theme);
 
   return css`
-    background-color: ${isDarkMode(props) ? grayDark : grayLighter};
+    background-color: ${isDarkMode(props) ? grayScale['700'] : grayScale['100']};
     border-radius: ${borderRadius};
     display: ${block ? 'flex' : 'inline-flex'};
     height: ${px(Math.ceil(size * ratio))};

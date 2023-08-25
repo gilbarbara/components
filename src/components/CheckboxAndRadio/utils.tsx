@@ -67,7 +67,7 @@ export const StyledElement = styled(
   getStyledOptions('label'),
 )<InnerProps>(props => {
   const { accent = 'primary', category = 'checkbox', label, size } = props;
-  const { grayDark, grayDarker, grayLighter, radius, white, ...theme } = getTheme(props);
+  const { grayScale, radius, white, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
@@ -125,8 +125,8 @@ export const StyledElement = styled(
 
   return css`
     ${baseStyles(props)};
-    background-color: ${darkMode ? grayDarker : white};
-    border: 2px solid ${grayDark};
+    background-color: ${darkMode ? grayScale['800'] : white};
+    border: 2px solid ${grayScale['700']};
     border-radius: ${category === 'checkbox' ? radius.xxs : radius.round};
     display: inline-flex;
     flex-shrink: 0;
@@ -167,7 +167,7 @@ export const StyledElement = styled(
     }
 
     input:not(:checked):disabled ~ & {
-      background-color: ${grayLighter};
+      background-color: ${grayScale['100']};
     }
   `;
 });
@@ -181,7 +181,7 @@ export const StyledLabel = styled(
   return css`
     ${marginStyles(props)};
     align-items: ${align};
-    cursor: ${disabled ? 'default' : 'pointer'};
+    cursor: ${disabled ? 'not-allowed' : 'pointer'};
     display: flex;
     justify-content: flex-start;
     position: relative;
@@ -212,7 +212,7 @@ export function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
   const target = event.target as HTMLSpanElement;
   const input = target.previousElementSibling as HTMLInputElement;
 
-  if (!input || input.disabled || ![' ', 'Enter'].includes(event.key)) {
+  if (!input || input.disabled || !['Space', 'Enter'].includes(event.code)) {
     return;
   }
 

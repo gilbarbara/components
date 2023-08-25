@@ -1,6 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid';
 import { css, CSSObject } from '@emotion/react';
-import { capitalize, px } from '@gilbarbara/helpers';
+import { capitalize, objectEntries, px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 import { rgba } from 'polished';
@@ -126,41 +126,6 @@ export const appearanceStyles: CSSObject = {
   appearance: 'none',
 };
 
-export function colorStyles<T extends WithColors & WithInvert & WithTransparent & WithTheme>(
-  props: T,
-  withBorder = true,
-): CSSObject {
-  const theme = getTheme(props);
-  const { bg, color, invert, transparent } = props;
-
-  const styles: CSSObject = {};
-
-  if (bg) {
-    const { mainColor, textColor } = getColorTokens(bg, color, theme);
-
-    styles.backgroundColor = invert || transparent ? 'transparent' : mainColor;
-    styles.color = invert || transparent ? mainColor : textColor;
-
-    if (color) {
-      styles.color = textColor;
-    }
-
-    if (withBorder) {
-      styles.border = transparent ? 0 : `1px solid ${mainColor}`;
-    }
-
-    return styles;
-  }
-
-  if (color) {
-    const { mainColor } = getColorTokens(color, null, theme);
-
-    styles.color = mainColor;
-  }
-
-  return styles;
-}
-
 export function baseStyles<T extends WithTheme>(props: T): CSSObject {
   const { fontFamily } = getTheme(props);
 
@@ -223,7 +188,7 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
     });
 
     output = items.reduce<CSSObject>((acc, item) => {
-      Object.entries(item).forEach(([key, value]) => {
+      objectEntries(item).forEach(([key, value]) => {
         acc[key] = value;
       });
 
@@ -270,6 +235,41 @@ export const buttonStyles: CSSObject = {
   backgroundColor: 'transparent',
   border: 0,
 };
+
+export function colorStyles<T extends WithColors & WithInvert & WithTransparent & WithTheme>(
+  props: T,
+  withBorder = true,
+): CSSObject {
+  const theme = getTheme(props);
+  const { bg, color, invert, transparent } = props;
+
+  const styles: CSSObject = {};
+
+  if (bg) {
+    const { mainColor, textColor } = getColorTokens(bg, color, theme);
+
+    styles.backgroundColor = invert || transparent ? 'transparent' : mainColor;
+    styles.color = invert || transparent ? mainColor : textColor;
+
+    if (color) {
+      styles.color = textColor;
+    }
+
+    if (withBorder) {
+      styles.border = transparent ? 0 : `1px solid ${mainColor}`;
+    }
+
+    return styles;
+  }
+
+  if (color) {
+    const { mainColor } = getColorTokens(color, null, theme);
+
+    styles.color = mainColor;
+  }
+
+  return styles;
+}
 
 export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
   const { display } = props;
@@ -347,11 +347,7 @@ export function inputStyles<
   const {
     darkColor,
     fontFamily,
-    grayDark,
-    grayDarker,
-    grayLighter,
-    grayLightest,
-    grayMid,
+    grayScale,
     inputHeight,
     lightColor,
     radius,
@@ -362,7 +358,7 @@ export function inputStyles<
   } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
   const isSelect = is.boolean(multiple);
-  const placeholderColor = grayMid;
+  const placeholderColor = grayScale['500'];
 
   let height;
   let paddingY = large ? spacing.md : spacing.sm;
@@ -391,9 +387,9 @@ export function inputStyles<
   }
 
   const disabled = css`
-    ${!borderless && `background-color: ${darkMode ? grayDark : grayLightest};`}
-    border-color: ${darkMode ? grayDark : grayLighter};
-    color: ${darkMode ? grayLighter : grayDark};
+    ${!borderless && `background-color: ${darkMode ? grayScale['700'] : grayScale['40']};`}
+    border-color: ${darkMode ? grayScale['700'] : grayScale['100']};
+    color: ${darkMode ? grayScale['100'] : grayScale['700']};
     cursor: not-allowed;
   `;
 
@@ -401,11 +397,11 @@ export function inputStyles<
     ? css`
         background-color: transparent;
         border: 0;
-        border-bottom: 1px solid ${darkMode ? grayDark : grayMid};
+        border-bottom: 1px solid ${darkMode ? grayScale['700'] : grayScale['500']};
       `
     : css`
-        background-color: ${darkMode ? grayDarker : white};
-        border: 1px solid ${darkMode ? grayDark : grayMid};
+        background-color: ${darkMode ? grayScale['800'] : white};
+        border: 1px solid ${darkMode ? grayScale['700'] : grayScale['500']};
         border-radius: ${radius.xs};
       `;
 
@@ -585,7 +581,7 @@ export function paddingStyles<T extends WithPadding>(props: T, force = false): C
   }
 
   if (force) {
-    return Object.entries(output).reduce<CSSObject>((acc, [key, value]) => {
+    return objectEntries(output).reduce<CSSObject>((acc, [key, value]) => {
       acc[key] = `${value} !important`;
 
       return acc;

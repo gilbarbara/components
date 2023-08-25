@@ -21,7 +21,7 @@ const Item = styled(
   getStyledOptions(),
 )<{ multi?: boolean }>(props => {
   const { color, multi } = props;
-  const { grayDark, radius, spacing, white } = getTheme(props);
+  const { grayScale, radius, spacing, white } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   let multiStyles;
@@ -30,7 +30,7 @@ const Item = styled(
     multiStyles = css`
       border: 1px solid ${color};
       border-radius: ${radius.xxs};
-      background-color: ${darkMode ? grayDark : white};
+      background-color: ${darkMode ? grayScale['700'] : white};
       margin-bottom: ${spacing.xxs};
       margin-right: ${spacing.xs};
       margin-top: ${spacing.xxs};
@@ -63,11 +63,11 @@ const Placeholder = styled(
   'div',
   getStyledOptions(),
 )(props => {
-  const { grayMid } = getTheme(props);
+  const { grayScale } = getTheme(props);
 
   return css`
     align-items: center;
-    color: ${grayMid};
+    color: ${grayScale['500']};
     display: flex;
   `;
 });

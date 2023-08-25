@@ -44,11 +44,11 @@ export const StyledProgressBar = styled(
 )<Omit<ProgressBarProps, 'step' | 'steps'>>(props => {
   const { width } = props;
 
-  const { grayLight } = getTheme(props);
+  const { grayScale } = getTheme(props);
 
   return css`
     ${baseStyles(props)};
-    color: ${isDarkMode(props) && grayLight};
+    color: ${isDarkMode(props) && grayScale['200']};
     width: ${px(width)};
     ${marginStyles(props)};
   `;

@@ -22,7 +22,19 @@ export const defaultProps = {
  * RadioGroup accepts an `items` prop that render this component in a group and is responsible for managing state and interactions.
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const { accent, align, checked, defaultChecked, id, label, name, size, style, ...rest } = {
+  const {
+    accent,
+    align,
+    checked,
+    defaultChecked,
+    disabled,
+    id,
+    label,
+    name,
+    size,
+    style,
+    ...rest
+  } = {
     ...defaultProps,
     ...props,
   };
@@ -32,6 +44,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       align={align}
       category="radio"
       data-component-name="Radio"
+      disabled={disabled}
       htmlFor={id}
       {...getMarginProps(props)}
     >
@@ -40,6 +53,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
         aria-checked={!!(checked ?? defaultChecked)}
         checked={checked}
         defaultChecked={defaultChecked}
+        disabled={disabled}
         id={id}
         name={name}
         role="radio"
@@ -49,11 +63,12 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       <StyledElement
         accent={accent}
         category="radio"
+        data-component-name="RadioElement"
         label={label}
         onKeyDown={handleKeyDown}
         size={size}
         style={style}
-        tabIndex={rest.disabled ? -1 : 0}
+        tabIndex={disabled ? -1 : 0}
       />
       {label && (
         <StyledText category="radio" size={size}>

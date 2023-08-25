@@ -8,10 +8,10 @@ const StyledMenuDivider = styled(
   'div',
   getStyledOptions(),
 )(props => {
-  const { grayLight, spacing } = getTheme(props);
+  const { grayScale, spacing } = getTheme(props);
 
   return css`
-    background-color: ${grayLight};
+    background-color: ${grayScale['200']};
     height: 1px;
     margin-bottom: ${spacing.xxs};
     margin-top: ${spacing.xxs};

@@ -73,7 +73,7 @@ const StyledMenu = styled(
   getStyledOptions(),
 )<TabsProps & { width: number | null }>(props => {
   const { direction, width } = props;
-  const { grayLighter, spacing } = getTheme(props);
+  const { grayScale, spacing } = getTheme(props);
 
   const isHorizontal = direction === 'horizontal';
   const isVertical = direction === 'vertical';
@@ -89,8 +89,8 @@ const StyledMenu = styled(
     position: relative;
 
     &:before {
-      border-bottom: ${isVertical ? `1px solid ${grayLighter}` : undefined};
-      border-right: ${isHorizontal ? `1px solid ${grayLighter}` : undefined};
+      border-bottom: ${isVertical ? `1px solid ${grayScale['100']}` : undefined};
+      border-right: ${isHorizontal ? `1px solid ${grayScale['100']}` : undefined};
       bottom: 0;
       content: '';
       left: ${isVertical ? 0 : undefined};
@@ -111,22 +111,22 @@ const StyledMenuItem = styled(
   }
 >(props => {
   const { accent, direction, disableActiveBorderRadius, disabled, isActive } = props;
-  const { grayDarker, grayMid, grayScale, spacing, ...theme } = getTheme(props);
+  const { grayScale, spacing, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   const { mainColor } = getColorTokens(accent, null, theme);
-  let color = darkMode ? grayScale['200'] : grayDarker;
+  let color = darkMode ? grayScale['200'] : grayScale['800'];
   const isVertical = direction === 'vertical';
   const isHorizontal = direction === 'horizontal';
 
   if (disabled) {
-    color = grayMid;
+    color = grayScale['500'];
   } else if (isActive) {
     color = mainColor;
   }
 
   return css`
-    color: ${disabled ? grayMid : color};
+    color: ${disabled ? grayScale['500'] : color};
     cursor: ${disabled ? 'not-allowed' : 'pointer'};
     line-height: 1;
     padding: ${spacing.xs} ${spacing.md};

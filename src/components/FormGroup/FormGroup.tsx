@@ -108,11 +108,11 @@ const AssistiveContent = styled(
   'div',
   getStyledOptions(),
 )<Partial<FormGroupProps>>(props => {
-  const { grayLight, grayMid, spacing, typography } = getTheme(props);
+  const { grayScale, spacing, typography } = getTheme(props);
 
   return css`
     align-items: center;
-    color: ${isDarkMode(props) ? grayLight : grayMid};
+    color: ${isDarkMode(props) ? grayScale['200'] : grayScale['500']};
     display: flex;
     font-size: ${typography.mid.fontSize};
     line-height: 16px;
