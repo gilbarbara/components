@@ -12,7 +12,7 @@ import { ButtonGroup, defaultProps } from './ButtonGroup';
 type Story = StoryObj<typeof ButtonGroup>;
 
 export default {
-  title: 'Components/ButtonGroup',
+  title: 'Buttons/ButtonGroup',
   component: ButtonGroup,
   args: defaultProps,
   argTypes: {

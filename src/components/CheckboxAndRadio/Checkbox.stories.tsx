@@ -9,7 +9,7 @@ import { Checkbox, defaultProps } from './Checkbox';
 type Story = StoryObj<typeof Checkbox>;
 
 export default {
-  title: 'Components/Checkbox',
+  title: 'Inputs/Checkbox',
   component: Checkbox,
   args: {
     ...defaultProps,

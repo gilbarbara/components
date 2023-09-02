@@ -15,7 +15,7 @@ import { defaultProps, Paragraph } from './Paragraph';
 type Story = StoryObj<typeof Paragraph>;
 
 export default {
-  title: 'Components/Paragraph',
+  title: 'Content/Paragraph',
   component: Paragraph,
   args: {
     ...defaultProps,

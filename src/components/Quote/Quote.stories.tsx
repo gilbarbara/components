@@ -7,7 +7,7 @@ import { defaultProps, Quote } from './Quote';
 type Story = StoryObj<typeof Quote>;
 
 export default {
-  title: 'Components/Quote',
+  title: 'Content/Quote',
   component: Quote,
   args: defaultProps,
   argTypes: {

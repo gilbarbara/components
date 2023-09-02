@@ -12,7 +12,7 @@ import { SkeletonTextProps } from './utils';
 type Story = StoryObj<typeof SkeletonText>;
 
 export default {
-  title: 'Components/Skeleton',
+  title: 'Feedback/Skeleton',
   component: SkeletonText,
   args: defaultProps,
   argTypes: {

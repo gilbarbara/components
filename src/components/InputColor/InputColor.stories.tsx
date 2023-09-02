@@ -7,7 +7,7 @@ import { defaultProps, InputColor } from './InputColor';
 type Story = StoryObj<typeof InputColor>;
 
 export default {
-  title: 'Components/InputColor',
+  title: 'Inputs/InputColor',
   component: InputColor,
   args: {
     ...defaultProps,

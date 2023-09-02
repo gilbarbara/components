@@ -7,7 +7,7 @@ import { defaultProps, Loader } from './Loader';
 type Story = StoryObj<typeof Loader>;
 
 export default {
-  title: 'Components/Loader',
+  title: 'Feedback/Loader',
   component: Loader,
   args: {
     ...defaultProps,

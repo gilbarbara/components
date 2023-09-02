@@ -7,7 +7,7 @@ import { DatePickerSelector, selectorDefaultProps } from './Selector';
 type Story = StoryObj<typeof DatePickerSelector>;
 
 export default {
-  title: 'Components/DatePicker',
+  title: 'Inputs/DatePicker',
   component: DatePickerSelector,
   args: {
     ...selectorDefaultProps,

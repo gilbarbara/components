@@ -14,7 +14,7 @@ import { defaultProps, Toggle, ToggleProps } from './Toggle';
 type Story = StoryObj<typeof Toggle>;
 
 export default {
-  title: 'Components/Toggle',
+  title: 'Inputs/Toggle',
   component: Toggle,
   args: {
     ...defaultProps,

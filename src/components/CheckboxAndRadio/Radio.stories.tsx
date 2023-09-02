@@ -7,7 +7,7 @@ import { defaultProps, Radio } from './Radio';
 type Story = StoryObj<typeof Radio>;
 
 export default {
-  title: 'Components/Radio',
+  title: 'Inputs/Radio',
   component: Radio,
   args: {
     ...defaultProps,

@@ -22,7 +22,7 @@ import { defaultProps, Tag } from './Tag';
 type Story = StoryObj<typeof Tag>;
 
 export default {
-  title: 'Components/Tag',
+  title: 'Feedback/Tag',
   component: Tag,
   args: defaultProps,
   argTypes: {

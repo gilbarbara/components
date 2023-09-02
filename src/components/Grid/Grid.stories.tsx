@@ -20,7 +20,7 @@ import { defaultProps, Grid } from './Grid';
 type Story = StoryObj<typeof Grid>;
 
 export default {
-  title: 'Components/Grid',
+  title: 'Layout/Grid',
   component: Grid,
   args: {
     ...defaultProps,

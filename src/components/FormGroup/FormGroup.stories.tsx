@@ -15,7 +15,7 @@ import { defaultProps, FormGroup } from './FormGroup';
 type Story = StoryObj<typeof FormGroup>;
 
 export default {
-  title: 'Components/FormGroup',
+  title: 'Forms/FormGroup',
   component: FormGroup,
   args: {
     ...defaultProps,

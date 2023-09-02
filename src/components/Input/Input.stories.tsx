@@ -9,7 +9,7 @@ import { defaultProps, Input } from './Input';
 type Story = StoryObj<typeof Input>;
 
 export default {
-  title: 'Components/Input',
+  title: 'Inputs/Input',
   component: Input,
   args: {
     ...defaultProps,

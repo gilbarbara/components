@@ -12,7 +12,7 @@ import { defaultProps, StatusIndicator } from './StatusIndicator';
 type Story = StoryObj<typeof StatusIndicator>;
 
 export default {
-  title: 'Components/StatusIndicator',
+  title: 'Feedback/StatusIndicator',
   component: StatusIndicator,
   args: defaultProps,
   argTypes: {

@@ -21,7 +21,7 @@ import { Button, defaultProps } from './Button';
 type Story = StoryObj<typeof Button>;
 
 export default {
-  title: 'Components/Button',
+  title: 'Buttons/Button',
   component: Button,
   args: {
     ...defaultProps,

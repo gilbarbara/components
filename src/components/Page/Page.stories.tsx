@@ -16,7 +16,7 @@ import { defaultProps, Page } from './Page';
 type Story = StoryObj<typeof Page>;
 
 export default {
-  title: 'Components/Page',
+  title: 'Layout/Page',
   component: Page,
   args: {
     ...defaultProps,
