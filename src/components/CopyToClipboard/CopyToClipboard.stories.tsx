@@ -7,7 +7,7 @@ import { CopyToClipboard, defaultProps } from './CopyToClipboard';
 type Story = StoryObj<typeof CopyToClipboard>;
 
 export default {
-  title: 'Components/CopyToClipboard',
+  title: 'Content/CopyToClipboard',
   component: CopyToClipboard,
   args: {
     ...defaultProps,

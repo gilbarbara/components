@@ -10,7 +10,7 @@ import { Collapse, defaultProps } from './Collapse';
 type Story = StoryObj<typeof Collapse>;
 
 export default {
-  title: 'Components/Collapse',
+  title: 'Display/Collapse',
   component: Collapse,
   args: {
     ...defaultProps,

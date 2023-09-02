@@ -12,7 +12,7 @@ import { defaultProps, Menu } from './Menu';
 type Story = StoryObj<typeof Menu>;
 
 export default {
-  title: 'Components/Menu',
+  title: 'Navigation/Menu',
   component: Menu,
   args: defaultProps,
   argTypes: {

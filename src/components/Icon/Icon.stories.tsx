@@ -9,7 +9,7 @@ import { defaultProps, Icon } from './Icon';
 type Story = StoryObj<typeof Icon>;
 
 export default {
-  title: 'Components/Icon',
+  title: 'Media/Icon',
   component: Icon,
   args: {
     ...defaultProps,

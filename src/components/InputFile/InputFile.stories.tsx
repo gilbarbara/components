@@ -7,7 +7,7 @@ import { defaultProps, InputFile } from './InputFile';
 type Story = StoryObj<typeof InputFile>;
 
 export default {
-  title: 'Components/InputFile',
+  title: 'Inputs/InputFile',
   component: InputFile,
   args: {
     ...defaultProps,

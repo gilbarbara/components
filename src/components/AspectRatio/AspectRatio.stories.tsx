@@ -13,7 +13,7 @@ import { AspectRatio } from './AspectRatio';
 type Story = StoryObj<typeof AspectRatio>;
 
 export default {
-  title: 'Components/AspectRatio',
+  title: 'Media/AspectRatio',
   component: AspectRatio,
   args: {
     ratio: 512 / 103,

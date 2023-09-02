@@ -9,7 +9,7 @@ import { ComponentWrapper, defaultProps } from './ComponentWrapper';
 type Story = StoryObj<typeof ComponentWrapper>;
 
 export default {
-  title: 'Components/ComponentWrapper',
+  title: 'Layout/ComponentWrapper',
   component: ComponentWrapper,
   args: defaultProps,
   argTypes: {

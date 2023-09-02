@@ -7,7 +7,7 @@ import { defaultProps, Truncate } from './Truncate';
 type Story = StoryObj<typeof Truncate>;
 
 export default {
-  title: 'Components/Truncate',
+  title: 'Layout/Truncate',
   component: Truncate,
   args: {
     ...defaultProps,

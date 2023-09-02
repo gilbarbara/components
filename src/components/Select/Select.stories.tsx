@@ -7,7 +7,7 @@ import { defaultProps, Select } from './Select';
 type Story = StoryObj<typeof Select>;
 
 export default {
-  title: 'Components/Select',
+  title: 'Inputs/Select',
   component: Select,
   args: {
     ...defaultProps,

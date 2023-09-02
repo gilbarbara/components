@@ -7,7 +7,7 @@ import { Emoji } from './Emoji';
 type Story = StoryObj<typeof Emoji>;
 
 export default {
-  title: 'Components/Emoji',
+  title: 'Media/Emoji',
   component: Emoji,
   args: {
     label: 'Unicorn',

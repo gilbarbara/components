@@ -1,12 +1,13 @@
-import { create,  } from '@storybook/theming';
+import { create } from '@storybook/theming';
+import { variants } from '../src/modules/theme';
 
 export default create({
   base: 'light',
 
-  appBg: '#ececfd',
-  barSelectedColor: '#101010',
+  appBg: variants.primary['50'],
+  barSelectedColor: variants.primary['500'],
 
-  colorPrimary: '#4747eb',
+  colorPrimary: variants.primary['500'],
   colorSecondary: '#101010',
 
   fontBase: 'Rubik, sans-serif',

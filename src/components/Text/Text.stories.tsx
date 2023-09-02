@@ -13,7 +13,7 @@ import { Text } from './Text';
 type Story = StoryObj<typeof Text>;
 
 export default {
-  title: 'Components/Text',
+  title: 'Content/Text',
   component: Text,
   args: {
     ...textDefaultOptions,

@@ -10,7 +10,7 @@ import { defaultProps, Dialog, DialogProps } from './Dialog';
 type Story = StoryObj<typeof Dialog>;
 
 export default {
-  title: 'Components/Dialog',
+  title: 'Popups/Dialog',
   component: Dialog,
   args: {
     ...defaultProps,

@@ -19,7 +19,7 @@ import {
 type Story = StoryObj<typeof ButtonSplit>;
 
 export default {
-  title: 'Components/ButtonSplit',
+  title: 'Buttons/ButtonSplit',
   component: ButtonSplit,
   args: {
     ...defaultProps,

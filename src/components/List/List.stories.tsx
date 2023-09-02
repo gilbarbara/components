@@ -17,7 +17,7 @@ import { defaultProps, List } from './List';
 type Story = StoryObj<typeof List>;
 
 export default {
-  title: 'Components/List',
+  title: 'Display/List',
   component: List,
   args: {
     ...defaultProps,

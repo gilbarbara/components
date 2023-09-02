@@ -9,7 +9,7 @@ import { Anchor, defaultProps } from './Anchor';
 type Story = StoryObj<typeof Anchor>;
 
 export default {
-  title: 'Components/Anchor',
+  title: 'Navigation/Anchor',
   component: Anchor,
   args: {
     ...defaultProps,

@@ -15,7 +15,7 @@ import { Alert, defaultProps } from './Alert';
 type Story = StoryObj<typeof Alert>;
 
 export default {
-  title: 'Components/Alert',
+  title: 'Feedback/Alert',
   component: Alert,
   args: {
     ...defaultProps,

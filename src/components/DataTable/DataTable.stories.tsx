@@ -39,7 +39,7 @@ import { DataTableColumn, DataTableProps, DataTableRow } from './types';
 type Story = StoryObj<typeof DataTable>;
 
 export default {
-  title: 'Components/DataTable',
+  title: 'Display/DataTable',
   component: DataTable,
   args: {
     ...defaultProps,
