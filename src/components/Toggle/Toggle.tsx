@@ -8,7 +8,7 @@ import is from 'is-lite';
 
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
-import { baseStyles, getStyledOptions, isDarkMode } from '~/modules/system';
+import { baseStyles, getOutlineStyles, getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { Label } from '~/components/Label';
 
@@ -147,8 +147,7 @@ const StyledButton = styled(
 
 export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggle'>, 'size'>>(
   props => {
-    const { disabled, label, size } = props;
-    const { colors } = getTheme(props);
+    const { accent = 'primary', disabled, label, size } = props;
 
     const { height, width } = styles[size];
 
@@ -164,8 +163,11 @@ export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggl
       width: ${px(width)};
 
       &:focus {
-        filter: drop-shadow(0 0 4px ${colors.primary});
         outline: none;
+
+        [data-component-name='ToggleTrack'] {
+          ${getOutlineStyles(getColorTokens(accent, null, getTheme(props)).mainColor)};
+        }
       }
     `;
   },
@@ -264,6 +266,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         {...checkStatus}
       />
       <StyledToggle
+        accent={accent}
         disabled={disabled}
         label={label}
         name={name}
@@ -272,7 +275,12 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         tabIndex={0}
         {...rest}
       >
-        <StyledTrack accent={accent} isActive={isActive} size={size} />
+        <StyledTrack
+          accent={accent}
+          data-component-name="ToggleTrack"
+          isActive={isActive}
+          size={size}
+        />
         <StyledButton accent={accent} disabled={disabled} isActive={isActive} size={size} />
       </StyledToggle>
       {label}

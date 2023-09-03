@@ -10,6 +10,7 @@ import {
   appearanceStyles,
   baseStyles,
   colorStyles,
+  getOutlineStyles,
   getStyledOptions,
   paddingStyles,
 } from '~/modules/system';
@@ -77,7 +78,7 @@ export const StyledButton = styled(
   'button',
   getStyledOptions(),
 )<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
-  const { bg, block, busy, color, light, shape, size, wide } = props;
+  const { bg, block, busy, color, invert, light, shape, size, wide } = props;
   const { button, grayScale, radius, spacing, ...theme } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
@@ -121,17 +122,17 @@ export const StyledButton = styled(
       border-color 0.6s;
     width: ${block ? '100%' : 'auto'};
     ${colorStyles(props)};
-    ${paddingStyles(props)}
+    ${paddingStyles(props)};
 
     &:disabled {
-      background-color: ${grayScale['100']};
+      background-color: ${invert ? grayScale['30'] : grayScale['100']};
       border-color: ${grayScale['100']};
       color: ${grayScale['500']};
       cursor: not-allowed;
     }
 
     &:focus {
-      outline-color: ${getColorTokens(bg, color, theme).mainColor};
+      ${getOutlineStyles(getColorTokens(bg, color, theme).mainColor)};
     }
 
     ${!!busy &&
