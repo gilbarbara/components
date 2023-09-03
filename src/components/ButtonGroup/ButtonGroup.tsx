@@ -16,12 +16,15 @@ export interface ButtonGroupKnownProps
   extends StyledProps,
     WithButtonSize,
     WithChildren,
-    WithColorsDefaultBg {}
+    WithColorsDefaultBg {
+  disabled?: boolean;
+}
 
 export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',
+  disabled: false,
   size: 'md',
 } satisfies Omit<ButtonGroupProps, 'children'>;
 
@@ -56,10 +59,11 @@ export const StyledButtonGroup = styled(
 );
 
 export function ButtonGroup(props: ButtonGroupProps) {
-  const { bg, children, color, size, ...rest } = { ...defaultProps, ...props };
+  const { bg, children, color, disabled, size, ...rest } = { ...defaultProps, ...props };
   const buttonProps = {
     bg,
     color,
+    disabled,
     size,
   };
 

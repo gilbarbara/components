@@ -3,7 +3,7 @@ import { css, CSSObject } from '@emotion/react';
 import { capitalize, objectEntries, px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
-import { rgba } from 'polished';
+import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
 
@@ -72,6 +72,14 @@ export function getContainerStyles(props: WithTheme, options?: GetContainerStyle
       },
     })}
   `;
+}
+
+export function getOutlineStyles(color: string, amount = 0.4): CSSObject {
+  return {
+    boxShadow: `0 0 0 3px ${transparentize(amount, color)}`,
+    outline: 'none',
+    zIndex: 10,
+  };
 }
 
 export function getStyledOptions(...exclude: string[]) {
@@ -417,8 +425,8 @@ export function inputStyles<
     ${styles}
 
     &:focus {
-      ${!!borderless && `border-color: ${mainColor};`}
-      ${!borderless && `box-shadow: 0 0 8px 1px ${rgba(mainColor, 1)};`}
+      ${!!borderless && `box-shadow: 0 3px 0 0 ${transparentize(0.5, mainColor)};`}
+      ${!borderless && getOutlineStyles(mainColor)}
       outline: none;
     }
 
@@ -534,14 +542,6 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
   }
 
   return output;
-}
-
-export function outlineStyles<T extends WithTheme>(props: T): CSSObject {
-  const { colors } = getTheme(props);
-
-  return {
-    boxShadow: `0 0 6px 0 ${rgba(colors.primary, 0.6)}`,
-  };
 }
 
 export function paddingStyles<T extends WithPadding>(props: T, force = false): CSSObject {

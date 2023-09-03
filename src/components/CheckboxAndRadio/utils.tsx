@@ -7,10 +7,10 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import {
   baseStyles,
+  getOutlineStyles,
   getStyledOptions,
   isDarkMode,
   marginStyles,
-  outlineStyles,
 } from '~/modules/system';
 
 import {
@@ -140,8 +140,7 @@ export const StyledElement = styled(
     width: ${px(dimensions)};
 
     &:focus {
-      filter: drop-shadow(0 0 2px ${mainColor});
-      outline: none;
+      ${getOutlineStyles(mainColor)};
     }
 
     &:after {
@@ -185,22 +184,6 @@ export const StyledLabel = styled(
     display: flex;
     justify-content: flex-start;
     position: relative;
-
-    &:focus,
-    &:hover {
-      [data-component-name='Checkbox'],
-      [data-component-name='Radio'] {
-        &:not(:checked) ~ [data-component-name='Checkbox'],
-        &:not(:checked) ~ [data-component-name='Radio'] {
-          ${outlineStyles(props)};
-        }
-
-        &:not(:disabled):checked ~ [data-component-name='Checkbox'],
-        &:not(:disabled):checked ~ [data-component-name='Radio'] {
-          ${outlineStyles(props)};
-        }
-      }
-    }
   `;
 });
 

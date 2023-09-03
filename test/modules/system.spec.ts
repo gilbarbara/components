@@ -7,12 +7,12 @@ import {
   flexBoxStyles,
   flexItemStyles,
   getContainerStyles,
+  getOutlineStyles,
   getStyledOptions,
   inputStyles,
   isDarkMode,
   layoutStyles,
   marginStyles,
-  outlineStyles,
   paddingStyles,
   positioningStyles,
   radiusStyles,
@@ -127,6 +127,16 @@ describe('getContainerStyles', () => {
   });
 });
 
+describe('getOutlineStyles', () => {
+  it('should return properly', () => {
+    expect(getOutlineStyles('#000')).toEqual({
+      boxShadow: '0 0 0 3px rgba(0,0,0,0.6)',
+      outline: 'none',
+      zIndex: 10,
+    });
+  });
+});
+
 describe('getStyledOptions', () => {
   it.each([
     ['onChange', true],
@@ -179,12 +189,6 @@ describe('marginStyles', () => {
 
   it('should return an empty object without any "margin" props', () => {
     expect(marginStyles({})).toMatchSnapshot();
-  });
-});
-
-describe('outlineStyles', () => {
-  it('should return properly', () => {
-    expect(outlineStyles({})).toMatchSnapshot();
   });
 });
 

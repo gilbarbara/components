@@ -2,6 +2,8 @@ import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { getColorTokens } from '~/modules/colors';
+import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
 import {
   appearanceStyles,
@@ -9,6 +11,7 @@ import {
   borderStyles,
   colorStyles,
   displayStyles,
+  getOutlineStyles,
   getStyledOptions,
   layoutStyles,
   marginStyles,
@@ -65,7 +68,9 @@ export const StyledButtonUnstyled = styled(
   'button',
   getStyledOptions(),
 )<Omit<ButtonUnstyledProps, 'children'>>(props => {
-  const { align, busy, justify } = props;
+  const { align, busy, color = 'black', justify } = props;
+
+  const theme = getTheme(props);
 
   return css`
     ${appearanceStyles};
@@ -92,6 +97,10 @@ export const StyledButtonUnstyled = styled(
     :disabled {
       cursor: not-allowed;
       opacity: 0.6;
+    }
+
+    :focus {
+      ${getOutlineStyles(getColorTokens(color, null, theme).mainColor)};
     }
 
     ${!!busy &&

@@ -4,10 +4,11 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import ReactDropdown, { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 import { SetRequired } from '@gilbarbara/types';
+import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
+import { getOutlineStyles, getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
 
 import { DropdownProps } from '~/types';
 
@@ -82,8 +83,11 @@ export const StyledDropdown = styled(
 
       &:focus,
       &:focus-within {
-        border-color: ${mainColor} !important;
-        box-shadow: ${borderless ? 'none' : `0 0 8px 1px ${mainColor}`} !important;
+        ${borderless
+          ? css`
+              box-shadow: 0 3px 0 0 ${transparentize(0.5, mainColor)};
+            `
+          : getOutlineStyles(mainColor)};
 
         .react-dropdown-separator {
           background-color: ${mainColor};
