@@ -15,8 +15,13 @@ const StyledDatePicker = styled(
   return getStyles(props);
 });
 
+export const singleDefaultProps = {
+  ...defaultProps,
+  readOnly: false,
+} satisfies DatePickerSingleProps;
+
 export function DatePicker(props: DatePickerSingleProps) {
-  const { currentMonthLabel, fromDate, month, onChange, selected, toDate, ...rest } = {
+  const { currentMonthLabel, fromDate, month, onChange, readOnly, selected, toDate, ...rest } = {
     ...defaultProps,
     ...props,
   };
@@ -49,7 +54,7 @@ export function DatePicker(props: DatePickerSingleProps) {
     >
       <DayPicker
         footer={getFooter(setSelectedMonth, currentMonthLabel)}
-        mode="single"
+        mode={readOnly ? undefined : 'single'}
         month={selectedMonth}
         onMonthChange={setSelectedMonth}
         onSelect={handleSelect}
@@ -62,5 +67,3 @@ export function DatePicker(props: DatePickerSingleProps) {
 }
 
 DatePicker.displayName = 'DatePicker';
-
-export { defaultProps } from './utils';

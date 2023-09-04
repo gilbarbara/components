@@ -52,6 +52,7 @@ export interface DatePickerRangeProps
    */
   onApply?: (selected: DatePickerRangeParameter) => void;
   onChange?: DatePickerRangeClickHandler;
+  readOnly?: boolean;
   /**
    * The initial date.
    */
@@ -68,6 +69,7 @@ export interface DatePickerSingleProps
     DatePickerLayoutProps,
     Omit<DayPickerSingleProps, 'fromDate' | 'mode' | 'onSelect' | 'selected' | 'toDate'> {
   onChange?: DatePickerSingleClickHandler;
+  readOnly?: boolean;
   /**
    * The initial date.
    */
