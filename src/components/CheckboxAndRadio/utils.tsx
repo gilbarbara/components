@@ -7,6 +7,7 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import {
   baseStyles,
+  getDisableStyles,
   getOutlineStyles,
   getStyledOptions,
   isDarkMode,
@@ -139,7 +140,7 @@ export const StyledElement = styled(
       border-color 0.2s;
     width: ${px(dimensions)};
 
-    &:focus {
+    input:not(:disabled) ~ &:focus {
       ${getOutlineStyles(mainColor)};
     }
 
@@ -161,12 +162,7 @@ export const StyledElement = styled(
     }
 
     input:disabled ~ & {
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-
-    input:not(:checked):disabled ~ & {
-      background-color: ${grayScale['100']};
+      ${getDisableStyles(props)};
     }
   `;
 });

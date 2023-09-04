@@ -102,6 +102,11 @@ export interface WithComponentSize {
   size?: Sizes;
 }
 
+export interface WithDisabled {
+  /** @default false */
+  disabled?: boolean;
+}
+
 export interface WithDisplay {
   display?: StandardLonghandProperties['display'];
 }
@@ -175,9 +180,7 @@ export interface WithFlexItem {
   order?: StandardLonghandProperties['order'];
 }
 
-export interface WithFormElements {
-  /** @default false */
-  disabled?: boolean;
+export interface WithFormElements extends WithDisabled {
   name: string;
   /** @default false */
   readOnly?: boolean;

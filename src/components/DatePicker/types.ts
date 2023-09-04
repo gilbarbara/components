@@ -9,6 +9,7 @@ import {
   WithAccent,
   WithBorder,
   WithBorderless,
+  WithDisabled,
   WithMargin,
   WithOpen,
   WithPadding,
@@ -78,8 +79,9 @@ export interface DatePickerSingleProps
 
 export interface DatePickerSelectorBaseProps
   extends DatePickerBaseProps,
-    Omit<DayPickerBase, 'fromDate' | 'mode' | 'selected' | 'toDate'>,
+    Omit<DayPickerBase, 'disabled' | 'fromDate' | 'mode' | 'selected' | 'toDate'>,
     WithBorderless,
+    WithDisabled,
     WithOpen,
     WithMargin {
   /**

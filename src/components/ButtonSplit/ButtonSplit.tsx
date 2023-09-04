@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { SetRequired, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
-import { colorStyles, getStyledOptions } from '~/modules/system';
+import { colorStyles, getDisableStyles, getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
@@ -51,16 +51,24 @@ export const StyledButtonSplit = styled(
 )<SetRequired<Omit<ButtonSplitProps, 'label' | 'onClick'>, keyof typeof defaultProps>>(props => {
   const { block, disabled, invert, size } = props;
   const { button, grayScale, spacing } = getTheme(props);
+  const darkMode = isDarkMode(props);
 
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   const buttonPadding = `${padding[0]} ${padding[1]}`;
   const styles = colorStyles(props);
 
   if (disabled) {
-    styles.backgroundColor = grayScale['100'];
+    styles.border = `1px solid ${darkMode ? grayScale['800'] : grayScale['100']}`;
     styles.borderColor = grayScale['100'];
     styles.color = grayScale['500'];
   }
+
+  const disabledStyles = disabled
+    ? css`
+        ${getDisableStyles(props, { isButton: true })};
+        border-color: ${darkMode ? grayScale['850'] : grayScale['100']};
+      `
+    : undefined;
 
   return css`
     display: inline-flex;
@@ -81,10 +89,13 @@ export const StyledButtonSplit = styled(
       line-height: ${lineHeight};
       opacity: 1;
       padding: ${buttonPadding};
+
+      ${disabledStyles};
     }
 
     > [data-component-name='Menu'] {
       ${styles};
+      ${disabledStyles};
       align-items: center;
       border-left: ${invert ? styles.border : `1px solid ${styles.color}`};
       border-top-right-radius: ${borderRadius};

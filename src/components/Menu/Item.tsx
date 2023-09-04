@@ -10,15 +10,14 @@ import { getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { Paragraph } from '~/components/Paragraph';
 
-import { WithAccent, WithColors } from '~/types';
+import { WithAccent, WithColors, WithDisabled } from '~/types';
 
 interface ChildProps {
   closeMenu?: () => void;
 }
 
-export interface MenuItemProps extends ChildProps, WithColors {
+export interface MenuItemProps extends ChildProps, WithColors, WithDisabled {
   children: ((props: Required<ChildProps>) => ReactNode) | ReactNode;
-  disabled?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 

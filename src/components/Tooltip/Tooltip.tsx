@@ -25,6 +25,7 @@ import {
   Sizes,
   WithChildren,
   WithColors,
+  WithDisabled,
   WithOpen,
   WithRadius,
   WithShadow,
@@ -90,6 +91,7 @@ export interface TooltipProps
     Partial<ArrowProps>,
     WithChildren,
     WithColors,
+    WithDisabled,
     WithOpen,
     WithRadius,
     WithShadow,
@@ -100,11 +102,6 @@ export interface TooltipProps
    */
   ariaLabel?: string;
   content: ReactNode;
-  /**
-   * Disable the tooltip.
-   * @default false
-   */
-  disabled?: boolean;
   /**
    * Trigger type.
    * @default hover

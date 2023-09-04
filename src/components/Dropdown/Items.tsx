@@ -10,7 +10,7 @@ import { getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { BoxInline } from '~/components/Box';
 
-import { DropdownProps, Theme, WithAccent } from '~/types';
+import { DropdownProps, Theme, WithAccent, WithDisabled } from '~/types';
 
 import Add from './Add';
 
@@ -74,7 +74,7 @@ const Input = styled(
 const Item = styled(
   'div',
   getStyledOptions(),
-)<WithAccent & { disabled?: boolean; hovered: boolean; selected: boolean }>(props => {
+)<WithAccent & WithDisabled & { hovered: boolean; selected: boolean }>(props => {
   const { accent = 'primary', disabled, hovered, selected } = props;
   const { darkMode, grayScale, spacing, white, ...theme } = getTheme(props);
   const { mainColor, textColor } = getColorTokens(accent, null, theme);

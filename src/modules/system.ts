@@ -41,6 +41,11 @@ interface GetContainerStylesOptions {
   verticalPadding?: boolean;
 }
 
+interface GetDisableStylesOptions {
+  hasPlaceholder?: boolean;
+  isButton?: boolean;
+}
+
 export function getContainerStyles(props: WithTheme, options?: GetContainerStylesOptions) {
   const { responsive = true, verticalPadding = false } = options ?? {};
   const { spacing } = getTheme(props);
@@ -71,6 +76,49 @@ export function getContainerStyles(props: WithTheme, options?: GetContainerStyle
         paddingTop: spacing.xl,
       },
     })}
+  `;
+}
+
+export function getDisableStyles<T extends WithBorderless & WithInvert & WithTheme>(
+  props: T,
+  options: GetDisableStylesOptions = {},
+) {
+  const { borderless, invert } = props;
+  const { hasPlaceholder, isButton } = options;
+  const darkMode = isDarkMode(props);
+  const { grayScale } = getTheme(props);
+
+  let backgroundColor;
+  let borderColor = darkMode ? grayScale['800'] : grayScale['100'];
+  let color = darkMode ? grayScale['100'] : grayScale['700'];
+  const placeholderColor = darkMode ? grayScale['600'] : grayScale['300'];
+
+  if (!borderless) {
+    backgroundColor = darkMode ? grayScale['900'] : grayScale['30'];
+  }
+
+  if (isButton) {
+    backgroundColor = darkMode ? grayScale['800'] : grayScale['100'];
+    borderColor = darkMode ? grayScale['800'] : grayScale['100'];
+    color = grayScale['500'];
+
+    if (invert) {
+      backgroundColor = darkMode ? grayScale['900'] : grayScale['30'];
+    }
+  }
+
+  return css`
+    background-color: ${backgroundColor};
+    border-color: ${borderColor};
+    color: ${color};
+    cursor: not-allowed;
+
+    ${hasPlaceholder &&
+    css`
+      &::placeholder {
+        color: ${placeholderColor};
+      }
+    `}
   `;
 }
 
@@ -394,12 +442,7 @@ export function inputStyles<
     paddingRight = is.boolean(suffixSpacing) ? '40px' : px(suffixSpacing);
   }
 
-  const disabled = css`
-    ${!borderless && `background-color: ${darkMode ? grayScale['700'] : grayScale['40']};`}
-    border-color: ${darkMode ? grayScale['700'] : grayScale['100']};
-    color: ${darkMode ? grayScale['100'] : grayScale['700']};
-    cursor: not-allowed;
-  `;
+  const disabled = getDisableStyles(props, { hasPlaceholder: true });
 
   const styles = borderless
     ? css`

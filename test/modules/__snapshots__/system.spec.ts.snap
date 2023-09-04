@@ -148,6 +148,43 @@ exports[`getContainerStyles should return properly with "verticalPadding: true" 
   "
 `;
 
+exports[`getDisableStyles should return properly 1`] = `
+"
+    background-color: #f7f7f7;
+    border-color: #e6e6e6;
+    color: #4d4d4d;
+    cursor: not-allowed;
+
+    
+  "
+`;
+
+exports[`getDisableStyles should return properly with "hasPlaceholder: true" 1`] = `
+"
+    background-color: #f7f7f7;
+    border-color: #e6e6e6;
+    color: #4d4d4d;
+    cursor: not-allowed;
+
+    
+      &::placeholder {
+        color: #b3b3b3;
+      }
+    ;
+  "
+`;
+
+exports[`getDisableStyles should return properly with "isButton: true" 1`] = `
+"
+    background-color: #e6e6e6;
+    border-color: #e6e6e6;
+    color: #808080;
+    cursor: not-allowed;
+
+    
+  "
+`;
+
 exports[`inputStyles should return custom styles for "input" 1`] = `
 "
     color: #101010;
@@ -172,10 +209,16 @@ exports[`inputStyles should return custom styles for "input" 1`] = `
 
     &:disabled {
       
-    
+    background-color: ;
     border-color: #e6e6e6;
     color: #4d4d4d;
     cursor: not-allowed;
+
+    
+      &::placeholder {
+        color: #b3b3b3;
+      }
+    ;
   ;
     }
 
@@ -190,10 +233,16 @@ exports[`inputStyles should return custom styles for "input" 1`] = `
 
       &:read-only {
         
-    
+    background-color: ;
     border-color: #e6e6e6;
     color: #4d4d4d;
     cursor: not-allowed;
+
+    
+      &::placeholder {
+        color: #b3b3b3;
+      }
+    ;
   ;
       }
     ;
@@ -224,10 +273,16 @@ exports[`inputStyles should return the default styles for "select" 1`] = `
 
     &:disabled {
       
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
     border-color: #e6e6e6;
     color: #4d4d4d;
     cursor: not-allowed;
+
+    
+      &::placeholder {
+        color: #b3b3b3;
+      }
+    ;
   ;
     }
 
@@ -242,10 +297,16 @@ exports[`inputStyles should return the default styles for "select" 1`] = `
 
       &:read-only {
         
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
     border-color: #e6e6e6;
     color: #4d4d4d;
     cursor: not-allowed;
+
+    
+      &::placeholder {
+        color: #b3b3b3;
+      }
+    ;
   ;
       }
     ;

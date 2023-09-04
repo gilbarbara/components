@@ -2,7 +2,7 @@ import { ElementType, HTMLProps, ReactNode } from 'react';
 import { HiddenInput, Option, Props } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { WithAccent, WithBorderless, WithMargin, WithOpen } from './shared';
+import { WithAccent, WithBorderless, WithDisabled, WithMargin, WithOpen } from './shared';
 import { Theme, VariantWithTones } from './theme';
 
 export interface BaseProps {
@@ -15,8 +15,7 @@ export interface StyledProps {
   theme?: Theme;
 }
 
-export interface CheckboxItem {
-  disabled?: boolean;
+export interface CheckboxItem extends WithDisabled {
   label?: ReactNode;
   name: string;
 }
@@ -82,9 +81,8 @@ export interface DropdownProps
   width?: StringOrNumber;
 }
 
-export interface RadioItem {
+export interface RadioItem extends WithDisabled {
   accent?: VariantWithTones;
-  disabled?: boolean;
   label?: ReactNode;
   value: StringOrNumber;
 }
