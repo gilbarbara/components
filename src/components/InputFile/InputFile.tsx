@@ -100,7 +100,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
 
   return (
     <StyledFileInput data-component-name="InputFile" {...rest}>
-      <BoxInline overflow="hidden" position="relative">
+      <BoxInline position="relative">
         <Button
           bg={accent}
           disabled={isDisabled}

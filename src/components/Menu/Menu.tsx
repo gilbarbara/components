@@ -14,14 +14,26 @@ import { easing } from '~/modules/theme';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
 
-import { ComponentProps, Position, StyledProps, WithAccent, WithChildren, WithOpen } from '~/types';
+import {
+  ComponentProps,
+  Position,
+  StyledProps,
+  WithAccent,
+  WithChildren,
+  WithDisabled,
+  WithOpen,
+} from '~/types';
 
 import { MenuItem } from './Item';
 
-export interface MenuKnownProps extends StyledProps, WithAccent, WithChildren, WithOpen {
+export interface MenuKnownProps
+  extends StyledProps,
+    WithAccent,
+    WithChildren,
+    WithDisabled,
+    WithOpen {
   /** @default An Icon with more-vertical-o */
   component?: ReactElement;
-  disabled?: boolean;
   /** @default 200 */
   minWidth?: StringOrNumber;
   onToggle?: (status: boolean) => void;

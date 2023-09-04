@@ -8,7 +8,13 @@ import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
-import { getOutlineStyles, getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
+import {
+  getDisableStyles,
+  getOutlineStyles,
+  getStyledOptions,
+  isDarkMode,
+  marginStyles,
+} from '~/modules/system';
 
 import { DropdownProps } from '~/types';
 
@@ -50,7 +56,7 @@ export const StyledDropdown = styled(
   }
 >(props => {
   const { accent, borderless, isFilled, multi, width } = props;
-  const { grayScale, radius, spacing, ...theme } = getTheme(props);
+  const { grayScale, radius, spacing, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
   const darkMode = isDarkMode(props);
@@ -68,6 +74,7 @@ export const StyledDropdown = styled(
         padding: 0 !important;
       `
     : css`
+        background-color: ${darkMode ? grayScale['800'] : white};
         border: 1px solid ${borderColor};
         border-radius: ${radius.xs};
         padding-left: ${multi ? 0 : spacing.xs} !important;
@@ -96,6 +103,7 @@ export const StyledDropdown = styled(
 
       &[disabled] {
         opacity: 1 !important;
+        ${getDisableStyles(props)};
 
         .react-dropdown-content {
           color: ${grayScale['500']};

@@ -10,15 +10,15 @@ import {
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
+  WithDisabled,
 } from '~/types';
 
 export interface ButtonGroupKnownProps
   extends StyledProps,
     WithButtonSize,
     WithChildren,
-    WithColorsDefaultBg {
-  disabled?: boolean;
-}
+    WithColorsDefaultBg,
+    WithDisabled {}
 
 export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
 

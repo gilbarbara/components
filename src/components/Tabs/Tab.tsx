@@ -1,10 +1,9 @@
 /* eslint-disable react/no-unused-prop-types */
 import { ReactNode } from 'react';
 
-import { StyledProps, WithChildren, WithColors } from '~/types';
+import { StyledProps, WithChildren, WithColors, WithDisabled } from '~/types';
 
-export interface TabProps extends StyledProps, WithChildren, WithColors {
-  disabled?: boolean;
+export interface TabProps extends StyledProps, WithChildren, WithColors, WithDisabled {
   id: string;
   title: ReactNode;
 }

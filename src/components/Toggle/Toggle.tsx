@@ -17,10 +17,11 @@ import {
   StyledProps,
   WithAccent,
   WithComponentSize,
+  WithDisabled,
   WithTextOptions,
 } from '~/types';
 
-export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponentSize {
+export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponentSize, WithDisabled {
   /** Status (controlled mode) */
   checked?: boolean;
   /**
@@ -28,7 +29,6 @@ export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponent
    * @default false
    */
   defaultChecked?: boolean;
-  disabled?: boolean;
   label?: ReactNode;
   labelOptions?: Simplify<WithTextOptions>;
   name?: string;

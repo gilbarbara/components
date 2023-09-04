@@ -7,7 +7,7 @@ import { borderStyles, getStyledOptions, marginStyles, paddingStyles } from '~/m
 
 import { Icon } from '~/components/Icon';
 
-import { WithAccent, WithBorder, WithMargin, WithPadding } from '~/types';
+import { WithAccent, WithBorder, WithDisabled, WithMargin, WithPadding } from '~/types';
 
 import PaginationButton from './Button';
 
@@ -30,9 +30,8 @@ export interface PaginationProps extends WithAccent, WithBorder, WithMargin, Wit
   totalPages: number;
 }
 
-interface Item {
+interface Item extends WithDisabled {
   content?: ReactNode;
-  disabled?: boolean;
   key?: string;
   page?: number;
 }

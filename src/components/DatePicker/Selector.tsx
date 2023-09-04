@@ -7,7 +7,7 @@ import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
+import { getDisableStyles, getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
 
 import { Box, BoxCenter } from '~/components/Box';
 import { ClickOutside } from '~/components/ClickOutside';
@@ -34,8 +34,9 @@ interface State {
 
 export const selectorDefaultProps = {
   ...defaultProps,
-  borderless: false,
   accent: 'primary',
+  borderless: false,
+  disabled: false,
   large: false,
   mode: 'single',
   position: 'right',
@@ -48,11 +49,21 @@ const StyledButton = styled(
   'div',
   getStyledOptions(),
 )<
-  Pick<DatePickerSelectorProps, 'accent' | 'borderless' | 'large' | 'theme' | 'width'> & {
+  Pick<
+    DatePickerSelectorProps,
+    'accent' | 'borderless' | 'disabled' | 'large' | 'theme' | 'width'
+  > & {
     isFilled: boolean;
   }
 >(props => {
-  const { accent = selectorDefaultProps.accent, borderless, isFilled, large, width } = props;
+  const {
+    accent = selectorDefaultProps.accent,
+    borderless,
+    disabled,
+    isFilled,
+    large,
+    width,
+  } = props;
   const { darkColor, grayScale, inputHeight, lightColor, radius, spacing, white, ...theme } =
     getTheme(props);
   const darkMode = isDarkMode(props);
@@ -78,6 +89,8 @@ const StyledButton = styled(
         padding-left: ${spacing.md};
       `;
 
+  console.log(getDisableStyles(props));
+
   return css`
     align-items: center;
     background-color: ${darkMode ? grayScale['800'] : white};
@@ -90,6 +103,12 @@ const StyledButton = styled(
     width: ${width ? px(width) : 'auto'};
     ${styles};
     ${marginStyles(props)};
+
+    ${disabled &&
+    css`
+      ${getDisableStyles(props)}
+      color: ${grayScale['500']};
+    `};
   `;
 });
 
@@ -138,6 +157,7 @@ const StyledContent = styled(
 export function DatePickerSelector(props: DatePickerSelectorProps) {
   const {
     borderless,
+    disabled,
     formatLocale,
     large,
     mode,
@@ -160,7 +180,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
   const isRange = mode === 'range';
 
   const toggle = () => {
-    if (is.boolean(open)) {
+    if (is.boolean(open) || disabled) {
       return;
     }
 

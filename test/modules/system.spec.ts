@@ -7,6 +7,7 @@ import {
   flexBoxStyles,
   flexItemStyles,
   getContainerStyles,
+  getDisableStyles,
   getOutlineStyles,
   getStyledOptions,
   inputStyles,
@@ -122,6 +123,26 @@ describe('getContainerStyles', () => {
 
   it('should return properly with "verticalPadding: true"', () => {
     const { styles } = getContainerStyles({}, { verticalPadding: true });
+
+    expect(styles).toMatchSnapshot();
+  });
+});
+
+describe('getDisableStyles', () => {
+  it('should return properly', () => {
+    const { styles } = getDisableStyles({});
+
+    expect(styles).toMatchSnapshot();
+  });
+
+  it('should return properly with "isButton: true"', () => {
+    const { styles } = getDisableStyles({}, { isButton: true });
+
+    expect(styles).toMatchSnapshot();
+  });
+
+  it('should return properly with "hasPlaceholder: true"', () => {
+    const { styles } = getDisableStyles({}, { hasPlaceholder: true });
 
     expect(styles).toMatchSnapshot();
   });

@@ -68,9 +68,10 @@ export const StyledButtonUnstyled = styled(
   'button',
   getStyledOptions(),
 )<Omit<ButtonUnstyledProps, 'children'>>(props => {
-  const { align, busy, color = 'black', justify } = props;
+  const { align, busy, color, justify } = props;
 
-  const theme = getTheme(props);
+  const { darkMode, ...theme } = getTheme(props);
+  const selectedColor = color ?? darkMode ? 'white' : 'black';
 
   return css`
     ${appearanceStyles};
@@ -100,7 +101,7 @@ export const StyledButtonUnstyled = styled(
     }
 
     :focus {
-      ${getOutlineStyles(getColorTokens(color, null, theme).mainColor)};
+      ${getOutlineStyles(getColorTokens(selectedColor, null, theme).mainColor)};
     }
 
     ${!!busy &&

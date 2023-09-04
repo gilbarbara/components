@@ -14,6 +14,7 @@ import {
   RadioItem,
   ValidatePasswordOptions,
   WithAccent,
+  WithDisabled,
 } from '~/types';
 
 export type RegisterOptionsProps = FieldBaseProps & {
@@ -67,11 +68,11 @@ export interface FieldBaseProps
       FormGroupProps,
       'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
     >,
-    WithAccent {
+    WithAccent,
+    WithDisabled {
   autoComplete?: string;
   clearError?: () => void;
   debug?: boolean;
-  disabled?: boolean;
   id?: string;
   maxLength?: number;
   minLength?: number;
