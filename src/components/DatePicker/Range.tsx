@@ -19,6 +19,7 @@ import { defaultProps, getFooter, getNumberOfMonths, getRange, getStyles } from 
 
 export const rangeDefaultProps = {
   ...defaultProps,
+  readOnly: false,
   showApply: false,
 } satisfies DatePickerRangeProps;
 
@@ -38,6 +39,7 @@ export function DatePickerRange(props: DatePickerRangeProps) {
     month,
     onApply,
     onChange,
+    readOnly,
     selected,
     showApply,
     toDate,
@@ -148,7 +150,7 @@ export function DatePickerRange(props: DatePickerRangeProps) {
         {content.header}
       </BoxCenter>
       <DayPicker
-        mode="range"
+        mode={readOnly ? undefined : 'range'}
         modifiers={modifiers}
         month={selectedMonth}
         numberOfMonths={getNumberOfMonths(fromDate, toDate)}
