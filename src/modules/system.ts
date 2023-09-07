@@ -676,13 +676,19 @@ export function radiusStyles<T extends WithRadius & WithTheme>(props: T): CSSObj
     if (top) {
       output.borderTopLeftRadius = radius[top];
       output.borderTopRightRadius = radius[top];
-    } else if (right) {
+    }
+
+    if (right) {
       output.borderTopRightRadius = radius[right];
       output.borderBottomRightRadius = radius[right];
-    } else if (bottom) {
+    }
+
+    if (bottom) {
       output.borderBottomRightRadius = radius[bottom];
       output.borderBottomLeftRadius = radius[bottom];
-    } else if (left) {
+    }
+
+    if (left) {
       output.borderBottomLeftRadius = radius[left];
       output.borderTopLeftRadius = radius[left];
     }

@@ -11,7 +11,7 @@ import {
   responsive,
 } from '~/modules/helpers';
 
-import { MenuDivider, MenuItem } from '../../src/components/Menu';
+import { MenuDivider, MenuItem } from '~/components/Menu';
 
 describe('clearNumber', () => {
   it('should return properly', () => {
