@@ -13,41 +13,42 @@ interface ScrollToOptions {
 }
 
 export function animateIcon(
-  target: HTMLElement,
+  target: HTMLElement | null,
   color: VariantWithTones,
   theme: Theme = baseTheme,
 ) {
   const { mainColor } = getColorTokens(color, null, theme);
 
-  /* istanbul ignore else */
-  if (target) {
-    const icon = target.querySelector('[data-component-name="Icon"]') as HTMLSpanElement;
-
-    if (!icon) {
-      return;
-    }
-
-    const iconClone = document.createElement('span');
-
-    iconClone.innerHTML = icon.innerHTML;
-    iconClone.classList.add(icon.className, 'will-animate');
-    iconClone.setAttribute(
-      'style',
-      `color: ${mainColor}; position: absolute; top: ${icon.offsetTop}px; left: ${icon.offsetLeft}px`,
-    );
-    target.appendChild(iconClone);
-
-    setTimeout(() => {
-      iconClone.classList.add('is-animating');
-    }, 100);
-
-    target.addEventListener('transitionend', () => {
-      /* istanbul ignore else */
-      if (iconClone.parentNode !== null && iconClone.classList.contains('is-animating')) {
-        iconClone.parentNode.removeChild(iconClone);
-      }
-    });
+  if (!target) {
+    return;
   }
+
+  const icon = target.querySelector('[data-component-name="Icon"]') as HTMLSpanElement;
+
+  if (!icon) {
+    return;
+  }
+
+  const iconClone = document.createElement('span');
+
+  iconClone.innerHTML = icon.innerHTML;
+  iconClone.classList.add(icon.className, 'will-animate');
+  iconClone.setAttribute(
+    'style',
+    `color: ${mainColor}; position: absolute; top: ${icon.offsetTop}px; left: ${icon.offsetLeft}px`,
+  );
+  target.appendChild(iconClone);
+
+  setTimeout(() => {
+    iconClone.classList.add('is-animating');
+  }, 100);
+
+  target.addEventListener('transitionend', () => {
+    /* istanbul ignore else */
+    if (iconClone.parentNode !== null && iconClone.classList.contains('is-animating')) {
+      iconClone.parentNode.removeChild(iconClone);
+    }
+  });
 }
 
 export const fadeIn = keyframes`
@@ -90,10 +91,12 @@ export const rotate = keyframes`
   }
 `;
 
+/* istanbul ignore next */
 export function scrollDocument(): HTMLElement {
   return (document.scrollingElement as HTMLElement) || document.createElement('body');
 }
 
+/* istanbul ignore next */
 export function scrollTo(value: number, options: ScrollToOptions = {}): Promise<void> {
   const { element = scrollDocument(), scrollDuration = 400 } = options;
 

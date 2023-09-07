@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`alignStyles should return an empty object without the "align" prop 1`] = `{}`;
-
 exports[`alignStyles should return properly 1`] = `
 {
   "textAlign": "center",
@@ -15,22 +13,45 @@ exports[`baseStyles should return properly 1`] = `
 }
 `;
 
-exports[`borderStyles should return an empty object without the "border" prop 1`] = `{}`;
+exports[`borderStyles should return properly for ""all"" 1`] = `
+{
+  "border": "1px solid #e6e6e6",
+}
+`;
 
-exports[`borderStyles should return properly for "horizontal" 1`] = `
+exports[`borderStyles should return properly for ""end"" 1`] = `
+{
+  "borderInlineEnd": "1px solid #e6e6e6",
+}
+`;
+
+exports[`borderStyles should return properly for ""horizontal"" 1`] = `
 {
   "borderBottom": "1px solid #e6e6e6",
   "borderTop": "1px solid #e6e6e6",
 }
 `;
 
-exports[`borderStyles should return properly for "left" 1`] = `
+exports[`borderStyles should return properly for ""left"" 1`] = `
 {
   "borderLeft": "1px solid #e6e6e6",
 }
 `;
 
-exports[`borderStyles should return properly for \`true\` 1`] = `
+exports[`borderStyles should return properly for ""start"" 1`] = `
+{
+  "borderInlineStart": "1px solid #e6e6e6",
+}
+`;
+
+exports[`borderStyles should return properly for ""vertical"" 1`] = `
+{
+  "borderLeft": "1px solid #e6e6e6",
+  "borderRight": "1px solid #e6e6e6",
+}
+`;
+
+exports[`borderStyles should return properly for "true" 1`] = `
 {
   "border": "1px solid #e6e6e6",
 }
@@ -39,37 +60,49 @@ exports[`borderStyles should return properly for \`true\` 1`] = `
 exports[`borderStyles should return properly with an array 1`] = `
 {
   "borderLeft": "4px solid #cdcdfe",
-  "borderTop": "2px solid #f04",
+  "borderTop": "1px solid #e6e6e6",
 }
 `;
 
-exports[`colorStyles should return an empty object without any "background" props 1`] = `{}`;
+exports[`boxStyles should return properly 1`] = `
+{
+  "map": undefined,
+  "name": "1dn1kmt",
+  "next": undefined,
+  "styles": "
+    box-sizing:border-box;font-family:inherit;;
+    background-color:#3030e8;color:#ffffff;;
+    ;
+    ;
+    ;
+    ;
+    ;
+    ;
+    ;
+    ;
+    box-shadow:2px 4px 16px 4px rgba(148, 148, 148, 0.24);;
+  ",
+  "toString": [Function],
+}
+`;
 
-exports[`colorStyles should return properly 1`] = `
+exports[`colorStyles should return properly with "background" and "color" 1`] = `
 {
   "backgroundColor": "#3030e8",
   "border": "1px solid #3030e8",
-  "color": "#ffffff",
+  "color": "#d3f8d7",
 }
 `;
 
-exports[`displayStyles should return an empty object without the "display" prop 1`] = `{}`;
+exports[`colorStyles should return properly with just "color" 1`] = `
+{
+  "color": "#ff6666",
+}
+`;
 
 exports[`displayStyles should return properly 1`] = `
 {
   "display": "flex",
-}
-`;
-
-exports[`flexBoxStyles should return an empty object without any "flexBox" props 1`] = `
-{
-  "alignContent": undefined,
-  "alignItems": undefined,
-  "flexDirection": undefined,
-  "flexWrap": undefined,
-  "gap": undefined,
-  "justifyContent": undefined,
-  "justifyItems": undefined,
 }
 `;
 
@@ -85,19 +118,34 @@ exports[`flexBoxStyles should return properly 1`] = `
 }
 `;
 
-exports[`flexItemStyles should return an empty object without any "flexItem" props 1`] = `
-{
-  "alignSelf": undefined,
-  "flexBasis": undefined,
-  "justifySelf": undefined,
-  "order": undefined,
-}
-`;
-
 exports[`flexItemStyles should return properly 1`] = `
 {
   "alignSelf": "center",
   "flex": "1 1",
+  "flexBasis": undefined,
+  "height": "100%",
+  "justifySelf": undefined,
+  "order": undefined,
+  "width": "100%",
+}
+`;
+
+exports[`flexItemStyles should return properly with flex object 1`] = `
+{
+  "alignSelf": "center",
+  "flex": "1 1",
+  "flexBasis": undefined,
+  "height": "100%",
+  "justifySelf": undefined,
+  "order": undefined,
+  "width": "100%",
+}
+`;
+
+exports[`flexItemStyles should return properly with flex string 1`] = `
+{
+  "alignSelf": "center",
+  "flex": "1 0",
   "flexBasis": undefined,
   "height": "100%",
   "justifySelf": undefined,
@@ -176,7 +224,7 @@ exports[`getDisableStyles should return properly with "hasPlaceholder: true" 1`]
 
 exports[`getDisableStyles should return properly with "isButton: true" 1`] = `
 "
-    background-color: #e6e6e6;
+    background-color: #f7f7f7;
     border-color: #e6e6e6;
     color: #808080;
     cursor: not-allowed;
@@ -257,7 +305,48 @@ exports[`inputStyles should return the default styles for "select" 1`] = `
     font-size: 16px;
     height: 40px;
     line-height: 1.4;
-    padding: 12px 16px 12px 16px;
+    padding: 8px 24px 8px 16px;
+    width: 100%;
+    
+        background-color: #fff;
+        border: 1px solid #808080;
+        border-radius: 8px;
+      ;
+
+    &:focus {
+      
+      box-shadow:0 0 0 3px rgba(48,48,232,0.6);outline:none;z-index:10;
+      outline: none;
+    }
+
+    &:disabled {
+      
+    background-color: #f7f7f7;
+    border-color: #e6e6e6;
+    color: #4d4d4d;
+    cursor: not-allowed;
+
+    
+      &::placeholder {
+        color: #b3b3b3;
+      }
+    ;
+  ;
+    }
+
+    
+  "
+`;
+
+exports[`inputStyles should return the default styles for "textarea" 1`] = `
+"
+    color: #101010;
+    display: block;
+    font-family: inherit;
+    font-size: 16px;
+    height: ;
+    line-height: 1.4;
+    padding: 8px 40px 8px 16px;
     width: 100%;
     
         background-color: #fff;
@@ -313,72 +402,112 @@ exports[`inputStyles should return the default styles for "select" 1`] = `
   "
 `;
 
-exports[`layoutStyles should return an empty object without any "layout" props 1`] = `{}`;
-
 exports[`layoutStyles should return properly 1`] = `
 {
   "display": "flex",
+  "height": "100px",
+  "maxHeight": "80px",
+  "maxWidth": "80px",
+  "minHeight": "20px",
+  "minWidth": "20px",
   "opacity": 1,
   "pointerEvents": "none",
   "transition": "all 0.2s",
+  "width": "100px",
 }
 `;
-
-exports[`marginStyles should return an empty object without any "margin" props 1`] = `{}`;
 
 exports[`marginStyles should return properly 1`] = `
 {
+  "margin": "16px",
+  "marginBottom": "8px",
   "marginLeft": "auto",
   "marginRight": "auto",
+  "marginTop": "8px",
 }
 `;
 
-exports[`paddingStyles should return an empty object without any "padding" props 1`] = `{}`;
+exports[`marginStyles should return properly for side values 1`] = `
+{
+  "marginBottom": "24px",
+  "marginLeft": "auto",
+  "marginRight": "auto",
+  "marginTop": "32px",
+}
+`;
 
 exports[`paddingStyles should return properly 1`] = `
 {
-  "paddingLeft": "16px",
-  "paddingRight": "16px",
+  "padding": "16px",
+  "paddingBottom": "8px",
+  "paddingLeft": "24px",
+  "paddingRight": "24px",
   "paddingTop": "8px",
 }
 `;
 
-exports[`positioningStyles should return an empty object without any "positioning" props 1`] = `{}`;
+exports[`paddingStyles should return properly for side values 1`] = `
+{
+  "paddingBottom": "24px !important",
+  "paddingLeft": "8px !important",
+  "paddingRight": "12px !important",
+  "paddingTop": "32px !important",
+}
+`;
 
 exports[`positioningStyles should return properly 1`] = `
 {
   "bottom": "0px",
+  "left": "0px",
   "position": "absolute",
+  "right": "0px",
+  "top": "0px",
 }
 `;
 
-exports[`radiusStyles should return an empty object without the "border-radius" prop 1`] = `{}`;
-
-exports[`radiusStyles should return properly 1`] = `
+exports[`radiusStyles should return properly with a string 1`] = `
 {
   "borderRadius": "4px",
 }
 `;
 
-exports[`shadowStyles should return a "box-shadow" prop 1`] = `
+exports[`radiusStyles should return properly with an object 1`] = `
 {
-  "boxShadow": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
+  "borderBottomLeftRadius": "16px",
+  "borderBottomRightRadius": "8px",
+  "borderTopLeftRadius": "16px",
+  "borderTopRightRadius": "24px",
 }
 `;
 
-exports[`shadowStyles should return a "filter" prop 1`] = `
+exports[`shadowStyles should return properly for "box-shadow (dark)" 1`] = `
 {
-  "filter": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
+  "boxShadow": "2px 4px 16px 4px rgba(222, 222, 222, 0.24)",
 }
 `;
 
-exports[`shadowStyles should return an empty object without any "shadow" props 1`] = `{}`;
+exports[`shadowStyles should return properly for "box-shadow (light)" 1`] = `
+{
+  "boxShadow": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
+}
+`;
 
-exports[`textStyles should return an empty object without any "textStyles" prop 1`] = `{}`;
+exports[`shadowStyles should return properly for "filter (dark)" 1`] = `
+{
+  "filter": "drop-shadow(2px 4px 18px rgba(222, 222, 222, 0.8))",
+}
+`;
+
+exports[`shadowStyles should return properly for "filter (light)" 1`] = `
+{
+  "filter": "drop-shadow(2px 4px 8px rgba(222, 222, 222, 0.4))",
+}
+`;
 
 exports[`textStyles should return properly 1`] = `
 {
   "fontSize": "14px",
+  "fontStyle": "italic",
   "fontWeight": 700,
   "lineHeight": 1.2,
   "textTransform": "uppercase",

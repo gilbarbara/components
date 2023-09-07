@@ -2,13 +2,13 @@ import { Config } from 'jest';
 
 const config: Config = {
   collectCoverage: false,
-  collectCoverageFrom: ['src/modules/**/*'],
+  collectCoverageFrom: ['src/modules/**/*', '!src/**/*.snap'],
   coverageThreshold: {
     global: {
-      branches: 15,
-      functions: 15,
-      lines: 15,
-      statements: 15,
+      branches: 70,
+      functions: 90,
+      lines: 90,
+      statements: 90,
     },
   },
   moduleDirectories: ['node_modules', 'src'],
@@ -16,14 +16,14 @@ const config: Config = {
     '^~/(.*)$': '<rootDir>/src/$1',
   },
   snapshotSerializers: ['@emotion/jest/serializer'],
-  setupFilesAfterEnv: ['<rootDir>/test/__setup__/setupFilesAfterEnv.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
   testEnvironment: 'jsdom',
-  testRegex: 'test/.*?\\.(test|spec)\\.tsx?$',
+  testRegex: '.*?\\.(test|spec)\\.tsx?$',
   transform: {
-    '^.+\\.m?[tj]sx?$': [
+    '^.+\\.tsx?$': [
       'ts-jest',
       {
-        useESM: true,
+        tsconfig: 'tsconfig.json',
         diagnostics: {
           ignoreCodes: ['TS151001'],
         },
