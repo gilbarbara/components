@@ -86,6 +86,7 @@ export const StyledDropdown = styled(
     ${marginStyles(props)};
 
     .react-dropdown {
+      background-color: transparent;
       ${styles};
 
       &:focus,
@@ -194,7 +195,7 @@ export function Dropdown(props: DropdownProps) {
   };
 
   return (
-    <StyledDropdown data-component-name="Dropdown" isFilled={isFilled} {...rest}>
+    <StyledDropdown data-component-name="DropdownWrapper" isFilled={isFilled} {...rest}>
       <ReactDropdown
         closeOnSelect={closeMultiOnSelect}
         contentComponent={Content}

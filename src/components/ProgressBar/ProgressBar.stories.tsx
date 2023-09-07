@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { colorProps, hideProps, marginProps } from '~/stories/__helpers__';
+import { addChromaticModes, colorProps, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { defaultProps, ProgressBar } from './ProgressBar';
 
@@ -19,6 +19,9 @@ export default {
     ...hideProps(),
     ...colorProps(['accent', 'backgroundColor']),
     ...marginProps(),
+  },
+  parameters: {
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
   },
 } satisfies Meta<typeof ProgressBar>;
 

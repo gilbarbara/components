@@ -80,13 +80,15 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 
   const handleClick = async (event: MouseEvent<HTMLSpanElement>) => {
     if (!disableAnimation) {
-      animateIcon(event.currentTarget, rest.color || 'primary', theme);
+      animateIcon(event.currentTarget, rest.color ?? 'primary', theme);
     }
 
     try {
       await navigator.clipboard.writeText(text);
 
       setContent(tooltipCopiedText);
+
+      onCopy?.(text);
 
       setTimeout(() => {
         if (isActive.current) {
@@ -95,6 +97,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
       }, 2000);
     } catch (error: any) {
       setContent(error.message);
+      onCopy?.(error.message);
     }
   };
 

@@ -69,7 +69,7 @@ export const Tones: Story = {
     const { variants } = getTheme({ theme: useTheme() });
 
     return (
-      <Spacer>
+      <Spacer gapVertical="sm">
         {objectKeys(variants.primary).map(d => (
           <Tag key={d} {...props} bg={`primary.${d}`}>
             {capitalize(d)}
@@ -85,7 +85,7 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer>
+    <Spacer gapVertical="sm">
       {textSizes.map(d => (
         <Tag key={d} {...props} size={d}>
           {capitalize(d)}

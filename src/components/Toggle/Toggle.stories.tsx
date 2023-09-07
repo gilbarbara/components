@@ -1,13 +1,20 @@
 import { useTheme } from '@emotion/react';
 import { objectKeys } from '@gilbarbara/helpers';
-import { useArgs } from '@storybook/addons';
+import { useArgs } from '@storybook/client-api';
+import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { fireEvent, within } from '@storybook/testing-library';
 
 import { Grid } from '~';
 
 import { getTheme } from '~/modules/helpers';
 
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+} from '~/stories/__helpers__';
 
 import { defaultProps, Toggle, ToggleProps } from './Toggle';
 
@@ -77,5 +84,60 @@ export const Colors: Story = {
         ))}
       </Grid>
     );
+  },
+};
+
+const mockOnChange = jest.fn();
+const mockOnToggle = jest.fn();
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    onChange: mockOnChange,
+    onToggle: mockOnToggle,
+  },
+  play: async ({ canvasElement }) => {
+    mockOnChange.mockClear();
+    mockOnToggle.mockClear();
+
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Toggle');
+
+    fireEvent.click(canvas.getByTestId('Toggle'));
+    await expect(mockOnChange).toHaveBeenCalledTimes(1);
+    await expect(mockOnToggle).toHaveBeenCalledTimes(1);
+
+    fireEvent.keyDown(canvas.getByTestId('ToggleElement'), { code: 'Space' });
+    await expect(mockOnChange).toHaveBeenCalledTimes(2);
+    await expect(mockOnToggle).toHaveBeenCalledTimes(2);
+  },
+};
+
+export const TestsControlled: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    checked: false,
+    onChange: mockOnChange,
+    onToggle: mockOnToggle,
+  },
+  render: Controlled.render,
+  play: async ({ canvasElement }) => {
+    mockOnChange.mockClear();
+    mockOnToggle.mockClear();
+
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Toggle');
+
+    fireEvent.click(canvas.getByTestId('Toggle'));
+    await expect(mockOnChange).toHaveBeenCalledTimes(0);
+    await expect(mockOnToggle).toHaveBeenCalledTimes(0);
+
+    fireEvent.keyDown(canvas.getByTestId('ToggleElement'), { code: 'Enter' });
+    await expect(mockOnChange).toHaveBeenCalledTimes(0);
+    await expect(mockOnToggle).toHaveBeenCalledTimes(0);
   },
 };

@@ -2,8 +2,9 @@ import { isValidElement, ReactNode, useEffect, useRef, useState } from 'react';
 import { usePrevious } from 'react-use';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { SetRequired, StringOrNumber } from '@gilbarbara/types';
+import is from 'is-lite';
 
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, marginStyles } from '~/modules/system';
@@ -129,18 +130,13 @@ const Content = styled('div')<ContentProps>(props => {
 });
 
 export function Collapse(props: CollapseProps) {
-  const {
-    children,
-    defaultIsOpen = false,
-    hideToggle = false,
-    onToggle,
-    open,
-    title,
-    ...rest
-  } = { ...defaultProps, ...props };
+  const { children, defaultOpen, hideToggle, onToggle, open, title, ...rest } = mergeProps(
+    defaultProps,
+    props,
+  );
 
   const isControlled = typeof open === 'boolean';
-  const [isOpen, setIsOpen] = useState(isControlled ? open : defaultIsOpen);
+  const [isOpen, setIsOpen] = useState(isControlled ? open : defaultOpen);
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const previousIsOpen = usePrevious(isOpen);
@@ -148,7 +144,7 @@ export function Collapse(props: CollapseProps) {
   useEffect(() => {
     if (isControlled) {
       setIsOpen(open);
-      setShouldAnimate(previousIsOpen !== open);
+      setShouldAnimate(is.boolean(previousIsOpen) && previousIsOpen !== open);
     }
   }, [isControlled, open, previousIsOpen]);
 
@@ -166,7 +162,11 @@ export function Collapse(props: CollapseProps) {
   };
 
   return (
-    <StyledCollapse data-component-name="Collapse" {...rest}>
+    <StyledCollapse
+      data-component-name="Collapse"
+      data-state={isOpen ? 'open' : 'closed'}
+      {...rest}
+    >
       {Boolean(title) && (
         <Header data-component-name="CollapseHeader" onClick={handleClickToggle}>
           {isValidElement(title) ? title : <Paragraph>{title}</Paragraph>}

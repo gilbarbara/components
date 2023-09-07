@@ -44,12 +44,12 @@ export function getColorTokens(
 
           return {
             mainColor: selectedMainColor,
-            textColor: selectedTextColor || contrastingColor(selectedMainColor),
+            textColor: selectedTextColor ?? contrastingColor(selectedMainColor),
             variant,
           };
         }
 
-        return { mainColor, textColor: selectedTextColor || contrastingColor(mainColor) };
+        return { mainColor, textColor: selectedTextColor ?? contrastingColor(mainColor) };
       }
     }
   } catch {

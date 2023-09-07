@@ -13,7 +13,8 @@ import {
 } from './common';
 import { ButtonSize, Radius, Shadow, Spacing, Theme, VariantWithTones } from './theme';
 
-type SpacingAuto = Spacing | 0 | 'auto';
+type SpacingOrZero = Spacing | 0;
+type SpacingAuto = SpacingOrZero | 'auto';
 
 export interface WithAccent<T = VariantWithTones> {
   /**
@@ -228,7 +229,7 @@ export interface WithLight {
 
 export interface WithMargin {
   /** Also accepts the shortcuts: mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical) */
-  margin?: Spacing | 0;
+  margin?: SpacingOrZero;
   /** margin-bottom */
   mb?: SpacingAuto;
   /** margin-left */
@@ -240,7 +241,7 @@ export interface WithMargin {
   /** margin horizontal axis */
   mx?: SpacingAuto;
   /** margin vertical axis */
-  my?: Spacing | 0;
+  my?: SpacingOrZero;
 }
 
 export interface WithOpen {
@@ -252,7 +253,7 @@ export interface WithOpen {
 
 export interface WithPadding {
   /** Also accepts the shortcuts: pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
-  padding?: Spacing | 0;
+  padding?: SpacingOrZero;
   /** padding-bottom */
   pb?: Spacing;
   /** padding-left */

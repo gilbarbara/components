@@ -1,9 +1,16 @@
 import { useState } from 'react';
+import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import { Button } from '~';
 
-import { disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+import {
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+  marginProps,
+} from '~/stories/__helpers__';
 
 import { Collapse, defaultProps } from './Collapse';
 
@@ -59,5 +66,33 @@ export const LoadMore: Story = {
         </Button>
       </>
     );
+  },
+};
+
+export const Open: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    defaultOpen: true,
+  },
+};
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    title: <p>Lorem ipsum dolor sit amet</p>,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Collapse');
+    expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'closed');
+
+    await userEvent.click(canvas.getByTestId('CollapseHeader'));
+    expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'open');
+
+    await userEvent.click(canvas.getByTestId('CollapseHeader'));
+    expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'closed');
   },
 };

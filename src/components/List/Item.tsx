@@ -8,9 +8,13 @@ import { boxStyles, getStyledOptions } from '~/modules/system';
 
 import { Box, BoxProps } from '~/components/Box';
 
-import { Theme } from '~/types';
+import { Direction, Theme } from '~/types';
 
-import { defaultProps, ListProps } from './utils';
+import { getBorderColor, ListProps } from './utils';
+
+export interface ListItemProps
+  extends Omit<BoxProps, 'direction'>,
+    Pick<ListProps, 'borderColor' | 'direction' | 'hideBorder' | 'hideDivider' | 'size'> {}
 
 function getSpacing(size: Required<ListProps['size']>, spacing: Theme['spacing']) {
   switch (size) {
@@ -29,17 +33,17 @@ function getSpacing(size: Required<ListProps['size']>, spacing: Theme['spacing']
 export const StyledListItem = styled(
   Box,
   getStyledOptions(),
-)<Pick<ListProps, 'border' | 'borderColor' | 'direction' | 'divider' | 'size'>>(props => {
-  const { border, borderColor = defaultProps.borderColor, direction, divider, size } = props;
+)<ListItemProps & { listDirection?: Direction }>(props => {
+  const { hideBorder, hideDivider, listDirection: direction, size } = props;
   const { black, spacing, white, ...theme } = getTheme(props);
   const [spacerMain, spacerCross] = getSpacing(size, spacing);
-  const { mainColor } = getColorTokens(borderColor, null, theme);
+  const { mainColor } = getColorTokens(getBorderColor(props), null, theme);
 
   return css`
     ${direction === 'vertical' &&
     css`
-      border-bottom: ${divider ? `1px solid ${mainColor}` : undefined};
-      padding: ${spacerMain} ${border ? spacerCross : 0};
+      border-bottom: ${hideDivider ? undefined : `1px solid ${mainColor}`};
+      padding: ${spacerMain} ${hideBorder ? 0 : spacerCross};
 
       &:last-of-type {
         border-bottom: none;
@@ -48,8 +52,8 @@ export const StyledListItem = styled(
 
     ${direction === 'horizontal' &&
     css`
-      border-right: ${divider ? `1px solid ${mainColor}` : undefined};
-      padding: ${border ? spacerMain : 0} ${spacerCross};
+      border-right: ${hideDivider ? undefined : `1px solid ${mainColor}`};
+      padding: ${hideBorder ? 0 : spacerMain} ${spacerCross};
 
       &:last-of-type {
         border-right: none;
@@ -60,6 +64,10 @@ export const StyledListItem = styled(
   `;
 });
 
-export function ListItem(props: Omit<BoxProps, 'direction'>) {
-  return <StyledListItem as="li" data-component-name="ListItem" {...props} />;
+export function ListItem(props: ListItemProps) {
+  const { direction, ...rest } = props;
+
+  return (
+    <StyledListItem as="li" data-component-name="ListItem" {...rest} listDirection={direction} />
+  );
 }

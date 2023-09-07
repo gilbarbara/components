@@ -63,15 +63,20 @@
     "@size-limit/preset-small-lib": "^8.2.6",
     "@storybook/addon-a11y": "^7.4.0",
     "@storybook/addon-actions": "^7.4.0",
+    "@storybook/addon-coverage": "^0.0.9",
     "@storybook/addon-docs": "^7.4.0",
     "@storybook/addon-essentials": "^7.4.0",
+    "@storybook/addon-interactions": "^7.4.0",
     "@storybook/addon-links": "^7.4.0",
     "@storybook/addon-storysource": "^7.4.0",
     "@storybook/addons": "^7.4.0",
     "@storybook/blocks": "^7.4.0",
     "@storybook/client-api": "^7.4.0",
+    "@storybook/jest": "^0.2.2",
     "@storybook/react": "^7.4.0",
     "@storybook/react-vite": "^7.4.0",
+    "@storybook/test-runner": "^0.13.0",
+    "@storybook/testing-library": "^0.2.0",
     "@storybook/theming": "^7.4.0",
     "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.0.0",
@@ -85,9 +90,11 @@
     "@types/scrollparent": "^2.0.1",
     "@vitejs/plugin-react": "^4.0.4",
     "chromatic": "^7.0.0",
+    "concurrently": "^8.2.1",
     "csstype": "^3.1.2",
     "del-cli": "^5.1.0",
     "deploy-aws-s3-cloudfront": "^3.8.0",
+    "http-server": "^14.1.1",
     "husky": "^8.0.3",
     "jest": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4",
@@ -105,22 +112,27 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vite-tsconfig-paths": "^4.2.0"
+    "vite-tsconfig-paths": "^4.2.0",
+    "wait-on": "^7.0.1"
   },
   "scripts": {
     "build": "pnpm run clean && tsup",
     "clean": "del dist/*",
     "watch": "tsup --watch",
-    "lint": "eslint --fix src stories test",
+    "lint": "eslint --fix src stories",
     "test": "jest",
     "test:watch": "jest --watchAll --verbose",
     "test:coverage": "jest --bail --coverage",
     "typecheck": "tsc -p stories/tsconfig.json --noEmit",
     "size": "size-limit",
-    "validate": "pnpm run lint && pnpm run typecheck && pnpm run test:coverage && pnpm run build && pnpm run size",
-    "storybook:dev": "storybook dev -p 4000",
+    "storybook:dev": "storybook dev -p 6006",
     "storybook:build": "storybook build -o build",
+    "storybook:test:watch": "test-storybook --watchAll --verbose",
+    "storybook:test:coverage": "test-storybook --coverage",
+    "storybook:merge-coverage": "cp coverage/storybook/coverage-storybook.json coverage/coverage-storybook.json && nyc report --reporter=lcov -t coverage --report-dir coverage",
+    "storybook:validate": "pnpm run storybook:build && concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"http-server build --p 6006 -s\" \"wait-on tcp:127.0.0.1:6006 && pnpm run storybook:test:coverage && pnpm run storybook:merge-coverage\"",
     "prepublishOnly": "pnpm run validate",
+    "validate": "pnpm run lint && pnpm run typecheck && pnpm run test:coverage && pnpm run build && pnpm run size",
     "prepare": "husky install"
   },
   "tsup": {
@@ -139,16 +151,9 @@
     "extends": [
       "@gilbarbara/eslint-config"
     ],
-    "overrides": [
-      {
-        "files": [
-          "stories/**/*"
-        ],
-        "rules": {
-          "react/function-component-definition": "off"
-        }
-      }
-    ]
+    "rules": {
+      "testing-library/no-await-sync-events": "off"
+    }
   },
   "prettier": "@gilbarbara/prettier-config",
   "size-limit": [

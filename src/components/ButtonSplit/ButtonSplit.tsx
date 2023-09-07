@@ -4,7 +4,13 @@ import styled from '@emotion/styled';
 import { SetRequired, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
-import { colorStyles, getDisableStyles, getStyledOptions, isDarkMode } from '~/modules/system';
+import {
+  colorStyles,
+  getDisableStyles,
+  getOutlineStyles,
+  getStyledOptions,
+  isDarkMode,
+} from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
@@ -76,7 +82,7 @@ export const StyledButtonSplit = styled(
     min-width: ${height};
     width: ${block ? '100%' : 'auto'};
 
-    > [data-component-name='ButtonUnstyled'] {
+    [data-component-name='ButtonSplitMainButton'] {
       ${styles};
       border-bottom-left-radius: ${borderRadius};
       border-right: 0;
@@ -91,23 +97,27 @@ export const StyledButtonSplit = styled(
       padding: ${buttonPadding};
 
       ${disabledStyles};
+
+      &:focus {
+        ${getOutlineStyles(styles.backgroundColor as string)};
+      }
     }
 
-    > [data-component-name='Menu'] {
+    [data-component-name='MenuButton'] {
       ${styles};
       ${disabledStyles};
       align-items: center;
       border-left: ${invert ? styles.border : `1px solid ${styles.color}`};
-      border-top-right-radius: ${borderRadius};
-      border-bottom-right-radius: ${borderRadius};
+      border-radius: 0 ${borderRadius} ${borderRadius} 0;
       display: flex;
-    }
-
-    [data-component-name='MenuButton'] {
       height: 100%;
       opacity: 1;
       padding: 0 ${spacing[size === 'xs' ? 'xxs' : 'xs']};
       width: 100%;
+
+      &:focus {
+        ${getOutlineStyles(styles.backgroundColor as string)};
+      }
     }
   `;
 });
@@ -153,7 +163,13 @@ export function ButtonSplit(props: ButtonSplitProps) {
 
   return (
     <StyledButtonSplit busy={busy} data-component-name="ButtonSplit" position={position} {...rest}>
-      <ButtonUnstyled busy={busy} disabled={disabled} onClick={onClick} {...dataAttributes}>
+      <ButtonUnstyled
+        busy={busy}
+        data-component-name="ButtonSplitMainButton"
+        disabled={disabled}
+        onClick={onClick}
+        {...dataAttributes}
+      >
         {label}
       </ButtonUnstyled>
       <Menu

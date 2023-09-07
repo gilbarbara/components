@@ -1,6 +1,16 @@
+import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { fireEvent, within } from '@storybook/testing-library';
 
-import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+import { Spacer } from '~';
+
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+  marginProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, Radio } from './Radio';
 
@@ -11,9 +21,9 @@ export default {
   component: Radio,
   args: {
     ...defaultProps,
-    label: 'Skip Packaging',
-    name: 'skipPackaging',
-    value: 'skipPackaging',
+    label: 'Label',
+    name: 'radio',
+    value: 'radio',
   },
   argTypes: {
     ...hideProps(),
@@ -25,4 +35,54 @@ export default {
   },
 } satisfies Meta<typeof Radio>;
 
-export const Basic: Story = {};
+export const Basic: Story = {
+  argTypes: {
+    name: disableControl(),
+    value: disableControl(),
+  },
+};
+
+export const Sizes: Story = {
+  argTypes: {
+    label: disableControl(),
+    name: disableControl(),
+    size: disableControl(),
+    value: disableControl(),
+  },
+  render: props => (
+    <Spacer>
+      <Radio {...props} defaultChecked label="Small" name="sizes" size="sm" value="sm" />
+      <Radio {...props} label="Medium" name="sizes" size="md" value="md" />
+      <Radio {...props} label="Large" name="sizes" size="lg" value="lg" />
+    </Spacer>
+  ),
+};
+
+export const Disabled: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    disabled: true,
+  },
+  argTypes: {
+    disabled: disableControl(),
+  },
+};
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Radio');
+
+    expect(canvas.getByRole('radio')).not.toBeChecked();
+
+    fireEvent.keyDown(canvas.getByTestId('RadioElement'), { code: 'Tab' });
+    expect(canvas.getByRole('radio')).not.toBeChecked();
+
+    fireEvent.keyDown(canvas.getByTestId('RadioElement'), { code: 'Enter' });
+    expect(canvas.getByRole('radio')).toBeChecked();
+  },
+};

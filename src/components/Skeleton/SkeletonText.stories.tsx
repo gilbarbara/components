@@ -1,10 +1,16 @@
 import { useEffect } from 'react';
-import { useArgs } from '@storybook/addons';
+import { useArgs } from '@storybook/client-api';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph } from '~';
 
-import { colorProps, hideProps, layoutProps, spacingProps } from '~/stories/__helpers__';
+import {
+  addChromaticModes,
+  colorProps,
+  hideProps,
+  layoutProps,
+  spacingProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonText } from './SkeletonText';
 import { SkeletonTextProps } from './utils';
@@ -23,6 +29,7 @@ export default {
   },
   parameters: {
     align: 'stretch',
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
   },
 } satisfies Meta<typeof SkeletonText>;
 

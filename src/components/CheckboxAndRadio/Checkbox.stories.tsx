@@ -1,8 +1,16 @@
+import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { fireEvent, within } from '@storybook/testing-library';
 
-import { FormGroup, Spacer } from '~';
+import { Spacer } from '~';
 
-import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+  marginProps,
+} from '~/stories/__helpers__';
 
 import { Checkbox, defaultProps } from './Checkbox';
 
@@ -13,8 +21,8 @@ export default {
   component: Checkbox,
   args: {
     ...defaultProps,
-    label: 'Skip Packaging',
-    name: 'skipPackaging',
+    label: 'Label',
+    name: 'checkbox',
   },
   argTypes: {
     ...hideProps(),
@@ -27,18 +35,49 @@ export default {
 
 export const Basic: Story = {};
 
-export const Multiple: Story = {
+export const Sizes: Story = {
   argTypes: {
     label: disableControl(),
     name: disableControl(),
+    size: disableControl(),
   },
   render: props => (
-    <FormGroup label="Options" width={480}>
-      <Spacer>
-        <Checkbox {...props} defaultChecked label="Hide e-mail" name="hideEmail" />
-        <Checkbox {...props} label="Hide picture" name="hidePicture" />
-        <Checkbox {...props} label="Hide location" name="hideLocation" />
-      </Spacer>
-    </FormGroup>
+    <Spacer>
+      <Checkbox {...props} defaultChecked label="Small" name="sm" size="sm" />
+      <Checkbox {...props} label="Medium" name="md" size="md" />
+      <Checkbox {...props} label="Large" name="lg" size="lg" />
+    </Spacer>
   ),
+};
+
+export const Disabled: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    disabled: true,
+  },
+  argTypes: {
+    disabled: disableControl(),
+  },
+};
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Checkbox');
+
+    expect(canvas.getByRole('checkbox')).not.toBeChecked();
+
+    fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Tab' });
+    expect(canvas.getByRole('checkbox')).not.toBeChecked();
+
+    fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Enter' });
+    expect(canvas.getByRole('checkbox')).toBeChecked();
+
+    fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Space' });
+    expect(canvas.getByRole('checkbox')).not.toBeChecked();
+  },
 };

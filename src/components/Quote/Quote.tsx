@@ -53,7 +53,7 @@ export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, 
   /**
    * The distance between the border and content
    *
-   * @default xs
+   * @default md
    */
   gap?: Spacing;
 }
@@ -73,7 +73,7 @@ export const defaultProps = {
   attributionSize: 'mid',
   border: 'left',
   borderSize: 'md',
-  gap: 'xs',
+  gap: 'md',
   size: 'large',
 } satisfies Omit<QuoteProps, 'children'>;
 

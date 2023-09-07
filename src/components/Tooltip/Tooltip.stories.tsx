@@ -1,5 +1,9 @@
+/* eslint-disable no-await-in-loop */
 import { useState } from 'react';
+import { sleep } from '@gilbarbara/helpers';
+import { expect } from '@storybook/jest';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fireEvent, waitFor, within } from '@storybook/testing-library';
 
 import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from '~';
 
@@ -8,6 +12,7 @@ import {
   disableControl,
   hideNoControlsWarning,
   hideProps,
+  hideStoryFromDocsPage,
   hideTable,
   radiusProps,
   textOptionsProps,
@@ -180,4 +185,30 @@ export const Positions: Story = {
       </Box>
     </Spacer>
   ),
+};
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  argTypes: Positions.argTypes,
+  render: Positions.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tooltips = await canvas.findAllByTestId('Tooltip');
+
+    await sleep(0.5);
+
+    for (const tooltip of tooltips) {
+      fireEvent.mouseOver(tooltip);
+      await expect(await canvas.findByTestId('TooltipBody')).toHaveTextContent(
+        tooltip.getAttribute('aria-label') || '',
+      );
+
+      fireEvent.mouseOut(tooltip);
+      await waitFor(() => {
+        expect(canvas.queryByTestId('TooltipBody')).not.toBeInTheDocument();
+      });
+    }
+  },
 };

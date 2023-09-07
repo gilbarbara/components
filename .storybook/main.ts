@@ -2,17 +2,32 @@ import type { StorybookConfig } from '@storybook/react-vite';
 import { variants } from '../src/modules/theme';
 
 const config: StorybookConfig = {
-  stories: [
-    '../stories/**/*.stories.mdx',
-    '../src/components/**/*.stories.@(ts|tsx)',
+  stories: ['../stories/**/*.stories.mdx', '../src/components/**/*.stories.@(ts|tsx)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-a11y',
+    '@storybook/addon-storysource',
+    '@storybook/addon-interactions',
+    {
+      name: '@storybook/addon-coverage',
+      options: {
+        istanbul: {
+          include: ['src/**/*.tsx'],
+          exclude: ['**/*.test.ts?x', '**/*.snap'],
+        },
+      },
+    },
   ],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-a11y', '@storybook/addon-storysource'],
   docs: {
-    autodocs: true
+    autodocs: true,
+  },
+  features: {
+    storyStoreV7: true,
   },
   framework: {
     name: '@storybook/react-vite',
-    options: {}
+    options: {},
   },
   managerHead: (head) => `
     ${head}
@@ -30,6 +45,6 @@ const config: StorybookConfig = {
     </style>
   `,
   staticDirs: ['./public'],
-}
+};
 
 export default config;

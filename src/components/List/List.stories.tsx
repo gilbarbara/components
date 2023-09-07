@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Avatar, Box, H3, H6, Paragraph, Spacer } from '~';
 
 import {
+  addChromaticModes,
   colorProps,
   disableControl,
   hideProps,
@@ -31,12 +32,17 @@ export default {
     ...radiusProps(),
     children: disableControl(),
   },
+  parameters: {
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
+  },
 } satisfies Meta<typeof List>;
 
 export const Basic: Story = {
   render: props => (
     <List {...props}>
-      <ListItem bg="primary">The first item</ListItem>
+      <ListItem bg="primary" hideDivider px="md">
+        The first item
+      </ListItem>
       <ListItem>The second item</ListItem>
       <ListItem>The third item</ListItem>
       <ListItem>The forth item</ListItem>
@@ -47,7 +53,6 @@ export const Basic: Story = {
 
 export const Horizontal: Story = {
   args: {
-    borderColor: 'black',
     direction: 'horizontal',
     radius: 'xl',
     shadow: 'low',
@@ -68,22 +73,24 @@ export const Horizontal: Story = {
 
 export const WithComponents: Story = {
   args: {
-    children: [
-      <ListItem key="1">
-        <H3 mb="xs">Users</H3>
-        <Paragraph>The users inside this group</Paragraph>
-      </ListItem>,
-      <ListItem key="2">
-        <Spacer>
-          <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
-          <Box>
-            <H6 mb={0}>John Smith</H6>
-            <Paragraph>Admin</Paragraph>
-          </Box>
-        </Spacer>
-      </ListItem>,
-    ],
-    border: false,
+    children: (
+      <>
+        <ListItem>
+          <H3 mb="xs">Users</H3>
+          <Paragraph>The users inside this group</Paragraph>
+        </ListItem>
+        <ListItem>
+          <Spacer>
+            <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
+            <Box>
+              <H6 mb={0}>John Smith</H6>
+              <Paragraph>Admin</Paragraph>
+            </Box>
+          </Spacer>
+        </ListItem>
+      </>
+    ),
+    hideBorder: true,
     radius: false,
   },
 };

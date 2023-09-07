@@ -219,7 +219,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLSpanElement>) => {
-    if (disabled || ![' ', 'Enter'].includes(event.key)) {
+    if (disabled || !['Space', 'Enter'].includes(event.code)) {
       return;
     }
 
@@ -267,6 +267,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
       />
       <StyledToggle
         accent={accent}
+        data-component-name="ToggleElement"
         disabled={disabled}
         label={label}
         name={name}

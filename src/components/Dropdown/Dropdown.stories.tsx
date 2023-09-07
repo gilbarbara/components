@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import { Icon } from '~';
 
-import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+  marginProps,
+} from '~/stories/__helpers__';
 import { DropdownOption } from '~/types';
 
 import { defaultProps, Dropdown } from './Dropdown';
@@ -21,15 +28,11 @@ export default {
     ...marginProps(),
     inputOptions: disableControl(),
     items: disableControl(),
-    onChange: { action: 'onChange' },
-    onCreate: { action: 'onCreate' },
   },
   parameters: {
-    actions: {
-      argTypesRegex: '^on[A-Z].*',
-    },
     layout: 'fullscreen',
     minHeight: 350,
+    paddingDocs: 'md',
   },
 } satisfies Meta<typeof Dropdown>;
 
@@ -61,12 +64,42 @@ export const WithCreate: Story = {
         value,
       };
 
-      action('onCreate')(value);
       setItems([...controlledItems, newItem]);
       setValues([...values, newItem]);
       close();
     };
 
     return <Dropdown {...props} items={controlledItems} onCreate={handleCreate} values={values} />;
+  },
+};
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    allowCreate: true,
+    borderless: false,
+  },
+  render: WithCreate.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('DropdownWrapper');
+
+    await userEvent.click(canvas.getByLabelText('Toggle'));
+    expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
+
+    await userEvent.click(canvas.getAllByRole('listitem')[0]);
+    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('One');
+
+    await userEvent.click(canvas.getByTestId('ContentItem'));
+    await userEvent.click(canvas.getAllByRole('listitem')[0]);
+    expect(canvas.getByText('Select an option')).toBeInTheDocument();
+
+    await userEvent.type(canvas.getByRole('textbox'), 'Twenty');
+    await userEvent.click(canvas.getByRole('button', { name: 'Create "Twenty"' }));
+
+    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Twenty');
   },
 };

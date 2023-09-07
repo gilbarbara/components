@@ -89,12 +89,15 @@ export const Shapes: Story = {
     shape: disableControl(),
   },
   render: props => (
-    <Grid gap={20} templateColumns="repeat(3, 1fr)">
+    <Grid gap={20} templateColumns="repeat(4, 1fr)">
       <Button {...props} shape="round">
         <Icon name="arrow-down" size={18} />
       </Button>
       <Button {...props} shape="circle">
         <Icon name="check" size={18} />
+      </Button>
+      <Button {...props} busy shape="circle">
+        <Icon name="trash" size={18} />
       </Button>
       <Button {...props} shape="square">
         <Icon name="trash" size={18} />

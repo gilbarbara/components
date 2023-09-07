@@ -67,7 +67,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
         onKeyDown={handleKeyDown}
         size={size}
         style={style}
-        tabIndex={props.disabled ? -1 : 0}
+        tabIndex={disabled ? -1 : 0}
       />
       {label && (
         <StyledText category="checkbox" size={size}>

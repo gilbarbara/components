@@ -43,7 +43,7 @@ function FieldDebug(props: Props) {
   }
 
   return (
-    <Box as="code" bg="gray.50" display="block" padding="md">
+    <Box as="code" bg="gray.50" data-component-name="FieldDebug" display="block" padding="md">
       {objectEntries(props)
         .filter(([key]) => key !== 'debug')
         .sort(sortByLocaleCompare('0'))

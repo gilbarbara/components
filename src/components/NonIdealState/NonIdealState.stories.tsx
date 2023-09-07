@@ -37,6 +37,9 @@ export const Basic: Story = {};
 export const Horizontal: Story = {
   args: {
     direction: 'horizontal',
+    icon: 'airplane',
+    size: 'lg',
+    type: 'error',
   },
   argTypes: {
     direction: disableControl(),

@@ -162,9 +162,10 @@ const StyledMenuItems = styled(
 });
 
 const StyledMenuButton = styled(ButtonUnstyled)(props => {
-  const { spacing } = getTheme(props);
+  const { button, spacing } = getTheme(props);
 
   return css`
+    border-radius: ${button.sm.borderRadius};
     display: flex;
     min-height: ${spacing.lg};
     min-width: ${spacing.lg};
@@ -242,6 +243,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
       <StyledMenuItems
         active={active}
         data-component-name="MenuItems"
+        data-state={active ? 'open' : 'closed'}
         minWidth={minWidth}
         position={position}
       >

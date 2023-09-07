@@ -1,10 +1,17 @@
 import { useEffect } from 'react';
-import { useArgs } from '@storybook/addons';
+import { useArgs } from '@storybook/client-api';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, Paragraph } from '~';
 
-import { colorProps, hideProps, hideTable, layoutProps, spacingProps } from '~/stories/__helpers__';
+import {
+  addChromaticModes,
+  colorProps,
+  hideProps,
+  hideTable,
+  layoutProps,
+  spacingProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonCircle } from './SkeletonCircle';
 import { SkeletonCircleProps } from './utils';
@@ -21,6 +28,9 @@ export default {
     ...layoutProps(),
     ...spacingProps(),
     radius: hideTable(),
+  },
+  parameters: {
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
   },
 } satisfies Meta<typeof SkeletonCircle>;
 

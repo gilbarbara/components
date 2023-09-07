@@ -1,17 +1,20 @@
 import { action } from '@storybook/addon-actions';
+import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 import { Box, Form, Grid, H3 } from '~';
 
 import { areas, contractTypes, frameworks, specializations } from '~/stories/__fixtures__';
 import {
+  addChromaticModes,
   colorProps,
   disableControl,
-  hideNoControlsWarning,
   hideProps,
+  hideStoryFromDocsPage,
 } from '~/stories/__helpers__';
 
-import { defaultProps, Field } from './Field';
+import { defaultProps, Field, FieldProps } from './Field';
 
 type Story = StoryObj<typeof Field>;
 
@@ -25,6 +28,253 @@ export default {
   },
 } satisfies Meta<typeof Field>;
 
+interface FieldBlockProps<TOnChange = any>
+  extends Pick<FieldProps, 'accent' | 'borderless' | 'debug' | 'disabled' | 'hideAssistiveText'> {
+  onChange?: TOnChange;
+}
+
+function FieldCheckbox(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Checkbox</H3>
+      <Field
+        {...rest}
+        items={contractTypes}
+        label="Contract Type"
+        name="contractType"
+        onChange={onChange ?? action('checkbox onChange')}
+        required
+        type="checkbox"
+      />
+    </Box>
+  );
+}
+
+function FieldColor(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Color</H3>
+      <Field
+        {...rest}
+        label="Profile color"
+        name="color"
+        onChange={onChange ?? action('color onChange')}
+        type="color"
+      />
+    </Box>
+  );
+}
+
+function FieldDatePicker(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>DatePicker</H3>
+      <Field
+        {...rest}
+        datePickerProps={{
+          formatLocale: 'en-US',
+          mode: 'single',
+        }}
+        label="Date"
+        name="date"
+        onChange={onChange ?? action('datePicker onChange')}
+        placeholder="Start date"
+        required
+        type="datePicker"
+      />
+    </Box>
+  );
+}
+
+function FieldDropdown(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box minWidth={260}>
+      <H3>Dropdown</H3>
+      <Field
+        dropdownProps={{
+          multi: true,
+          searchable: false,
+        }}
+        {...rest}
+        items={frameworks}
+        label="Frameworks"
+        name="frameworks"
+        onChange={onChange ?? action('dropdown onChange')}
+        type="dropdown"
+      />
+    </Box>
+  );
+}
+
+function FieldEmail(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>E-mail</H3>
+      <Field
+        {...rest}
+        label="E-Mail"
+        name="email"
+        onChange={onChange ?? action('email onChange')}
+        placeholder="Your e-mail"
+        required
+        type="text"
+        validations={['email']}
+      />
+    </Box>
+  );
+}
+
+function FieldFile(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>File</H3>
+      <Field
+        {...rest}
+        label="Picture"
+        name="picture"
+        onChange={onChange ?? action('file onChange')}
+        type="file"
+      />
+    </Box>
+  );
+}
+
+function FieldPassword(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Password</H3>
+      <Field
+        {...rest}
+        name="password"
+        onChange={onChange ?? action('password onChange')}
+        placeholder="Your password"
+        required
+        type="password"
+        validationOptions={{
+          minLength: 12,
+          minLengthMessage: 'Your password must be at least 12 characters long',
+        }}
+        validations={['password']}
+      />
+    </Box>
+  );
+}
+
+function FieldRadio(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Radio</H3>
+      <Field
+        {...rest}
+        items={specializations}
+        label="Specialization"
+        name="specialization"
+        onChange={onChange ?? action('radio onChange')}
+        required
+        type="radio"
+      />
+    </Box>
+  );
+}
+
+function FieldSelect(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Select</H3>
+      <Field
+        {...rest}
+        label="Area"
+        name="area"
+        onChange={onChange ?? action('select onChange')}
+        required
+        type="select"
+      >
+        <option value="">Select an option</option>
+        {areas.map(d => (
+          <option key={d.value} value={d.value}>
+            {d.label}
+          </option>
+        ))}
+      </Field>
+    </Box>
+  );
+}
+
+function FieldText(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Text</H3>
+      <Field
+        {...rest}
+        formatter="money"
+        label="Salary (Min)"
+        minLength={5}
+        name="salaryMin"
+        onChange={onChange ?? action('text onChange')}
+        placeholder="$0"
+        required
+        type="text"
+      />
+    </Box>
+  );
+}
+
+function FieldTextarea(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Textarea</H3>
+      <Field
+        {...rest}
+        assistiveText="Tell us a little about your experience"
+        label="Resume"
+        name="resume"
+        onChange={onChange ?? action('textarea onChange')}
+        placeholder="..."
+        type="textarea"
+      />
+    </Box>
+  );
+}
+
+function FieldToggle(props: FieldBlockProps) {
+  const { onChange, ...rest } = props;
+
+  return (
+    <Box>
+      <H3>Toggle</H3>
+      <Field
+        {...rest}
+        label="Are you available to start immediately?"
+        name="availability"
+        onChange={onChange ?? action('toggle onChange')}
+        type="toggle"
+      />
+    </Box>
+  );
+}
+
 export const Basic: Story = {
   args: {
     assistiveText: 'Make sure to fill out your full name',
@@ -36,165 +286,350 @@ export const Basic: Story = {
   argTypes: {
     type: disableControl(),
   },
+  parameters: {
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
+  },
   render: props => <Form>{() => <Field {...props} />}</Form>,
 };
 
 export const Types: Story = {
   argTypes: {
-    ...hideProps('datePickerProps', 'dropdownProps', 'items', 'name', 'type'),
+    ...hideProps(
+      'assistiveText',
+      'autoComplete',
+      'clearError',
+      'datePickerProps',
+      'dropdownProps',
+      'formatter',
+      'id',
+      'inline',
+      'items',
+      'label',
+      'maxLength',
+      'minLength',
+      'name',
+      'onBlur',
+      'onChange',
+      'onFocus',
+      'placeholder',
+      'readOnly',
+      'required',
+      'setValueAs',
+      'skipValidation',
+      'type',
+      'validationOptions',
+      'validations',
+      'value',
+    ),
   },
   parameters: {
-    controls: hideNoControlsWarning(),
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
   },
-  render: () => (
+  render: props => (
     <Form>
       {() => (
-        <Grid columnGap={32} templateColumns="repeat(auto-fit, minmax(480px, 1fr))" width="1024">
-          <Box width="100%">
-            <H3>Checkbox</H3>
-            <Field
-              items={contractTypes}
-              label="Contract Type"
-              name="contractType"
-              onChange={action('checkbox onChange')}
-              required
-              type="checkbox"
-            />
-          </Box>
-          <Box>
-            <H3>Color</H3>
-            <Field
-              label="Profile color"
-              name="color"
-              onChange={action('color onChange')}
-              type="color"
-            />
-          </Box>
-          <Box>
-            <H3>Dropdown</H3>
-            <Field
-              dropdownProps={{
-                multi: true,
-                searchable: false,
-              }}
-              items={frameworks}
-              label="Frameworks"
-              name="frameworks"
-              onChange={action('dropdown onChange')}
-              type="dropdown"
-            />
-          </Box>
-          <Box>
-            <H3>DatePicker</H3>
-            <Field
-              datePickerProps={{
-                formatLocale: 'en-US',
-                mode: 'single',
-              }}
-              label="Date"
-              name="date"
-              onChange={action('datePicker onChange')}
-              placeholder="Start date"
-              required
-              type="datePicker"
-            />
-          </Box>
-          <Box>
-            <H3>E-mail</H3>
-            <Field
-              label="E-Mail"
-              name="email"
-              onChange={action('email onChange')}
-              placeholder="Your e-mail"
-              required
-              type="text"
-              validations={['email']}
-            />
-          </Box>
-          <Box>
-            <H3>File</H3>
-            <Field label="Picture" name="picture" onChange={action('file onChange')} type="file" />
-          </Box>
-          <Box>
-            <H3>Password</H3>
-            <Field
-              label="Password"
-              name="password"
-              onChange={action('password onChange')}
-              placeholder="Your password"
-              required
-              type="password"
-              validationOptions={{
-                minLength: 12,
-                minLengthMessage: 'Your password must be at least 12 characters long',
-              }}
-              validations={['password']}
-            />
-          </Box>
-          <Box>
-            <H3>Radio</H3>
-            <Field
-              items={specializations}
-              label="Specialization"
-              name="specialization"
-              onChange={action('radio onChange')}
-              required
-              type="radio"
-            />
-          </Box>
-          <Box>
-            <H3>Select</H3>
-            <Field
-              label="Area"
-              name="area"
-              onChange={action('select onChange')}
-              required
-              type="select"
-            >
-              <option value="">Select an option</option>
-              {areas.map(d => (
-                <option key={d.value} value={d.value}>
-                  {d.label}
-                </option>
-              ))}
-            </Field>
-          </Box>
-          <Box>
-            <H3>Text</H3>
-            <Field
-              formatter="money"
-              label="Salary (Min)"
-              minLength={5}
-              name="salaryMin"
-              onChange={action('text onChange')}
-              placeholder="$0"
-              required
-              type="text"
-              value=""
-            />
-          </Box>
-          <Box>
-            <H3>Textarea</H3>
-            <Field
-              assistiveText="Tell us a little about your experience"
-              label="Resume"
-              name="resume"
-              onChange={action('textarea onChange')}
-              placeholder="..."
-              type="textarea"
-            />
-          </Box>
-          <Box>
-            <H3>Toggle</H3>
-            <Field
-              label="Are you available to start immediately?"
-              name="availability"
-              onChange={action('toggle onChange')}
-              type="toggle"
-            />
-          </Box>
-        </Grid>
+        <Box maxWidth={800} width="100%">
+          <Grid columnGap={32} templateColumns="repeat(auto-fit, minmax(290px, 1fr))">
+            <FieldCheckbox {...props} />
+            <FieldColor {...props} />
+            <FieldDatePicker {...props} />
+            <FieldDropdown {...props} />
+            <FieldEmail {...props} />
+            <FieldFile {...props} />
+            <FieldPassword {...props} />
+            <FieldRadio {...props} />
+            <FieldSelect {...props} />
+            <FieldText {...props} />
+            <FieldTextarea {...props} />
+            <FieldToggle {...props} />
+          </Grid>
+        </Box>
       )}
     </Form>
   ),
+};
+
+const mockOnBlur = jest.fn();
+const mockOnChange = jest.fn();
+const mockOnFocus = jest.fn();
+
+export const TestCheckbox: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'checkbox',
+    type: 'checkbox',
+    onChange: mockOnChange,
+  },
+  render: props => <Form>{() => <FieldCheckbox {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnChange.mockClear();
+    await canvas.findByTestId('Field');
+
+    const checkboxElements = canvas.getAllByTestId('CheckboxElement');
+    const checkboxes = canvas.getAllByRole('checkbox');
+
+    await userEvent.click(checkboxElements[0]);
+    await expect(checkboxes[0]).toBeChecked();
+    await expect(mockOnChange).toHaveBeenNthCalledWith(1, ['full-time']);
+
+    await userEvent.click(checkboxElements[0]);
+    await expect(checkboxes[0]).not.toBeChecked();
+    await expect(mockOnChange).toHaveBeenNthCalledWith(2, []);
+  },
+};
+
+export const TestDatePicker: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'datePicker',
+    type: 'datePicker',
+    onChange: mockOnChange,
+  },
+  render: props => <Form>{() => <FieldDatePicker {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnChange.mockClear();
+    await canvas.findByTestId('Field');
+
+    await userEvent.click(canvas.getByTestId('DatePickerSelectorButton'));
+    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'open');
+
+    const days = canvas.getAllByRole('gridcell');
+
+    // select a date
+    await userEvent.click(days[10]);
+    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'closed');
+    await expect(mockOnChange).toHaveBeenNthCalledWith(
+      1,
+      expect.stringMatching(/^\d{4}-\d{2}-\d{2}/),
+    );
+
+    await userEvent.click(canvas.getByTestId('DatePickerSelectorButton'));
+    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'open');
+
+    // unselect a date
+    await userEvent.click(days[10]);
+    await expect(mockOnChange).toHaveBeenNthCalledWith(2, '');
+
+    await userEvent.click(document.body);
+    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'closed');
+  },
+};
+
+export const TestDropdownMulti: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'dropdown',
+    type: 'dropdown',
+    onChange: mockOnChange,
+  },
+  render: props => <Form>{() => <FieldDropdown {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnChange.mockClear();
+    await canvas.findByTestId('Field');
+
+    await userEvent.click(canvas.getByLabelText('Toggle'));
+    expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
+
+    await userEvent.click(canvas.getAllByRole('listitem')[1]);
+
+    await userEvent.click(canvas.getByLabelText('Toggle'));
+    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Angular');
+
+    await userEvent.click(canvas.getByLabelText('Toggle'));
+    await userEvent.click(canvas.getAllByRole('listitem')[1]);
+    await userEvent.click(canvas.getAllByRole('listitem')[2]);
+
+    await userEvent.click(canvas.getByLabelText('Toggle'));
+    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('ContentItem')).not.toHaveTextContent('Angular');
+    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Flutter');
+  },
+};
+
+export const TestDropdownSingle: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'dropdown',
+    type: 'dropdown',
+    dropdownProps: {
+      multi: false,
+      searchable: true,
+    },
+    onChange: mockOnChange,
+  },
+  render: props => <Form>{() => <FieldDropdown {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnChange.mockClear();
+    await canvas.findByTestId('Field');
+
+    await userEvent.click(canvas.getByLabelText('Toggle'));
+    expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
+
+    await userEvent.type(canvas.getByRole('textbox'), 'ang');
+
+    await waitFor(() => {
+      expect(canvas.getAllByRole('listitem')).toHaveLength(1);
+    });
+
+    await userEvent.click(canvas.getByRole('listitem'));
+
+    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Angular');
+  },
+};
+
+export const TestRadio: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'radio',
+    type: 'radio',
+    onChange: mockOnChange,
+  },
+  render: props => <Form>{() => <FieldRadio {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnChange.mockClear();
+    await canvas.findByTestId('Field');
+
+    const radioElements = canvas.getAllByTestId('RadioElement');
+
+    await userEvent.click(radioElements[0]);
+    await expect(mockOnChange).toHaveBeenNthCalledWith(1, 'back-end');
+
+    await userEvent.click(radioElements[1]);
+    await expect(mockOnChange).toHaveBeenNthCalledWith(2, 'devops');
+  },
+};
+
+export const TestSelect: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'select',
+    type: 'select',
+    onBlur: mockOnBlur,
+    onChange: mockOnChange,
+    onFocus: mockOnFocus,
+  },
+  render: props => <Form>{() => <FieldSelect {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnBlur.mockClear();
+    mockOnChange.mockClear();
+    mockOnFocus.mockClear();
+    await canvas.findByTestId('Field');
+
+    const select = canvas.getByTestId('Select');
+
+    await userEvent.click(select);
+    await expect(mockOnFocus).toHaveBeenCalledTimes(1);
+
+    await userEvent.tab();
+    await expect(mockOnBlur).toHaveBeenCalledTimes(1);
+
+    await userEvent.selectOptions(select, ['data']);
+    await expect(mockOnChange).toHaveBeenNthCalledWith(1, 'data');
+  },
+};
+
+export const TestText: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'text',
+    type: 'text',
+    onBlur: mockOnBlur,
+    onChange: mockOnChange,
+    onFocus: mockOnFocus,
+  },
+  render: props => <Form>{() => <FieldText {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnBlur.mockClear();
+    mockOnChange.mockClear();
+    mockOnFocus.mockClear();
+    await canvas.findByTestId('Field');
+
+    await userEvent.click(canvas.getByTestId('Input'));
+    await expect(mockOnFocus).toHaveBeenCalledTimes(1);
+
+    await userEvent.type(canvas.getByTestId('Input'), '12345');
+    await expect(mockOnChange).toHaveBeenCalledTimes(5);
+
+    await userEvent.tab();
+    await expect(mockOnBlur).toHaveBeenCalledTimes(1);
+  },
+};
+
+export const TestTextarea: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'textarea',
+    type: 'textarea',
+    onBlur: mockOnBlur,
+    onChange: mockOnChange,
+    onFocus: mockOnFocus,
+  },
+  render: props => <Form>{() => <FieldTextarea {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnBlur.mockClear();
+    mockOnChange.mockClear();
+    mockOnFocus.mockClear();
+    await canvas.findByTestId('Field');
+
+    await userEvent.click(canvas.getByTestId('Textarea'));
+    await expect(mockOnFocus).toHaveBeenCalledTimes(1);
+
+    await userEvent.type(canvas.getByTestId('Textarea'), '12345');
+    await expect(mockOnChange).toHaveBeenCalledTimes(5);
+
+    await userEvent.tab();
+    await expect(mockOnBlur).toHaveBeenCalledTimes(1);
+  },
+};
+
+export const TestToggle: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    name: 'toggle',
+    type: 'toggle',
+    debug: true,
+    onChange: mockOnChange,
+  },
+  render: props => <Form>{() => <FieldToggle {...props} />}</Form>,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnChange.mockClear();
+    await canvas.findByTestId('Field');
+
+    await userEvent.click(canvas.getByTestId('Toggle'));
+    await expect(mockOnChange).toHaveBeenNthCalledWith(1, true);
+
+    await userEvent.click(canvas.getByTestId('Toggle'));
+    await expect(mockOnChange).toHaveBeenNthCalledWith(2, false);
+
+    expect(canvas.getByTestId('FieldDebug')).toBeInTheDocument();
+  },
 };

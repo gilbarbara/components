@@ -25,8 +25,6 @@ export interface SearchItemProps extends Required<WithAccent>, WithChildren {
 }
 
 export interface SearchProps extends StyledProps, WithAccent, WithBorderless, WithMargin {
-  /** @default 0 */
-  debounce?: number;
   height?: StringOrNumber;
   /** @default false */
   hideIcon?: boolean;
@@ -40,6 +38,12 @@ export interface SearchProps extends StyledProps, WithAccent, WithBorderless, Wi
    * Fires after the "debounce" delay
    */
   onSearch?: (value: string) => void;
+  /**
+   * Debounce onSearch event in milliseconds.
+   * Set it to 0 for real-time events.
+   * @default 250
+   */
+  onSearchDebounce?: number;
   onSelect: (value: string) => void;
   /**
    * Fires immediately when the user types

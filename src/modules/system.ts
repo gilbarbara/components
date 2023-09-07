@@ -593,8 +593,8 @@ export function paddingStyles<T extends WithPadding>(props: T, force = false): C
 
   const output: CSSObject = {};
 
-  if (padding) {
-    output.padding = spacing[padding];
+  if (!is.nullOrUndefined(padding)) {
+    output.padding = is.number(padding) ? padding : spacing[padding];
   }
 
   if (py) {
