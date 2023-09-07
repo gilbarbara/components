@@ -90,8 +90,6 @@ const StyledButton = styled(
         padding-left: ${spacing.md};
       `;
 
-  console.log(getDisableStyles(props));
-
   return css`
     align-items: center;
     color: ${textColor};
@@ -269,6 +267,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
         </StyledButton>
         <StyledContent
           data-component-name="DatePickerSelectorContent"
+          data-state={isActive ? 'open' : 'closed'}
           isActive={isActive}
           position={position}
           wide={isRange && numberOfMonths > 1}

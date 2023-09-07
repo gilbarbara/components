@@ -26,6 +26,34 @@ export const variantsWithTones = [...objectKeys(themeVariants), 'black', 'white'
   [''],
 ) as VariantWithTones[];
 
+const chromaticModeTitles = {
+  desktop_light: 'Desktop (light)',
+  desktop_dark: 'Desktop (dark)',
+  mobile_light: 'Mobile (light)',
+  mobile_dark: 'Mobile (dark)',
+};
+
+type ChromaticMode = keyof typeof chromaticModeTitles;
+
+export function addChromaticModes(...inputModes: [ChromaticMode, ...ChromaticMode[]]) {
+  const modes = inputModes.reduce<PlainObject<any>>((acc, mode) => {
+    const [viewport, appearance] = mode.split('_');
+
+    acc[chromaticModeTitles[mode]] = {
+      appearance,
+      viewport: viewport === 'mobile' ? 'mobile2' : 'responsive',
+    };
+
+    return acc;
+  }, {});
+
+  return {
+    chromatic: {
+      modes,
+    },
+  };
+}
+
 export function disableControl() {
   return { control: false };
 }
@@ -47,6 +75,17 @@ export function hideProps(...props: string[]) {
   });
 
   return fields;
+}
+
+// eslint-disable-next-line unicorn/prevent-abbreviations
+export function hideStoryFromDocsPage() {
+  return {
+    parameters: {
+      docs: {
+        disable: true,
+      },
+    },
+  };
 }
 
 export function hideTable() {

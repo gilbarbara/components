@@ -1,12 +1,19 @@
 import { MouseEvent, useState } from 'react';
 import { action } from '@storybook/addon-actions';
+import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 import { ButtonUnstyled, Icon, Spacer } from '~';
 
 import { sizesButton } from '~/modules/options';
 
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+} from '~/stories/__helpers__';
 
 import {
   ButtonSplit,
@@ -131,12 +138,47 @@ export const Basic: Story = {
 };
 
 export const Sizes: Story = {
+  argTypes: {
+    bg: disableControl(),
+  },
   render: props => (
     <Spacer>
-      <ButtonSplitWrapper {...props} size="xs" />
-      <ButtonSplitWrapper {...props} size="sm" />
-      <ButtonSplitWrapper {...props} size="md" />
-      <ButtonSplitWrapper {...props} size="lg" />
+      <ButtonSplitWrapper {...props} bg="red" size="xs" />
+      <ButtonSplitWrapper {...props} bg="green" size="sm" />
+      <ButtonSplitWrapper {...props} bg="blue" size="md" />
+      <ButtonSplitWrapper {...props} bg="purple" size="lg" />
     </Spacer>
   ),
+};
+
+export const Disabled: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  argTypes: {
+    disabled: disableControl(),
+  },
+  render: props => <ButtonSplitWrapper {...props} disabled />,
+};
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  render: Basic.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('ButtonSplit');
+
+    expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+
+    await userEvent.click(canvas.getByTestId('MenuButton'));
+    await waitFor(() => {
+      expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'open');
+    });
+
+    await userEvent.click(canvas.getByTestId('MenuButton'));
+    await waitFor(() => {
+      expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+    });
+  },
 };

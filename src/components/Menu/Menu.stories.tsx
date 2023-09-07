@@ -1,9 +1,16 @@
 import { action } from '@storybook/addon-actions';
+import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 import { Avatar, Box, ButtonUnstyled, H6, Icon, Paragraph, Spacer } from '~';
 
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+} from '~/stories/__helpers__';
 
 import { MenuDivider } from './Divider';
 import { MenuItem } from './Item';
@@ -100,4 +107,27 @@ export const WithComponentAndHover: Story = {
       </MenuItem>
     </Menu>
   ),
+};
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  render: Basic.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Menu');
+
+    expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+
+    await userEvent.click(canvas.getByTestId('MenuButton'));
+    await waitFor(() => {
+      expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'open');
+    });
+
+    await userEvent.click(canvas.getByTestId('MenuButton'));
+    await waitFor(() => {
+      expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+    });
+  },
 };

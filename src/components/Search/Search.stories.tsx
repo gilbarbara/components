@@ -1,8 +1,16 @@
+import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 import { Avatar, Box, Paragraph } from '~';
 
-import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  hideStoryFromDocsPage,
+  marginProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, Search } from './Search';
 import { SearchItem } from './types';
@@ -66,5 +74,63 @@ const items: SearchItem[] = users.map(d => ({
 export const Basic: Story = {
   args: {
     items,
+  },
+};
+
+const mockOnFocus = jest.fn();
+const mockOnSearch = jest.fn();
+const mockOnSelect = jest.fn();
+const mockOnType = jest.fn();
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    items,
+    onFocus: mockOnFocus,
+    onSearch: mockOnSearch,
+    onSelect: mockOnSelect,
+    onType: mockOnType,
+  },
+  render: Basic.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnFocus.mockClear();
+    mockOnSearch.mockClear();
+    mockOnSelect.mockClear();
+    mockOnType.mockClear();
+
+    await canvas.findByTestId('Search');
+
+    const input = canvas.getByTestId('SearchInput');
+
+    await userEvent.click(input);
+    await waitFor(() => {
+      expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    });
+
+    await userEvent.type(canvas.getByTestId('SearchInput'), 'Jim');
+    await expect(mockOnType).toHaveBeenCalledTimes(3);
+    await waitFor(() => {
+      expect(mockOnSearch).toHaveBeenNthCalledWith(1, 'Jim');
+    });
+    await expect(mockOnSelect).toHaveBeenCalledTimes(0);
+    await waitFor(() => {
+      expect(canvas.getByText('Nothing found')).toBeInTheDocument();
+    });
+
+    await userEvent.clear(canvas.getByTestId('SearchInput'));
+    await userEvent.type(canvas.getByTestId('SearchInput'), 'John');
+    await expect(mockOnType).toHaveBeenCalledTimes(8);
+    await waitFor(() => {
+      expect(mockOnSearch).toHaveBeenNthCalledWith(2, 'John');
+    });
+    await waitFor(() => {
+      expect(canvas.getAllByTestId('SearchItem')).toHaveLength(2);
+    });
+
+    await userEvent.click(canvas.getByText('John Smith'));
+    await expect(mockOnSelect).toHaveBeenNthCalledWith(1, 'John Smith');
   },
 };

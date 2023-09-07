@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { pick } from '@gilbarbara/helpers';
+import { omit } from '@gilbarbara/helpers';
 
 import { recursiveChildrenEnhancer } from '~/modules/helpers';
 import {
@@ -14,19 +14,30 @@ import {
   shadowStyles,
 } from '~/modules/system';
 
+import { WithBorder } from '~/types';
+
 import { ListItem } from './Item';
-import { defaultProps, ListProps } from './utils';
+import { getBorderColor, ListProps } from './utils';
+
+export const defaultProps = {
+  direction: 'vertical',
+  hideBorder: false,
+  hideDivider: false,
+  radius: 'xs',
+  shadow: false,
+  size: 'md',
+} satisfies Omit<ListProps, 'children'>;
 
 export const StyledList = styled(
   'ul',
   getStyledOptions(),
 )<ListProps>(props => {
-  const { border, borderColor, direction } = props;
+  const { direction, hideBorder } = props;
 
-  const borderProps = { ...props };
+  const borderProps: WithBorder = {};
 
-  if (border === true) {
-    borderProps.border = [{ side: 'all', color: borderColor }];
+  if (!hideBorder) {
+    borderProps.border = [{ side: 'all', color: getBorderColor(props) }];
   }
 
   return css`
@@ -51,15 +62,12 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
 
   return (
     <StyledList ref={ref} data-component-name="List" {...rest}>
-      {recursiveChildrenEnhancer(
-        children,
-        pick(rest, 'border', 'borderColor', 'direction', 'divider', 'size'),
-        { componentType: ListItem },
-      )}
+      {recursiveChildrenEnhancer(children, omit(rest, 'radius', 'shadow'), {
+        componentType: ListItem,
+        overrideProps: false,
+      })}
     </StyledList>
   );
 });
 
 List.displayName = 'List';
-
-export { defaultProps } from './utils';

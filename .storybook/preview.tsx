@@ -1,20 +1,21 @@
 import * as React from 'react';
-import { usePrevious } from 'react-use';
 import styled from '@emotion/styled';
 import { DocsContainer } from '@storybook/addon-docs';
 import { objectKeys } from '@gilbarbara/helpers';
+import { configure } from '@storybook/testing-library';
 
 import { ThemeProvider } from '@emotion/react';
 import { useGlobals } from '@storybook/client-api';
 import CacheProvider from 'react-inlinesvg/provider';
 
 import { colors as themeColors } from '../src/modules/theme';
-import {Theme, WithFlexBox, WithPadding} from '../src/types';
+import { Theme, WithFlexBox, WithPadding } from '../src/types';
 
 import { Box } from '../src';
 
 interface Context {
   globals: {
+    backgrounds: { value: string };
     color: keyof Theme['colors'];
     appearance: 'light' | 'dark' | 'side-by-side';
   };
@@ -32,6 +33,8 @@ interface Context {
   };
   viewMode: string;
 }
+
+configure({ testIdAttribute: 'data-component-name' });
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -53,11 +56,15 @@ export const parameters = {
     sort: 'requiredFirst',
   },
   docs: {
-    container: ({ children, context }: React.ComponentProps<typeof DocsContainer>) => (
-      <DocsContainer context={context}>
-        <CacheProvider name="@gilbarbara/components"><>{children}</></CacheProvider>
-      </DocsContainer>
-    ),
+    container: ({ children, context }: React.ComponentProps<typeof DocsContainer>) => {
+      return (
+        <DocsContainer context={context}>
+          <CacheProvider name="@gilbarbara/components">
+            <>{children}</>
+          </CacheProvider>
+        </DocsContainer>
+      );
+    },
   },
   layout: 'centered',
   options: {
@@ -123,14 +130,14 @@ const ThemeBlock = styled.div(
 
 function Preview(StoryFn: React.FC, context: Context) {
   const {
-    globals: { appearance, color },
+    globals: { appearance, backgrounds, color },
     parameters: {
       align = 'center',
       direction = 'column',
       display = 'flex',
       justify = 'start',
       layout,
-      minWidth = 768,
+      minWidth,
       maxWidth = 1024,
       minHeight,
       padding = 'md',
@@ -140,10 +147,13 @@ function Preview(StoryFn: React.FC, context: Context) {
   } = context;
 
   const docsRef = React.useRef<HTMLDivElement>(null);
-  const previousAppearance = usePrevious(appearance);
   const [, updateGlobals] = useGlobals();
+
+  const isDocs = viewMode === 'docs';
   const isDarkMode = appearance === 'dark';
   const isSideBySide = appearance === 'side-by-side';
+  const desiredBackground = isSideBySide || appearance === 'light' ? '#fff' : '#101010';
+  const requireBackgroundUpdate = backgrounds?.value !== desiredBackground;
 
   React.useEffect(() => {
     const target = docsRef.current
@@ -153,28 +163,46 @@ function Preview(StoryFn: React.FC, context: Context) {
     if (target) {
       target.style.width = '100%';
     }
+
+    if (isDocs && requireBackgroundUpdate) {
+      updateGlobals({ backgrounds: { value: desiredBackground } });
+    }
   }, []);
 
-  if (viewMode === 'docs') {
-    return (
-      <Box
-        ref={docsRef}
-        align={align}
-        data-component-name="StoryDocs"
-        direction={direction}
-        display={display}
-        justify={justify}
-        minHeight={minHeight}
-        minWidth={minWidth}
-        padding={paddingDocs}
-      >
-        <StoryFn />
-      </Box>
-    );
-  }
+  React.useEffect(() => {
+    if (isDocs) {
+      return;
+    }
 
-  if (!isSideBySide && previousAppearance !== appearance) {
-    updateGlobals({ backgrounds: { value: appearance === 'dark' ? '#101010' : '#fff' } });
+    if (requireBackgroundUpdate) {
+      updateGlobals({ backgrounds: { value: desiredBackground } });
+    }
+  }, [isDocs, desiredBackground]);
+
+  if (isDocs) {
+    return (
+      <ThemeProvider
+        theme={{
+          darkMode: isDarkMode,
+          colors: { primary: themeColors[color] },
+        }}
+      >
+        <Box
+          ref={docsRef}
+          align={align}
+          data-component-name="StoryDocs"
+          direction={direction}
+          display={display}
+          justify={justify}
+          minHeight={minHeight}
+          minWidth={minWidth}
+          padding={paddingDocs}
+          style={{ color: isDarkMode ? '#fff' : '#101010' }}
+        >
+          <StoryFn />
+        </Box>
+      </ThemeProvider>
+    );
   }
 
   if (isSideBySide) {

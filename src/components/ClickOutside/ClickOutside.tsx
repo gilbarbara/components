@@ -52,17 +52,11 @@ export function ClickOutside(props: ClickOutsideProps) {
     };
   }, [active]);
 
+  const style =
+    display !== DISPLAY.BLOCK && Object.values(DISPLAY).includes(display) ? { display } : undefined;
+
   return (
-    <div
-      ref={containerRef}
-      data-component-name="ClickOutside"
-      style={
-        display !== DISPLAY.BLOCK && Object.values(DISPLAY).includes(display)
-          ? { display }
-          : undefined
-      }
-      {...rest}
-    >
+    <div ref={containerRef} data-component-name="ClickOutside" style={style} {...rest}>
       {children}
     </div>
   );

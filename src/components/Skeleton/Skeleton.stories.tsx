@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { useArgs } from '@storybook/addons';
+import { useArgs } from '@storybook/client-api';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, Box, H3, H6, Paragraph, Spacer } from '~';
 
 import {
+  addChromaticModes,
   colorProps,
   hideProps,
   layoutProps,
@@ -27,6 +28,9 @@ export default {
     ...layoutProps(),
     ...radiusProps(),
     ...spacingProps(),
+  },
+  parameters: {
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
   },
 } satisfies Meta<typeof Skeleton>;
 

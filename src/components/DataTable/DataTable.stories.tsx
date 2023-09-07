@@ -23,6 +23,7 @@ import {
 
 import { users } from '~/stories/__fixtures__';
 import {
+  addChromaticModes,
   colorProps,
   disableControl,
   flexItemProps,
@@ -61,6 +62,7 @@ export default {
     scrollElement: disableControl(),
   },
   parameters: {
+    ...addChromaticModes('desktop_light', 'desktop_dark', 'mobile_light'),
     layout: 'fullscreen',
     minHeight: 300,
     minWidth: '100%',

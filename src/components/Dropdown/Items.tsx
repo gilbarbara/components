@@ -14,7 +14,7 @@ import { DropdownProps, Theme, WithAccent, WithDisabled } from '~/types';
 
 import Add from './Add';
 
-interface DropdownOptionsProps
+interface DropdownItemsProps
   extends WithAccent,
     ComponentProps,
     Pick<DropdownProps, 'allowCreate' | 'onCreate' | 'onSearch'> {}
@@ -180,14 +180,7 @@ const Search = styled(
   `;
 });
 
-function DropdownOptions({
-  accent,
-  methods,
-  onCreate,
-  onSearch,
-  props,
-  state,
-}: DropdownOptionsProps) {
+function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: DropdownItemsProps) {
   const { addItem, getLabels, getStyles, removeItem, setSearch } = methods;
   const { autoFocus, create, options, searchable } = props;
   const { cursor, search, values } = state;
@@ -268,9 +261,9 @@ function DropdownOptions({
   }
 
   return (
-    <List data-component-name="DropdownOptions" maxHeight={getStyles().menuMaxHeight}>
+    <List data-component-name="DropdownItems" maxHeight={getStyles().menuMaxHeight}>
       {searchable && (
-        <Search data-component-name="DropdownOptionsSearch">
+        <Search data-component-name="DropdownItemsSearch">
           <Input
             ref={searchInput}
             accent={accent}
@@ -280,12 +273,12 @@ function DropdownOptions({
           />
         </Search>
       )}
-      <Items data-component-name="DropdownOptionsList">{output.options}</Items>
+      <Items data-component-name="DropdownItemsList">{output.options}</Items>
       {output.create}
     </List>
   );
 }
 
-DropdownOptions.displayName = 'DropdownOptions';
+DropdownItems.displayName = 'DropdownItems';
 
-export default DropdownOptions;
+export default DropdownItems;

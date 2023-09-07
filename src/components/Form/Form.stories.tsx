@@ -12,7 +12,7 @@ import {
   seniorities,
   specializations,
 } from '~/stories/__fixtures__';
-import { hideNoControlsWarning } from '~/stories/__helpers__';
+import { addChromaticModes, hideNoControlsWarning } from '~/stories/__helpers__';
 
 import { Form, FormRenderProps } from './Form';
 
@@ -23,6 +23,7 @@ export default {
   component: Form,
   parameters: {
     controls: hideNoControlsWarning(),
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
   },
 } satisfies Meta<typeof Form>;
 

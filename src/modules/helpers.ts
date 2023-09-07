@@ -11,7 +11,6 @@ import { generatePalette } from './palette';
 
 import {
   BaseProps,
-  Breakpoint,
   MediaQueries,
   RecursiveChildrenEnhancerOptions,
   ResponsiveInput,
@@ -46,7 +45,7 @@ export function getMediaQueries(): MediaQueries {
   return objectKeys(breakpoints)
     .filter(d => Number.isNaN(parseInt(d, 10)))
     .reduce((acc: PlainObject, d) => {
-      acc[d] = `@media screen and (min-width: ${px(breakpoints[d as Breakpoint])})`;
+      acc[d] = `@media screen and (min-width: ${px(breakpoints[d])})`;
 
       return acc;
     }, {}) as MediaQueries;

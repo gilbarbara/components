@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Input, Select, Textarea } from '~';
 
 import {
+  addChromaticModes,
   disableControl,
   hideProps,
   layoutProps,
@@ -32,6 +33,9 @@ export default {
     error: { control: 'text' },
     label: { control: 'text' },
     labelInfo: { control: 'text' },
+  },
+  parameters: {
+    ...addChromaticModes('desktop_light', 'desktop_dark'),
   },
 } satisfies Meta<typeof FormGroup>;
 

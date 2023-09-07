@@ -1,6 +1,9 @@
+import { sleep } from '@gilbarbara/helpers';
+import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
-import { colorProps, hideProps, marginProps } from '~/stories/__helpers__';
+import { colorProps, hideProps, hideStoryFromDocsPage, marginProps } from '~/stories/__helpers__';
 
 import { CopyToClipboard, defaultProps } from './CopyToClipboard';
 
@@ -21,3 +24,28 @@ export default {
 } satisfies Meta<typeof CopyToClipboard>;
 
 export const Basic: Story = {};
+
+const mockOnCopy = jest.fn();
+
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    onCopy: mockOnCopy,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    mockOnCopy.mockClear();
+    await canvas.findByTestId('CopyToClipboard');
+
+    await sleep(0.5);
+
+    await userEvent.hover(canvas.getByTestId('Tooltip'));
+
+    expect(canvas.getByTestId('TooltipBody')).toBeInTheDocument();
+
+    await userEvent.click(canvas.getByTestId('CopyToClipboard'));
+    await expect(mockOnCopy).toHaveBeenCalledTimes(1);
+  },
+};

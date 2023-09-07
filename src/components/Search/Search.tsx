@@ -11,19 +11,19 @@ import { ClickOutside } from '~/components/ClickOutside';
 import { ComponentWrapper } from '~/components/ComponentWrapper';
 import { Icon } from '~/components/Icon';
 import { Input } from '~/components/Input';
-import { SearchProps } from '~/components/Search/types';
 
 import Items from './Items';
+import { SearchProps } from './types';
 
 export const defaultProps = {
   accent: 'primary',
   borderless: false,
-  debounce: 0,
   height: 230,
   hideIcon: false,
   icon: 'search',
   loading: false,
   noResultsLabel: 'Nothing found',
+  onSearchDebounce: 250,
   placeholder: 'Search for...',
   showListOnFocus: true,
 } satisfies Omit<SearchProps, 'items' | 'onSelect'>;
@@ -45,7 +45,6 @@ export function Search(props: SearchProps) {
   const {
     accent,
     borderless,
-    debounce,
     height,
     hideIcon,
     icon,
@@ -53,6 +52,7 @@ export function Search(props: SearchProps) {
     loading,
     onFocus,
     onSearch,
+    onSearchDebounce,
     onSelect,
     onType,
     placeholder,
@@ -103,7 +103,7 @@ export function Search(props: SearchProps) {
 
     const nextState = { active: !!inputValue, value: inputValue };
 
-    if (debounce) {
+    if (onSearchDebounce) {
       updateState({ ...nextState, typing: true });
       clearTimeout(timeout.current);
 
@@ -113,21 +113,17 @@ export function Search(props: SearchProps) {
           currentItems: items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
         });
 
-        if (onSearch) {
-          onSearch(inputValue);
-        }
+        onSearch?.(inputValue);
 
         timeout.current = 0;
-      }, debounce);
+      }, onSearchDebounce);
     } else {
       updateState({
         ...nextState,
         currentItems: items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
       });
 
-      if (onSearch) {
-        onSearch(inputValue);
-      }
+      onSearch?.(inputValue);
     }
   };
 
@@ -203,6 +199,7 @@ export function Search(props: SearchProps) {
             accent={accent}
             autoComplete="off"
             borderless={borderless}
+            data-component-name="SearchInput"
             name="search"
             onBlur={handleBlur}
             onChange={handleChange}
