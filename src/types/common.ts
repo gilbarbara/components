@@ -3,9 +3,10 @@ import { SerializedStyles } from '@emotion/react';
 import { validatePassword } from '@gilbarbara/helpers';
 import { StandardShorthandProperties } from 'csstype';
 
-import { Breakpoint, VariantWithTones } from './theme';
+import { icons, inputTypes, sizes, textSizes } from '~/modules/options';
 
-import { icons, inputTypes, sizes, textSizes } from '../modules/options';
+import { Breakpoint, VariantWithTones } from './theme';
+import { Concat } from './utils';
 
 export type Alignment = 'left' | 'center' | 'right';
 
@@ -48,13 +49,13 @@ export type Icons = (typeof icons)[number]['name'];
 
 export type InputTypes = (typeof inputTypes)[number];
 
-export type Placement = 'bottom' | 'left' | 'right' | 'top';
+export type Placement = Concat<Position, 'start' | 'middle' | 'end'>;
 
 export type PositionX = 'left-bottom' | 'left-top' | 'right-bottom' | 'right-top';
 
 export type PositionY = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
 
-export type Position = PositionX | PositionY;
+export type Position = 'bottom' | 'left' | 'right' | 'top';
 
 export type Sizes = (typeof sizes)[number];
 

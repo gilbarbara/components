@@ -100,7 +100,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 
   return (
     <StyledCopyToClipboard data-component-name="CopyToClipboard" onClick={handleClick} {...rest}>
-      <Tooltip content={content} position="right" size="small">
+      <Tooltip content={content} placement="right-middle" size="small">
         <StyledIcon name={icon} size={size} title={null} />
       </Tooltip>
     </StyledCopyToClipboard>
