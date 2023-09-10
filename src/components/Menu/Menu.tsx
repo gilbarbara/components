@@ -16,7 +16,8 @@ import { Icon } from '~/components/Icon';
 
 import {
   ComponentProps,
-  Position,
+  PositionX,
+  PositionY,
   StyledProps,
   WithAccent,
   WithChildren,
@@ -38,7 +39,7 @@ export interface MenuKnownProps
   minWidth?: StringOrNumber;
   onToggle?: (status: boolean) => void;
   /** @default bottom-right */
-  position?: Position;
+  position?: PositionX | PositionY;
   /** @default click */
   trigger?: 'click' | 'hover';
 }

@@ -2,7 +2,7 @@ import { CSSProperties, isValidElement, ReactNode, useEffect, useMemo, useState 
 import innerText from 'react-innertext';
 import { css, useTheme } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
-import { omit, px } from '@gilbarbara/helpers';
+import { mergeProps, omit, px } from '@gilbarbara/helpers';
 import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
 
@@ -34,10 +34,11 @@ import {
 } from '~/types';
 
 interface SharedProps {
-  /** @default middle */
-  align: 'start' | 'middle' | 'end';
-  /** @default bottom */
-  position: Placement;
+  /**
+   * The placement of the tooltip.
+   * @default bottom-middle
+   */
+  placement: Placement;
   /**
    * Optional title for the tooltip.
    */
@@ -112,7 +113,6 @@ export interface TooltipProps
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),
-  align: 'middle',
   arrowDistance: 4,
   arrowMargin: 4,
   arrowLength: 8,
@@ -122,7 +122,7 @@ export const defaultProps = {
   duration: 260,
   easing: 'ease-in-out',
   eventType: 'hover',
-  position: 'bottom',
+  placement: 'bottom-middle',
   radius: 'xxs',
   size: 'mid',
   zIndex: 100,
@@ -138,7 +138,8 @@ const StyledTooltip = styled('div', getStyledOptions())`
 `;
 
 const StyledArrow = styled.span<SharedProps & ArrowProps & ColorProps>(props => {
-  const { align, arrowDistance, arrowLength, arrowMargin, bg, position } = props;
+  const { arrowDistance, arrowLength, arrowMargin, bg, placement } = props;
+  const [position, align] = placement.split('-');
 
   const arrowStyles: CSSObject = {};
   const styles: CSSObject = {};
@@ -233,7 +234,6 @@ const StyledBody = styled(
 )<SharedProps & AnimationProps & ArrowProps & ColorProps & WithRadius & WithShadow & WithTextSize>(
   props => {
     const {
-      align,
       arrowDistance,
       arrowLength,
       bg,
@@ -241,13 +241,14 @@ const StyledBody = styled(
       delay,
       duration,
       easing,
-      position,
+      placement,
       size,
       wrap,
       zIndex,
     } = props;
     const { spacing } = getTheme(props);
     const arrowSpacing = arrowLength + arrowDistance;
+    const [position, align] = placement.split('-');
 
     const styles: CSSObject = {};
 
@@ -352,13 +353,12 @@ const StyledContent = styled(Text)`
 `;
 
 function TooltipBody(
-  props: SetRequired<Omit<TooltipProps, 'children' | 'open'>, 'align' | 'position'> &
+  props: SetRequired<Omit<TooltipProps, 'children' | 'open'>, 'placement'> &
     AnimationProps &
     ArrowProps &
     ColorProps,
 ) {
   const {
-    align,
     arrowDistance,
     arrowLength,
     arrowMargin,
@@ -367,7 +367,7 @@ function TooltipBody(
     color,
     content,
     italic,
-    position,
+    placement,
     radius,
     shadow,
     size,
@@ -378,14 +378,13 @@ function TooltipBody(
 
   return (
     <StyledBody
-      align={align}
       arrowDistance={arrowDistance}
       arrowLength={arrowLength}
       arrowMargin={arrowMargin}
       bg={bg}
       color={color}
       data-component-name="TooltipBody"
-      position={position}
+      placement={placement}
       radius={radius}
       shadow={shadow}
       size={size}
@@ -401,26 +400,23 @@ function TooltipBody(
         </StyledContent>
       )}
       <StyledArrow
-        align={align}
         arrowDistance={arrowDistance}
         arrowLength={arrowLength}
         arrowMargin={arrowMargin}
         bg={bg}
         color={color}
         data-component-name="TooltipArrow"
-        position={position}
+        placement={placement}
       />
     </StyledBody>
   );
 }
 
 export function Tooltip(props: TooltipProps) {
-  const { ariaLabel, bg, children, color, content, disabled, eventType, open, title } = {
-    ...defaultProps,
-    ...props,
-  };
+  const mergedProps = mergeProps(defaultProps, props);
+  const { ariaLabel, bg, children, color, content, disabled, eventType, open, title, ...rest } =
+    mergedProps;
   const [isOpen, setOpen] = useState(open ?? false);
-
   const theme = getTheme({ theme: useTheme() });
 
   const label = useMemo(() => ariaLabel ?? innerText(content), [ariaLabel, content]);
@@ -458,9 +454,10 @@ export function Tooltip(props: TooltipProps) {
       onMouseLeave={handleMouseLeave}
       role="tooltip"
       title={title}
+      {...rest}
     >
       {children}
-      {isOpen && <TooltipBody {...defaultProps} {...props} bg={mainColor} color={textColor} />}
+      {isOpen && <TooltipBody {...mergedProps} bg={mainColor} color={textColor} />}
     </StyledTooltip>
   );
 }

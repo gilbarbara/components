@@ -12,7 +12,7 @@ import { baseStyles, getStyledOptions, textStyles } from '~/modules/system';
 import {
   ComponentProps,
   HeadingSizes,
-  Placement,
+  Position,
   Sizes,
   Spacing,
   StyledProps,
@@ -43,7 +43,7 @@ export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, 
    *
    * @default left
    */
-  border?: Placement;
+  border?: Position;
   /**
    * The size of the border
    *

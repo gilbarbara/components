@@ -73,7 +73,7 @@ export const Popconfirm: Story = {
           </Box>
         }
         open={isOpen}
-        position="top"
+        placement="top-middle"
         radius="md"
         shadow="low"
       >
@@ -87,56 +87,70 @@ export const Popconfirm: Story = {
 
 export const Positions: Story = {
   argTypes: {
-    align: disableControl(),
     content: disableControl(),
-    position: disableControl(),
+    placement: disableControl(),
     size: disableControl(),
     wrap: disableControl(),
   },
   render: props => (
-    <Spacer direction="vertical" gap="xxl" grow minWidth={480}>
+    <Spacer direction="vertical" gap="xl" grow minWidth={480}>
       <Box display="flex" justify="space-between">
         <Tooltip
           {...props}
-          align="start"
-          content="Its me. I am a leftist with large text. Get it?"
-          position="top"
-          size="large"
+          content="placement: top-align — size: small"
+          placement="top-start"
+          size="small"
         >
           <Button size="sm">Top Start</Button>
         </Tooltip>
 
         <Tooltip
           {...props}
-          align="middle"
-          content="I continue in single line unless you specify a size"
-          position="top"
+          content="placement: top-middle — size: regular"
+          placement="top-middle"
+          size="regular"
         >
           <Button size="sm">Top</Button>
         </Tooltip>
 
-        <Tooltip {...props} align="end" content="Emoji? No problem 😎" position="top">
+        <Tooltip
+          {...props}
+          content="placement: top-end — size: large"
+          placement="top-end"
+          size="large"
+        >
           <Button size="sm">Top End</Button>
+        </Tooltip>
+      </Box>
+      <Box display="flex" justify="space-between">
+        <Tooltip {...props} content="placement: left-start" placement="left-start">
+          <Button size="sm">Left Start</Button>
+        </Tooltip>
+        <Tooltip
+          {...props}
+          content="placement: right-start — size: small — wrap: sm"
+          placement="right-start"
+          size="small"
+          wrap="sm"
+        >
+          <Button size="sm">Right Start</Button>
         </Tooltip>
       </Box>
       <Box display="flex" justify="space-between">
         <Tooltip
           {...props}
           content={
-            <Paragraph>
-              I'm a tooltip with <b>wrap="lg"</b> and a Paragraph. I am who I am from my head to my
-              toes. I tend to get loud when speaking my mind. Even a little crazy some of the time.
-            </Paragraph>
+            <Paragraph>placement: right-middle — wrap: lg — using a Paragraph component.</Paragraph>
           }
-          position="left"
+          placement="left-middle"
           wrap="lg"
         >
           <Button size="sm">Left</Button>
         </Tooltip>
         <Tooltip
           {...props}
-          content="I'm using a medium wrap and regular size text. Use me for slightly longer messages"
-          position="right"
+          content="placement: right-middle — size: regular — wrap: md"
+          placement="right-middle"
           size="regular"
           wrap="md"
         >
@@ -144,26 +158,23 @@ export const Positions: Story = {
         </Tooltip>
       </Box>
       <Box display="flex" justify="space-between">
-        <Tooltip {...props} align="start" content="I am in the bottom left" position="bottom">
+        <Tooltip {...props} content="placement: left-end" placement="left-end">
+          <Button size="sm">Left End</Button>
+        </Tooltip>
+        <Tooltip {...props} content="placement: right-end" placement="right-end">
+          <Button size="sm">Right End</Button>
+        </Tooltip>
+      </Box>
+      <Box display="flex" justify="space-between">
+        <Tooltip {...props} content="placement: bottom-start" placement="bottom-start">
           <Button size="sm">Bottom Start</Button>
         </Tooltip>
 
-        <Tooltip
-          {...props}
-          align="middle"
-          content="I have a small wrap"
-          position="bottom"
-          wrap="sm"
-        >
+        <Tooltip {...props} content="placement: bottom-middle" placement="bottom-middle">
           <Button size="sm">Bottom</Button>
         </Tooltip>
 
-        <Tooltip
-          {...props}
-          align="end"
-          content="Look, its me at the bottom right"
-          position="bottom"
-        >
+        <Tooltip {...props} content="placement: bottom-end" placement="bottom-end">
           <Button size="sm">Bottom End</Button>
         </Tooltip>
       </Box>
