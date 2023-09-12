@@ -13,6 +13,7 @@ import {
 export const defaultProps = {
   accent: 'primary',
   align: 'center',
+  borderless: false,
   disabled: false,
   size: 'md',
 } satisfies Omit<CheckboxProps, 'name'>;
@@ -21,6 +22,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
   const {
     accent,
     align,
+    borderless,
     checked,
     defaultChecked,
     disabled,
@@ -58,6 +60,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
       />
       <StyledElement
         accent={accent}
+        borderless={borderless}
         category="checkbox"
         data-component-name="CheckboxElement"
         label={label}
