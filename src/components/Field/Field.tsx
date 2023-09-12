@@ -30,6 +30,7 @@ import { getDefaultValue, getError, getRegisterOptions } from './utils';
 
 export const defaultProps = {
   accent: 'primary',
+  borderless: false,
   debug: false,
   disabled: false,
   hideAssistiveText: false,

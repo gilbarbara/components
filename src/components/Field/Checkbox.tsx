@@ -13,7 +13,17 @@ interface Props extends FieldCheckboxProps {
 }
 
 function FieldCheckbox(props: Props) {
-  const { currentValue, items = [], name = 'CheckboxGroup', onChange, setValue } = props;
+  const {
+    accent,
+    borderless,
+    currentValue,
+    disabled,
+    items = [],
+    name = 'CheckboxGroup',
+    onChange,
+    readOnly,
+    setValue,
+  } = props;
   const ref = useRef<HTMLDivElement>(null);
 
   useUpdateEffect(() => {
@@ -41,14 +51,18 @@ function FieldCheckbox(props: Props) {
   };
 
   return (
-    <Spacer mb="xs">
+    <Spacer gapVertical="xs">
       {items.map(d => (
         <Checkbox
           key={d.name}
+          accent={accent}
+          borderless={borderless}
           defaultChecked={currentValue.includes(d.name)}
+          disabled={disabled}
           label={d.label}
           name={d.name}
           onChange={handleChange}
+          readOnly={readOnly}
           size="sm"
         />
       ))}

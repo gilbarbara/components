@@ -14,6 +14,7 @@ import {
   RadioItem,
   ValidatePasswordOptions,
   WithAccent,
+  WithBorderless,
   WithDisabled,
 } from '~/types';
 
@@ -69,6 +70,7 @@ export interface FieldBaseProps
       'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
     >,
     WithAccent,
+    WithBorderless,
     WithDisabled {
   autoComplete?: string;
   clearError?: () => void;
