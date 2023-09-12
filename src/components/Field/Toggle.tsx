@@ -11,7 +11,7 @@ interface Props extends FieldToggleProps {
 }
 
 function FieldToggle(props: Props) {
-  const { disabled, name, onChange, required, setValue } = props;
+  const { accent, disabled, name, onChange, required, setValue } = props;
 
   const handleToggle = useCallback(
     (status: boolean) => {
@@ -32,6 +32,7 @@ function FieldToggle(props: Props) {
       name={name}
       render={({ field }) => (
         <Toggle
+          accent={accent}
           checked={is.undefined(field.value) ? false : field.value}
           disabled={disabled}
           name={name}

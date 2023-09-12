@@ -13,7 +13,7 @@ interface Props extends FieldRadioProps {
 }
 
 function FieldRadio(props: Props) {
-  const { items = [], onChange, registration } = props;
+  const { accent, borderless, disabled, items = [], onChange, readOnly, registration } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -24,9 +24,19 @@ function FieldRadio(props: Props) {
   };
 
   return (
-    <Spacer mb="xs">
+    <Spacer gapVertical="xs">
       {items.map((d: RadioItem) => (
-        <Radio key={d.value} {...d} {...registration} onChange={handleChange} size="sm" />
+        <Radio
+          key={d.value}
+          {...d}
+          {...registration}
+          accent={accent}
+          borderless={borderless}
+          disabled={disabled}
+          onChange={handleChange}
+          readOnly={readOnly}
+          size="sm"
+        />
       ))}
     </Spacer>
   );

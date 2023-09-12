@@ -25,6 +25,7 @@ interface Props extends Omit<FieldInputProps, 'type' | 'validationOptions'> {
 
 function FieldInput(props: Props) {
   const {
+    accent,
     currentValue,
     formatter = '',
     id,
@@ -107,6 +108,7 @@ function FieldInput(props: Props) {
     case 'file': {
       content = (
         <InputFile
+          accent={accent}
           {...registration}
           {...input}
           value={currentValue?.length ? currentValue[0].name : ''}

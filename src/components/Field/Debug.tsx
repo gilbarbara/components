@@ -16,6 +16,10 @@ function primitiveToString(value: any, key: string): string {
     return `{ RHF ${key} }`;
   }
 
+  if (key === 'children') {
+    return '{ ReactNode }';
+  }
+
   if (is.function(value)) {
     return '{ Function }';
   }

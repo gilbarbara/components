@@ -84,6 +84,7 @@ const StyledButton = styled(
         padding: ${spacing.xxs} 0;
       `
     : css`
+        background-color: ${darkMode ? grayScale['800'] : white};
         border: 1px solid ${borderColor};
         border-radius: ${radius.xs};
         padding-left: ${spacing.md};
@@ -93,7 +94,6 @@ const StyledButton = styled(
 
   return css`
     align-items: center;
-    background-color: ${darkMode ? grayScale['800'] : white};
     color: ${textColor};
     cursor: pointer;
     display: flex;
