@@ -13,6 +13,7 @@ import {
 export const defaultProps = {
   accent: 'primary',
   align: 'center',
+  borderless: false,
   disabled: false,
   size: 'md',
 } satisfies Omit<RadioProps, 'name' | 'value'>;
@@ -25,6 +26,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const {
     accent,
     align,
+    borderless,
     checked,
     defaultChecked,
     disabled,
@@ -62,6 +64,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       />
       <StyledElement
         accent={accent}
+        borderless={borderless}
         category="radio"
         data-component-name="RadioElement"
         label={label}

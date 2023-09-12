@@ -20,12 +20,18 @@ import {
   RadioItem,
   StyledProps,
   WithAccent,
+  WithBorderless,
   WithComponentSize,
   WithFlexBox,
   WithMargin,
 } from '~/types';
 
-export interface SharedProps extends StyledProps, WithAccent, WithComponentSize, WithMargin {
+export interface SharedProps
+  extends StyledProps,
+    WithAccent,
+    WithBorderless,
+    WithComponentSize,
+    WithMargin {
   /** @default center */
   align?: WithFlexBox['align'];
   name: string;
@@ -67,10 +73,15 @@ export const StyledElement = styled(
   'span',
   getStyledOptions('label'),
 )<InnerProps>(props => {
-  const { accent = 'primary', category = 'checkbox', label, size } = props;
+  const { accent = 'primary', borderless, category = 'checkbox', label, size } = props;
   const { grayScale, radius, white, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
   const { mainColor } = getColorTokens(accent, null, theme);
+  let backgroundColor = darkMode ? grayScale['800'] : white;
+
+  if (borderless) {
+    backgroundColor = darkMode ? grayScale['700'] : grayScale['100'];
+  }
 
   let after;
   let dimensions = 18;
@@ -126,8 +137,8 @@ export const StyledElement = styled(
 
   return css`
     ${baseStyles(props)};
-    background-color: ${darkMode ? grayScale['800'] : white};
-    border: 2px solid ${grayScale['700']};
+    background-color: ${backgroundColor};
+    border: ${borderless ? 0 : `2px solid ${grayScale['700']}`};
     border-radius: ${category === 'checkbox' ? radius.xxs : radius.round};
     display: inline-flex;
     flex-shrink: 0;
