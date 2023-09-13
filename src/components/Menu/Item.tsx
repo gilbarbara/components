@@ -31,7 +31,7 @@ export const StyledMenuItem = styled(
 
   const themeColor = darkMode ? grayScale['200'] : grayScale['800'];
 
-  const { mainColor, textColor } = getColorTokens(bg || accent, color, theme);
+  const { mainColor, textColor } = getColorTokens(bg ?? accent, color, theme);
 
   return css`
     color: ${themeColor};
@@ -82,9 +82,7 @@ export function MenuItem({
       closeMenu();
     }
 
-    if (onClick) {
-      onClick(event);
-    }
+    onClick?.(event);
   };
 
   let content: ReactNode;

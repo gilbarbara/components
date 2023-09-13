@@ -42,9 +42,7 @@ export function DatePicker(props: DatePickerSingleProps) {
 
     setSelectedDate(nextDate);
 
-    if (onChange) {
-      onChange(nextDate ? selectedDay.toISOString() : '');
-    }
+    onChange?.(nextDate ? selectedDay.toISOString() : '');
   };
 
   return (

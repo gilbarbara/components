@@ -210,9 +210,7 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
 
     setSearch(event);
 
-    if (onSearch) {
-      onSearch(value);
-    }
+    onSearch?.(value);
   };
 
   const availableOptions = options

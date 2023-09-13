@@ -27,9 +27,7 @@ function DropdownAdd(props: Props) {
   } = props;
 
   const handleClick = () => {
-    if (onCreate) {
-      onCreate(search, () => setStatus('close'));
-    }
+    onCreate?.(search, () => setStatus('close'));
   };
 
   return (

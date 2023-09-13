@@ -18,9 +18,7 @@ function FieldRadio(props: Props) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
 
-    if (onChange) {
-      onChange(target.value);
-    }
+    onChange?.(target.value);
   };
 
   return (

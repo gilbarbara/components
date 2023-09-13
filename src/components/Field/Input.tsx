@@ -46,9 +46,7 @@ function FieldInput(props: Props) {
 
       registration.onBlur(event);
 
-      if (onBlur) {
-        onBlur(event);
-      }
+      onBlur?.(event);
     },
     [isDirty, onBlur, registration, setStatus],
   );
@@ -57,9 +55,7 @@ function FieldInput(props: Props) {
     (event: FocusEvent<HTMLInputElement>) => {
       setStatus({ isActive: true });
 
-      if (onFocus) {
-        onFocus(event);
-      }
+      onFocus?.(event);
     },
     [onFocus, setStatus],
   );
@@ -76,9 +72,7 @@ function FieldInput(props: Props) {
 
       registration.onChange(event);
 
-      if (onChange) {
-        onChange(value);
-      }
+      onChange?.(value);
     },
     [formatter, onChange, registration],
   );

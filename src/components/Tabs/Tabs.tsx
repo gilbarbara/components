@@ -253,9 +253,7 @@ export function Tabs(props: TabsProps) {
       setState({ activeId: tabId });
     }
 
-    if (onClick) {
-      onClick(tabId);
-    }
+    onClick?.(tabId);
   };
 
   if (error) {

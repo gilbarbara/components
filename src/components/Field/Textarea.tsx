@@ -21,9 +21,7 @@ function FieldTextarea(props: Props) {
 
       registration.onBlur(event);
 
-      if (onBlur) {
-        onBlur(event);
-      }
+      onBlur?.(event);
     },
     [isDirty, onBlur, registration, setStatus],
   );
@@ -32,9 +30,7 @@ function FieldTextarea(props: Props) {
     (event: FocusEvent<HTMLTextAreaElement>) => {
       setStatus({ isActive: true });
 
-      if (onFocus) {
-        onFocus(event);
-      }
+      onFocus?.(event);
     },
     [onFocus, setStatus],
   );
@@ -43,9 +39,7 @@ function FieldTextarea(props: Props) {
     (event: ChangeEvent<HTMLTextAreaElement>) => {
       registration.onChange(event);
 
-      if (onChange) {
-        onChange(event.target.value);
-      }
+      onChange?.(event.target.value);
     },
     [onChange, registration],
   );

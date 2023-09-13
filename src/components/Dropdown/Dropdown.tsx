@@ -189,9 +189,7 @@ export function Dropdown(props: DropdownProps) {
   const handleChange = (value: Option[]) => {
     setFilled(!!value.length);
 
-    if (onChange) {
-      onChange(value);
-    }
+    onChange?.(value);
   };
 
   return (

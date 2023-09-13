@@ -45,9 +45,7 @@ function FieldCheckbox(props: Props) {
 
     setValue(name, nextValue, { shouldDirty: true, shouldValidate: true });
 
-    if (onChange) {
-      onChange(nextValue);
-    }
+    onChange?.(nextValue);
   };
 
   return (

@@ -68,10 +68,7 @@ export function RadioGroup(props: RadioGroupProps) {
       const numericValue = Number(target.value);
       const currentValue = !Number.isNaN(numericValue) ? numericValue : target.value;
 
-      /* istanbul ignore else */
-      if (onChange) {
-        onChange(event);
-      }
+      onChange?.(event);
 
       if (!value && !disabled) {
         setSelectedValue(currentValue);

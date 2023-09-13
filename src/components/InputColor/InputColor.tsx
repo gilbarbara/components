@@ -176,21 +176,23 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
 
-    if (onChange) {
-      if (!onChangeDebounce) {
-        onChange(event);
-
-        return;
-      }
-
-      clearTimeout(debounceTimeout.current);
-
-      debounceTimeout.current = window.setTimeout(() => {
-        onChange(event);
-
-        debounceTimeout.current = 0;
-      }, onChangeDebounce);
+    if (!onChange) {
+      return;
     }
+
+    if (!onChangeDebounce) {
+      onChange(event);
+
+      return;
+    }
+
+    clearTimeout(debounceTimeout.current);
+
+    debounceTimeout.current = window.setTimeout(() => {
+      onChange(event);
+
+      debounceTimeout.current = 0;
+    }, onChangeDebounce);
   };
 
   let text;

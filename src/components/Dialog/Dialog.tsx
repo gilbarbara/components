@@ -118,10 +118,7 @@ export function Dialog(props: DialogProps) {
 
   const handlePortalClose = useCallback(() => {
     onClickCancel();
-
-    if (onClose) {
-      onClose();
-    }
+    onClose?.();
   }, [onClickCancel, onClose]);
 
   const actionButton = (

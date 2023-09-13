@@ -20,9 +20,7 @@ function FieldSelect(props: Props) {
 
       registration.onBlur(event);
 
-      if (onBlur) {
-        onBlur(event);
-      }
+      onBlur?.(event);
     },
     [isDirty, onBlur, registration, setStatus],
   );
@@ -31,9 +29,7 @@ function FieldSelect(props: Props) {
     (event: FocusEvent<HTMLSelectElement>) => {
       setStatus({ isActive: true });
 
-      if (onFocus) {
-        onFocus(event);
-      }
+      onFocus?.(event);
     },
     [onFocus, setStatus],
   );
@@ -42,9 +38,7 @@ function FieldSelect(props: Props) {
     (event: ChangeEvent<HTMLSelectElement>) => {
       registration.onChange(event);
 
-      if (onChange) {
-        onChange(event.target.value);
-      }
+      onChange?.(event.target.value);
     },
     [onChange, registration],
   );
