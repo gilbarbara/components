@@ -9,7 +9,7 @@ import { getTheme } from '~/modules/helpers';
 import { appearanceStyles, baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithAccent,
   WithBorderless,
@@ -28,7 +28,7 @@ export interface SelectKnownProps
   large?: boolean;
 }
 
-export type SelectProps = ComponentProps<HTMLSelectElement, SelectKnownProps>;
+export type SelectProps = OmitElementProps<HTMLSelectElement, SelectKnownProps>;
 
 export const defaultProps = {
   accent: 'primary',

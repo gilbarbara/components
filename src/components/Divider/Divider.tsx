@@ -9,8 +9,8 @@ import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, getStyledOptions, marginStyles, textStyles } from '~/modules/system';
 
 import {
-  ComponentProps,
   Direction,
+  OmitElementProps,
   Sizes,
   Spacing,
   StyledProps,
@@ -58,7 +58,7 @@ export interface DividerKnownProps
   minBorderWidth?: StringOrNumber;
 }
 
-export type DividerProps = ComponentProps<HTMLDivElement, DividerKnownProps>;
+export type DividerProps = OmitElementProps<HTMLDivElement, DividerKnownProps>;
 
 const borderSizes = {
   sm: '1px',

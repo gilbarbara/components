@@ -23,7 +23,7 @@ import {
 import { Icon } from '~/components/Icon';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithBorder,
   WithBusy,
@@ -54,7 +54,7 @@ export interface ButtonUnstyledKnownProps
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
-export type ButtonUnstyledProps = ComponentProps<HTMLButtonElement, ButtonUnstyledKnownProps>;
+export type ButtonUnstyledProps = OmitElementProps<HTMLButtonElement, ButtonUnstyledKnownProps>;
 
 export const defaultProps = {
   ...textDefaultOptions,

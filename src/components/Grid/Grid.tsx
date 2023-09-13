@@ -21,7 +21,7 @@ import {
 } from '~/modules/system';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildren,
@@ -67,7 +67,7 @@ export interface GridKnownProps
   templateRows?: StandardLonghandProperties['gridTemplateRows'];
 }
 
-export type GridProps = ComponentProps<HTMLDivElement, GridKnownProps>;
+export type GridProps = OmitElementProps<HTMLDivElement, GridKnownProps>;
 
 export const defaultProps = {
   display: 'grid',

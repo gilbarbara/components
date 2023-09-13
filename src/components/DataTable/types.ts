@@ -4,7 +4,7 @@ import { Simplify, StringOrNull, StringOrNumber } from '@gilbarbara/types';
 import { LoaderType } from '~/components/Loader';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   SortDirection,
   StyledProps,
   VariantWithTones,
@@ -173,7 +173,7 @@ export interface DataTableKnownProps<T extends string>
   width?: number;
 }
 
-export type DataTableProps<T extends string = string> = ComponentProps<
+export type DataTableProps<T extends string = string> = OmitElementProps<
   HTMLDivElement,
   DataTableKnownProps<T>,
   'data' | 'wrap'

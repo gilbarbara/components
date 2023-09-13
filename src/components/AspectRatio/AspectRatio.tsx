@@ -5,14 +5,14 @@ import { px, round } from '@gilbarbara/helpers';
 
 import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
-import { ComponentProps, StyledProps, WithChildren, WithMargin } from '~/types';
+import { OmitElementProps, StyledProps, WithChildren, WithMargin } from '~/types';
 
 export interface AspectRatioKnownProps extends StyledProps, WithChildren, WithMargin {
   maxWidth?: number;
   ratio: number;
 }
 
-export type AspectRatioProps = ComponentProps<HTMLDivElement, AspectRatioKnownProps>;
+export type AspectRatioProps = OmitElementProps<HTMLDivElement, AspectRatioKnownProps>;
 
 export const StyledAspectRatio = styled(
   'div',

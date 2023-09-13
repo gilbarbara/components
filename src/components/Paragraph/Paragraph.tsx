@@ -16,7 +16,7 @@ import {
 import { Text } from '~/components/Text';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithAlign,
   WithChildren,
@@ -39,7 +39,7 @@ export interface ParagraphKnownProps
   skipMarginTop?: boolean;
 }
 
-export type ParagraphProps = ComponentProps<HTMLParagraphElement, ParagraphKnownProps>;
+export type ParagraphProps = OmitElementProps<HTMLParagraphElement, ParagraphKnownProps>;
 
 export const defaultProps = {
   skipMarginTop: false,

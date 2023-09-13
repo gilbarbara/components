@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithButtonSize,
   WithChildren,
@@ -20,7 +20,7 @@ export interface ButtonGroupKnownProps
     WithColorsDefaultBg,
     WithDisabled {}
 
-export type ButtonGroupProps = ComponentProps<HTMLDivElement, ButtonGroupKnownProps>;
+export type ButtonGroupProps = OmitElementProps<HTMLDivElement, ButtonGroupKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

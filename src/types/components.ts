@@ -20,9 +20,6 @@ export interface CheckboxItem extends WithDisabled {
   name: string;
 }
 
-export type ComponentProps<T, P, E extends string = never> = P &
-  Omit<HTMLProps<T>, 'ref' | 'size' | keyof P | E>;
-
 export interface DropdownOption extends Option {
   prefix?: ReactNode;
   suffix?: ReactNode;
@@ -80,6 +77,9 @@ export interface DropdownProps
   /** @default 260 */
   width?: StringOrNumber;
 }
+
+export type OmitElementProps<TElement, TProps, TProperties extends string = never> = TProps &
+  Omit<HTMLProps<TElement>, 'ref' | 'size' | keyof TProps | TProperties>;
 
 export interface RadioItem extends WithDisabled {
   accent?: VariantWithTones;

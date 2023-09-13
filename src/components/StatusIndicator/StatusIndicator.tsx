@@ -7,7 +7,7 @@ import { getColorTokens, getColorWithTone } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
-import { ComponentProps, StyledProps, Tone, Variant, WithMargin } from '~/types';
+import { OmitElementProps, StyledProps, Tone, Variant, WithMargin } from '~/types';
 
 export interface StatusIndicatorKnownProps extends StyledProps, WithMargin {
   /** Component color */
@@ -18,7 +18,7 @@ export interface StatusIndicatorKnownProps extends StyledProps, WithMargin {
   tone?: Tone;
 }
 
-export type StatusIndicatorProps = ComponentProps<HTMLDivElement, StatusIndicatorKnownProps>;
+export type StatusIndicatorProps = OmitElementProps<HTMLDivElement, StatusIndicatorKnownProps>;
 
 export const defaultProps = {
   color: 'green',

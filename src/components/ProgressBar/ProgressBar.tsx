@@ -10,7 +10,7 @@ import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from '~/module
 
 import { Paragraph } from '~/components/Paragraph';
 
-import { ComponentProps, StyledProps, VariantWithTones, WithAccent, WithMargin } from '~/types';
+import { OmitElementProps, StyledProps, VariantWithTones, WithAccent, WithMargin } from '~/types';
 
 export interface ProgressBarKnownProps extends StyledProps, WithAccent, WithMargin {
   /**
@@ -28,7 +28,7 @@ export interface ProgressBarKnownProps extends StyledProps, WithAccent, WithMarg
   width?: StringOrNumber;
 }
 
-export type ProgressBarProps = ComponentProps<HTMLDivElement, ProgressBarKnownProps>;
+export type ProgressBarProps = OmitElementProps<HTMLDivElement, ProgressBarKnownProps>;
 
 export const defaultProps = {
   accent: 'primary',

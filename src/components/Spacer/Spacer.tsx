@@ -17,8 +17,8 @@ import {
 } from '~/modules/system';
 
 import {
-  ComponentProps,
   Direction,
+  OmitElementProps,
   Spacing,
   StyledProps,
   WithBorder,
@@ -75,7 +75,7 @@ export interface SpacerKnownProps
   wrap?: boolean;
 }
 
-export type SpacerProps = ComponentProps<HTMLDivElement, SpacerKnownProps>;
+export type SpacerProps = OmitElementProps<HTMLDivElement, SpacerKnownProps>;
 
 export const defaultProps = {
   direction: 'horizontal',

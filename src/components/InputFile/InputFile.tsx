@@ -11,7 +11,7 @@ import { BoxInline } from '~/components/Box';
 import { Button } from '~/components/Button';
 import { Truncate } from '~/components/Truncate';
 
-import { ComponentProps, StyledProps, WithAccent, WithFormElements } from '~/types';
+import { OmitElementProps, StyledProps, WithAccent, WithFormElements } from '~/types';
 
 export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormElements {
   /**
@@ -24,7 +24,7 @@ export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormEl
   value?: string;
 }
 
-export type InputFileProps = ComponentProps<
+export type InputFileProps = OmitElementProps<
   HTMLInputElement,
   InputFileKnownProps,
   'name' | 'type' | 'width'

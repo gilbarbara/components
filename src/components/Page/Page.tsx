@@ -12,7 +12,7 @@ import { Loader } from '~/components/Loader';
 
 import {
   Alignment,
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithColors,
   WithFlexBox,
@@ -51,7 +51,7 @@ export interface PageKnownProps
   textAlign?: Alignment;
 }
 
-export type PageProps = ComponentProps<HTMLDivElement, PageKnownProps, 'wrap'>;
+export type PageProps = OmitElementProps<HTMLDivElement, PageKnownProps, 'wrap'>;
 
 export const defaultProps = {
   centered: false,
