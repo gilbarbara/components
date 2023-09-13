@@ -20,9 +20,7 @@ function FieldToggle(props: Props) {
         shouldValidate: true,
       });
 
-      if (onChange) {
-        onChange(status);
-      }
+      onChange?.(status);
     },
     [name, onChange, setValue],
   );

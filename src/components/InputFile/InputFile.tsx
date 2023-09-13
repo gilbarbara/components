@@ -93,9 +93,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
 
     setLocalValue(files?.length ? files[0].name : '');
 
-    if (onChange) {
-      onChange(event);
-    }
+    onChange?.(event);
   };
 
   return (

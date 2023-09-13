@@ -108,9 +108,7 @@ export function Modal(props: ModalProps) {
   const { black, darkMode, white } = getTheme({ theme: useTheme() });
 
   const handlePortalClose = useCallback(() => {
-    if (onClose) {
-      onClose();
-    }
+    onClose?.();
   }, [onClose]);
 
   let header;

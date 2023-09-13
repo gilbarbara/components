@@ -106,9 +106,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     const pageNumber = Number(page);
     const scrollTarget = scrollElement ?? element.current;
 
-    if (onClickPage) {
-      onClickPage(pageNumber, remote?.totalPages ?? totalPages);
-    }
+    onClickPage?.(pageNumber, remote?.totalPages ?? totalPages);
 
     if (scrollTarget && !disableScroll) {
       scrollTo(scrollTarget.getBoundingClientRect().top - scrollMargin, { scrollDuration });
@@ -132,9 +130,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
         sortDirection: nextDirection,
       };
 
-      if (onClickSort) {
-        onClickSort(name as T, nextDirection);
-      }
+      onClickSort?.(name as T, nextDirection);
 
       setState(options);
     },

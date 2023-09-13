@@ -64,26 +64,20 @@ export function DatePickerRange(props: DatePickerRangeProps) {
   const handleClickSelect: SelectRangeEventHandler = selectedRange => {
     setSelectedDates([selectedRange?.from?.toISOString(), selectedRange?.to?.toISOString()]);
 
-    if (onChange) {
-      onChange([
-        selectedRange?.from?.toISOString() ?? undefined,
-        selectedRange?.to?.toISOString() ?? undefined,
-      ]);
-    }
+    onChange?.([
+      selectedRange?.from?.toISOString() ?? undefined,
+      selectedRange?.to?.toISOString() ?? undefined,
+    ]);
   };
 
   const handleClickApply = () => {
-    if (onApply) {
-      onApply([selectedDates?.[0], selectedDates?.[1]]);
-    }
+    onApply?.([selectedDates?.[0], selectedDates?.[1]]);
   };
 
   const handleClickReset = () => {
     setSelectedDates([undefined, undefined]);
 
-    if (onChange) {
-      onChange([undefined, undefined]);
-    }
+    onChange?.([undefined, undefined]);
   };
 
   const modifiers = {

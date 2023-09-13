@@ -204,9 +204,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
       document.addEventListener('click', handleClickOutside);
     }
 
-    if (onToggle) {
-      onToggle(active);
-    }
+    onToggle?.(active);
 
     return () => {
       if (!is.boolean(open)) {

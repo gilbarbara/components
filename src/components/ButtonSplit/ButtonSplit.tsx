@@ -134,9 +134,7 @@ export function ButtonSplit(props: ButtonSplitProps) {
     (status: boolean) => {
       setActive(status);
 
-      if (onToggle) {
-        onToggle(status);
-      }
+      onToggle?.(status);
     },
     [onToggle],
   );

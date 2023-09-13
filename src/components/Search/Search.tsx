@@ -97,9 +97,7 @@ export function Search(props: SearchProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
-    if (onType) {
-      onType(inputValue);
-    }
+    onType?.(inputValue);
 
     const nextState = { active: !!inputValue, value: inputValue };
 
@@ -132,9 +130,7 @@ export function Search(props: SearchProps) {
 
     updateState({ active: showListOnFocus && !!currentItems.length, focus: true });
 
-    if (onFocus) {
-      onFocus(inputValue);
-    }
+    onFocus?.(inputValue);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
