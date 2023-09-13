@@ -18,8 +18,8 @@ import {
 import { Icon } from '~/components/Icon';
 
 import {
-  ComponentProps,
   Icons,
+  OmitElementProps,
   StyledProps,
   WithChildren,
   WithColorsDefaultColor,
@@ -45,7 +45,7 @@ export interface AnchorKnownProps
   name?: string;
 }
 
-export type AnchorProps = ComponentProps<HTMLAnchorElement, AnchorKnownProps>;
+export type AnchorProps = OmitElementProps<HTMLAnchorElement, AnchorKnownProps>;
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),

@@ -1,7 +1,7 @@
 import { StringOrNumber } from '@gilbarbara/types';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   Spacing,
   StyledProps,
   VariantWithTones,
@@ -55,7 +55,7 @@ export interface SkeletonKnownProps
   isLoaded?: boolean;
 }
 
-export type SkeletonProps = ComponentProps<HTMLDivElement, SkeletonKnownProps>;
+export type SkeletonProps = OmitElementProps<HTMLDivElement, SkeletonKnownProps>;
 
 export interface SkeletonTextProps extends Omit<SkeletonProps, 'fitContent'> {
   /**

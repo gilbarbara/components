@@ -1,9 +1,9 @@
-import { ComponentProps, StyledProps, WithBlock, WithColorsDefaultColor } from '~/types';
+import { OmitElementProps, StyledProps, WithBlock, WithColorsDefaultColor } from '~/types';
 
 export type LoaderType = 'grow' | 'pill' | 'pride' | 'pulse' | 'rotate';
 
 export interface LoaderProps
-  extends ComponentProps<
+  extends OmitElementProps<
     HTMLDivElement,
     StyledProps & WithBlock & Pick<WithColorsDefaultColor, 'color'>
   > {

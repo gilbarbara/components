@@ -15,7 +15,7 @@ import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   PositionX,
   PositionY,
   StyledProps,
@@ -44,7 +44,7 @@ export interface MenuKnownProps
   trigger?: 'click' | 'hover';
 }
 
-export type MenuProps = ComponentProps<HTMLDivElement, MenuKnownProps>;
+export type MenuProps = OmitElementProps<HTMLDivElement, MenuKnownProps>;
 
 interface MenuItemsProps extends Required<Pick<MenuProps, 'minWidth' | 'position'>> {
   active: boolean;

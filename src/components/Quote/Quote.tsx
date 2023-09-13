@@ -10,8 +10,8 @@ import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, getStyledOptions, textStyles } from '~/modules/system';
 
 import {
-  ComponentProps,
   HeadingSizes,
+  OmitElementProps,
   Position,
   Sizes,
   Spacing,
@@ -58,7 +58,7 @@ export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, 
   gap?: Spacing;
 }
 
-export type QuoteProps = ComponentProps<HTMLElement, QuoteKnownProps>;
+export type QuoteProps = OmitElementProps<HTMLElement, QuoteKnownProps>;
 
 const borderSizes = {
   sm: '1px',

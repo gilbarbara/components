@@ -20,7 +20,7 @@ import { Icon } from '~/components/Icon';
 
 import {
   ButtonTypes,
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithBlock,
   WithBusy,
@@ -60,7 +60,7 @@ export interface ButtonKnownProps
   wide?: boolean;
 }
 
-export type ButtonProps = ComponentProps<HTMLElement, ButtonKnownProps>;
+export type ButtonProps = OmitElementProps<HTMLElement, ButtonKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

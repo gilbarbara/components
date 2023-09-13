@@ -22,7 +22,7 @@ import { Icon } from '~/components/Icon';
 import { Label } from '~/components/Label';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildren,
@@ -54,7 +54,7 @@ export interface FormGroupKnownProps
   valid?: boolean;
 }
 
-export type FormGroupProps = ComponentProps<HTMLElement, FormGroupKnownProps>;
+export type FormGroupProps = OmitElementProps<HTMLElement, FormGroupKnownProps>;
 
 export const defaultProps = {
   hideAssistiveText: false,

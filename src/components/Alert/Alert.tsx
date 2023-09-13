@@ -17,8 +17,8 @@ import { Icon } from '~/components/Icon';
 import { Text } from '~/components/Text';
 
 import {
-  ComponentProps,
   Icons,
+  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildren,
@@ -43,7 +43,7 @@ export interface AlertKnownProps
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
 }
 
-export type AlertProps = ComponentProps<HTMLDivElement, AlertKnownProps>;
+export type AlertProps = OmitElementProps<HTMLDivElement, AlertKnownProps>;
 
 function getColor(type: AlertProps['type'], invert?: boolean) {
   const types = {

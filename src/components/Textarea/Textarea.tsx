@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithAccent,
   WithBorderless,
@@ -20,7 +20,7 @@ export interface TextareaKnownProps
     WithElementSpacing,
     WithFormElements {}
 
-export type TextareaProps = ComponentProps<HTMLTextAreaElement, TextareaKnownProps, 'name'>;
+export type TextareaProps = OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'name'>;
 
 export const defaultProps = {
   accent: 'primary',

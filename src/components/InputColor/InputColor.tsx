@@ -17,7 +17,13 @@ import { inputHeight } from '~/modules/theme';
 
 import { Text } from '~/components/Text';
 
-import { ComponentProps, StyledProps, WithAccent, WithBorderless, WithFormElements } from '~/types';
+import {
+  OmitElementProps,
+  StyledProps,
+  WithAccent,
+  WithBorderless,
+  WithFormElements,
+} from '~/types';
 
 export interface InputColorKnownProps
   extends StyledProps,
@@ -47,7 +53,7 @@ export interface InputColorKnownProps
   value?: string;
 }
 
-export type InputColorProps = ComponentProps<
+export type InputColorProps = OmitElementProps<
   HTMLInputElement,
   InputColorKnownProps,
   'name' | 'type' | 'width'

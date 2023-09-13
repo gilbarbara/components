@@ -16,7 +16,7 @@ import {
 
 import {
   CheckboxItem,
-  ComponentProps,
+  OmitElementProps,
   RadioItem,
   StyledProps,
   WithAccent,
@@ -38,8 +38,8 @@ export interface SharedProps
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export type CheckboxProps = ComponentProps<HTMLInputElement, SharedProps & CheckboxItem>;
-export type RadioProps = ComponentProps<HTMLInputElement, SharedProps & RadioItem>;
+export type CheckboxProps = OmitElementProps<HTMLInputElement, SharedProps & CheckboxItem>;
+export type RadioProps = OmitElementProps<HTMLInputElement, SharedProps & RadioItem>;
 
 interface InnerProps
   extends Omit<CheckboxProps, 'name' | 'value'>,

@@ -5,8 +5,8 @@ import styled from '@emotion/styled';
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
 import {
-  ComponentProps,
   InputTypes,
+  OmitElementProps,
   StyledProps,
   WithAccent,
   WithBorderless,
@@ -27,7 +27,7 @@ export interface InputKnownProps
   type?: InputTypes;
 }
 
-export type InputProps = ComponentProps<
+export type InputProps = OmitElementProps<
   HTMLInputElement,
   InputKnownProps,
   'name' | 'type' | 'width'

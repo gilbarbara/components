@@ -5,7 +5,7 @@ import { px } from '@gilbarbara/helpers';
 
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
-import { ComponentProps, StyledProps } from '~/types';
+import { OmitElementProps, StyledProps } from '~/types';
 
 export interface EmojiKnownProps extends StyledProps {
   label?: string;
@@ -13,7 +13,7 @@ export interface EmojiKnownProps extends StyledProps {
   symbol: string;
 }
 
-export type EmojiProps = ComponentProps<HTMLSpanElement, EmojiKnownProps>;
+export type EmojiProps = OmitElementProps<HTMLSpanElement, EmojiKnownProps>;
 
 export const StyledEmoji = styled(
   'span',

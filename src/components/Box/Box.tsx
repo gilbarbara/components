@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { boxStyles, getStyledOptions } from '~/modules/system';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildrenOptional,
@@ -40,7 +40,7 @@ export interface BoxKnownProps
   flexBox?: boolean;
 }
 
-export type BoxProps<T = HTMLDivElement> = ComponentProps<T, BoxKnownProps>;
+export type BoxProps<T = HTMLDivElement> = OmitElementProps<T, BoxKnownProps>;
 
 export const StyledBox = styled(
   'div',

@@ -13,7 +13,7 @@ import { baseStyles, getOutlineStyles, getStyledOptions, isDarkMode } from '~/mo
 import { Label } from '~/components/Label';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   WithAccent,
   WithComponentSize,
@@ -42,7 +42,7 @@ export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponent
   onToggle?: (value: boolean) => void;
 }
 
-export type ToggleProps = Simplify<ComponentProps<HTMLDivElement, ToggleKnownProps>>;
+export type ToggleProps = Simplify<OmitElementProps<HTMLDivElement, ToggleKnownProps>>;
 
 interface InnerProps extends SetRequired<ToggleProps, 'accent' | 'size'> {
   isActive: boolean;

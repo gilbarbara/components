@@ -23,9 +23,9 @@ import { Icon } from '~/components/Icon';
 import { Paragraph } from '~/components/Paragraph';
 
 import {
-  ComponentProps,
   Direction,
   Icons,
+  OmitElementProps,
   Sizes,
   StyledProps,
   WithBorder,
@@ -63,7 +63,7 @@ export interface NonIdealStateKnownProps
   type?: 'error' | 'no-results' | 'not-found' | 'offline' | null;
 }
 
-export type NonIdealStateProps = ComponentProps<HTMLDivElement, NonIdealStateKnownProps, 'wrap'>;
+export type NonIdealStateProps = OmitElementProps<HTMLDivElement, NonIdealStateKnownProps, 'wrap'>;
 
 export const defaultProps = {
   direction: 'vertical',

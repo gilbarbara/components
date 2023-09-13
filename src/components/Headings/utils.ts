@@ -11,7 +11,7 @@ import {
 } from '~/modules/system';
 
 import {
-  ComponentProps,
+  OmitElementProps,
   StyledProps,
   Typography,
   WithAlign,
@@ -33,8 +33,8 @@ export interface HeadingKnownProps
     WithMargin,
     Omit<WithTextOptions, 'bold' | 'size'> {}
 
-export type HeadingProps = ComponentProps<HTMLHeadingElement, HeadingKnownProps>;
-export type HeadingLargeProps = ComponentProps<
+export type HeadingProps = OmitElementProps<HTMLHeadingElement, HeadingKnownProps>;
+export type HeadingLargeProps = OmitElementProps<
   HTMLHeadingElement,
   HeadingKnownProps & { large?: boolean }
 >;
