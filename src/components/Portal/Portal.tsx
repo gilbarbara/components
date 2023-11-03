@@ -75,22 +75,24 @@ const portalShow = keyframes`
   }
 `;
 
-const CloseButton = styled.button`
-  ${baseStyles};
-  ${buttonStyles};
-  align-items: center;
-  color: ${black};
-  display: inline-flex;
-  height: 30px;
-  justify-content: center;
-  line-height: 1;
-  pointer-events: all;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 30px;
-  z-index: 20;
-`;
+const CloseButton = styled.button(
+  props => css`
+    ${baseStyles(props)};
+    ${buttonStyles};
+    align-items: center;
+    color: ${black};
+    display: inline-flex;
+    height: 30px;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: all;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    z-index: 20;
+  `,
+);
 
 const Content = styled.div`
   max-height: 100%;

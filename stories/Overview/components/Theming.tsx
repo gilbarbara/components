@@ -26,7 +26,8 @@ function OverviewTheming() {
       <Paragraph mt={0}>
         You can access them using the <code style={{ color: 'red' }}>variants</code> property.
       </Paragraph>
-      <CodeBlock language="tsx">{`import { ThemeProvider } from '@emotion/react';
+      <CodeBlock language="tsx">
+        {`import { ThemeProvider } from '@emotion/react';
 import { mergeTheme } from '@gilbarbara/components';
 
 export const theme = mergeTheme({
@@ -39,7 +40,8 @@ function App() {
   <ThemeProvider theme={theme}>
     <Root />
   </ThemeProvider>
-}`}</CodeBlock>
+}`}
+      </CodeBlock>
     </Box>
   );
 }

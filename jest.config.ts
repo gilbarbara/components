@@ -30,7 +30,6 @@ const config: Config = {
       },
     ],
   },
-  transformIgnorePatterns: ['node_modules/(?!(react-merge-refs)/)'],
   verbose: false,
   watchPathIgnorePatterns: ['<rootDir>/node_modules/'],
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
