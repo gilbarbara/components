@@ -130,12 +130,17 @@ export const defaultProps = {
 
 const arrowSize = 6;
 
-const StyledTooltip = styled('div', getStyledOptions())`
-  ${baseStyles};
-  display: inline-flex;
-  line-height: 1;
-  position: relative;
-`;
+const StyledTooltip = styled(
+  'div',
+  getStyledOptions(),
+)(
+  props => css`
+    ${baseStyles(props)};
+    display: inline-flex;
+    line-height: 1;
+    position: relative;
+  `,
+);
 
 const StyledArrow = styled.span<SharedProps & ArrowProps & ColorProps>(props => {
   const { arrowDistance, arrowLength, arrowMargin, bg, placement } = props;

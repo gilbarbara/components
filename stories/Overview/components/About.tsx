@@ -49,12 +49,14 @@ function OverviewAbout() {
 
       <H2>Usage</H2>
 
-      <CodeBlock language="tsx">{`import { DatePicker } from '@gilbarbara/components';
+      <CodeBlock language="tsx">
+        {`import { DatePicker } from '@gilbarbara/components';
 
 function App() {
   return <DatePicker />
 }
-`}</CodeBlock>
+`}
+      </CodeBlock>
 
       <H2>API</H2>
 
