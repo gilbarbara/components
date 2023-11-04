@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { SetRequired, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -58,7 +58,7 @@ export interface DividerKnownProps
   minBorderWidth?: StringOrNumber;
 }
 
-export type DividerProps = OmitElementProps<HTMLDivElement, DividerKnownProps>;
+export type DividerProps = Simplify<OmitElementProps<HTMLDivElement, DividerKnownProps>>;
 
 const borderSizes = {
   sm: '1px',

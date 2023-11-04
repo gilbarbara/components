@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { boxStyles, getStyledOptions } from '~/modules/system';
 
@@ -40,7 +41,7 @@ export interface BoxKnownProps
   flexBox?: boolean;
 }
 
-export type BoxProps<T = HTMLDivElement> = OmitElementProps<T, BoxKnownProps>;
+export type BoxProps<T = HTMLDivElement> = Simplify<OmitElementProps<T, BoxKnownProps>>;
 
 export const StyledBox = styled(
   'div',

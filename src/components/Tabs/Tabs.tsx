@@ -11,7 +11,7 @@ import { useMeasure, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit, px, unique } from '@gilbarbara/helpers';
-import { PlainObject, SetOptional, SetRequired } from '@gilbarbara/types';
+import { PlainObject, SetOptional, SetRequired, Simplify } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
 
@@ -27,7 +27,7 @@ import { Direction, StyledProps, WithAccent, WithChildren, WithMargin } from '~/
 
 import { Tab, TabProps } from './Tab';
 
-export interface TabsProps extends StyledProps, WithAccent, WithChildren, WithMargin {
+export interface TabsKnownProps extends StyledProps, WithAccent, WithChildren, WithMargin {
   defaultId?: string;
   /** @default vertical */
   direction?: Direction;
@@ -41,6 +41,8 @@ export interface TabsProps extends StyledProps, WithAccent, WithChildren, WithMa
   onClick?: (id: string) => void;
   style?: CSSProperties;
 }
+
+export type TabsProps = Simplify<TabsKnownProps>;
 
 interface State {
   activeId: string;

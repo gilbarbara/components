@@ -1,5 +1,5 @@
 import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { Icons, StyledProps, WithAccent, WithBorderless, WithChildren, WithMargin } from '~/types';
 
@@ -24,7 +24,7 @@ export interface SearchItemProps extends Required<WithAccent>, WithChildren {
   value: string;
 }
 
-export interface SearchProps extends StyledProps, WithAccent, WithBorderless, WithMargin {
+export interface SearchKnownProps extends StyledProps, WithAccent, WithBorderless, WithMargin {
   height?: StringOrNumber;
   /** @default false */
   hideIcon?: boolean;
@@ -61,3 +61,5 @@ export interface SearchProps extends StyledProps, WithAccent, WithBorderless, Wi
   /** @default 100% */
   width?: StringOrNumber;
 }
+
+export type SearchProps = Simplify<SearchKnownProps>;

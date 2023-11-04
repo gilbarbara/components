@@ -1,7 +1,7 @@
 import { CSSProperties, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { PlainObject } from '@gilbarbara/types';
+import { PlainObject, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getTheme } from '~/modules/helpers';
@@ -54,7 +54,7 @@ export interface FormGroupKnownProps
   valid?: boolean;
 }
 
-export type FormGroupProps = OmitElementProps<HTMLElement, FormGroupKnownProps>;
+export type FormGroupProps = Simplify<OmitElementProps<HTMLElement, FormGroupKnownProps>>;
 
 export const defaultProps = {
   hideAssistiveText: false,

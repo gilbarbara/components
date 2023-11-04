@@ -1,6 +1,7 @@
 import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { borderStyles, getStyledOptions, marginStyles, paddingStyles } from '~/modules/system';
@@ -11,7 +12,7 @@ import { WithAccent, WithBorder, WithDisabled, WithMargin, WithPadding } from '~
 
 import PaginationButton from './Button';
 
-export interface PaginationProps extends WithAccent, WithBorder, WithMargin, WithPadding {
+export interface PaginationKnownProps extends WithAccent, WithBorder, WithMargin, WithPadding {
   /** @default end */
   align?: 'start' | 'center' | 'end';
   currentPage: number;
@@ -29,6 +30,8 @@ export interface PaginationProps extends WithAccent, WithBorder, WithMargin, Wit
   style?: CSSProperties;
   totalPages: number;
 }
+
+export type PaginationProps = Simplify<PaginationKnownProps>;
 
 interface Item extends WithDisabled {
   content?: ReactNode;

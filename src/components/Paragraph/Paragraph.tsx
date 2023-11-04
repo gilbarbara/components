@@ -2,6 +2,7 @@ import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import { Simplify } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
@@ -39,7 +40,7 @@ export interface ParagraphKnownProps
   skipMarginTop?: boolean;
 }
 
-export type ParagraphProps = OmitElementProps<HTMLParagraphElement, ParagraphKnownProps>;
+export type ParagraphProps = Simplify<OmitElementProps<HTMLParagraphElement, ParagraphKnownProps>>;
 
 export const defaultProps = {
   skipMarginTop: false,

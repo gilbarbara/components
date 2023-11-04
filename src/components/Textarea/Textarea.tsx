@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
@@ -20,7 +21,9 @@ export interface TextareaKnownProps
     WithElementSpacing,
     WithFormElements {}
 
-export type TextareaProps = OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'name'>;
+export type TextareaProps = Simplify<
+  OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'name'>
+>;
 
 export const defaultProps = {
   accent: 'primary',

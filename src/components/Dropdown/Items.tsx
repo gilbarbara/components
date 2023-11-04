@@ -10,9 +10,10 @@ import { getStyledOptions, isDarkMode } from '~/modules/system';
 
 import { BoxInline } from '~/components/Box';
 
-import { DropdownProps, Theme, WithAccent, WithDisabled } from '~/types';
+import { Theme, WithAccent, WithDisabled } from '~/types';
 
 import Add from './Add';
+import { DropdownProps } from './types';
 
 interface DropdownItemsProps
   extends WithAccent,

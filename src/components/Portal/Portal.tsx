@@ -1,9 +1,9 @@
-/* eslint-disable react/no-unused-prop-types */
 import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from 'react-use';
 import { css, keyframes, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { baseStyles, buttonStyles } from '~/modules/system';
@@ -13,7 +13,7 @@ import { Icon } from '~/components/Icon';
 
 import { StyledProps, WithChildren } from '~/types';
 
-export interface PortalProps extends StyledProps, WithChildren {
+export interface PortalKnownProps extends StyledProps, WithChildren {
   /** @default true */
   closeOnClickOverlay?: boolean;
   /** @default true */
@@ -29,6 +29,8 @@ export interface PortalProps extends StyledProps, WithChildren {
   /** @default 1000 */
   zIndex?: number;
 }
+
+export type PortalProps = Simplify<PortalKnownProps>;
 
 export const defaultProps = {
   closeOnClickOverlay: true,

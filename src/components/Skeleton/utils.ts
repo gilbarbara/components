@@ -1,4 +1,4 @@
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import {
   OmitElementProps,
@@ -55,29 +55,33 @@ export interface SkeletonKnownProps
   isLoaded?: boolean;
 }
 
-export type SkeletonProps = OmitElementProps<HTMLDivElement, SkeletonKnownProps>;
+export type SkeletonProps = Simplify<OmitElementProps<HTMLDivElement, SkeletonKnownProps>>;
 
-export interface SkeletonTextProps extends Omit<SkeletonProps, 'fitContent'> {
-  /**
-   * The spacing between lines
-   * @default xs
-   */
-  gap?: Spacing;
-  /**
-   * The height of each line
-   * @default 16
-   */
-  height?: StringOrNumber;
-  /**
-   * The number of lines to render
-   * @default 3
-   */
-  lines?: number;
-}
+export type SkeletonTextProps = Simplify<
+  Omit<SkeletonProps, 'fitContent'> & {
+    /**
+     * The spacing between lines
+     * @default xs
+     */
+    gap?: Spacing;
+    /**
+     * The height of each line
+     * @default 16
+     */
+    height?: StringOrNumber;
+    /**
+     * The number of lines to render
+     * @default 3
+     */
+    lines?: number;
+  }
+>;
 
-export interface SkeletonCircleProps extends Omit<SkeletonProps, 'fitContent'> {
-  size: StringOrNumber;
-}
+export type SkeletonCircleProps = Simplify<
+  Omit<SkeletonProps, 'fitContent'> & {
+    size: StringOrNumber;
+  }
+>;
 
 export const baseDefaultProps = {
   accent: 'white',

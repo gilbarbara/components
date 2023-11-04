@@ -2,7 +2,7 @@ import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -17,7 +17,7 @@ import {
 import { Button } from '~/components/Button';
 import { H3 } from '~/components/Headings';
 import { Paragraph } from '~/components/Paragraph';
-import { Portal, PortalProps } from '~/components/Portal';
+import { Portal } from '~/components/Portal';
 import { Spacer } from '~/components/Spacer';
 
 import {
@@ -29,8 +29,9 @@ import {
   WithRadius,
   WithShadow,
 } from '~/types';
+import type { PortalProps } from '~/types/props';
 
-export interface DialogProps
+export interface DialogKnownProps
   extends StyledProps,
     WithAccent,
     WithBorder,
@@ -55,6 +56,8 @@ export interface DialogProps
   /** @default 380 */
   width?: StringOrNumber;
 }
+
+export type DialogProps = Simplify<DialogKnownProps>;
 
 export const defaultProps = {
   accent: 'primary',

@@ -1,6 +1,7 @@
 import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -43,7 +44,7 @@ export interface AlertKnownProps
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
 }
 
-export type AlertProps = OmitElementProps<HTMLDivElement, AlertKnownProps>;
+export type AlertProps = Simplify<OmitElementProps<HTMLDivElement, AlertKnownProps>>;
 
 function getColor(type: AlertProps['type'], invert?: boolean) {
   const types = {

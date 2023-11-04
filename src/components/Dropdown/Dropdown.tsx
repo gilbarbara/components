@@ -16,10 +16,9 @@ import {
   marginStyles,
 } from '~/modules/system';
 
-import { DropdownProps } from '~/types';
-
 import Content from './Content';
 import Items from './Items';
+import { DropdownProps } from './types';
 
 export const defaultProps = {
   accent: 'primary',

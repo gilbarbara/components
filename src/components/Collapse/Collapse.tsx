@@ -3,7 +3,7 @@ import { usePrevious } from 'react-use';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
-import { SetRequired, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getTheme } from '~/modules/helpers';
@@ -14,7 +14,7 @@ import { Paragraph } from '~/components/Paragraph';
 
 import { WithMargin } from '~/types';
 
-export interface CollapseProps extends WithMargin {
+export interface CollapseKnownProps extends WithMargin {
   /**
    * The duration of the animation when the content is sliding down in seconds.
    * @default 0.3
@@ -41,6 +41,8 @@ export interface CollapseProps extends WithMargin {
   open?: boolean;
   title?: ReactNode;
 }
+
+export type CollapseProps = Simplify<CollapseKnownProps>;
 
 export const defaultProps = {
   animationEnterDuration: 0.3,

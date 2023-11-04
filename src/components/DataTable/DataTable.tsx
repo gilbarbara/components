@@ -4,11 +4,12 @@ import { useTheme } from '@emotion/react';
 
 import { scrollTo } from '~/modules/animations';
 
-import { Box, BoxCenter, BoxProps } from '~/components/Box';
+import { Box, BoxCenter } from '~/components/Box';
 import { Pagination } from '~/components/Pagination';
 import { Text } from '~/components/Text';
 
 import { SortDirection } from '~/types';
+import type { BoxProps } from '~/types/props';
 
 import Body from './Body';
 import Head from './Head';

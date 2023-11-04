@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -54,7 +55,9 @@ export interface ButtonUnstyledKnownProps
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
-export type ButtonUnstyledProps = OmitElementProps<HTMLButtonElement, ButtonUnstyledKnownProps>;
+export type ButtonUnstyledProps = Simplify<
+  OmitElementProps<HTMLButtonElement, ButtonUnstyledKnownProps>
+>;
 
 export const defaultProps = {
   ...textDefaultOptions,

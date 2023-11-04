@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
@@ -13,7 +14,7 @@ export interface EmojiKnownProps extends StyledProps {
   symbol: string;
 }
 
-export type EmojiProps = OmitElementProps<HTMLSpanElement, EmojiKnownProps>;
+export type EmojiProps = Simplify<OmitElementProps<HTMLSpanElement, EmojiKnownProps>>;
 
 export const StyledEmoji = styled(
   'span',

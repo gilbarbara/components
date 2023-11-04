@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactNode, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { SetRequired, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -26,7 +26,7 @@ import {
   WithInvert,
 } from '~/types';
 
-export interface ButtonSplitProps
+export interface ButtonSplitKnownProps
   extends Pick<MenuProps, 'disabled' | 'onToggle'>,
     WithBlock,
     WithButtonSize,
@@ -40,6 +40,8 @@ export interface ButtonSplitProps
   /** @default bottom-right */
   position?: PositionY;
 }
+
+export type ButtonSplitProps = Simplify<ButtonSplitKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

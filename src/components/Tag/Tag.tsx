@@ -2,7 +2,7 @@ import { CSSProperties, forwardRef, MouseEvent, ReactNode } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
-import { PlainObject } from '@gilbarbara/types';
+import { PlainObject, Simplify } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
@@ -27,7 +27,7 @@ import {
   WithTextOptions,
 } from '~/types';
 
-export interface TagProps
+export interface TagKnownProps
   extends StyledProps,
     WithChildren,
     WithColors,
@@ -42,6 +42,8 @@ export interface TagProps
   onClickBefore?: (event: MouseEvent<HTMLButtonElement>) => void;
   style?: CSSProperties;
 }
+
+export type TagProps = Simplify<TagKnownProps>;
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),

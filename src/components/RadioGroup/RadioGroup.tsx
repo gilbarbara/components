@@ -2,22 +2,25 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { usePrevious } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { Radio, RadioProps } from '~/components/CheckboxAndRadio';
+import { Radio } from '~/components/CheckboxAndRadio';
+import { RadioProps } from '~/components/CheckboxAndRadio/utils';
 
 import { RadioItem, WithComponentSize } from '~/types';
 
-export interface RadioGroupProps
+export interface RadioGroupKnownProps
   extends WithComponentSize,
     Omit<RadioProps, 'align' | 'checked' | 'defaultChecked' | 'label'> {
   defaultValue?: StringOrNumber;
   inline?: boolean;
   items: RadioItem[];
 }
+
+export type RadioGroupProps = Simplify<RadioGroupKnownProps>;
 
 export const defaultProps = {
   accent: 'primary',

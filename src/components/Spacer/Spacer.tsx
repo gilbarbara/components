@@ -1,6 +1,7 @@
 import { Children, forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 import { StandardShorthandProperties } from 'csstype';
 
 import { getTheme } from '~/modules/helpers';
@@ -75,7 +76,7 @@ export interface SpacerKnownProps
   wrap?: boolean;
 }
 
-export type SpacerProps = OmitElementProps<HTMLDivElement, SpacerKnownProps>;
+export type SpacerProps = Simplify<OmitElementProps<HTMLDivElement, SpacerKnownProps>>;
 
 export const defaultProps = {
   direction: 'horizontal',

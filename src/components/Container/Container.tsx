@@ -2,7 +2,7 @@ import { CSSProperties, forwardRef } from 'react';
 import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { SetRequired, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import {
   baseStyles,
@@ -51,7 +51,7 @@ export interface ContainerKnownProps
   verticalPadding?: boolean;
 }
 
-export type ContainerProps = OmitElementProps<HTMLDivElement, ContainerKnownProps>;
+export type ContainerProps = Simplify<OmitElementProps<HTMLDivElement, ContainerKnownProps>>;
 
 const flexMap = {
   center: 'center',

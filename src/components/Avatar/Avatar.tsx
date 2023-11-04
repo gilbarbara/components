@@ -2,6 +2,7 @@ import { CSSProperties, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { getInitials } from '@gilbarbara/helpers';
+import { Simplify } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { colorStyles, getStyledOptions } from '~/modules/system';
@@ -10,13 +11,19 @@ import { BoxCenter } from '~/components/Box';
 
 import { AvatarSize, StyledProps, WithBorder, WithColorsDefaultBg, WithFlexItem } from '~/types';
 
-export interface AvatarProps extends StyledProps, WithBorder, WithColorsDefaultBg, WithFlexItem {
+export interface AvatarKnownProps
+  extends StyledProps,
+    WithBorder,
+    WithColorsDefaultBg,
+    WithFlexItem {
   image?: string;
   name: string;
   /** @default md */
   size?: AvatarSize;
   style?: CSSProperties;
 }
+
+export type AvatarProps = Simplify<AvatarKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { DayPickerBase, DayPickerRangeProps, DayPickerSingleProps } from 'react-day-picker';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import {
   Alignment,
@@ -38,7 +38,7 @@ export interface DatePickerLayoutProps
     WithRadius,
     WithShadow {}
 
-export interface DatePickerRangeProps
+export interface DatePickerRangeKnownProps
   extends DatePickerBaseProps,
     DatePickerLayoutProps,
     Omit<DayPickerRangeProps, 'fromDate' | 'mode' | 'selected' | 'onSelect' | 'toDate'> {
@@ -65,7 +65,9 @@ export interface DatePickerRangeProps
   showApply?: boolean;
 }
 
-export interface DatePickerSingleProps
+export type DatePickerRangeProps = Simplify<DatePickerRangeKnownProps>;
+
+export interface DatePickerSingleKnownProps
   extends DatePickerBaseProps,
     DatePickerLayoutProps,
     Omit<DayPickerSingleProps, 'fromDate' | 'mode' | 'onSelect' | 'selected' | 'toDate'> {
@@ -76,6 +78,8 @@ export interface DatePickerSingleProps
    */
   selected?: string;
 }
+
+export type DatePickerSingleProps = Simplify<DatePickerSingleKnownProps>;
 
 export interface DatePickerSelectorBaseProps
   extends DatePickerBaseProps,
@@ -131,14 +135,16 @@ export interface DatePickerSelectorBaseProps
   width?: StringOrNumber;
 }
 
-export type DatePickerSelectorProps = DatePickerSelectorBaseProps &
-  (
-    | {
-        mode: 'range';
-        onChange?: DatePickerRangeClickHandler;
-      }
-    | {
-        mode: 'single';
-        onChange?: DatePickerSingleClickHandler;
-      }
-  );
+export type DatePickerSelectorProps = Simplify<
+  DatePickerSelectorBaseProps &
+    (
+      | {
+          mode: 'range';
+          onChange?: DatePickerRangeClickHandler;
+        }
+      | {
+          mode: 'single';
+          onChange?: DatePickerSingleClickHandler;
+        }
+    )
+>;

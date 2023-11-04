@@ -1,6 +1,7 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { animateIcon, fadeInOut } from '~/modules/animations';
 import { getTheme } from '~/modules/helpers';
@@ -11,7 +12,7 @@ import { Tooltip } from '~/components/Tooltip';
 
 import { Icons, WithColors, WithMargin } from '~/types';
 
-export interface CopyToClipboardProps extends Pick<WithColors, 'color'>, WithMargin {
+export interface CopyToClipboardKnownProps extends Pick<WithColors, 'color'>, WithMargin {
   disableAnimation?: boolean;
   /** @default copy */
   icon?: Icons;
@@ -24,6 +25,8 @@ export interface CopyToClipboardProps extends Pick<WithColors, 'color'>, WithMar
   /** @default Copy */
   tooltipText?: string;
 }
+
+export type CopyToClipboardProps = Simplify<CopyToClipboardKnownProps>;
 
 export const defaultProps = {
   disableAnimation: false,

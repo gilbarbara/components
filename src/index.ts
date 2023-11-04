@@ -66,3 +66,4 @@ export { px } from '@gilbarbara/helpers';
 // Types
 export type { Theme } from './types';
 export * as Types from './types';
+export * as Props from './types/props';

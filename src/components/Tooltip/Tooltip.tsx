@@ -3,7 +3,7 @@ import innerText from 'react-innertext';
 import { css, useTheme } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import { mergeProps, omit, px } from '@gilbarbara/helpers';
-import { SetRequired } from '@gilbarbara/types';
+import { SetRequired, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { fadeIn } from '~/modules/animations';
@@ -86,7 +86,7 @@ interface ColorProps {
   color: string;
 }
 
-export interface TooltipProps
+export interface TooltipKnownProps
   extends Partial<SharedProps>,
     Partial<AnimationProps>,
     Partial<ArrowProps>,
@@ -110,6 +110,8 @@ export interface TooltipProps
   eventType?: 'click' | 'hover';
   style?: CSSProperties;
 }
+
+export type TooltipProps = Simplify<TooltipKnownProps>;
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),

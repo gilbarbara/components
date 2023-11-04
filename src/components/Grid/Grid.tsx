@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
 import {
@@ -67,7 +67,7 @@ export interface GridKnownProps
   templateRows?: StandardLonghandProperties['gridTemplateRows'];
 }
 
-export type GridProps = OmitElementProps<HTMLDivElement, GridKnownProps>;
+export type GridProps = Simplify<OmitElementProps<HTMLDivElement, GridKnownProps>>;
 
 export const defaultProps = {
   display: 'grid',
