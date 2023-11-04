@@ -5,6 +5,7 @@ import { Box, Paragraph } from '~';
 import {
   flexBoxProps,
   hideProps,
+  hideStoryFromDocsPage,
   hideTable,
   radiusProps,
   spacingProps,
@@ -23,9 +24,9 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...flexBoxProps('alignContent', 'justifyItems'),
     ...radiusProps(),
     ...spacingProps(),
-    align: flexBoxProps().align,
     children: { control: 'text' },
     type: { control: 'select' },
   },
@@ -47,10 +48,21 @@ const types: AlertProps[] = [
     type: 'error',
   },
   { children: 'Please wait, loading...', type: 'info' },
-  { children: 'Nothing too important, just letting you know.', type: 'neutral' },
+  {
+    children: 'Nothing too important, just letting you know.',
+    type: 'neutral',
+  },
 ];
 
 export const Basic: Story = {};
+
+export const Vertical: Story = {
+  args: {
+    direction: 'column',
+    iconSize: 48,
+    maxWidth: 400,
+  },
+};
 
 export const Types: Story = {
   argTypes: {
@@ -62,13 +74,7 @@ export const Types: Story = {
   render: props => (
     <>
       {types.map(d => (
-        <Alert
-          key={d.type}
-          {...props}
-          align={('align' in d && d.align) || undefined}
-          mb="md"
-          type={d.type}
-        >
+        <Alert key={d.type} align={d.align} mb="md" {...props} type={d.type}>
           {d.children}
         </Alert>
       ))}
@@ -76,28 +82,14 @@ export const Types: Story = {
   ),
 };
 
-export const TypesInverted: Story = {
-  argTypes: {
-    align: hideTable(),
-    children: hideTable(),
-    icon: hideTable(),
-    invert: hideTable(),
-    type: hideTable(),
+export const Tests: Story = {
+  ...hideStoryFromDocsPage(),
+  tags: ['hidden'],
+  args: {
+    hideIcon: true,
+    light: true,
+    padding: 'xxl',
+    justify: 'center',
   },
-  render: props => (
-    <>
-      {types.map(d => (
-        <Alert
-          key={d.type}
-          {...props}
-          align={('align' in d && d.align) || undefined}
-          invert
-          mb="md"
-          type={d.type}
-        >
-          {d.children}
-        </Alert>
-      ))}
-    </>
-  ),
+  render: Basic.render,
 };
