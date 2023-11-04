@@ -1,17 +1,19 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getStyledOptions } from '~/modules/system';
 
 import { StyledProps, WithChildren } from '~/types';
 
-export interface TruncateProps extends StyledProps, WithChildren {
+export interface TruncateKnownProps extends StyledProps, WithChildren {
   /** @default 2 */
   lines?: number;
   maxWidth?: StringOrNumber;
 }
+
+export type TruncateProps = Simplify<TruncateKnownProps>;
 
 export const defaultProps = {
   lines: 2,

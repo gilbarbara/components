@@ -2,7 +2,7 @@ import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { SetRequired } from '@gilbarbara/types';
+import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -58,7 +58,7 @@ export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, 
   gap?: Spacing;
 }
 
-export type QuoteProps = OmitElementProps<HTMLElement, QuoteKnownProps>;
+export type QuoteProps = Simplify<OmitElementProps<HTMLElement, QuoteKnownProps>>;
 
 const borderSizes = {
   sm: '1px',

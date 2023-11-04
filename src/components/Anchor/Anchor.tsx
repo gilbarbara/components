@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
+import { Simplify } from '@gilbarbara/types';
 
 import { textDefaultOptions } from '~/modules/options';
 import {
@@ -45,7 +46,7 @@ export interface AnchorKnownProps
   name?: string;
 }
 
-export type AnchorProps = OmitElementProps<HTMLAnchorElement, AnchorKnownProps>;
+export type AnchorProps = Simplify<OmitElementProps<HTMLAnchorElement, AnchorKnownProps>>;
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),

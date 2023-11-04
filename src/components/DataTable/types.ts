@@ -1,7 +1,7 @@
 import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import { Simplify, StringOrNull, StringOrNumber } from '@gilbarbara/types';
 
-import { LoaderType } from '~/components/Loader';
+import { LoaderType } from '~/components/Loader/types';
 
 import {
   OmitElementProps,
@@ -173,10 +173,8 @@ export interface DataTableKnownProps<T extends string>
   width?: number;
 }
 
-export type DataTableProps<T extends string = string> = OmitElementProps<
-  HTMLDivElement,
-  DataTableKnownProps<T>,
-  'data' | 'wrap'
+export type DataTableProps<T extends string = string> = Simplify<
+  OmitElementProps<HTMLDivElement, DataTableKnownProps<T>, 'data' | 'wrap'>
 >;
 
 export interface DataTableHeadProps extends WithAccent, Pick<DataTableProps, 'clean' | 'columns'> {

@@ -1,14 +1,16 @@
 import { JSX } from 'react';
 import { FieldValues, FormProvider, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
-import { PlainObject } from '@gilbarbara/types';
+import { PlainObject, Simplify } from '@gilbarbara/types';
 
 export interface FormRenderProps<T extends FieldValues = FieldValues> {
   formMethods: UseFormReturn<T>;
 }
 
-export interface FormProps<T extends FieldValues> extends UseFormProps<T> {
-  children: (props: FormRenderProps<T>) => JSX.Element;
-}
+export type FormProps<T extends FieldValues> = Simplify<
+  UseFormProps<T> & {
+    children: (props: FormRenderProps<T>) => JSX.Element;
+  }
+>;
 
 /**
  A wrapper for the `react-hook-form` FormProvider for use with the **Field** component.

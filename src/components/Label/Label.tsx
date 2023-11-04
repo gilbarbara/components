@@ -1,6 +1,7 @@
 import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getTheme } from '~/modules/helpers';
@@ -29,7 +30,7 @@ export interface LabelKnownProps
   labelInfo?: ReactNode;
 }
 
-export type LabelProps = OmitElementProps<HTMLLabelElement, LabelKnownProps>;
+export type LabelProps = Simplify<OmitElementProps<HTMLLabelElement, LabelKnownProps>>;
 
 export const defaultProps = {
   ...textDefaultOptions,

@@ -3,7 +3,9 @@ import { ComponentProps } from '@gilbarbara/react-dropdown';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
-import { DropdownProps, WithAccent } from '~/types';
+import { WithAccent } from '~/types';
+
+import { DropdownProps } from './types';
 
 interface Props extends WithAccent, ComponentProps, Pick<DropdownProps, 'onCreate'> {}
 

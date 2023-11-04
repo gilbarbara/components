@@ -1,13 +1,15 @@
 import { memo, useEffect, useRef } from 'react';
-import { ValueOf } from '@gilbarbara/types';
+import { Simplify, ValueOf } from '@gilbarbara/types';
 
 import { WithChildren } from '~/types';
 
-export interface ClickOutsideProps extends WithChildren {
+export interface ClickOutsideKnownProps extends WithChildren {
   active: boolean;
   display?: ValueOf<typeof DISPLAY>;
   onClick: () => void;
 }
+
+export type ClickOutsideProps = Simplify<ClickOutsideKnownProps>;
 
 const DISPLAY = {
   BLOCK: 'block',

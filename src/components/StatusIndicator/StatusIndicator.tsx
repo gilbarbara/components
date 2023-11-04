@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { SetRequired } from '@gilbarbara/types';
+import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -18,7 +18,9 @@ export interface StatusIndicatorKnownProps extends StyledProps, WithMargin {
   tone?: Tone;
 }
 
-export type StatusIndicatorProps = OmitElementProps<HTMLDivElement, StatusIndicatorKnownProps>;
+export type StatusIndicatorProps = Simplify<
+  OmitElementProps<HTMLDivElement, StatusIndicatorKnownProps>
+>;
 
 export const defaultProps = {
   color: 'green',

@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { clamp, px, round } from '@gilbarbara/helpers';
-import { SetRequired, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -28,7 +28,7 @@ export interface ProgressBarKnownProps extends StyledProps, WithAccent, WithMarg
   width?: StringOrNumber;
 }
 
-export type ProgressBarProps = OmitElementProps<HTMLDivElement, ProgressBarKnownProps>;
+export type ProgressBarProps = Simplify<OmitElementProps<HTMLDivElement, ProgressBarKnownProps>>;
 
 export const defaultProps = {
   accent: 'primary',

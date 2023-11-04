@@ -1,8 +1,10 @@
+import { Simplify } from '@gilbarbara/types';
+
 import { OmitElementProps, StyledProps, WithBlock, WithColorsDefaultColor } from '~/types';
 
 export type LoaderType = 'grow' | 'pill' | 'pride' | 'pulse' | 'rotate';
 
-export interface LoaderProps
+export interface LoaderKnownProps
   extends OmitElementProps<
     HTMLDivElement,
     StyledProps & WithBlock & Pick<WithColorsDefaultColor, 'color'>
@@ -11,3 +13,5 @@ export interface LoaderProps
   /** @default pill */
   type?: LoaderType;
 }
+
+export type LoaderProps = Simplify<LoaderKnownProps>;

@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px, round } from '@gilbarbara/helpers';
+import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
@@ -12,7 +13,7 @@ export interface AspectRatioKnownProps extends StyledProps, WithChildren, WithMa
   ratio: number;
 }
 
-export type AspectRatioProps = OmitElementProps<HTMLDivElement, AspectRatioKnownProps>;
+export type AspectRatioProps = Simplify<OmitElementProps<HTMLDivElement, AspectRatioKnownProps>>;
 
 export const StyledAspectRatio = styled(
   'div',

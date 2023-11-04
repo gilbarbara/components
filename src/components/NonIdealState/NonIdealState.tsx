@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
-import { PlainObject } from '@gilbarbara/types';
+import { PlainObject, Simplify } from '@gilbarbara/types';
 
 import {
   baseStyles,
@@ -63,7 +63,9 @@ export interface NonIdealStateKnownProps
   type?: 'error' | 'no-results' | 'not-found' | 'offline' | null;
 }
 
-export type NonIdealStateProps = OmitElementProps<HTMLDivElement, NonIdealStateKnownProps, 'wrap'>;
+export type NonIdealStateProps = Simplify<
+  OmitElementProps<HTMLDivElement, NonIdealStateKnownProps, 'wrap'>
+>;
 
 export const defaultProps = {
   direction: 'vertical',

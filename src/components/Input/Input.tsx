@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
@@ -27,10 +28,8 @@ export interface InputKnownProps
   type?: InputTypes;
 }
 
-export type InputProps = OmitElementProps<
-  HTMLInputElement,
-  InputKnownProps,
-  'name' | 'type' | 'width'
+export type InputProps = Simplify<
+  OmitElementProps<HTMLInputElement, InputKnownProps, 'name' | 'type' | 'width'>
 >;
 
 export const defaultProps = {

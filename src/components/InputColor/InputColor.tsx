@@ -9,6 +9,7 @@ import {
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -53,10 +54,8 @@ export interface InputColorKnownProps
   value?: string;
 }
 
-export type InputColorProps = OmitElementProps<
-  HTMLInputElement,
-  InputColorKnownProps,
-  'name' | 'type' | 'width'
+export type InputColorProps = Simplify<
+  OmitElementProps<HTMLInputElement, InputColorKnownProps, 'name' | 'type' | 'width'>
 >;
 
 export const defaultProps = {

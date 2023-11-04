@@ -4,7 +4,7 @@ import innerText from 'react-innertext';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { RequireExactlyOne, SetRequired } from '@gilbarbara/types';
+import { RequireExactlyOne, SetRequired, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { rotate } from '~/modules/animations';
@@ -25,7 +25,7 @@ export interface IconKnownProps extends StyledProps, Pick<WithColors, 'color'>, 
   url: string;
 }
 
-export type IconProps = RequireExactlyOne<IconKnownProps, 'name' | 'url'>;
+export type IconProps = Simplify<RequireExactlyOne<IconKnownProps, 'name' | 'url'>>;
 
 const loadBar = keyframes`
   0%, 100% { transform: translateX(0); width: 4px; }

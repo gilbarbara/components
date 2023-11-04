@@ -1,6 +1,7 @@
 import { Children, cloneElement, ReactElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
@@ -20,7 +21,7 @@ export interface ButtonGroupKnownProps
     WithColorsDefaultBg,
     WithDisabled {}
 
-export type ButtonGroupProps = OmitElementProps<HTMLDivElement, ButtonGroupKnownProps>;
+export type ButtonGroupProps = Simplify<OmitElementProps<HTMLDivElement, ButtonGroupKnownProps>>;
 
 export const defaultProps = {
   bg: 'primary',

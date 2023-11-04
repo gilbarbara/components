@@ -1,3 +1,5 @@
+import { Simplify } from '@gilbarbara/types';
+
 import { isDarkMode } from '~/modules/system';
 
 import {
@@ -40,7 +42,7 @@ export interface ListKnownProps
   size?: 'sm' | 'md' | 'lg';
 }
 
-export type ListProps = OmitElementProps<HTMLUListElement, ListKnownProps>;
+export type ListProps = Simplify<OmitElementProps<HTMLUListElement, ListKnownProps>>;
 
 export function getBorderColor<T extends Pick<ListProps, 'borderColor' | 'theme'>>(props: T) {
   const { borderColor } = props;

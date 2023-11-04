@@ -6,9 +6,10 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { boxStyles, getStyledOptions } from '~/modules/system';
 
-import { Box, BoxProps } from '~/components/Box';
+import { Box } from '~/components/Box';
 
 import { Direction, Theme } from '~/types';
+import type { BoxProps } from '~/types/props';
 
 import { getBorderColor, ListProps } from './utils';
 

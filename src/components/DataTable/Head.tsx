@@ -4,9 +4,11 @@ import styled from '@emotion/styled';
 
 import { getStyledOptions } from '~/modules/system';
 
-import { Box, BoxProps } from '~/components/Box';
+import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
+
+import type { BoxProps } from '~/types/props';
 
 import type { DataTableHeadProps } from './types';
 

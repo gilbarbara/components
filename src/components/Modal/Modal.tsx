@@ -2,7 +2,7 @@ import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 
 import { getTheme } from '~/modules/helpers';
@@ -19,11 +19,12 @@ import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { H3 } from '~/components/Headings';
 import { Icon } from '~/components/Icon';
-import { Portal, PortalProps } from '~/components/Portal';
+import { Portal } from '~/components/Portal';
 
 import { StyledProps, WithBorder, WithPadding, WithRadius, WithShadow } from '~/types';
+import type { PortalProps } from '~/types/props';
 
-export interface ModalProps
+export interface ModalKnownProps
   extends StyledProps,
     WithBorder,
     WithPadding,
@@ -38,6 +39,8 @@ export interface ModalProps
   title?: ReactNode;
   width?: StringOrNumber;
 }
+
+export type ModalProps = Simplify<ModalKnownProps>;
 
 export const defaultProps = {
   closeOnClickOverlay: true,

@@ -2,7 +2,7 @@ import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { Property } from 'csstype';
 
 import { getContainerStyles, paddingStyles } from '~/modules/system';
@@ -51,7 +51,7 @@ export interface PageKnownProps
   textAlign?: Alignment;
 }
 
-export type PageProps = OmitElementProps<HTMLDivElement, PageKnownProps, 'wrap'>;
+export type PageProps = Simplify<OmitElementProps<HTMLDivElement, PageKnownProps, 'wrap'>>;
 
 export const defaultProps = {
   centered: false,

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Simplify } from '@gilbarbara/types';
 
 import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules/system';
@@ -13,7 +14,7 @@ export interface TextKnownProps
     Pick<WithColors, 'color'>,
     WithTextOptions {}
 
-export type TextProps = OmitElementProps<HTMLSpanElement, TextKnownProps>;
+export type TextProps = Simplify<OmitElementProps<HTMLSpanElement, TextKnownProps>>;
 
 export const StyledText = styled(
   'span',

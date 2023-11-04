@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { useMergeRefs } from '@gilbarbara/hooks';
-import { StringOrNumber } from '@gilbarbara/types';
+import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getTheme, recursiveChildrenEnhancer } from '~/modules/helpers';
@@ -44,7 +44,7 @@ export interface MenuKnownProps
   trigger?: 'click' | 'hover';
 }
 
-export type MenuProps = OmitElementProps<HTMLDivElement, MenuKnownProps>;
+export type MenuProps = Simplify<OmitElementProps<HTMLDivElement, MenuKnownProps>>;
 
 interface MenuItemsProps extends Required<Pick<MenuProps, 'minWidth' | 'position'>> {
   active: boolean;

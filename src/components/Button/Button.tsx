@@ -2,7 +2,7 @@ import { ForwardedRef, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { PlainObject, SetRequired } from '@gilbarbara/types';
+import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -60,7 +60,7 @@ export interface ButtonKnownProps
   wide?: boolean;
 }
 
-export type ButtonProps = OmitElementProps<HTMLElement, ButtonKnownProps>;
+export type ButtonProps = Simplify<OmitElementProps<HTMLElement, ButtonKnownProps>>;
 
 export const defaultProps = {
   bg: 'primary',

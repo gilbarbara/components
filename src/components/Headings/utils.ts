@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { Simplify } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -33,10 +34,9 @@ export interface HeadingKnownProps
     WithMargin,
     Omit<WithTextOptions, 'bold' | 'size'> {}
 
-export type HeadingProps = OmitElementProps<HTMLHeadingElement, HeadingKnownProps>;
-export type HeadingLargeProps = OmitElementProps<
-  HTMLHeadingElement,
-  HeadingKnownProps & { large?: boolean }
+export type HeadingProps = Simplify<OmitElementProps<HTMLHeadingElement, HeadingKnownProps>>;
+export type HeadingLargeProps = Simplify<
+  OmitElementProps<HTMLHeadingElement, HeadingKnownProps & { large?: boolean }>
 >;
 
 export const defaultProps = {

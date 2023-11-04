@@ -2,6 +2,7 @@ import { ChangeEventHandler, KeyboardEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { pick, px } from '@gilbarbara/helpers';
+import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -26,7 +27,7 @@ import {
   WithMargin,
 } from '~/types';
 
-export interface SharedProps
+export interface CheckboxAndRadioKnownProps
   extends StyledProps,
     WithAccent,
     WithBorderless,
@@ -38,8 +39,12 @@ export interface SharedProps
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export type CheckboxProps = OmitElementProps<HTMLInputElement, SharedProps & CheckboxItem>;
-export type RadioProps = OmitElementProps<HTMLInputElement, SharedProps & RadioItem>;
+export type CheckboxProps = Simplify<
+  OmitElementProps<HTMLInputElement, CheckboxAndRadioKnownProps & CheckboxItem>
+>;
+export type RadioProps = Simplify<
+  OmitElementProps<HTMLInputElement, CheckboxAndRadioKnownProps & RadioItem>
+>;
 
 interface InnerProps
   extends Omit<CheckboxProps, 'name' | 'value'>,

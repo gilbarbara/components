@@ -2,7 +2,7 @@ import { ChangeEvent, forwardRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNull } from '@gilbarbara/types';
+import { Simplify, StringOrNull } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, getStyledOptions } from '~/modules/system';
@@ -24,10 +24,8 @@ export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormEl
   value?: string;
 }
 
-export type InputFileProps = OmitElementProps<
-  HTMLInputElement,
-  InputFileKnownProps,
-  'name' | 'type' | 'width'
+export type InputFileProps = Simplify<
+  OmitElementProps<HTMLInputElement, InputFileKnownProps, 'name' | 'type' | 'width'>
 >;
 
 export const defaultProps = {

@@ -3,6 +3,7 @@ import { useMount } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useMergeRefs } from '@gilbarbara/hooks';
+import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -28,7 +29,7 @@ export interface SelectKnownProps
   large?: boolean;
 }
 
-export type SelectProps = OmitElementProps<HTMLSelectElement, SelectKnownProps>;
+export type SelectProps = Simplify<OmitElementProps<HTMLSelectElement, SelectKnownProps>>;
 
 export const defaultProps = {
   accent: 'primary',

@@ -2,7 +2,7 @@ import { CSSProperties, forwardRef, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { PlainObject, StringOrNumber } from '@gilbarbara/types';
+import { PlainObject, Simplify, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { getStyledOptions, marginStyles } from '~/modules/system';
@@ -12,7 +12,7 @@ import { Icon } from '~/components/Icon';
 
 import { Icons, StyledProps, WithChildren, WithMargin } from '~/types';
 
-export interface ComponentWrapperProps extends StyledProps, WithChildren, WithMargin {
+export interface ComponentWrapperKnownProps extends StyledProps, WithChildren, WithMargin {
   prefix?: Icons | ReactElement;
   /**
    * A single value for both or [width,height]
@@ -24,6 +24,8 @@ export interface ComponentWrapperProps extends StyledProps, WithChildren, WithMa
   /** @default 100% */
   width?: StringOrNumber;
 }
+
+export type ComponentWrapperProps = Simplify<ComponentWrapperKnownProps>;
 
 export const defaultProps = {
   size: 40,
