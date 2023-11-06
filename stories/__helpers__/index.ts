@@ -1,9 +1,9 @@
-import { objectKeys } from '@gilbarbara/helpers';
+import { objectEntries, objectKeys } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
 import { variants as themeVariants } from '~/modules/theme';
 
-import { VariantWithTones } from '~/types';
+import { VariantWithTones, WithFlexBox } from '~/types';
 
 const base = ['normal', 'stretch'];
 const contentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];
@@ -104,10 +104,13 @@ export function colorProps(
   }, {});
 }
 
-export function flexBoxProps() {
-  return {
+export function flexBoxProps(...exclude: Array<keyof WithFlexBox>) {
+  const options = {
     align: { control: 'select', options: ['', ...flexItems] },
-    alignContent: { control: 'select', options: ['', ...flexContent] },
+    alignContent: {
+      control: 'select',
+      options: ['', ...flexContent],
+    },
     direction: {
       control: 'select',
       options: ['row', 'row-reverse', 'column', 'column-reverse'],
@@ -116,8 +119,19 @@ export function flexBoxProps() {
       control: 'text',
     },
     justify: { control: 'select', options: ['', ...flexContent] },
+    justifyItems: { control: 'select', options: ['', ...flexItems] },
     wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
   };
+
+  return objectEntries(options).reduce<PlainObject>((acc, [key, value]) => {
+    if (exclude.includes(key)) {
+      return acc;
+    }
+
+    acc[key] = value;
+
+    return acc;
+  }, {});
 }
 
 export function flexItemProps() {
