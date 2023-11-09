@@ -16,6 +16,7 @@ const config: Config = {
     '^~/(.*)$': '<rootDir>/src/$1',
   },
   snapshotSerializers: ['@emotion/jest/serializer'],
+  setupFiles: ['@testing-library/react/dont-cleanup-after-each'],
   setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
   testEnvironment: 'jsdom',
   testRegex: '.*?\\.(test|spec)\\.tsx?$',
