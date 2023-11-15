@@ -11,7 +11,7 @@ import {
   responsive,
 } from '~/modules/helpers';
 
-import { MenuDivider, MenuItem } from '~/components/Menu';
+import { MenuItem, MenuSeparator } from '~/components/Menu';
 
 describe('clearNumber', () => {
   it('should return properly', () => {
@@ -78,7 +78,7 @@ describe('mergeTheme', () => {
 describe('recursiveChildrenEnhancer', () => {
   it('should enhance the matching components', () => {
     const tree = recursiveChildrenEnhancer(
-      [<MenuItem>One</MenuItem>, <MenuItem>Two</MenuItem>, <MenuDivider />],
+      [<MenuItem>One</MenuItem>, <MenuItem>Two</MenuItem>, <MenuSeparator />],
       { name: 'SuperItem' },
       { componentType: MenuItem },
     );
