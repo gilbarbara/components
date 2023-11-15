@@ -1,30 +1,27 @@
-import { Children, isValidElement, MouseEvent, MouseEventHandler, ReactNode } from 'react';
+import { isValidElement, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { noop } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
-import { Paragraph } from '~/components/Paragraph';
+import { useMenuContext } from '~/components/Menu/utils';
 
-import { WithAccent, WithColors, WithDisabled } from '~/types';
+import { WithAccent, WithColors, WithDisabled, WithPadding } from '~/types';
 
-interface ChildProps {
-  closeMenu?: () => void;
-}
-
-export interface MenuItemProps extends ChildProps, WithColors, WithDisabled {
-  children: ((props: Required<ChildProps>) => ReactNode) | ReactNode;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+export interface MenuItemProps extends WithColors, WithDisabled, WithPadding {
+  children: ((props: { closeMenu: () => void }) => ReactNode) | ReactNode;
+  /** @default false */
+  disableAutoClose?: boolean;
+  onToggle?: (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
 }
 
 export const StyledMenuItem = styled(
-  'div',
+  'li',
   getStyledOptions(),
-)<Omit<MenuItemProps, 'closeMenu'> & WithAccent>(props => {
+)<MenuItemProps & WithAccent>(props => {
   const { accent = 'primary', bg, color, disabled } = props;
   const { grayScale, spacing, typography, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
@@ -35,12 +32,14 @@ export const StyledMenuItem = styled(
 
   return css`
     color: ${themeColor};
-    cursor: ${disabled ? 'default' : 'pointer'};
-    font-size: ${typography.mid.fontSize};
+    cursor: ${disabled ? 'not-allowed' : 'pointer'};
+    font-size: ${typography.regular.fontSize};
+    opacity: ${disabled ? 0.6 : 1};
     transition: background-color 0.3s;
 
     ${!disabled &&
     css`
+      &:focus-visible,
       &:hover,
       &:active {
         background-color: ${mainColor};
@@ -58,48 +57,59 @@ export const StyledMenuItem = styled(
     }
 
     > * {
-      display: flex !important;
-      padding: ${spacing.xs} ${spacing.sm} !important;
-      white-space: nowrap !important;
+      display: flex;
+      padding: ${spacing.xs} ${spacing.sm};
+      white-space: nowrap;
       width: 100%;
     }
   `;
 });
 
-export function MenuItem({
-  children,
-  closeMenu = noop,
-  disabled,
-  onClick,
-  ...rest
-}: MenuItemProps) {
-  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+export function MenuItem(props: MenuItemProps) {
+  const { children, disableAutoClose = false, disabled, onToggle, ...rest } = props;
+  const { closeMenu, state } = useMenuContext();
+
+  const handleToggle = (event: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>) => {
     if (disabled) {
       return;
     }
 
-    if (!is.function(children) && closeMenu) {
-      closeMenu();
-    }
+    if ('code' in event && !state.disableKeyboardNavigation) {
+      if (['Enter', 'Space'].includes(event.code)) {
+        onToggle?.(event);
 
-    onClick?.(event);
+        if (!disableAutoClose) {
+          closeMenu?.();
+        }
+      }
+    } else {
+      onToggle?.(event);
+
+      if (!disableAutoClose) {
+        closeMenu?.();
+      }
+    }
   };
 
   let content: ReactNode;
 
   if (is.function(children)) {
     content = children({ closeMenu });
-  } else if (!Children.toArray(children).every(d => isValidElement(d))) {
-    content = <Paragraph>{children}</Paragraph>;
+  } else if (!isValidElement(children)) {
+    content = <span>{children}</span>;
   } else {
     content = children;
   }
 
   return (
     <StyledMenuItem
+      accent={state.accent}
       data-component-name="MenuItem"
       disabled={disabled}
-      onClick={handleClick}
+      onClick={handleToggle}
+      onKeyDown={handleToggle}
+      role="menuitem"
+      tabIndex={disabled || state.disableKeyboardNavigation ? -1 : 0}
       {...rest}
     >
       {content}

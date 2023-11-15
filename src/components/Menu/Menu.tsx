@@ -1,171 +1,37 @@
-import { forwardRef, ReactElement, useCallback, useRef, useState } from 'react';
-import { useUpdateEffect } from 'react-use';
+import { forwardRef, KeyboardEvent, useCallback, useId, useRef, useState } from 'react';
+import { useMount, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
-import { useMergeRefs } from '@gilbarbara/hooks';
-import { Simplify, StringOrNumber } from '@gilbarbara/types';
+import { mergeProps, omit } from '@gilbarbara/helpers';
+import { useLatest, useMergeRefs } from '@gilbarbara/hooks';
+import { deepmerge } from 'deepmerge-ts';
 import is from 'is-lite';
 
-import { getTheme, recursiveChildrenEnhancer } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
-import { easing } from '~/modules/theme';
+import { getTheme } from '~/modules/helpers';
+import KeyboardScope from '~/modules/keyboardScope';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
-import { Icon } from '~/components/Icon';
+import { ClickOutside } from '~/components/ClickOutside';
 
-import {
-  OmitElementProps,
-  PositionX,
-  PositionY,
-  StyledProps,
-  WithAccent,
-  WithChildren,
-  WithDisabled,
-  WithOpen,
-} from '~/types';
+import { MenuItems } from './Items';
+import { MenuProps } from './types';
+import { defaultProps, MenuProvider } from './utils';
 
-import { MenuItem } from './Item';
-
-export interface MenuKnownProps
-  extends StyledProps,
-    WithAccent,
-    WithChildren,
-    WithDisabled,
-    WithOpen {
-  /** @default An Icon with more-vertical-o */
-  component?: ReactElement;
-  /** @default 200 */
-  minWidth?: StringOrNumber;
-  onToggle?: (status: boolean) => void;
-  /** @default bottom-right */
-  position?: PositionX | PositionY;
-  /** @default click */
-  trigger?: 'click' | 'hover';
-}
-
-export type MenuProps = Simplify<OmitElementProps<HTMLDivElement, MenuKnownProps>>;
-
-interface MenuItemsProps extends Required<Pick<MenuProps, 'minWidth' | 'position'>> {
-  active: boolean;
-}
-
-export const defaultProps = {
-  accent: 'primary',
-  component: <Icon name="more-vertical-o" size={24} title={null} />,
-  disabled: false,
-  minWidth: 200,
-  position: 'bottom-right',
-  trigger: 'click',
-} satisfies Omit<MenuProps, 'children'>;
-
-const StyledMenu = styled.div`
+const StyledMenu = styled.nav`
   display: inline-flex;
   position: relative;
   vertical-align: middle;
+
+  [data-component-name='ClickOutside'] {
+    width: 100%;
+  }
 `;
 
-const StyledMenuItems = styled(
-  'div',
-  getStyledOptions(),
-)<MenuItemsProps>(props => {
-  const { active, minWidth, position } = props;
-  const [positionMain, positionCross] = position.split('-');
-
-  const { grayScale, radius, shadow, spacing, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
-
-  return css`
-    position: absolute;
-    transform: scaleY(0);
-    transition: transform 0.3s ${easing};
-    z-index: 10;
-
-    ${active &&
-    css`
-      transform: scaleY(1);
-    `}
-
-    ${positionMain === 'bottom' &&
-    css`
-      top: 100%;
-      transform-origin: top;
-    `}
-
-    ${positionMain === 'left' &&
-    css`
-      right: 100%;
-    `}
-
-    ${positionMain === 'right' &&
-    css`
-      left: 100%;
-    `}
-
-    ${positionMain === 'top' &&
-    css`
-      bottom: 100%;
-      transform-origin: bottom;
-    `}
-
-    ${positionCross === 'bottom' &&
-    css`
-      bottom: 0;
-      transform-origin: bottom;
-    `}
-
-    ${positionCross === 'left' &&
-    css`
-      left: 0;
-    `}
-
-    ${positionCross === 'right' &&
-    css`
-      right: 0;
-    `}
-
-    ${positionCross === 'top' &&
-    css`
-      top: 0;
-      transform-origin: top;
-    `}
-
-  > div {
-      background-color: ${darkMode ? grayScale['800'] : white};
-      border-radius: ${radius.xxs};
-      box-shadow: ${shadow.low};
-      color: ${darkMode ? grayScale['200'] : grayScale['800']};
-      min-width: ${px(minWidth)};
-      overflow: hidden;
-
-      ${positionMain === 'bottom' &&
-      css`
-        margin-top: ${spacing.xxs};
-      `}
-
-      ${positionMain === 'left' &&
-      css`
-        margin-right: ${spacing.xxs};
-      `}
-
-      ${positionMain === 'right' &&
-      css`
-        margin-left: ${spacing.xxs};
-      `}
-
-      ${positionMain === 'top' &&
-      css`
-        margin-bottom: ${spacing.xxs};
-      `}
-    }
-  `;
-});
-
 const StyledMenuButton = styled(ButtonUnstyled)(props => {
-  const { button, spacing } = getTheme(props);
+  const { spacing } = getTheme(props);
 
   return css`
-    border-radius: ${button.sm.borderRadius};
+    border-radius: 2px;
     display: flex;
     min-height: ${spacing.lg};
     min-width: ${spacing.lg};
@@ -177,82 +43,115 @@ const StyledMenuButton = styled(ButtonUnstyled)(props => {
   `;
 });
 
-export const Menu = forwardRef<HTMLDivElement, MenuProps>((props, ref) => {
-  const { accent, children, component, disabled, minWidth, onToggle, open, position, trigger } = {
-    ...defaultProps,
-    ...props,
-  };
+export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
+  const mergedProps = mergeProps(defaultProps, props);
+  const {
+    button,
+    children,
+    disableCloseOnBlur,
+    disabled,
+    disableKeyboardNavigation,
+    minWidth,
+    onToggle,
+    open,
+    position,
+    trigger,
+  } = mergedProps;
   const [active, setActive] = useState(open ?? false);
-  const localRef = useRef<HTMLDivElement>(null);
+  const localRef = useRef<HTMLElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
+  const keyboardScope = useRef<KeyboardScope>();
+  const onToggleRef = useLatest(onToggle);
+  const id = useId();
 
-  const handleClickOutside = useCallback(
-    ({ target }: MouseEvent) => {
-      if (target && (localRef.current?.contains(target as HTMLElement) || !active)) {
-        return;
-      }
+  const labels = deepmerge(defaultProps.labels, mergedProps.labels);
 
-      document.removeEventListener('click', handleClickOutside);
-
-      setActive(false);
-    },
-    [active],
-  );
+  useMount(() => {
+    if (!disableKeyboardNavigation) {
+      keyboardScope.current = new KeyboardScope(localRef.current, {
+        arrowNavigation: 'both',
+        escCallback: handleToggleMenu(false),
+        selector: `#menu-items-${id.replace(/:/g, '\\:')} > [data-component-name="MenuItem"]`,
+      });
+    }
+  });
 
   useUpdateEffect(() => {
-    if (active && !is.boolean(open)) {
-      document.addEventListener('click', handleClickOutside);
+    const scope = keyboardScope.current;
+
+    if (active) {
+      scope?.addScope();
     }
 
-    onToggle?.(active);
+    onToggleRef.current?.(active);
 
     return () => {
       if (!is.boolean(open)) {
-        document.removeEventListener('click', handleClickOutside);
+        scope?.removeScope();
       }
     };
-  }, [active, handleClickOutside, onToggle, open]);
+  }, [active, onToggleRef, open]);
 
-  const handleToggleMenu = useCallback(() => {
-    if (disabled || is.boolean(open)) {
+  const handleClickOutside = useCallback(() => {
+    if (is.boolean(open) || disableCloseOnBlur) {
       return;
     }
 
-    setActive(a => !a);
-  }, [disabled, open]);
+    setActive(false);
+  }, [disableCloseOnBlur, open]);
+
+  const handleKeyDownButton = useCallback(
+    (event: KeyboardEvent<HTMLButtonElement>) => {
+      if (disableKeyboardNavigation) {
+        event.preventDefault();
+      }
+    },
+    [disableKeyboardNavigation],
+  );
+
+  const handleToggleMenu = useCallback(
+    (force?: boolean) => {
+      return () => {
+        if (disabled || is.boolean(open)) {
+          return;
+        }
+
+        setActive(a => force ?? !a);
+      };
+    },
+    [disabled, open],
+  );
 
   return (
     <StyledMenu
       ref={mergedRefs}
+      aria-label={labels.name}
       data-component-name="Menu"
-      onMouseEnter={trigger === 'hover' ? handleToggleMenu : undefined}
-      onMouseLeave={trigger === 'hover' ? handleToggleMenu : undefined}
+      onMouseEnter={trigger === 'hover' ? handleToggleMenu(true) : undefined}
+      onMouseLeave={trigger === 'hover' ? handleToggleMenu(false) : undefined}
     >
-      <StyledMenuButton
-        aria-label={active ? 'Close menu' : 'Open menu'}
-        data-component-name="MenuButton"
-        disabled={disabled}
-        onClick={trigger === 'click' ? handleToggleMenu : undefined}
-        title={active ? 'Close menu' : 'Open menu'}
-        type="button"
-      >
-        {component}
-      </StyledMenuButton>
-      <StyledMenuItems
-        active={active}
-        data-component-name="MenuItems"
-        data-state={active ? 'open' : 'closed'}
-        minWidth={minWidth}
-        position={position}
-      >
-        <div data-component-name="MenuItemsWrapper">
-          {recursiveChildrenEnhancer(
-            children,
-            { closeMenu: handleToggleMenu, accent },
-            { componentType: MenuItem },
-          )}
-        </div>
-      </StyledMenuItems>
+      <ClickOutside active={active} onClick={handleClickOutside}>
+        <MenuProvider closeMenu={handleToggleMenu(false)} props={omit(mergedProps, 'children')}>
+          <StyledMenuButton
+            aria-controls={`menu-items-${id}`}
+            aria-expanded={active}
+            aria-haspopup="menu"
+            aria-label={active ? labels.close : labels.open}
+            data-component-name="MenuButton"
+            disabled={disabled}
+            onClick={handleToggleMenu()}
+            onKeyDown={handleKeyDownButton}
+            tabIndex={disableKeyboardNavigation ? -1 : 0}
+            title={active ? labels.close : labels.open}
+            type="button"
+          >
+            {button}
+          </StyledMenuButton>
+          <MenuItems active={active} id={id} minWidth={minWidth} position={position}>
+            {children}
+          </MenuItems>
+        </MenuProvider>
+      </ClickOutside>
     </StyledMenu>
   );
 });

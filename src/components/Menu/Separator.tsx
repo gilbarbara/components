@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-const StyledMenuDivider = styled(
+const StyledMenuSeparator = styled(
   'div',
   getStyledOptions(),
 )(props => {
@@ -18,8 +18,8 @@ const StyledMenuDivider = styled(
   `;
 });
 
-export function MenuDivider() {
-  return <StyledMenuDivider data-component-name="MenuDivider" />;
+export function MenuSeparator() {
+  return <StyledMenuSeparator data-component-name="MenuSeparator" role="separator" />;
 }
 
-MenuDivider.displayName = 'MenuDivider';
+MenuSeparator.displayName = 'MenuSeparator';

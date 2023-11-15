@@ -35,7 +35,7 @@ export type { InputFileProps } from '../components/InputFile/InputFile';
 export type { LabelProps } from '../components/Label/Label';
 export type { ListProps } from '../components/List/utils';
 export type { LoaderProps } from '../components/Loader/types';
-export type { MenuProps } from '../components/Menu/Menu';
+export type { MenuProps } from '../components/Menu/types';
 export type { ModalProps } from '../components/Modal/Modal';
 export type { NonIdealStateProps } from '../components/NonIdealState/NonIdealState';
 export type { PageProps } from '../components/Page/Page';
