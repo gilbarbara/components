@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
 import { fireEvent, userEvent, within } from '@storybook/testing-library';
@@ -22,9 +22,9 @@ export default {
 function Render(props: ClickOutsideProps) {
   const [isActive, setActive] = useState(true);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setActive(!isActive);
-  };
+  }, [isActive]);
 
   return (
     <ClickOutside {...props} onClick={handleClick}>
