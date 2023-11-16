@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -177,13 +177,13 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
   });
   const isRange = mode === 'range';
 
-  const toggle = () => {
+  const toggle = useCallback(() => {
     if (is.boolean(open) || disabled) {
       return;
     }
 
     setState(s => ({ isActive: !s.isActive }));
-  };
+  }, [disabled, open, setState]);
 
   const handleApply = (isoDate: DatePickerRangeParameter) => {
     if (onChange) {

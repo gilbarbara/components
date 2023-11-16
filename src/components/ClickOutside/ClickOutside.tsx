@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { Simplify, ValueOf } from '@gilbarbara/types';
 
 import { WithChildren } from '~/types';
@@ -24,35 +24,36 @@ export function ClickOutside(props: ClickOutsideProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isTouch = useRef(false);
 
-  const handleClick = useRef((event: MouseEvent | TouchEvent) => {
-    const container = containerRef.current;
+  const handleClick = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      const container = containerRef.current;
 
-    if (event.type === 'touchend') {
-      isTouch.current = true;
-    }
+      if (event.type === 'touchend') {
+        isTouch.current = true;
+      }
 
-    if (event.type === 'click' && isTouch.current) {
-      return;
-    }
+      if (event.type === 'click' && isTouch.current) {
+        return;
+      }
 
-    if (container && !container.contains(event.target as Node)) {
-      onClick();
-    }
-  });
+      if (container && !container.contains(event.target as Node)) {
+        onClick();
+      }
+    },
+    [onClick],
+  );
 
   useEffect(() => {
-    const { current } = handleClick;
-
     if (active) {
-      document.addEventListener('touchend', current, true);
-      document.addEventListener('click', current, true);
+      document.addEventListener('touchend', handleClick, true);
+      document.addEventListener('click', handleClick, true);
     }
 
     return () => {
-      document.removeEventListener('touchend', current, true);
-      document.removeEventListener('click', current, true);
+      document.removeEventListener('touchend', handleClick, true);
+      document.removeEventListener('click', handleClick, true);
     };
-  }, [active]);
+  }, [active, handleClick]);
 
   const style =
     display !== DISPLAY.BLOCK && Object.values(DISPLAY).includes(display) ? { display } : undefined;
