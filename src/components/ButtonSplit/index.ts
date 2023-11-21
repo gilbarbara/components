@@ -1,1 +1,1 @@
-export { ButtonSplit, ButtonSplitDivider, ButtonSplitItem } from './ButtonSplit';
+export { ButtonSplit, ButtonSplitSeparator, ButtonSplitItem } from './ButtonSplit';

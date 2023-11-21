@@ -14,7 +14,8 @@ import {
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
-import { Menu, MenuProps } from '~/components/Menu/Menu';
+import { Menu } from '~/components/Menu';
+import { MenuProps } from '~/components/Menu/types';
 
 import {
   PositionY,
@@ -174,7 +175,7 @@ export function ButtonSplit(props: ButtonSplitProps) {
       </ButtonUnstyled>
       <Menu
         accent={bg}
-        component={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={iconSize} />}
+        button={<Icon name={active ? 'chevron-up' : 'chevron-down'} size={iconSize} />}
         disabled={disabled || busy}
         onToggle={handleToggle}
         position={position}
@@ -185,6 +186,9 @@ export function ButtonSplit(props: ButtonSplitProps) {
   );
 }
 
-export { MenuDivider as ButtonSplitDivider, MenuItem as ButtonSplitItem } from '~/components/Menu';
+export {
+  MenuSeparator as ButtonSplitSeparator,
+  MenuItem as ButtonSplitItem,
+} from '~/components/Menu';
 
 ButtonSplit.displayName = 'ButtonSplit';
