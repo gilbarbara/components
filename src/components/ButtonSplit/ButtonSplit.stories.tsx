@@ -17,9 +17,9 @@ import {
 
 import {
   ButtonSplit,
-  ButtonSplitDivider,
   ButtonSplitItem,
   ButtonSplitProps,
+  ButtonSplitSeparator,
   defaultProps,
 } from './ButtonSplit';
 
@@ -61,7 +61,7 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
 
       if (name) {
         setActionName(name);
-        action('onClickItem')(name);
+        action('onClick')(name);
       }
 
       setTimeout(() => {
@@ -81,13 +81,13 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
       }}
       onClick={handleClick}
     >
-      <ButtonSplitItem>
-        <ButtonUnstyled color="primary" disabled>
+      <ButtonSplitItem disabled>
+        <ButtonUnstyled color="primary">
           <Icon mr="xxs" name="plus-o" />
           Sign up
         </ButtonUnstyled>
       </ButtonSplitItem>
-      <ButtonSplitItem>
+      <ButtonSplitItem disableAutoClose>
         {({ closeMenu }) => (
           <ButtonUnstyled
             color="primary"
@@ -101,7 +101,7 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
           </ButtonUnstyled>
         )}
       </ButtonSplitItem>
-      <ButtonSplitItem>
+      <ButtonSplitItem disableAutoClose>
         {({ closeMenu }) => (
           <ButtonUnstyled color="primary" onClick={handleClickClosure(closeMenu, 'Save draft')}>
             <Icon mr="xxs" name="bookmark" />
@@ -110,7 +110,7 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
           </ButtonUnstyled>
         )}
       </ButtonSplitItem>
-      <ButtonSplitItem>
+      <ButtonSplitItem disableAutoClose>
         {({ closeMenu }) => (
           <ButtonUnstyled color="primary" onClick={handleClickClosure(closeMenu, 'Snooze')}>
             <Icon mr="xxs" name="clock" />
@@ -119,7 +119,7 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
           </ButtonUnstyled>
         )}
       </ButtonSplitItem>
-      <ButtonSplitDivider />
+      <ButtonSplitSeparator />
       <ButtonSplitItem color="red">
         {({ closeMenu }) => (
           <ButtonUnstyled color="red" onClick={handleClickClosure(closeMenu, 'Delete')}>
