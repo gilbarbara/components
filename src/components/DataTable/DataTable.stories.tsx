@@ -6,6 +6,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import {
   Anchor,
+  Avatar,
   Box,
   Button,
   ButtonUnstyled,
@@ -70,7 +71,7 @@ export default {
   },
 } satisfies Meta<typeof DataTable>;
 
-type WrapperColumns = 'email' | 'team' | 'status' | 'action';
+type WrapperColumns = 'avatar' | 'email' | 'team' | 'status' | 'action';
 
 type WrapperState = typeof wrapperState;
 
@@ -96,7 +97,7 @@ const wrapperState = {
 };
 
 const teams = users.reduce((acc, user) => {
-  if (user.team && !acc.some(d => user.team === d.label)) {
+  if (!acc.some(d => user.team === d.label)) {
     acc.push({
       label: user.team,
       value: user.team,
@@ -200,6 +201,7 @@ function DataTableWrapper(props: DataTableProps) {
 
   const columns = useMemo(() => {
     const items: DataTableColumn<WrapperColumns>[] = [
+      { key: 'avatar', title: '', size: 64, disableSort: true },
       { key: 'email', title: 'Nome / E-mail', size: 250 },
       { key: 'team', title: 'Team', min: 150 },
       { key: 'status', title: 'Status', min: 180 },
@@ -233,7 +235,8 @@ function DataTableWrapper(props: DataTableProps) {
       })
       .map(user => {
         const row: DataTableRow<WrapperColumns> = {
-          id: user.id ?? user.code,
+          id: user.id || user.code,
+          avatar: <Avatar image={user.avatar} name={user.name} />,
           email: (
             <>
               <Text color={!user.name ? 'gray' : undefined}>{user.name || 'Unnamed User'}</Text>
@@ -244,8 +247,8 @@ function DataTableWrapper(props: DataTableProps) {
           ),
           team: <Text size="mid">{user.team || '--'}</Text>,
           status: (
-            <Tag bg={user.id ? 'green' : 'blue'} iconAfter={user.id ? 'check' : 'hourglass'} invert>
-              {user.id ? 'Active' : 'Invite sent'}
+            <Tag bg={user.code ? 'blue' : 'green'} iconAfter={user.code ? 'clock' : 'check'} invert>
+              {user.code ? 'Invite sent' : 'Active'}
             </Tag>
           ),
           action: (
