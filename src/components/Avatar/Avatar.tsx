@@ -58,6 +58,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     <BoxCenter
       ref={ref}
       data-component-name="Avatar"
+      flex={{ shrink: 0 }}
       height={selectedSize.size}
       overflow="hidden"
       radius="round"

@@ -170,7 +170,7 @@ export interface WithFlexItem {
   /**
    * Set flex-grow and/or flex-shrink.
    */
-  flex?: boolean | 'grow' | 'shrink' | { grow: number; shrink: number };
+  flex?: boolean | 'grow' | 'shrink' | { grow?: number; shrink?: number };
   /**
    * Sets how the item is justified inside its container along the appropriate axis.
    */

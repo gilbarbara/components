@@ -133,8 +133,9 @@ exports[`flexItemStyles should return properly 1`] = `
 exports[`flexItemStyles should return properly with flex object 1`] = `
 {
   "alignSelf": "center",
-  "flex": "1 1",
   "flexBasis": undefined,
+  "flexGrow": 1,
+  "flexShrink": 1,
   "height": "100%",
   "justifySelf": undefined,
   "order": undefined,

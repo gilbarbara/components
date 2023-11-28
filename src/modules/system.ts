@@ -364,14 +364,16 @@ export function flexItemStyles<T extends WithFlexItem>(props: T): CSSObject {
   if (!is.nullOrUndefined(flex)) {
     if (is.boolean(flex)) {
       output.flex = flex ? '1 1' : '0 0';
-    }
-
-    if (is.string(flex)) {
+    } else if (is.string(flex)) {
       output.flex = flex === 'grow' ? '1 0' : '0 1';
-    }
+    } else {
+      if (is.number(flex.grow)) {
+        output.flexGrow = flex.grow;
+      }
 
-    if (is.plainObject(flex)) {
-      output.flex = `${flex.grow ? flex.grow : 0} ${flex.shrink ? flex.shrink : 0}`;
+      if (is.number(flex.shrink)) {
+        output.flexShrink = flex.shrink;
+      }
     }
   }
 
