@@ -53,6 +53,7 @@
     "scrollparent": "^2.1.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.13.5",
     "@emotion/jest": "^11.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -125,6 +126,7 @@
     "test:watch": "jest --watchAll --verbose",
     "test:coverage": "jest --bail --coverage",
     "typecheck": "tsc -p stories/tsconfig.json",
+    "typevalidation": "attw -P",
     "size": "size-limit",
     "storybook:dev": "storybook dev -p 6006",
     "storybook:build": "storybook build -o build",
@@ -133,7 +135,7 @@
     "storybook:merge-coverage": "cp coverage/storybook/coverage-storybook.json coverage/coverage-storybook.json && nyc report --reporter=lcov -t coverage --report-dir coverage",
     "storybook:validate": "pnpm run storybook:build && concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"http-server build --p 6006 -s\" \"wait-on tcp:127.0.0.1:6006 && pnpm run storybook:test:coverage && pnpm run storybook:merge-coverage\"",
     "prepublishOnly": "pnpm run validate",
-    "validate": "pnpm run lint && pnpm run typecheck && pnpm run test:coverage && pnpm run build && pnpm run size",
+    "validate": "pnpm run lint && pnpm run typecheck && pnpm run test:coverage && pnpm run build && npm run typevalidation && pnpm run size",
     "prepare": "husky install"
   },
   "tsup": {
