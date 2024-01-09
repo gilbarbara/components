@@ -72,7 +72,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
 
   if (labelInfo) {
     info = is.string(labelInfo) ? (
-      <Text color={rest.color} size="mid">
+      <Text color={rest.color} size="sm">
         {labelInfo}
       </Text>
     ) : (

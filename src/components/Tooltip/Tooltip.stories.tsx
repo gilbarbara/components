@@ -102,9 +102,9 @@ export const Positions: Story = {
       <Box display="flex" justify="space-between">
         <Tooltip
           {...props}
-          content="placement: top-align — size: small"
+          content="placement: top-align — size: xs"
           placement="top-start"
-          size="small"
+          size="xs"
         >
           <Button size="sm">Top Start</Button>
         </Tooltip>
@@ -113,7 +113,7 @@ export const Positions: Story = {
           {...props}
           content="placement: top-middle — size: regular"
           placement="top-middle"
-          size="regular"
+          size="md"
         >
           <Button size="sm">Top</Button>
         </Tooltip>
@@ -122,7 +122,7 @@ export const Positions: Story = {
           {...props}
           content="placement: top-end — size: large"
           placement="top-end"
-          size="large"
+          size="lg"
         >
           <Button size="sm">Top End</Button>
         </Tooltip>
@@ -133,9 +133,9 @@ export const Positions: Story = {
         </Tooltip>
         <Tooltip
           {...props}
-          content="placement: right-start — size: small — wrap: sm"
+          content="placement: right-start — size: xs — wrap: sm"
           placement="right-start"
-          size="small"
+          size="xs"
           wrap="sm"
         >
           <Button size="sm">Right Start</Button>
@@ -156,7 +156,7 @@ export const Positions: Story = {
           {...props}
           content="placement: right-middle — size: regular — wrap: md"
           placement="right-middle"
-          size="regular"
+          size="md"
           wrap="md"
         >
           <Button size="sm">Right</Button>

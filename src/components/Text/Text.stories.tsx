@@ -1,10 +1,9 @@
-import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Paragraph } from '~';
+import { Paragraph, Tag } from '~';
 
-import { textDefaultOptions, textSizes } from '~/modules/options';
+import { sizesAll, textDefaultOptions } from '~/modules/options';
 
 import { colorProps, disableControl, hideProps, textOptionsProps } from '~/stories/__helpers__';
 
@@ -37,11 +36,11 @@ export const Sizes: Story = {
   },
   render: props => (
     <div>
-      {textSizes.map(size => (
+      {sizesAll.map(size => (
         <Paragraph key={size}>
           <Text onClick={action('clicked')} {...props} size={size}>
-            {capitalize(size)} mountains, far from the countries Vokalia and Consonantia, there live
-            the blind texts.
+            <Tag size={size}>{size}</Tag> In the mountains far from the countries Vokalia and
+            Consonantia, there live the blind texts.
           </Text>
         </Paragraph>
       ))}

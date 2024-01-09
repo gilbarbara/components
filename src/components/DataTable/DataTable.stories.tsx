@@ -240,12 +240,12 @@ function DataTableWrapper(props: DataTableProps) {
           email: (
             <>
               <Text color={!user.name ? 'gray' : undefined}>{user.name || 'Unnamed User'}</Text>
-              <Anchor color={accent} href={`mailto:${user.email}`} size="mid">
+              <Anchor color={accent} href={`mailto:${user.email}`} size="sm">
                 {user.email}
               </Anchor>
             </>
           ),
-          team: <Text size="mid">{user.team || '--'}</Text>,
+          team: <Text size="sm">{user.team || '--'}</Text>,
           status: (
             <Tag bg={user.code ? 'blue' : 'green'} iconAfter={user.code ? 'clock' : 'check'} invert>
               {user.code ? 'Invite sent' : 'Active'}

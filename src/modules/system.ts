@@ -11,7 +11,7 @@ import {
   BorderItem,
   BorderItemSide,
   HeadingSizes,
-  TextSizes,
+  SizesAll,
   WithAccent,
   WithAlign,
   WithBorder,
@@ -462,7 +462,7 @@ export function inputStyles<
     color: ${darkMode ? lightColor : darkColor};
     display: block;
     font-family: ${fontFamily};
-    font-size: ${typography.regular.fontSize};
+    font-size: ${typography.md.fontSize};
     height: ${height};
     line-height: 1.4;
     padding: ${paddingY} ${paddingRight} ${paddingY} ${paddingLeft};
@@ -726,7 +726,7 @@ export function shadowStyles<T extends WithShadow & WithTheme>(
   return {};
 }
 
-export function textStyles<T extends WithTextOptions<HeadingSizes | TextSizes> & WithTheme>(
+export function textStyles<T extends WithTextOptions<HeadingSizes | SizesAll> & WithTheme>(
   props: T,
   lineHeightCustom?: StringOrNumber,
 ): CSSObject {

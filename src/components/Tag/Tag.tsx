@@ -49,7 +49,7 @@ export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),
   bg: 'primary.50',
   invert: false,
-  size: 'mid',
+  size: 'sm',
 } satisfies Omit<TagProps, 'children'>;
 
 export const StyledTag = styled(

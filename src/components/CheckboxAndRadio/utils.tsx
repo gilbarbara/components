@@ -67,7 +67,7 @@ export const StyledText = styled(
   const { size } = props;
   const { typography } = getTheme(props);
 
-  const { fontSize } = typography[size === 'sm' ? 'mid' : 'regular'];
+  const { fontSize } = typography[size ?? 'md'];
 
   return css`
     font-size: ${fontSize};

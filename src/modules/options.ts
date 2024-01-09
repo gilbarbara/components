@@ -804,11 +804,10 @@ export const inputTypes = [
 ] as const;
 
 export const sizes = ['sm', 'md', 'lg'] as const;
-export const sizesButton = ['xs', ...sizes] as const;
-export const textSizes = ['small', 'mid', 'regular', 'large'] as const;
+export const sizesAll = ['xs', ...sizes] as const;
 
 export const textDefaultOptions = {
   bold: false,
   italic: false,
-  size: 'regular' as const,
+  size: 'md' as const,
 };

@@ -162,7 +162,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
       {...rest}
     >
       {!hideIcon && <Icon color={selected.color} name={icon ?? selected.icon} size={iconSize} />}
-      {isValidElement(children) ? children : <Text size="mid">{children}</Text>}
+      {isValidElement(children) ? children : <Text size="sm">{children}</Text>}
     </StyledAlert>
   );
 });

@@ -29,7 +29,7 @@ export const StyledSearchItem = styled(
   return css`
     color: ${darkMode ? white : grayScale['700']};
     cursor: pointer;
-    font-size: ${typography.regular.fontSize};
+    font-size: ${typography.md.fontSize};
     padding: ${spacing.sm} ${spacing.md};
     transition: background-color 0.3s;
 

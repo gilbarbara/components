@@ -69,7 +69,7 @@ function DataTableBody(props: DataTableBodyProps) {
                     <Paragraph
                       color="gray"
                       mb="xxs"
-                      size="small"
+                      size="xs"
                       style={{ textTransform: 'uppercase' }}
                     >
                       {title}

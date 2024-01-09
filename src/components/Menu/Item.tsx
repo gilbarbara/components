@@ -33,7 +33,7 @@ export const StyledMenuItem = styled(
   return css`
     color: ${themeColor};
     cursor: ${disabled ? 'not-allowed' : 'pointer'};
-    font-size: ${typography.regular.fontSize};
+    font-size: ${typography.md.fontSize};
     opacity: ${disabled ? 0.6 : 1};
     transition: background-color 0.3s;
 

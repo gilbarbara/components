@@ -9,7 +9,7 @@ import {
   Direction,
   HeadingSizes,
   Sizes,
-  TextSizes,
+  SizesAll,
 } from './common';
 import { ButtonSize, Radius, Shadow, Spacing, Theme, VariantWithTones } from './theme';
 
@@ -294,14 +294,14 @@ export interface WithShadow {
   shadow?: Shadow | false;
 }
 
-export interface WithTextSize<T = TextSizes> {
+export interface WithTextSize<T = SizesAll> {
   /**
    * Text size
    */
   size?: T;
 }
 
-export interface WithTextOptions<T extends TextSizes | HeadingSizes = TextSizes>
+export interface WithTextOptions<T extends SizesAll | HeadingSizes = SizesAll>
   extends WithTextSize<T> {
   /**
    * Bold text

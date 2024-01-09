@@ -6,7 +6,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 import { ButtonUnstyled, Icon, Spacer } from '~';
 
-import { sizesButton } from '~/modules/options';
+import { sizesAll } from '~/modules/options';
 
 import {
   colorProps,
@@ -38,7 +38,7 @@ export default {
     children: disableControl(),
     label: { control: 'text' },
     onClick: disableControl(),
-    size: { control: 'radio', options: sizesButton },
+    size: { control: 'radio', options: sizesAll },
   },
   parameters: {
     minHeight: 250,

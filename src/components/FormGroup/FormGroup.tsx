@@ -114,7 +114,7 @@ const AssistiveContent = styled(
     align-items: center;
     color: ${isDarkMode(props) ? grayScale['200'] : grayScale['500']};
     display: flex;
-    font-size: ${typography.mid.fontSize};
+    font-size: ${typography.sm.fontSize};
     line-height: 16px;
     margin-top: ${spacing.xxs};
     min-height: ${spacing.md};

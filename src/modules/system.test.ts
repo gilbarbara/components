@@ -343,7 +343,7 @@ describe('shadowStyles', () => {
 describe('textStyles', () => {
   it('should return properly', () => {
     expect(
-      textStyles({ bold: true, italic: true, size: 'mid', textTransform: 'uppercase' }),
+      textStyles({ bold: true, italic: true, size: 'sm', textTransform: 'uppercase' }),
     ).toMatchSnapshot();
   });
 
