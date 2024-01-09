@@ -126,7 +126,7 @@ export const defaultProps = {
   eventType: 'hover',
   placement: 'bottom-middle',
   radius: 'xxs',
-  size: 'mid',
+  size: 'sm',
   zIndex: 100,
 } satisfies Omit<TooltipProps, 'children' | 'content'>;
 
@@ -307,8 +307,8 @@ const StyledBody = styled(
     }
 
     switch (size) {
-      case 'small':
-      case 'mid': {
+      case 'xs':
+      case 'sm': {
         styles.padding = `${spacing.xxs} ${spacing.xs}`;
         break;
       }

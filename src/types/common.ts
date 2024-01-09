@@ -3,7 +3,7 @@ import { SerializedStyles } from '@emotion/react';
 import { validatePassword } from '@gilbarbara/helpers';
 import { StandardShorthandProperties } from 'csstype';
 
-import { icons, inputTypes, sizes, textSizes } from '~/modules/options';
+import { icons, inputTypes, sizes, sizesAll } from '~/modules/options';
 
 import { Breakpoint, VariantWithTones } from './theme';
 import { Concat } from './utils';
@@ -58,10 +58,9 @@ export type PositionY = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right
 export type Position = 'bottom' | 'left' | 'right' | 'top';
 
 export type Sizes = (typeof sizes)[number];
+export type SizesAll = (typeof sizesAll)[number];
 
 export type SortDirection = 'asc' | 'desc';
-
-export type TextSizes = (typeof textSizes)[number];
 
 // Responsive
 export interface MediaQueries {

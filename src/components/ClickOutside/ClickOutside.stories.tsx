@@ -37,7 +37,7 @@ function Render(props: ClickOutsideProps) {
           {isActive ? 'Content is visible' : 'Click to show'}
         </Button>
 
-        <Paragraph bold mt="md" size="large">
+        <Paragraph bold mt="md" size="lg">
           Culpa incididunt cillum aliquip dolore
         </Paragraph>
         {isActive && (
@@ -47,7 +47,7 @@ function Render(props: ClickOutsideProps) {
               officia. Exercitation sint ea mollit esse proident eu sint qui duis et officia commodo
               id dolore consectetur. Eu eu occaecat officia laborum laboris duis enim ex deserunt.
             </Paragraph>
-            <Paragraph bold size="mid">
+            <Paragraph bold size="sm">
               Click outside the border to hide it
             </Paragraph>
           </Box>

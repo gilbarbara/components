@@ -49,7 +49,7 @@ export const Basic: Story = {
         </Paragraph>
       </Container>
 
-      <Paragraph color="gray" size="small">
+      <Paragraph color="gray" size="xs">
         *The border is just for visualization...
       </Paragraph>
     </Box>

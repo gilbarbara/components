@@ -96,7 +96,7 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>((props, 
       data-component-name="ProgressBar"
       role="progressbar"
     >
-      {!hideText && <Paragraph mb="xs" size="large">{`Step ${stepLimit} of ${steps}`}</Paragraph>}
+      {!hideText && <Paragraph mb="xs" size="lg">{`Step ${stepLimit} of ${steps}`}</Paragraph>}
       <StyledProgressTrack {...rest} {...props}>
         <div style={{ width: `${percentage}%` }} />
       </StyledProgressTrack>

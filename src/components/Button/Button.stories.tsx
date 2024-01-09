@@ -5,7 +5,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Icon, Spacer } from '~';
 
-import { sizesButton } from '~/modules/options';
+import { sizesAll } from '~/modules/options';
 
 import {
   colorProps,
@@ -33,7 +33,7 @@ export default {
     ...paddingProps(),
     children: { control: 'text' },
     onClick: { action: 'onClick' },
-    size: { control: 'radio', options: sizesButton },
+    size: { control: 'radio', options: sizesAll },
   },
 } satisfies Meta<typeof Button>;
 
@@ -45,7 +45,7 @@ export const Sizes: Story = {
   },
   render: props => (
     <Spacer>
-      {sizesButton.map(d => (
+      {sizesAll.map(d => (
         <Button key={d} {...props} size={d}>
           Button {capitalize(d)}
         </Button>

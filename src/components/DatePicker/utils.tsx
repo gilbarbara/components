@@ -228,7 +228,7 @@ export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
       color: currentColor;
       display: inline-flex;
       font-family: inherit;
-      font-size: ${typography.large.fontSize};
+      font-size: ${typography.lg.fontSize};
       font-weight: normal;
       margin: 0;
       padding: 0 ${spacing.xs};
@@ -341,7 +341,7 @@ export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
 
     .${className}-head_cell {
       color: ${grayScale['500']};
-      font-size: ${typography.mid.fontSize};
+      font-size: ${typography.sm.fontSize};
       font-weight: normal;
       height: 24px;
       padding: 0;
@@ -365,7 +365,7 @@ export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
     }
 
     .${className}-weeknumber {
-      font-size: ${typography.mid.fontSize};
+      font-size: ${typography.sm.fontSize};
     }
 
     .${className}-weeknumber, .${className}-day {

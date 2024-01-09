@@ -172,7 +172,7 @@ function Icons() {
     <Box>
       <Jumbo>Icons</Jumbo>
 
-      <Paragraph mb="xl" size="large">
+      <Paragraph mb="xl" size="lg">
         A set of icons ({icons.length}) based on the{' '}
         <a href="https://css.gg/" rel="noreferrer" target="_blank">
           CSS icons

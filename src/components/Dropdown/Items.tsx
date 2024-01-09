@@ -173,7 +173,7 @@ const Search = styled(
       background-color: ${darkMode ? grayScale['800'] : white};
       border: 1px solid ${darkMode ? grayScale['500'] : grayScale['200']};
       color: ${darkMode ? lightColor : darkColor};
-      font-size: ${typography.regular.fontSize};
+      font-size: ${typography.md.fontSize};
       line-height: 1.6;
       padding: ${spacing.xxs} ${spacing.sm};
       width: 100%;

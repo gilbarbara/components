@@ -72,7 +72,7 @@ const defaultItems: SearchItem[] = users
         <Avatar image={d.avatar} name={d.name} />
         <Box ml="xs">
           <Paragraph bold>{d.name}</Paragraph>
-          <Paragraph size="mid" skipMarginTop>
+          <Paragraph size="sm" skipMarginTop>
             {d.team}
           </Paragraph>
         </Box>

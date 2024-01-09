@@ -14,15 +14,15 @@ import {
   OmitElementProps,
   Position,
   Sizes,
+  SizesAll,
   Spacing,
   StyledProps,
-  TextSizes,
   WithAccent,
   WithChildren,
   WithTextOptions,
 } from '~/types';
 
-type TextOptions = WithTextOptions<HeadingSizes | TextSizes>;
+type TextOptions = WithTextOptions<HeadingSizes | SizesAll>;
 
 export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, TextOptions {
   attribution?: ReactNode;
@@ -35,7 +35,7 @@ export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, 
   /**
    * The font size of the citation
    *
-   * @default mid
+   * @default sm
    */
   attributionSize?: TextOptions['size'];
   /**
@@ -70,11 +70,11 @@ export const defaultProps = {
   ...textDefaultOptions,
   accent: 'primary',
   attributionGap: 'md',
-  attributionSize: 'mid',
+  attributionSize: 'sm',
   border: 'left',
   borderSize: 'md',
   gap: 'md',
-  size: 'large',
+  size: 'lg',
 } satisfies Omit<QuoteProps, 'children'>;
 
 export const StyledFigure = styled(

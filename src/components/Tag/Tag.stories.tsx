@@ -7,7 +7,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Grid, Spacer } from '~';
 
 import { getTheme } from '~/modules/helpers';
-import { textSizes } from '~/modules/options';
+import { sizesAll } from '~/modules/options';
 
 import {
   colorProps,
@@ -86,7 +86,7 @@ export const Sizes: Story = {
   },
   render: props => (
     <Spacer gapVertical="sm">
-      {textSizes.map(d => (
+      {sizesAll.map(d => (
         <Tag key={d} {...props} size={d}>
           {capitalize(d)}
         </Tag>
@@ -114,7 +114,7 @@ export const WithIcons: Story = {
             data-name="assign"
             iconBefore="focus"
             onClickBefore={handleClickBefore}
-            size="small"
+            size="xs"
           >
             assign
           </Tag>
@@ -125,7 +125,7 @@ export const WithIcons: Story = {
             data-name="add"
             iconBefore="plus"
             onClickBefore={handleClickBefore}
-            size="mid"
+            size="sm"
           >
             add
           </Tag>
@@ -138,7 +138,7 @@ export const WithIcons: Story = {
             iconAfter="close"
             invert
             onClickAfter={handleClickAfter}
-            size="regular"
+            size="md"
           >
             remove
           </Tag>
@@ -151,7 +151,7 @@ export const WithIcons: Story = {
             data-name="continue"
             iconAfter="chevron-right"
             onClickAfter={handleClickAfter}
-            size="large"
+            size="lg"
           >
             continue
           </Tag>

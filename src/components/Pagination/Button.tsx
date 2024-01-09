@@ -32,7 +32,7 @@ const StyledPaginationButton = styled(
     background-color: ${current ? mainColor : 'transparent'};
     color: ${current ? textColor : color};
     display: flex;
-    font-size: ${typography.mid.fontSize};
+    font-size: ${typography.sm.fontSize};
     font-weight: ${700};
     justify-content: center;
     height: ${spacing.xl};

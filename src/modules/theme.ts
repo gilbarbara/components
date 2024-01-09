@@ -67,19 +67,19 @@ export const spacing = {
 };
 
 export const typography = {
-  small: {
+  xs: {
     fontSize: '12px',
     lineHeight: 1.2,
   },
-  mid: {
+  sm: {
     fontSize: '14px',
     lineHeight: 1.2,
   },
-  regular: {
+  md: {
     fontSize: '16px',
     lineHeight: 1.2,
   },
-  large: {
+  lg: {
     fontSize: '18px',
     lineHeight: 1.2,
   },

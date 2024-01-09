@@ -23,7 +23,7 @@ const StyledMenuTitle = styled(
 
     [data-component-name='MenuTitleText'] {
       color: ${grayScale['500']};
-      font-size: ${typography.small.fontSize};
+      font-size: ${typography.xs.fontSize};
       text-transform: uppercase;
     }
   `;

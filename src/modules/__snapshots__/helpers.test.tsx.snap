@@ -220,19 +220,19 @@ exports[`getTheme should return the theme 1`] = `
       "fontSize": "64px",
       "lineHeight": 1.2,
     },
-    "large": {
+    "lg": {
       "fontSize": "18px",
       "lineHeight": 1.2,
     },
-    "mid": {
-      "fontSize": "14px",
-      "lineHeight": 1.2,
-    },
-    "regular": {
+    "md": {
       "fontSize": "16px",
       "lineHeight": 1.2,
     },
-    "small": {
+    "sm": {
+      "fontSize": "14px",
+      "lineHeight": 1.2,
+    },
+    "xs": {
       "fontSize": "12px",
       "lineHeight": 1.2,
     },
@@ -606,19 +606,19 @@ exports[`mergeTheme should return a modified theme 1`] = `
       "fontSize": "64px",
       "lineHeight": 1.2,
     },
-    "large": {
+    "lg": {
       "fontSize": "18px",
       "lineHeight": 1.2,
     },
-    "mid": {
-      "fontSize": "14px",
-      "lineHeight": 1.2,
-    },
-    "regular": {
+    "md": {
       "fontSize": "16px",
       "lineHeight": 1.2,
     },
-    "small": {
+    "sm": {
+      "fontSize": "14px",
+      "lineHeight": 1.2,
+    },
+    "xs": {
       "fontSize": "12px",
       "lineHeight": 1.2,
     },
@@ -992,19 +992,19 @@ exports[`mergeTheme should return the default theme 1`] = `
       "fontSize": "64px",
       "lineHeight": 1.2,
     },
-    "large": {
+    "lg": {
       "fontSize": "18px",
       "lineHeight": 1.2,
     },
-    "mid": {
-      "fontSize": "14px",
-      "lineHeight": 1.2,
-    },
-    "regular": {
+    "md": {
       "fontSize": "16px",
       "lineHeight": 1.2,
     },
-    "small": {
+    "sm": {
+      "fontSize": "14px",
+      "lineHeight": 1.2,
+    },
+    "xs": {
       "fontSize": "12px",
       "lineHeight": 1.2,
     },

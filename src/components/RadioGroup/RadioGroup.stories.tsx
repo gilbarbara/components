@@ -21,7 +21,7 @@ export default {
       {
         label: (
           <div>
-            <Text size="large">Forth</Text>
+            <Text size="lg">Forth</Text>
             <Paragraph>Far far away, behind the word mountains.</Paragraph>
           </div>
         ),

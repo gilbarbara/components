@@ -39,7 +39,7 @@ const types: AlertProps[] = [
     align: 'start',
     children: (
       <Box ml="xs">
-        <Paragraph bold size="large">
+        <Paragraph bold size="lg">
           Something went wrong!
         </Paragraph>
         <Paragraph mt="xxs">Your information could not be saved.</Paragraph>

@@ -76,7 +76,7 @@ export const defaultProps = {
   gap: 'xs',
   length: '100%',
   minBorderWidth: 50,
-  size: 'regular',
+  size: 'md',
 } satisfies DividerProps;
 
 const StyledDivider = styled(
