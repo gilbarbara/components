@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -32,6 +33,7 @@ export const StyledSearchItem = styled(
     padding: ${spacing.sm} ${spacing.md};
     transition: background-color 0.3s;
 
+    &:focus-visible,
     &:hover,
     &:active {
       ${selected};
@@ -43,28 +45,26 @@ export const StyledSearchItem = styled(
       color: ${grayScale['700']};
       text-decoration: none;
     }
-
-    > * {
-      white-space: nowrap;
-    }
   `;
 });
 
-function SearchItem({ accent, children, isSelected, onClick, value }: SearchItemProps) {
+function SearchItemComponent({ accent, children, isSelected, onSelect, value }: SearchItemProps) {
   return (
     <StyledSearchItem
       accent={accent}
       data-component-name="SearchItem"
       data-value={value}
       isSelected={isSelected}
-      onClick={onClick}
+      onClick={onSelect}
+      onKeyDown={onSelect}
       role="listitem"
+      tabIndex={0}
     >
       {children}
     </StyledSearchItem>
   );
 }
 
-SearchItem.displayName = 'SearchItem';
+SearchItemComponent.displayName = 'SearchItem';
 
-export default SearchItem;
+export default memo(SearchItemComponent);
