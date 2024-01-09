@@ -1,12 +1,21 @@
-import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, useEffect, useRef } from 'react';
-import { useSetState } from 'react-use';
+import {
+  ChangeEvent,
+  FocusEvent,
+  KeyboardEvent,
+  memo,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
+import { useMount, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
+import KeyboardScope from '~/modules/keyboardScope';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
-import { Box } from '~/components/Box';
 import { ClickOutside } from '~/components/ClickOutside';
 import { ComponentWrapper } from '~/components/ComponentWrapper';
 import { Icon } from '~/components/Icon';
@@ -18,6 +27,9 @@ import { SearchProps } from './types';
 export const defaultProps = {
   accent: 'primary',
   borderless: false,
+  disableCloseOnBlur: false,
+  disableKeyboardNavigation: false,
+  disabled: false,
   height: 230,
   hideIcon: false,
   icon: 'search',
@@ -29,7 +41,7 @@ export const defaultProps = {
 } satisfies Omit<SearchProps, 'items' | 'onSelect'>;
 
 export const StyledSearch = styled(
-  Box,
+  'div',
   getStyledOptions(),
 )<Omit<SearchProps, 'items' | 'onChange' | 'onSelect' | 'onType'>>(props => {
   const { width } = props;
@@ -41,136 +53,198 @@ export const StyledSearch = styled(
   `;
 });
 
-export function Search(props: SearchProps) {
+function SearchComponent(props: SearchProps) {
   const {
     accent,
     borderless,
+    disableCloseOnBlur,
+    disabled,
+    disableKeyboardNavigation,
     height,
     hideIcon,
     icon,
     items,
     loading,
+    onBlur,
     onFocus,
     onSearch,
     onSearchDebounce,
     onSelect,
     onType,
     placeholder,
+    remote,
     showListOnFocus,
     ...rest
   } = { ...defaultProps, ...props };
 
-  const optionsRef = useRef<HTMLDivElement>(null);
-  const isActive = useRef(false);
   const [{ active, currentItems, cursor, focus, typing, value }, setState] = useSetState({
     active: false,
-    currentItems: items,
+    currentItems: remote ? [] : items,
     cursor: -1,
     focus: false,
     typing: false,
     value: '',
   });
+  const mainRef = useRef<HTMLDivElement>(null);
+  const itemsRef = useRef<HTMLDivElement>(null);
+  const isMounted = useRef(false);
+  const scopeManager = useRef<KeyboardScope>();
   const timeout = useRef(0);
 
+  useMount(() => {
+    if (!disableKeyboardNavigation) {
+      scopeManager.current = new KeyboardScope(mainRef.current, {
+        arrowNavigation: 'both',
+        escCallback: handleToggleList(false),
+        selector: '[data-component-name="SearchItem"]',
+      });
+    }
+  });
+
   useEffect(() => {
-    isActive.current = true;
+    isMounted.current = true;
 
     return () => {
-      isActive.current = false;
+      isMounted.current = false;
     };
   }, []);
 
-  const updateState = (state: Parameters<typeof setState>[0]) => {
-    if (isActive.current) {
-      setState(state);
+  useEffect(() => {
+    if (active) {
+      scopeManager.current?.addScope();
     }
-  };
 
-  const close = () => {
-    updateState({ active: false });
-  };
+    return () => {
+      scopeManager.current?.removeScope();
+    };
+  }, [active]);
 
-  const handleBlur = () => {
-    updateState({ cursor: -1, focus: false });
-  };
+  const updateState = useCallback(
+    (state: Parameters<typeof setState>[0]) => {
+      if (isMounted.current) {
+        setState(state);
+      }
+    },
+    [setState],
+  );
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-
-    onType?.(inputValue);
-
-    const nextState = { active: !!inputValue, value: inputValue };
-
-    if (onSearchDebounce) {
-      updateState({ ...nextState, typing: true });
-      clearTimeout(timeout.current);
-
-      timeout.current = window.setTimeout(() => {
-        updateState({
-          typing: false,
-          currentItems: items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
-        });
-
-        onSearch?.(inputValue);
-
-        timeout.current = 0;
-      }, onSearchDebounce);
-    } else {
-      updateState({
-        ...nextState,
-        currentItems: items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
-      });
-
-      onSearch?.(inputValue);
-    }
-  };
-
-  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-
-    updateState({ active: showListOnFocus && !!currentItems.length, focus: true });
-
-    onFocus?.(inputValue);
-  };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    const { code, shiftKey } = event;
-    const optionElement = optionsRef.current;
-
-    if (!active || !optionElement) {
+  const close = useCallback(() => {
+    if (disableCloseOnBlur) {
       return;
     }
 
-    let nextCursor = cursor;
+    updateState({ active: false });
+  }, [disableCloseOnBlur, updateState]);
 
-    if (
-      ((code === 'Tab' && !shiftKey) || code === 'ArrowDown') &&
-      cursor < currentItems.length - 1
-    ) {
-      nextCursor++;
-      event.preventDefault();
-    } else if (((code === 'Tab' && shiftKey) || code === 'ArrowUp') && cursor > 0) {
-      nextCursor--;
-      event.preventDefault();
-    } else if (code === 'Enter') {
-      const { dataset } = optionElement.children[cursor] as HTMLDivElement;
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
 
-      updateState({ active: false, value: '' });
-      onSelect(dataset.value ?? '');
-    }
+      updateState({ cursor: -1, focus: false });
+      onBlur?.(inputValue);
+    },
+    [onBlur, updateState],
+  );
 
-    updateState({ cursor: nextCursor });
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
+      const nextState = { active: !!inputValue, value: inputValue };
 
-    if (optionElement.children[nextCursor]) {
-      optionElement.children[nextCursor].scrollIntoView({ block: 'end' });
-    }
-  };
+      onType?.(inputValue);
 
-  const handleSelect = (event: MouseEvent<HTMLDivElement>) => {
-    const { dataset } = event.currentTarget;
+      if (onSearchDebounce) {
+        updateState({ ...nextState, typing: true });
+        clearTimeout(timeout.current);
 
-    updateState({ active: false, value: '' });
-    onSelect(dataset.value ?? '');
+        timeout.current = window.setTimeout(() => {
+          updateState({
+            typing: false,
+            currentItems: remote
+              ? []
+              : items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
+          });
+
+          onSearch?.(inputValue);
+
+          timeout.current = 0;
+        }, onSearchDebounce);
+      } else {
+        updateState({
+          ...nextState,
+          currentItems: remote
+            ? []
+            : items.filter(d => d.value.toLowerCase().includes(inputValue.toLowerCase())),
+        });
+
+        onSearch?.(inputValue);
+      }
+    },
+    [items, onSearch, onSearchDebounce, onType, remote, updateState],
+  );
+
+  const handleFocus = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
+
+      updateState({
+        active: showListOnFocus && (remote ? !!items.length : !!currentItems.length),
+        focus: true,
+      });
+
+      onFocus?.(inputValue);
+    },
+    [currentItems.length, items.length, onFocus, remote, showListOnFocus, updateState],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      const { code } = event;
+      const itemElement = itemsRef.current;
+
+      if (!active || !itemElement) {
+        return;
+      }
+
+      const nextCursor = cursor;
+
+      if (code === 'Enter') {
+        const { dataset } = itemElement.children[cursor] as HTMLDivElement;
+
+        updateState({ active: false, value: '' });
+        onSelect(dataset.value ?? '');
+      }
+
+      updateState({ cursor: nextCursor });
+
+      if (itemElement.children[nextCursor]) {
+        itemElement.children[nextCursor].scrollIntoView({ block: 'end' });
+      }
+    },
+    [active, cursor, onSelect, updateState],
+  );
+
+  const handleSelect = useCallback(
+    (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => {
+      const { dataset } = event.currentTarget;
+
+      if ('code' in event && !disableKeyboardNavigation) {
+        if (['Enter', 'Space'].includes(event.code)) {
+          updateState({ active: false, value: '' });
+          onSelect(dataset.value ?? '');
+        }
+      } else {
+        updateState({ active: false, value: '' });
+        onSelect(dataset.value ?? '');
+      }
+    },
+    [disableKeyboardNavigation, onSelect, updateState],
+  );
+
+  const handleToggleList = (force?: boolean) => {
+    return () => {
+      updateState({ active: force ?? !active });
+    };
   };
 
   let prefixSpacing = borderless ? 32 : true;
@@ -179,8 +253,10 @@ export function Search(props: SearchProps) {
     prefixSpacing = false;
   }
 
+  const isBusy = typing || loading;
+
   return (
-    <StyledSearch data-component-name="Search" {...rest}>
+    <StyledSearch ref={mainRef} data-component-name="Search" {...rest}>
       <ClickOutside active={active} onClick={close}>
         <ComponentWrapper
           prefix={
@@ -189,13 +265,14 @@ export function Search(props: SearchProps) {
             )
           }
           size={borderless ? [24, 40] : 40}
-          suffix={typing || loading ? <Icon name="spinner" spin /> : undefined}
+          suffix={isBusy ? <Icon name="spinner" spin /> : undefined}
         >
           <Input
             accent={accent}
             autoComplete="off"
             borderless={borderless}
             data-component-name="SearchInput"
+            disabled={disabled}
             name="search"
             onBlur={handleBlur}
             onChange={handleChange}
@@ -207,12 +284,13 @@ export function Search(props: SearchProps) {
           />
         </ComponentWrapper>
         <Items
-          ref={optionsRef}
+          ref={itemsRef}
           accent={accent}
           active={active}
           cursor={cursor}
           height={height}
-          items={currentItems}
+          isBusy={isBusy}
+          items={remote ? items : currentItems}
           onSelect={handleSelect}
           {...rest}
         />
@@ -220,5 +298,7 @@ export function Search(props: SearchProps) {
     </StyledSearch>
   );
 }
+
+export const Search = memo(SearchComponent);
 
 Search.displayName = 'Search';

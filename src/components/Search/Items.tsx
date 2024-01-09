@@ -1,8 +1,8 @@
-import { forwardRef, ReactNode, useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { PlainObject, StringOrNumber } from '@gilbarbara/types';
+import { StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
@@ -64,7 +64,7 @@ const Empty = styled(
 });
 
 const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) => {
-  const { accent, active, cursor, height, items, noResultsLabel, onSelect } = props;
+  const { accent, active, cursor, height, isBusy, items, noResultsLabel, onSelect } = props;
   const isActive = useRef(false);
 
   useEffect(() => {
@@ -75,23 +75,22 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
     };
   }, []);
 
-  const content: PlainObject<ReactNode> = {};
-
-  content.items = !items.length ? (
-    <Empty>{noResultsLabel}</Empty>
-  ) : (
-    items.map((data, index) => (
-      <Item
-        key={data.value}
-        accent={data.accent ?? accent}
-        isSelected={cursor === index}
-        onClick={onSelect}
-        value={data.value}
-      >
-        {data.label ?? data.value}
-      </Item>
-    ))
-  );
+  const content =
+    !items.length && !isBusy ? (
+      <Empty>{noResultsLabel}</Empty>
+    ) : (
+      items.map((data, index) => (
+        <Item
+          key={data.value}
+          accent={data.accent ?? accent}
+          isSelected={cursor === index}
+          onSelect={onSelect}
+          value={data.value}
+        >
+          {data.label ?? data.value}
+        </Item>
+      ))
+    );
 
   return (
     <StyledSearchItems
@@ -100,9 +99,8 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
       data-component-name="SearchItems"
       height={height}
       role="list"
-      tabIndex={0}
     >
-      {content.items}
+      {content}
     </StyledSearchItems>
   );
 });

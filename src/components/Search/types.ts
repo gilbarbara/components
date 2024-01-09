@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import { CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { Icons, StyledProps, WithAccent, WithBorderless, WithChildren, WithMargin } from '~/types';
@@ -8,23 +8,34 @@ export interface SearchItem extends WithAccent {
   value: string;
 }
 
+export type SearchOnSelect = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
+
 export interface SearchItemsProps
   extends Required<WithAccent>,
     Pick<SearchProps, 'noResultsLabel'> {
   active: boolean;
   cursor: number;
   height: StringOrNumber;
+  isBusy: boolean;
   items: SearchItem[];
-  onSelect: MouseEventHandler;
+  onSelect: SearchOnSelect;
 }
 
 export interface SearchItemProps extends Required<WithAccent>, WithChildren {
   isSelected: boolean;
-  onClick: MouseEventHandler;
+  onSelect: SearchOnSelect;
   value: string;
 }
 
 export interface SearchKnownProps extends StyledProps, WithAccent, WithBorderless, WithMargin {
+  /**
+   * Disable closing the list when you click outside.
+   * @default false
+   */
+  disableCloseOnBlur?: boolean;
+  /** @default false */
+  disableKeyboardNavigation?: boolean;
+  disabled?: boolean;
   height?: StringOrNumber;
   /** @default false */
   hideIcon?: boolean;
@@ -33,6 +44,7 @@ export interface SearchKnownProps extends StyledProps, WithAccent, WithBorderles
   items: SearchItem[];
   loading?: boolean;
   noResultsLabel?: ReactNode;
+  onBlur?: (value: string) => void;
   onFocus?: (value: string) => void;
   /**
    * Fires after the "debounce" delay
@@ -52,7 +64,12 @@ export interface SearchKnownProps extends StyledProps, WithAccent, WithBorderles
   /** @default Search for... */
   placeholder?: string;
   /**
-   * Show the options on focus (if available)
+   * Disable internal filtering.
+   * @default false
+   */
+  remote?: boolean;
+  /**
+   * Show the list on focus (if available)
    *
    * @default true
    */

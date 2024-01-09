@@ -1,9 +1,14 @@
+import { useState } from 'react';
+import { objectKeys, sortByLocaleCompare } from '@gilbarbara/helpers';
 import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 import { Avatar, Box, Paragraph } from '~';
 
+import { colors } from '~/modules/theme';
+
+import { users } from '~/stories/__fixtures__';
 import {
   colorProps,
   disableControl,
@@ -11,6 +16,7 @@ import {
   hideStoryFromDocsPage,
   marginProps,
 } from '~/stories/__helpers__';
+import { Variant } from '~/types';
 
 import { defaultProps, Search } from './Search';
 import { SearchItem } from './types';
@@ -39,98 +45,135 @@ export default {
   },
 } satisfies Meta<typeof Search>;
 
-const users = [
-  { name: 'John Smith', position: 'Admin', image: 'https://i.pravatar.cc/300?img=68' },
-  {
-    name: 'Maria Garcia',
-    position: 'Admin',
-    image: 'https://i.pravatar.cc/300?img=19',
-  },
-  { accent: 'green', name: 'William Brown Jones', position: 'Manager' },
-  { name: 'Martha Johnson', position: 'Manager', image: 'https://i.pravatar.cc/300?img=49' },
-  { name: 'Sarah Goldstein', position: 'Member', image: 'https://i.pravatar.cc/300?img=38' },
-  { name: 'Robert Rodriguez', position: 'Member', image: 'https://i.pravatar.cc/300?img=18' },
-  { name: 'George Miller' },
-];
+const accentMap: Record<string, { color: Variant; count: number }> = {};
 
-const items: SearchItem[] = users.map(d => ({
-  accent: d.accent,
-  label: (
-    <Box display="flex">
-      <Avatar bg={d.accent} image={d.image} name={d.name} />
-      <Box ml="xs">
-        <Paragraph bold>{d.name}</Paragraph>
-        {d.position && (
+function getAccent(team: string) {
+  if (!accentMap[team]) {
+    const colorNames = objectKeys(colors);
+    const randomColor = colorNames[Math.floor(Math.random() * colorNames.length)];
+    const accentMapLength = Object.keys(accentMap).length;
+
+    const colorKey = colorNames[accentMapLength] ?? randomColor;
+
+    accentMap[team] = { color: colorKey, count: 1 };
+  } else {
+    accentMap[team].count += 1;
+  }
+
+  return accentMap[team].color;
+}
+
+const defaultItems: SearchItem[] = users
+  .slice(0, 20)
+  .map(d => ({
+    accent: getAccent(d.team),
+    label: (
+      <Box flexBox>
+        <Avatar image={d.avatar} name={d.name} />
+        <Box ml="xs">
+          <Paragraph bold>{d.name}</Paragraph>
           <Paragraph size="mid" skipMarginTop>
-            {d.position}
+            {d.team}
           </Paragraph>
-        )}
+        </Box>
       </Box>
-    </Box>
-  ),
-  value: d.name,
-}));
+    ),
+    value: d.name,
+  }))
+  .sort(sortByLocaleCompare('value'));
 
 export const Basic: Story = {
   args: {
-    items,
+    icon: 'users',
+    items: defaultItems,
+  },
+  render: props => <Search {...props} />,
+};
+
+export const ExternalData: Story = {
+  argTypes: {
+    onSearch: disableControl(),
+  },
+  args: {
+    remote: true,
+  },
+  render: function Render(props) {
+    const [items, setItems] = useState([] as SearchItem[]);
+
+    const handleSearch = (value: string) => {
+      setItems(
+        defaultItems.filter(d => !!value && d.value.toLowerCase().includes(value.toLowerCase())),
+      );
+    };
+
+    return <Search {...props} items={items} onSearch={handleSearch} />;
   },
 };
 
-const mockOnFocus = jest.fn();
-const mockOnSearch = jest.fn();
-const mockOnSelect = jest.fn();
-const mockOnType = jest.fn();
+const onFocusMock = jest.fn();
+const onSearchMock = jest.fn();
+const onSelectMock = jest.fn();
+const onTypeMock = jest.fn();
+
+function resetMocks() {
+  onFocusMock.mockClear();
+  onSearchMock.mockClear();
+  onSelectMock.mockClear();
+  onTypeMock.mockClear();
+}
 
 export const Tests: Story = {
   ...hideStoryFromDocsPage(),
   tags: ['hidden'],
   args: {
-    items,
-    onFocus: mockOnFocus,
-    onSearch: mockOnSearch,
-    onSelect: mockOnSelect,
-    onType: mockOnType,
+    items: defaultItems,
+    onFocus: onFocusMock,
+    onSearch: onSearchMock,
+    onSearchDebounce: 0,
+    onSelect: onSelectMock,
+    onType: onTypeMock,
   },
   render: Basic.render,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    mockOnFocus.mockClear();
-    mockOnSearch.mockClear();
-    mockOnSelect.mockClear();
-    mockOnType.mockClear();
-
     await canvas.findByTestId('Search');
-
     const input = canvas.getByTestId('SearchInput');
 
-    await userEvent.click(input);
-    await waitFor(() => {
-      expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    await step('should dispatch the onFocus callback', async () => {
+      resetMocks();
+
+      await userEvent.click(input);
+      await waitFor(() => {
+        expect(onFocusMock).toHaveBeenCalledTimes(1);
+      });
     });
 
-    await userEvent.type(canvas.getByTestId('SearchInput'), 'Jim');
-    await expect(mockOnType).toHaveBeenCalledTimes(3);
-    await waitFor(() => {
-      expect(mockOnSearch).toHaveBeenNthCalledWith(1, 'Jim');
-    });
-    await expect(mockOnSelect).toHaveBeenCalledTimes(0);
-    await waitFor(() => {
-      expect(canvas.getByText('Nothing found')).toBeInTheDocument();
+    await step('should render the items', async () => {
+      await expect(canvas.getAllByTestId('SearchItem')).toHaveLength(20);
     });
 
-    await userEvent.clear(canvas.getByTestId('SearchInput'));
-    await userEvent.type(canvas.getByTestId('SearchInput'), 'John');
-    await expect(mockOnType).toHaveBeenCalledTimes(8);
-    await waitFor(() => {
-      expect(mockOnSearch).toHaveBeenNthCalledWith(2, 'John');
-    });
-    await waitFor(() => {
-      expect(canvas.getAllByTestId('SearchItem')).toHaveLength(2);
+    await step('should select an item', async () => {
+      resetMocks();
+
+      const value = canvas.getAllByTestId('SearchItem')[0].getAttribute('data-value') ?? '';
+
+      await userEvent.click(canvas.getByText(value));
+      await expect(onSelectMock).toHaveBeenNthCalledWith(1, value);
     });
 
-    await userEvent.click(canvas.getByText('John Smith'));
-    await expect(mockOnSelect).toHaveBeenNthCalledWith(1, 'John Smith');
+    await step('should render "Nothing found" if search returned no results', async () => {
+      resetMocks();
+
+      await userEvent.type(canvas.getByTestId('SearchInput'), 'xyz');
+
+      await waitFor(() => {
+        expect(canvas.getByText('Nothing found')).toBeInTheDocument();
+      });
+
+      await expect(onTypeMock).toHaveBeenCalledTimes(3);
+      await expect(onSearchMock).toHaveBeenLastCalledWith('xyz');
+      await expect(onSelectMock).toHaveBeenCalledTimes(0);
+    });
   },
 };
