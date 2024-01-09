@@ -1,9 +1,13 @@
 import { memo, useCallback, useEffect, useRef } from 'react';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Simplify, ValueOf } from '@gilbarbara/types';
 
-import { WithChildren } from '~/types';
+import { getStyledOptions, layoutStyles } from '~/modules/system';
 
-export interface ClickOutsideKnownProps extends WithChildren {
+import { WithChildren, WithLayout } from '~/types';
+
+export interface ClickOutsideKnownProps extends WithChildren, WithLayout {
   active: boolean;
   display?: ValueOf<typeof DISPLAY>;
   onClick: () => void;
@@ -19,8 +23,20 @@ const DISPLAY = {
   CONTENTS: 'contents',
 } as const;
 
-export function ClickOutside(props: ClickOutsideProps) {
-  const { active, children, display = DISPLAY.BLOCK, onClick, ...rest } = props;
+export const StyledClickOutside = styled(
+  'div',
+  getStyledOptions(),
+)<Omit<ClickOutsideProps, 'active' | 'onClick'>>(props => {
+  const { display } = props;
+
+  return css`
+    display: ${display && Object.values(DISPLAY).includes(display) ? display : undefined};
+    ${layoutStyles(props)};
+  `;
+});
+
+function ClickOutsideComponent(props: ClickOutsideProps) {
+  const { active, children, onClick, ...rest } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const isTouch = useRef(false);
 
@@ -55,16 +71,13 @@ export function ClickOutside(props: ClickOutsideProps) {
     };
   }, [active, handleClick]);
 
-  const style =
-    display !== DISPLAY.BLOCK && Object.values(DISPLAY).includes(display) ? { display } : undefined;
-
   return (
-    <div ref={containerRef} data-component-name="ClickOutside" style={style} {...rest}>
+    <StyledClickOutside ref={containerRef} data-component-name="ClickOutside" {...rest}>
       {children}
-    </div>
+    </StyledClickOutside>
   );
 }
 
-export const ClickOutsideMemo = memo(ClickOutside);
+export const ClickOutside = memo(ClickOutsideComponent);
 
-ClickOutsideMemo.displayName = 'ClickOutside';
+ClickOutside.displayName = 'ClickOutside';
