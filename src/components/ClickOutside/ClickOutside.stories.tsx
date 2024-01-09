@@ -3,9 +3,9 @@ import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
 import { fireEvent, userEvent, within } from '@storybook/testing-library';
 
-import { Box, ButtonUnstyled, Paragraph } from '~';
+import { Box, Button, Paragraph } from '~';
 
-import { hideStoryFromDocsPage } from '~/stories/__helpers__';
+import { hideStoryFromDocsPage, layoutProps } from '~/stories/__helpers__';
 
 import { ClickOutside, ClickOutsideProps } from './ClickOutside';
 
@@ -16,6 +16,10 @@ export default {
   component: ClickOutside,
   args: {
     active: true,
+    width: 400,
+  },
+  argTypes: {
+    ...layoutProps(),
   },
 } satisfies Meta<typeof ClickOutside>;
 
@@ -28,10 +32,10 @@ function Render(props: ClickOutsideProps) {
 
   return (
     <ClickOutside {...props} onClick={handleClick}>
-      <Box border padding="md" width={400}>
-        <ButtonUnstyled color="primary" disabled={isActive} onClick={handleClick}>
+      <Box border padding="md">
+        <Button disabled={isActive} onClick={handleClick} size="xs">
           {isActive ? 'Content is visible' : 'Click to show'}
-        </ButtonUnstyled>
+        </Button>
 
         <Paragraph bold mt="md" size="large">
           Culpa incididunt cillum aliquip dolore
@@ -71,8 +75,8 @@ export const Tests: Story = {
     await userEvent.click(document.body);
     expect(canvas.queryByTestId('Content')).not.toBeInTheDocument();
 
-    fireEvent.touchEnd(canvas.getByTestId('ButtonUnstyled'));
-    await userEvent.click(canvas.getByTestId('ButtonUnstyled'));
+    fireEvent.touchEnd(canvas.getByTestId('Button'));
+    await userEvent.click(canvas.getByTestId('Button'));
     expect(canvas.getByTestId('Content')).toBeInTheDocument();
   },
 };
