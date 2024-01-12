@@ -716,6 +716,7 @@ export const iconsCustom = [
   { name: 'stop-r' as const, categories: ['multimedia', 'square'] },
   { name: 'stop-sign' as const, categories: ['misc'] },
   { name: 'stopwatch' as const, categories: ['time'] },
+  { name: 'storybook' as const, categories: ['brand'] },
   { name: 'student' as const, categories: ['misc'] },
   { name: 'style' as const, categories: ['ui'] },
   { name: 'svelte' as const, categories: ['development'] },
