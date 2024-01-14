@@ -4,6 +4,7 @@ import {
   borderStyles,
   boxStyles,
   colorStyles,
+  dimensionStyles,
   displayStyles,
   flexBoxStyles,
   flexItemStyles,
@@ -93,6 +94,16 @@ describe('displayStyles', () => {
 
   it('should return an empty object without the "display" prop', () => {
     expect(displayStyles({})).toEqual({});
+  });
+});
+
+describe('dimensionStyles', () => {
+  it('should return properly', () => {
+    expect(dimensionStyles({ height: 200, maxWidth: '100%', width: 480 })).toMatchSnapshot();
+  });
+
+  it('should return an empty object', () => {
+    expect(dimensionStyles({})).toEqual({});
   });
 });
 

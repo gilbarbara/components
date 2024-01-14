@@ -103,6 +103,15 @@ export interface WithComponentSize {
   size?: Sizes;
 }
 
+export interface WithDimension {
+  height?: StandardLonghandProperties['height'] | number;
+  maxHeight?: StandardLonghandProperties['maxHeight'] | number;
+  maxWidth?: StandardLonghandProperties['maxWidth'] | number;
+  minHeight?: StandardLonghandProperties['minHeight'] | number;
+  minWidth?: StandardLonghandProperties['minWidth'] | number;
+  width?: StandardLonghandProperties['width'] | number;
+}
+
 export interface WithDisabled {
   /** @default false */
   disabled?: boolean;
@@ -204,12 +213,7 @@ export interface WithInvert {
   invert?: boolean;
 }
 
-export interface WithLayout extends WithDisplay {
-  height?: StandardLonghandProperties['height'] | number;
-  maxHeight?: StandardLonghandProperties['maxHeight'] | number;
-  maxWidth?: StandardLonghandProperties['maxWidth'] | number;
-  minHeight?: StandardLonghandProperties['minHeight'] | number;
-  minWidth?: StandardLonghandProperties['minWidth'] | number;
+export interface WithLayout extends WithDisplay, WithDimension {
   opacity?: StandardLonghandProperties['opacity'] | number;
   overflow?: StandardShorthandProperties['overflow'];
   pointerEvents?: StandardLonghandProperties['pointerEvents'];
@@ -217,7 +221,6 @@ export interface WithLayout extends WithDisplay {
   transform?: StandardLonghandProperties['transform'];
   transformOrigin?: StandardLonghandProperties['transformOrigin'];
   transition?: StandardShorthandProperties['transition'];
-  width?: StandardLonghandProperties['width'] | number;
 }
 
 export interface WithLight {

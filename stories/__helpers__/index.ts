@@ -104,6 +104,17 @@ export function colorProps(
   }, {});
 }
 
+export function dimensionProps() {
+  return {
+    height: { control: 'text', table: { category: 'Layout' } },
+    maxHeight: { control: 'text', table: { category: 'Layout' } },
+    maxWidth: { control: 'text', table: { category: 'Layout' } },
+    minHeight: { control: 'text', table: { category: 'Layout' } },
+    minWidth: { control: 'text', table: { category: 'Layout' } },
+    width: { control: 'text', table: { category: 'Layout' } },
+  };
+}
+
 export function flexBoxProps(...exclude: Array<keyof WithFlexBox>) {
   const options = {
     align: { control: 'select', options: ['', ...flexItems] },
@@ -149,12 +160,8 @@ export function layoutProps(options?: { display: string }) {
   const { display } = options ?? {};
 
   return {
+    ...dimensionProps(),
     display: { control: 'text', defaultValue: display, table: { category: 'Layout' } },
-    height: { control: 'text', table: { category: 'Layout' } },
-    maxHeight: { control: 'text', table: { category: 'Layout' } },
-    maxWidth: { control: 'text', table: { category: 'Layout' } },
-    minHeight: { control: 'text', table: { category: 'Layout' } },
-    minWidth: { control: 'text', table: { category: 'Layout' } },
     opacity: { control: 'number', table: { category: 'Layout' } },
     overflow: { control: 'text', table: { category: 'Layout' } },
     pointerEvents: { control: 'select', table: { category: 'Layout' } },
@@ -162,7 +169,6 @@ export function layoutProps(options?: { display: string }) {
     transform: { control: 'text', table: { category: 'Layout' } },
     transformOrigin: { control: 'text', table: { category: 'Layout' } },
     transition: { control: 'text', table: { category: 'Layout' } },
-    width: { control: 'text', table: { category: 'Layout' } },
   };
 }
 
