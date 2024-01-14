@@ -100,6 +100,14 @@ exports[`colorStyles should return properly with just "color" 1`] = `
 }
 `;
 
+exports[`dimensionStyles should return properly 1`] = `
+{
+  "height": "200px",
+  "maxWidth": "100%",
+  "width": "480px",
+}
+`;
+
 exports[`displayStyles should return properly 1`] = `
 {
   "display": "flex",

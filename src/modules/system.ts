@@ -18,6 +18,7 @@ import {
   WithBorderless,
   WithChildrenOptional,
   WithColors,
+  WithDimension,
   WithDisplay,
   WithElementSpacing,
   WithFlexBox,
@@ -327,6 +328,38 @@ export function colorStyles<T extends WithColors & WithInvert & WithTransparent 
   return styles;
 }
 
+export function dimensionStyles<T extends WithDimension>(props: T) {
+  const { height, maxHeight, maxWidth, minHeight, minWidth, width } = props;
+
+  const output: CSSObject = {};
+
+  if (!is.nullOrUndefined(height)) {
+    output.height = px(height);
+  }
+
+  if (!is.nullOrUndefined(maxHeight)) {
+    output.maxHeight = px(maxHeight);
+  }
+
+  if (!is.nullOrUndefined(maxWidth)) {
+    output.maxWidth = px(maxWidth);
+  }
+
+  if (!is.nullOrUndefined(minHeight)) {
+    output.minHeight = px(minHeight);
+  }
+
+  if (!is.nullOrUndefined(minWidth)) {
+    output.minWidth = px(minWidth);
+  }
+
+  if (!is.nullOrUndefined(width)) {
+    output.width = px(width);
+  }
+
+  return output;
+}
+
 export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
   const { display } = props;
 
@@ -497,7 +530,7 @@ export function inputStyles<
 }
 
 export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
-  const { display, height, maxHeight, maxWidth, minHeight, minWidth, width } = props;
+  const { display } = props;
 
   const output: CSSObject = {};
 
@@ -523,31 +556,7 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
     output.display = display;
   }
 
-  if (!is.nullOrUndefined(height)) {
-    output.height = px(height);
-  }
-
-  if (!is.nullOrUndefined(maxHeight)) {
-    output.maxHeight = px(maxHeight);
-  }
-
-  if (!is.nullOrUndefined(maxWidth)) {
-    output.maxWidth = px(maxWidth);
-  }
-
-  if (!is.nullOrUndefined(minHeight)) {
-    output.minHeight = px(minHeight);
-  }
-
-  if (!is.nullOrUndefined(minWidth)) {
-    output.minWidth = px(minWidth);
-  }
-
-  if (!is.nullOrUndefined(width)) {
-    output.width = px(width);
-  }
-
-  return output;
+  return { ...output, ...dimensionStyles(props) };
 }
 
 export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObject {
