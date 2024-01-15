@@ -12,6 +12,8 @@ import {
 
 import { defaultProps, NonIdealState } from './NonIdealState';
 
+import { Box } from '../..';
+
 type Story = StoryObj<typeof NonIdealState>;
 
 export default {
@@ -34,14 +36,39 @@ export default {
 
 export const Basic: Story = {};
 
-export const Horizontal: Story = {
+export const Sizes: Story = {
   args: {
-    direction: 'horizontal',
-    icon: 'airplane',
-    size: 'lg',
-    type: 'error',
+    icon: 'size',
   },
   argTypes: {
-    direction: disableControl(),
+    size: disableControl(),
+  },
+  render: function Render(props) {
+    return (
+      <Box>
+        <NonIdealState {...props} description="The smallest size" size="sm" title="sm" />
+        <NonIdealState {...props} description="The medium size" size="md" title="md (default)" />
+        <NonIdealState {...props} description="The larger size" size="lg" title="lg" />
+      </Box>
+    );
+  },
+};
+
+export const Types: Story = {
+  args: {
+    direction: 'horizontal',
+  },
+  argTypes: {
+    type: disableControl(),
+  },
+  render: function Render(props) {
+    return (
+      <Box>
+        <NonIdealState {...props} title="error" type="error" />
+        <NonIdealState {...props} title="no-results" type="no-results" />
+        <NonIdealState {...props} title="not-found (default)" type="not-found" />
+        <NonIdealState {...props} title="offline" type="offline" />
+      </Box>
+    );
   },
 };

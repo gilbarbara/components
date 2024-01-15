@@ -58,6 +58,7 @@ export const Basic: Story = {
 
 export const WithParent: Story = {
   args: {
+    fullScreen: true,
     justify: 'center',
   },
   render: props => (
