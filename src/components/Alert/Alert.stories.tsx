@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Box, Paragraph } from '~';
 
 import {
+  dimensionProps,
   flexBoxProps,
   hideProps,
   hideStoryFromDocsPage,
@@ -25,6 +26,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...flexBoxProps('alignContent', 'justifyItems'),
+    ...dimensionProps(),
     ...radiusProps(),
     ...spacingProps(),
     children: { control: 'text' },
