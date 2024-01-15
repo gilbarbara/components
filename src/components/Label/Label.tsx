@@ -54,7 +54,6 @@ export const StyledLabel = styled(
     line-height: 1;
     ${!inline ? `margin-bottom: ${spacing.sm}` : ''};
     position: relative;
-    white-space: nowrap;
     ${colorStyles(props)};
     ${textStyles(props)};
 
