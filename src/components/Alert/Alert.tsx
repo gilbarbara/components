@@ -1,7 +1,7 @@
 import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
@@ -9,6 +9,7 @@ import { getTheme } from '~/modules/helpers';
 import {
   baseStyles,
   borderStyles,
+  dimensionStyles,
   flexBoxStyles,
   getStyledOptions,
   marginStyles,
@@ -21,12 +22,11 @@ import { Text } from '~/components/Text';
 
 import {
   Icons,
-  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildren,
+  WithDimension,
   WithFlexBox,
-  WithLayout,
   WithMargin,
   WithPadding,
   WithRadius,
@@ -37,7 +37,7 @@ export interface AlertKnownProps
     WithBorder,
     WithChildren,
     Omit<WithFlexBox, 'alignContent' | 'justifyItems'>,
-    Pick<WithLayout, 'maxWidth'>,
+    WithDimension,
     WithMargin,
     WithPadding,
     WithRadius {
@@ -60,7 +60,7 @@ export interface AlertKnownProps
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
 }
 
-export type AlertProps = Simplify<OmitElementProps<HTMLDivElement, AlertKnownProps>>;
+export type AlertProps = Simplify<AlertKnownProps>;
 
 function getColor(type: AlertProps['type'], light?: boolean) {
   const colors = {
@@ -116,13 +116,14 @@ export const defaultProps = {
   padding: 'md',
   radius: 'xs',
   type: 'success',
+  width: '100%',
 } satisfies Omit<AlertProps, 'children'>;
 
 export const StyledAlert = styled(
   'div',
   getStyledOptions('type'),
 )<AlertProps>(props => {
-  const { align, direction, light, maxWidth, type } = props;
+  const { align, direction, light, type } = props;
   const { grayScale, spacing, white, ...theme } = getTheme(props);
   const { mainColor, textColor } = getColorTokens(getColor(type, light), null, theme);
 
@@ -134,9 +135,9 @@ export const StyledAlert = styled(
     display: flex;
     flex-direction: ${direction};
     position: relative;
-    max-width: ${px(maxWidth)};
     width: 100%;
     ${borderStyles(props)};
+    ${dimensionStyles(props)};
     ${flexBoxStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};
@@ -162,7 +163,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
       {...rest}
     >
       {!hideIcon && <Icon color={selected.color} name={icon ?? selected.icon} size={iconSize} />}
-      {isValidElement(children) ? children : <Text size="sm">{children}</Text>}
+      {isValidElement(children) ? children : <Text>{children}</Text>}
     </StyledAlert>
   );
 });
