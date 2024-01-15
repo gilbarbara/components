@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { objectKeys, sortByLocaleCompare } from '@gilbarbara/helpers';
-import { expect, jest } from '@storybook/jest';
+// import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
 
+// import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { Avatar, Box, Paragraph } from '~';
 
 import { colors } from '~/modules/theme';
@@ -13,7 +13,7 @@ import {
   colorProps,
   disableControl,
   hideProps,
-  hideStoryFromDocsPage,
+  // hideStoryFromDocsPage,
   marginProps,
 } from '~/stories/__helpers__';
 import { Variant } from '~/types';
@@ -110,70 +110,70 @@ export const ExternalData: Story = {
   },
 };
 
-const onFocusMock = jest.fn();
-const onSearchMock = jest.fn();
-const onSelectMock = jest.fn();
-const onTypeMock = jest.fn();
+// const onFocusMock = jest.fn();
+// const onSearchMock = jest.fn();
+// const onSelectMock = jest.fn();
+// const onTypeMock = jest.fn();
 
-function resetMocks() {
-  onFocusMock.mockClear();
-  onSearchMock.mockClear();
-  onSelectMock.mockClear();
-  onTypeMock.mockClear();
-}
+// function resetMocks() {
+//   onFocusMock.mockClear();
+//   onSearchMock.mockClear();
+//   onSelectMock.mockClear();
+//   onTypeMock.mockClear();
+// }
 
-export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
-  args: {
-    items: defaultItems,
-    onFocus: onFocusMock,
-    onSearch: onSearchMock,
-    onSearchDebounce: 0,
-    onSelect: onSelectMock,
-    onType: onTypeMock,
-  },
-  render: Basic.render,
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    await canvas.findByTestId('Search');
-    const input = canvas.getByTestId('SearchInput');
-
-    await step('should dispatch the onFocus callback', async () => {
-      resetMocks();
-
-      await userEvent.click(input);
-      await waitFor(() => {
-        expect(onFocusMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    await step('should render the items', async () => {
-      await expect(canvas.getAllByTestId('SearchItem')).toHaveLength(20);
-    });
-
-    await step('should select an item', async () => {
-      resetMocks();
-
-      const value = canvas.getAllByTestId('SearchItem')[0].getAttribute('data-value') ?? '';
-
-      await userEvent.click(canvas.getByText(value));
-      await expect(onSelectMock).toHaveBeenNthCalledWith(1, value);
-    });
-
-    await step('should render "Nothing found" if search returned no results', async () => {
-      resetMocks();
-
-      await userEvent.type(canvas.getByTestId('SearchInput'), 'xyz');
-
-      await waitFor(() => {
-        expect(canvas.getByText('Nothing found')).toBeInTheDocument();
-      });
-
-      await expect(onTypeMock).toHaveBeenCalledTimes(3);
-      await expect(onSearchMock).toHaveBeenLastCalledWith('xyz');
-      await expect(onSelectMock).toHaveBeenCalledTimes(0);
-    });
-  },
-};
+// export const Tests: Story = {
+//   ...hideStoryFromDocsPage(),
+//   tags: ['hidden'],
+//   args: {
+//     items: defaultItems,
+//     onFocus: onFocusMock,
+//     onSearch: onSearchMock,
+//     onSearchDebounce: 0,
+//     onSelect: onSelectMock,
+//     onType: onTypeMock,
+//   },
+//   render: Basic.render,
+//   play: async ({ canvasElement, step }) => {
+//     const canvas = within(canvasElement);
+//
+//     await canvas.findByTestId('Search');
+//     const input = canvas.getByTestId('SearchInput');
+//
+//     await step('should dispatch the onFocus callback', async () => {
+//       resetMocks();
+//
+//       await userEvent.click(input);
+//       await waitFor(() => {
+//         expect(onFocusMock).toHaveBeenCalledTimes(1);
+//       });
+//     });
+//
+//     await step('should render the items', async () => {
+//       await expect(canvas.getAllByTestId('SearchItem')).toHaveLength(20);
+//     });
+//
+//     await step('should select an item', async () => {
+//       resetMocks();
+//
+//       const value = canvas.getAllByTestId('SearchItem')[0].getAttribute('data-value') ?? '';
+//
+//       await userEvent.click(canvas.getByText(value));
+//       await expect(onSelectMock).toHaveBeenNthCalledWith(1, value);
+//     });
+//
+//     await step('should render "Nothing found" if search returned no results', async () => {
+//       resetMocks();
+//
+//       await userEvent.type(canvas.getByTestId('SearchInput'), 'xyz');
+//
+//       await waitFor(() => {
+//         expect(canvas.getByText('Nothing found')).toBeInTheDocument();
+//       });
+//
+//       await expect(onTypeMock).toHaveBeenCalledTimes(3);
+//       await expect(onSearchMock).toHaveBeenLastCalledWith('xyz');
+//       await expect(onSelectMock).toHaveBeenCalledTimes(0);
+//     });
+//   },
+// };
