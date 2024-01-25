@@ -65,7 +65,7 @@ export type SortDirection = 'asc' | 'desc';
 // Responsive
 export interface MediaQueries {
   [key: string]: any;
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   _: string;
   lg: string;
   md: string;
