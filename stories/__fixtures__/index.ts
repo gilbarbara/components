@@ -67,7 +67,7 @@ function randomValue(value: string) {
   return Math.round(Math.random()) ? value : '';
 }
 
-function createRandomUser(): User {
+export function createRandomUser(): User {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const code = randomValue(faker.string.nanoid());
@@ -86,7 +86,3 @@ function createRandomUser(): User {
     role: faker.helpers.fake(['admin', 'user']),
   };
 }
-
-export const users: User[] = faker.helpers.multiple(createRandomUser, {
-  count: 50,
-});
