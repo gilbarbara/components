@@ -1,4 +1,3 @@
-import { MouseEventHandler } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -13,8 +12,9 @@ import { WithAccent, WithChildrenOptional } from '~/types';
 interface PaginationButtonProps extends WithAccent, WithChildrenOptional {
   currentPage: number;
   disabled: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: (currentPage: number, type?: string) => void;
   page: number;
+  type?: string;
 }
 
 const StyledPaginationButton = styled(
@@ -47,15 +47,23 @@ const StyledPaginationButton = styled(
 });
 
 export default function PaginationButton(props: PaginationButtonProps) {
-  const { accent, children, currentPage, disabled, onClick, page } = props;
+  const { accent, children, currentPage, disabled, onClick, page, type } = props;
+  const current = page === currentPage && children === page;
+
+  const handleClick = () => {
+    onClick?.(page, type);
+  };
 
   return (
     <StyledPaginationButton
       accent={accent}
-      current={page === currentPage && children === page}
+      current={current}
+      data-component-name="PaginationButton"
+      data-current={current}
       data-page={page}
+      data-type={type}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children ?? page}
     </StyledPaginationButton>

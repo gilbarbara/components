@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Simplify } from '@gilbarbara/types';
@@ -26,7 +26,7 @@ export interface PaginationKnownProps extends WithAccent, WithBorder, WithMargin
    * @default 3
    */
   edgeNavigationLimit?: number;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: (currentPage: number, type?: string) => void;
   style?: CSSProperties;
   totalPages: number;
 }
@@ -35,8 +35,8 @@ export type PaginationProps = Simplify<PaginationKnownProps>;
 
 interface Item extends WithDisabled {
   content?: ReactNode;
-  key?: string;
   page?: number;
+  type: string;
 }
 
 export const defaultProps = {
@@ -80,7 +80,7 @@ export function Pagination(props: PaginationProps) {
 
   if (!disableEdgeNavigation && totalPages > edgeNavigationLimit) {
     items.push({
-      key: 'first',
+      type: 'first',
       disabled: currentPage === 1,
       page: 1,
       content: <Icon name="chevron-double-left" />,
@@ -88,44 +88,44 @@ export function Pagination(props: PaginationProps) {
   }
 
   items.push({
-    key: 'previous',
+    type: 'previous',
     disabled: currentPage === 1,
     page: currentPage - 1,
     content: <Icon name="chevron-left" />,
   });
 
   if (disableEdgeNavigation && totalPages > 6) {
-    items.push({ key: 'back', page: 1 });
+    items.push({ type: 'page', page: 1 });
 
     if (currentPage > 3) {
-      items.push({ key: 'between-1', content: '...' });
+      items.push({ type: 'between-1', content: '...' });
     }
 
     if (currentPage === totalPages) {
-      items.push({ page: currentPage - 2 });
+      items.push({ type: 'page', page: currentPage - 2 });
     }
 
     if (currentPage > 2) {
-      items.push({ page: currentPage - 1 });
+      items.push({ type: 'page', page: currentPage - 1 });
     }
 
     if (currentPage !== 1 && currentPage !== totalPages) {
-      items.push({ page: currentPage });
+      items.push({ type: 'page', page: currentPage });
     }
 
     if (currentPage < totalPages - 1) {
-      items.push({ page: currentPage + 1 });
+      items.push({ type: 'page', page: currentPage + 1 });
     }
 
     if (currentPage === 1) {
-      items.push({ page: currentPage + 2 });
+      items.push({ type: 'page', page: currentPage + 2 });
     }
 
     if (currentPage < totalPages - 2) {
-      items.push({ key: 'between-2', content: '...' });
+      items.push({ type: 'between-2', content: '...' });
     }
 
-    items.push({ page: totalPages });
+    items.push({ type: 'page', page: totalPages });
   } else {
     const pages = Array.from({ length: totalPages }, (_, index) => index + 1).filter(p => {
       const limit = currentPage + 2 <= totalPages ? currentPage - 1 : totalPages - 2;
@@ -137,12 +137,12 @@ export function Pagination(props: PaginationProps) {
     });
 
     pages.forEach(d => {
-      items.push({ page: d });
+      items.push({ type: 'page', page: d });
     });
   }
 
   items.push({
-    key: 'next',
+    type: 'next',
     disabled: currentPage === totalPages,
     page: currentPage + 1,
     content: <Icon name="chevron-right" />,
@@ -150,7 +150,7 @@ export function Pagination(props: PaginationProps) {
 
   if (!disableEdgeNavigation && totalPages > edgeNavigationLimit) {
     items.push({
-      key: 'last',
+      type: 'last',
       disabled: currentPage === totalPages,
       page: totalPages,
       content: <Icon name="chevron-double-right" />,
@@ -160,19 +160,20 @@ export function Pagination(props: PaginationProps) {
   return (
     <StyledPagination data-component-name="Pagination" {...rest}>
       {items.map((d, index) =>
-        !is.undefined(d.page) ? (
+        is.number(d.page) ? (
           <PaginationButton
-            key={d.key ?? d.page ?? index}
+            key={`${d.type}-${d.page ?? index}`}
             accent={accent}
             currentPage={currentPage}
             disabled={d.disabled ?? false}
             onClick={onClick}
             page={d.page}
+            type={d.type}
           >
             {d.content ?? d.page}
           </PaginationButton>
         ) : (
-          <span key={d.key}>...</span>
+          <span key={d.type}>...</span>
         ),
       )}
     </StyledPagination>
