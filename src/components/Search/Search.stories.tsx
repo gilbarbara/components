@@ -8,7 +8,7 @@ import { Avatar, Box, Paragraph } from '~';
 
 import { colors } from '~/modules/theme';
 
-import { users } from '~/stories/__fixtures__';
+import users from '~/stories/__fixtures__/users.json';
 import {
   colorProps,
   disableControl,

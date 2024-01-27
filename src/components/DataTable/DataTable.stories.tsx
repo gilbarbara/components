@@ -22,7 +22,7 @@ import {
   Text,
 } from '~';
 
-import { users } from '~/stories/__fixtures__';
+import users from '~/stories/__fixtures__/users.json';
 import {
   addChromaticModes,
   colorProps,
