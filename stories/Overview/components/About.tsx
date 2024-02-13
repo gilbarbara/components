@@ -11,8 +11,7 @@ function OverviewAbout() {
     <Box>
       <Jumbo>@gilbarbara/components</Jumbo>
 
-      <img alt="components" src="https://files.gilbarbara.dev/logos/components.svg" />
-
+      <img alt="components" src="https://files.gilbarbara.dev/logos/components-icon.svg" />
       <Paragraph mt="md">
         A collection of React components to help you create beautiful user interfaces.
       </Paragraph>
