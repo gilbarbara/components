@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Simplify, ValueOf } from '@gilbarbara/types';
@@ -38,6 +38,7 @@ export const StyledClickOutside = styled(
 function ClickOutsideComponent(props: ClickOutsideProps) {
   const { active, children, onClick, ...rest } = props;
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isReady, setReady] = useState(false);
   const isTouch = useRef(false);
 
   const handleClick = useCallback(
@@ -60,6 +61,10 @@ function ClickOutsideComponent(props: ClickOutsideProps) {
   );
 
   useEffect(() => {
+    if (!isReady) {
+      setReady(true);
+    }
+
     if (active) {
       document.addEventListener('touchend', handleClick, true);
       document.addEventListener('click', handleClick, true);
@@ -69,10 +74,15 @@ function ClickOutsideComponent(props: ClickOutsideProps) {
       document.removeEventListener('touchend', handleClick, true);
       document.removeEventListener('click', handleClick, true);
     };
-  }, [active, handleClick]);
+  }, [active, handleClick, isReady]);
 
   return (
-    <StyledClickOutside ref={containerRef} data-component-name="ClickOutside" {...rest}>
+    <StyledClickOutside
+      ref={containerRef}
+      data-component-name="ClickOutside"
+      data-ready={isReady}
+      {...rest}
+    >
       {children}
     </StyledClickOutside>
   );

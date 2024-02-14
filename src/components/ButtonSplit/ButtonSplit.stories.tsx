@@ -1,8 +1,7 @@
 import { MouseEvent, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import { ButtonUnstyled, Icon, Spacer } from '~';
 
@@ -169,7 +168,7 @@ export const Tests: Story = {
 
     await canvas.findByTestId('ButtonSplit');
 
-    expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+    await expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
 
     await userEvent.click(canvas.getByTestId('MenuButton'));
     await waitFor(() => {

@@ -1,9 +1,8 @@
 /* eslint-disable no-await-in-loop */
 import { useState } from 'react';
 import { sleep } from '@gilbarbara/helpers';
-import { expect } from '@storybook/jest';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fireEvent, waitFor, within } from '@storybook/testing-library';
+import { expect, fireEvent, waitFor, within } from '@storybook/test';
 
 import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from '~';
 
@@ -200,12 +199,12 @@ export const Tests: Story = {
     await sleep(0.5);
 
     for (const tooltip of tooltips) {
-      fireEvent.mouseOver(tooltip);
+      await fireEvent.mouseOver(tooltip);
       await expect(await canvas.findByTestId('TooltipBody')).toHaveTextContent(
-        tooltip.getAttribute('aria-label') || '',
+        tooltip.getAttribute('aria-label') ?? '',
       );
 
-      fireEvent.mouseOut(tooltip);
+      await fireEvent.mouseOut(tooltip);
       await waitFor(() => {
         expect(canvas.queryByTestId('TooltipBody')).not.toBeInTheDocument();
       });

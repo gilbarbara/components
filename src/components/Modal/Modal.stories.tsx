@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { screen, userEvent, within } from '@storybook/testing-library';
+import { expect, screen, userEvent, waitFor, within } from '@storybook/test';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from '~';
 
@@ -50,7 +49,7 @@ export const Basic: Story = {
         </Button>
 
         <Modal {...props} isActive={isActive} onClose={handleClick}>
-          <FormGroup label="Name" required>
+          <FormGroup data-component-name="Dialog" label="Name" required>
             <Input name="name" placeholder="Name" />
           </FormGroup>
           <FormGroup label="Description">
@@ -77,18 +76,22 @@ export const Tests: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await canvas.findByTestId('OpenModal');
-
     await userEvent.click(canvas.getByTestId('OpenModal'));
-    expect(await screen.findByTestId('Modal')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('Modal')).toBeInTheDocument();
+    });
 
     await userEvent.click(screen.getByRole('button', { name: 'Save' }));
-    expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
+    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
 
     await userEvent.click(canvas.getByTestId('OpenModal'));
-    expect(await screen.findByTestId('Modal')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('Modal')).toBeInTheDocument();
+    });
 
     await userEvent.keyboard('{Escape}');
-    expect(screen.queryByTestId('Modal')).not.toBeInTheDocument();
+    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
   },
 };

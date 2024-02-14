@@ -1,9 +1,8 @@
 import { useTheme } from '@emotion/react';
 import { objectKeys } from '@gilbarbara/helpers';
 import { useArgs } from '@storybook/client-api';
-import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { fireEvent, within } from '@storybook/testing-library';
+import { expect, fireEvent, fn, waitFor, within } from '@storybook/test';
 
 import { Grid } from '~';
 
@@ -87,8 +86,8 @@ export const Colors: Story = {
   },
 };
 
-const mockOnChange = jest.fn();
-const mockOnToggle = jest.fn();
+const mockOnChange = fn();
+const mockOnToggle = fn();
 
 export const Tests: Story = {
   ...hideStoryFromDocsPage(),
@@ -105,12 +104,16 @@ export const Tests: Story = {
 
     await canvas.findByTestId('Toggle');
 
-    fireEvent.click(canvas.getByTestId('Toggle'));
-    await expect(mockOnChange).toHaveBeenCalledTimes(1);
+    await fireEvent.click(canvas.getByTestId('Toggle'));
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalledTimes(1);
+    });
     await expect(mockOnToggle).toHaveBeenCalledTimes(1);
 
-    fireEvent.keyDown(canvas.getByTestId('ToggleElement'), { code: 'Space' });
-    await expect(mockOnChange).toHaveBeenCalledTimes(2);
+    await fireEvent.keyDown(canvas.getByTestId('ToggleElement'), { code: 'Space' });
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalledTimes(2);
+    });
     await expect(mockOnToggle).toHaveBeenCalledTimes(2);
   },
 };
@@ -132,11 +135,11 @@ export const TestsControlled: Story = {
 
     await canvas.findByTestId('Toggle');
 
-    fireEvent.click(canvas.getByTestId('Toggle'));
+    await fireEvent.click(canvas.getByTestId('Toggle'));
     await expect(mockOnChange).toHaveBeenCalledTimes(0);
     await expect(mockOnToggle).toHaveBeenCalledTimes(0);
 
-    fireEvent.keyDown(canvas.getByTestId('ToggleElement'), { code: 'Enter' });
+    await fireEvent.keyDown(canvas.getByTestId('ToggleElement'), { code: 'Enter' });
     await expect(mockOnChange).toHaveBeenCalledTimes(0);
     await expect(mockOnToggle).toHaveBeenCalledTimes(0);
   },

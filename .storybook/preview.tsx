@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { DocsContainer } from '@storybook/addon-docs';
 import { objectKeys } from '@gilbarbara/helpers';
-import { configure } from '@storybook/testing-library';
+import { configure } from '@storybook/test';
 
 import { ThemeProvider } from '@emotion/react';
 import { useGlobals } from '@storybook/client-api';

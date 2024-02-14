@@ -1,7 +1,6 @@
 import { sleep } from '@gilbarbara/helpers';
-import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { colorProps, hideProps, hideStoryFromDocsPage, marginProps } from '~/stories/__helpers__';
 
@@ -25,7 +24,7 @@ export default {
 
 export const Basic: Story = {};
 
-const mockOnCopy = jest.fn();
+const mockOnCopy = fn();
 
 export const Tests: Story = {
   ...hideStoryFromDocsPage(),
@@ -33,19 +32,19 @@ export const Tests: Story = {
   args: {
     onCopy: mockOnCopy,
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ args, canvasElement }) => {
     mockOnCopy.mockClear();
-    await canvas.findByTestId('CopyToClipboard');
+
+    const canvas = within(canvasElement);
 
     await sleep(0.5);
 
     await userEvent.hover(canvas.getByTestId('Tooltip'));
-
-    expect(canvas.getByTestId('TooltipBody')).toBeInTheDocument();
+    await expect(canvas.getByTestId('TooltipBody')).toBeInTheDocument();
 
     await userEvent.click(canvas.getByTestId('CopyToClipboard'));
-    await expect(mockOnCopy).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(args.onCopy).toHaveBeenCalledTimes(1);
+    });
   },
 };

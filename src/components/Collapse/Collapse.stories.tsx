@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { expect, userEvent, within } from '@storybook/test';
 
 import { Button } from '~';
 
@@ -87,12 +86,12 @@ export const Tests: Story = {
     const canvas = within(canvasElement);
 
     await canvas.findByTestId('Collapse');
-    expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'closed');
+    await expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'closed');
 
     await userEvent.click(canvas.getByTestId('CollapseHeader'));
-    expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'open');
+    await expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'open');
 
     await userEvent.click(canvas.getByTestId('CollapseHeader'));
-    expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'closed');
+    await expect(canvas.getByTestId('Collapse')).toHaveAttribute('data-state', 'closed');
   },
 };

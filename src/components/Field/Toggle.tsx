@@ -19,7 +19,6 @@ function FieldToggle(props: Props) {
         shouldDirty: true,
         shouldValidate: true,
       });
-
       onChange?.(status);
     },
     [name, onChange, setValue],
@@ -28,15 +27,17 @@ function FieldToggle(props: Props) {
   return (
     <Controller
       name={name}
-      render={({ field }) => (
-        <Toggle
-          accent={accent}
-          checked={is.undefined(field.value) ? false : field.value}
-          disabled={disabled}
-          name={name}
-          onToggle={handleToggle}
-        />
-      )}
+      render={({ field }) => {
+        return (
+          <Toggle
+            accent={accent}
+            checked={is.undefined(field.value) ? false : field.value}
+            disabled={disabled}
+            name={name}
+            onToggle={handleToggle}
+          />
+        );
+      }}
       rules={{ required }}
     />
   );
