@@ -1,7 +1,6 @@
 /* eslint-disable testing-library/no-render-in-lifecycle,testing-library/no-node-access */
 import { useEffect, useRef } from 'react';
-import { waitFor } from '@storybook/testing-library';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import KeyboardScope, { Options } from '~/modules/keyboardScope';
 

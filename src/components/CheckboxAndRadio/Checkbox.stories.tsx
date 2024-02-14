@@ -1,6 +1,5 @@
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { fireEvent, within } from '@storybook/testing-library';
+import { expect, fireEvent, within } from '@storybook/test';
 
 import { Spacer } from '~';
 
@@ -69,15 +68,15 @@ export const Tests: Story = {
 
     await canvas.findByTestId('Checkbox');
 
-    expect(canvas.getByRole('checkbox')).not.toBeChecked();
+    await expect(canvas.getByRole('checkbox')).not.toBeChecked();
 
-    fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Tab' });
-    expect(canvas.getByRole('checkbox')).not.toBeChecked();
+    await fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Tab' });
+    await expect(canvas.getByRole('checkbox')).not.toBeChecked();
 
-    fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Enter' });
-    expect(canvas.getByRole('checkbox')).toBeChecked();
+    await fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Enter' });
+    await expect(canvas.getByRole('checkbox')).toBeChecked();
 
-    fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Space' });
-    expect(canvas.getByRole('checkbox')).not.toBeChecked();
+    await fireEvent.keyDown(canvas.getByTestId('CheckboxElement'), { code: 'Space' });
+    await expect(canvas.getByRole('checkbox')).not.toBeChecked();
   },
 };

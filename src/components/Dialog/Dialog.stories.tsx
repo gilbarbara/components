@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { screen, userEvent, within } from '@storybook/testing-library';
+import { expect, screen, userEvent, waitFor, within } from '@storybook/test';
 
 import { Button } from '~';
 
@@ -73,18 +72,22 @@ export const Tests: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await canvas.findByTestId('OpenDialog');
-
     await userEvent.click(canvas.getByTestId('OpenDialog'));
-    expect(await screen.findByTestId('Dialog')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
+    });
 
     await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
-    expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
+    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
 
     await userEvent.click(canvas.getByTestId('OpenDialog'));
-    expect(await screen.findByTestId('Dialog')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('Dialog')).toBeInTheDocument();
+    });
 
     await userEvent.keyboard('{Escape}');
-    expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
+    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
   },
 };

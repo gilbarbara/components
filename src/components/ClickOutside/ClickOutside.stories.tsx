@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { fireEvent, userEvent, within } from '@storybook/testing-library';
+import { expect, fireEvent, userEvent, waitFor, within } from '@storybook/test';
 
 import { Box, Button, Paragraph } from '~';
 
@@ -68,15 +67,17 @@ export const Tests: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await canvas.findByTestId('ClickOutside');
+    await waitFor(() => {
+      expect(canvas.getByTestId('ClickOutside')).toHaveAttribute('data-ready', 'true');
+    });
 
-    expect(canvas.getByTestId('Content')).toBeInTheDocument();
+    await expect(canvas.getByTestId('Content')).toBeInTheDocument();
 
     await userEvent.click(document.body);
-    expect(canvas.queryByTestId('Content')).not.toBeInTheDocument();
+    await expect(canvas.queryByTestId('Content')).not.toBeInTheDocument();
 
-    fireEvent.touchEnd(canvas.getByTestId('Button'));
+    await fireEvent.touchEnd(canvas.getByTestId('Button'));
     await userEvent.click(canvas.getByTestId('Button'));
-    expect(canvas.getByTestId('Content')).toBeInTheDocument();
+    await expect(canvas.getByTestId('Content')).toBeInTheDocument();
   },
 };

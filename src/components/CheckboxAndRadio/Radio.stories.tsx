@@ -1,6 +1,5 @@
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { fireEvent, within } from '@storybook/testing-library';
+import { expect, fireEvent, within } from '@storybook/test';
 
 import { Spacer } from '~';
 
@@ -77,12 +76,12 @@ export const Tests: Story = {
 
     await canvas.findByTestId('Radio');
 
-    expect(canvas.getByRole('radio')).not.toBeChecked();
+    await expect(canvas.getByRole('radio')).not.toBeChecked();
 
-    fireEvent.keyDown(canvas.getByTestId('RadioElement'), { code: 'Tab' });
-    expect(canvas.getByRole('radio')).not.toBeChecked();
+    await fireEvent.keyDown(canvas.getByTestId('RadioElement'), { code: 'Tab' });
+    await expect(canvas.getByRole('radio')).not.toBeChecked();
 
-    fireEvent.keyDown(canvas.getByTestId('RadioElement'), { code: 'Enter' });
-    expect(canvas.getByRole('radio')).toBeChecked();
+    await fireEvent.keyDown(canvas.getByTestId('RadioElement'), { code: 'Enter' });
+    await expect(canvas.getByRole('radio')).toBeChecked();
   },
 };

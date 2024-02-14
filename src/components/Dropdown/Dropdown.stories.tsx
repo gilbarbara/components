@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { expect, userEvent, within } from '@storybook/test';
 
 import { Icon } from '~';
 
@@ -87,19 +86,19 @@ export const Tests: Story = {
     await canvas.findByTestId('DropdownWrapper');
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
-    expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
+    await expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
 
     await userEvent.click(canvas.getAllByRole('listitem')[0]);
-    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
-    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('One');
+    await expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    await expect(canvas.getByTestId('ContentItem')).toHaveTextContent('One');
 
     await userEvent.click(canvas.getByTestId('ContentItem'));
     await userEvent.click(canvas.getAllByRole('listitem')[0]);
-    expect(canvas.getByText('Select an option')).toBeInTheDocument();
+    await expect(canvas.getByText('Select an option')).toBeInTheDocument();
 
     await userEvent.type(canvas.getByRole('textbox'), 'Twenty');
     await userEvent.click(canvas.getByRole('button', { name: 'Create "Twenty"' }));
 
-    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Twenty');
+    await expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Twenty');
   },
 };

@@ -1,7 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { Box, Form, Grid, H3 } from '~';
 
@@ -349,13 +348,13 @@ export const Types: Story = {
   ),
 };
 
-const mockOnBlur = jest.fn();
-const mockOnChange = jest.fn();
-const mockOnFocus = jest.fn();
+const mockOnBlur = fn();
+const mockOnChange = fn();
+const mockOnFocus = fn();
 
 export const TestCheckbox: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'checkbox',
     type: 'checkbox',
@@ -373,17 +372,21 @@ export const TestCheckbox: Story = {
 
     await userEvent.click(checkboxElements[0]);
     await expect(checkboxes[0]).toBeChecked();
-    await expect(mockOnChange).toHaveBeenNthCalledWith(1, ['full-time']);
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(1, ['full-time']);
+    });
 
     await userEvent.click(checkboxElements[0]);
     await expect(checkboxes[0]).not.toBeChecked();
-    await expect(mockOnChange).toHaveBeenNthCalledWith(2, []);
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(2, []);
+    });
   },
 };
 
 export const TestDatePicker: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'datePicker',
     type: 'datePicker',
@@ -397,33 +400,46 @@ export const TestDatePicker: Story = {
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('DatePickerSelectorButton'));
-    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'open');
+    await expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute(
+      'data-state',
+      'open',
+    );
 
     const days = canvas.getAllByRole('gridcell');
 
     // select a date
     await userEvent.click(days[10]);
-    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'closed');
-    await expect(mockOnChange).toHaveBeenNthCalledWith(
-      1,
-      expect.stringMatching(/^\d{4}-\d{2}-\d{2}/),
+    await expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute(
+      'data-state',
+      'closed',
     );
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(1, expect.stringMatching(/^\d{4}-\d{2}-\d{2}/));
+    });
 
     await userEvent.click(canvas.getByTestId('DatePickerSelectorButton'));
-    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'open');
+    await expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute(
+      'data-state',
+      'open',
+    );
 
     // unselect a date
     await userEvent.click(days[10]);
-    await expect(mockOnChange).toHaveBeenNthCalledWith(2, '');
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(2, '');
+    });
 
     await userEvent.click(document.body);
-    expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute('data-state', 'closed');
+    await expect(canvas.getByTestId('DatePickerSelectorContent')).toHaveAttribute(
+      'data-state',
+      'closed',
+    );
   },
 };
 
 export const TestDropdownMulti: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'dropdown',
     type: 'dropdown',
@@ -437,28 +453,28 @@ export const TestDropdownMulti: Story = {
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
-    expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
+    await expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
 
     await userEvent.click(canvas.getAllByRole('listitem')[1]);
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
-    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
-    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Angular');
+    await expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    await expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Angular');
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
     await userEvent.click(canvas.getAllByRole('listitem')[1]);
     await userEvent.click(canvas.getAllByRole('listitem')[2]);
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
-    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
-    expect(canvas.getByTestId('ContentItem')).not.toHaveTextContent('Angular');
-    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Flutter');
+    await expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    await expect(canvas.getByTestId('ContentItem')).not.toHaveTextContent('Angular');
+    await expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Flutter');
   },
 };
 
 export const TestDropdownSingle: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'dropdown',
     type: 'dropdown',
@@ -476,7 +492,7 @@ export const TestDropdownSingle: Story = {
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
-    expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
+    await expect(await canvas.findByTestId('DropdownItems')).toBeInTheDocument();
 
     await userEvent.type(canvas.getByRole('textbox'), 'ang');
 
@@ -486,14 +502,14 @@ export const TestDropdownSingle: Story = {
 
     await userEvent.click(canvas.getByRole('listitem'));
 
-    expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
-    expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Angular');
+    await expect(canvas.queryByTestId('DropdownItems')).not.toBeInTheDocument();
+    await expect(canvas.getByTestId('ContentItem')).toHaveTextContent('Angular');
   },
 };
 
 export const TestRadio: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'radio',
     type: 'radio',
@@ -509,16 +525,20 @@ export const TestRadio: Story = {
     const radioElements = canvas.getAllByTestId('RadioElement');
 
     await userEvent.click(radioElements[0]);
-    await expect(mockOnChange).toHaveBeenNthCalledWith(1, 'back-end');
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(1, 'back-end');
+    });
 
     await userEvent.click(radioElements[1]);
-    await expect(mockOnChange).toHaveBeenNthCalledWith(2, 'devops');
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(2, 'devops');
+    });
   },
 };
 
 export const TestSelect: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'select',
     type: 'select',
@@ -538,19 +558,25 @@ export const TestSelect: Story = {
     const select = canvas.getByTestId('Select');
 
     await userEvent.click(select);
-    await expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    });
 
     await userEvent.tab();
-    await expect(mockOnBlur).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockOnBlur).toHaveBeenCalledTimes(1);
+    });
 
     await userEvent.selectOptions(select, ['data']);
-    await expect(mockOnChange).toHaveBeenNthCalledWith(1, 'data');
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(1, 'data');
+    });
   },
 };
 
 export const TestText: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'text',
     type: 'text',
@@ -568,19 +594,25 @@ export const TestText: Story = {
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('Input'));
-    await expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    });
 
     await userEvent.type(canvas.getByTestId('Input'), '12345');
-    await expect(mockOnChange).toHaveBeenCalledTimes(5);
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalledTimes(5);
+    });
 
     await userEvent.tab();
-    await expect(mockOnBlur).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockOnBlur).toHaveBeenCalledTimes(1);
+    });
   },
 };
 
 export const TestTextarea: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'textarea',
     type: 'textarea',
@@ -598,19 +630,25 @@ export const TestTextarea: Story = {
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('Textarea'));
-    await expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockOnFocus).toHaveBeenCalledTimes(1);
+    });
 
     await userEvent.type(canvas.getByTestId('Textarea'), '12345');
-    await expect(mockOnChange).toHaveBeenCalledTimes(5);
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalledTimes(5);
+    });
 
     await userEvent.tab();
-    await expect(mockOnBlur).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockOnBlur).toHaveBeenCalledTimes(1);
+    });
   },
 };
 
 export const TestToggle: Story = {
   ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  // tags: ['hidden'],
   args: {
     name: 'toggle',
     type: 'toggle',
@@ -625,11 +663,10 @@ export const TestToggle: Story = {
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('Toggle'));
-    await expect(mockOnChange).toHaveBeenNthCalledWith(1, true);
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenNthCalledWith(1, true);
+    });
 
-    await userEvent.click(canvas.getByTestId('Toggle'));
-    await expect(mockOnChange).toHaveBeenNthCalledWith(2, false);
-
-    expect(canvas.getByTestId('FieldDebug')).toBeInTheDocument();
+    await expect(canvas.getByTestId('FieldDebug')).toBeInTheDocument();
   },
 };

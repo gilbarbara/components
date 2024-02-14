@@ -1,7 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { expect, jest } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { Avatar, Box, H6, Icon, Paragraph, Spacer } from '~';
 
@@ -110,7 +109,7 @@ export const TestMouseInteractions: Story = {
 
     await canvas.findByTestId('Menu');
 
-    expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+    await expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
 
     await step('Open the menu', async () => {
       await userEvent.click(canvas.getByTestId('MenuButton'));
@@ -168,7 +167,7 @@ export const TestKeyboardInteractions: Story = {
   tags: ['hidden'],
   name: 'Test > Keyboard',
   args: {
-    onToggle: jest.fn(),
+    onToggle: fn(),
   },
   render: WithCustomButtonAndHover.render,
   play: async ({ args, canvasElement, step }) => {
@@ -221,7 +220,7 @@ export const TestDisabledKeyboardAndBlur: Story = {
   args: {
     disableCloseOnBlur: true,
     disableKeyboardNavigation: true,
-    onToggle: jest.fn(),
+    onToggle: fn(),
   },
   render: WithCustomButtonAndHover.render,
   play: async ({ args, canvasElement }) => {
