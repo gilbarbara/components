@@ -1,6 +1,8 @@
+import { vi } from 'vitest';
+
 import { animateIcon } from './animations';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('animateIcon', () => {
   let target: HTMLElement;
@@ -27,7 +29,7 @@ describe('animateIcon', () => {
 
     expect(iconClone).toHaveClass('will-animate');
 
-    jest.runAllTimers();
+    vi.runAllTimers();
     expect(iconClone).toHaveClass('is-animating');
 
     target.dispatchEvent(new Event('transitionend'));

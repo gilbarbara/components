@@ -132,7 +132,6 @@ export default class KeyboardScope {
         ? (this.element?.querySelector(initialFocusedElement) as HTMLElement | null)
         : initialFocusedElement;
 
-    /* istanbul ignore else */
     if (target) {
       window.requestAnimationFrame(() => this.checkFocus(target));
     }

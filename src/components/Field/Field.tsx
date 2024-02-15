@@ -106,7 +106,6 @@ export function Field<T extends FieldProps>(props: T) {
   };
   const output: PlainObject<ReactNode> = { error };
 
-  /* istanbul ignore else */
   if (!skipValidation) {
     groupProps.skipIcon = [
       'checkbox',

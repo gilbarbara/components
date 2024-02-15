@@ -1,15 +1,16 @@
 /* eslint-disable testing-library/no-render-in-lifecycle,testing-library/no-node-access */
 import { useEffect, useRef } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MockInstance, vi } from 'vitest';
 
 import KeyboardScope, { Options } from '~/modules/keyboardScope';
 
-const addEventListener = jest.spyOn(window, 'addEventListener');
-const removeEventListener = jest.spyOn(window, 'removeEventListener');
+const addEventListener = vi.spyOn(window, 'addEventListener');
+const removeEventListener = vi.spyOn(window, 'removeEventListener');
 
 const canBeTabbedCount = 3;
 
-const mocks: Record<string, jest.SpyInstance> = {};
+const mocks: Record<string, MockInstance> = {};
 let scopeInstance: KeyboardScope;
 
 interface Props extends Omit<Options, 'selector'> {
@@ -19,12 +20,12 @@ interface Props extends Omit<Options, 'selector'> {
 function setScope(scope: KeyboardScope) {
   scopeInstance = scope;
 
-  mocks.addScope = jest.spyOn(scope, 'addScope');
-  mocks.canBeTabbed = jest.spyOn(scope, 'canBeTabbed');
-  mocks.findValidElements = jest.spyOn(scope, 'findValidElements');
-  mocks.interceptArrows = jest.spyOn(scope, 'interceptArrows');
-  mocks.interceptTab = jest.spyOn(scope, 'interceptTab');
-  mocks.removeScope = jest.spyOn(scope, 'removeScope');
+  mocks.addScope = vi.spyOn(scope, 'addScope');
+  mocks.canBeTabbed = vi.spyOn(scope, 'canBeTabbed');
+  mocks.findValidElements = vi.spyOn(scope, 'findValidElements');
+  mocks.interceptArrows = vi.spyOn(scope, 'interceptArrows');
+  mocks.interceptTab = vi.spyOn(scope, 'interceptTab');
+  mocks.removeScope = vi.spyOn(scope, 'removeScope');
 }
 
 function dispatchKeydownEvent(code: string) {
@@ -84,8 +85,12 @@ describe('modules/keyboardScope', () => {
       ({ unmount } = render(<Component />));
     });
 
+    beforeEach(() => {
+      scopeInstance.addScope();
+    });
+
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     afterAll(() => {
@@ -167,7 +172,7 @@ describe('modules/keyboardScope', () => {
   });
 
   describe('with "vertical" arrowNavigation and escCallback', () => {
-    const mockEscCallback = jest.fn();
+    const mockEscCallback = vi.fn();
 
     beforeAll(() => {
       ({ unmount } = render(
@@ -181,7 +186,7 @@ describe('modules/keyboardScope', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     afterAll(() => {
@@ -189,7 +194,7 @@ describe('modules/keyboardScope', () => {
     });
 
     it('should focus the primary button', async () => {
-      await waitFor(() => {
+      await vi.waitFor(() => {
         expect(screen.getByTestId('primary') === document.activeElement).toBeTrue();
       });
     });
@@ -201,7 +206,7 @@ describe('modules/keyboardScope', () => {
       expect(mocks.findValidElements).toHaveBeenCalledTimes(1);
       expect(mocks.canBeTabbed).toHaveBeenCalledTimes(canBeTabbedCount);
 
-      await waitFor(() => {
+      await vi.waitFor(() => {
         expect(screen.getByTestId('back') === document.activeElement).toBeTrue();
       });
     });
@@ -220,7 +225,7 @@ describe('modules/keyboardScope', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     afterAll(() => {
@@ -234,7 +239,7 @@ describe('modules/keyboardScope', () => {
       expect(mocks.findValidElements).toHaveBeenCalledTimes(1);
       expect(mocks.canBeTabbed).toHaveBeenCalledTimes(canBeTabbedCount);
 
-      await waitFor(() => {
+      await vi.waitFor(() => {
         expect(screen.getByTestId('skip') === document.activeElement).toBeTrue();
       });
     });
@@ -246,7 +251,7 @@ describe('modules/keyboardScope', () => {
       expect(mocks.findValidElements).toHaveBeenCalledTimes(1);
       expect(mocks.canBeTabbed).toHaveBeenCalledTimes(canBeTabbedCount);
 
-      await waitFor(() => {
+      await vi.waitFor(() => {
         expect(screen.getByTestId('primary') === document.activeElement).toBeTrue();
       });
     });
