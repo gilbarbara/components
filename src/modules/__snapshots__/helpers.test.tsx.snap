@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getMediaQueries should return properly 1`] = `
+exports[`getMediaQueries > should return properly 1`] = `
 {
   "lg": "@media screen and (min-width: 1024px)",
   "md": "@media screen and (min-width: 768px)",
@@ -13,7 +13,7 @@ exports[`getMediaQueries should return properly 1`] = `
 }
 `;
 
-exports[`getTheme should return the theme 1`] = `
+exports[`getTheme > should return the theme 1`] = `
 {
   "avatar": {
     "jumbo": {
@@ -399,7 +399,7 @@ exports[`getTheme should return the theme 1`] = `
 }
 `;
 
-exports[`mergeTheme should return a modified theme 1`] = `
+exports[`mergeTheme > should return a modified theme 1`] = `
 {
   "avatar": {
     "jumbo": {
@@ -785,7 +785,7 @@ exports[`mergeTheme should return a modified theme 1`] = `
 }
 `;
 
-exports[`mergeTheme should return the default theme 1`] = `
+exports[`mergeTheme > should return the default theme 1`] = `
 {
   "avatar": {
     "jumbo": {
@@ -1171,4 +1171,4 @@ exports[`mergeTheme should return the default theme 1`] = `
 }
 `;
 
-exports[`responsive should return proper styles 1`] = `"width:120px;@media screen and (min-width: 768px){width:200px;}"`;
+exports[`responsive > should return proper styles 1`] = `"width:120px;@media screen and (min-width: 768px){width:200px;}"`;

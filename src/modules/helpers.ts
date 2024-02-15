@@ -124,7 +124,6 @@ export function responsive(rules: ResponsiveInput) {
   const mediaQueries = getMediaQueries();
 
   for (const rule in rules) {
-    /* istanbul ignore else */
     if ({}.hasOwnProperty.call(rules, rule)) {
       const styles = rules[rule];
       const query = createMediaQuery(rule, mediaQueries);

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generatePalette should return a monochromatic palette 1`] = `
+exports[`generatePalette > should return a monochromatic palette 1`] = `
 {
   "100": "#e6e6e6",
   "200": "#cccccc",
@@ -15,7 +15,7 @@ exports[`generatePalette should return a monochromatic palette 1`] = `
 }
 `;
 
-exports[`generatePalette should return properly 1`] = `
+exports[`generatePalette > should return properly 1`] = `
 {
   "100": "#ffccda",
   "200": "#ff99b4",

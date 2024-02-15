@@ -44,7 +44,6 @@ export function animateIcon(
   }, 100);
 
   target.addEventListener('transitionend', () => {
-    /* istanbul ignore else */
     if (iconClone.parentNode !== null && iconClone.classList.contains('is-animating')) {
       iconClone.parentNode.removeChild(iconClone);
     }
@@ -91,12 +90,12 @@ export const rotate = keyframes`
   }
 `;
 
-/* istanbul ignore next */
+/* c8 ignore next 3 */
 export function scrollDocument(): HTMLElement {
   return (document.scrollingElement as HTMLElement) || document.createElement('body');
 }
 
-/* istanbul ignore next */
+/* c8 ignore start  */
 export function scrollTo(value: number, options: ScrollToOptions = {}): Promise<void> {
   const { element = scrollDocument(), scrollDuration = 400 } = options;
 
@@ -120,3 +119,4 @@ export function scrollTo(value: number, options: ScrollToOptions = {}): Promise<
     );
   });
 }
+/* c8 ignore stop  */

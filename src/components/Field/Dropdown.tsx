@@ -34,7 +34,6 @@ function FieldDropdown(props: Props) {
       } else {
         const [selected] = data;
 
-        /* istanbul ignore else */
         if (selected) {
           setValue(name, selected.value, setValueOptions);
 
