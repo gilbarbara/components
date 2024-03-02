@@ -103,6 +103,9 @@ export const TestMouseInteractions: Story = {
   ...hideStoryFromDocsPage(),
   tags: ['hidden'],
   name: 'Test > Mouse',
+  args: {
+    onToggle: fn(),
+  },
   render: WithCustomButtonAndHover.render,
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -228,7 +231,7 @@ export const TestDisabledKeyboardAndBlur: Story = {
 
     await canvas.findByTestId('Menu');
 
-    expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+    await expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
 
     // Open the menu by tabbing to the button and pressing enter
     await userEvent.keyboard('{Tab}');

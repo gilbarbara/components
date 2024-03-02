@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { objectKeys } from '@gilbarbara/helpers';
-import { useArgs } from '@storybook/client-api';
+import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fireEvent, fn, waitFor, within } from '@storybook/test';
 

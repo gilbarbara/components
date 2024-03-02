@@ -1,10 +1,10 @@
-import { Meta } from '@storybook/addon-docs';
+import { Meta } from '@storybook/blocks';
 import { Unstyled } from '@storybook/blocks';
 
 import { Box, H1, H2, H3, H4, H5, H6, Jumbo, Paragraph, Spacer } from '../../src';
 import { typography } from '../../src/modules/theme';
 
-<Meta title='Overview/Typography' />
+<Meta title="Overview/Typography" />
 
 <Unstyled>
   <Jumbo>Typography</Jumbo>
@@ -16,48 +16,63 @@ import { typography } from '../../src/modules/theme';
       <Box mb="xs">
         <Paragraph>Jumbo Large ({typography.jumboLarge.fontSize})</Paragraph>
       </Box>
+
       <Jumbo large mb={0}>The quick brown fox jumps over the lazy dog</Jumbo>
     </Box>
+
     <Box>
       <Box mb="xs">
         Jumbo ({typography.jumbo.fontSize})
       </Box>
+
       <Jumbo mb={0}>The quick brown fox jumps over the lazy dog</Jumbo>
     </Box>
+
     <Box>
       <Box mb="xs">
         H1 ({typography.h1.fontSize})
       </Box>
+
       <H1 mb={0}>The quick brown fox jumps over the lazy dog</H1>
     </Box>
+
     <Box>
       <Box mb="xs">
         H2 ({typography.h2.fontSize})
       </Box>
+
       <H2 mb={0}>The quick brown fox jumps over the lazy dog</H2>
     </Box>
+
     <Box>
       <Box mb="xs">
         H3 ({typography.h3.fontSize})
       </Box>
+
       <H3 mb={0}>The quick brown fox jumps over the lazy dog</H3>
     </Box>
+
     <Box>
       <Box mb="xs">
         H4 ({typography.h4.fontSize})
       </Box>
+
       <H4 mb={0}>The quick brown fox jumps over the lazy dog</H4>
     </Box>
+
     <Box>
       <Box mb="xs">
         H5 ({typography.h5.fontSize})
       </Box>
+
       <H5 mb={0}>The quick brown fox jumps over the lazy dog</H5>
     </Box>
+
     <Box>
       <Box mb="xs">
         H6 ({typography.h6.fontSize})
       </Box>
+
       <H6 mb={0}>The quick brown fox jumps over the lazy dog</H6>
     </Box>
   </Spacer>
@@ -69,24 +84,31 @@ import { typography } from '../../src/modules/theme';
       <Box width={128}>
         LG ({typography.lg.fontSize})
       </Box>
+
       <Paragraph size="lg">The quick brown fox jumps over the lazy dog</Paragraph>
     </Spacer>
+
     <Spacer>
       <Box width={128}>
         MD ({typography.md.fontSize})
       </Box>
+
       <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
     </Spacer>
+
     <Spacer>
       <Box width={128}>
         SM ({typography.sm.fontSize})
       </Box>
+
       <Paragraph size="sm">The quick brown fox jumps over the lazy dog</Paragraph>
     </Spacer>
+
     <Spacer>
       <Box width={128}>
         XS ({typography.xs.fontSize})
       </Box>
+
       <Paragraph size="xs">The quick brown fox jumps over the lazy dog</Paragraph>
     </Spacer>
   </Spacer>
