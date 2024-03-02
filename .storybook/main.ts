@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@storybook/react-vite';
 import { variants } from '../src/modules/theme';
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.stories.mdx', '../src/components/**/*.stories.@(ts|tsx)'],
+  stories: ['../stories/**/*.mdx', '../src/components/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -22,14 +22,11 @@ const config: StorybookConfig = {
   docs: {
     autodocs: true,
   },
-  features: {
-    storyStoreV7: true,
-  },
   framework: {
     name: '@storybook/react-vite',
     options: {},
   },
-  managerHead: (head) => `
+  managerHead: head => `
     ${head}
     <style>
       #storybook-explorer-menu [data-nodetype="root"] button[aria-expanded="true"],
@@ -45,6 +42,9 @@ const config: StorybookConfig = {
     </style>
   `,
   staticDirs: ['./public'],
+  typescript: {
+    reactDocgen: "react-docgen-typescript",
+  },
 };
 
 export default config;

@@ -5,7 +5,7 @@ import { objectKeys } from '@gilbarbara/helpers';
 import { configure } from '@storybook/test';
 
 import { ThemeProvider } from '@emotion/react';
-import { useGlobals } from '@storybook/client-api';
+import { useGlobals } from '@storybook/preview-api';
 import CacheProvider from 'react-inlinesvg/provider';
 
 import { colors as themeColors } from '../src/modules/theme';

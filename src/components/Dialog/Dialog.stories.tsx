@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, screen, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, screen, userEvent, waitFor, within } from '@storybook/test';
 
 import { Button } from '~';
 
@@ -67,6 +67,10 @@ export const Tests: Story = {
   args: {
     buttonOrder: 'rtl',
     hideOverlay: true,
+    onClickCancel: fn(),
+    onClickConfirmation: fn(),
+    onClose: fn(),
+    onOpen: fn(),
   },
   render: Basic.render,
   play: async ({ canvasElement }) => {

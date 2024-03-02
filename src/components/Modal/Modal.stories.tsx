@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, screen, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, screen, userEvent, waitFor, within } from '@storybook/test';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from '~';
 
@@ -72,6 +72,10 @@ export const Basic: Story = {
 export const Tests: Story = {
   ...hideStoryFromDocsPage(),
   tags: ['hidden'],
+  args: {
+    onClose: fn(),
+    onOpen: fn(),
+  },
   render: Basic.render,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
