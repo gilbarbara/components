@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       all: true,
       include: ['src/modules/**/*.ts?(x)'],
-      reporter: ['text', 'lcov'],
+      reporter: ['text', 'html', 'lcov', 'json'],
       thresholds: {
         statements: 90,
         branches: 80,
