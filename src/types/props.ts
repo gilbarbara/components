@@ -13,7 +13,13 @@ export type { CollapseProps } from '../components/Collapse/Collapse';
 export type { ComponentWrapperProps } from '../components/ComponentWrapper/ComponentWrapper';
 export type { ContainerProps } from '../components/Container/Container';
 export type { CopyToClipboardProps } from '../components/CopyToClipboard/CopyToClipboard';
-export type { DataTableProps } from '../components/DataTable/types';
+export type {
+  DataTableProps,
+  DataTableHeadProps,
+  DataTableBodyProps,
+  DataTableColumn,
+  DataTableRow,
+} from '../components/DataTable/types';
 export type {
   DatePickerSingleProps,
   DatePickerRangeProps,
