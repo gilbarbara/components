@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 
 import { Icon } from '~';
 
@@ -78,6 +78,7 @@ export const Tests: Story = {
   args: {
     allowCreate: true,
     borderless: false,
+    onSearch: fn(),
   },
   render: WithCreate.render,
   play: async ({ canvasElement }) => {

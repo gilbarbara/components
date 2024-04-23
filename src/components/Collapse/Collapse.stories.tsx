@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 
 import { Button } from '~';
 
@@ -81,6 +81,7 @@ export const Tests: Story = {
   tags: ['hidden'],
   args: {
     title: <p>Lorem ipsum dolor sit amet</p>,
+    onToggle: fn(),
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
