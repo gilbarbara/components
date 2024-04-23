@@ -2,11 +2,11 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     tags:
       - 'v*'
   pull_request:
-    branches: [ '*' ]
+    branches: ['*']
 
   workflow_dispatch:
 
@@ -40,7 +40,7 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         name: Install pnpm
         with:
           version: 8
@@ -55,7 +55,7 @@ jobs:
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: "${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}"
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
