@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, screen, userEvent, within } from '@storybook/test';
+import { expect, fn, screen, userEvent, within } from '@storybook/test';
 
 import {
   colorProps,
@@ -66,6 +66,7 @@ export const Tests: Story = {
   tags: ['hidden'],
   args: {
     disableEdgeNavigation: true,
+    onClick: fn(),
   },
   render: Basic.render,
   play: async ({ canvasElement, step }) => {

@@ -109,12 +109,14 @@ export const ExternalData: Story = {
   },
 };
 
+const mockOnBlur = fn();
 const mockOnFocus = fn();
 const mockOnSearch = fn();
 const mockOnSelect = fn();
 const mockOnType = fn();
 
 function resetMocks() {
+  mockOnBlur.mockClear();
   mockOnFocus.mockClear();
   mockOnSearch.mockClear();
   mockOnSelect.mockClear();
@@ -126,6 +128,7 @@ export const Tests: Story = {
   tags: ['hidden'],
   args: {
     items: defaultItems,
+    onBlur: mockOnBlur,
     onFocus: mockOnFocus,
     onSearch: mockOnSearch,
     onSearchDebounce: 0,

@@ -1,5 +1,6 @@
 import { objectEntries, objectKeys } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
+import { InputType } from '@storybook/types';
 
 import { variants as themeVariants } from '~/modules/theme';
 
@@ -54,7 +55,7 @@ export function addChromaticModes(...inputModes: [ChromaticMode, ...ChromaticMod
   };
 }
 
-export function disableControl() {
+export function disableControl(): InputType {
   return { control: false };
 }
 
@@ -172,7 +173,7 @@ export function layoutProps(options?: { display: string }) {
   };
 }
 
-export function marginProps() {
+export function marginProps(): Record<string, InputType> {
   return {
     margin: { control: 'select', table: { category: 'Spacing' } },
     mb: { control: 'select', table: { category: 'Spacing' } },
@@ -184,7 +185,7 @@ export function marginProps() {
   };
 }
 
-export function paddingProps() {
+export function paddingProps(): Record<string, InputType> {
   return {
     padding: { control: 'select', table: { category: 'Spacing' } },
     pb: { control: 'select', table: { category: 'Spacing' } },
