@@ -8,10 +8,10 @@ import {
   useEffect,
   useRef,
 } from 'react';
-import { useMount, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import { useMount, useSetState } from '@gilbarbara/hooks';
 
 import KeyboardScope from '~/modules/keyboardScope';
 import { getStyledOptions, marginStyles } from '~/modules/system';

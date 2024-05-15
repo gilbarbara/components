@@ -1,9 +1,8 @@
 import { forwardRef, KeyboardEvent, useCallback, useId, useRef, useState } from 'react';
-import { useMount, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, omit } from '@gilbarbara/helpers';
-import { useLatest, useMergeRefs } from '@gilbarbara/hooks';
+import { useLatest, useMergeRefs, useMount, useUpdateEffect } from '@gilbarbara/hooks';
 import { deepmerge } from 'deepmerge-ts';
 import is from 'is-lite';
 

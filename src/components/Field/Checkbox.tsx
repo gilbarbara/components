@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from 'react';
 import { FieldValues, SetFieldValue } from 'react-hook-form';
-import { useUpdateEffect } from 'react-use';
+import { useUpdateEffect } from '@gilbarbara/hooks';
 
 import { Checkbox } from '~/components/CheckboxAndRadio';
 import { Spacer } from '~/components/Spacer';

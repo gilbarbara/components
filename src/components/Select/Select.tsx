@@ -1,8 +1,7 @@
 import { ChangeEvent, forwardRef, useCallback, useRef, useState } from 'react';
-import { useMount } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useMergeRefs } from '@gilbarbara/hooks';
+import { useMergeRefs, useMount } from '@gilbarbara/hooks';
 import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';

@@ -1,8 +1,8 @@
 import { ReactNode, useCallback } from 'react';
-import { useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { formatDateLocale, omit, px } from '@gilbarbara/helpers';
+import { useSetState } from '@gilbarbara/hooks';
 import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';

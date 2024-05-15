@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useMount, usePrevious, useUnmount, useUpdateEffect } from 'react-use';
 import { css, keyframes, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useMount, usePrevious, useUnmount, useUpdateEffect } from '@gilbarbara/hooks';
 import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 

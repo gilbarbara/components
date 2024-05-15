@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { usePrevious } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { usePrevious } from '@gilbarbara/hooks';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';

@@ -7,10 +7,10 @@ import {
   useEffect,
   useRef,
 } from 'react';
-import { useMeasure, useSetState } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit, px, unique } from '@gilbarbara/helpers';
+import { useMeasure, useSetState } from '@gilbarbara/hooks';
 import { PlainObject, SetOptional, SetRequired, Simplify } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
@@ -196,7 +196,8 @@ export function Tabs(props: TabsProps) {
   });
   const isMounted = useRef(false);
   const uniqueId = useRef(unique(6));
-  const [ref, measurements] = useMeasure<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
+  const measurements = useMeasure(ref);
 
   useEffect(() => {
     isMounted.current = true;

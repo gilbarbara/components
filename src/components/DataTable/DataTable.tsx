@@ -1,6 +1,6 @@
 import { MouseEvent, useCallback, useMemo, useRef } from 'react';
-import { useMount, useSetState, useUpdateEffect } from 'react-use';
 import { useTheme } from '@emotion/react';
+import { useMount, useSetState, useUpdateEffect } from '@gilbarbara/hooks';
 
 import { scrollTo } from '~/modules/animations';
 
