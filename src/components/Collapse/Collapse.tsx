@@ -1,8 +1,8 @@
 import { isValidElement, ReactNode, useEffect, useRef, useState } from 'react';
-import { usePrevious } from 'react-use';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
+import { usePrevious } from '@gilbarbara/hooks';
 import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 

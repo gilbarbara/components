@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode, useMemo, useRef } from 'react';
-import { useSetState } from 'react-use';
 import { capitalize, objectKeys, sortByLocaleCompare } from '@gilbarbara/helpers';
+import { useSetState } from '@gilbarbara/hooks';
 
 import { Box, Dropdown, H2, H3, Icon, Input, Jumbo, Paragraph, Spacer, Text } from '~';
 

@@ -1,6 +1,6 @@
 import { ChangeEvent, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSetState } from 'react-use';
 import { removeAccents, request } from '@gilbarbara/helpers';
+import { useSetState } from '@gilbarbara/hooks';
 import { StringOrNull } from '@gilbarbara/types';
 import { Meta, StoryObj } from '@storybook/react';
 

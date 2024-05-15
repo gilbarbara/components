@@ -6,6 +6,8 @@ import { variants as themeVariants } from '~/modules/theme';
 
 import { VariantWithTones, WithFlexBox } from '~/types';
 
+type ControlMap = Record<string, InputType>;
+
 const base = ['normal', 'stretch'];
 const contentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];
 const contentPosition = ['center', 'end', 'flex-end', 'flex-start', 'start'];
@@ -98,14 +100,14 @@ export function hideTable() {
 export function colorProps(
   props: Array<'accent' | 'backgroundColor' | 'bg' | 'borderColor' | 'color'> = ['color'],
 ) {
-  return props.reduce<PlainObject>((acc, prop) => {
+  return props.reduce<ControlMap>((acc, prop) => {
     acc[prop] = { control: 'select', options: variantsWithTones };
 
     return acc;
   }, {});
 }
 
-export function dimensionProps() {
+export function dimensionProps(): ControlMap {
   return {
     height: { control: 'text', table: { category: 'Layout' } },
     maxHeight: { control: 'text', table: { category: 'Layout' } },
@@ -146,7 +148,7 @@ export function flexBoxProps(...exclude: Array<keyof WithFlexBox>) {
   }, {});
 }
 
-export function flexItemProps() {
+export function flexItemProps(): ControlMap {
   return {
     alignSelf: { table: { category: 'Flex Item' } },
     basis: { table: { category: 'Flex Item' } },
@@ -157,7 +159,7 @@ export function flexItemProps() {
   };
 }
 
-export function layoutProps(options?: { display: string }) {
+export function layoutProps(options?: { display: string }): ControlMap {
   const { display } = options ?? {};
 
   return {
@@ -173,7 +175,7 @@ export function layoutProps(options?: { display: string }) {
   };
 }
 
-export function marginProps(): Record<string, InputType> {
+export function marginProps(): ControlMap {
   return {
     margin: { control: 'select', table: { category: 'Spacing' } },
     mb: { control: 'select', table: { category: 'Spacing' } },
@@ -185,7 +187,7 @@ export function marginProps(): Record<string, InputType> {
   };
 }
 
-export function paddingProps(): Record<string, InputType> {
+export function paddingProps(): ControlMap {
   return {
     padding: { control: 'select', table: { category: 'Spacing' } },
     pb: { control: 'select', table: { category: 'Spacing' } },
@@ -208,7 +210,7 @@ export function positioningProps() {
   };
 }
 
-export function radiusProps() {
+export function radiusProps(): ControlMap {
   return {
     radius: {
       control: 'select',
@@ -217,7 +219,7 @@ export function radiusProps() {
   };
 }
 
-export function spacingProps() {
+export function spacingProps(): ControlMap {
   return {
     ...marginProps(),
     ...paddingProps(),

@@ -1,8 +1,8 @@
 import { ChangeEvent, forwardRef, KeyboardEvent, MouseEvent, ReactNode, useState } from 'react';
-import { usePrevious, useUpdateEffect } from 'react-use';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import { usePrevious, useUpdateEffect } from '@gilbarbara/hooks';
 import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
