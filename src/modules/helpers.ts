@@ -2,7 +2,7 @@ import { Children, cloneElement, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import { objectEntries, objectKeys, omit, px } from '@gilbarbara/helpers';
 import { PartialDeep, PlainObject } from '@gilbarbara/types';
-import { deepmergeCustom, DeepMergeLeafURI } from 'deepmerge-ts';
+import { deepmergeCustom } from 'deepmerge-ts';
 import is from 'is-lite';
 
 import * as theme from '~/modules/theme';
@@ -20,9 +20,7 @@ import {
 
 const { breakpoints } = theme;
 
-const deepmerge = deepmergeCustom<{
-  DeepMergeArraysURI: DeepMergeLeafURI; // <-- Needed for correct output type.
-}>({
+const deepmerge = deepmergeCustom({
   mergeArrays: false,
 });
 
