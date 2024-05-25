@@ -5,7 +5,7 @@ import { Box, Grid, Paragraph } from '~';
 
 import { colors } from '~/modules/theme';
 
-import { disableControl, hideProps, marginProps, variants } from '~/stories/__helpers__';
+import { disableControl, hideProps, marginProps, VARIANTS } from '~/stories/__helpers__';
 
 import { defaultProps, StatusIndicator } from './StatusIndicator';
 
@@ -30,7 +30,7 @@ export const Colors: Story = {
   },
   render: props => (
     <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
-      {variants.map(d => (
+      {VARIANTS.map(d => (
         <Box key={d} align="center" direction="column" display="flex">
           <StatusIndicator key={d} {...props} color={d} />
           <Paragraph>{d}</Paragraph>

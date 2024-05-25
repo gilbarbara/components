@@ -9,6 +9,7 @@ import {
   colorProps,
   hideProps,
   layoutProps,
+  PANGRAM,
   spacingProps,
 } from '~/stories/__helpers__';
 
@@ -49,7 +50,7 @@ export const Text: Story = {
     return (
       <>
         <SkeletonText {...props} isLoaded={isLoaded}>
-          The quick brown fox jumps over the lazy dog
+          {PANGRAM}
         </SkeletonText>
         <Paragraph color="gray.300" mt="md">
           isLoaded: {isLoaded?.toString()}

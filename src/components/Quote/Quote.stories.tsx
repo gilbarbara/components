@@ -2,7 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Spacer } from '~';
 
-import { colorProps, disableControl, hideProps, textOptionsProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  PANGRAM,
+  textOptionsProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, Quote } from './Quote';
 
@@ -14,7 +20,7 @@ export default {
   args: {
     ...defaultProps,
     attribution: 'Homer Simpson',
-    children: 'The quick brown fox jumps over the lazy dog',
+    children: PANGRAM,
   },
   argTypes: {
     ...hideProps(),

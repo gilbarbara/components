@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { colorProps, hideProps, marginProps } from '~/stories/__helpers__';
+import { colorProps, hideProps, marginProps, PANGRAM } from '~/stories/__helpers__';
 
 import { Jumbo } from './index';
 import { jumboDefaultProps } from './utils';
@@ -13,7 +13,7 @@ export default {
   args: {
     ...jumboDefaultProps,
     align: 'center',
-    children: 'The quick brown fox jumps over the lazy dog',
+    children: PANGRAM,
   },
   argTypes: {
     ...hideProps(),

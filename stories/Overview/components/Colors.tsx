@@ -6,7 +6,7 @@ import { Box, BoxCenter, Grid, H2, H3, H5, Icon, Paragraph, Spacer, Text } from 
 import { getColorTokens } from '~/modules/colors';
 import { colors, grayScale, variants as themeVariants } from '~/modules/theme';
 
-import { tones } from '~/stories/__helpers__';
+import { PANGRAM, TONES } from '~/stories/__helpers__';
 
 interface SwatchProps {
   bg: string;
@@ -56,8 +56,8 @@ export function Colors() {
                 {capitalize(name)} ({value})
               </H3>
               <BoxCenter bg={name} padding="xl" radius={{ top: 'md' }}>
-                <H5>The quick brown fox jumps over the lazy dog</H5>
-                <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
+                <H5>{PANGRAM}</H5>
+                <Paragraph>{PANGRAM}</Paragraph>
               </BoxCenter>
               <Grid
                 border={{ color: name }}
@@ -136,7 +136,7 @@ export function Tones() {
       <H2>Tones</H2>
 
       <Spacer direction="vertical" gap="xl" grow mb="xxl">
-        {tones.map(tone => (
+        {TONES.map(tone => (
           <Box key={tone}>
             <H3 light>{tone}</H3>
             <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">

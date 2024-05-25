@@ -12,8 +12,8 @@ import {
   disableControl,
   hideProps,
   paddingProps,
-  tones,
-  variants,
+  TONES,
+  VARIANTS,
 } from '~/stories/__helpers__';
 
 import { Button, defaultProps } from './Button';
@@ -60,7 +60,7 @@ export const Colors: Story = {
   },
   render: props => (
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {variants.map(d => (
+      {VARIANTS.map(d => (
         <Button key={d} {...props} bg={d}>
           Button {capitalize(d)}
         </Button>
@@ -75,7 +75,7 @@ export const Tones: Story = {
   },
   render: props => (
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {tones.map(d => (
+      {TONES.map(d => (
         <Button key={d} {...props} bg={`primary.${d}`}>
           Button {capitalize(d)}
         </Button>
