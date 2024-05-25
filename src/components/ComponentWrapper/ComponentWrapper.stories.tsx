@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon, Input, Select, Textarea } from '~';
 
-import { hideProps, marginProps } from '~/stories/__helpers__';
+import { hideProps, marginProps, PANGRAM } from '~/stories/__helpers__';
 
 import { ComponentWrapper, defaultProps } from './ComponentWrapper';
 
@@ -29,12 +29,7 @@ export const Basic: Story = {
         prefix={<Icon color="green" name="check-o" size={24} />}
         suffix="toggle-square"
       >
-        <Input
-          name="A"
-          placeholder="The quick brown fox jumps over the lazy dog"
-          prefixSpacing
-          suffixSpacing
-        />
+        <Input name="A" placeholder={PANGRAM} prefixSpacing suffixSpacing />
       </ComponentWrapper>
       <ComponentWrapper mb="xl" prefix={<Icon color="red" name="check-o" size={24} />}>
         <Select name="A" prefixSpacing value="">
@@ -45,12 +40,7 @@ export const Basic: Story = {
         </Select>
       </ComponentWrapper>
       <ComponentWrapper prefix={<Icon color="red" name="check-o" size={24} />} suffix="check-o">
-        <Textarea
-          name="A"
-          placeholder="The quick brown fox jumps over the lazy dog"
-          prefixSpacing
-          suffixSpacing
-        />
+        <Textarea name="A" placeholder={PANGRAM} prefixSpacing suffixSpacing />
       </ComponentWrapper>
     </>
   ),

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { colorProps, hideProps, marginProps } from '~/stories/__helpers__';
+import { colorProps, hideProps, marginProps, PANGRAM } from '~/stories/__helpers__';
 
 import { H1, H2, H3, H4, H5, H6 } from './index';
 import { defaultProps } from './utils';
@@ -11,7 +11,7 @@ export default {
   args: {
     ...defaultProps,
     align: 'center',
-    children: 'The quick brown fox jumps over the lazy dog',
+    children: PANGRAM,
   },
   argTypes: {
     ...hideProps(),

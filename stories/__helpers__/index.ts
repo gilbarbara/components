@@ -8,15 +8,18 @@ import { VariantWithTones, WithFlexBox } from '~/types';
 
 type ControlMap = Record<string, InputType>;
 
-const base = ['normal', 'stretch'];
-const contentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];
-const contentPosition = ['center', 'end', 'flex-end', 'flex-start', 'start'];
+const flexBase = ['normal', 'stretch'];
+const flexContentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];
+const flexContentPosition = ['center', 'end', 'flex-end', 'flex-start', 'start'];
 
-export const flexItems = ['baseline', ...base, ...contentPosition];
-export const flexContent = [...base, ...contentDistribution, ...contentPosition];
-export const tones = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'] as const;
-export const variants = [...objectKeys(themeVariants), 'black', 'white'] as const;
-export const variantsWithTones = [...objectKeys(themeVariants), 'black', 'white'].reduce<
+export const flexItems = ['baseline', ...flexBase, ...flexContentPosition];
+export const flexContent = [...flexBase, ...flexContentDistribution, ...flexContentPosition];
+
+export const PANGRAM = 'The quick brown fox jumps over the lazy dog';
+
+export const TONES = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'] as const;
+export const VARIANTS = [...objectKeys(themeVariants), 'black', 'white'] as const;
+export const VARIANTS_WITH_TONES = [...objectKeys(themeVariants), 'black', 'white'].reduce<
   Array<string>
 >(
   (acc, variant) => {
@@ -24,25 +27,25 @@ export const variantsWithTones = [...objectKeys(themeVariants), 'black', 'white'
       return [...acc, variant];
     }
 
-    return [...acc, variant, ...tones.map(tone => `${variant}.${tone}`)];
+    return [...acc, variant, ...TONES.map(tone => `${variant}.${tone}`)];
   },
   [''],
 ) as VariantWithTones[];
 
-const chromaticModeTitles = {
+const CHROMATIC_MODE_TITLE = {
   desktop_light: 'Desktop (light)',
   desktop_dark: 'Desktop (dark)',
   mobile_light: 'Mobile (light)',
   mobile_dark: 'Mobile (dark)',
 };
 
-type ChromaticMode = keyof typeof chromaticModeTitles;
+type ChromaticMode = keyof typeof CHROMATIC_MODE_TITLE;
 
 export function addChromaticModes(...inputModes: [ChromaticMode, ...ChromaticMode[]]) {
   const modes = inputModes.reduce<PlainObject<any>>((acc, mode) => {
     const [viewport, appearance] = mode.split('_');
 
-    acc[chromaticModeTitles[mode]] = {
+    acc[CHROMATIC_MODE_TITLE[mode]] = {
       appearance,
       viewport: viewport === 'mobile' ? 'mobile2' : 'responsive',
     };
@@ -101,7 +104,7 @@ export function colorProps(
   props: Array<'accent' | 'backgroundColor' | 'bg' | 'borderColor' | 'color'> = ['color'],
 ) {
   return props.reduce<ControlMap>((acc, prop) => {
-    acc[prop] = { control: 'select', options: variantsWithTones };
+    acc[prop] = { control: 'select', options: VARIANTS_WITH_TONES };
 
     return acc;
   }, {});
@@ -199,7 +202,7 @@ export function paddingProps(): ControlMap {
   };
 }
 
-export function positioningProps() {
+export function positioningProps(): ControlMap {
   return {
     bottom: { control: 'text', table: { category: 'Positioning' } },
     left: { control: 'text', table: { category: 'Positioning' } },
@@ -226,7 +229,7 @@ export function spacingProps(): ControlMap {
   };
 }
 
-export function textOptionsProps() {
+export function textOptionsProps(): ControlMap {
   return {
     bold: { control: 'boolean', table: { category: 'Text Options' } },
     italic: { control: 'boolean', table: { category: 'Text Options' } },

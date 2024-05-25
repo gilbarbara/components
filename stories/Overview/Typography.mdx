@@ -3,6 +3,7 @@ import { Unstyled } from '@storybook/blocks';
 
 import { Box, H1, H2, H3, H4, H5, H6, Jumbo, Paragraph, Spacer } from '../../src';
 import { typography } from '../../src/modules/theme';
+import { PANGRAM } from "../__helpers__";
 
 <Meta title="Overview/Typography" />
 
@@ -17,7 +18,7 @@ import { typography } from '../../src/modules/theme';
         <Paragraph>Jumbo Large ({typography.jumboLarge.fontSize})</Paragraph>
       </Box>
 
-      <Jumbo large mb={0}>The quick brown fox jumps over the lazy dog</Jumbo>
+      <Jumbo large mb={0}>{PANGRAM}</Jumbo>
     </Box>
 
     <Box>
@@ -25,7 +26,7 @@ import { typography } from '../../src/modules/theme';
         Jumbo ({typography.jumbo.fontSize})
       </Box>
 
-      <Jumbo mb={0}>The quick brown fox jumps over the lazy dog</Jumbo>
+      <Jumbo mb={0}>{PANGRAM}</Jumbo>
     </Box>
 
     <Box>
@@ -33,7 +34,7 @@ import { typography } from '../../src/modules/theme';
         H1 ({typography.h1.fontSize})
       </Box>
 
-      <H1 mb={0}>The quick brown fox jumps over the lazy dog</H1>
+      <H1 mb={0}>{PANGRAM}</H1>
     </Box>
 
     <Box>
@@ -41,7 +42,7 @@ import { typography } from '../../src/modules/theme';
         H2 ({typography.h2.fontSize})
       </Box>
 
-      <H2 mb={0}>The quick brown fox jumps over the lazy dog</H2>
+      <H2 mb={0}>{PANGRAM}</H2>
     </Box>
 
     <Box>
@@ -49,7 +50,7 @@ import { typography } from '../../src/modules/theme';
         H3 ({typography.h3.fontSize})
       </Box>
 
-      <H3 mb={0}>The quick brown fox jumps over the lazy dog</H3>
+      <H3 mb={0}>{PANGRAM}</H3>
     </Box>
 
     <Box>
@@ -57,7 +58,7 @@ import { typography } from '../../src/modules/theme';
         H4 ({typography.h4.fontSize})
       </Box>
 
-      <H4 mb={0}>The quick brown fox jumps over the lazy dog</H4>
+      <H4 mb={0}>{PANGRAM}</H4>
     </Box>
 
     <Box>
@@ -65,7 +66,7 @@ import { typography } from '../../src/modules/theme';
         H5 ({typography.h5.fontSize})
       </Box>
 
-      <H5 mb={0}>The quick brown fox jumps over the lazy dog</H5>
+      <H5 mb={0}>{PANGRAM}</H5>
     </Box>
 
     <Box>
@@ -73,7 +74,7 @@ import { typography } from '../../src/modules/theme';
         H6 ({typography.h6.fontSize})
       </Box>
 
-      <H6 mb={0}>The quick brown fox jumps over the lazy dog</H6>
+      <H6 mb={0}>{PANGRAM}</H6>
     </Box>
   </Spacer>
 
@@ -85,7 +86,7 @@ import { typography } from '../../src/modules/theme';
         LG ({typography.lg.fontSize})
       </Box>
 
-      <Paragraph size="lg">The quick brown fox jumps over the lazy dog</Paragraph>
+      <Paragraph size="lg">{PANGRAM}</Paragraph>
     </Spacer>
 
     <Spacer>
@@ -93,7 +94,7 @@ import { typography } from '../../src/modules/theme';
         MD ({typography.md.fontSize})
       </Box>
 
-      <Paragraph>The quick brown fox jumps over the lazy dog</Paragraph>
+      <Paragraph>{PANGRAM}</Paragraph>
     </Spacer>
 
     <Spacer>
@@ -101,7 +102,7 @@ import { typography } from '../../src/modules/theme';
         SM ({typography.sm.fontSize})
       </Box>
 
-      <Paragraph size="sm">The quick brown fox jumps over the lazy dog</Paragraph>
+      <Paragraph size="sm">{PANGRAM}</Paragraph>
     </Spacer>
 
     <Spacer>
@@ -109,7 +110,7 @@ import { typography } from '../../src/modules/theme';
         XS ({typography.xs.fontSize})
       </Box>
 
-      <Paragraph size="xs">The quick brown fox jumps over the lazy dog</Paragraph>
+      <Paragraph size="xs">{PANGRAM}</Paragraph>
     </Spacer>
   </Spacer>
 </Unstyled>

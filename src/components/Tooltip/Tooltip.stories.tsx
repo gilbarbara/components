@@ -13,6 +13,7 @@ import {
   hideProps,
   hideStoryFromDocsPage,
   hideTable,
+  PANGRAM,
   radiusProps,
   textOptionsProps,
 } from '~/stories/__helpers__';
@@ -41,7 +42,7 @@ export default {
 export const Basic: Story = {
   args: {
     children: <Icon name="diamond" size={24} title={null} />,
-    content: 'The quick brown fox jumps over the lazy dog',
+    content: PANGRAM,
   },
   argTypes: {
     children: hideTable(),
