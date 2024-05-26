@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
@@ -24,15 +24,15 @@ import {
   WithAccent,
   WithBorderless,
   WithFormElements,
+  WithHeight,
 } from '~/types';
 
 export interface InputColorKnownProps
   extends StyledProps,
     WithAccent,
     WithBorderless,
-    WithFormElements {
-  /** @default false */
-  large?: boolean;
+    WithFormElements,
+    WithHeight {
   /**
    * Get the value only when the color picker is closed.
    */
@@ -62,7 +62,7 @@ export const defaultProps = {
   accent: 'primary',
   borderless: false,
   disabled: false,
-  large: false,
+  height: 'md',
   onChangeDebounce: 250,
   placeholder: 'Select a color',
   readOnly: false,
@@ -74,7 +74,7 @@ const StyledInputColor = styled(
   getStyledOptions(),
 )<
   Required<
-    Pick<InputColorProps, 'accent' | 'borderless' | 'disabled' | 'large' | 'width'> & {
+    Pick<InputColorProps, 'accent' | 'borderless' | 'disabled' | 'height' | 'width'> & {
       isFilled: boolean;
     }
   >
@@ -123,11 +123,11 @@ const StyledInputColor = styled(
 const StyledLabel = styled(
   'label',
   getStyledOptions(),
-)<Pick<InputColorProps, 'large'>>(props => {
-  const { large } = props;
+)<Required<Pick<InputColorProps, 'height'>>>(props => {
+  const { height } = props;
   const { grayScale, radius, spacing } = getTheme(props);
   const darkMode = isDarkMode(props);
-  const size = parseInt(large ? inputHeight.large : inputHeight.normal, 10) - 10;
+  const size = parseInt(inputHeight[height], 10) - 10;
   const inputSize = px(size + 16);
 
   return css`
@@ -161,7 +161,7 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
     accent,
     borderless,
     disabled,
-    large,
+    height,
     name,
     onChange,
     onChangeDebounce,
@@ -170,10 +170,7 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
     value: initialValue,
     width,
     ...rest
-  } = {
-    ...defaultProps,
-    ...props,
-  };
+  } = mergeProps(defaultProps, props);
   const [value, setValue] = useState<string>(initialValue ?? '');
   const debounceTimeout = useRef<number>(0);
   const isDisabled = disabled || readOnly;
@@ -214,11 +211,11 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
       borderless={borderless}
       data-component-name="InputColor"
       disabled={isDisabled}
+      height={height}
       isFilled={!!value}
-      large={large}
       width={width}
     >
-      <StyledLabel data-component-name="InputColorLabel" large={large}>
+      <StyledLabel data-component-name="InputColorLabel" height={height}>
         <input
           ref={ref}
           disabled={isDisabled}

@@ -1,7 +1,7 @@
 import { ChangeEvent, forwardRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify, StringOrNull } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
@@ -11,16 +11,14 @@ import { BoxInline } from '~/components/Box';
 import { Button } from '~/components/Button';
 import { Truncate } from '~/components/Truncate';
 
-import { OmitElementProps, StyledProps, WithAccent, WithFormElements } from '~/types';
+import { OmitElementProps, StyledProps, WithAccent, WithFormElements, WithHeight } from '~/types';
 
-export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormElements {
+export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormElements, WithHeight {
   /**
    * Invert background
    * @default true
    */
   invert?: boolean;
-  /** @default false */
-  large?: boolean;
   value?: string;
 }
 
@@ -31,8 +29,8 @@ export type InputFileProps = Simplify<
 export const defaultProps = {
   accent: 'primary',
   disabled: false,
+  height: 'md',
   invert: true,
-  large: false,
   placeholder: 'Upload a file',
   readOnly: false,
   width: '100%',
@@ -78,11 +76,18 @@ export const StyledInput = styled('input', getStyledOptions())`
 `;
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, ref) => {
-  const { accent, disabled, invert, large, name, onChange, placeholder, readOnly, value, ...rest } =
-    {
-      ...defaultProps,
-      ...props,
-    };
+  const {
+    accent,
+    disabled,
+    height,
+    invert,
+    name,
+    onChange,
+    placeholder,
+    readOnly,
+    value,
+    ...rest
+  } = mergeProps(defaultProps, props);
   const [localValue, setLocalValue] = useState<StringOrNull>(null);
   const isDisabled = disabled || readOnly;
 
@@ -101,7 +106,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
           bg={accent}
           disabled={isDisabled}
           invert={invert}
-          size={large ? 'lg' : 'md'}
+          size={height}
           style={{ zIndex: isDisabled ? 2 : 1 }}
         >
           {placeholder}

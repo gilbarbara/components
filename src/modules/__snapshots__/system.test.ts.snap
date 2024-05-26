@@ -248,9 +248,9 @@ exports[`inputStyles > should return custom styles for "input" 1`] = `
     display: block;
     font-family: inherit;
     font-size: 16px;
-    height: 48px;
+    height: 40px;
     line-height: 1.4;
-    padding: 16px 0 16px 40px;
+    padding: 12px 0 12px 40px;
     width: 100%;
     
         background-color: transparent;

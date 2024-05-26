@@ -257,6 +257,19 @@ export const button = {
 };
 
 export const inputHeight = {
-  normal: '40px',
-  large: '48px',
+  sm: '32px',
+  md: '40px',
+  lg: '48px',
+};
+
+export const inputPaddingY = {
+  sm: spacing.xs,
+  md: spacing.sm,
+  lg: spacing.md,
+};
+
+export const selectPaddingY = {
+  sm: spacing.xxs,
+  md: spacing.xs,
+  lg: spacing.sm,
 };

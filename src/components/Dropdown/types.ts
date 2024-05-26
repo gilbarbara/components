@@ -1,7 +1,7 @@
 import { HiddenInput, Option, Props } from '@gilbarbara/react-dropdown';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
-import { StyledProps, WithAccent, WithBorderless, WithMargin, WithOpen } from '~/types';
+import { StyledProps, WithAccent, WithBorderless, WithHeight, WithMargin, WithOpen } from '~/types';
 
 export type DropdownBaseProps = Omit<
   Props,
@@ -32,6 +32,7 @@ export interface DropdownKnownProps
   extends StyledProps,
     WithAccent,
     WithBorderless,
+    WithHeight,
     WithMargin,
     WithOpen,
     DropdownBaseProps {
@@ -45,7 +46,6 @@ export interface DropdownKnownProps
    */
   inputOptions?: HiddenInput;
   items: Option[];
-  large?: boolean;
   /** @default 260 */
   menuMaxHeight?: number;
   onClear?: () => void;

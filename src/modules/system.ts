@@ -6,6 +6,7 @@ import is from 'is-lite';
 import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
+import { inputPaddingY, selectPaddingY } from '~/modules/theme';
 
 import {
   BorderItem,
@@ -23,6 +24,7 @@ import {
   WithElementSpacing,
   WithFlexBox,
   WithFlexItem,
+  WithHeight,
   WithInvert,
   WithLayout,
   WithMargin,
@@ -423,12 +425,13 @@ export function inputStyles<
   T extends WithAccent &
     WithBorderless &
     WithElementSpacing &
-    WithTheme & { large?: boolean; multiple?: boolean; width?: StringOrNumber },
+    Partial<WithHeight> &
+    WithTheme & { multiple?: boolean; width?: StringOrNumber },
 >(props: T, type: 'input' | 'select' | 'textarea') {
   const {
     accent = 'primary',
     borderless,
-    large,
+    height = 'md',
     multiple,
     prefixSpacing,
     suffixSpacing,
@@ -451,21 +454,19 @@ export function inputStyles<
   const isSelect = is.boolean(multiple);
   const placeholderColor = grayScale['500'];
 
-  let height;
-  let paddingY = large ? spacing.md : spacing.sm;
-  let paddingLeft: StringOrNumber | undefined = borderless ? 0 : spacing.md;
-  let paddingRight: StringOrNumber | undefined = borderless ? 0 : spacing.md;
+  let componentHeight;
+  let paddingY = inputPaddingY[height];
+  let paddingLeft: StringOrNumber = borderless ? 0 : spacing.md;
+  let paddingRight: StringOrNumber = borderless ? 0 : spacing.md;
 
   if (type === 'textarea') {
     paddingY = spacing.xs;
-  }
-
-  if (type !== 'textarea' && !multiple) {
-    height = large ? inputHeight.large : inputHeight.normal;
+  } else if (!multiple) {
+    componentHeight = inputHeight[height];
   }
 
   if (isSelect) {
-    paddingY = large ? spacing.sm : spacing.xs;
+    paddingY = selectPaddingY[height];
     paddingRight = spacing.lg;
   }
 
@@ -496,7 +497,7 @@ export function inputStyles<
     display: block;
     font-family: ${fontFamily};
     font-size: ${typography.md.fontSize};
-    height: ${height};
+    height: ${componentHeight};
     line-height: 1.4;
     padding: ${paddingY} ${paddingRight} ${paddingY} ${paddingLeft};
     width: ${width ? px(width) : '100%'};

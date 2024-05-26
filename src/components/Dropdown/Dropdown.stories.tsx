@@ -44,7 +44,24 @@ const items: DropdownOption[] = [
 ];
 
 export const Basic: Story = {
-  render: props => <Dropdown {...props} items={items} />,
+  args: {
+    items,
+  },
+};
+
+export const Sizes: Story = {
+  argTypes: {
+    height: disableControl(),
+  },
+  render: props => (
+    <>
+      <Dropdown {...props} height="sm" items={items} />
+      <br />
+      <Dropdown {...props} height="md" items={items} />
+      <br />
+      <Dropdown {...props} height="lg" items={items} />
+    </>
+  ),
 };
 
 export const WithCreate: Story = {

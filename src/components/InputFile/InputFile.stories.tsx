@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { colorProps, hideProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, InputFile } from './InputFile';
 
@@ -21,3 +21,18 @@ export default {
 } satisfies Meta<typeof InputFile>;
 
 export const Basic: Story = {};
+
+export const Sizes: Story = {
+  argTypes: {
+    height: disableControl(),
+  },
+  render: props => (
+    <>
+      <InputFile {...props} height="sm" />
+      <br />
+      <InputFile {...props} height="md" />
+      <br />
+      <InputFile {...props} height="lg" />
+    </>
+  ),
+};

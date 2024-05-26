@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { inputTypes } from '~/modules/options';
 
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, PANGRAM } from '~/stories/__helpers__';
 
 import { defaultProps, Input } from './Input';
 
@@ -25,6 +25,26 @@ export default {
 } satisfies Meta<typeof Input>;
 
 export const Basic: Story = {};
+
+export const Sizes: Story = {
+  args: {
+    placeholder: '',
+  },
+  argTypes: {
+    name: disableControl(),
+    height: disableControl(),
+  },
+  render: props => (
+    <>
+      <Input {...props} height="sm" name="sm" placeholder={`(sm) ${PANGRAM}`} />
+      <br />
+      <Input {...props} height="md" name="md" placeholder={`(md) ${PANGRAM}`} />
+      <br />
+      <Input {...props} height="lg" name="lg" placeholder={`(lg) ${PANGRAM}`} />
+      <br />
+    </>
+  ),
+};
 
 export const Types: Story = {
   args: {

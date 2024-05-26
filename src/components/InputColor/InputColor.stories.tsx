@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { hideProps } from '~/stories/__helpers__';
+import { disableControl, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, InputColor } from './InputColor';
 
@@ -21,3 +21,18 @@ export default {
 } satisfies Meta<typeof InputColor>;
 
 export const Basic: Story = {};
+
+export const Sizes: Story = {
+  argTypes: {
+    height: disableControl(),
+  },
+  render: props => (
+    <>
+      <InputColor {...props} height="sm" />
+      <br />
+      <InputColor {...props} height="md" />
+      <br />
+      <InputColor {...props} height="lg" />
+    </>
+  ),
+};

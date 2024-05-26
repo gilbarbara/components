@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
@@ -13,16 +14,16 @@ import {
   WithBorderless,
   WithElementSpacing,
   WithFormElements,
+  WithHeight,
 } from '~/types';
 
 export interface InputKnownProps
   extends StyledProps,
     WithAccent,
     WithBorderless,
+    WithHeight,
     WithElementSpacing,
     WithFormElements {
-  /** @default false */
-  large?: boolean;
   placeholder?: string;
   /** @default text */
   type?: InputTypes;
@@ -36,7 +37,7 @@ export const defaultProps = {
   accent: 'primary',
   borderless: false,
   disabled: false,
-  large: false,
+  height: 'md',
   prefixSpacing: false,
   readOnly: false,
   suffixSpacing: false,
@@ -55,10 +56,10 @@ export const StyledInput = styled(
 });
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { name } = props;
+  const mergedProps = mergeProps(defaultProps, props);
 
   return (
-    <StyledInput ref={ref} data-component-name="Input" id={name} {...defaultProps} {...props} />
+    <StyledInput ref={ref} data-component-name="Input" id={mergedProps.name} {...mergedProps} />
   );
 });
 

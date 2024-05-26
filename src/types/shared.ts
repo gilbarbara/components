@@ -197,6 +197,14 @@ export interface WithFormElements extends WithDisabled {
   width?: StringOrNumber;
 }
 
+export interface WithHeight {
+  /**
+   * Component height
+   * @default md
+   */
+  height?: Sizes;
+}
+
 export interface WithInline {
   /**
    * Display as an inline element

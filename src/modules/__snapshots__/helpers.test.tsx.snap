@@ -151,8 +151,14 @@ exports[`getTheme > should return the theme 1`] = `
     "950": "#0d0d0d",
   },
   "inputHeight": {
-    "large": "48px",
-    "normal": "40px",
+    "lg": "48px",
+    "md": "40px",
+    "sm": "32px",
+  },
+  "inputPaddingY": {
+    "lg": "16px",
+    "md": "12px",
+    "sm": "8px",
   },
   "lightColor": "#f5f5f5",
   "opacity": {
@@ -170,6 +176,11 @@ exports[`getTheme > should return the theme 1`] = `
     "xl": "32px",
     "xs": "8px",
     "xxs": "4px",
+  },
+  "selectPaddingY": {
+    "lg": "12px",
+    "md": "8px",
+    "sm": "4px",
   },
   "shadow": {
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
@@ -537,8 +548,14 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     "950": "#0d0d0d",
   },
   "inputHeight": {
-    "large": "48px",
-    "normal": "40px",
+    "lg": "48px",
+    "md": "40px",
+    "sm": "32px",
+  },
+  "inputPaddingY": {
+    "lg": "16px",
+    "md": "12px",
+    "sm": "8px",
   },
   "lightColor": "#f5f5f5",
   "opacity": {
@@ -556,6 +573,11 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     "xl": "32px",
     "xs": "8px",
     "xxs": "4px",
+  },
+  "selectPaddingY": {
+    "lg": "12px",
+    "md": "8px",
+    "sm": "4px",
   },
   "shadow": {
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
@@ -923,8 +945,14 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "950": "#0d0d0d",
   },
   "inputHeight": {
-    "large": "48px",
-    "normal": "40px",
+    "lg": "48px",
+    "md": "40px",
+    "sm": "32px",
+  },
+  "inputPaddingY": {
+    "lg": "16px",
+    "md": "12px",
+    "sm": "8px",
   },
   "lightColor": "#f5f5f5",
   "opacity": {
@@ -942,6 +970,11 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "xl": "32px",
     "xs": "8px",
     "xxs": "4px",
+  },
+  "selectPaddingY": {
+    "lg": "12px",
+    "md": "8px",
+    "sm": "4px",
   },
   "shadow": {
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",

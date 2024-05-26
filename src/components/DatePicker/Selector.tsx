@@ -1,7 +1,7 @@
 import { ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { formatDateLocale, omit, px } from '@gilbarbara/helpers';
+import { formatDateLocale, mergeProps, omit, px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 import is from 'is-lite';
 
@@ -37,7 +37,7 @@ export const selectorDefaultProps = {
   accent: 'primary',
   borderless: false,
   disabled: false,
-  large: false,
+  height: 'md',
   mode: 'single',
   position: 'right',
   separator: ' — ',
@@ -51,17 +51,18 @@ const StyledButton = styled(
 )<
   Pick<
     DatePickerSelectorProps,
-    'accent' | 'borderless' | 'disabled' | 'large' | 'theme' | 'width'
-  > & {
-    isFilled: boolean;
-  }
+    'accent' | 'borderless' | 'disabled' | 'height' | 'theme' | 'width'
+  > &
+    Required<Pick<DatePickerSelectorProps, 'height'>> & {
+      isFilled: boolean;
+    }
 >(props => {
   const {
     accent = selectorDefaultProps.accent,
     borderless,
     disabled,
+    height,
     isFilled,
-    large,
     width,
   } = props;
   const { darkColor, grayScale, inputHeight, lightColor, radius, spacing, white, ...theme } =
@@ -96,7 +97,7 @@ const StyledButton = styled(
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    min-height: ${large ? inputHeight.large : inputHeight.normal};
+    min-height: ${inputHeight[height]};
     min-width: 200px;
     width: ${width ? px(width) : 'auto'};
     ${styles};
@@ -157,7 +158,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
     borderless,
     disabled,
     formatLocale,
-    large,
+    height,
     mode,
     name,
     onChange,
@@ -169,7 +170,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
     showRangeApply,
     width,
     ...rest
-  } = { ...selectorDefaultProps, ...props };
+  } = mergeProps(selectorDefaultProps, props);
   const [{ isActive, isFilled, selectedDates }, setState] = useSetState<State>({
     isActive: open ?? false,
     isFilled: false,
@@ -256,6 +257,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
       <ClickOutside active={isActive} onClick={toggle}>
         <StyledButton
           data-component-name="DatePickerSelectorButton"
+          height={height}
           isFilled={isFilled}
           onClick={toggle}
           {...omit(props, 'hidden', 'onChange')}
