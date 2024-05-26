@@ -1,6 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { addChromaticModes, colorProps, hideProps, marginProps } from '~/stories/__helpers__';
+import {
+  addChromaticModes,
+  colorProps,
+  disableControl,
+  hideProps,
+  marginProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, ProgressBar } from './ProgressBar';
 
@@ -26,3 +32,18 @@ export default {
 } satisfies Meta<typeof ProgressBar>;
 
 export const Basic: Story = {};
+
+export const Sizes: Story = {
+  argTypes: {
+    size: disableControl(),
+  },
+  render: props => (
+    <>
+      <ProgressBar {...props} size="sm" />
+      <br />
+      <ProgressBar {...props} size="md" />
+      <br />
+      <ProgressBar {...props} size="lg" />
+    </>
+  ),
+};
