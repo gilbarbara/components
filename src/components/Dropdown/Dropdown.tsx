@@ -29,12 +29,12 @@ export const defaultProps = {
   closeMultiOnSelect: false,
   direction: 'ltr',
   disabled: false,
+  height: 'md',
   keepSelectedInList: true,
   labels: {
     create: 'Create {search}',
     noData: 'Nothing found',
   },
-  large: false,
   loading: false,
   menuMaxHeight: 260,
   multi: false,
@@ -166,9 +166,9 @@ export function Dropdown(props: DropdownProps) {
   const {
     allowCreate,
     closeMultiOnSelect,
+    height = 'md',
     inputOptions,
     items,
-    large,
     menuMaxHeight = 260,
     onChange,
     onClear,
@@ -208,7 +208,7 @@ export function Dropdown(props: DropdownProps) {
           bgColor: darkMode ? grayScale['700'] : white,
           color: mainColor,
           gap: 0,
-          minHeight: parseInt(large ? inputHeight.large : inputHeight.normal, 10),
+          minHeight: parseInt(inputHeight[height], 10),
           menuMaxHeight,
           width: rest.width,
         }}

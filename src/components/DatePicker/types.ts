@@ -10,6 +10,7 @@ import {
   WithBorder,
   WithBorderless,
   WithDisabled,
+  WithHeight,
   WithMargin,
   WithOpen,
   WithPadding,
@@ -86,6 +87,7 @@ export interface DatePickerSelectorBaseProps
     Omit<DayPickerBase, 'disabled' | 'fromDate' | 'mode' | 'selected' | 'toDate'>,
     WithBorderless,
     WithDisabled,
+    WithHeight,
     WithOpen,
     WithMargin {
   /**
@@ -93,7 +95,6 @@ export interface DatePickerSelectorBaseProps
    * @default en-US
    */
   formatLocale?: string;
-  large?: boolean;
   /**
    * Whether to show the calendar in range or single mode.
    * @default single

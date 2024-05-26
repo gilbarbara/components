@@ -7,6 +7,7 @@ import { Simplify } from '@gilbarbara/types';
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { appearanceStyles, baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
+import { selectPaddingY } from '~/modules/theme';
 
 import {
   OmitElementProps,
@@ -16,6 +17,7 @@ import {
   WithChildren,
   WithElementSpacing,
   WithFormElements,
+  WithHeight,
 } from '~/types';
 
 export interface SelectKnownProps
@@ -24,9 +26,8 @@ export interface SelectKnownProps
     WithBorderless,
     WithChildren,
     Omit<WithElementSpacing, 'suffixSpacing'>,
-    WithFormElements {
-  large?: boolean;
-}
+    WithFormElements,
+    WithHeight {}
 
 export type SelectProps = Simplify<OmitElementProps<HTMLSelectElement, SelectKnownProps>>;
 
@@ -34,7 +35,7 @@ export const defaultProps = {
   accent: 'primary',
   borderless: false,
   disabled: false,
-  large: false,
+  height: 'md',
   multiple: false,
   prefixSpacing: false,
   width: '100%',
@@ -44,12 +45,12 @@ export const StyledSelect = styled(
   'select',
   getStyledOptions(),
 )<SelectProps & { filled: boolean }>(props => {
-  const { accent = defaultProps.accent, filled, large, multiple } = props;
+  const { accent = defaultProps.accent, filled, height = defaultProps.height, multiple } = props;
   const { darkColor, darkMode, grayScale, spacing, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
   let color = grayScale['500'];
-  const paddingY = large ? spacing.sm : spacing.xs;
+  const paddingY = selectPaddingY[height];
 
   if (filled) {
     color = darkMode ? white : darkColor;

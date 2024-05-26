@@ -22,7 +22,7 @@ export interface TextareaKnownProps
     WithFormElements {}
 
 export type TextareaProps = Simplify<
-  OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'name'>
+  OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'height' | 'name'>
 >;
 
 export const defaultProps = {
