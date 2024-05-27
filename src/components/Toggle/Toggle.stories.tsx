@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { objectKeys } from '@gilbarbara/helpers';
+import { objectKeys, sleep } from '@gilbarbara/helpers';
 import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fireEvent, fn, waitFor, within } from '@storybook/test';
@@ -102,9 +102,11 @@ export const Tests: Story = {
 
     const canvas = within(canvasElement);
 
-    await canvas.findByTestId('Toggle');
+    await sleep(0.5);
 
-    await fireEvent.click(canvas.getByTestId('Toggle'));
+    const toggle = canvas.getByTestId('Toggle');
+
+    await fireEvent.click(toggle);
     await waitFor(() => {
       expect(mockOnChange).toHaveBeenCalledTimes(1);
     });
