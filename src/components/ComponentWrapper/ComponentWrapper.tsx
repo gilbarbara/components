@@ -18,7 +18,7 @@ export interface ComponentWrapperKnownProps extends StyledProps, WithChildren, W
    * A single value for both or [width,height]
    * @default 32
    */
-  size?: StringOrNumber | [StringOrNumber, StringOrNumber];
+  size?: StringOrNumber | [width: StringOrNumber, height: StringOrNumber];
   style?: CSSProperties;
   suffix?: Icons | ReactElement;
   /** @default 100% */
