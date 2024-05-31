@@ -29,6 +29,10 @@ export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponent
    * @default false
    */
   defaultChecked?: boolean;
+  icons?: {
+    checked?: ReactNode;
+    unchecked?: ReactNode;
+  };
   label?: ReactNode;
   labelOptions?: Simplify<WithTextOptions>;
   name?: string;
@@ -131,9 +135,13 @@ const StyledButton = styled(
   const { height, space } = styles[size];
 
   return css`
+    align-items: center;
     background-color: ${backgroundColor};
     border-radius: 50%;
     bottom: ${px(space)};
+    display: flex;
+    font-size: ${px(height - 6)};
+    justify-content: center;
     left: ${isActive ? px(height + 2) : px(space)};
     opacity: ${disabled ? 0.7 : 1};
     position: absolute;
@@ -167,6 +175,7 @@ export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggl
 
         [data-component-name='ToggleTrack'] {
           ${getOutlineStyles(getColorTokens(accent, null, getTheme(props)).mainColor)};
+          z-index: unset;
         }
       }
     `;
@@ -179,6 +188,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     checked,
     defaultChecked,
     disabled,
+    icons,
     label,
     labelOptions,
     name,
@@ -282,7 +292,15 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
           isActive={isActive}
           size={size}
         />
-        <StyledButton accent={accent} disabled={disabled} isActive={isActive} size={size} />
+        <StyledButton
+          accent={accent}
+          data-component-name="ToggleButton"
+          disabled={disabled}
+          isActive={isActive}
+          size={size}
+        >
+          {isActive ? icons?.checked : icons?.unchecked}
+        </StyledButton>
       </StyledToggle>
       {label}
     </Label>

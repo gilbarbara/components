@@ -4,7 +4,7 @@ import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fireEvent, fn, waitFor, within } from '@storybook/test';
 
-import { Grid } from '~';
+import { Grid, Icon } from '~';
 
 import { getTheme } from '~/modules/helpers';
 
@@ -49,6 +49,15 @@ export const Controlled: Story = {
     };
 
     return <Toggle {...props} onToggle={handleToggle} />;
+  },
+};
+
+export const WithIcons: Story = {
+  args: {
+    icons: {
+      checked: <Icon name="check-o" size={18} />,
+      unchecked: <Icon name="block-o" size={18} />,
+    },
   },
 };
 
