@@ -15,6 +15,7 @@ import { Label } from '~/components/Label';
 import {
   OmitElementProps,
   StyledProps,
+  VariantWithTones,
   WithAccent,
   WithComponentSize,
   WithDisabled,
@@ -24,6 +25,10 @@ import {
 export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponentSize, WithDisabled {
   /** Status (controlled mode) */
   checked?: boolean;
+  colors?: {
+    button?: VariantWithTones;
+    track?: VariantWithTones;
+  };
   /**
    * Initial status (uncontrolled mode)
    * @default false
@@ -48,7 +53,9 @@ export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponent
 
 export type ToggleProps = Simplify<OmitElementProps<HTMLDivElement, ToggleKnownProps>>;
 
-interface InnerProps extends SetRequired<ToggleProps, 'accent' | 'size'> {
+interface InnerProps
+  extends SetRequired<ToggleProps, 'accent' | 'size'>,
+    Pick<ToggleProps, 'colors'> {
   isActive: boolean;
 }
 
@@ -94,11 +101,15 @@ const StyledTrack = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { accent, isActive } = props;
+  const { accent, colors, isActive } = props;
   const { grayScale, radius, ...theme } = getTheme(props);
 
   const { mainColor } = getColorTokens(accent, null, theme);
-  let backgroundColor = isDarkMode(props) ? grayScale['700'] : grayScale['100'];
+  let backgroundColor = isDarkMode(props) ? grayScale['700'] : grayScale['200'];
+
+  if (colors?.track) {
+    backgroundColor = getColorTokens(colors.track, null, theme).mainColor;
+  }
 
   if (isActive) {
     backgroundColor = mainColor;
@@ -120,7 +131,7 @@ const StyledButton = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { accent, disabled, isActive, size } = props;
+  const { accent, colors, disabled, isActive, size } = props;
   const { grayScale, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
@@ -130,6 +141,10 @@ const StyledButton = styled(
     backgroundColor = grayScale['800'];
   } else if (isActive) {
     backgroundColor = getColorWithTone(mainColor, '50');
+  }
+
+  if (colors?.button) {
+    backgroundColor = getColorTokens(colors.button, null, theme).mainColor;
   }
 
   const { height, space } = styles[size];
@@ -186,6 +201,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
   const {
     accent,
     checked,
+    colors,
     defaultChecked,
     disabled,
     icons,
@@ -288,12 +304,14 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
       >
         <StyledTrack
           accent={accent}
+          colors={colors}
           data-component-name="ToggleTrack"
           isActive={isActive}
           size={size}
         />
         <StyledButton
           accent={accent}
+          colors={colors}
           data-component-name="ToggleButton"
           disabled={disabled}
           isActive={isActive}
