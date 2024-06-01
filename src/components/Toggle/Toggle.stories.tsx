@@ -52,6 +52,16 @@ export const Controlled: Story = {
   },
 };
 
+export const WithColors: Story = {
+  args: {
+    accent: 'red',
+    colors: {
+      button: 'purple.600',
+      track: 'yellow.200',
+    },
+  },
+};
+
 export const WithIcons: Story = {
   args: {
     icons: {
