@@ -1,10 +1,11 @@
 import { useTheme } from '@emotion/react';
 import { objectKeys, sleep } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
 import { clearAllMocks, expect, fireEvent, fn, waitFor, within } from '@storybook/test';
 
-import { Grid, Icon } from '~';
+import { Box, Grid, Icon, Paragraph, Tooltip } from '~';
 
 import { getTheme } from '~/modules/helpers';
 
@@ -22,10 +23,7 @@ type Story = StoryObj<typeof Toggle>;
 export default {
   title: 'Inputs/Toggle',
   component: Toggle,
-  args: {
-    ...defaultProps,
-    label: 'Toggle',
-  },
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...colorProps(['accent']),
@@ -34,40 +32,54 @@ export default {
   },
 } satisfies Meta<typeof Toggle>;
 
-export const Basic: Story = {};
-
-export const Controlled: Story = {
+export const Basic: Story = {
   args: {
-    checked: false,
-    label: 'Controlled',
+    'aria-label': 'Toggle',
+    defaultChecked: true,
+    title: 'Toggle',
   },
-  render: function Render(props) {
-    const [{ checked }, updateArguments] = useArgs<ToggleProps>();
+};
 
-    const handleToggle = () => {
-      updateArguments({ checked: !checked });
-    };
-
-    return <Toggle {...props} onToggle={handleToggle} />;
+export const WithLabel: Story = {
+  args: {
+    label: 'Notifications',
   },
 };
 
 export const WithColors: Story = {
   args: {
-    accent: 'red',
-    colors: {
-      button: 'purple.600',
-      track: 'yellow.200',
-    },
+    accent: 'orange.500',
+    colorButton: ['orange.500', 'yellow'],
+    colorTrack: 'yellow',
+    label: 'Notifications',
   },
 };
 
-export const WithIcons: Story = {
+export const WithThumbIcon: Story = {
   args: {
-    icons: {
-      checked: <Icon name="check-o" size={18} />,
-      unchecked: <Icon name="block-o" size={18} />,
-    },
+    label: 'Notifications',
+    thumbIconChecked: <Icon name="check-o" size={18} />,
+    thumbIconUnchecked: <Icon name="block-o" size={18} />,
+  },
+};
+
+export const WithTrackIcon: Story = {
+  args: {
+    accent: 'gray.700',
+    colorTrack: 'yellow',
+    label: 'Dark Mode',
+    iconEnd: <Icon name="moon" />,
+    iconStart: <Icon name="sun" />,
+  },
+};
+
+export const WithTooltip: Story = {
+  render: function Render(props) {
+    return (
+      <Tooltip content="Notifications">
+        <Toggle {...props} />
+      </Tooltip>
+    );
   },
 };
 
@@ -101,6 +113,27 @@ export const Colors: Story = {
           <Toggle key={color} {...props} accent={color} defaultChecked label={color} name={color} />
         ))}
       </Grid>
+    );
+  },
+};
+
+export const Controlled: Story = {
+  args: {
+    checked: false,
+    label: 'Controlled',
+  },
+  render: function Render(props) {
+    const [{ checked }, updateArguments] = useArgs<SetRequired<ToggleProps, 'checked'>>();
+
+    const handleToggle = () => {
+      updateArguments({ checked: !checked });
+    };
+
+    return (
+      <Box direction="column" flexBox justify="start">
+        <Toggle {...props} onToggle={handleToggle} title={props.label as string} />
+        <Paragraph mt="xs">Selected: {checked?.toString()}</Paragraph>
+      </Box>
     );
   },
 };
