@@ -14,7 +14,12 @@ import {
   WithBorderless,
   WithDisabled,
 } from '~/types';
-import type { DatePickerSelectorProps, DropdownProps, FormGroupProps } from '~/types/props';
+import type {
+  DatePickerSelectorProps,
+  DropdownProps,
+  FormGroupProps,
+  ToggleProps,
+} from '~/types/props';
 
 export type RegisterOptionsProps = Simplify<
   FieldBaseProps & {
@@ -61,6 +66,7 @@ interface FieldExcludedProps {
   items?: never;
   onBlur?: never;
   onFocus?: never;
+  toggleProps?: never;
   validationOptions?: never;
 }
 
@@ -169,8 +175,9 @@ export type FieldTextareaProps = Simplify<
 
 export type FieldToggleProps = Simplify<
   FieldBaseProps &
-    FieldExcludedProps & {
+    Omit<FieldExcludedProps, 'toggleProps'> & {
       onChange?: (value: boolean) => void;
+      toggleProps?: Omit<ToggleProps, 'disabled' | 'label' | 'name' | 'onChange'>;
       type: 'toggle';
     }
 >;
