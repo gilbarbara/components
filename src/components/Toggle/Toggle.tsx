@@ -1,16 +1,27 @@
-import { ChangeEvent, forwardRef, KeyboardEvent, MouseEvent, ReactNode, useState } from 'react';
+import {
+  AriaAttributes,
+  ChangeEvent,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  KeyboardEvent,
+  MouseEvent,
+  ReactElement,
+  ReactNode,
+  useId,
+  useState,
+} from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { usePrevious, useUpdateEffect } from '@gilbarbara/hooks';
 import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
+import { VisuallyHidden } from '@react-aria/visually-hidden';
 import is from 'is-lite';
 
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, getOutlineStyles, getStyledOptions, isDarkMode } from '~/modules/system';
-
-import { Label } from '~/components/Label';
 
 import {
   OmitElementProps,
@@ -19,27 +30,30 @@ import {
   WithAccent,
   WithComponentSize,
   WithDisabled,
-  WithTextOptions,
+  WithLabel,
 } from '~/types';
 
-export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponentSize, WithDisabled {
+export interface ToggleKnownProps
+  extends StyledProps,
+    AriaAttributes,
+    WithAccent,
+    WithComponentSize,
+    WithDisabled,
+    WithLabel {
   /** Status (controlled mode) */
   checked?: boolean;
-  colors?: {
-    button?: VariantWithTones;
-    track?: VariantWithTones;
-  };
+  colorButton?: VariantWithTones | [unchecked: VariantWithTones, checked: VariantWithTones];
+  colorTrack?: VariantWithTones;
   /**
    * Initial status (uncontrolled mode)
    * @default false
    */
   defaultChecked?: boolean;
-  icons?: {
-    checked?: ReactNode;
-    unchecked?: ReactNode;
-  };
-  label?: ReactNode;
-  labelOptions?: Simplify<WithTextOptions>;
+  iconEnd?: ReactNode;
+  iconStart?: ReactNode;
+  /**
+   * The name for the input element, used when submitting an HTML form.
+   */
   name?: string;
   /**
    * Callback when the status changes (uncontrolled mode)
@@ -49,14 +63,16 @@ export interface ToggleKnownProps extends StyledProps, WithAccent, WithComponent
    * Callback when clicking/key down the toggle
    */
   onToggle?: (value: boolean) => void;
+  thumbIconChecked?: ReactNode;
+  thumbIconUnchecked?: ReactNode;
 }
 
-export type ToggleProps = Simplify<OmitElementProps<HTMLDivElement, ToggleKnownProps>>;
+export type ToggleProps = Simplify<OmitElementProps<HTMLLabelElement, ToggleKnownProps>>;
 
 interface InnerProps
   extends SetRequired<ToggleProps, 'accent' | 'size'>,
-    Pick<ToggleProps, 'colors'> {
-  isActive: boolean;
+    Pick<ToggleProps, 'colorButton' | 'colorTrack'> {
+  isChecked: boolean;
 }
 
 const styles = {
@@ -85,33 +101,46 @@ export const defaultProps = {
   defaultChecked: false,
   disabled: false,
   size: 'md',
-} satisfies ToggleProps;
+} satisfies Omit<ToggleProps, 'label'>;
 
-const StyledInput = styled('input')`
-  bottom: 0;
-  left: 0;
-  opacity: 0.0001;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: -1;
-`;
+const StyledLabel = styled(
+  'label',
+  getStyledOptions(),
+)<Pick<InnerProps, 'accent'>>(props => {
+  const { accent = 'primary' } = props;
+  const { radius } = getTheme(props);
+
+  return css`
+    display: inline-flex;
+
+    &:focus {
+      outline: none;
+
+      [data-component-name='ToggleElement'] {
+        border-radius: ${radius.sm};
+        outline: none;
+        ${getOutlineStyles(getColorTokens(accent, null, getTheme(props)).mainColor)};
+        z-index: unset;
+      }
+    }
+  `;
+});
 
 const StyledTrack = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { accent, colors, isActive } = props;
+  const { accent, colorTrack, isChecked } = props;
   const { grayScale, radius, ...theme } = getTheme(props);
 
   const { mainColor } = getColorTokens(accent, null, theme);
   let backgroundColor = isDarkMode(props) ? grayScale['700'] : grayScale['200'];
 
-  if (colors?.track) {
-    backgroundColor = getColorTokens(colors.track, null, theme).mainColor;
+  if (colorTrack) {
+    backgroundColor = getColorTokens(colorTrack, null, theme).mainColor;
   }
 
-  if (isActive) {
+  if (isChecked) {
     backgroundColor = mainColor;
   }
 
@@ -127,24 +156,46 @@ const StyledTrack = styled(
   `;
 });
 
+const StyledTrackIcon = styled('span')<InnerProps>(props => {
+  const { accent, isChecked, size } = props;
+  const { darkColor, grayScale, white, ...theme } = getTheme(props);
+  const { textColor } = getColorTokens(accent, null, theme);
+  const { height, space } = styles[size];
+
+  return css`
+    align-items: center;
+    bottom: 0;
+    color: ${isChecked ? textColor : darkColor};
+    display: flex;
+    justify-content: center;
+    left: ${isChecked ? px(space) : undefined};
+    height: ${px(height)};
+    position: absolute;
+    right: ${isChecked ? undefined : px(space)};
+    top: 0;
+  `;
+});
+
 const StyledButton = styled(
   'span',
   getStyledOptions(),
 )<InnerProps>(props => {
-  const { accent, colors, disabled, isActive, size } = props;
+  const { accent, colorButton, disabled, isChecked, size } = props;
   const { grayScale, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
   let backgroundColor = white;
 
-  if (accent === 'white' && isActive) {
+  if (accent === 'white' && isChecked) {
     backgroundColor = grayScale['800'];
-  } else if (isActive) {
+  } else if (isChecked) {
     backgroundColor = getColorWithTone(mainColor, '50');
   }
 
-  if (colors?.button) {
-    backgroundColor = getColorTokens(colors.button, null, theme).mainColor;
+  if (colorButton) {
+    backgroundColor = is.array(colorButton)
+      ? getColorTokens(isChecked ? colorButton[1] : colorButton[0], null, theme).mainColor
+      : getColorTokens(colorButton, null, theme).mainColor;
   }
 
   const { height, space } = styles[size];
@@ -157,7 +208,7 @@ const StyledButton = styled(
     display: flex;
     font-size: ${px(height - 6)};
     justify-content: center;
-    left: ${isActive ? px(height + 2) : px(space)};
+    left: ${isChecked ? px(height + 2) : px(space)};
     opacity: ${disabled ? 0.7 : 1};
     position: absolute;
     top: ${px(space)};
@@ -170,7 +221,7 @@ const StyledButton = styled(
 
 export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggle'>, 'size'>>(
   props => {
-    const { accent = 'primary', disabled, label, size } = props;
+    const { disabled, label, size } = props;
 
     const { height, width } = styles[size];
 
@@ -184,41 +235,42 @@ export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggl
       user-select: none;
       vertical-align: middle;
       width: ${px(width)};
-
-      &:focus {
-        outline: none;
-
-        [data-component-name='ToggleTrack'] {
-          ${getOutlineStyles(getColorTokens(accent, null, getTheme(props)).mainColor)};
-          z-index: unset;
-        }
-      }
     `;
   },
 );
 
+/**
+ * Make sure to pass the `aria-label` prop when the `label` prop is not provided.
+ * This is required for accessibility.
+ */
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => {
   const {
     accent,
+    as,
     checked,
-    colors,
+    colorButton,
+    colorTrack,
     defaultChecked,
     disabled,
-    icons,
+    iconEnd,
+    iconStart,
     label,
-    labelOptions,
     name,
     onChange,
     onToggle,
     size,
+    theme,
+    thumbIconChecked,
+    thumbIconUnchecked,
     ...rest
-  } = { ...defaultProps, ...props };
-  const [isActive, setActive] = useState(is.boolean(checked) ? checked : defaultChecked);
+  } = mergeProps(defaultProps, props);
+  const [isChecked, setChecked] = useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
+  const labelId = useId();
 
   useUpdateEffect(() => {
     if (is.boolean(checked) && previousChecked !== checked) {
-      setActive(checked);
+      setChecked(checked);
     }
   }, [checked, previousChecked]);
 
@@ -229,14 +281,14 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
 
     const { target } = event;
 
-    setActive(target.checked);
+    setChecked(target.checked);
 
     onChange?.(target.checked);
   };
 
   const handleClickLabel = () => {
     if (!disabled) {
-      onToggle?.(!isActive);
+      onToggle?.(!isChecked);
     }
   };
 
@@ -249,7 +301,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
       return;
     }
 
-    const status = !isActive;
+    const status = !isChecked;
 
     onToggle?.(status);
 
@@ -257,11 +309,11 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
       return;
     }
 
-    setActive(status);
+    setChecked(status);
     onChange?.(status);
   };
 
-  const value = isActive ? 'on' : 'off';
+  const value = isChecked ? 'on' : 'off';
   const checkStatus: PlainObject<boolean> = {};
 
   if (is.boolean(checked)) {
@@ -270,58 +322,97 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     checkStatus.defaultChecked = defaultChecked;
   }
 
+  let labelElement: ReactNode = null;
+
+  if (label) {
+    labelElement = isValidElement(label) ? (
+      cloneElement(label as ReactElement, { id: labelId })
+    ) : (
+      <span id={labelId}>{label}</span>
+    );
+  }
+
   return (
-    <Label
+    <StyledLabel
+      accent={accent}
+      as={as}
+      data-checked={isChecked}
       data-component-name="Toggle"
-      inline
+      data-disabled={disabled}
       onClick={handleClickLabel}
-      style={{ cursor: disabled ? 'default' : 'pointer' }}
-      {...labelOptions}
+      onKeyDown={handleKeyDown}
+      style={{
+        cursor: disabled ? 'default' : 'pointer',
+        pointerEvents: disabled ? 'none' : 'auto',
+        touchAction: disabled ? 'none' : undefined,
+      }}
+      tabIndex={disabled ? -1 : 0}
+      {...rest}
     >
-      <StyledInput
-        ref={ref}
-        aria-checked={isActive}
-        aria-label={!label ? name : undefined}
-        disabled={disabled}
-        name={name}
-        onChange={handleChange}
-        onClick={handleClickInput}
-        role="switch"
-        type="checkbox"
-        value={value}
-        {...checkStatus}
-      />
+      <VisuallyHidden elementType="span">
+        <input
+          ref={ref}
+          aria-checked={isChecked}
+          aria-labelledby={label ? labelId : undefined}
+          disabled={disabled}
+          name={name}
+          onChange={handleChange}
+          onClick={handleClickInput}
+          role="switch"
+          type="checkbox"
+          value={value}
+          {...checkStatus}
+        />
+      </VisuallyHidden>
       <StyledToggle
         accent={accent}
+        aria-hidden
         data-component-name="ToggleElement"
         disabled={disabled}
         label={label}
         name={name}
-        onKeyDown={handleKeyDown}
         size={size}
-        tabIndex={0}
-        {...rest}
       >
         <StyledTrack
           accent={accent}
-          colors={colors}
+          colorTrack={colorTrack}
           data-component-name="ToggleTrack"
-          isActive={isActive}
+          isChecked={isChecked}
           size={size}
         />
         <StyledButton
           accent={accent}
-          colors={colors}
+          colorButton={colorButton}
           data-component-name="ToggleButton"
           disabled={disabled}
-          isActive={isActive}
+          isChecked={isChecked}
           size={size}
         >
-          {isActive ? icons?.checked : icons?.unchecked}
+          {isChecked ? thumbIconChecked : thumbIconUnchecked}
         </StyledButton>
+        {!isChecked && iconStart && (
+          <StyledTrackIcon
+            accent={accent}
+            data-component-name="ToggleTrackIcon"
+            isChecked={isChecked}
+            size={size}
+          >
+            {iconStart}
+          </StyledTrackIcon>
+        )}
+        {isChecked && iconEnd && (
+          <StyledTrackIcon
+            accent={accent}
+            data-component-name="ToggleTrackIcon"
+            isChecked={isChecked}
+            size={size}
+          >
+            {iconEnd}
+          </StyledTrackIcon>
+        )}
       </StyledToggle>
-      {label}
-    </Label>
+      {labelElement}
+    </StyledLabel>
   );
 });
 
