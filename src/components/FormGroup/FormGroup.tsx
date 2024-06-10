@@ -27,6 +27,7 @@ import {
   WithBorder,
   WithChildren,
   WithInline,
+  WithLabel,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -38,6 +39,7 @@ export interface FormGroupKnownProps
     WithBorder,
     WithChildren,
     WithInline,
+    WithLabel,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -45,7 +47,6 @@ export interface FormGroupKnownProps
   assistiveText?: ReactNode;
   error?: ReactNode;
   hideAssistiveText?: boolean;
-  label?: ReactNode;
   labelId?: string;
   labelInfo?: ReactNode;
   labelStyles?: CSSProperties;
