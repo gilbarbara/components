@@ -2,7 +2,7 @@ import { ElementType, HTMLProps, ReactNode } from 'react';
 import { Option } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { WithDisabled } from './shared';
+import { WithDisabled, WithLabel } from './shared';
 import { Theme, VariantWithTones } from './theme';
 
 export interface BaseProps {
@@ -15,8 +15,7 @@ export interface StyledProps {
   theme?: Theme;
 }
 
-export interface CheckboxItem extends WithDisabled {
-  label?: ReactNode;
+export interface CheckboxItem extends WithDisabled, WithLabel {
   name: string;
 }
 
@@ -29,8 +28,7 @@ export interface DropdownOption extends Option {
 export type OmitElementProps<TElement, TProps, TProperties extends string = never> = TProps &
   Omit<HTMLProps<TElement>, 'ref' | 'size' | keyof TProps | TProperties>;
 
-export interface RadioItem extends WithDisabled {
+export interface RadioItem extends WithDisabled, WithLabel {
   accent?: VariantWithTones;
-  label?: ReactNode;
   value: StringOrNumber;
 }

@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, useCallback, useState } from 'react';
+import { MouseEventHandler, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
@@ -25,6 +25,7 @@ import {
   WithChildren,
   WithColorsDefaultBg,
   WithInvert,
+  WithLabel,
 } from '~/types';
 
 export interface ButtonSplitKnownProps
@@ -34,9 +35,9 @@ export interface ButtonSplitKnownProps
     WithBusy,
     WithChildren,
     WithColorsDefaultBg,
-    WithInvert {
+    WithInvert,
+    Required<WithLabel> {
   dataAttributes?: Record<`data-${string}`, StringOrNumber>;
-  label: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
   /** @default bottom-right */
   position?: PositionY;

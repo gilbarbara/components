@@ -1,10 +1,17 @@
 import { CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
-import { Icons, StyledProps, WithAccent, WithBorderless, WithChildren, WithMargin } from '~/types';
+import {
+  Icons,
+  StyledProps,
+  WithAccent,
+  WithBorderless,
+  WithChildren,
+  WithLabel,
+  WithMargin,
+} from '~/types';
 
-export interface SearchItem extends WithAccent {
-  label?: ReactNode;
+export interface SearchItem extends WithAccent, WithLabel {
   value: string;
 }
 
