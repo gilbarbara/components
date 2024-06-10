@@ -5,7 +5,6 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { RequireExactlyOne, SetRequired, Simplify } from '@gilbarbara/types';
-import is from 'is-lite';
 
 import { rotate } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
@@ -131,11 +130,7 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
     return '';
   }, [name, url]);
 
-  let titleString = name as string;
-
-  if (!is.undefined(title)) {
-    titleString = is.string(title) ? title : innerText(title);
-  }
+  const titleString = title ? innerText(title) : (name as string);
 
   if (!iconURL) {
     return null;

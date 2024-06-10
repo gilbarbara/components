@@ -231,6 +231,10 @@ export interface WithLayout extends WithDisplay, WithDimension {
   transition?: StandardShorthandProperties['transition'];
 }
 
+export interface WithLabel {
+  label?: ReactNode;
+}
+
 export interface WithLight {
   /**
    * Remove bold style
