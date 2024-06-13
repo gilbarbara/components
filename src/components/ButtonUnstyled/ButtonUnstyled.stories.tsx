@@ -4,6 +4,7 @@ import { Icon } from '~';
 
 import {
   colorProps,
+  disableControl,
   flexContent,
   flexItems,
   hideProps,
@@ -57,6 +58,6 @@ export const Custom: Story = {
     width: 64,
   },
   argTypes: {
-    children: { control: 'none' },
+    children: disableControl(),
   },
 };

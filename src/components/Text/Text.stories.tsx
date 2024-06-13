@@ -1,4 +1,3 @@
-import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph, Tag } from '~';
@@ -38,7 +37,7 @@ export const Sizes: Story = {
     <div>
       {sizesAll.map(size => (
         <Paragraph key={size}>
-          <Text onClick={action('clicked')} {...props} size={size}>
+          <Text {...props} size={size}>
             <Tag size={size}>{size}</Tag> In the mountains far from the countries Vokalia and
             Consonantia, there live the blind texts.
           </Text>

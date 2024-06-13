@@ -13,8 +13,8 @@ import {
 } from './common';
 import { ButtonSize, Radius, Shadow, Spacing, Theme, VariantWithTones } from './theme';
 
-type SpacingOrZero = Spacing | 0;
-type SpacingAuto = SpacingOrZero | 'auto';
+export type SpacingOrZero = Spacing | 0;
+export type SpacingAuto = SpacingOrZero | 'auto';
 
 export interface WithAccent<T = VariantWithTones> {
   /**

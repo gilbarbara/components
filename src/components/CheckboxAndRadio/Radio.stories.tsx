@@ -29,7 +29,7 @@ export default {
     ...colorProps(['accent']),
     ...marginProps(),
     label: { control: 'text' },
-    onChange: { action: 'onChange', ...disableControl() },
+    onChange: { action: 'onChange' },
     value: { control: 'text' },
   },
 } satisfies Meta<typeof Radio>;

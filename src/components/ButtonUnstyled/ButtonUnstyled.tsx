@@ -74,7 +74,7 @@ export const StyledButtonUnstyled = styled(
   const { align, busy, color, justify } = props;
 
   const { darkMode, ...theme } = getTheme(props);
-  const selectedColor = color ?? darkMode ? 'white' : 'black';
+  const selectedColor = (color ?? darkMode) ? 'white' : 'black';
 
   return css`
     ${appearanceStyles};

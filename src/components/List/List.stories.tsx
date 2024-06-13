@@ -54,6 +54,7 @@ export const Basic: Story = {
 export const Horizontal: Story = {
   args: {
     direction: 'horizontal',
+    minWidth: 150,
     radius: 'xl',
     shadow: 'low',
   },
@@ -91,6 +92,6 @@ export const WithComponents: Story = {
       </>
     ),
     hideBorder: true,
-    radius: false,
+    radius: 'none',
   },
 };

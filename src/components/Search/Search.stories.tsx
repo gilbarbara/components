@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { objectKeys, sleep, sortByLocaleCompare } from '@gilbarbara/helpers';
+import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { clearAllMocks, expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { Avatar, Box, Paragraph } from '~';
 
@@ -27,6 +28,7 @@ export default {
   component: Search,
   args: {
     ...defaultProps,
+    onSelect: action('onSelect'),
     width: 260,
   },
   argTypes: {
@@ -115,14 +117,6 @@ const mockOnSearch = fn();
 const mockOnSelect = fn();
 const mockOnType = fn();
 
-function resetMocks() {
-  mockOnBlur.mockClear();
-  mockOnFocus.mockClear();
-  mockOnSearch.mockClear();
-  mockOnSelect.mockClear();
-  mockOnType.mockClear();
-}
-
 export const Tests: Story = {
   ...hideStoryFromDocsPage(),
   tags: ['hidden'],
@@ -144,7 +138,7 @@ export const Tests: Story = {
     const input = canvas.getByTestId('SearchInput');
 
     await step('should dispatch the onFocus callback', async () => {
-      resetMocks();
+      clearAllMocks();
 
       await userEvent.click(input);
       await waitFor(() => {
@@ -157,7 +151,7 @@ export const Tests: Story = {
     });
 
     await step('should select an item', async () => {
-      resetMocks();
+      clearAllMocks();
 
       const value = canvas.getAllByTestId('SearchItem')[0].getAttribute('data-value') ?? '';
 
@@ -166,7 +160,7 @@ export const Tests: Story = {
     });
 
     await step('should render "Nothing found" if search returned no results', async () => {
-      resetMocks();
+      clearAllMocks();
 
       await userEvent.type(canvas.getByTestId('SearchInput'), 'xyz');
 
