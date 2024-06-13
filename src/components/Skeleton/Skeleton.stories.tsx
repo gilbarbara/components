@@ -9,8 +9,8 @@ import {
   colorProps,
   hideProps,
   layoutProps,
+  marginProps,
   radiusProps,
-  spacingProps,
 } from '~/stories/__helpers__';
 
 import { defaultProps, Skeleton } from './Skeleton';
@@ -27,7 +27,7 @@ export default {
     ...colorProps(['accent', 'bg']),
     ...layoutProps(),
     ...radiusProps(),
-    ...spacingProps(),
+    ...marginProps(),
   },
   parameters: {
     ...addChromaticModes('desktop_light', 'desktop_dark'),

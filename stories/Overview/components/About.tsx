@@ -25,10 +25,16 @@ function OverviewAbout() {
       </Paragraph>
 
       <Spacer gap="xs" mb="xl" mt="md">
-        <a href="https://github.com/gilbarbara/components" rel="noreferrer" target="_blank">
+        <a
+          aria-label="GitHub"
+          href="https://github.com/gilbarbara/components"
+          rel="noreferrer"
+          target="_blank"
+        >
           <SVG height={24} src="https://cdn.svgporn.com/logos/github-icon.svg" width={32} />
         </a>
         <a
+          aria-label="NPM"
           href="https://www.npmjs.com/package/@gilbarbara/components"
           rel="noreferrer"
           target="_blank"

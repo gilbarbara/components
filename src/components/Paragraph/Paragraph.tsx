@@ -72,7 +72,7 @@ export const StyledParagraph = styled(
 });
 
 export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
-  const { children, ...rest } = { ...defaultProps, ...props };
+  const { children, id, ...rest } = { ...defaultProps, ...props };
 
   return (
     <StyledParagraph ref={ref} data-component-name="Paragraph" {...props}>
