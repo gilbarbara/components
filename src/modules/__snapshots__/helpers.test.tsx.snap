@@ -123,7 +123,7 @@ exports[`getTheme > should return the theme 1`] = `
     "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
     "mid": "drop-shadow(2px 4px 12px rgba(148, 148, 148, 0.6))",
   },
-  "easing": "cubic-bezier(0.35, 0.01, 0.77, 0.34);",
+  "easing": "cubic-bezier(0.65, 0.815, 0.735, 0.395)",
   "fontFamily": "inherit",
   "fontMonospace": "Courier, monospace",
   "fontWeights": {
@@ -531,7 +531,7 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
     "mid": "drop-shadow(2px 4px 12px rgba(148, 148, 148, 0.6))",
   },
-  "easing": "cubic-bezier(0.35, 0.01, 0.77, 0.34);",
+  "easing": "cubic-bezier(0.65, 0.815, 0.735, 0.395)",
   "fontFamily": "inherit",
   "fontMonospace": "Courier, monospace",
   "fontWeights": {
@@ -939,7 +939,7 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
     "mid": "drop-shadow(2px 4px 12px rgba(148, 148, 148, 0.6))",
   },
-  "easing": "cubic-bezier(0.35, 0.01, 0.77, 0.34);",
+  "easing": "cubic-bezier(0.65, 0.815, 0.735, 0.395)",
   "fontFamily": "inherit",
   "fontMonospace": "Courier, monospace",
   "fontWeights": {
