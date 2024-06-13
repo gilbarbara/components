@@ -29,7 +29,7 @@ export const breakpoints = {
   xxxl: '1680px',
 };
 
-export const easing = 'cubic-bezier(0.35, 0.01, 0.77, 0.34);';
+export const easing = 'cubic-bezier(0.65, 0.815, 0.735, 0.395)';
 
 export const opacity = {
   /** @default 0.72 */

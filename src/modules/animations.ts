@@ -84,6 +84,16 @@ export const fadeInOut = keyframes`
   }
 `;
 
+export const horizontalScale = keyframes`
+  0% {
+    transform: translateX(-50%) scaleX(.2);
+  }
+  
+  100% {
+    transform: translateX(100%) scaleX(1);
+  }
+`;
+
 export const rotate = keyframes`
   100% {
     transform: rotate(360deg);
