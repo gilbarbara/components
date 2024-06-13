@@ -55,7 +55,14 @@ export * from './components/Tooltip';
 export * from './components/Truncate';
 
 // Modules
-export { animateIcon, fadeIn, fadeOut, fadeInOut, rotate } from './modules/animations';
+export {
+  animateIcon,
+  fadeIn,
+  fadeOut,
+  fadeInOut,
+  horizontalScale,
+  rotate,
+} from './modules/animations';
 export { icons } from './modules/options';
 export { mergeTheme, responsive } from './modules/helpers';
 export { generatePalette } from './modules/palette';

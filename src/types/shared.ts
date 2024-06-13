@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
@@ -204,6 +204,11 @@ export interface WithHeight {
    */
   height?: Sizes;
 }
+
+export type WithHTMLAttributes<T = HTMLDivElement> = Pick<
+  HTMLAttributes<T>,
+  'className' | 'id' | 'style' | 'tabIndex' | 'title'
+>;
 
 export interface WithInline {
   /**
