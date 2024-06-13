@@ -133,7 +133,7 @@ export const StyledButton = styled(
       ${getOutlineStyles(getColorTokens(bg, color, theme).mainColor)};
     }
 
-    ${!!busy &&
+    ${busy &&
     css`
       pointer-events: none;
     `};

@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import { objectKeys, sleep } from '@gilbarbara/helpers';
 import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fireEvent, fn, waitFor, within } from '@storybook/test';
+import { clearAllMocks, expect, fireEvent, fn, waitFor, within } from '@storybook/test';
 
 import { Grid, Icon } from '~';
 
@@ -116,8 +116,7 @@ export const Tests: Story = {
     onToggle: mockOnToggle,
   },
   play: async ({ canvasElement }) => {
-    mockOnChange.mockClear();
-    mockOnToggle.mockClear();
+    clearAllMocks();
 
     const canvas = within(canvasElement);
 
@@ -149,8 +148,7 @@ export const TestsControlled: Story = {
   },
   render: Controlled.render,
   play: async ({ canvasElement }) => {
-    mockOnChange.mockClear();
-    mockOnToggle.mockClear();
+    clearAllMocks();
 
     const canvas = within(canvasElement);
 

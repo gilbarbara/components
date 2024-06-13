@@ -178,7 +178,7 @@ export const TestKeyboardInteractions: Story = {
 
     await canvas.findByTestId('Menu');
 
-    expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
+    await expect(canvas.getByTestId('MenuItems')).toHaveAttribute('data-state', 'closed');
 
     await step('Open the menu by typing Tab to the button and pressing Enter', async () => {
       await userEvent.keyboard('{Tab}');

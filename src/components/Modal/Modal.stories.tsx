@@ -83,7 +83,7 @@ export const Tests: Story = {
     await userEvent.click(canvas.getByTestId('OpenModal'));
 
     await waitFor(() => {
-      expect(screen.getByTestId('Modal')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
     });
 
     await userEvent.click(screen.getByRole('button', { name: 'Save' }));
@@ -92,7 +92,7 @@ export const Tests: Story = {
     await userEvent.click(canvas.getByTestId('OpenModal'));
 
     await waitFor(() => {
-      expect(screen.getByTestId('Modal')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
     });
 
     await userEvent.keyboard('{Escape}');

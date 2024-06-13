@@ -6,7 +6,6 @@ import is from 'is-lite';
 import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
-import { inputPaddingY, selectPaddingY } from '~/modules/theme';
 
 import {
   BorderItem,
@@ -443,8 +442,10 @@ export function inputStyles<
     fontFamily,
     grayScale,
     inputHeight,
+    inputPaddingY,
     lightColor,
     radius,
+    selectPaddingY,
     spacing,
     typography,
     white,

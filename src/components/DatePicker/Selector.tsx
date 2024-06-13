@@ -174,7 +174,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
   const [{ isActive, isFilled, selectedDates }, setState] = useSetState<State>({
     isActive: open ?? false,
     isFilled: false,
-    selectedDates: mode === 'range' ? selected ?? [undefined, undefined] : selected ?? '',
+    selectedDates: mode === 'range' ? (selected ?? [undefined, undefined]) : (selected ?? ''),
   });
   const isRange = mode === 'range';
 

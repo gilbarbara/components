@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { clearAllMocks, expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { Box, Form, Grid, H3 } from '~';
 
@@ -354,7 +354,7 @@ const mockOnFocus = fn();
 
 export const TestCheckbox: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'checkbox',
     type: 'checkbox',
@@ -362,9 +362,10 @@ export const TestCheckbox: Story = {
   },
   render: props => <Form>{() => <FieldCheckbox {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnChange.mockClear();
     await canvas.findByTestId('Field');
 
     const checkboxElements = canvas.getAllByTestId('CheckboxElement');
@@ -386,7 +387,7 @@ export const TestCheckbox: Story = {
 
 export const TestDatePicker: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'datePicker',
     type: 'datePicker',
@@ -394,9 +395,10 @@ export const TestDatePicker: Story = {
   },
   render: props => <Form>{() => <FieldDatePicker {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnChange.mockClear();
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('DatePickerSelectorButton'));
@@ -439,7 +441,7 @@ export const TestDatePicker: Story = {
 
 export const TestDropdownMulti: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'dropdown',
     type: 'dropdown',
@@ -447,9 +449,10 @@ export const TestDropdownMulti: Story = {
   },
   render: props => <Form>{() => <FieldDropdown {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnChange.mockClear();
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
@@ -474,7 +477,7 @@ export const TestDropdownMulti: Story = {
 
 export const TestDropdownSingle: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'dropdown',
     type: 'dropdown',
@@ -486,9 +489,10 @@ export const TestDropdownSingle: Story = {
   },
   render: props => <Form>{() => <FieldDropdown {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnChange.mockClear();
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByLabelText('Toggle'));
@@ -509,7 +513,7 @@ export const TestDropdownSingle: Story = {
 
 export const TestRadio: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'radio',
     type: 'radio',
@@ -517,9 +521,10 @@ export const TestRadio: Story = {
   },
   render: props => <Form>{() => <FieldRadio {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnChange.mockClear();
     await canvas.findByTestId('Field');
 
     const radioElements = canvas.getAllByTestId('RadioElement');
@@ -538,7 +543,7 @@ export const TestRadio: Story = {
 
 export const TestSelect: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'select',
     type: 'select',
@@ -548,11 +553,10 @@ export const TestSelect: Story = {
   },
   render: props => <Form>{() => <FieldSelect {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnBlur.mockClear();
-    mockOnChange.mockClear();
-    mockOnFocus.mockClear();
     await canvas.findByTestId('Field');
 
     const select = canvas.getByTestId('Select');
@@ -576,7 +580,7 @@ export const TestSelect: Story = {
 
 export const TestText: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'text',
     type: 'text',
@@ -586,11 +590,10 @@ export const TestText: Story = {
   },
   render: props => <Form>{() => <FieldText {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnBlur.mockClear();
-    mockOnChange.mockClear();
-    mockOnFocus.mockClear();
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('Input'));
@@ -612,7 +615,7 @@ export const TestText: Story = {
 
 export const TestTextarea: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'textarea',
     type: 'textarea',
@@ -622,11 +625,10 @@ export const TestTextarea: Story = {
   },
   render: props => <Form>{() => <FieldTextarea {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnBlur.mockClear();
-    mockOnChange.mockClear();
-    mockOnFocus.mockClear();
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('Textarea'));
@@ -648,7 +650,7 @@ export const TestTextarea: Story = {
 
 export const TestToggle: Story = {
   ...hideStoryFromDocsPage(),
-  // tags: ['hidden'],
+  tags: ['hidden'],
   args: {
     name: 'toggle',
     type: 'toggle',
@@ -657,9 +659,10 @@ export const TestToggle: Story = {
   },
   render: props => <Form>{() => <FieldToggle {...props} />}</Form>,
   play: async ({ canvasElement }) => {
+    clearAllMocks();
+
     const canvas = within(canvasElement);
 
-    mockOnChange.mockClear();
     await canvas.findByTestId('Field');
 
     await userEvent.click(canvas.getByTestId('Toggle'));

@@ -76,8 +76,7 @@ describe('modules/keyboardScope', () => {
   let unmount: () => void;
 
   beforeAll(() => {
-    addEventListener.mockClear();
-    removeEventListener.mockClear();
+    vi.clearAllMocks();
   });
 
   describe('with matching elements', () => {

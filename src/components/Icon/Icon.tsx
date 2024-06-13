@@ -5,7 +5,6 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { RequireExactlyOne, SetRequired, Simplify } from '@gilbarbara/types';
-import is from 'is-lite';
 
 import { rotate } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
@@ -131,19 +130,21 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
     return '';
   }, [name, url]);
 
-  let titleString = name as string;
-
-  if (!is.undefined(title)) {
-    titleString = is.string(title) ? title : innerText(title);
-  }
-
   if (!iconURL) {
     return null;
   }
 
+  let titleSVG: string | null;
+
+  if (title !== null) {
+    titleSVG = title ? innerText(title) : (name as string);
+  } else {
+    titleSVG = null;
+  }
+
   return (
     <StyledIcon ref={ref} data-component-name="Icon" name={name} size={size} {...rest}>
-      <SVG height={size} src={iconURL} title={titleString} width={size} />
+      <SVG height={size} src={iconURL} title={titleSVG} width={size} />
     </StyledIcon>
   );
 });

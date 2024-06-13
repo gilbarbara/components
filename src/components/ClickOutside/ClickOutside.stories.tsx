@@ -26,11 +26,15 @@ function Render(props: ClickOutsideProps) {
   const [isActive, setActive] = useState(true);
 
   const handleClick = useCallback(() => {
-    setActive(!isActive);
-  }, [isActive]);
+    setActive(s => !s);
+  }, []);
+
+  const handleClickOutside = useCallback(() => {
+    setActive(false);
+  }, []);
 
   return (
-    <ClickOutside {...props} onClick={handleClick}>
+    <ClickOutside {...props} onClick={handleClickOutside}>
       <Box border padding="md">
         <Button disabled={isActive} onClick={handleClick} size="xs">
           {isActive ? 'Content is visible' : 'Click to show'}
