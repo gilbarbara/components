@@ -6,9 +6,9 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderProps } from './types';
+import { LoaderComponentProps } from './types';
 
-const grow = ({ size = 32 }: LoaderProps) => keyframes`
+const grow = ({ size = 32 }: LoaderComponentProps) => keyframes`
   0% {
     height: 0;
     width: 0;
@@ -30,7 +30,7 @@ const grow = ({ size = 32 }: LoaderProps) => keyframes`
 const StyledLoaderGrow = styled(
   'div',
   getStyledOptions(),
-)<LoaderProps>(props => {
+)<LoaderComponentProps>(props => {
   const { block, color = 'primary', size = 32 } = props;
   const { darkColor, lightColor, spacing, ...theme } = getTheme(props);
 
@@ -57,7 +57,7 @@ const StyledLoaderGrow = styled(
   `;
 });
 
-export default function LoaderGrow(props: LoaderProps) {
+export default function LoaderGrow(props: LoaderComponentProps) {
   return (
     <StyledLoaderGrow data-component-name="LoaderGrow" {...props}>
       <div />
