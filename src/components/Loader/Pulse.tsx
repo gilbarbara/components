@@ -6,9 +6,9 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderProps } from './types';
+import { LoaderComponentProps } from './types';
 
-const pulse = ({ size = 32 }: LoaderProps) => keyframes`
+const pulse = ({ size = 32 }: LoaderComponentProps) => keyframes`
   0% {
     height: 0;
     left: ${px(size / 2)};
@@ -29,7 +29,7 @@ const pulse = ({ size = 32 }: LoaderProps) => keyframes`
 const StyledLoaderPulse = styled(
   'div',
   getStyledOptions(),
-)<LoaderProps>(props => {
+)<LoaderComponentProps>(props => {
   const { block, color = 'primary', size = 32 } = props;
   const { darkColor, lightColor, spacing, ...theme } = getTheme(props);
 
@@ -61,7 +61,7 @@ const StyledLoaderPulse = styled(
   `;
 });
 
-export default function LoaderPulse(props: LoaderProps) {
+export default function LoaderPulse(props: LoaderComponentProps) {
   return (
     <StyledLoaderPulse data-component-name="LoaderPulse" {...props}>
       <div />

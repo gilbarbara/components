@@ -1,13 +1,14 @@
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
+import is from 'is-lite';
 import { rgba } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
-import { LoaderProps } from './types';
+import { LoaderComponentProps, LoaderSize } from './types';
 
 const animation = keyframes`
   0% {
@@ -26,23 +27,28 @@ const animation = keyframes`
 export const StyledLoaderPill = styled(
   'div',
   getStyledOptions(),
-)<Omit<LoaderProps, 'type'>>(props => {
-  const { block, color = 'primary', size = 128 } = props;
+)<
+  Omit<LoaderComponentProps, 'size'> & {
+    height: number;
+    width: number;
+  }
+>(props => {
+  const { block, color = 'primary', height, width } = props;
   const { darkColor, grayScale, lightColor, spacing, ...theme } = getTheme(props);
 
   const ratio = 0.16;
-  const borderRadius = px(size / 2);
+  const borderRadius = px(height / 2);
   const { mainColor } = getColorTokens(color, null, theme);
 
   return css`
     background-color: ${isDarkMode(props) ? grayScale['700'] : grayScale['100']};
     border-radius: ${borderRadius};
     display: ${block ? 'flex' : 'inline-flex'};
-    height: ${px(Math.ceil(size * ratio))};
+    height: ${px(height === width ? Math.ceil(height * ratio) : height)};
     margin: ${block ? spacing.lg : 0} auto;
     overflow: hidden;
     position: relative;
-    width: ${px(size)};
+    width: ${px(width)};
 
     div {
       animation: ${animation} 2s infinite ease-in-out;
@@ -72,9 +78,12 @@ export const StyledLoaderPill = styled(
   `;
 });
 
-export default function LoaderPill(props: LoaderProps) {
+export default function LoaderPill(props: LoaderComponentProps<LoaderSize>) {
+  const { size } = props;
+  const [width, height] = is.array(size) ? size : [size, size];
+
   return (
-    <StyledLoaderPill data-component-name="LoaderPill" {...props}>
+    <StyledLoaderPill data-component-name="LoaderPill" height={height} width={width} {...props}>
       <div />
       <div />
       <div />
