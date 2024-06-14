@@ -7,7 +7,7 @@ import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderProps } from './types';
+import { LoaderComponentProps } from './types';
 
 const dash = keyframes`
   0% {
@@ -29,7 +29,7 @@ const dash = keyframes`
 const StyledLoaderRotate = styled(
   'div',
   getStyledOptions(),
-)<LoaderProps>(props => {
+)<LoaderComponentProps>(props => {
   const { block } = props;
   const { spacing } = getTheme(props);
 
@@ -63,7 +63,7 @@ const StyledLoaderRotateCircle = styled('circle', getStyledOptions())<{ color: s
   stroke-linecap: round;
 `;
 
-export default function LoaderRotate(props: LoaderProps) {
+export default function LoaderRotate(props: LoaderComponentProps) {
   const { color = 'primary', size = 32 } = props;
   const { darkColor, lightColor, ...theme } = getTheme(props);
 
