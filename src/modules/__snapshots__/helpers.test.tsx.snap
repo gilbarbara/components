@@ -168,9 +168,12 @@ exports[`getTheme > should return the theme 1`] = `
     "semiOpaque": 0.72,
     "semiTransparent": 0.08,
   },
+  "opacityDisabled": 0.64,
   "radius": {
+    "full": "9999px",
     "lg": "24px",
     "md": "16px",
+    "none": "0px",
     "round": "50%",
     "sm": "12px",
     "xl": "32px",
@@ -243,9 +246,17 @@ exports[`getTheme > should return the theme 1`] = `
       "fontSize": "14px",
       "lineHeight": 1.2,
     },
+    "xl": {
+      "fontSize": "20px",
+      "lineHeight": 1.2,
+    },
     "xs": {
       "fontSize": "12px",
       "lineHeight": 1.2,
+    },
+    "xxs": {
+      "fontSize": "10px",
+      "lineHeight": 1.1,
     },
   },
   "variants": {
@@ -565,9 +576,12 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     "semiOpaque": 0.72,
     "semiTransparent": 0.08,
   },
+  "opacityDisabled": 0.64,
   "radius": {
+    "full": "9999px",
     "lg": "24px",
     "md": "16px",
+    "none": "0px",
     "round": "50%",
     "sm": "12px",
     "xl": "32px",
@@ -640,9 +654,17 @@ exports[`mergeTheme > should return a modified theme 1`] = `
       "fontSize": "14px",
       "lineHeight": 1.2,
     },
+    "xl": {
+      "fontSize": "20px",
+      "lineHeight": 1.2,
+    },
     "xs": {
       "fontSize": "12px",
       "lineHeight": 1.2,
+    },
+    "xxs": {
+      "fontSize": "10px",
+      "lineHeight": 1.1,
     },
   },
   "variants": {
@@ -962,9 +984,12 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "semiOpaque": 0.72,
     "semiTransparent": 0.08,
   },
+  "opacityDisabled": 0.64,
   "radius": {
+    "full": "9999px",
     "lg": "24px",
     "md": "16px",
+    "none": "0px",
     "round": "50%",
     "sm": "12px",
     "xl": "32px",
@@ -1037,9 +1062,17 @@ exports[`mergeTheme > should return the default theme 1`] = `
       "fontSize": "14px",
       "lineHeight": 1.2,
     },
+    "xl": {
+      "fontSize": "20px",
+      "lineHeight": 1.2,
+    },
     "xs": {
       "fontSize": "12px",
       "lineHeight": 1.2,
+    },
+    "xxs": {
+      "fontSize": "10px",
+      "lineHeight": 1.1,
     },
   },
   "variants": {

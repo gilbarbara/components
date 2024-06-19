@@ -217,7 +217,7 @@ export function radiusProps(): ControlMap {
   return {
     radius: {
       control: 'select',
-      options: ['', false, 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'round'],
+      options: ['', 'none', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'round'],
     },
   };
 }
