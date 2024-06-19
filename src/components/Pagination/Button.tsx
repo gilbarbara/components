@@ -22,7 +22,7 @@ const StyledPaginationButton = styled(
   getStyledOptions(),
 )<WithAccent & { current: boolean; disabled: boolean }>(props => {
   const { accent = 'primary', current } = props;
-  const { black, spacing, typography, white, ...theme } = getTheme(props);
+  const { black, opacity, spacing, typography, white, ...theme } = getTheme(props);
   const color = isDarkMode(props) ? white : black;
   const { mainColor, textColor } = getColorTokens(accent, null, theme);
 
@@ -40,7 +40,7 @@ const StyledPaginationButton = styled(
     width: ${spacing.xl};
 
     &:disabled {
-      opacity: 0.3;
+      opacity: ${opacity.medium};
       pointer-events: none;
     }
   `;

@@ -73,7 +73,7 @@ export const StyledButtonUnstyled = styled(
 )<Omit<ButtonUnstyledProps, 'children'>>(props => {
   const { align, busy, color, justify } = props;
 
-  const { darkMode, ...theme } = getTheme(props);
+  const { darkMode, opacityDisabled, ...theme } = getTheme(props);
   const selectedColor = (color ?? darkMode) ? 'white' : 'black';
 
   return css`
@@ -100,7 +100,7 @@ export const StyledButtonUnstyled = styled(
 
     :disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: ${opacityDisabled};
     }
 
     :focus {

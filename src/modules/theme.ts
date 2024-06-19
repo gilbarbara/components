@@ -3,7 +3,6 @@ import { generatePalette } from './palette';
 /**
  * Basics
  */
-
 export const fontFamily = 'inherit';
 export const fontMonospace = 'Courier, monospace';
 export const fontWeights = {
@@ -12,33 +11,58 @@ export const fontWeights = {
 };
 
 export const breakpoints = {
+  /** @default 320px */
   xxs: '320px',
+  /** @default 375px */
   xs: '375px',
+  /** @default 400px */
   sm: '400px',
+  /** @default 768px */
   md: '768px',
+  /** @default 1024px */
   lg: '1024px',
+  /** @default 1280px */
   xl: '1280px',
+  /** @default 1440px */
   xxl: '1440px',
+  /** @default 1680px */
   xxxl: '1680px',
 };
 
 export const easing = 'cubic-bezier(0.35, 0.01, 0.77, 0.34);';
 
 export const opacity = {
+  /** @default 0.72 */
   semiOpaque: 0.72,
+  /** @default 0.64 */
   intense: 0.64,
+  /** @default 0.32 */
   medium: 0.32,
+  /** @default 0.16 */
   light: 0.16,
+  /** @default 0.08 */
   semiTransparent: 0.08,
 };
+export const opacityDisabled = opacity.intense;
 
 export const radius = {
+  /** @default 0px */
+  none: '0px',
+  /** @default 4px */
   xxs: '4px',
+  /** @default 8px */
   xs: '8px',
+  /** @default 12px */
   sm: '12px',
+  /** @default 16px */
   md: '16px',
+  /** @default 24px */
   lg: '24px',
+  /** @default 32px */
   xl: '32px',
+  /** @default 9999px */
+  full: '9999px',
+  /** @default 50% */
   round: '50%',
 };
 
@@ -55,63 +79,94 @@ export const shadow = {
 };
 
 export const spacing = {
+  /** @default 4px */
   xxs: '4px',
+  /** @default 8px */
   xs: '8px',
+  /** @default 12px */
   sm: '12px',
+  /** @default 16px */
   md: '16px',
+  /** @default 24px */
   lg: '24px',
+  /** @default 32px */
   xl: '32px',
+  /** @default 48px */
   xxl: '48px',
+  /** @default 64px */
   xxxl: '64px',
+  /** @default 96px */
   jumbo: '96px',
 };
 
 export const typography = {
+  xxs: {
+    /** @default 10px */
+    fontSize: '10px',
+    lineHeight: 1.1,
+  },
   xs: {
+    /** @default 12px */
     fontSize: '12px',
     lineHeight: 1.2,
   },
   sm: {
+    /** @default 14px */
     fontSize: '14px',
     lineHeight: 1.2,
   },
   md: {
+    /** @default 16px */
     fontSize: '16px',
     lineHeight: 1.2,
   },
   lg: {
+    /** @default 18px */
     fontSize: '18px',
     lineHeight: 1.2,
   },
+  xl: {
+    /** @default 20px */
+    fontSize: '20px',
+    lineHeight: 1.2,
+  },
   h6: {
+    /** @default 16px */
     fontSize: '16px',
     lineHeight: 1.2,
   },
   h5: {
+    /** @default 18px */
     fontSize: '18px',
     lineHeight: 1.2,
   },
   h4: {
+    /** @default 20px */
     fontSize: '20px',
     lineHeight: 1.2,
   },
   h3: {
+    /** @default 24px */
     fontSize: '24px',
     lineHeight: 1.2,
   },
   h2: {
+    /** @default 28px */
     fontSize: '28px',
     lineHeight: 1.2,
   },
   h1: {
+    /** @default 32px */
     fontSize: '32px',
     lineHeight: 1.2,
   },
   jumbo: {
+    /** @default 48px */
     fontSize: '48px',
     lineHeight: 1.2,
   },
   jumboLarge: {
+    /** @default 64px */
     fontSize: '64px',
     lineHeight: 1.2,
   },
@@ -120,53 +175,97 @@ export const typography = {
 /**
  * Colors
  */
-
 export const black = '#000';
 export const white = '#fff';
 export const darkColor = '#101010';
 export const lightColor = '#f5f5f5';
 
 export const grayScale = {
+  /** @default #fcfcfc */
   '10': '#fcfcfc',
+  /** @default #fafafa */
   '20': '#fafafa',
+  /** @default #f7f7f7 */
   '30': '#f7f7f7',
-  /** Lightest */
+  /**
+   * Lightest
+   * @default #f5f5f5
+   * */
   '40': '#f5f5f5',
+  /** @default #f2f2f2 */
   '50': '#f2f2f2',
-  /** Lighter */
+  /**
+   * Lighter
+   * @default #e6e6e6
+   */
   '100': '#e6e6e6',
+  /** @default #d9d9d9 */
   '150': '#d9d9d9',
-  /** Light */
+  /**
+   * Light
+   * @default #cccccc
+   */
   '200': '#cccccc',
+  /** @default #b3b3b3 */
   '300': '#b3b3b3',
+  /** @default #999999 */
   '400': '#999999',
-  /** Mid */
+  /**
+   * Mid
+   * @default #808080
+   */
   '500': '#808080',
+  /** @default #666666 */
   '600': '#666666',
-  /** Dark */
+  /**
+   * Dark
+   * @default #4d4d4d
+   */
   '700': '#4d4d4d',
+  /** @default #404040 */
   '750': '#404040',
-  /** Darker */
+  /**
+   * Darker
+   * @default #333333
+   */
   '800': '#333333',
+  /** @default #262626 */
   '850': '#262626',
-  /** Darkest */
+  /**
+   * Darkest
+   * @default #1a1a1a
+   */
   '900': '#1a1a1a',
+  /** @default #0d0d0d */
   '950': '#0d0d0d',
 };
 
 export const colors = {
+  /** @default #3030e8 */
   primary: '#3030e8',
+  /** @default #2a5d65 */
   secondary: '#2a5d65',
+  /** @default #999999 */
   gray: '#999999',
+  /** @default #ff5e5e */
   red: '#ff5e5e',
+  /** @default #ff995d */
   orange: '#ff995d',
+  /** @default #ffe166 */
   yellow: '#ffe166',
+  /** @default #58d063 */
   green: '#58d063',
+  /** @default #38b2ac */
   teal: '#38b2ac',
+  /** @default #0bc5ea */
   cyan: '#0bc5ea',
+  /** @default #66a5ff */
   blue: '#66a5ff',
+  /** @default #8a8fff */
   indigo: '#8a8fff',
+  /** @default #ad7bff */
   purple: '#ad7bff',
+  /** @default #ee63ab */
   pink: '#ee63ab',
 };
 
@@ -189,7 +288,6 @@ export const variants = {
 /**
  * Components
  */
-
 export const avatar = {
   xxs: {
     size: '16px',
@@ -257,8 +355,11 @@ export const button = {
 };
 
 export const inputHeight = {
+  /** @default 32px */
   sm: '32px',
+  /** @default 40px */
   md: '40px',
+  /** @default 48px */
   lg: '48px',
 };
 

@@ -181,7 +181,7 @@ const StyledButton = styled(
   getStyledOptions(),
 )<InnerProps>(props => {
   const { accent, colorButton, disabled, isChecked, size } = props;
-  const { grayScale, white, ...theme } = getTheme(props);
+  const { grayScale, opacityDisabled, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
   let backgroundColor = white;
@@ -209,7 +209,7 @@ const StyledButton = styled(
     font-size: ${px(height - 6)};
     justify-content: center;
     left: ${isChecked ? px(height + 2) : px(space)};
-    opacity: ${disabled ? 0.7 : 1};
+    opacity: ${disabled ? opacityDisabled : 1};
     position: absolute;
     top: ${px(space)};
     transition:
@@ -222,6 +222,7 @@ const StyledButton = styled(
 export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggle'>, 'size'>>(
   props => {
     const { disabled, label, size } = props;
+    const { opacityDisabled } = getTheme(props);
 
     const { height, width } = styles[size];
 
@@ -230,7 +231,7 @@ export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggl
       cursor: ${disabled ? 'default' : 'pointer'};
       height: ${px(height)};
       margin-right: ${label ? '8px' : 0};
-      opacity: ${disabled ? 0.8 : 1};
+      opacity: ${disabled ? opacityDisabled : 1};
       position: relative;
       user-select: none;
       vertical-align: middle;
