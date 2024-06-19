@@ -1,4 +1,5 @@
 import { MouseEvent, useState } from 'react';
+import { capitalize } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '~';
@@ -25,26 +26,24 @@ export const Basic: Story = {
   render: function Render(props) {
     const [active, setActive] = useState('two');
 
-    const handleClick = ({ target }: MouseEvent<HTMLButtonElement>) => {
-      if (target instanceof HTMLButtonElement) {
-        setActive(target.dataset.name ?? '');
+    const handleClick = ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
+      if (currentTarget instanceof HTMLButtonElement) {
+        setActive(currentTarget.dataset.name ?? '');
       }
     };
 
     return (
       <ButtonGroup {...props}>
-        <Button data-name="one" invert={active !== 'one'} onClick={handleClick}>
-          First
-        </Button>
-        <Button data-name="two" invert={active !== 'two'} onClick={handleClick}>
-          Second
-        </Button>
-        <Button data-name="three" invert={active !== 'three'} onClick={handleClick}>
-          Third
-        </Button>
-        <Button data-name="four" invert={active !== 'four'} onClick={handleClick}>
-          Forth
-        </Button>
+        {['one', 'two', 'three', 'four'].map(name => (
+          <Button
+            key={name}
+            data-name={name}
+            onClick={handleClick}
+            variant={active === name ? 'solid' : 'bordered'}
+          >
+            {capitalize(name)}
+          </Button>
+        ))}
       </ButtonGroup>
     );
   },

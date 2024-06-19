@@ -33,7 +33,7 @@ export const Basic: Story = {
   render: props => (
     <Spacer {...props}>
       <Button>Yes, add it</Button>
-      <Button invert>No, cancel</Button>
+      <Button variant="bordered">No, cancel</Button>
     </Spacer>
   ),
 };
@@ -55,7 +55,7 @@ export const Vertical: Story = {
       <Button bg="orange" size="sm">
         Maybe?
       </Button>
-      <Button bg="red" invert size="sm">
+      <Button bg="red" size="sm" variant="bordered">
         No, cancel
       </Button>
     </Spacer>

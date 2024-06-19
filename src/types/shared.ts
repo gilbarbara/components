@@ -128,6 +128,13 @@ export interface WithElementSpacing {
   suffixSpacing?: boolean | StringOrNumber;
 }
 
+export interface WithEndContent {
+  /**
+   * Display some content after the main content.
+   */
+  endContent?: ReactNode;
+}
+
 export interface WithFlexBox {
   /**
    * How to align the contents along the cross axis.<br />
@@ -218,14 +225,6 @@ export interface WithInline {
   inline?: boolean;
 }
 
-export interface WithInvert {
-  /**
-   * Invert background
-   * @default false
-   */
-  invert?: boolean;
-}
-
 export interface WithLayout extends WithDisplay, WithDimension {
   opacity?: StandardLonghandProperties['opacity'] | number;
   overflow?: StandardShorthandProperties['overflow'];
@@ -306,12 +305,18 @@ export interface WithRadius {
         left?: Radius;
         right?: Radius;
         top?: Radius;
-      }
-    | false;
+      };
 }
 
 export interface WithShadow {
   shadow?: Shadow | false;
+}
+
+export interface WithStartContent {
+  /**
+   * Display some content before the main content.
+   */
+  startContent?: ReactNode;
 }
 
 export interface WithTextSize<T = TextSizes> {
@@ -344,10 +349,10 @@ export interface WithTheme {
   theme?: Partial<Theme>;
 }
 
-export interface WithTransparent {
+export interface WithVariant {
   /**
-   * Remove background and color
-   * @default false
+   * Component variant
+   * @default solid
    */
-  transparent?: boolean;
+  variant?: 'bordered' | 'clean' | 'solid' | 'shadow';
 }

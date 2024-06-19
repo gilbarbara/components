@@ -93,7 +93,13 @@ export function DatePickerRange(props: DatePickerRangeProps) {
       setSelectedMonth,
       currentMonthLabel,
       <Spacer>
-        <Button bg={accent} disabled={!initialDate} invert onClick={handleClickReset} size="sm">
+        <Button
+          bg={accent}
+          disabled={!initialDate}
+          onClick={handleClickReset}
+          size="sm"
+          variant="bordered"
+        >
           Reset
         </Button>
         <Button bg={accent} disabled={!endDate} onClick={handleClickApply} size="sm">
@@ -106,7 +112,6 @@ export function DatePickerRange(props: DatePickerRangeProps) {
     content.reset = (
       <Button
         bg={accent}
-        invert
         onClick={handleClickReset}
         size="sm"
         style={{
@@ -114,6 +119,7 @@ export function DatePickerRange(props: DatePickerRangeProps) {
           minHeight: 24,
           padding: `${spacing.xxs} ${spacing.xs}`,
         }}
+        variant="bordered"
       >
         Reset
       </Button>

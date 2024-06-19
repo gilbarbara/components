@@ -4,10 +4,17 @@ import styled from '@emotion/styled';
 import { formatDateLocale, mergeProps, omit, px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 import is from 'is-lite';
+import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
-import { getDisableStyles, getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
+import {
+  getDisableStyles,
+  getOutlineStyles,
+  getStyledOptions,
+  isDarkMode,
+  marginStyles,
+} from '~/modules/system';
 
 import { Box, BoxCenter } from '~/components/Box';
 import { ClickOutside } from '~/components/ClickOutside';
@@ -54,6 +61,7 @@ const StyledButton = styled(
     'accent' | 'borderless' | 'disabled' | 'height' | 'theme' | 'width'
   > &
     Required<Pick<DatePickerSelectorProps, 'height'>> & {
+      isActive: boolean;
       isFilled: boolean;
     }
 >(props => {
@@ -62,6 +70,7 @@ const StyledButton = styled(
     borderless,
     disabled,
     height,
+    isActive,
     isFilled,
     width,
   } = props;
@@ -108,6 +117,14 @@ const StyledButton = styled(
       ${getDisableStyles(props)}
       color: ${grayScale['500']};
     `};
+
+    ${isActive &&
+    !!borderless &&
+    css`
+      box-shadow: 0 3px 0 0 ${transparentize(0.5, mainColor)};
+      outline: none;
+    `}
+    ${isActive && !borderless && getOutlineStyles(mainColor)}
   `;
 });
 
@@ -258,6 +275,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
         <StyledButton
           data-component-name="DatePickerSelectorButton"
           height={height}
+          isActive={isActive}
           isFilled={isFilled}
           onClick={toggle}
           {...omit(props, 'hidden', 'onChange')}
