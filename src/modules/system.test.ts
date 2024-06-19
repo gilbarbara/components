@@ -167,7 +167,7 @@ describe('getDisableStyles', () => {
   });
 
   it('should return properly with "isButton: true"', () => {
-    const { styles } = getDisableStyles({ invert: true }, { isButton: true });
+    const { styles } = getDisableStyles({ variant: 'bordered' }, { isButton: true });
 
     expect(styles).toMatchSnapshot();
   });
@@ -182,8 +182,8 @@ describe('getDisableStyles', () => {
 describe('getOutlineStyles', () => {
   it('should return properly', () => {
     expect(getOutlineStyles('#000')).toEqual({
-      boxShadow: '0 0 0 3px rgba(0,0,0,0.6)',
-      outline: 'none',
+      outline: 'rgba(0,0,0,0.6) solid 3px',
+      outlineOffset: '1px',
       zIndex: 10,
     });
   });

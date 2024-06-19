@@ -13,7 +13,9 @@ import {
   getDisableStyles,
   getOutlineStyles,
   getStyledOptions,
+  hoverStyles,
   paddingStyles,
+  radiusStyles,
 } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
@@ -27,10 +29,10 @@ import {
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
-  WithInvert,
   WithLight,
   WithPadding,
-  WithTransparent,
+  WithRadius,
+  WithVariant,
 } from '~/types';
 
 export interface ButtonKnownProps
@@ -40,14 +42,15 @@ export interface ButtonKnownProps
     WithChildren,
     WithColorsDefaultBg,
     WithButtonSize,
-    WithInvert,
     WithLight,
     WithPadding,
-    WithTransparent {
+    WithRadius,
+    WithVariant {
   /**
-   * A shaped button with equal padding on all sides
+   * Whether the button should have the same width and height.
+   * @default false
    */
-  shape?: 'circle' | 'round' | 'square';
+  iconOnly?: boolean;
   /**
    * The button type
    * @default button
@@ -67,11 +70,11 @@ export const defaultProps = {
   block: false,
   busy: false,
   disabled: false,
-  invert: false,
+  iconOnly: false,
   light: false,
   size: 'md',
-  transparent: false,
   type: 'button',
+  variant: 'solid',
   wide: false,
 } satisfies Omit<ButtonProps, 'children'>;
 
@@ -79,32 +82,22 @@ export const StyledButton = styled(
   'button',
   getStyledOptions(),
 )<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
-  const { bg, block, busy, color, light, shape, size, wide } = props;
+  const { bg, block, busy, color, iconOnly, light, size, wide } = props;
   const { button, grayScale, radius, spacing, ...theme } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
-  let selectedRadius = borderRadius;
 
-  if (shape) {
-    buttonPadding = spacing.xxs;
-
-    switch (shape) {
-      case 'square': {
-        selectedRadius = `0`;
-        break;
-      }
-      case 'circle': {
-        selectedRadius = radius.round;
-        break;
-      }
-    }
+  if (iconOnly) {
+    buttonPadding = '0px';
   }
+
+  const { mainColor } = getColorTokens(bg, color, theme);
 
   return css`
     ${appearanceStyles};
     ${baseStyles(props)};
     align-items: center;
-    border-radius: ${selectedRadius};
+    border-radius: ${borderRadius};
     box-shadow: none;
     cursor: pointer;
     display: inline-flex;
@@ -124,13 +117,18 @@ export const StyledButton = styled(
     width: ${block ? '100%' : 'auto'};
     ${colorStyles(props)};
     ${paddingStyles(props)};
+    ${radiusStyles(props)};
 
     &:disabled {
       ${getDisableStyles(props, { isButton: true })};
     }
 
+    &:hover {
+      ${hoverStyles(props)};
+    }
+
     &:focus {
-      ${getOutlineStyles(getColorTokens(bg, color, theme).mainColor)};
+      ${getOutlineStyles(mainColor)};
     }
 
     ${busy &&
@@ -141,7 +139,7 @@ export const StyledButton = styled(
 });
 
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
-  const { busy, children, shape, size } = { ...defaultProps, ...props };
+  const { busy, children, iconOnly, size } = { ...defaultProps, ...props };
   const { button } = getTheme(props);
   const { fontSize } = button[size];
 
@@ -150,7 +148,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
     icon: busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize, 10) + 4} spin />,
   };
 
-  if (shape && busy) {
+  if (iconOnly && busy) {
     content.children = <Icon name="spinner" size={parseInt(fontSize, 10) + 4} spin />;
     content.icon = '';
   }

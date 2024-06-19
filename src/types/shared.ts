@@ -218,14 +218,6 @@ export interface WithInline {
   inline?: boolean;
 }
 
-export interface WithInvert {
-  /**
-   * Invert background
-   * @default false
-   */
-  invert?: boolean;
-}
-
 export interface WithLayout extends WithDisplay, WithDimension {
   opacity?: StandardLonghandProperties['opacity'] | number;
   overflow?: StandardShorthandProperties['overflow'];
@@ -306,8 +298,7 @@ export interface WithRadius {
         left?: Radius;
         right?: Radius;
         top?: Radius;
-      }
-    | false;
+      };
 }
 
 export interface WithShadow {
@@ -344,10 +335,10 @@ export interface WithTheme {
   theme?: Partial<Theme>;
 }
 
-export interface WithTransparent {
+export interface WithVariant {
   /**
-   * Remove background and color
-   * @default false
+   * Component variant
+   * @default solid
    */
-  transparent?: boolean;
+  variant?: 'bordered' | 'light' | 'solid' | 'shadow';
 }

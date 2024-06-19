@@ -105,9 +105,15 @@ export function hideTable() {
 
 export function colorProps(
   props: Array<'accent' | 'backgroundColor' | 'bg' | 'borderColor' | 'color'> = ['color'],
+  variantsOnly = false,
 ) {
   return props.reduce<ControlMap>((acc, prop) => {
-    acc[prop] = { control: 'select', options: VARIANTS_WITH_TONES };
+    acc[prop] = {
+      control: 'select',
+      options: variantsOnly
+        ? VARIANTS.filter(v => !['black', 'white'].includes(v))
+        : VARIANTS_WITH_TONES,
+    };
 
     return acc;
   }, {});
