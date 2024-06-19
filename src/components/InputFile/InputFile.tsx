@@ -15,10 +15,10 @@ import { OmitElementProps, StyledProps, WithAccent, WithFormElements, WithHeight
 
 export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormElements, WithHeight {
   /**
-   * Invert background
-   * @default true
+   * Solid color
+   * @default false
    */
-  invert?: boolean;
+  solid?: boolean;
   value?: string;
 }
 
@@ -30,9 +30,9 @@ export const defaultProps = {
   accent: 'primary',
   disabled: false,
   height: 'md',
-  invert: true,
   placeholder: 'Upload a file',
   readOnly: false,
+  solid: false,
   width: '100%',
 } satisfies Omit<InputFileProps, 'name'>;
 
@@ -76,18 +76,8 @@ export const StyledInput = styled('input', getStyledOptions())`
 `;
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, ref) => {
-  const {
-    accent,
-    disabled,
-    height,
-    invert,
-    name,
-    onChange,
-    placeholder,
-    readOnly,
-    value,
-    ...rest
-  } = mergeProps(defaultProps, props);
+  const { accent, disabled, height, name, onChange, placeholder, readOnly, solid, value, ...rest } =
+    mergeProps(defaultProps, props);
   const [localValue, setLocalValue] = useState<StringOrNull>(null);
   const isDisabled = disabled || readOnly;
 
@@ -105,9 +95,9 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
         <Button
           bg={accent}
           disabled={isDisabled}
-          invert={invert}
           size={height}
           style={{ zIndex: isDisabled ? 2 : 1 }}
+          variant={solid ? 'solid' : 'bordered'}
         >
           {placeholder}
         </Button>

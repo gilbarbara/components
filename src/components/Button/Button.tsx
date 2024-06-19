@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, ReactNode } from 'react';
+import { ForwardedRef, forwardRef, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
@@ -13,7 +13,9 @@ import {
   getDisableStyles,
   getOutlineStyles,
   getStyledOptions,
+  hoverStyles,
   paddingStyles,
+  radiusStyles,
 } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
@@ -21,33 +23,53 @@ import { Icon } from '~/components/Icon';
 import {
   ButtonTypes,
   OmitElementProps,
+  Spacing,
   StyledProps,
   WithBlock,
   WithBusy,
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
-  WithInvert,
+  WithEndContent,
   WithLight,
   WithPadding,
-  WithTransparent,
+  WithRadius,
+  WithStartContent,
+  WithVariant,
 } from '~/types';
 
 export interface ButtonKnownProps
   extends StyledProps,
     WithBlock,
     WithBusy,
+    WithButtonSize,
     WithChildren,
     WithColorsDefaultBg,
-    WithButtonSize,
-    WithInvert,
+    WithEndContent,
     WithLight,
     WithPadding,
-    WithTransparent {
+    WithRadius,
+    WithStartContent,
+    WithVariant {
   /**
-   * A shaped button with equal padding on all sides
+   * Space between the start and end content
+   * @default xs
    */
-  shape?: 'circle' | 'round' | 'square';
+  gap?: Spacing;
+  /**
+   * Whether the button should have the same width and height.
+   * @default false
+   */
+  iconOnly?: boolean;
+  /**
+   * A custom spinner icon to show when the button is busy.
+   */
+  spinner?: ReactNode;
+  /**
+   * The spinner position
+   * @default end
+   */
+  spinnerPosition?: 'start' | 'end';
   /**
    * The button type
    * @default button
@@ -67,11 +89,13 @@ export const defaultProps = {
   block: false,
   busy: false,
   disabled: false,
-  invert: false,
+  gap: 'xs',
+  iconOnly: false,
   light: false,
   size: 'md',
-  transparent: false,
+  spinnerPosition: 'end',
   type: 'button',
+  variant: 'solid',
   wide: false,
 } satisfies Omit<ButtonProps, 'children'>;
 
@@ -79,37 +103,28 @@ export const StyledButton = styled(
   'button',
   getStyledOptions(),
 )<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
-  const { bg, block, busy, color, light, shape, size, wide } = props;
+  const { bg, block, busy, color, gap, iconOnly, light, size, wide } = props;
   const { button, grayScale, radius, spacing, ...theme } = getTheme(props);
   const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
   let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
-  let selectedRadius = borderRadius;
 
-  if (shape) {
-    buttonPadding = spacing.xxs;
-
-    switch (shape) {
-      case 'square': {
-        selectedRadius = `0`;
-        break;
-      }
-      case 'circle': {
-        selectedRadius = radius.round;
-        break;
-      }
-    }
+  if (iconOnly) {
+    buttonPadding = '0px';
   }
+
+  const { mainColor } = getColorTokens(bg, color, theme);
 
   return css`
     ${appearanceStyles};
     ${baseStyles(props)};
     align-items: center;
-    border-radius: ${selectedRadius};
+    border-radius: ${borderRadius};
     box-shadow: none;
     cursor: pointer;
     display: inline-flex;
     font-size: ${fontSize};
     font-weight: ${light ? 400 : fontWeight};
+    gap: ${spacing[gap]};
     min-height: ${height};
     min-width: ${height};
     justify-content: center;
@@ -124,13 +139,18 @@ export const StyledButton = styled(
     width: ${block ? '100%' : 'auto'};
     ${colorStyles(props)};
     ${paddingStyles(props)};
+    ${radiusStyles(props)};
 
     &:disabled {
       ${getDisableStyles(props, { isButton: true })};
     }
 
+    &:hover {
+      ${hoverStyles(props)};
+    }
+
     &:focus {
-      ${getOutlineStyles(getColorTokens(bg, color, theme).mainColor)};
+      ${getOutlineStyles(mainColor)};
     }
 
     ${busy &&
@@ -141,18 +161,33 @@ export const StyledButton = styled(
 });
 
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
-  const { busy, children, shape, size } = { ...defaultProps, ...props };
+  const { busy, children, endContent, iconOnly, size, spinner, spinnerPosition, startContent } = {
+    ...defaultProps,
+    ...props,
+  };
   const { button } = getTheme(props);
   const { fontSize } = button[size];
 
   const content: PlainObject<ReactNode> = {
     children,
-    icon: busy && <Icon ml="sm" name="spinner" size={parseInt(fontSize, 10) + 4} spin />,
+    spinner: busy && (spinner ?? <Icon name="spinner" size={parseInt(fontSize, 10) + 4} spin />),
   };
 
-  if (shape && busy) {
-    content.children = <Icon name="spinner" size={parseInt(fontSize, 10) + 4} spin />;
-    content.icon = '';
+  if (iconOnly && busy) {
+    content.children = content.spinner;
+    content.spinner = '';
+  }
+
+  if (startContent) {
+    content.startContent = isValidElement(startContent) ? (
+      startContent
+    ) : (
+      <span>{startContent}</span>
+    );
+  }
+
+  if (endContent) {
+    content.endContent = isValidElement(endContent) ? endContent : <span>{endContent}</span>;
   }
 
   return (
@@ -162,8 +197,11 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
       {...defaultProps}
       {...props}
     >
+      {content.startContent}
+      {spinnerPosition === 'start' && content.spinner}
       {content.children}
-      {content.icon}
+      {spinnerPosition === 'end' && content.spinner}
+      {content.endContent}
     </StyledButton>
   );
 });

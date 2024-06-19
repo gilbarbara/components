@@ -1,9 +1,9 @@
-import { MouseEvent, useRef } from 'react';
-import { capitalize } from '@gilbarbara/helpers';
-import { action } from '@storybook/addon-actions';
+import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Icon, Spacer } from '~';
+
+import { radius } from '~/modules/theme';
 
 import {
   colorProps,
@@ -11,9 +11,13 @@ import {
   disableControl,
   hideProps,
   paddingProps,
+  radiusProps,
   TONES,
   VARIANTS,
 } from '~/stories/__helpers__';
+import Code from '~/stories/components/Code';
+import Description from '~/stories/components/Description';
+import Info from '~/stories/components/Info';
 
 import { Button, defaultProps } from './Button';
 
@@ -30,6 +34,7 @@ export default {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
     ...paddingProps(),
+    ...radiusProps(),
     children: { control: 'text' },
     onClick: { action: 'onClick' },
     size: { control: 'radio', options: COMPONENT_SIZES },
@@ -37,6 +42,73 @@ export default {
 } satisfies Meta<typeof Button>;
 
 export const Basic: Story = {};
+
+export const Busy: Story = {
+  render: props => (
+    <>
+      <Spacer gap="lg">
+        <Button {...props} busy>
+          Submit
+        </Button>
+
+        <Button {...props} busy spinner={<Icon name="clock" spin />} spinnerPosition="start">
+          Save (with custom spinner)
+        </Button>
+      </Spacer>
+      <Description>
+        Setting the <Code>busy</Code> prop to true adds a spinner and the button will ignore clicks.
+        <br />
+        You can change the its position with the <Code>spinnerPosition</Code> prop.
+      </Description>
+    </>
+  ),
+};
+
+export const WithIcon: Story = {
+  render: props => (
+    <Spacer gap="lg">
+      <Button {...props} bg="green" endContent={<Icon name="image" />}>
+        Take a photo
+      </Button>
+
+      <Button {...props} bg="red" color="white" startContent={<Icon name="user" />}>
+        Delete user
+      </Button>
+    </Spacer>
+  ),
+};
+
+export const IconOnly: Story = {
+  argTypes: {
+    iconOnly: disableControl(),
+    radius: disableControl(),
+  },
+  args: {
+    iconOnly: true,
+    size: 'sm',
+  },
+  render: props => (
+    <>
+      <Grid gap={20} templateColumns="repeat(4, 1fr)">
+        <Button {...props} radius="xxs">
+          <Icon name="arrow-down" size={18} />
+        </Button>
+        <Button {...props} radius="sm">
+          <Icon name="check" size={18} />
+        </Button>
+        <Button {...props} busy radius="round">
+          <Icon name="trash" size={18} />
+        </Button>
+        <Button {...props} radius="none">
+          <Icon name="trash" size={18} />
+        </Button>
+      </Grid>
+      <Description>
+        Setting the <Code>iconOnly</Code> prop removes the padding and center the content.
+      </Description>
+    </>
+  ),
+};
 
 export const Sizes: Story = {
   argTypes: {
@@ -46,7 +118,7 @@ export const Sizes: Story = {
     <Spacer>
       {COMPONENT_SIZES.map(d => (
         <Button key={d} {...props} size={d}>
-          Button {capitalize(d)}
+          Button ({d})
         </Button>
       ))}
     </Spacer>
@@ -61,7 +133,7 @@ export const Colors: Story = {
     <Grid gap={30} templateColumns="repeat(3, 1fr)">
       {VARIANTS.map(d => (
         <Button key={d} {...props} bg={d}>
-          Button {capitalize(d)}
+          Button ({d})
         </Button>
       ))}
     </Grid>
@@ -70,58 +142,65 @@ export const Colors: Story = {
 
 export const Tones: Story = {
   argTypes: {
-    bg: disableControl(),
+    ...colorProps(['bg', 'color'], true),
   },
-  render: props => (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {TONES.map(d => (
-        <Button key={d} {...props} bg={`primary.${d}`}>
-          Button {capitalize(d)}
-        </Button>
-      ))}
-    </Grid>
-  ),
-};
-
-export const Shapes: Story = {
-  argTypes: {
-    shape: disableControl(),
-  },
-  render: props => (
-    <Grid gap={20} templateColumns="repeat(4, 1fr)">
-      <Button {...props} shape="round">
-        <Icon name="arrow-down" size={18} />
-      </Button>
-      <Button {...props} shape="circle">
-        <Icon name="check" size={18} />
-      </Button>
-      <Button {...props} busy shape="circle">
-        <Icon name="trash" size={18} />
-      </Button>
-      <Button {...props} shape="square">
-        <Icon name="trash" size={18} />
-      </Button>
-    </Grid>
-  ),
-};
-
-export const AsLink: Story = {
-  args: {
-    as: 'a',
-  },
-  render: function Render(props) {
-    const ref = useRef<HTMLAnchorElement>(null);
-
-    const handleClick = (event: MouseEvent<HTMLElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-      action('clicked')(event);
-    };
+  render: ({ bg, ...props }) => {
+    const [variant] = bg?.split('.') ?? [];
 
     return (
-      <Button ref={ref} href="https://example.com" onClick={handleClick} {...props}>
-        Link
-      </Button>
+      <Grid gap={30} templateColumns="repeat(3, 1fr)">
+        {TONES.map(d => (
+          <Button key={d} {...props} bg={`${variant}.${d}`}>
+            Button ({d})
+          </Button>
+        ))}
+      </Grid>
+    );
+  },
+};
+
+export const Variants: Story = {
+  argTypes: {
+    variant: disableControl(),
+  },
+  render: props => {
+    return (
+      <Spacer>
+        <Button {...props} variant="solid">
+          solid
+        </Button>
+        <Button {...props} variant="bordered">
+          bordered
+        </Button>
+        <Button {...props} variant="clean">
+          clean
+        </Button>
+        <Button {...props} variant="shadow">
+          shadow
+        </Button>
+      </Spacer>
+    );
+  },
+};
+
+export const Radius: Story = {
+  argTypes: {
+    radius: disableControl(),
+  },
+  render: props => {
+    return (
+      <>
+        <Grid gap={30} templateColumns="repeat(3, 1fr)">
+          {objectKeys(radius).map(d => (
+            <Button key={d} {...props} radius={d}>
+              {d}
+            </Button>
+          ))}
+        </Grid>
+        <Info icon="paintbrush" mt="xl">
+          You can update the theme <Code>button[size].radius</Code> to customize the default.
+        </Info>
+      </>
     );
   },
 };

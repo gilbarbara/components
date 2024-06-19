@@ -22,6 +22,12 @@ export default {
 
 export const Basic: Story = {};
 
+export const Solid: Story = {
+  args: {
+    solid: true,
+  },
+};
+
 export const Sizes: Story = {
   argTypes: {
     height: disableControl(),
