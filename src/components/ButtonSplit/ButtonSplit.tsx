@@ -1,7 +1,7 @@
 import { MouseEventHandler, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -18,14 +18,15 @@ import { Menu } from '~/components/Menu';
 import { MenuProps } from '~/components/Menu/types';
 
 import {
+  DataAttributes,
   PositionY,
   WithBlock,
   WithBusy,
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
-  WithInvert,
   WithLabel,
+  WithTextOptions,
 } from '~/types';
 
 export interface ButtonSplitKnownProps
@@ -35,9 +36,13 @@ export interface ButtonSplitKnownProps
     WithBusy,
     WithChildren,
     WithColorsDefaultBg,
-    WithInvert,
     Required<WithLabel> {
-  dataAttributes?: Record<`data-${string}`, StringOrNumber>;
+  /**
+   * Whether the button should only have a border
+   * @default false
+   */
+  bordered?: boolean;
+  buttonProps?: WithTextOptions & DataAttributes;
   onClick: MouseEventHandler<HTMLButtonElement>;
   /** @default bottom-right */
   position?: PositionY;
@@ -48,9 +53,9 @@ export type ButtonSplitProps = Simplify<ButtonSplitKnownProps>;
 export const defaultProps = {
   bg: 'primary',
   block: false,
+  bordered: false,
   busy: false,
   disabled: false,
-  invert: false,
   position: 'bottom-right',
   size: 'md',
 } satisfies Omit<ButtonSplitProps, 'children' | 'label' | 'onClick'>;
@@ -59,13 +64,14 @@ export const StyledButtonSplit = styled(
   'div',
   getStyledOptions(),
 )<SetRequired<Omit<ButtonSplitProps, 'label' | 'onClick'>, keyof typeof defaultProps>>(props => {
-  const { block, disabled, invert, size } = props;
+  const { block, bordered, disabled, size } = props;
   const { button, grayScale, spacing } = getTheme(props);
   const darkMode = isDarkMode(props);
 
-  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
+  const { borderRadius, height, padding } = button[size];
   const buttonPadding = `${padding[0]} ${padding[1]}`;
-  const styles = colorStyles(props);
+
+  const styles = colorStyles({ ...props, variant: bordered ? 'bordered' : 'solid' });
 
   if (disabled) {
     styles.border = `1px solid ${darkMode ? grayScale['800'] : grayScale['100']}`;
@@ -93,10 +99,7 @@ export const StyledButtonSplit = styled(
       border-top-left-radius: ${borderRadius};
       display: flex;
       flex: 1;
-      font-size: ${fontSize};
-      font-weight: ${fontWeight};
       justify-content: center;
-      line-height: ${lineHeight};
       opacity: 1;
       padding: ${buttonPadding};
 
@@ -111,7 +114,7 @@ export const StyledButtonSplit = styled(
       ${styles};
       ${disabledStyles};
       align-items: center;
-      border-left: ${invert ? styles.border : `1px solid ${styles.color}`};
+      border-left: ${bordered ? styles.border : `1px solid ${styles.color}`};
       border-radius: 0 ${borderRadius} ${borderRadius} 0;
       display: flex;
       height: 100%;
@@ -127,7 +130,7 @@ export const StyledButtonSplit = styled(
 });
 
 export function ButtonSplit(props: ButtonSplitProps) {
-  const { busy, children, dataAttributes, label, onClick, onToggle, position, ...rest } = {
+  const { busy, buttonProps, children, label, onClick, onToggle, position, ...rest } = {
     ...defaultProps,
     ...props,
   };
@@ -170,7 +173,8 @@ export function ButtonSplit(props: ButtonSplitProps) {
         data-component-name="ButtonSplitMainButton"
         disabled={disabled}
         onClick={onClick}
-        {...dataAttributes}
+        size={size}
+        {...buttonProps}
       >
         {label}
       </ButtonUnstyled>

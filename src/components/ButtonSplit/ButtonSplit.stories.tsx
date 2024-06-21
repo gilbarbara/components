@@ -1,9 +1,10 @@
-import { MouseEvent, useState } from 'react';
+import { KeyboardEvent, MouseEvent, useState } from 'react';
+import { objectKeys } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
-import { ButtonUnstyled, Icon, Spacer } from '~';
+import { Anchor, Box, BoxInline, Grid, Icon, Paragraph, Spacer } from '~';
 
 import {
   colorProps,
@@ -11,7 +12,9 @@ import {
   disableControl,
   hideProps,
   hideStoryFromDocsPage,
+  VARIANTS,
 } from '~/stories/__helpers__';
+import { MenuItemProps } from '~/types/props';
 
 import {
   ButtonSplit,
@@ -39,7 +42,8 @@ export default {
     size: { control: 'radio', options: COMPONENT_SIZES },
   },
   parameters: {
-    minHeight: 250,
+    minHeight: 550,
+    justify: 'center',
   },
 } satisfies Meta<typeof ButtonSplit>;
 
@@ -48,86 +52,121 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    const { id } = event.currentTarget.dataset;
-
-    action('onClick')(id);
+    action('onClick')(event.currentTarget.textContent);
   };
 
-  const handleClickClosure = (closeMenu: () => void, name?: string) => {
-    return () => {
-      setLoading(true);
+  const handleClickItem: MenuItemProps['onToggle'] = (event, closeMenu) => {
+    const { name } = event.currentTarget.dataset;
 
-      if (name) {
-        setActionName(name);
-        action('onClick')(name);
-      }
+    setLoading(true);
 
-      setTimeout(() => {
-        setActionName('');
-        setLoading(false);
-        closeMenu();
-      }, 1500);
-    };
+    if (name) {
+      setActionName(name);
+      action('onClick')(name);
+    }
+
+    setTimeout(() => {
+      setActionName('');
+      setLoading(false);
+      closeMenu();
+    }, 1500);
   };
 
   return (
     <ButtonSplit
       {...props}
-      dataAttributes={{
+      buttonProps={{
         'data-origin': 'X',
         'data-value': 10,
       }}
       onClick={handleClick}
     >
       <ButtonSplitItem disabled>
-        <ButtonUnstyled color="primary">
+        <BoxInline color="primary">
           <Icon mr="xxs" name="plus-o" />
-          Sign up
-        </ButtonUnstyled>
+          Add recipient
+        </BoxInline>
       </ButtonSplitItem>
-      <ButtonSplitItem disableAutoClose>
-        {({ closeMenu }) => (
-          <ButtonUnstyled
-            color="primary"
-            onClick={handleClickClosure(closeMenu, 'Schedule for later')}
-          >
-            <Icon mr="xxs" name="calendar-due" />
-            Schedule for later
-            {loading && actionName === 'Schedule for later' && (
-              <Icon ml="xxs" name="spinner" spin />
-            )}
-          </ButtonUnstyled>
-        )}
+      <ButtonSplitItem
+        data-name="Schedule for later"
+        disableAutoClose
+        disabled={loading && actionName !== 'Schedule for later'}
+        onToggle={handleClickItem}
+      >
+        <Icon mr="xxs" name="calendar-due" />
+        Schedule for later
+        {loading && actionName === 'Schedule for later' && <Icon ml="auto" name="spinner" spin />}
       </ButtonSplitItem>
-      <ButtonSplitItem disableAutoClose>
-        {({ closeMenu }) => (
-          <ButtonUnstyled color="primary" onClick={handleClickClosure(closeMenu, 'Save draft')}>
-            <Icon mr="xxs" name="bookmark" />
-            Save draft
-            {loading && actionName === 'Save draft' && <Icon ml="xxs" name="spinner" spin />}
-          </ButtonUnstyled>
-        )}
+      <ButtonSplitItem
+        data-name="Save draft"
+        disableAutoClose
+        disabled={loading && actionName !== 'Save draft'}
+        onToggle={handleClickItem}
+      >
+        <Icon mr="xxs" name="bookmark" />
+        Save draft
+        {loading && actionName === 'Save draft' && <Icon ml="auto" name="spinner" spin />}
       </ButtonSplitItem>
-      <ButtonSplitItem disableAutoClose>
-        {({ closeMenu }) => (
-          <ButtonUnstyled color="primary" onClick={handleClickClosure(closeMenu, 'Snooze')}>
-            <Icon mr="xxs" name="clock" />
-            Snooze
-            {loading && actionName === 'Snooze' && <Icon ml="xxs" name="spinner" spin />}
-          </ButtonUnstyled>
-        )}
+      <ButtonSplitItem>
+        <Anchor color="black" href="#">
+          <Icon mr="xxs" name="external" />
+          Open in a new window
+        </Anchor>
       </ButtonSplitItem>
       <ButtonSplitSeparator />
-      <ButtonSplitItem color="red">
-        {({ closeMenu }) => (
-          <ButtonUnstyled color="red" onClick={handleClickClosure(closeMenu, 'Delete')}>
-            <Icon mr="xxs" name="trash" />
-            Delete
-            {loading && actionName === 'Delete' && <Icon ml="xxs" name="spinner" spin />}
-          </ButtonUnstyled>
-        )}
+      <ButtonSplitItem
+        bg="red"
+        data-name="Delete"
+        disableAutoClose
+        disabled={loading && actionName !== 'Delete'}
+        onToggle={handleClickItem}
+      >
+        <Icon mr="xxs" name="trash" />
+        Delete
+        {loading && actionName === 'Delete' && <Icon ml="auto" name="spinner" spin />}
       </ButtonSplitItem>
     </ButtonSplit>
+  );
+}
+
+const descriptionsMap = {
+  merge:
+    'All commits from the source branch are added to the destination branch via a merge commit.',
+  squash:
+    'All commits from the source branch are added to the destination branch as a single commit.',
+  rebase: 'All commits from the source branch are added to the destination branch individually.',
+};
+
+const labelsMap = {
+  merge: 'Create a merge commit',
+  squash: 'Squash and merge',
+  rebase: 'Rebase and merge',
+} as const;
+
+type SelectorKeys = keyof typeof labelsMap;
+
+function ButtonSplitSelector(props: {
+  onClick: MenuItemProps['onToggle'];
+  selected: SelectorKeys;
+  type: string;
+}) {
+  const { onClick, selected, type } = props;
+
+  return (
+    <ButtonSplitItem
+      bg="gray.100"
+      data-title={labelsMap[selected]}
+      data-type={selected}
+      onToggle={onClick}
+      wrap
+    >
+      <Box bg={type === selected ? 'gray.200' : undefined} padding="xs" radius="xs" width={290}>
+        <Paragraph bold>{labelsMap[selected]}</Paragraph>
+        <Paragraph mt="xxs" size="sm">
+          {descriptionsMap[selected]}
+        </Paragraph>
+      </Box>
+    </ButtonSplitItem>
   );
 }
 
@@ -135,17 +174,62 @@ export const Basic: Story = {
   render: props => <ButtonSplitWrapper {...props} />,
 };
 
+export const Selector: Story = {
+  args: {
+    bg: 'gray.100',
+    buttonProps: {
+      bold: false,
+    },
+    size: 'sm',
+  },
+  render: function Render(props) {
+    const [title, setTitle] = useState<string>(labelsMap.merge);
+    const [type, setType] = useState('merge');
+
+    const handleClickItem = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => {
+      const { title: dataTitle = '', type: dataType = '' } = event.currentTarget.dataset;
+
+      setTitle(dataTitle);
+      setType(dataType);
+    };
+
+    const handleClick = () => {
+      action('onClick')(type);
+    };
+
+    return (
+      <ButtonSplit {...props} label={title} onClick={handleClick}>
+        {objectKeys(labelsMap).map(key => (
+          <ButtonSplitSelector key={key} onClick={handleClickItem} selected={key} type={type} />
+        ))}
+      </ButtonSplit>
+    );
+  },
+};
+
 export const Sizes: Story = {
+  argTypes: {
+    size: disableControl(),
+  },
+  render: props => (
+    <Spacer gap="lg">
+      {COMPONENT_SIZES.map(d => (
+        <ButtonSplitWrapper key={d} {...props} label={`Send (${d})`} size={d} />
+      ))}
+    </Spacer>
+  ),
+};
+
+export const Colors: Story = {
   argTypes: {
     bg: disableControl(),
   },
   render: props => (
-    <Spacer>
-      <ButtonSplitWrapper {...props} bg="red" size="xs" />
-      <ButtonSplitWrapper {...props} bg="green" size="sm" />
-      <ButtonSplitWrapper {...props} bg="blue" size="md" />
-      <ButtonSplitWrapper {...props} bg="purple" size="lg" />
-    </Spacer>
+    <Grid gap={30} templateColumns="repeat(3, 1fr)">
+      {VARIANTS.map(d => (
+        <ButtonSplitWrapper key={d} {...props} bg={d} label={d} />
+      ))}
+    </Grid>
   ),
 };
 

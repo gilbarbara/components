@@ -1,6 +1,7 @@
 import { CSSProperties, JSXElementConstructor } from 'react';
 import { SerializedStyles } from '@emotion/react';
 import { validatePassword } from '@gilbarbara/helpers';
+import { StringOrNumber } from '@gilbarbara/types';
 import { StandardShorthandProperties } from 'csstype';
 
 import { icons, inputTypes, sizes, textSizes } from '~/modules/options';
@@ -40,6 +41,8 @@ export interface BorderItem {
 }
 
 export type ButtonTypes = 'button' | 'submit' | 'reset';
+
+export type DataAttributes = Record<`data-${string}`, StringOrNumber>;
 
 export type Direction = 'horizontal' | 'vertical';
 
