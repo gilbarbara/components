@@ -1,22 +1,21 @@
-import { CSSProperties, isValidElement, ReactNode } from 'react';
+import { isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { getTheme } from '~/modules/helpers';
-import { getStyledOptions } from '~/modules/system';
+import { colorStyles, getStyledOptions, textStyles } from '~/modules/system';
 
-interface MenuTitleProps {
-  children: ReactNode;
-  style?: CSSProperties;
-}
+import { MenuTitleProps } from './types';
 
 const StyledMenuTitle = styled(
   'li',
   getStyledOptions(),
-)(props => {
+)<Omit<MenuTitleProps, 'children'>>(props => {
   const { grayScale, spacing, typography } = getTheme(props);
 
   return css`
+    ${colorStyles(props)};
+
     [data-component-name='MenuTitleContent'] {
       padding: ${spacing.xs} ${spacing.sm};
     }
@@ -25,6 +24,7 @@ const StyledMenuTitle = styled(
       color: ${grayScale['500']};
       font-size: ${typography.xs.fontSize};
       text-transform: uppercase;
+      ${textStyles(props)};
     }
   `;
 });
