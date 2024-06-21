@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import { useDeepCompareEffect } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
 
 import { Icon } from '~/components/Icon';
@@ -49,7 +50,11 @@ export const MenuContext = createContext<MenuContextValue | undefined>(undefined
 MenuContext.displayName = 'MenuContext';
 
 export function MenuProvider({ children, closeMenu, props }: MenuContextProps) {
-  const [state] = useState<ContextState>(props);
+  const [state, setState] = useState<ContextState>(props);
+
+  useDeepCompareEffect(() => {
+    setState(props);
+  }, [props]);
 
   const value = useMemo(
     () => ({

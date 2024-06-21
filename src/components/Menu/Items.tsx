@@ -15,7 +15,7 @@ interface MenuItemsProps extends Required<Pick<MenuProps, 'minWidth' | 'position
   id: string;
 }
 
-const StyledMenuItemsWrapper = styled(
+const StyledMenuItems = styled(
   'div',
   getStyledOptions(),
 )<Omit<MenuItemsProps, 'id'>>(props => {
@@ -118,21 +118,16 @@ export function MenuItems(props: MenuItemsProps) {
   const { active, children, id, minWidth, position } = props;
 
   return (
-    <StyledMenuItemsWrapper
+    <StyledMenuItems
       active={active}
       data-component-name="MenuItems"
       data-state={active ? 'open' : 'closed'}
       minWidth={minWidth}
       position={position}
     >
-      <ul
-        aria-orientation="vertical"
-        data-component-name="MenuItemsWrapper"
-        id={`menu-items-${id}`}
-        role="menu"
-      >
+      <ul aria-orientation="vertical" id={id} role="menu">
         {children}
       </ul>
-    </StyledMenuItemsWrapper>
+    </StyledMenuItems>
   );
 }

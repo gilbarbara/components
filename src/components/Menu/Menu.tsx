@@ -1,4 +1,4 @@
-import { forwardRef, KeyboardEvent, useCallback, useId, useRef, useState } from 'react';
+import { forwardRef, KeyboardEvent, useCallback, useEffect, useId, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, omit } from '@gilbarbara/helpers';
@@ -27,7 +27,7 @@ const StyledMenu = styled.nav`
 `;
 
 const StyledMenuButton = styled(ButtonUnstyled)(props => {
-  const { spacing } = getTheme(props);
+  const { opacityDisabled, spacing } = getTheme(props);
 
   return css`
     border-radius: 2px;
@@ -37,7 +37,7 @@ const StyledMenuButton = styled(ButtonUnstyled)(props => {
 
     :disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: ${opacityDisabled};
     }
   `;
 });
@@ -70,10 +70,16 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
       keyboardScope.current = new KeyboardScope(localRef.current, {
         arrowNavigation: 'both',
         escCallback: handleToggleMenu(false),
-        selector: `#menu-items-${id.replace(/:/g, '\\:')} > [data-component-name="MenuItem"]`,
+        selector: `#${id.replace(/:/g, '\\:')} > [data-component-name="MenuItem"]`,
       });
     }
   });
+
+  useEffect(() => {
+    if (is.boolean(open)) {
+      setActive(open);
+    }
+  }, [open]);
 
   useUpdateEffect(() => {
     const scope = keyboardScope.current;
@@ -130,9 +136,12 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
       onMouseLeave={trigger === 'hover' ? handleToggleMenu(false) : undefined}
     >
       <ClickOutside active={active} onClick={handleClickOutside}>
-        <MenuProvider closeMenu={handleToggleMenu(false)} props={omit(mergedProps, 'children')}>
+        <MenuProvider
+          closeMenu={handleToggleMenu(false)}
+          props={omit(mergedProps, 'button', 'children', 'onToggle')}
+        >
           <StyledMenuButton
-            aria-controls={`menu-items-${id}`}
+            aria-controls={id}
             aria-expanded={active}
             aria-haspopup="menu"
             aria-label={active ? labels.close : labels.open}
