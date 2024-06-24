@@ -810,8 +810,8 @@ export const inputTypes = [
 ] as const;
 
 export const sizes = ['sm', 'md', 'lg'] as const;
-export const sizesAll = ['xs', ...sizes] as const;
 
+export const textSizes = ['xxs', 'xs', ...sizes, 'xl'] as const;
 export const textDefaultOptions = {
   bold: false,
   italic: false,

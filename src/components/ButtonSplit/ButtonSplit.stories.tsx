@@ -5,10 +5,9 @@ import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { ButtonUnstyled, Icon, Spacer } from '~';
 
-import { sizesAll } from '~/modules/options';
-
 import {
   colorProps,
+  COMPONENT_SIZES,
   disableControl,
   hideProps,
   hideStoryFromDocsPage,
@@ -37,7 +36,7 @@ export default {
     children: disableControl(),
     label: { control: 'text' },
     onClick: disableControl(),
-    size: { control: 'radio', options: sizesAll },
+    size: { control: 'radio', options: COMPONENT_SIZES },
   },
   parameters: {
     minHeight: 250,

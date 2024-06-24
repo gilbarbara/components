@@ -12,8 +12,8 @@ import { Paragraph } from '~/components/Paragraph';
 
 import {
   OmitElementProps,
-  SizesAll,
   StyledProps,
+  TextSizes,
   VariantWithTones,
   WithAccent,
   WithComponentSize,
@@ -37,7 +37,7 @@ export interface ProgressBarKnownProps
   /**
    * Text size
    */
-  textSize?: SizesAll;
+  textSize?: TextSizes;
   /** @default 100% */
   width?: StringOrNumber;
 }

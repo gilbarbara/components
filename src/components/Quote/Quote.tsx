@@ -14,15 +14,15 @@ import {
   OmitElementProps,
   Position,
   Sizes,
-  SizesAll,
   Spacing,
   StyledProps,
+  TextSizes,
   WithAccent,
   WithChildren,
   WithTextOptions,
 } from '~/types';
 
-type TextOptions = WithTextOptions<HeadingSizes | SizesAll>;
+type TextOptions = WithTextOptions<HeadingSizes | TextSizes>;
 
 export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, TextOptions {
   attribution?: ReactNode;
