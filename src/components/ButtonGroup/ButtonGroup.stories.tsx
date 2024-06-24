@@ -3,9 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '~';
 
-import { sizesAll } from '~/modules/options';
-
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import { colorProps, COMPONENT_SIZES, disableControl, hideProps } from '~/stories/__helpers__';
 
 import { ButtonGroup, defaultProps } from './ButtonGroup';
 
@@ -19,7 +17,7 @@ export default {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
     children: disableControl(),
-    size: { control: 'radio', options: sizesAll },
+    size: { control: 'radio', options: COMPONENT_SIZES },
   },
 } satisfies Meta<typeof ButtonGroup>;
 

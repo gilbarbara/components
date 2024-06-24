@@ -11,7 +11,7 @@ import {
   BorderItem,
   BorderItemSide,
   HeadingSizes,
-  SizesAll,
+  TextSizes,
   WithAccent,
   WithAlign,
   WithBorder,
@@ -737,7 +737,7 @@ export function shadowStyles<T extends WithShadow & WithTheme>(
   return {};
 }
 
-export function textStyles<T extends WithTextOptions<HeadingSizes | SizesAll> & WithTheme>(
+export function textStyles<T extends WithTextOptions<TextSizes | HeadingSizes> & WithTheme>(
   props: T,
   lineHeightCustom?: StringOrNumber,
 ): CSSObject {
