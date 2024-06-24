@@ -39,6 +39,7 @@ export * from './components/Pagination';
 export * from './components/Paragraph';
 export * from './components/Portal';
 export * from './components/ProgressBar';
+export * from './components/ProgressCircle';
 export * from './components/Quote';
 export * from './components/RadioGroup';
 export * from './components/Select';

@@ -49,6 +49,7 @@ export type { PaginationProps } from '../components/Pagination/Pagination';
 export type { ParagraphProps } from '../components/Paragraph/Paragraph';
 export type { PortalProps } from '../components/Portal/Portal';
 export type { ProgressBarProps } from '../components/ProgressBar/ProgressBar';
+export type { ProgressCircleProps } from '../components/ProgressCircle/ProgressCircle';
 export type { QuoteProps } from '../components/Quote/Quote';
 export type { RadioGroupProps } from '../components/RadioGroup/RadioGroup';
 export type { SearchProps } from '../components/Search/types';
