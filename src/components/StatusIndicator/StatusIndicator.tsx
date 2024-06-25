@@ -1,20 +1,57 @@
+import { cloneElement, isValidElement, ReactElement, ReactNode, useId } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
-import { OmitElementProps, StyledProps, Tone, Variant, WithMargin } from '~/types';
+import { Text } from '~/components/Text';
+
+import {
+  OmitElementProps,
+  Position,
+  Spacing,
+  StyledProps,
+  Tone,
+  Variant,
+  WithMargin,
+} from '~/types';
 
 export interface StatusIndicatorKnownProps extends StyledProps, WithMargin {
+  /**
+   * The size of the inner circle relative to the outer circle.
+   * @default 0.7
+   */
+  borderRatio?: number;
   /** Component color */
   color?: Variant | string;
-  ratio?: number;
+  /**
+   * The gap between the component and the label.
+   * @default xxs
+   */
+  gap?: Spacing;
+  /**
+   * The icon to display inside the component.
+   */
+  icon?: ReactNode;
+  label?: ReactNode;
+  /**
+   * The position of the label.
+   * @default 'bottom'
+   */
+  labelPosition?: Position;
+  /**
+   * The size of the component.
+   * @default 24
+   */
   size?: number;
-  /** @default 100 */
+  /**
+   * The inner circle color tone.
+   * @default 100
+   */
   tone?: Tone;
 }
 
@@ -23,17 +60,42 @@ export type StatusIndicatorProps = Simplify<
 >;
 
 export const defaultProps = {
+  borderRatio: 0.7,
   color: 'green',
+  gap: 'xxs',
+  labelPosition: 'bottom',
   tone: '100',
-  ratio: 0.7,
   size: 24,
 } satisfies StatusIndicatorProps;
+
+const StyledStatusIndicatorWrapper = styled(
+  'div',
+  getStyledOptions(),
+)<Required<Pick<StatusIndicatorProps, 'gap' | 'labelPosition'>>>(props => {
+  const { gap, labelPosition } = props;
+  const { spacing } = getTheme(props);
+
+  const flexDirectionMap = {
+    bottom: 'column',
+    left: 'row-reverse',
+    right: 'row',
+    top: 'column-reverse',
+  };
+
+  return css`
+    align-items: center;
+    display: flex;
+    flex-direction: ${flexDirectionMap[labelPosition]};
+    gap: ${spacing[gap]};
+    justify-content: center;
+  `;
+});
 
 const StyledStatusIndicator = styled(
   'div',
   getStyledOptions(),
-)<SetRequired<StatusIndicatorProps, 'color' | 'ratio' | 'size' | 'tone'>>(props => {
-  const { color, ratio, size, tone } = props;
+)<SetRequired<StatusIndicatorProps, 'borderRatio' | 'color' | 'size' | 'tone'>>(props => {
+  const { borderRatio, color, size, tone } = props;
   const { white, ...theme } = getTheme(props);
   const { mainColor, variant } = getColorTokens(color, null, theme);
   let centerBg: string;
@@ -44,7 +106,7 @@ const StyledStatusIndicator = styled(
     centerBg = getColorWithTone(mainColor, tone);
   }
 
-  const innerSize = size * ratio < size ? size * ratio : size;
+  const innerSize = size * borderRatio < size ? size * borderRatio : size;
 
   return css`
     align-items: center;
@@ -54,6 +116,7 @@ const StyledStatusIndicator = styled(
     height: ${px(size)};
     justify-content: center;
     line-height: 1;
+    position: relative;
     width: ${px(size)};
     ${marginStyles(props)};
 
@@ -66,12 +129,41 @@ const StyledStatusIndicator = styled(
       position: absolute;
       width: ${px(innerSize)};
     }
+
+    > * {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
   `;
 });
 
 export function StatusIndicator(props: StatusIndicatorProps) {
+  const { gap, icon, label, labelPosition, ...rest } = mergeProps(defaultProps, props);
+  const labelId = useId();
+
+  const content: Record<string, ReactNode> = {};
+
+  if (label) {
+    content.label = isValidElement(label) ? (
+      cloneElement(label as ReactElement, { id: labelId })
+    ) : (
+      <Text data-component-name="StatusIndicatorLabel" id={labelId} size="md">
+        {label}
+      </Text>
+    );
+  }
+
   return (
-    <StyledStatusIndicator data-component-name="StatusIndicator" {...defaultProps} {...props} />
+    <StyledStatusIndicatorWrapper
+      data-component-name="StatusIndicator"
+      gap={gap}
+      labelPosition={labelPosition}
+    >
+      <StyledStatusIndicator {...rest}>{icon}</StyledStatusIndicator>
+      {content.label}
+    </StyledStatusIndicatorWrapper>
   );
 }
 
