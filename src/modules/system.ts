@@ -604,10 +604,14 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
 }
 
 export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObject {
-  const { margin, mb, ml, mr, mt, mx, my } = props;
+  const { m, margin, mb, ml, mr, mt, mx, my } = props;
   const { spacing } = getTheme(props);
 
   const output: CSSObject = {};
+
+  if (!is.undefined(m)) {
+    output.margin = m ? spacing[m] : m;
+  }
 
   if (!is.undefined(margin)) {
     output.margin = margin ? spacing[margin] : margin;
@@ -643,38 +647,42 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
 }
 
 export function paddingStyles<T extends WithPadding>(props: T, force = false): CSSObject {
-  const { padding, pb, pl, pr, pt, px: paddingX, py } = props;
+  const { p, padding, pb, pl, pr, pt, px: paddingX, py } = props;
   const { spacing } = getTheme(props);
 
   const output: CSSObject = {};
+
+  if (!is.nullOrUndefined(p)) {
+    output.padding = is.number(p) ? p : spacing[p];
+  }
 
   if (!is.nullOrUndefined(padding)) {
     output.padding = is.number(padding) ? padding : spacing[padding];
   }
 
-  if (py) {
-    output.paddingBottom = spacing[py];
-    output.paddingTop = spacing[py];
+  if (!is.nullOrUndefined(py)) {
+    output.paddingBottom = is.number(py) ? py : spacing[py];
+    output.paddingTop = is.number(py) ? py : spacing[py];
   } else {
-    if (pb) {
-      output.paddingBottom = spacing[pb];
+    if (!is.nullOrUndefined(pb)) {
+      output.paddingBottom = is.number(pb) ? pb : spacing[pb];
     }
 
-    if (pt) {
-      output.paddingTop = spacing[pt];
+    if (!is.nullOrUndefined(pt)) {
+      output.paddingTop = is.number(pt) ? pt : spacing[pt];
     }
   }
 
-  if (paddingX) {
-    output.paddingLeft = spacing[paddingX];
-    output.paddingRight = spacing[paddingX];
+  if (!is.nullOrUndefined(paddingX)) {
+    output.paddingLeft = is.number(paddingX) ? paddingX : spacing[paddingX];
+    output.paddingRight = is.number(paddingX) ? paddingX : spacing[paddingX];
   } else {
-    if (pl) {
-      output.paddingLeft = spacing[pl];
+    if (!is.nullOrUndefined(pl)) {
+      output.paddingLeft = is.number(pl) ? pl : spacing[pl];
     }
 
-    if (pr) {
-      output.paddingRight = spacing[pr];
+    if (!is.nullOrUndefined(pr)) {
+      output.paddingRight = is.number(pr) ? pr : spacing[pr];
     }
   }
 
