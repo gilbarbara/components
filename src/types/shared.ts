@@ -247,7 +247,11 @@ export interface WithLight {
 }
 
 export interface WithMargin {
-  /** Also accepts the shortcuts: mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical) */
+  /** margin */
+  m?: SpacingOrZero;
+  /**
+   * Also accepts the shortcuts: m (all sides), mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical)
+   */
   margin?: SpacingOrZero;
   /** margin-bottom */
   mb?: SpacingAuto;
@@ -271,20 +275,22 @@ export interface WithOpen {
 }
 
 export interface WithPadding {
-  /** Also accepts the shortcuts: pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
+  p?: SpacingOrZero;
+  /**
+   * Also accepts the shortcuts: p (all sides), pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
   padding?: SpacingOrZero;
   /** padding-bottom */
-  pb?: Spacing;
+  pb?: SpacingOrZero;
   /** padding-left */
-  pl?: Spacing;
+  pl?: SpacingOrZero;
   /** padding-right */
-  pr?: Spacing;
+  pr?: SpacingOrZero;
   /** padding-top */
-  pt?: Spacing;
+  pt?: SpacingOrZero;
   /** padding horizontal axis */
-  px?: Spacing;
+  px?: SpacingOrZero;
   /** padding vertical axis */
-  py?: Spacing;
+  py?: SpacingOrZero;
 }
 
 export interface WithPositioning {
