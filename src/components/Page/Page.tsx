@@ -12,10 +12,10 @@ import { Loader } from '~/components/Loader';
 
 import {
   Alignment,
-  OmitElementProps,
   StyledProps,
   WithColors,
   WithFlexBox,
+  WithHTMLAttributes,
   WithPadding,
 } from '~/types';
 
@@ -23,6 +23,7 @@ export interface PageKnownProps
   extends StyledProps,
     WithColors,
     Pick<WithFlexBox, 'align' | 'justify'>,
+    WithHTMLAttributes,
     WithPadding {
   /**
    * Override `align` and `justify` to "center"
@@ -51,7 +52,7 @@ export interface PageKnownProps
   textAlign?: Alignment;
 }
 
-export type PageProps = Simplify<OmitElementProps<HTMLDivElement, PageKnownProps, 'wrap'>>;
+export type PageProps = Simplify<PageKnownProps>;
 
 export const defaultProps = {
   centered: false,

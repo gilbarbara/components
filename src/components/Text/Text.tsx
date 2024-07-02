@@ -6,15 +6,22 @@ import { Simplify } from '@gilbarbara/types';
 import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules/system';
 
-import { OmitElementProps, StyledProps, WithChildren, WithColors, WithTextOptions } from '~/types';
+import {
+  StyledProps,
+  WithChildren,
+  WithColors,
+  WithHTMLAttributes,
+  WithTextOptions,
+} from '~/types';
 
 export interface TextKnownProps
   extends StyledProps,
     WithChildren,
     Pick<WithColors, 'color'>,
+    WithHTMLAttributes,
     WithTextOptions {}
 
-export type TextProps = Simplify<OmitElementProps<HTMLSpanElement, TextKnownProps>>;
+export type TextProps = Simplify<TextKnownProps>;
 
 export const StyledText = styled(
   'span',

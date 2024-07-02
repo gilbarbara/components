@@ -21,12 +21,12 @@ import {
 } from '~/modules/system';
 
 import {
-  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildren,
   WithColors,
   WithFlexItem,
+  WithHTMLAttributes,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -41,6 +41,7 @@ export interface GridKnownProps
     WithChildren,
     WithColors,
     WithFlexItem,
+    WithHTMLAttributes,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -67,7 +68,7 @@ export interface GridKnownProps
   templateRows?: StandardLonghandProperties['gridTemplateRows'];
 }
 
-export type GridProps = Simplify<OmitElementProps<HTMLDivElement, GridKnownProps>>;
+export type GridProps = Simplify<GridKnownProps>;
 
 export const defaultProps = {
   display: 'grid',

@@ -82,7 +82,7 @@ export interface ButtonKnownProps
   wide?: boolean;
 }
 
-export type ButtonProps = Simplify<OmitElementProps<HTMLElement, ButtonKnownProps>>;
+export type ButtonProps = Simplify<OmitElementProps<HTMLButtonElement, ButtonKnownProps>>;
 
 export const defaultProps = {
   bg: 'primary',

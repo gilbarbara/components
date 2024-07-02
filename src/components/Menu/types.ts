@@ -2,7 +2,6 @@ import { CSSProperties, KeyboardEvent, MouseEvent, ReactElement, ReactNode } fro
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import {
-  OmitElementProps,
   PositionX,
   PositionY,
   StyledProps,
@@ -10,6 +9,7 @@ import {
   WithChildren,
   WithColors,
   WithDisabled,
+  WithHTMLAttributes,
   WithMargin,
   WithOpen,
   WithPadding,
@@ -22,6 +22,7 @@ export interface MenuKnownProps
     WithAccent,
     WithChildren,
     WithDisabled,
+    WithHTMLAttributes,
     WithOpen {
   /**
    * The Menu button.
@@ -54,7 +55,7 @@ export interface MenuKnownProps
   trigger?: 'click' | 'hover';
 }
 
-export type MenuProps = Simplify<OmitElementProps<HTMLDivElement, MenuKnownProps>>;
+export type MenuProps = Simplify<MenuKnownProps>;
 
 export interface MenuItemProps extends WithColors, WithDisabled, WithPadding {
   children: ((props: { closeMenu: () => void }) => ReactNode) | ReactNode;
