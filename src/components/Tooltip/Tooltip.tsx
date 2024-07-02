@@ -13,6 +13,7 @@ import { textDefaultOptions } from '~/modules/options';
 import {
   baseStyles,
   getStyledOptions,
+  paddingStyles,
   radiusStyles,
   shadowStyles,
   textStyles,
@@ -27,6 +28,7 @@ import {
   WithColors,
   WithDisabled,
   WithOpen,
+  WithPadding,
   WithRadius,
   WithShadow,
   WithTextOptions,
@@ -94,6 +96,7 @@ export interface TooltipKnownProps
     WithColors,
     WithDisabled,
     WithOpen,
+    WithPadding,
     WithRadius,
     WithShadow,
     WithTextOptions {
@@ -145,7 +148,7 @@ const StyledTooltip = styled(
 );
 
 const StyledArrow = styled.span<SharedProps & ArrowProps & ColorProps>(props => {
-  const { arrowDistance, arrowLength, arrowMargin, bg, placement } = props;
+  const { arrowLength, arrowMargin, bg, placement } = props;
   const [position, align] = placement.split('-');
 
   const arrowStyles: CSSObject = {};
@@ -206,16 +209,16 @@ const StyledArrow = styled.span<SharedProps & ArrowProps & ColorProps>(props => 
       styles.left = '50%';
       styles.transform = 'translateX(-50%)';
     } else {
-      styles.right = arrowDistance;
+      styles.right = arrowMargin;
     }
   } else if (['left', 'right'].includes(position)) {
     if (align === 'start') {
-      styles.top = arrowDistance;
+      styles.top = arrowMargin;
     } else if (align === 'middle') {
       styles.top = '50%';
       styles.transform = 'translateY(-50%)';
     } else {
-      styles.bottom = arrowDistance;
+      styles.bottom = arrowMargin;
     }
   }
 
@@ -238,121 +241,129 @@ const StyledArrow = styled.span<SharedProps & ArrowProps & ColorProps>(props => 
 const StyledBody = styled(
   'span',
   getStyledOptions(),
-)<SharedProps & AnimationProps & ArrowProps & ColorProps & WithRadius & WithShadow & WithTextSize>(
-  props => {
-    const {
-      arrowDistance,
-      arrowLength,
-      bg,
-      color,
-      delay,
-      duration,
-      easing,
-      placement,
-      size,
-      wrap,
-      zIndex,
-    } = props;
-    const { spacing } = getTheme(props);
-    const arrowSpacing = arrowLength + arrowDistance;
-    const [position, align] = placement.split('-');
+)<
+  SharedProps &
+    AnimationProps &
+    ArrowProps &
+    ColorProps &
+    WithPadding &
+    WithRadius &
+    WithShadow &
+    WithTextSize
+>(props => {
+  const {
+    arrowDistance,
+    arrowLength,
+    bg,
+    color,
+    delay,
+    duration,
+    easing,
+    placement,
+    size,
+    wrap,
+    zIndex,
+  } = props;
+  const { spacing } = getTheme(props);
+  const arrowSpacing = arrowLength + arrowDistance;
+  const [position, align] = placement.split('-');
 
-    const styles: CSSObject = {};
+  const styles: CSSObject = {};
 
-    if (align === 'start') {
-      if (['left', 'right'].includes(position)) {
-        styles.top = arrowDistance;
-      } else {
-        styles.left = 0;
-      }
-    } else if (align === 'middle') {
-      if (['left', 'right'].includes(position)) {
-        styles.top = '50%';
-        styles.transform = 'translateY(-50%)';
-      } else {
-        styles.left = '50%';
-        styles.transform = 'translateX(-50%)';
-      }
-    } else if (['left', 'right'].includes(position)) {
-      styles.bottom = arrowDistance;
+  if (align === 'start') {
+    if (['left', 'right'].includes(position)) {
+      styles.top = arrowDistance;
     } else {
-      styles.right = arrowDistance;
+      styles.left = 0;
     }
-
-    switch (position) {
-      case 'bottom': {
-        styles.marginTop = arrowSpacing;
-        styles.top = '100%';
-
-        break;
-      }
-      case 'left': {
-        styles.right = '100%';
-        styles.marginRight = arrowSpacing;
-
-        break;
-      }
-      case 'right': {
-        styles.left = '100%';
-        styles.marginLeft = arrowSpacing;
-
-        break;
-      }
-      case 'top': {
-        styles.bottom = '100%';
-        styles.marginBottom = arrowSpacing;
-
-        break;
-      }
+  } else if (align === 'middle') {
+    if (['left', 'right'].includes(position)) {
+      styles.top = '50%';
+      styles.transform = 'translateY(-50%)';
+    } else {
+      styles.left = '50%';
+      styles.transform = 'translateX(-50%)';
     }
+  } else if (['left', 'right'].includes(position)) {
+    styles.bottom = arrowDistance;
+  } else {
+    styles.right = arrowDistance;
+  }
 
-    switch (size) {
-      case 'xs':
-      case 'sm': {
-        styles.padding = `${spacing.xxs} ${spacing.xs}`;
-        break;
-      }
-      default: {
-        styles.padding = `${spacing.xs} ${spacing.sm}`;
-        break;
-      }
+  switch (position) {
+    case 'bottom': {
+      styles.marginTop = arrowSpacing;
+      styles.top = '100%';
+
+      break;
     }
+    case 'left': {
+      styles.right = '100%';
+      styles.marginRight = arrowSpacing;
 
-    let width;
-
-    switch (wrap) {
-      case 'sm': {
-        width = '100px';
-        break;
-      }
-      case 'md': {
-        width = '200px';
-        break;
-      }
-      case 'lg': {
-        width = '320px';
-        break;
-      }
+      break;
     }
+    case 'right': {
+      styles.left = '100%';
+      styles.marginLeft = arrowSpacing;
 
-    return css`
-      animation: ${fadeIn} ${duration}ms forwards ${easing};
-      animation-delay: ${delay}ms;
-      background-color: ${bg};
-      color: ${color};
-      opacity: 0;
-      position: absolute;
-      text-align: center;
-      white-space: ${wrap ? 'initial' : 'nowrap'};
-      width: ${width};
-      z-index: ${zIndex};
-      ${radiusStyles(props)};
-      ${shadowStyles(props, true)};
-      ${textStyles(props)};
-      ${styles};
-    `;
-  },
-);
+      break;
+    }
+    case 'top': {
+      styles.bottom = '100%';
+      styles.marginBottom = arrowSpacing;
+
+      break;
+    }
+  }
+
+  switch (size) {
+    case 'xs':
+    case 'sm': {
+      styles.padding = `${spacing.xxs} ${spacing.xs}`;
+      break;
+    }
+    default: {
+      styles.padding = `${spacing.xs} ${spacing.sm}`;
+      break;
+    }
+  }
+
+  let width;
+
+  switch (wrap) {
+    case 'sm': {
+      width = '100px';
+      break;
+    }
+    case 'md': {
+      width = '200px';
+      break;
+    }
+    case 'lg': {
+      width = '320px';
+      break;
+    }
+  }
+
+  return css`
+    animation: ${fadeIn} ${duration}ms forwards ${easing};
+    animation-delay: ${delay}ms;
+    background-color: ${bg};
+    color: ${color};
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    white-space: ${wrap ? 'initial' : 'nowrap'};
+    width: ${width};
+    z-index: ${zIndex};
+    ${styles};
+    ${paddingStyles(props)};
+    ${radiusStyles(props)};
+    ${shadowStyles(props, true)};
+    ${textStyles(props)};
+  `;
+});
 
 const StyledContent = styled(Text)`
   position: relative;
