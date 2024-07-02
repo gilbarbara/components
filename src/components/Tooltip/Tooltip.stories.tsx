@@ -13,6 +13,7 @@ import {
   hideProps,
   hideStoryFromDocsPage,
   hideTable,
+  paddingProps,
   PANGRAM,
   radiusProps,
   textOptionsProps,
@@ -29,6 +30,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
+    ...paddingProps(),
     ...radiusProps(),
     ...textOptionsProps(),
     content: { control: 'text' },
@@ -68,7 +70,7 @@ export const Popconfirm: Story = {
           <Box open={isOpen} padding="sm">
             <Paragraph mb="md">Are you sure you want to delete this?</Paragraph>
             <Spacer distribution="end" gap="sm">
-              <Button bg="black" invert onClick={handleClick} size="sm">
+              <Button bg="black" onClick={handleClick} size="sm" variant="bordered">
                 Cancel
               </Button>
               <Button bg="red" onClick={handleClick} size="sm">
