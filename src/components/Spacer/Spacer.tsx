@@ -19,12 +19,12 @@ import {
 
 import {
   Direction,
-  OmitElementProps,
   Spacing,
   StyledProps,
   WithBorder,
   WithChildren,
   WithFlexItem,
+  WithHTMLAttributes,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -37,6 +37,7 @@ export interface SpacerKnownProps
     WithBorder,
     WithChildren,
     WithFlexItem,
+    WithHTMLAttributes,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -76,7 +77,7 @@ export interface SpacerKnownProps
   wrap?: boolean;
 }
 
-export type SpacerProps = Simplify<OmitElementProps<HTMLDivElement, SpacerKnownProps>>;
+export type SpacerProps = Simplify<SpacerKnownProps>;
 
 export const defaultProps = {
   direction: 'horizontal',

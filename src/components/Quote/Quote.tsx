@@ -11,7 +11,6 @@ import { baseStyles, getStyledOptions, textStyles } from '~/modules/system';
 
 import {
   HeadingSizes,
-  OmitElementProps,
   Position,
   Sizes,
   Spacing,
@@ -19,12 +18,18 @@ import {
   TextSizes,
   WithAccent,
   WithChildren,
+  WithHTMLAttributes,
   WithTextOptions,
 } from '~/types';
 
 type TextOptions = WithTextOptions<HeadingSizes | TextSizes>;
 
-export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, TextOptions {
+export interface QuoteKnownProps
+  extends StyledProps,
+    WithAccent,
+    WithChildren,
+    WithHTMLAttributes,
+    TextOptions {
   attribution?: ReactNode;
   /**
    * The distance between the quote and citation
@@ -58,7 +63,7 @@ export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, 
   gap?: Spacing;
 }
 
-export type QuoteProps = Simplify<OmitElementProps<HTMLElement, QuoteKnownProps>>;
+export type QuoteProps = Simplify<QuoteKnownProps>;
 
 const borderSizes = {
   sm: '1px',

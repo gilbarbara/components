@@ -22,10 +22,10 @@ import { Icon } from '~/components/Icon';
 import { Label } from '~/components/Label';
 
 import {
-  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildren,
+  WithHTMLAttributes,
   WithInline,
   WithLabel,
   WithLayout,
@@ -38,6 +38,7 @@ export interface FormGroupKnownProps
   extends StyledProps,
     WithBorder,
     WithChildren,
+    WithHTMLAttributes,
     WithInline,
     WithLabel,
     WithLayout,
@@ -55,7 +56,7 @@ export interface FormGroupKnownProps
   valid?: boolean;
 }
 
-export type FormGroupProps = Simplify<OmitElementProps<HTMLElement, FormGroupKnownProps>>;
+export type FormGroupProps = Simplify<FormGroupKnownProps>;
 
 export const defaultProps = {
   hideAssistiveText: false,

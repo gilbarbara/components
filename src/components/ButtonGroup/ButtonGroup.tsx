@@ -6,12 +6,12 @@ import { Simplify } from '@gilbarbara/types';
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
 import {
-  OmitElementProps,
   StyledProps,
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
   WithDisabled,
+  WithHTMLAttributes,
 } from '~/types';
 
 export interface ButtonGroupKnownProps
@@ -19,9 +19,10 @@ export interface ButtonGroupKnownProps
     WithButtonSize,
     WithChildren,
     WithColorsDefaultBg,
-    WithDisabled {}
+    WithDisabled,
+    WithHTMLAttributes {}
 
-export type ButtonGroupProps = Simplify<OmitElementProps<HTMLDivElement, ButtonGroupKnownProps>>;
+export type ButtonGroupProps = Simplify<ButtonGroupKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

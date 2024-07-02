@@ -7,14 +7,17 @@ import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
-import { OmitElementProps, StyledProps, WithLabel } from '~/types';
+import { StyledProps, WithHTMLAttributes, WithLabel } from '~/types';
 
-export interface EmojiKnownProps extends StyledProps, WithLabel {
+export interface EmojiKnownProps
+  extends StyledProps,
+    WithHTMLAttributes<HTMLSpanElement>,
+    WithLabel {
   size?: number;
   symbol: string;
 }
 
-export type EmojiProps = Simplify<OmitElementProps<HTMLSpanElement, EmojiKnownProps>>;
+export type EmojiProps = Simplify<EmojiKnownProps>;
 
 export const StyledEmoji = styled(
   'span',

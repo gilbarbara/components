@@ -11,16 +11,16 @@ import { getStyledOptions, marginStyles } from '~/modules/system';
 import { Text } from '~/components/Text';
 
 import {
-  OmitElementProps,
   Position,
   Spacing,
   StyledProps,
   Tone,
   Variant,
+  WithHTMLAttributes,
   WithMargin,
 } from '~/types';
 
-export interface StatusIndicatorKnownProps extends StyledProps, WithMargin {
+export interface StatusIndicatorKnownProps extends StyledProps, WithHTMLAttributes, WithMargin {
   /**
    * The size of the inner circle relative to the outer circle.
    * @default 0.7
@@ -55,9 +55,7 @@ export interface StatusIndicatorKnownProps extends StyledProps, WithMargin {
   tone?: Tone;
 }
 
-export type StatusIndicatorProps = Simplify<
-  OmitElementProps<HTMLDivElement, StatusIndicatorKnownProps>
->;
+export type StatusIndicatorProps = Simplify<StatusIndicatorKnownProps>;
 
 export const defaultProps = {
   borderRatio: 0.7,
