@@ -6,6 +6,7 @@ import {
   colorProps,
   disableControl,
   hideProps,
+  marginProps,
   PANGRAM,
   textOptionsProps,
 } from '~/stories/__helpers__';
@@ -25,6 +26,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['accent']),
+    ...marginProps(),
     ...textOptionsProps(),
     attribution: { control: 'text' },
     children: { control: 'text' },

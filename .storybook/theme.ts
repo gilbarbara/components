@@ -1,4 +1,5 @@
 import { create } from '@storybook/theming';
+
 import { variants } from '../src/modules/theme';
 
 export default create({

@@ -7,7 +7,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Grid, Spacer } from '~';
 
 import { getTheme } from '~/modules/helpers';
-import { sizesAll } from '~/modules/options';
+import { textSizes } from '~/modules/options';
 
 import {
   colorProps,
@@ -86,7 +86,7 @@ export const Sizes: Story = {
   },
   render: props => (
     <Spacer gapVertical="sm">
-      {sizesAll.map(d => (
+      {textSizes.map(d => (
         <Tag key={d} {...props} size={d}>
           {capitalize(d)}
         </Tag>

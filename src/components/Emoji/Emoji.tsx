@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import innerText from 'react-innertext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
@@ -6,15 +7,17 @@ import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
-import { OmitElementProps, StyledProps } from '~/types';
+import { StyledProps, WithHTMLAttributes, WithLabel } from '~/types';
 
-export interface EmojiKnownProps extends StyledProps {
-  label?: string;
+export interface EmojiKnownProps
+  extends StyledProps,
+    WithHTMLAttributes<HTMLSpanElement>,
+    WithLabel {
   size?: number;
   symbol: string;
 }
 
-export type EmojiProps = Simplify<OmitElementProps<HTMLSpanElement, EmojiKnownProps>>;
+export type EmojiProps = Simplify<EmojiKnownProps>;
 
 export const StyledEmoji = styled(
   'span',
@@ -43,7 +46,7 @@ export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
     <StyledEmoji
       ref={ref}
       aria-hidden={label ? 'false' : 'true'}
-      aria-label={label ?? ''}
+      aria-label={label ? innerText(label) : ''}
       data-component-name="Emoji"
       size={size}
     >

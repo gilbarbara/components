@@ -130,7 +130,7 @@ export function Dialog(props: DialogProps) {
     </Button>
   );
   const cancelButton = (
-    <Button bg={accent} invert onClick={onClickCancel}>
+    <Button bg={accent} onClick={onClickCancel} variant="bordered">
       {buttonCancelText}
     </Button>
   );

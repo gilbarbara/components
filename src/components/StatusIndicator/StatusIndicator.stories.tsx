@@ -1,7 +1,7 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, Grid, Paragraph } from '~';
+import { Box, Grid, Icon, Spacer } from '~';
 
 import { colors } from '~/modules/theme';
 
@@ -24,6 +24,37 @@ export default {
 
 export const Basic: Story = {};
 
+export const WithLabelAndIcon: Story = {
+  name: 'With label and icon',
+  args: {
+    labelPosition: 'right',
+    borderRatio: 0.9,
+    tone: '500',
+  },
+  render: props => (
+    <Spacer direction="vertical">
+      <StatusIndicator
+        {...props}
+        color="green.300"
+        icon={<Icon color="white" name="check-o" />}
+        label="Website"
+      />
+      <StatusIndicator
+        {...props}
+        color="orange.300"
+        icon={<Icon color="white" name="info-o" />}
+        label="API"
+      />
+      <StatusIndicator
+        {...props}
+        color="red.300"
+        icon={<Icon color="white" name="danger-o" />}
+        label="Cache"
+      />
+    </Spacer>
+  ),
+};
+
 export const Colors: Story = {
   argTypes: {
     color: disableControl(),
@@ -31,17 +62,34 @@ export const Colors: Story = {
   render: props => (
     <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
       {VARIANTS.map(d => (
-        <Box key={d} align="center" direction="column" display="flex">
-          <StatusIndicator key={d} {...props} color={d} />
-          <Paragraph>{d}</Paragraph>
-        </Box>
+        <StatusIndicator key={d} {...props} color={d} label={d} />
       ))}
     </Grid>
   ),
 };
 
-export const CustomColor: Story = {
+export const Custom: Story = {
   args: {
-    color: '#ff0044',
+    borderRatio: 1,
+    color: 'white',
+    gap: 'xs',
+    icon: <Icon color="#ff0000" name="times-heavy" size={28} />,
+    label: 'Infrastructure',
+    size: 64,
+    tone: '50',
   },
+  render: props => (
+    <Box
+      align="center"
+      bg="red.500"
+      color="white"
+      flexBox
+      height={160}
+      justify="center"
+      radius="xl"
+      width={160}
+    >
+      <StatusIndicator {...props} />
+    </Box>
+  ),
 };

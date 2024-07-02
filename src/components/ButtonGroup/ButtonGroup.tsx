@@ -3,15 +3,16 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Simplify } from '@gilbarbara/types';
 
-import { baseStyles, getStyledOptions } from '~/modules/system';
+import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
 import {
-  OmitElementProps,
   StyledProps,
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
   WithDisabled,
+  WithHTMLAttributes,
+  WithMargin,
 } from '~/types';
 
 export interface ButtonGroupKnownProps
@@ -19,9 +20,11 @@ export interface ButtonGroupKnownProps
     WithButtonSize,
     WithChildren,
     WithColorsDefaultBg,
-    WithDisabled {}
+    WithDisabled,
+    WithHTMLAttributes,
+    WithMargin {}
 
-export type ButtonGroupProps = Simplify<OmitElementProps<HTMLDivElement, ButtonGroupKnownProps>>;
+export type ButtonGroupProps = Simplify<ButtonGroupKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',
@@ -36,6 +39,7 @@ export const StyledButtonGroup = styled(
   props => css`
     ${baseStyles(props)};
     display: inline-flex;
+    ${marginStyles(props)};
 
     > button {
       + button {

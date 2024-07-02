@@ -105,9 +105,9 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
         <Button
           bg={accent}
           disabled={isDisabled}
-          invert={invert}
           size={height}
           style={{ zIndex: isDisabled ? 2 : 1 }}
+          variant={invert ? 'bordered' : 'solid'}
         >
           {placeholder}
         </Button>

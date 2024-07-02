@@ -4,10 +4,10 @@ import { isDarkMode } from '~/modules/system';
 
 import {
   Direction,
-  OmitElementProps,
   StyledProps,
   VariantWithTones,
   WithChildren,
+  WithHTMLAttributes,
   WithLayout,
   WithMargin,
   WithRadius,
@@ -17,6 +17,7 @@ import {
 export interface ListKnownProps
   extends StyledProps,
     WithChildren,
+    WithHTMLAttributes,
     WithLayout,
     WithMargin,
     WithRadius,
@@ -42,7 +43,7 @@ export interface ListKnownProps
   size?: 'sm' | 'md' | 'lg';
 }
 
-export type ListProps = Simplify<OmitElementProps<HTMLUListElement, ListKnownProps>>;
+export type ListProps = Simplify<ListKnownProps>;
 
 export function getBorderColor<T extends Pick<ListProps, 'borderColor' | 'theme'>>(props: T) {
   const { borderColor } = props;

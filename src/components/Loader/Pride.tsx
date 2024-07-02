@@ -6,9 +6,9 @@ import { rotate } from '~/modules/animations';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderProps } from './types';
+import { LoaderComponentProps } from './types';
 
-type LoaderPrideProps = Omit<LoaderProps, 'color'>;
+type LoaderPrideProps = Omit<LoaderComponentProps, 'color'>;
 
 const StyledLoaderPride = styled(
   'div',
@@ -24,7 +24,7 @@ const StyledLoaderPride = styled(
     position: relative;
     width: ${px(size)};
 
-    #LoaderPrideGroup {
+    .loaderPrideGroup {
       animation: ${rotate} 1s infinite linear;
       transform-origin: 10px 10px;
     }
@@ -141,7 +141,7 @@ export default function LoaderPride(props: LoaderPrideProps) {
           </linearGradient>
         </defs>
         <g transform="translate(2.000000, 2.000000)">
-          <g id="LoaderPrideGroup" strokeWidth="4">
+          <g className="loaderPrideGroup" strokeWidth="4">
             <path
               d="M10,3.70074342e-16 C12.111796,3.70074342e-16 14.1693886,0.668517671 15.8778738,1.90979148"
               stroke="url(#linearGradient-vitwvdhq8u-1)"

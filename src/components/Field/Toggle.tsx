@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Controller, FieldValues, UseFormSetValue } from 'react-hook-form';
+import innerText from 'react-innertext';
 import is from 'is-lite';
 
 import { Toggle } from '~/components/Toggle';
@@ -11,7 +12,7 @@ interface Props extends FieldToggleProps {
 }
 
 function FieldToggle(props: Props) {
-  const { accent, disabled, name, onChange, required, setValue } = props;
+  const { accent, disabled, label, name, onChange, required, setValue, toggleProps } = props;
 
   const handleToggle = useCallback(
     (status: boolean) => {
@@ -31,10 +32,12 @@ function FieldToggle(props: Props) {
         return (
           <Toggle
             accent={accent}
+            aria-label={innerText(label)}
             checked={is.undefined(field.value) ? false : field.value}
             disabled={disabled}
             name={name}
             onToggle={handleToggle}
+            {...toggleProps}
           />
         );
       }}

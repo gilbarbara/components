@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { colorProps, hideProps, textOptionsProps } from '~/stories/__helpers__';
+import { colorProps, hideProps, marginProps, textOptionsProps } from '~/stories/__helpers__';
 
 import { defaultProps, Label } from './Label';
 
@@ -17,6 +17,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...marginProps(),
     ...textOptionsProps(),
     labelInfo: { control: 'text' },
   },

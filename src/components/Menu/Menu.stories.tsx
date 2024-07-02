@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
-import { Avatar, Box, H6, Icon, Paragraph, Spacer } from '~';
+import { Avatar, Box, Icon, Paragraph } from '~';
 
 import {
   colorProps,
@@ -27,29 +27,27 @@ export default {
     children: disableControl(),
   },
   parameters: {
-    minHeight: 300,
-    layout: 'fullscreen',
-    paddingDocs: 'md',
+    minHeight: 550,
+    justify: 'center',
   },
 } satisfies Meta<typeof Menu>;
 
 export const Basic: Story = {
+  args: {
+    button: <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" size="sm" />,
+  },
   render: props => {
     return (
       <Menu {...props}>
-        <MenuTitle>
-          <Spacer>
-            <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" />
-            <Box>
-              <H6 mb={0}>John Smith</H6>
-              <Paragraph>Admin</Paragraph>
-            </Box>
-          </Spacer>
+        <MenuTitle bg="gray.100">
+          <Box>
+            <Paragraph bold>John Smith</Paragraph>
+            <Paragraph mt="xxs">Admin</Paragraph>
+          </Box>
         </MenuTitle>
-        <MenuSeparator />
         <MenuItem onToggle={action('Profile')}>Profile</MenuItem>
         <MenuItem onToggle={action('Configuration')}>Configuration</MenuItem>
-        <MenuSeparator />
+        <MenuSeparator margin={0} />
         <MenuTitle>Documentation</MenuTitle>
         <MenuItem bg="purple" onToggle={action('Help')}>
           Help

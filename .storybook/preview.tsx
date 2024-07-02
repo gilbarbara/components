@@ -1,23 +1,22 @@
-import * as React from 'react';
-import styled from '@emotion/styled';
-import { DocsContainer } from '@storybook/addon-docs';
-import { objectKeys } from '@gilbarbara/helpers';
-import { configure } from '@storybook/test';
-
-import { ThemeProvider } from '@emotion/react';
-import { useGlobals } from '@storybook/preview-api';
+import { type ComponentProps, type FC, useEffect, useRef } from 'react';
 import CacheProvider from 'react-inlinesvg/provider';
+import { ThemeProvider } from '@emotion/react';
+import styled from '@emotion/styled';
+import { objectKeys } from '@gilbarbara/helpers';
+import { DocsContainer } from '@storybook/addon-docs';
+import { useGlobals } from '@storybook/preview-api';
+import { configure } from '@storybook/test';
+import { GlobalTypes } from '@storybook/types';
 
+import { Box, mergeTheme } from '../src';
 import { colors as themeColors } from '../src/modules/theme';
 import { Theme, WithFlexBox, WithPadding } from '../src/types';
 
-import { Box } from '../src';
-
 interface Context {
   globals: {
+    appearance: 'light' | 'dark' | 'side-by-side';
     backgrounds: { value: string };
     color: keyof Theme['colors'];
-    appearance: 'light' | 'dark' | 'side-by-side';
   };
   parameters: {
     align: string;
@@ -25,9 +24,9 @@ interface Context {
     display: string;
     justify: string;
     layout: string;
-    minWidth: number;
     maxWidth: number;
     minHeight?: string;
+    minWidth: number;
     padding: WithPadding['padding'];
     paddingDocs: WithPadding['padding'];
   };
@@ -56,12 +55,10 @@ export const parameters = {
     sort: 'requiredFirst',
   },
   docs: {
-    container: ({ children, context }: React.ComponentProps<typeof DocsContainer>) => {
+    container: ({ children, context }: ComponentProps<typeof DocsContainer>) => {
       return (
         <DocsContainer context={context}>
-          <CacheProvider name="@gilbarbara/components">
-            <>{children}</>
-          </CacheProvider>
+          <CacheProvider name="@gilbarbara/components">{children}</CacheProvider>
         </DocsContainer>
       );
     },
@@ -70,7 +67,11 @@ export const parameters = {
   options: {
     storySort: {
       method: 'alphabetical',
-      order: ['Overview', 'Components'],
+      order: [
+        'Overview',
+        ['About', 'Exports', 'Colors', 'Icons', 'Theme', 'Customize Theme'],
+        'Components',
+      ],
     },
   },
   sidebar: {
@@ -78,7 +79,7 @@ export const parameters = {
   },
 };
 
-export const globalTypes = {
+export const globalTypes: GlobalTypes = {
   appearance: {
     description: 'The appearance of the components',
     defaultValue: 'light',
@@ -128,7 +129,7 @@ const ThemeBlock = styled.div(
         },
 );
 
-function Preview(StoryFn: React.FC, context: Context) {
+function Preview(StoryFn: FC, context: Context) {
   const {
     globals: { appearance, backgrounds, color },
     parameters: {
@@ -137,16 +138,16 @@ function Preview(StoryFn: React.FC, context: Context) {
       display = 'flex',
       justify = 'start',
       layout,
-      minWidth,
       maxWidth = 1024,
       minHeight,
+      minWidth,
       padding = 'md',
       paddingDocs = 0,
     },
     viewMode,
   } = context;
 
-  const docsRef = React.useRef<HTMLDivElement>(null);
+  const docsRef = useRef<HTMLDivElement>(null);
   const [, updateGlobals] = useGlobals();
 
   const isDocs = viewMode === 'docs';
@@ -155,7 +156,7 @@ function Preview(StoryFn: React.FC, context: Context) {
   const desiredBackground = isSideBySide || appearance === 'light' ? '#fff' : '#101010';
   const requireBackgroundUpdate = backgrounds?.value !== desiredBackground;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const target = docsRef.current
       ?.closest('.docs-story')
       ?.querySelector('[scale="1"]') as HTMLDivElement;
@@ -169,7 +170,7 @@ function Preview(StoryFn: React.FC, context: Context) {
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isDocs) {
       return;
     }
@@ -177,16 +178,28 @@ function Preview(StoryFn: React.FC, context: Context) {
     if (requireBackgroundUpdate) {
       updateGlobals({ backgrounds: { value: desiredBackground } });
     }
-  }, [isDocs, desiredBackground]);
+  }, [desiredBackground, isDocs, requireBackgroundUpdate, updateGlobals]);
+
+  const customTheme = (darkMode: boolean): any =>
+    mergeTheme({
+      colors: { primary: themeColors[color] },
+      darkMode,
+      variants: {
+        secondary: {
+          50: themeColors[color],
+          100: themeColors[color],
+          200: themeColors[color],
+          800: themeColors[color],
+          900: themeColors[color],
+        },
+      },
+    });
+
+  console.log(customTheme(true));
 
   if (isDocs) {
     return (
-      <ThemeProvider
-        theme={{
-          darkMode: isDarkMode,
-          colors: { primary: themeColors[color] },
-        }}
-      >
+      <ThemeProvider theme={customTheme(isDarkMode)}>
         <Box
           ref={docsRef}
           align={align}
@@ -208,12 +221,7 @@ function Preview(StoryFn: React.FC, context: Context) {
   if (isSideBySide) {
     return (
       <>
-        <ThemeProvider
-          theme={{
-            colors: { primary: themeColors[color] },
-            darkMode: false,
-          }}
-        >
+        <ThemeProvider theme={customTheme(false)}>
           <ThemeBlock data-side="left" side="left">
             <Box
               align={align}
@@ -230,12 +238,7 @@ function Preview(StoryFn: React.FC, context: Context) {
             </Box>
           </ThemeBlock>
         </ThemeProvider>
-        <ThemeProvider
-          theme={{
-            colors: { primary: themeColors[color] },
-            darkMode: true,
-          }}
-        >
+        <ThemeProvider theme={customTheme(true)}>
           <ThemeBlock data-side="right" side="right">
             <Box
               align={align}
@@ -257,12 +260,7 @@ function Preview(StoryFn: React.FC, context: Context) {
   }
 
   return (
-    <ThemeProvider
-      theme={{
-        darkMode: isDarkMode,
-        colors: { primary: themeColors[color] },
-      }}
-    >
+    <ThemeProvider theme={customTheme(isDarkMode)}>
       <Box
         align={align}
         data-component-name="Story"
@@ -283,7 +281,7 @@ function Preview(StoryFn: React.FC, context: Context) {
 }
 
 export const decorators = [
-  (StoryFn: React.FC, context: Context) => (
+  (StoryFn: FC, context: Context) => (
     <CacheProvider name="@gilbarbara/components">{Preview(StoryFn, context)}</CacheProvider>
   ),
 ];

@@ -28,7 +28,7 @@ export default {
     ...colorProps(['accent']),
     ...marginProps(),
     label: { control: 'text' },
-    onChange: { action: 'onChange', ...disableControl() },
+    onChange: { action: 'onChange' },
   },
 } satisfies Meta<typeof Checkbox>;
 

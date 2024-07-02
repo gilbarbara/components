@@ -35,7 +35,7 @@ export default {
     ...colorProps(['accent']),
     ...marginProps(),
     defaultValue: { control: 'number' },
-    onChange: { action: 'onChange', ...disableControl() },
+    onChange: { action: 'onChange' },
     items: disableControl(),
   },
 } satisfies Meta<typeof RadioGroup>;

@@ -1,10 +1,23 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import { StringOrNull } from '@gilbarbara/types';
-import { hex2hsl, hsl2hex, parseCSS, textColor as contrastingColor } from 'colorizr';
+import {
+  darken,
+  hex2hsl,
+  hsl2hex,
+  lighten,
+  parseCSS,
+  textColor as contrastingColor,
+} from 'colorizr';
 
 import * as theme from '~/modules/theme';
 
 import { Color, ColorTone, Theme } from '~/types';
+
+export function getColorComplement(color: string) {
+  const { l } = parseCSS(color, 'hsl');
+
+  return l >= 90 ? darken(color, 10) : lighten(color, 10);
+}
 
 export function getColorWithTone(color: string, tone: ColorTone) {
   const hsl = hex2hsl(parseCSS(color));
@@ -20,7 +33,7 @@ export function getColorTokens(
   mainColor: string,
   textColor?: StringOrNull,
   { colors, variants }: Pick<Theme, 'colors' | 'variants'> = theme,
-): { mainColor: string; textColor: string; variant?: Color } {
+): { hoverColor: string; mainColor: string; textColor: string; variant?: Color } {
   try {
     const variantKeys = objectKeys(variants);
 
@@ -31,10 +44,18 @@ export function getColorTokens(
 
     switch (mainColor) {
       case 'black': {
-        return { mainColor: theme.black, textColor: selectedTextColor ?? theme.white };
+        return {
+          mainColor: theme.black,
+          textColor: selectedTextColor ?? theme.white,
+          hoverColor: theme.grayScale['800'],
+        };
       }
       case 'white': {
-        return { mainColor: theme.white, textColor: selectedTextColor ?? theme.black };
+        return {
+          mainColor: theme.white,
+          textColor: selectedTextColor ?? theme.black,
+          hoverColor: theme.grayScale['100'],
+        };
       }
       default: {
         if (variantKeys.some(d => mainColor.startsWith(d))) {
@@ -45,17 +66,23 @@ export function getColorTokens(
           return {
             mainColor: selectedMainColor,
             textColor: selectedTextColor ?? contrastingColor(selectedMainColor),
+            hoverColor: getColorComplement(selectedMainColor),
             variant,
           };
         }
 
-        return { mainColor, textColor: selectedTextColor ?? contrastingColor(mainColor) };
+        return {
+          mainColor,
+          textColor: selectedTextColor ?? contrastingColor(mainColor),
+          hoverColor: getColorComplement(mainColor),
+        };
       }
     }
   } catch {
     return {
       mainColor: colors.primary,
       textColor: contrastingColor(colors.primary),
+      hoverColor: getColorComplement(colors.primary),
       variant: 'primary',
     };
   }

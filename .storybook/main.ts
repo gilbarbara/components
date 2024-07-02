@@ -1,8 +1,9 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+
 import { variants } from '../src/modules/theme';
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.mdx', '../src/components/**/*.stories.@(ts|tsx)'],
+  stories: ['../stories/**/*.mdx', '../src/components/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -43,7 +44,7 @@ const config: StorybookConfig = {
   `,
   staticDirs: ['./public'],
   typescript: {
-    reactDocgen: "react-docgen-typescript",
+    reactDocgen: 'react-docgen-typescript',
   },
 };
 

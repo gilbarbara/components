@@ -1,11 +1,16 @@
 import { MouseEvent, useState } from 'react';
+import { capitalize } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '~';
 
-import { sizesAll } from '~/modules/options';
-
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  COMPONENT_SIZES,
+  disableControl,
+  hideProps,
+  marginProps,
+} from '~/stories/__helpers__';
 
 import { ButtonGroup, defaultProps } from './ButtonGroup';
 
@@ -18,8 +23,9 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
+    ...marginProps(),
     children: disableControl(),
-    size: { control: 'radio', options: sizesAll },
+    size: { control: 'radio', options: COMPONENT_SIZES },
   },
 } satisfies Meta<typeof ButtonGroup>;
 
@@ -35,18 +41,16 @@ export const Basic: Story = {
 
     return (
       <ButtonGroup {...props}>
-        <Button data-name="one" invert={active !== 'one'} onClick={handleClick}>
-          First
-        </Button>
-        <Button data-name="two" invert={active !== 'two'} onClick={handleClick}>
-          Second
-        </Button>
-        <Button data-name="three" invert={active !== 'three'} onClick={handleClick}>
-          Third
-        </Button>
-        <Button data-name="four" invert={active !== 'four'} onClick={handleClick}>
-          Forth
-        </Button>
+        {['one', 'two', 'three', 'four'].map(name => (
+          <Button
+            key={name}
+            data-name={name}
+            onClick={handleClick}
+            variant={active === name ? 'solid' : 'bordered'}
+          >
+            {capitalize(name)}
+          </Button>
+        ))}
       </ButtonGroup>
     );
   },

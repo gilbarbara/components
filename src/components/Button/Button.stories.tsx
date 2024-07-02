@@ -5,13 +5,15 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Icon, Spacer } from '~';
 
-import { sizesAll } from '~/modules/options';
+import { radius } from '~/modules/theme';
 
 import {
   colorProps,
+  COMPONENT_SIZES,
   disableControl,
   hideProps,
   paddingProps,
+  radiusProps,
   TONES,
   VARIANTS,
 } from '~/stories/__helpers__';
@@ -31,9 +33,10 @@ export default {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
     ...paddingProps(),
+    ...radiusProps(),
     children: { control: 'text' },
     onClick: { action: 'onClick' },
-    size: { control: 'radio', options: sizesAll },
+    size: { control: 'radio', options: COMPONENT_SIZES },
   },
 } satisfies Meta<typeof Button>;
 
@@ -45,7 +48,7 @@ export const Sizes: Story = {
   },
   render: props => (
     <Spacer>
-      {sizesAll.map(d => (
+      {COMPONENT_SIZES.map(d => (
         <Button key={d} {...props} size={d}>
           Button {capitalize(d)}
         </Button>
@@ -71,35 +74,87 @@ export const Colors: Story = {
 
 export const Tones: Story = {
   argTypes: {
-    bg: disableControl(),
+    ...colorProps(['bg', 'color'], true),
   },
-  render: props => (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {TONES.map(d => (
-        <Button key={d} {...props} bg={`primary.${d}`}>
-          Button {capitalize(d)}
-        </Button>
-      ))}
-    </Grid>
-  ),
+  render: ({ bg, ...props }) => {
+    const [variant] = bg?.split('.') ?? [];
+
+    return (
+      <Grid gap={30} templateColumns="repeat(3, 1fr)">
+        {TONES.map(d => (
+          <Button key={d} {...props} bg={`${variant}.${d}`}>
+            Button {capitalize(d)}
+          </Button>
+        ))}
+      </Grid>
+    );
+  },
 };
 
-export const Shapes: Story = {
+export const Variants: Story = {
   argTypes: {
-    shape: disableControl(),
+    variant: disableControl(),
+  },
+  render: props => {
+    return (
+      <Spacer>
+        <Button {...props} variant="solid">
+          solid
+        </Button>
+        <Button {...props} variant="bordered">
+          bordered
+        </Button>
+        <Button {...props} variant="light">
+          light
+        </Button>
+        <Button {...props} variant="shadow">
+          shadow
+        </Button>
+      </Spacer>
+    );
+  },
+};
+
+export const Radius: Story = {
+  argTypes: {
+    radius: disableControl(),
+  },
+  render: props => {
+    const radiusKeys = Object.keys(radius) as Array<keyof typeof radius>;
+
+    return (
+      <Grid gap={30} templateColumns="repeat(3, 1fr)">
+        {radiusKeys.map(d => (
+          <Button key={d} {...props} radius={d}>
+            {d}
+          </Button>
+        ))}
+      </Grid>
+    );
+  },
+};
+
+export const WithIcon: Story = {
+  argTypes: {
+    iconOnly: disableControl(),
+    radius: disableControl(),
+  },
+  args: {
+    iconOnly: true,
+    size: 'sm',
   },
   render: props => (
     <Grid gap={20} templateColumns="repeat(4, 1fr)">
-      <Button {...props} shape="round">
+      <Button {...props} radius="lg">
         <Icon name="arrow-down" size={18} />
       </Button>
-      <Button {...props} shape="circle">
+      <Button {...props} radius="round">
         <Icon name="check" size={18} />
       </Button>
-      <Button {...props} busy shape="circle">
+      <Button {...props} busy radius="round">
         <Icon name="trash" size={18} />
       </Button>
-      <Button {...props} shape="square">
+      <Button {...props} radius="none">
         <Icon name="trash" size={18} />
       </Button>
     </Grid>
@@ -109,6 +164,7 @@ export const Shapes: Story = {
 export const AsLink: Story = {
   args: {
     as: 'a',
+    variant: 'light',
   },
   render: function Render(props) {
     const ref = useRef<HTMLAnchorElement>(null);

@@ -7,24 +7,31 @@ import { SetRequired, Simplify } from '@gilbarbara/types';
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
-import { baseStyles, getStyledOptions, textStyles } from '~/modules/system';
+import { baseStyles, getStyledOptions, marginStyles, textStyles } from '~/modules/system';
 
 import {
   HeadingSizes,
-  OmitElementProps,
   Position,
   Sizes,
-  SizesAll,
   Spacing,
   StyledProps,
+  TextSizes,
   WithAccent,
   WithChildren,
+  WithHTMLAttributes,
+  WithMargin,
   WithTextOptions,
 } from '~/types';
 
-type TextOptions = WithTextOptions<HeadingSizes | SizesAll>;
+type TextOptions = WithTextOptions<HeadingSizes | TextSizes>;
 
-export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, TextOptions {
+export interface QuoteKnownProps
+  extends StyledProps,
+    WithAccent,
+    WithChildren,
+    WithHTMLAttributes,
+    WithMargin,
+    TextOptions {
   attribution?: ReactNode;
   /**
    * The distance between the quote and citation
@@ -58,7 +65,7 @@ export interface QuoteKnownProps extends StyledProps, WithAccent, WithChildren, 
   gap?: Spacing;
 }
 
-export type QuoteProps = Simplify<OmitElementProps<HTMLElement, QuoteKnownProps>>;
+export type QuoteProps = Simplify<QuoteKnownProps>;
 
 const borderSizes = {
   sm: '1px',
@@ -122,6 +129,7 @@ export const StyledFigure = styled(
       display: flex;
       flex-direction: column;
       margin: 0;
+      ${marginStyles(props)};
     `;
   },
 );

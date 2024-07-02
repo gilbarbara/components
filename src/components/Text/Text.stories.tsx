@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph, Tag } from '~';
 
-import { sizesAll, textDefaultOptions } from '~/modules/options';
+import { textDefaultOptions, textSizes } from '~/modules/options';
 
 import { colorProps, disableControl, hideProps, textOptionsProps } from '~/stories/__helpers__';
 
@@ -36,7 +36,7 @@ export const Sizes: Story = {
   },
   render: props => (
     <div>
-      {sizesAll.map(size => (
+      {textSizes.map(size => (
         <Paragraph key={size}>
           <Text onClick={action('clicked')} {...props} size={size}>
             <Tag size={size}>{size}</Tag> In the mountains far from the countries Vokalia and

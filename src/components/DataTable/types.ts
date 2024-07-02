@@ -4,12 +4,12 @@ import { Simplify, StringOrNull, StringOrNumber } from '@gilbarbara/types';
 import { LoaderType } from '~/components/Loader/types';
 
 import {
-  OmitElementProps,
   SortDirection,
   StyledProps,
   VariantWithTones,
   WithAccent,
   WithFlexItem,
+  WithHTMLAttributes,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -65,6 +65,7 @@ export interface DataTableKnownProps<T extends string>
   extends StyledProps,
     WithAccent,
     WithFlexItem,
+    WithHTMLAttributes,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -173,9 +174,7 @@ export interface DataTableKnownProps<T extends string>
   width?: number;
 }
 
-export type DataTableProps<T extends string = string> = Simplify<
-  OmitElementProps<HTMLDivElement, DataTableKnownProps<T>, 'data' | 'wrap'>
->;
+export type DataTableProps<T extends string = string> = Simplify<DataTableKnownProps<T>>;
 
 export interface DataTableHeadProps extends WithAccent, Pick<DataTableProps, 'clean' | 'columns'> {
   darkMode: boolean;

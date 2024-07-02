@@ -3,7 +3,6 @@ import { generatePalette } from './palette';
 /**
  * Basics
  */
-
 export const fontFamily = 'inherit';
 export const fontMonospace = 'Courier, monospace';
 export const fontWeights = {
@@ -22,7 +21,7 @@ export const breakpoints = {
   xxxl: '1680px',
 };
 
-export const easing = 'cubic-bezier(0.35, 0.01, 0.77, 0.34);';
+export const easing = 'cubic-bezier(0.65, 0.815, 0.735, 0.395)';
 
 export const opacity = {
   semiOpaque: 0.72,
@@ -31,8 +30,10 @@ export const opacity = {
   light: 0.16,
   semiTransparent: 0.08,
 };
+export const opacityDisabled = opacity.intense;
 
 export const radius = {
+  none: '0px',
   xxs: '4px',
   xs: '8px',
   sm: '12px',
@@ -67,6 +68,10 @@ export const spacing = {
 };
 
 export const typography = {
+  xxs: {
+    fontSize: '10px',
+    lineHeight: 1.1,
+  },
   xs: {
     fontSize: '12px',
     lineHeight: 1.2,
@@ -81,6 +86,10 @@ export const typography = {
   },
   lg: {
     fontSize: '18px',
+    lineHeight: 1.2,
+  },
+  xl: {
+    fontSize: '20px',
     lineHeight: 1.2,
   },
   h6: {
@@ -120,7 +129,6 @@ export const typography = {
 /**
  * Colors
  */
-
 export const black = '#000';
 export const white = '#fff';
 export const darkColor = '#101010';
@@ -189,7 +197,6 @@ export const variants = {
 /**
  * Components
  */
-
 export const avatar = {
   xxs: {
     size: '16px',

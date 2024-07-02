@@ -2,17 +2,17 @@ import isPropValid from '@emotion/is-prop-valid';
 import { css, CSSObject } from '@emotion/react';
 import { capitalize, objectEntries, px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
+import { fade } from 'colorizr';
 import is from 'is-lite';
 import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
-import { inputPaddingY, selectPaddingY } from '~/modules/theme';
 
 import {
   BorderItem,
   BorderItemSide,
   HeadingSizes,
-  SizesAll,
+  TextSizes,
   WithAccent,
   WithAlign,
   WithBorder,
@@ -20,12 +20,12 @@ import {
   WithChildrenOptional,
   WithColors,
   WithDimension,
+  WithDisabled,
   WithDisplay,
   WithElementSpacing,
   WithFlexBox,
   WithFlexItem,
   WithHeight,
-  WithInvert,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -34,7 +34,7 @@ import {
   WithShadow,
   WithTextOptions,
   WithTheme,
-  WithTransparent,
+  WithVariant,
 } from '~/types';
 
 import { getTheme, responsive as responsiveHelper } from './helpers';
@@ -82,11 +82,11 @@ export function getContainerStyles(props: WithTheme, options?: GetContainerStyle
   `;
 }
 
-export function getDisableStyles<T extends WithBorderless & WithInvert & WithTheme>(
+export function getDisableStyles<T extends WithBorderless & WithTheme & WithVariant>(
   props: T,
   options: GetDisableStylesOptions = {},
 ) {
-  const { borderless, invert } = props;
+  const { borderless, variant } = props;
   const { hasPlaceholder, isButton } = options;
   const darkMode = isDarkMode(props);
   const { grayScale } = getTheme(props);
@@ -105,8 +105,13 @@ export function getDisableStyles<T extends WithBorderless & WithInvert & WithThe
     borderColor = darkMode ? grayScale['800'] : grayScale['100'];
     color = grayScale['500'];
 
-    if (invert) {
-      backgroundColor = darkMode ? grayScale['900'] : grayScale['30'];
+    if (variant === 'light') {
+      backgroundColor = 'transparent';
+      borderColor = 'transparent';
+    }
+
+    if (variant === 'bordered') {
+      backgroundColor = 'transparent';
     }
   }
 
@@ -127,8 +132,8 @@ export function getDisableStyles<T extends WithBorderless & WithInvert & WithThe
 
 export function getOutlineStyles(color: string, amount = 0.4): CSSObject {
   return {
-    boxShadow: `0 0 0 3px ${transparentize(amount, color)}`,
-    outline: 'none',
+    outline: `${transparentize(amount, color)} solid 3px`,
+    outlineOffset: '1px',
     zIndex: 10,
   };
 }
@@ -295,27 +300,34 @@ export const buttonStyles: CSSObject = {
   border: 0,
 };
 
-export function colorStyles<T extends WithColors & WithInvert & WithTransparent & WithTheme>(
+export function colorStyles<T extends WithColors & WithTheme & WithVariant>(
   props: T,
   withBorder = true,
 ): CSSObject {
   const theme = getTheme(props);
-  const { bg, color, invert, transparent } = props;
+  const { bg, color, variant } = props;
+  const isTransparent = !!variant && ['bordered', 'light'].includes(variant);
 
   const styles: CSSObject = {};
 
   if (bg) {
     const { mainColor, textColor } = getColorTokens(bg, color, theme);
 
-    styles.backgroundColor = invert || transparent ? 'transparent' : mainColor;
-    styles.color = invert || transparent ? mainColor : textColor;
+    styles.backgroundColor = isTransparent ? 'transparent' : mainColor;
+    styles.color = isTransparent ? mainColor : textColor;
 
     if (color) {
       styles.color = textColor;
     }
 
     if (withBorder) {
-      styles.border = transparent ? 0 : `1px solid ${mainColor}`;
+      styles.border = variant === 'light' ? 0 : `1px solid ${mainColor}`;
+    }
+
+    if (variant === 'shadow') {
+      const shadowColor = fade(mainColor, 0.5);
+
+      styles.boxShadow = `0 6px 12px -3px ${shadowColor},0 4px 6px -4px ${shadowColor}`;
     }
 
     return styles;
@@ -421,6 +433,32 @@ export function flexItemStyles<T extends WithFlexItem>(props: T): CSSObject {
   };
 }
 
+export function hoverStyles<T extends WithColors & WithDisabled & WithVariant>(
+  props: T,
+): CSSObject {
+  const theme = getTheme(props);
+  const { bg, color, disabled, variant } = props;
+  const styles: CSSObject = {};
+
+  if (!bg || disabled) {
+    return {};
+  }
+
+  const { hoverColor } = getColorTokens(bg, color, theme);
+
+  if (variant === 'bordered') {
+    styles.color = hoverColor;
+    styles.borderColor = hoverColor;
+  } else if (variant === 'light') {
+    styles.color = hoverColor;
+  } else {
+    styles.backgroundColor = hoverColor;
+    styles.borderColor = hoverColor;
+  }
+
+  return styles;
+}
+
 export function inputStyles<
   T extends WithAccent &
     WithBorderless &
@@ -443,8 +481,10 @@ export function inputStyles<
     fontFamily,
     grayScale,
     inputHeight,
+    inputPaddingY,
     lightColor,
     radius,
+    selectPaddingY,
     spacing,
     typography,
     white,
@@ -504,9 +544,12 @@ export function inputStyles<
     ${styles}
 
     &:focus {
-      ${!!borderless && `box-shadow: 0 3px 0 0 ${transparentize(0.5, mainColor)};`}
+      ${!!borderless &&
+      `
+box-shadow: 0 3px 0 0 ${transparentize(0.5, mainColor)};
+outline: none;
+`}
       ${!borderless && getOutlineStyles(mainColor)}
-      outline: none;
     }
 
     &:disabled {
@@ -561,10 +604,14 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
 }
 
 export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObject {
-  const { margin, mb, ml, mr, mt, mx, my } = props;
+  const { m, margin, mb, ml, mr, mt, mx, my } = props;
   const { spacing } = getTheme(props);
 
   const output: CSSObject = {};
+
+  if (!is.undefined(m)) {
+    output.margin = m ? spacing[m] : m;
+  }
 
   if (!is.undefined(margin)) {
     output.margin = margin ? spacing[margin] : margin;
@@ -600,10 +647,14 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
 }
 
 export function paddingStyles<T extends WithPadding>(props: T, force = false): CSSObject {
-  const { padding, pb, pl, pr, pt, px: paddingX, py } = props;
+  const { p, padding, pb, pl, pr, pt, px: paddingX, py } = props;
   const { spacing } = getTheme(props);
 
   const output: CSSObject = {};
+
+  if (!is.nullOrUndefined(p)) {
+    output.padding = is.number(p) ? p : spacing[p];
+  }
 
   if (!is.nullOrUndefined(padding)) {
     output.padding = is.number(padding) ? padding : spacing[padding];
@@ -736,7 +787,7 @@ export function shadowStyles<T extends WithShadow & WithTheme>(
   return {};
 }
 
-export function textStyles<T extends WithTextOptions<HeadingSizes | SizesAll> & WithTheme>(
+export function textStyles<T extends WithTextOptions<TextSizes | HeadingSizes> & WithTheme>(
   props: T,
   lineHeightCustom?: StringOrNumber,
 ): CSSObject {

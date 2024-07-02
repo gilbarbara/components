@@ -18,11 +18,11 @@ import { Box } from '~/components/Box';
 
 import {
   Alignment,
-  OmitElementProps,
   StyledProps,
   WithChildren,
   WithFlexBox,
   WithFlexItem,
+  WithHTMLAttributes,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -33,6 +33,7 @@ export interface ContainerKnownProps
     WithChildren,
     WithFlexBox,
     WithFlexItem,
+    WithHTMLAttributes,
     WithLayout,
     WithMargin,
     WithPadding {
@@ -51,7 +52,7 @@ export interface ContainerKnownProps
   verticalPadding?: boolean;
 }
 
-export type ContainerProps = Simplify<OmitElementProps<HTMLDivElement, ContainerKnownProps>>;
+export type ContainerProps = Simplify<ContainerKnownProps>;
 
 const flexMap = {
   center: 'center',

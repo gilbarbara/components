@@ -1,11 +1,11 @@
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import {
-  OmitElementProps,
   Spacing,
   StyledProps,
   VariantWithTones,
   WithChildrenOptional,
+  WithHTMLAttributes,
   WithLayout,
   WithMargin,
   WithRadius,
@@ -14,6 +14,7 @@ import {
 export interface SkeletonKnownProps
   extends StyledProps,
     WithChildrenOptional,
+    WithHTMLAttributes,
     WithLayout,
     WithMargin,
     WithRadius {
@@ -55,7 +56,7 @@ export interface SkeletonKnownProps
   isLoaded?: boolean;
 }
 
-export type SkeletonProps = Simplify<OmitElementProps<HTMLDivElement, SkeletonKnownProps>>;
+export type SkeletonProps = Simplify<SkeletonKnownProps>;
 
 export type SkeletonTextProps = Simplify<
   Omit<SkeletonProps, 'fitContent'> & {

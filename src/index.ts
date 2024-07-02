@@ -39,6 +39,7 @@ export * from './components/Pagination';
 export * from './components/Paragraph';
 export * from './components/Portal';
 export * from './components/ProgressBar';
+export * from './components/ProgressCircle';
 export * from './components/Quote';
 export * from './components/RadioGroup';
 export * from './components/Select';
@@ -55,7 +56,14 @@ export * from './components/Tooltip';
 export * from './components/Truncate';
 
 // Modules
-export { animateIcon, fadeIn, fadeOut, fadeInOut, rotate } from './modules/animations';
+export {
+  animateIcon,
+  fadeIn,
+  fadeOut,
+  fadeInOut,
+  horizontalScale,
+  rotate,
+} from './modules/animations';
 export { icons } from './modules/options';
 export { mergeTheme, responsive } from './modules/helpers';
 export { generatePalette } from './modules/palette';

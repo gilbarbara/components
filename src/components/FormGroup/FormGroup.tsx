@@ -22,11 +22,12 @@ import { Icon } from '~/components/Icon';
 import { Label } from '~/components/Label';
 
 import {
-  OmitElementProps,
   StyledProps,
   WithBorder,
   WithChildren,
+  WithHTMLAttributes,
   WithInline,
+  WithLabel,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -37,7 +38,9 @@ export interface FormGroupKnownProps
   extends StyledProps,
     WithBorder,
     WithChildren,
+    WithHTMLAttributes,
     WithInline,
+    WithLabel,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -45,7 +48,6 @@ export interface FormGroupKnownProps
   assistiveText?: ReactNode;
   error?: ReactNode;
   hideAssistiveText?: boolean;
-  label?: ReactNode;
   labelId?: string;
   labelInfo?: ReactNode;
   labelStyles?: CSSProperties;
@@ -54,7 +56,7 @@ export interface FormGroupKnownProps
   valid?: boolean;
 }
 
-export type FormGroupProps = Simplify<OmitElementProps<HTMLElement, FormGroupKnownProps>>;
+export type FormGroupProps = Simplify<FormGroupKnownProps>;
 
 export const defaultProps = {
   hideAssistiveText: false,

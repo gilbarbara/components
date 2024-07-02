@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import { StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
 
@@ -9,7 +9,7 @@ import {
   Direction,
   HeadingSizes,
   Sizes,
-  SizesAll,
+  TextSizes,
 } from './common';
 import { ButtonSize, Radius, Shadow, Spacing, Theme, VariantWithTones } from './theme';
 
@@ -205,20 +205,17 @@ export interface WithHeight {
   height?: Sizes;
 }
 
+export type WithHTMLAttributes<T = HTMLDivElement> = Pick<
+  HTMLAttributes<T>,
+  'className' | 'id' | 'style' | 'tabIndex' | 'title'
+>;
+
 export interface WithInline {
   /**
    * Display as an inline element
    * @default false
    */
   inline?: boolean;
-}
-
-export interface WithInvert {
-  /**
-   * Invert background
-   * @default false
-   */
-  invert?: boolean;
 }
 
 export interface WithLayout extends WithDisplay, WithDimension {
@@ -231,6 +228,10 @@ export interface WithLayout extends WithDisplay, WithDimension {
   transition?: StandardShorthandProperties['transition'];
 }
 
+export interface WithLabel {
+  label?: ReactNode;
+}
+
 export interface WithLight {
   /**
    * Remove bold style
@@ -239,7 +240,11 @@ export interface WithLight {
 }
 
 export interface WithMargin {
-  /** Also accepts the shortcuts: mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical) */
+  /** margin */
+  m?: SpacingOrZero;
+  /**
+   * You can use the shortcuts: m (all sides), mb (bottom), ml (left), mr (right), mt (top), mx (left and right), my (top and bottom)
+   */
   margin?: SpacingOrZero;
   /** margin-bottom */
   mb?: SpacingAuto;
@@ -263,7 +268,10 @@ export interface WithOpen {
 }
 
 export interface WithPadding {
-  /** Also accepts the shortcuts: pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
+  p?: SpacingOrZero;
+  /**
+   * You can use the shortcuts: p (all sides), pb (bottom), pl (left), pr (right), pt (top), px (left and right), py (top and bottom)
+   */
   padding?: SpacingOrZero;
   /** padding-bottom */
   pb?: Spacing;
@@ -297,22 +305,21 @@ export interface WithRadius {
         left?: Radius;
         right?: Radius;
         top?: Radius;
-      }
-    | false;
+      };
 }
 
 export interface WithShadow {
   shadow?: Shadow | false;
 }
 
-export interface WithTextSize<T = SizesAll> {
+export interface WithTextSize<T = TextSizes> {
   /**
    * Text size
    */
   size?: T;
 }
 
-export interface WithTextOptions<T extends SizesAll | HeadingSizes = SizesAll>
+export interface WithTextOptions<T extends TextSizes | HeadingSizes = TextSizes>
   extends WithTextSize<T> {
   /**
    * Bold text
@@ -335,10 +342,10 @@ export interface WithTheme {
   theme?: Partial<Theme>;
 }
 
-export interface WithTransparent {
+export interface WithVariant {
   /**
-   * Remove background and color
-   * @default false
+   * Component variant
+   * @default solid
    */
-  transparent?: boolean;
+  variant?: 'bordered' | 'light' | 'solid' | 'shadow';
 }

@@ -1,15 +1,20 @@
-import { ReactElement } from 'react';
+import { CSSProperties, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import {
-  OmitElementProps,
   PositionX,
   PositionY,
   StyledProps,
   WithAccent,
   WithChildren,
+  WithColors,
   WithDisabled,
+  WithHTMLAttributes,
+  WithMargin,
   WithOpen,
+  WithPadding,
+  WithTextOptions,
+  WithTextSize,
 } from '~/types';
 
 export interface MenuKnownProps
@@ -17,6 +22,7 @@ export interface MenuKnownProps
     WithAccent,
     WithChildren,
     WithDisabled,
+    WithHTMLAttributes,
     WithOpen {
   /**
    * The Menu button.
@@ -49,4 +55,29 @@ export interface MenuKnownProps
   trigger?: 'click' | 'hover';
 }
 
-export type MenuProps = Simplify<OmitElementProps<HTMLDivElement, MenuKnownProps>>;
+export type MenuProps = Simplify<MenuKnownProps>;
+
+export interface MenuItemProps extends WithColors, WithDisabled, WithPadding {
+  children: ((props: { closeMenu: () => void }) => ReactNode) | ReactNode;
+  /**
+   * Prevents the menu from closing when the item is clicked
+   * @default false
+   */
+  disableAutoClose?: boolean;
+  onToggle?: (
+    event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+    closeMenu: () => void,
+  ) => void;
+  /**
+   * Allows the item to wrap its content
+   * @default false
+   */
+  wrap?: boolean;
+}
+
+export interface MenuTitleProps extends WithColors, WithTextOptions, WithTextSize {
+  children: ReactNode;
+  style?: CSSProperties;
+}
+
+export interface MenuSeparatorProps extends WithMargin {}

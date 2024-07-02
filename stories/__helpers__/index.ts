@@ -2,6 +2,7 @@ import { objectEntries, objectKeys } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 import { InputType } from '@storybook/types';
 
+import { sizes as sizeOptions } from '~/modules/options';
 import { variants as themeVariants } from '~/modules/theme';
 
 import { VariantWithTones, WithFlexBox } from '~/types';
@@ -16,6 +17,8 @@ export const flexItems = ['baseline', ...flexBase, ...flexContentPosition];
 export const flexContent = [...flexBase, ...flexContentDistribution, ...flexContentPosition];
 
 export const PANGRAM = 'The quick brown fox jumps over the lazy dog';
+
+export const COMPONENT_SIZES = ['xs', ...sizeOptions] as const;
 
 export const TONES = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'] as const;
 export const VARIANTS = [...objectKeys(themeVariants), 'black', 'white'] as const;
@@ -102,9 +105,15 @@ export function hideTable() {
 
 export function colorProps(
   props: Array<'accent' | 'backgroundColor' | 'bg' | 'borderColor' | 'color'> = ['color'],
-) {
+  variantsOnly = false,
+): ControlMap {
   return props.reduce<ControlMap>((acc, prop) => {
-    acc[prop] = { control: 'select', options: VARIANTS_WITH_TONES };
+    acc[prop] = {
+      control: 'select',
+      options: variantsOnly
+        ? VARIANTS.filter(v => !['black', 'white'].includes(v))
+        : VARIANTS_WITH_TONES,
+    };
 
     return acc;
   }, {});
@@ -181,6 +190,7 @@ export function layoutProps(options?: { display: string }): ControlMap {
 export function marginProps(): ControlMap {
   return {
     margin: { control: 'select', table: { category: 'Spacing' } },
+    m: { control: 'select', table: { category: 'Spacing' } },
     mb: { control: 'select', table: { category: 'Spacing' } },
     ml: { control: 'select', table: { category: 'Spacing' } },
     mr: { control: 'select', table: { category: 'Spacing' } },
@@ -193,6 +203,7 @@ export function marginProps(): ControlMap {
 export function paddingProps(): ControlMap {
   return {
     padding: { control: 'select', table: { category: 'Spacing' } },
+    p: { control: 'select', table: { category: 'Spacing' } },
     pb: { control: 'select', table: { category: 'Spacing' } },
     pl: { control: 'select', table: { category: 'Spacing' } },
     pr: { control: 'select', table: { category: 'Spacing' } },
@@ -217,7 +228,7 @@ export function radiusProps(): ControlMap {
   return {
     radius: {
       control: 'select',
-      options: ['', false, 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'round'],
+      options: ['', 'none', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'round'],
     },
   };
 }
