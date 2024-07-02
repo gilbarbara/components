@@ -243,7 +243,7 @@ export interface WithMargin {
   /** margin */
   m?: SpacingOrZero;
   /**
-   * Also accepts the shortcuts: m (all sides), mb (margin-bottom), ml, mr, mt, mx (margin horizontal), my (margin vertical)
+   * You can use the shortcuts: m (all sides), mb (bottom), ml (left), mr (right), mt (top), mx (left and right), my (top and bottom)
    */
   margin?: SpacingOrZero;
   /** margin-bottom */
@@ -270,7 +270,8 @@ export interface WithOpen {
 export interface WithPadding {
   p?: SpacingOrZero;
   /**
-   * Also accepts the shortcuts: p (all sides), pb (padding-bottom), pl, pr, pt, px (padding horizontal), py (padding vertical) */
+   * You can use the shortcuts: p (all sides), pb (bottom), pl (left), pr (right), pt (top), px (left and right), py (top and bottom)
+   */
   padding?: SpacingOrZero;
   /** padding-bottom */
   pb?: Spacing;

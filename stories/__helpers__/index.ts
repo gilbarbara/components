@@ -106,7 +106,7 @@ export function hideTable() {
 export function colorProps(
   props: Array<'accent' | 'backgroundColor' | 'bg' | 'borderColor' | 'color'> = ['color'],
   variantsOnly = false,
-) {
+): ControlMap {
   return props.reduce<ControlMap>((acc, prop) => {
     acc[prop] = {
       control: 'select',
@@ -190,6 +190,7 @@ export function layoutProps(options?: { display: string }): ControlMap {
 export function marginProps(): ControlMap {
   return {
     margin: { control: 'select', table: { category: 'Spacing' } },
+    m: { control: 'select', table: { category: 'Spacing' } },
     mb: { control: 'select', table: { category: 'Spacing' } },
     ml: { control: 'select', table: { category: 'Spacing' } },
     mr: { control: 'select', table: { category: 'Spacing' } },
@@ -202,6 +203,7 @@ export function marginProps(): ControlMap {
 export function paddingProps(): ControlMap {
   return {
     padding: { control: 'select', table: { category: 'Spacing' } },
+    p: { control: 'select', table: { category: 'Spacing' } },
     pb: { control: 'select', table: { category: 'Spacing' } },
     pl: { control: 'select', table: { category: 'Spacing' } },
     pr: { control: 'select', table: { category: 'Spacing' } },
