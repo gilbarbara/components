@@ -11,7 +11,6 @@ import {
   disableControl,
   hideNoControlsWarning,
   hideProps,
-  hideStoryFromDocsPage,
   hideTable,
   paddingProps,
   PANGRAM,
@@ -190,8 +189,7 @@ export const Positions: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   argTypes: Positions.argTypes,
   render: Positions.render,
   play: async ({ canvasElement }) => {

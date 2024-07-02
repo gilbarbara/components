@@ -2,13 +2,7 @@ import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, screen, userEvent, within } from '@storybook/test';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-  spacingProps,
-} from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, spacingProps } from '~/stories/__helpers__';
 
 import { defaultProps, Pagination } from './Pagination';
 
@@ -62,8 +56,7 @@ function getButton(attribute: number | string, type = 'data-page') {
 }
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     disableEdgeNavigation: true,
     onClick: fn(),

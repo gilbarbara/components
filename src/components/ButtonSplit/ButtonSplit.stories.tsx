@@ -11,7 +11,6 @@ import {
   COMPONENT_SIZES,
   disableControl,
   hideProps,
-  hideStoryFromDocsPage,
   VARIANTS,
 } from '~/stories/__helpers__';
 import { MenuItemProps } from '~/types/props';
@@ -234,8 +233,7 @@ export const Colors: Story = {
 };
 
 export const Disabled: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   argTypes: {
     disabled: disableControl(),
   },
@@ -243,8 +241,7 @@ export const Disabled: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     onClick: fn(),
     onToggle: fn(),

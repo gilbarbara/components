@@ -118,7 +118,7 @@
     "build": "pnpm run clean && tsup",
     "clean": "del dist/*",
     "watch": "tsup --watch",
-    "lint": "eslint --fix src stories",
+    "lint": "eslint --fix .storybook src stories",
     "test": "is-ci \"test:coverage\" \"test:watch\"",
     "test:coverage": "TZ=UTC vitest run --coverage",
     "test:watch": "TZ=UTC vitest watch",

@@ -1,8 +1,9 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+
 import { variants } from '../src/modules/theme';
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.mdx', '../src/components/**/*.stories.@(ts|tsx)'],
+  stories: ['../stories/**/*.mdx', '../src/components/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -29,11 +30,13 @@ const config: StorybookConfig = {
   managerHead: head => `
     ${head}
     <style>
-      #storybook-explorer-menu [data-nodetype="root"] button[aria-expanded="true"],
-      #storybook-explorer-menu [data-nodetype="root"] button:focus,
-      #storybook-explorer-menu [data-nodetype="root"] a[data-selected]:hover {
-        background-color: #fff;
-        color: ${variants.primary['400']};
+      #storybook-explorer-menu [data-nodetype="root"] [data-action="collapse-root"] {
+        color: ${variants.primary['600']};
+        width: 100%;
+      }
+
+      #storybook-explorer-menu [data-nodetype="root"] [data-action="collapse-root"][aria-expanded="true"] {
+        background-color: ${variants.primary['100']};
       }
       
       [data-selected='true'] {
@@ -43,7 +46,7 @@ const config: StorybookConfig = {
   `,
   staticDirs: ['./public'],
   typescript: {
-    reactDocgen: "react-docgen-typescript",
+    reactDocgen: 'react-docgen-typescript',
   },
 };
 

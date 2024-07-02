@@ -122,7 +122,7 @@ export const Busy: Story = {
   },
 };
 
-export const Custom: Story = {
+export const Customized: Story = {
   args: {
     accent: 'white',
     backgroundColor: 'rgba(255, 255, 255, 0.3)',

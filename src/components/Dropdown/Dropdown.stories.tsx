@@ -4,13 +4,7 @@ import { expect, fn, userEvent, within } from '@storybook/test';
 
 import { Icon } from '~';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-  marginProps,
-} from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 import { DropdownOption } from '~/types';
 
 import { defaultProps, Dropdown } from './Dropdown';
@@ -90,8 +84,7 @@ export const WithCreate: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     allowCreate: true,
     borderless: false,

@@ -68,7 +68,7 @@ export const Colors: Story = {
   ),
 };
 
-export const Custom: Story = {
+export const Customized: Story = {
   args: {
     borderRatio: 1,
     color: 'white',

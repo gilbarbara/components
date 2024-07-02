@@ -4,12 +4,7 @@ import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { Avatar, Box, Icon, Paragraph } from '~';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-} from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
 import { Menu, MenuItem, MenuSeparator, MenuTitle } from './index';
 import { defaultProps } from './utils';
@@ -98,8 +93,7 @@ export const WithCustomButtonAndHover: Story = {
 };
 
 export const TestMouseInteractions: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   name: 'Test > Mouse',
   args: {
     onToggle: fn(),
@@ -164,8 +158,7 @@ export const TestMouseInteractions: Story = {
 };
 
 export const TestKeyboardInteractions: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   name: 'Test > Keyboard',
   args: {
     onToggle: fn(),
@@ -215,8 +208,7 @@ export const TestKeyboardInteractions: Story = {
 };
 
 export const TestDisabledKeyboardAndBlur: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   name: 'Test > Disabled Keyboard and Blur',
   args: {
     disableCloseOnBlur: true,

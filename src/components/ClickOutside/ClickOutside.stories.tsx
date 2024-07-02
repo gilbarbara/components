@@ -4,7 +4,7 @@ import { expect, fireEvent, userEvent, waitFor, within } from '@storybook/test';
 
 import { Box, Button, Paragraph } from '~';
 
-import { hideStoryFromDocsPage, layoutProps } from '~/stories/__helpers__';
+import { layoutProps } from '~/stories/__helpers__';
 
 import { ClickOutside, ClickOutsideProps } from './ClickOutside';
 
@@ -65,8 +65,7 @@ export const Basic: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   render: props => <Render {...props} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

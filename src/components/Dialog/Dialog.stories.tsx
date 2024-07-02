@@ -8,7 +8,6 @@ import {
   colorProps,
   disableControl,
   hideProps,
-  hideStoryFromDocsPage,
   paddingProps,
   radiusProps,
 } from '~/stories/__helpers__';
@@ -62,8 +61,7 @@ export const Basic: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     buttonOrder: 'rtl',
     hideOverlay: true,

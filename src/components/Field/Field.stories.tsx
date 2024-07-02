@@ -5,13 +5,7 @@ import { clearAllMocks, expect, fn, userEvent, waitFor, within } from '@storyboo
 import { Box, Form, Grid, H3 } from '~';
 
 import { areas, contractTypes, frameworks, specializations } from '~/stories/__fixtures__';
-import {
-  addChromaticModes,
-  colorProps,
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-} from '~/stories/__helpers__';
+import { addChromaticModes, colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, Field, FieldProps } from './Field';
 
@@ -353,8 +347,7 @@ const mockOnChange = fn();
 const mockOnFocus = fn();
 
 export const TestCheckbox: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'checkbox',
     type: 'checkbox',
@@ -386,8 +379,7 @@ export const TestCheckbox: Story = {
 };
 
 export const TestDatePicker: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'datePicker',
     type: 'datePicker',
@@ -440,8 +432,7 @@ export const TestDatePicker: Story = {
 };
 
 export const TestDropdownMulti: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'dropdown',
     type: 'dropdown',
@@ -476,8 +467,7 @@ export const TestDropdownMulti: Story = {
 };
 
 export const TestDropdownSingle: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'dropdown',
     type: 'dropdown',
@@ -512,8 +502,7 @@ export const TestDropdownSingle: Story = {
 };
 
 export const TestRadio: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'radio',
     type: 'radio',
@@ -542,8 +531,7 @@ export const TestRadio: Story = {
 };
 
 export const TestSelect: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'select',
     type: 'select',
@@ -579,8 +567,7 @@ export const TestSelect: Story = {
 };
 
 export const TestText: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'text',
     type: 'text',
@@ -614,8 +601,7 @@ export const TestText: Story = {
 };
 
 export const TestTextarea: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'textarea',
     type: 'textarea',
@@ -649,8 +635,7 @@ export const TestTextarea: Story = {
 };
 
 export const TestToggle: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     name: 'toggle',
     type: 'toggle',
