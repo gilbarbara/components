@@ -24,12 +24,12 @@ import { getTheme } from '~/modules/helpers';
 import { baseStyles, getOutlineStyles, getStyledOptions, isDarkMode } from '~/modules/system';
 
 import {
-  OmitElementProps,
   StyledProps,
   VariantWithTones,
   WithAccent,
   WithComponentSize,
   WithDisabled,
+  WithHTMLAttributes,
   WithLabel,
 } from '~/types';
 
@@ -39,6 +39,7 @@ export interface ToggleKnownProps
     WithAccent,
     WithComponentSize,
     WithDisabled,
+    WithHTMLAttributes,
     WithLabel {
   /** Status (controlled mode) */
   checked?: boolean;
@@ -67,7 +68,7 @@ export interface ToggleKnownProps
   thumbIconUnchecked?: ReactNode;
 }
 
-export type ToggleProps = Simplify<OmitElementProps<HTMLLabelElement, ToggleKnownProps>>;
+export type ToggleProps = Simplify<ToggleKnownProps>;
 
 interface InnerProps
   extends SetRequired<ToggleProps, 'accent' | 'size'>,

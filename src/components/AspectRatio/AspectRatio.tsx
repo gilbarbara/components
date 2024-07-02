@@ -6,14 +6,18 @@ import { Simplify } from '@gilbarbara/types';
 
 import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
-import { OmitElementProps, StyledProps, WithChildren, WithMargin } from '~/types';
+import { StyledProps, WithChildren, WithHTMLAttributes, WithMargin } from '~/types';
 
-export interface AspectRatioKnownProps extends StyledProps, WithChildren, WithMargin {
+export interface AspectRatioKnownProps
+  extends StyledProps,
+    WithChildren,
+    WithHTMLAttributes,
+    WithMargin {
   maxWidth?: number;
   ratio: number;
 }
 
-export type AspectRatioProps = Simplify<OmitElementProps<HTMLDivElement, AspectRatioKnownProps>>;
+export type AspectRatioProps = Simplify<AspectRatioKnownProps>;
 
 export const StyledAspectRatio = styled(
   'div',

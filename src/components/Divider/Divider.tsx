@@ -10,13 +10,13 @@ import { baseStyles, getStyledOptions, marginStyles, textStyles } from '~/module
 
 import {
   Direction,
-  OmitElementProps,
   Sizes,
   Spacing,
   StyledProps,
   VariantWithTones,
   WithAlign,
   WithChildrenOptional,
+  WithHTMLAttributes,
   WithMargin,
   WithTextOptions,
 } from '~/types';
@@ -25,6 +25,7 @@ export interface DividerKnownProps
   extends StyledProps,
     WithAlign,
     WithChildrenOptional,
+    WithHTMLAttributes,
     WithMargin,
     WithTextOptions {
   /** @default sm */
@@ -58,7 +59,7 @@ export interface DividerKnownProps
   minBorderWidth?: StringOrNumber;
 }
 
-export type DividerProps = Simplify<OmitElementProps<HTMLDivElement, DividerKnownProps>>;
+export type DividerProps = Simplify<DividerKnownProps>;
 
 const borderSizes = {
   sm: '1px',

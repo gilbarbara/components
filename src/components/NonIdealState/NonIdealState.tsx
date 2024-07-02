@@ -25,13 +25,13 @@ import { Paragraph } from '~/components/Paragraph';
 import {
   Direction,
   Icons,
-  OmitElementProps,
   Sizes,
   StyledProps,
   WithBorder,
   WithChildrenOptional,
   WithColors,
   WithFlexItem,
+  WithHTMLAttributes,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -45,6 +45,7 @@ export interface NonIdealStateKnownProps
     WithColors,
     WithChildrenOptional,
     WithFlexItem,
+    Omit<WithHTMLAttributes, 'title'>,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -63,9 +64,7 @@ export interface NonIdealStateKnownProps
   type?: 'error' | 'no-results' | 'not-found' | 'offline' | null;
 }
 
-export type NonIdealStateProps = Simplify<
-  OmitElementProps<HTMLDivElement, NonIdealStateKnownProps, 'wrap'>
->;
+export type NonIdealStateProps = Simplify<NonIdealStateKnownProps>;
 
 export const defaultProps = {
   direction: 'vertical',

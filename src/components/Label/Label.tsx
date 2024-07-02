@@ -11,10 +11,10 @@ import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules
 import { Text } from '~/components/Text';
 
 import {
-  OmitElementProps,
   StyledProps,
   WithChildren,
   WithColors,
+  WithHTMLAttributes,
   WithInline,
   WithTextOptions,
 } from '~/types';
@@ -23,6 +23,7 @@ export interface LabelKnownProps
   extends StyledProps,
     Pick<WithColors, 'color'>,
     WithChildren,
+    WithHTMLAttributes<HTMLLabelElement>,
     WithInline,
     WithTextOptions {
   /** For the htmlFor attribute */
@@ -30,7 +31,7 @@ export interface LabelKnownProps
   labelInfo?: ReactNode;
 }
 
-export type LabelProps = Simplify<OmitElementProps<HTMLLabelElement, LabelKnownProps>>;
+export type LabelProps = Simplify<LabelKnownProps>;
 
 export const defaultProps = {
   ...textDefaultOptions,

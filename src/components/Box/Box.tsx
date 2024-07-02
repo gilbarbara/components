@@ -41,7 +41,7 @@ export interface BoxKnownProps
   flexBox?: boolean;
 }
 
-export type BoxProps<T = HTMLDivElement> = Simplify<OmitElementProps<T, BoxKnownProps>>;
+export type BoxProps<T = HTMLElement> = Simplify<OmitElementProps<T, BoxKnownProps>>;
 
 export const StyledBox = styled(
   'div',
