@@ -9,12 +9,7 @@ import { Box, Grid, Icon, Paragraph, Tooltip } from '~';
 
 import { getTheme } from '~/modules/helpers';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-} from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, Toggle, ToggleProps } from './Toggle';
 
@@ -142,8 +137,7 @@ const mockOnChange = fn();
 const mockOnToggle = fn();
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     onChange: mockOnChange,
     onToggle: mockOnToggle,
@@ -172,8 +166,7 @@ export const Tests: Story = {
 };
 
 export const TestsControlled: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     checked: false,
     onChange: mockOnChange,

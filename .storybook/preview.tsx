@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prevent-abbreviations */
 import { type ComponentProps, type FC, useEffect, useRef } from 'react';
 import CacheProvider from 'react-inlinesvg/provider';
 import { ThemeProvider } from '@emotion/react';
@@ -64,11 +65,17 @@ export const parameters = {
   options: {
     storySort: {
       method: 'alphabetical',
-      order: ['Overview', 'Components'],
+      order: [
+        'About',
+        'Exports',
+        'Composition',
+        'Colors',
+        'Icons',
+        'Theme',
+        'Customize Theme',
+        'Components',
+      ],
     },
-  },
-  sidebar: {
-    showRoots: true,
   },
 };
 
@@ -161,7 +168,7 @@ function Preview(StoryFn: FC, context: Context) {
     if (isDocs && requireBackgroundUpdate) {
       updateGlobals({ backgrounds: { value: desiredBackground } });
     }
-  }, []);
+  }, [desiredBackground, isDocs, requireBackgroundUpdate, updateGlobals]);
 
   useEffect(() => {
     if (isDocs) {
@@ -173,12 +180,13 @@ function Preview(StoryFn: FC, context: Context) {
     }
   }, [desiredBackground, isDocs, requireBackgroundUpdate, updateGlobals]);
 
-  const customTheme = (darkMode: boolean): any =>
-    mergeTheme({
+  const customTheme = (darkMode: boolean): any => {
+    return mergeTheme({
       dataAttributeName: 'testid',
       colors: { primary: themeColors[color] },
       darkMode,
     });
+  };
 
   if (isDocs) {
     return (

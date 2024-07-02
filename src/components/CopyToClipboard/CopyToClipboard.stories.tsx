@@ -4,7 +4,7 @@ import { clearAllMocks, expect, fn, userEvent, waitFor, within } from '@storyboo
 
 import { Icon } from '~';
 
-import { colorProps, hideProps, hideStoryFromDocsPage, spacingProps } from '~/stories/__helpers__';
+import { colorProps, hideProps, spacingProps } from '~/stories/__helpers__';
 
 import { CopyToClipboard, defaultProps } from './CopyToClipboard';
 
@@ -45,8 +45,7 @@ const mockOnCopy = fn();
 const mockOnError = fn();
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     onCopy: mockOnCopy,
     onError: mockOnError,

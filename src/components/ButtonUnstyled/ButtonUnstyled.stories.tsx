@@ -49,7 +49,7 @@ export default {
 
 export const Basic: Story = {};
 
-export const Custom: Story = {
+export const Customized: Story = {
   args: {
     border: { size: 4, color: 'primary' },
     children: <Icon name="flash" size={48} />,

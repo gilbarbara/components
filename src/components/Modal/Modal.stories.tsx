@@ -4,13 +4,7 @@ import { expect, fn, screen, userEvent, waitFor, within } from '@storybook/test'
 
 import { Button, FormGroup, Input, Spacer, Textarea } from '~';
 
-import {
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-  paddingProps,
-  radiusProps,
-} from '~/stories/__helpers__';
+import { disableControl, hideProps, paddingProps, radiusProps } from '~/stories/__helpers__';
 
 import { defaultProps, Modal } from './Modal';
 
@@ -70,8 +64,7 @@ export const Basic: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     onClose: fn(),
     onOpen: fn(),

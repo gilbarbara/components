@@ -6,7 +6,6 @@ import {
   dimensionProps,
   flexBoxProps,
   hideProps,
-  hideStoryFromDocsPage,
   hideTable,
   radiusProps,
   spacingProps,
@@ -85,8 +84,7 @@ export const Types: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     hideIcon: true,
     light: true,

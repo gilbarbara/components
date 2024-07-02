@@ -36,6 +36,12 @@ export default {
 
 export const Basic: Story = {};
 
+export const Horizontal: Story = {
+  args: {
+    direction: 'horizontal',
+  },
+};
+
 export const Sizes: Story = {
   args: {
     icon: 'size',

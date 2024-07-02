@@ -3,12 +3,7 @@ import { expect, fn, userEvent, within } from '@storybook/test';
 
 import { Box, Button, H3, Icon, Paragraph } from '~';
 
-import {
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-  spacingProps,
-} from '~/stories/__helpers__';
+import { disableControl, hideProps, spacingProps } from '~/stories/__helpers__';
 import Code from '~/stories/components/Code';
 import Description from '~/stories/components/Description';
 import Info from '~/stories/components/Info';
@@ -141,8 +136,7 @@ export const Customized: Story = {
 };
 
 export const DefaultOpen: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     defaultOpen: true,
     title: 'Lorem ipsum dolor sit amet',
@@ -150,8 +144,7 @@ export const DefaultOpen: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     title: <p>Lorem ipsum dolor sit amet</p>,
     onToggle: fn(),

@@ -1,0 +1,21 @@
+import { Meta } from '@storybook/blocks';
+import { Unstyled } from '@storybook/blocks';
+
+import { Jumbo, Spacer } from '../../src';
+import Shadow from "./components/Shadow";
+import Radius from "./components/Radius";
+import Typography from "./components/Typography";
+import Spacing from "./components/Spacing";
+
+<Meta title="Theme" />
+
+<Unstyled>
+  <Jumbo>Theme</Jumbo>
+
+  <Spacer direction="vertical" gap="xxl">
+    <Spacing />
+    <Radius />
+    <Shadow />
+    <Typography />
+  </Spacer>
+</Unstyled>

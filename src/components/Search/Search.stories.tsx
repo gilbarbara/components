@@ -9,13 +9,7 @@ import { Avatar, Box, Paragraph } from '~';
 import { colors } from '~/modules/theme';
 
 import users from '~/stories/__fixtures__/users.json';
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-  marginProps,
-} from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 import { Variant } from '~/types';
 
 import { defaultProps, Search } from './Search';
@@ -118,8 +112,7 @@ const mockOnSelect = fn();
 const mockOnType = fn();
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     items: defaultItems,
     onBlur: mockOnBlur,

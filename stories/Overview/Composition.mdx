@@ -1,0 +1,126 @@
+import { Meta } from '@storybook/blocks';
+import { Unstyled } from '@storybook/blocks';
+
+import { Box, Jumbo, Paragraph } from "../../src";
+import Card from "./components/Card";
+import CodeBlock from "../components/CodeBlock";
+
+import users from '../__fixtures__/users.json';
+
+<Meta title="Composition" />
+
+<Unstyled>
+  <Jumbo>Composition</Jumbo>
+
+  <Paragraph>You can compose your own components by using several components from this package.</Paragraph>
+
+  <Box flexBox gap={20} mt="xl">
+    <Card
+      authorImage={users[0].avatar}
+      authorName={users[0].name}
+      date="Published yesterday"
+      description="Labore id ullamco duis et cillum. Cillum veniam magna veniam non labore occaecat tempor
+          minim aute consectetur voluptate elit enim ut."
+      imageAlt="Mobile"
+      imageSrc="https://images.unsplash.com/photo-1483478550801-ceba5fe50e8e?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      tags={['#technology', { name: '#news', bg: 'blue' }]}
+      title="What's new in tech"
+    />
+    <Card
+      authorImage={users[1].avatar}
+      authorName={users[1].name}
+      date="Published 2 days ago"
+      description="Velit ad culpa officia do culpa esse laborum culpa. Nisi do nisi dolore laborum voluptate tempor nisi."
+      imageAlt="Code"
+      imageSrc="https://images.unsplash.com/photo-1516383274235-5f42d6c6426d?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      tags={[{ name: '#web', bg: 'pink' }, { name: '#devtools', bg: 'green' }]}
+      title="6 Essential Websites For Developers"
+    />
+    <Card
+      authorImage={users[2].avatar}
+      authorName={users[2].name}
+      date="Published 7 days ago"
+      description="Lorem eiusmod dolor deserunt aliquip eiusmod incididunt excepteur et duis excepteur exercitation cupidatat quis."
+      imageAlt="Mobile"
+      imageSrc="https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      tags={[{ name: '#developers', bg: 'purple' }, { name: '#javascript', bg: 'orange' }]}
+      title="15 things you can do with JavaScript"
+    />
+  </Box>
+  <CodeBlock>{`import { ReactNode } from 'react';
+import { Avatar, Box, Chip, H3, Image, Paragraph, type Props } from '@gilbarbara/components';
+
+interface CardProps extends Omit<Props.BoxProps, 'title'> {
+  authorImage?: string;
+  authorName: string;
+  date: string;
+  description: ReactNode;
+  imageAlt: string;
+  imageSrc: string;
+  tags?: Array<string | { bg: string; color?: string; name: string }>;
+  title: ReactNode;
+}
+
+export default function Card(props: CardProps) {
+  const {
+    authorImage,
+    authorName,
+    date,
+    description,
+    imageAlt,
+    imageSrc,
+    padding,
+    tags,
+    title,
+    ...rest
+  } = props;
+
+  return (
+    <Box
+      direction="column"
+      flexBox
+      minHeight={480}
+      overflow="hidden"
+      radius="md"
+      shadow="mid"
+      width={300}
+      {...rest}
+    >
+      <Box as="header" flexBox>
+        <Image alt={imageAlt} src={imageSrc} />
+      </Box>
+      <Box direction="column" flex flexBox padding="md">
+        <H3>{title}</H3>
+        <Paragraph>{description}</Paragraph>
+        {!!tags && (
+          <Box flexBox gap="8" mt="sm">
+            {tags.map(tag => {
+              const {
+                bg = 'red',
+                color = 'white',
+                name,
+              } = typeof tag === 'string' ? { name: tag } : tag;
+
+              return (
+                <Chip key={name} bg={bg} color={color}>
+                  {name}
+                </Chip>
+              );
+            })}
+          </Box>
+        )}
+        <Box as="footer" flexBox mt="auto">
+          <Avatar image={authorImage} name={authorName} />
+          <Box ml="xs">
+            <Paragraph bold>{authorName}</Paragraph>
+            <Paragraph mt={0} size="sm">
+              {date}
+            </Paragraph>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+`}</CodeBlock>
+</Unstyled>

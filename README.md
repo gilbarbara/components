@@ -1,13 +1,28 @@
-# @gilbarbara/components
+<p align="center">
+  <a href="https://components.gilbarbara.dev">
+      <img src="https://files.gilbarbara.dev/logos/components-icon.svg" alt="@gilbarbara/components" height="240" width="256" />
+  </a>
+  <h1 align="center">@gilbarbara/components</h1>
+</p>
 
-[![npm version](https://badge.fury.io/js/%40gilbarbara%2Fcomponents.svg)](https://badge.fury.io/js/%40gilbarbara%2Fcomponents) [![CI](https://github.com/gilbarbara/components/actions/workflows/main.yml/badge.svg)](https://github.com/gilbarbara/components/actions/workflows/main.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gilbarbara_components&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gilbarbara_components)
+<p align="center">
+  <a href="https://www.npmjs.com/package/@gilbarbara/components" target="_blank">
+    <img alt="NPM" src="https://badge.fury.io/js/%40gilbarbara%2Fcomponents.svg" />
+  </a>
+  <a href="https://github.com/gilbarbara/components/actions/workflows/main.yml" target="_blank">
+    <img alt="CI" src="https://github.com/gilbarbara/components/actions/workflows/main.yml/badge.svg" />
+  </a>
+  <a href="https://sonarcloud.io/summary/new_code?id=gilbarbara_components" target="_blank">
+    <img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=gilbarbara_components&metric=alert_status" />
+  </a>
+</p>
 
-[![](https://files.gilbarbara.dev/logos/components-icon.svg)](https://components.gilbarbara.dev)
+A library of composable React components to simplify web application development. Use it to create complex user interfaces while following accessibility best practices.
 
-A collection of React components to help you create beautiful user interfaces.
+## Documentation
 
-Storybook: https://components.gilbarbara.dev  
-Code Sandbox: https://qzpq3w.csb.app/
+Go to https://components.gilbarbara.dev  
+Demo: https://codesandbox.io/p/sandbox/gilbarbara-components-2j37hj
 
 ## Installation
 
@@ -18,14 +33,15 @@ npm i @gilbarbara/components @emotion/react @emotion/styled
 ### Usage
 
 ```tsx
-import { DatePicker } from '@gilbarbara/components';
+import { Button } from '@gilbarbara/components';
 
 function App() {
-  return <DatePicker />
+  return <Button>Hello</Button>
 }
 ```
 
-### Documentation
+> You can access the props for all components under the namespace `Props`.
 
-[Overview and Components](https://components.gilbarbara.dev)
+### License
 
+MIT

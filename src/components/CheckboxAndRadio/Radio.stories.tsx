@@ -3,13 +3,7 @@ import { expect, fireEvent, within } from '@storybook/test';
 
 import { Spacer } from '~';
 
-import {
-  colorProps,
-  disableControl,
-  hideProps,
-  hideStoryFromDocsPage,
-  marginProps,
-} from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { defaultProps, Radio } from './Radio';
 
@@ -58,8 +52,7 @@ export const Sizes: Story = {
 };
 
 export const Disabled: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   args: {
     disabled: true,
   },
@@ -69,8 +62,7 @@ export const Disabled: Story = {
 };
 
 export const Tests: Story = {
-  ...hideStoryFromDocsPage(),
-  tags: ['hidden'],
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
