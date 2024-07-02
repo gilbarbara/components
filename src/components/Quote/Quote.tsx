@@ -7,7 +7,7 @@ import { SetRequired, Simplify } from '@gilbarbara/types';
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
-import { baseStyles, getStyledOptions, textStyles } from '~/modules/system';
+import { baseStyles, getStyledOptions, marginStyles, textStyles } from '~/modules/system';
 
 import {
   HeadingSizes,
@@ -19,6 +19,7 @@ import {
   WithAccent,
   WithChildren,
   WithHTMLAttributes,
+  WithMargin,
   WithTextOptions,
 } from '~/types';
 
@@ -29,6 +30,7 @@ export interface QuoteKnownProps
     WithAccent,
     WithChildren,
     WithHTMLAttributes,
+    WithMargin,
     TextOptions {
   attribution?: ReactNode;
   /**
@@ -127,6 +129,7 @@ export const StyledFigure = styled(
       display: flex;
       flex-direction: column;
       margin: 0;
+      ${marginStyles(props)};
     `;
   },
 );

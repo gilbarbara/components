@@ -6,7 +6,13 @@ import is from 'is-lite';
 
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
-import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules/system';
+import {
+  baseStyles,
+  colorStyles,
+  getStyledOptions,
+  marginStyles,
+  textStyles,
+} from '~/modules/system';
 
 import { Text } from '~/components/Text';
 
@@ -16,6 +22,7 @@ import {
   WithColors,
   WithHTMLAttributes,
   WithInline,
+  WithMargin,
   WithTextOptions,
 } from '~/types';
 
@@ -25,6 +32,7 @@ export interface LabelKnownProps
     WithChildren,
     WithHTMLAttributes<HTMLLabelElement>,
     WithInline,
+    WithMargin,
     WithTextOptions {
   /** For the htmlFor attribute */
   labelId?: string;
@@ -56,6 +64,7 @@ export const StyledLabel = styled(
     ${!inline ? `margin-bottom: ${spacing.sm}` : ''};
     position: relative;
     ${colorStyles(props)};
+    ${marginStyles(props)};
     ${textStyles(props)};
 
     [data-component-name='Text'] {
