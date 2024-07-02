@@ -5,7 +5,7 @@ import { usePrevious } from '@gilbarbara/hooks';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { getTheme } from '~/modules/helpers';
-import { getStyledOptions } from '~/modules/system';
+import { getStyledOptions, marginStyles } from '~/modules/system';
 
 import { Radio } from '~/components/CheckboxAndRadio';
 import { RadioProps } from '~/components/CheckboxAndRadio/utils';
@@ -39,6 +39,7 @@ const StyledRadioGroup = styled(
   return css`
     display: flex;
     flex-direction: ${inline ? 'row' : 'column'};
+    ${marginStyles(props)};
 
     ${inline &&
     css`
