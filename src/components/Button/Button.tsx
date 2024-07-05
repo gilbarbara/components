@@ -1,7 +1,8 @@
-import { ForwardedRef, forwardRef, isValidElement, ReactNode } from 'react';
+import { forwardRef, isValidElement, MouseEvent, ReactNode, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
+import { useMergeRefs } from '@gilbarbara/hooks';
 import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
 
 import { useTheme } from '~/hooks/useTheme';
@@ -21,6 +22,7 @@ import {
 } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
+import { Ripple, useRipple } from '~/components/Ripple';
 
 import {
   ButtonTypes,
@@ -53,6 +55,11 @@ export interface ButtonKnownProps
     WithRadius,
     WithStartContent,
     WithVariant {
+  /**
+   * Disable the button ripple effect on press.
+   * @default false
+   */
+  disableRipple?: boolean;
   /**
    * Space between the start and end content
    * @default xs
@@ -91,6 +98,7 @@ export const defaultProps = {
   block: false,
   busy: false,
   disabled: false,
+  disableRipple: false,
   gap: 'xs',
   iconOnly: false,
   light: false,
@@ -163,11 +171,36 @@ export const StyledButton = styled(
 });
 
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
-  const mergedProps = mergeProps(defaultProps, props);
-  const { busy, children, endContent, iconOnly, size, spinner, spinnerPosition, startContent } =
-    mergedProps;
+  const { onClick, ...mergedProps } = mergeProps(defaultProps, props);
+  const {
+    bg,
+    busy,
+    children,
+    disableRipple,
+    endContent,
+    iconOnly,
+    size,
+    spinner,
+    spinnerPosition,
+    startContent,
+  } = mergedProps;
+
+  const { onClick: onClickRipple, ...rippleProps } = useRipple();
+  const localRef = useRef<HTMLButtonElement | null>(null);
+  const mergedRefs = useMergeRefs(localRef, ref);
   const { getDataAttributes, theme } = useTheme();
+
   const { fontSize } = theme.button[size];
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
+
+    if (busy || disableRipple) {
+      return;
+    }
+
+    onClickRipple(event);
+  };
 
   const content: PlainObject<ReactNode> = {
     children,
@@ -191,10 +224,15 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
     content.endContent = isValidElement(endContent) ? endContent : <span>{endContent}</span>;
   }
 
+  if (!disableRipple) {
+    content.ripple = <Ripple color={bg} {...rippleProps} />;
+  }
+
   return (
     <StyledButton
-      ref={ref as ForwardedRef<HTMLButtonElement>}
+      ref={mergedRefs}
       {...getDataAttributes('Button')}
+      onClick={handleClick}
       {...mergedProps}
     >
       {content.startContent}
@@ -202,6 +240,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
       {content.children}
       {spinnerPosition === 'end' && content.spinner}
       {content.endContent}
+      {content.ripple}
     </StyledButton>
   );
 });

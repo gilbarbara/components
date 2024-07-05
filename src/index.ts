@@ -42,6 +42,7 @@ export * from './components/ProgressBar';
 export * from './components/ProgressCircle';
 export * from './components/Quote';
 export * from './components/RadioGroup';
+export * from './components/Ripple';
 export * from './components/Select';
 export * from './components/Search';
 export * from './components/Skeleton';
@@ -65,6 +66,7 @@ export {
   fadeOut,
   fadeInOut,
   horizontalScale,
+  ripple,
   rotate,
 } from './modules/animations';
 export { icons } from './modules/options';
@@ -75,6 +77,6 @@ export { getContainerStyles } from './modules/system';
 export { px } from '@gilbarbara/helpers';
 
 // Types
-export type { Theme } from './types';
 export * as Types from './types';
 export * as Props from './types/props';
+export type { Theme } from './types/theme';

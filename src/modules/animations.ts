@@ -94,6 +94,18 @@ export const horizontalScale = keyframes`
   }
 `;
 
+export const ripple = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+`;
+
 export const rotate = keyframes`
   100% {
     transform: rotate(360deg);
