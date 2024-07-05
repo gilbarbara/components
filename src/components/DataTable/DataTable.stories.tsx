@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   ButtonUnstyled,
+  Chip,
   ComponentWrapper,
   Dialog,
   Dropdown,
@@ -18,7 +19,6 @@ import {
   Input,
   NonIdealState,
   Spacer,
-  Tag,
   Text,
 } from '~';
 
@@ -247,9 +247,13 @@ function DataTableWrapper(props: DataTableProps) {
           ),
           team: <Text size="sm">{user.team || '--'}</Text>,
           status: (
-            <Tag bg={user.code ? 'blue' : 'green'} iconAfter={user.code ? 'clock' : 'check'} invert>
+            <Chip
+              bg={user.code ? 'blue' : 'green'}
+              endContent={user.code ? 'clock' : 'check'}
+              variant="bordered"
+            >
               {user.code ? 'Invite sent' : 'Active'}
-            </Tag>
+            </Chip>
           ),
           action: (
             <ButtonUnstyled data-code={user.code} data-id={user.id} onClick={handleClickDelete}>
@@ -438,7 +442,7 @@ function DataTableExternal(props: DataTableProps) {
           description: package_.description,
           keywords: package_.keywords ? package_.keywords.join(', ') : '--',
           version: {
-            label: <Tag bg={accent}>{package_.version}</Tag>,
+            label: <Chip bg={accent}>{package_.version}</Chip>,
             value: package_.version,
           },
           links: (

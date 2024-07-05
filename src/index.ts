@@ -48,7 +48,7 @@ export * from './components/Skeleton';
 export * from './components/Spacer';
 export * from './components/StatusIndicator';
 export * from './components/Tabs';
-export * from './components/Tag';
+export * from './components/Chip';
 export * from './components/Text';
 export * from './components/Textarea';
 export * from './components/Toggle';

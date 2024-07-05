@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Paragraph, Tag } from '~';
+import { Chip, Paragraph } from '~';
 
 import { textDefaultOptions, textSizes } from '~/modules/options';
 
@@ -38,7 +38,7 @@ export const Sizes: Story = {
       {textSizes.map(size => (
         <Paragraph key={size}>
           <Text {...props} size={size}>
-            <Tag size={size}>{size}</Tag> In the mountains far from the countries Vokalia and
+            <Chip size={size}>{size}</Chip> In the mountains far from the countries Vokalia and
             Consonantia, there live the blind texts.
           </Text>
         </Paragraph>
