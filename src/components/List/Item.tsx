@@ -2,6 +2,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { boxStyles, getStyledOptions } from '~/modules/system';
@@ -67,8 +69,14 @@ export const StyledListItem = styled(
 
 export function ListItem(props: ListItemProps) {
   const { direction, ...rest } = props;
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledListItem as="li" data-component-name="ListItem" {...rest} listDirection={direction} />
+    <StyledListItem
+      as="li"
+      {...getDataAttributes('ListItem')}
+      {...rest}
+      listDirection={direction}
+    />
   );
 }

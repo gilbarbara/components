@@ -1,8 +1,10 @@
 import { CSSProperties, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -117,7 +119,8 @@ export function Dialog(props: DialogProps) {
     title,
     zIndex,
     ...rest
-  } = { ...defaultProps, ...props };
+  } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   const handlePortalClose = useCallback(() => {
     onClickCancel();
@@ -145,7 +148,7 @@ export function Dialog(props: DialogProps) {
       onOpen={onOpen}
       zIndex={zIndex}
     >
-      <StyledDialog data-component-name="Dialog" style={style} {...rest}>
+      <StyledDialog {...getDataAttributes('Dialog')} style={style} {...rest}>
         {title && <H3 mb="sm">{title}</H3>}
 
         <Paragraph mb="xl">{content}</Paragraph>

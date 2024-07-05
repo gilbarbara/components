@@ -44,19 +44,19 @@ export const Basic: Story = {
 
     return (
       <div className="flex-center">
-        <Button data-component-name="OpenModal" onClick={handleClick}>
+        <Button data-testid="OpenModal" onClick={handleClick}>
           Open Modal
         </Button>
 
         <Modal {...props} isActive={isActive} onClose={handleClick}>
-          <FormGroup data-component-name="Dialog" label="Name" required>
+          <FormGroup data-testid="Dialog" label="Name" required>
             <Input name="name" placeholder="Name" />
           </FormGroup>
           <FormGroup label="Description">
             <Textarea name="description" placeholder="Tell us about yourself" />
           </FormGroup>
           <Spacer distribution="end">
-            <Button invert onClick={handleClick}>
+            <Button onClick={handleClick} variant="bordered">
               Cancel
             </Button>
             <Button onClick={handleClick} type="submit">

@@ -1,7 +1,10 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
@@ -47,10 +50,11 @@ export const StyledTextarea = styled(
 });
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
-  const { name, ...rest } = { ...defaultProps, ...props };
+  const { name, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledTextarea ref={ref} data-component-name="Textarea" id={name} name={name} {...rest} />
+    <StyledTextarea ref={ref} {...getDataAttributes('Textarea')} id={name} name={name} {...rest} />
   );
 });
 

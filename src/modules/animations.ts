@@ -23,7 +23,7 @@ export function animateIcon(
     return;
   }
 
-  const icon = target.querySelector('[data-component-name="Icon"]') as HTMLSpanElement;
+  const icon = target.querySelector(`[data-${theme.dataAttributeName}="Icon"]`) as HTMLSpanElement;
 
   if (!icon) {
     return;

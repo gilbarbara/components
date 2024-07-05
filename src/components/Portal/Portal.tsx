@@ -1,10 +1,13 @@
 import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { css, keyframes, useTheme } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from '@gilbarbara/hooks';
 import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { baseStyles, buttonStyles } from '~/modules/system';
 import { black } from '~/modules/theme';
@@ -150,10 +153,13 @@ export function Portal(props: PortalProps) {
     onOpen,
     showCloseButton,
     zIndex,
-  } = { ...defaultProps, ...props };
+  } = mergeProps(defaultProps, props);
   const [isReady, setReady] = useState(false);
   const portal = useRef<Element | null>(null);
-  const { darkMode = false } = useTheme();
+  const {
+    getDataAttributes,
+    theme: { darkMode },
+  } = useTheme();
 
   const closePortal = useRef(() => {
     destroyPortal.current();
@@ -253,11 +259,11 @@ export function Portal(props: PortalProps) {
   }
 
   return createPortal(
-    <StyledPortal data-component-name="Portal" isActive={isActive} zIndex={zIndex}>
+    <StyledPortal {...getDataAttributes('Portal')} isActive={isActive} zIndex={zIndex}>
       {!hideOverlay && (
         <Overlay
           darkMode={darkMode}
-          data-component-name="PortalOverlay"
+          {...getDataAttributes('PortalOverlay')}
           isActive={isActive}
           onClick={handleClickClose}
         />
@@ -267,7 +273,7 @@ export function Portal(props: PortalProps) {
           <Icon name="close-o" size={20} title="Close" />
         </CloseButton>
       )}
-      <Content data-component-name="PortalContent">{content}</Content>
+      <Content {...getDataAttributes('PortalContent')}>{content}</Content>
     </StyledPortal>,
     portal.current,
   );

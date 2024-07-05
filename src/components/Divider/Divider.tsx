@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -167,9 +169,10 @@ const StyledDivider = styled(
 });
 
 export function Divider(props: DividerProps) {
-  return (
-    <StyledDivider data-component-name="Divider" role="separator" {...defaultProps} {...props} />
-  );
+  const mergedProps = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
+  return <StyledDivider {...getDataAttributes('Divider')} role="separator" {...mergedProps} />;
 }
 
 Divider.displayName = 'Divider';

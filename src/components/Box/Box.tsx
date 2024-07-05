@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { boxStyles, getStyledOptions } from '~/modules/system';
 
 import {
@@ -62,9 +64,11 @@ export const boxDefaultProps = {
 /**
  * A container that lays out its contents using "block" (default) or "flex" (with the display prop).
  */
-export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
-  <StyledBox ref={ref} data-component-name="Box" {...boxDefaultProps} {...props} />
-));
+export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
+  const { getDataAttributes } = useTheme();
+
+  return <StyledBox ref={ref} {...getDataAttributes('Box')} {...boxDefaultProps} {...props} />;
+});
 
 Box.displayName = 'Box';
 
@@ -75,9 +79,18 @@ export const boxCenterDefaultProps = {
   justify: 'center',
 } satisfies Omit<BoxProps, 'children'>;
 
-export const BoxCenter = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((props, ref) => (
-  <StyledBox ref={ref} data-component-name="BoxCenter" {...boxCenterDefaultProps} {...props} />
-));
+export const BoxCenter = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((props, ref) => {
+  const { getDataAttributes } = useTheme();
+
+  return (
+    <StyledBox
+      ref={ref}
+      {...getDataAttributes('BoxCenter')}
+      {...boxCenterDefaultProps}
+      {...props}
+    />
+  );
+});
 
 BoxCenter.displayName = 'BoxCenter';
 
@@ -87,14 +100,18 @@ export const boxInlineDefaultProps = {
   display: 'inline-flex',
 } satisfies Omit<BoxProps, 'children'>;
 
-export const BoxInline = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((props, ref) => (
-  <StyledBox
-    ref={ref}
-    as="span"
-    data-component-name="BoxInline"
-    {...boxInlineDefaultProps}
-    {...props}
-  />
-));
+export const BoxInline = forwardRef<HTMLDivElement, Omit<BoxProps, 'flexBox'>>((props, ref) => {
+  const { getDataAttributes } = useTheme();
+
+  return (
+    <StyledBox
+      ref={ref}
+      as="span"
+      {...getDataAttributes('BoxInline')}
+      {...boxInlineDefaultProps}
+      {...props}
+    />
+  );
+});
 
 BoxInline.displayName = 'BoxInline';

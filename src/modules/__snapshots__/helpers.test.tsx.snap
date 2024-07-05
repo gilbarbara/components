@@ -118,6 +118,8 @@ exports[`getTheme > should return the theme 1`] = `
     "yellow": "#ffe166",
   },
   "darkColor": "#101010",
+  "darkMode": false,
+  "dataAttributeName": "component-name",
   "dropShadow": {
     "high": "drop-shadow(2px 4px 18px rgba(148, 148, 148, 0.8))",
     "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
@@ -526,6 +528,8 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     "yellow": "#ffe166",
   },
   "darkColor": "#f04",
+  "darkMode": false,
+  "dataAttributeName": "component-name",
   "dropShadow": {
     "high": "drop-shadow(2px 4px 18px rgba(148, 148, 148, 0.8))",
     "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
@@ -934,6 +938,8 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "yellow": "#ffe166",
   },
   "darkColor": "#101010",
+  "darkMode": false,
+  "dataAttributeName": "component-name",
   "dropShadow": {
     "high": "drop-shadow(2px 4px 18px rgba(148, 148, 148, 0.8))",
     "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",

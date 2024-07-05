@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
 import { SetRequired, Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
@@ -140,6 +142,7 @@ const StyledStatusIndicator = styled(
 export function StatusIndicator(props: StatusIndicatorProps) {
   const { gap, icon, label, labelPosition, ...rest } = mergeProps(defaultProps, props);
   const labelId = useId();
+  const { getDataAttributes } = useTheme();
 
   const content: Record<string, ReactNode> = {};
 
@@ -147,7 +150,7 @@ export function StatusIndicator(props: StatusIndicatorProps) {
     content.label = isValidElement(label) ? (
       cloneElement(label as ReactElement, { id: labelId })
     ) : (
-      <Text data-component-name="StatusIndicatorLabel" id={labelId} size="md">
+      <Text {...getDataAttributes('StatusIndicatorLabel')} id={labelId} size="md">
         {label}
       </Text>
     );
@@ -155,7 +158,7 @@ export function StatusIndicator(props: StatusIndicatorProps) {
 
   return (
     <StyledStatusIndicatorWrapper
-      data-component-name="StatusIndicator"
+      {...getDataAttributes('StatusIndicator')}
       gap={gap}
       labelPosition={labelPosition}
     >

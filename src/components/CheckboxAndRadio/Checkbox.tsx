@@ -1,4 +1,7 @@
 import { forwardRef } from 'react';
+import { mergeProps } from '@gilbarbara/helpers';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import {
   CheckboxProps,
@@ -32,16 +35,15 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     size,
     style,
     ...rest
-  } = {
-    ...defaultProps,
-    ...props,
-  };
+  } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
   const inputId = id ?? name;
 
   return (
     <StyledLabel
       align={align}
-      data-component-name="Checkbox"
+      {...getDataAttributes('Checkbox')}
       disabled={disabled}
       htmlFor={inputId}
       size={size}
@@ -62,7 +64,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
         accent={accent}
         borderless={borderless}
         category="checkbox"
-        data-component-name="CheckboxElement"
+        {...getDataAttributes('CheckboxElement')}
         label={label}
         onKeyDown={handleKeyDown}
         size={size}

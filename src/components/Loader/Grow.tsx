@@ -2,6 +2,8 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
@@ -58,8 +60,10 @@ const StyledLoaderGrow = styled(
 });
 
 export default function LoaderGrow(props: LoaderComponentProps) {
+  const { getDataAttributes } = useTheme();
+
   return (
-    <StyledLoaderGrow data-component-name="LoaderGrow" {...props}>
+    <StyledLoaderGrow {...getDataAttributes('LoaderGrow')} {...props}>
       <div />
     </StyledLoaderGrow>
   );

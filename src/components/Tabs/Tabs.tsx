@@ -9,11 +9,13 @@ import {
 } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { omit, px, unique } from '@gilbarbara/helpers';
+import { mergeProps, omit, px, unique } from '@gilbarbara/helpers';
 import { useMeasure, useSetState } from '@gilbarbara/hooks';
 import { PlainObject, SetOptional, SetRequired, Simplify } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -186,7 +188,7 @@ export function Tabs(props: TabsProps) {
     noContent,
     onClick,
     ...rest
-  } = { ...defaultProps, ...props };
+  } = mergeProps(defaultProps, props);
   const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
     activeId: id ?? defaultId,
     error: false,
@@ -198,6 +200,7 @@ export function Tabs(props: TabsProps) {
   const uniqueId = useRef(unique(6));
   const ref = useRef<HTMLDivElement>(null);
   const measurements = useMeasure(ref);
+  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     isMounted.current = true;
@@ -270,7 +273,7 @@ export function Tabs(props: TabsProps) {
       if (width || rest.direction === 'horizontal') {
         content.menu = (
           <StyledMenu
-            data-component-name="TabsMenu"
+            {...getDataAttributes('TabsMenu')}
             direction={rest.direction}
             role="tablist"
             width={width}
@@ -281,7 +284,7 @@ export function Tabs(props: TabsProps) {
                 accent={accent}
                 aria-controls={`panel-${uniqueId.current}-${d.id}`}
                 aria-selected={d.id === activeId}
-                data-component-name="TabsMenuItem"
+                {...getDataAttributes('TabsMenuItem')}
                 data-disabled={!!d.disabled}
                 data-tab-id={d.id}
                 direction={rest.direction}
@@ -300,7 +303,7 @@ export function Tabs(props: TabsProps) {
 
       content.main = (
         <StyledContent
-          data-component-name="TabsContent"
+          {...getDataAttributes('TabsContent')}
           maxHeight={maxHeight}
           minHeight={minHeight}
         >
@@ -311,7 +314,7 @@ export function Tabs(props: TabsProps) {
                 isValidElement(d) && (
                   <div
                     key={d.props.id}
-                    data-component-name="TabsPanel"
+                    {...getDataAttributes('TabsPanel')}
                     id={`panel-${uniqueId.current}-${d.props.id}`}
                     role="tabpanel"
                   >
@@ -331,7 +334,7 @@ export function Tabs(props: TabsProps) {
   }
 
   return (
-    <StyledTabs data-component-name="Tabs" {...rest}>
+    <StyledTabs {...getDataAttributes('Tabs')} {...rest}>
       {rest.direction === 'vertical' && <div ref={ref} />}
       {content.menu}
       {content.main}

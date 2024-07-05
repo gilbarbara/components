@@ -2,6 +2,8 @@ import { memo } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
@@ -49,10 +51,12 @@ export const StyledSearchItem = styled(
 });
 
 function SearchItemComponent({ accent, children, isSelected, onSelect, value }: SearchItemProps) {
+  const { getDataAttributes } = useTheme();
+
   return (
     <StyledSearchItem
       accent={accent}
-      data-component-name="SearchItem"
+      {...getDataAttributes('SearchItem')}
       data-value={value}
       isSelected={isSelected}
       onClick={onSelect}

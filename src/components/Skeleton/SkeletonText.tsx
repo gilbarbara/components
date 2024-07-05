@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
-import { createArray } from '@gilbarbara/helpers';
+import { createArray, mergeProps } from '@gilbarbara/helpers';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { Skeleton } from './Skeleton';
 import { baseDefaultProps, SkeletonTextProps } from './utils';
@@ -12,10 +14,8 @@ export const defaultProps = {
 } satisfies SkeletonTextProps;
 
 export const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>((props, ref) => {
-  const { children, gap, height, isLoaded, lines, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { children, gap, height, isLoaded, lines, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   const getWidth = (index: number) => {
     if (lines > 1) {
@@ -26,7 +26,7 @@ export const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>((props
   };
 
   return (
-    <div ref={ref} data-component-name="SkeletonText">
+    <div ref={ref} {...getDataAttributes('SkeletonText')}>
       {createArray(lines).map((line, index) => {
         if (isLoaded && index > 0) {
           // skip other lines

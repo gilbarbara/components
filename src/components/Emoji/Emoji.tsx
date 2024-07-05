@@ -5,6 +5,8 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
 import { StyledProps, WithHTMLAttributes, WithLabel } from '~/types';
@@ -41,13 +43,14 @@ export const StyledEmoji = styled(
 
 export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
   const { label, size, symbol } = props;
+  const { getDataAttributes } = useTheme();
 
   return (
     <StyledEmoji
       ref={ref}
       aria-hidden={label ? 'false' : 'true'}
       aria-label={label ? innerText(label) : ''}
-      data-component-name="Emoji"
+      {...getDataAttributes('Emoji')}
       size={size}
     >
       {symbol}

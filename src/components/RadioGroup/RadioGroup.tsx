@@ -1,8 +1,11 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { usePrevious } from '@gilbarbara/hooks';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
@@ -34,7 +37,7 @@ const StyledRadioGroup = styled(
   getStyledOptions(),
 )<Pick<RadioGroupProps, 'inline'>>(props => {
   const { inline } = props;
-  const { spacing } = getTheme(props);
+  const { dataAttributeName, spacing } = getTheme(props);
 
   return css`
     display: flex;
@@ -45,7 +48,7 @@ const StyledRadioGroup = styled(
     css`
       margin-top: 0;
 
-      [data-component-name='Radio'] + [data-component-name='Radio'] {
+      [data-${dataAttributeName}='Radio'] + [data-${dataAttributeName}='Radio'] {
         margin-left: ${spacing.xs};
       }
     `};
@@ -53,12 +56,11 @@ const StyledRadioGroup = styled(
 });
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { accent, defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { accent, defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } =
+    mergeProps(defaultProps, props);
   const [selectedValue, setSelectedValue] = useState(value ?? defaultValue);
   const previousProps = usePrevious(props);
+  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     if (previousProps && value && previousProps.value !== value) {
@@ -88,7 +90,12 @@ export function RadioGroup(props: RadioGroupProps) {
   const currentValue = !!value && value !== selectedValue ? value : selectedValue;
 
   return (
-    <StyledRadioGroup inline={inline} {...rest} data-component-name="RadioGroup" role="radiogroup">
+    <StyledRadioGroup
+      inline={inline}
+      {...rest}
+      {...getDataAttributes('RadioGroup')}
+      role="radiogroup"
+    >
       {items.map(item => (
         <Radio
           key={item.value}

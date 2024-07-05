@@ -6,6 +6,8 @@ import { useLatest, useMergeRefs, useMount, useUpdateEffect } from '@gilbarbara/
 import { deepmerge } from 'deepmerge-ts';
 import is from 'is-lite';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 import KeyboardScope from '~/modules/keyboardScope';
 
@@ -16,15 +18,19 @@ import { MenuItems } from './Items';
 import { MenuProps } from './types';
 import { defaultProps, MenuProvider } from './utils';
 
-const StyledMenu = styled.nav`
-  display: inline-flex;
-  position: relative;
-  vertical-align: middle;
+const StyledMenu = styled.nav(props => {
+  const { dataAttributeName } = getTheme(props);
 
-  [data-component-name='ClickOutside'] {
-    width: 100%;
-  }
-`;
+  return css`
+    display: inline-flex;
+    position: relative;
+    vertical-align: middle;
+
+    [data-${dataAttributeName}='ClickOutside'] {
+      width: 100%;
+    }
+  `;
+});
 
 const StyledMenuButton = styled(ButtonUnstyled)(props => {
   const { opacityDisabled, spacing } = getTheme(props);
@@ -62,6 +68,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
   const keyboardScope = useRef<KeyboardScope>();
   const onToggleRef = useLatest(onToggle);
   const id = useId();
+  const { getDataAttributes, theme } = useTheme();
 
   const labels = deepmerge(defaultProps.labels, mergedProps.labels);
 
@@ -70,7 +77,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
       keyboardScope.current = new KeyboardScope(localRef.current, {
         arrowNavigation: 'both',
         escCallback: handleToggleMenu(false),
-        selector: `#${id.replace(/:/g, '\\:')} > [data-component-name="MenuItem"]`,
+        selector: `#${id.replace(/:/g, '\\:')} > [data-${theme.dataAttributeName}="MenuItem"]`,
       });
     }
   });
@@ -131,7 +138,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
     <StyledMenu
       ref={mergedRefs}
       aria-label={labels.name}
-      data-component-name="Menu"
+      {...getDataAttributes('Menu')}
       onMouseEnter={trigger === 'hover' ? handleToggleMenu(true) : undefined}
       onMouseLeave={trigger === 'hover' ? handleToggleMenu(false) : undefined}
     >
@@ -145,7 +152,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
             aria-expanded={active}
             aria-haspopup="menu"
             aria-label={active ? labels.close : labels.open}
-            data-component-name="MenuButton"
+            {...getDataAttributes('MenuButton')}
             disabled={disabled}
             onClick={handleToggleMenu()}
             onKeyDown={handleKeyDownButton}

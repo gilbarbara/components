@@ -1,8 +1,10 @@
 import { CSSProperties, forwardRef } from 'react';
 import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import {
   baseStyles,
@@ -100,7 +102,10 @@ export const StyledContainer = styled(Box)<SetRequired<ContainerProps, 'align'>>
 });
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>((props, ref) => {
-  return <StyledContainer ref={ref} data-component-name="Container" {...defaultProps} {...props} />;
+  const mergedProps = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
+  return <StyledContainer ref={ref} {...getDataAttributes('Container')} {...mergedProps} />;
 });
 
 Container.displayName = 'Container';

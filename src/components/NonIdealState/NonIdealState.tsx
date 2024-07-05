@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { omit } from '@gilbarbara/helpers';
+import { mergeProps, omit } from '@gilbarbara/helpers';
 import { PlainObject, Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import {
   baseStyles,
@@ -101,10 +103,12 @@ export const StyledNonIdealState = styled(
 });
 
 export function NonIdealState(props: NonIdealStateProps) {
-  const { children, description, direction, hideIcon, icon, size, title, type } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { children, description, direction, hideIcon, icon, size, title, type } = mergeProps(
+    defaultProps,
+    props,
+  );
+  const { getDataAttributes } = useTheme();
+
   const iconSize = {
     sm: 48,
     md: 64,
@@ -183,7 +187,7 @@ export function NonIdealState(props: NonIdealStateProps) {
   }
 
   return (
-    <StyledNonIdealState data-component-name="NonIdealState" {...omit(props, 'title', 'type')}>
+    <StyledNonIdealState {...getDataAttributes('NonIdealState')} {...omit(props, 'title', 'type')}>
       {output.icon}
       <Box ml={!isVertical ? 'xs' : undefined} mt={isVertical && output.icon ? 'sm' : undefined}>
         {output.title}

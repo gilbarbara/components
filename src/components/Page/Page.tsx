@@ -1,9 +1,11 @@
 import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { Property } from 'csstype';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getContainerStyles, paddingStyles } from '~/modules/system';
 
@@ -38,8 +40,7 @@ export interface PageKnownProps
   /** @default 100vh */
   minHeight?: StringOrNumber;
   /**
-   * Set the "data-component-name" property
-   *
+   * Set the `data` attribute property
    * @default Page
    */
   name?: string;
@@ -77,10 +78,9 @@ export const StyledPage = styled(Box)<Omit<PageProps, 'name'>>(props => {
 });
 
 export function Page(props: PageProps) {
-  const { align, centered, children, isLoading, justify, maxWidth, name, textAlign, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { align, centered, children, isLoading, justify, maxWidth, name, textAlign, ...rest } =
+    mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   const textAlignMap: Partial<Record<Property.AlignItems, Alignment>> = {
     start: 'left',
@@ -102,7 +102,7 @@ export function Page(props: PageProps) {
   }
 
   return (
-    <StyledPage data-component-name={name} {...rest}>
+    <StyledPage {...getDataAttributes(name)} {...rest}>
       <Box
         align={shouldCenter ? 'center' : align}
         direction="column"

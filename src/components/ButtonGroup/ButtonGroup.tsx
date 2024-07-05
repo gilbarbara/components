@@ -1,7 +1,10 @@
 import { Children, cloneElement, ReactElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
@@ -64,7 +67,9 @@ export const StyledButtonGroup = styled(
 );
 
 export function ButtonGroup(props: ButtonGroupProps) {
-  const { bg, children, color, disabled, size, ...rest } = { ...defaultProps, ...props };
+  const { bg, children, color, disabled, size, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
   const buttonProps = {
     bg,
     color,
@@ -73,7 +78,7 @@ export function ButtonGroup(props: ButtonGroupProps) {
   };
 
   return (
-    <StyledButtonGroup data-component-name="ButtonGroup" {...rest}>
+    <StyledButtonGroup {...getDataAttributes('ButtonGroup')} {...rest}>
       {Children.map(children, child => cloneElement(child as ReactElement, { ...buttonProps }))}
     </StyledButtonGroup>
   );

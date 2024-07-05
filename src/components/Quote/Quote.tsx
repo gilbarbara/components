@@ -1,8 +1,10 @@
 import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { SetRequired, Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -161,13 +163,14 @@ const StyledAttribution = styled(
 });
 
 export const Quote = forwardRef<HTMLElement, QuoteProps>((props, ref) => {
-  const { attribution, attributionGap, attributionSize, children, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { attribution, attributionGap, attributionSize, children, ...rest } = mergeProps(
+    defaultProps,
+    props,
+  );
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledFigure ref={ref} data-component-name="Quote" {...rest}>
+    <StyledFigure ref={ref} {...getDataAttributes('Quote')} {...rest}>
       <StyledQuote {...rest}>{children}</StyledQuote>
       {attribution && (
         <StyledAttribution gap={attributionGap} size={attributionSize} theme={props.theme}>

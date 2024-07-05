@@ -1,8 +1,10 @@
 import { CSSProperties, forwardRef, isValidElement, MouseEvent, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { omit } from '@gilbarbara/helpers';
+import { mergeProps, omit } from '@gilbarbara/helpers';
 import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
@@ -101,10 +103,9 @@ export const StyledChip = styled(
 });
 
 export const Chip = forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
-  const { children, endContent, endContentOnClick, startContent, startContentOnClick, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { children, endContent, endContentOnClick, startContent, startContentOnClick, ...rest } =
+    mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   const content: PlainObject<ReactNode> = {
     startContent,
@@ -124,7 +125,7 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
   }
 
   return (
-    <StyledChip ref={ref} data-component-name="Chip" {...rest}>
+    <StyledChip ref={ref} {...getDataAttributes('Chip')} {...rest}>
       {isValidElement(content.startContent) ? (
         content.startContent
       ) : (

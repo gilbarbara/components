@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
@@ -48,6 +50,8 @@ const StyledPaginationButton = styled(
 
 export default function PaginationButton(props: PaginationButtonProps) {
   const { accent, children, currentPage, disabled, onClick, page, type } = props;
+  const { getDataAttributes } = useTheme();
+
   const current = page === currentPage && children === page;
 
   const handleClick = () => {
@@ -58,7 +62,7 @@ export default function PaginationButton(props: PaginationButtonProps) {
     <StyledPaginationButton
       accent={accent}
       current={current}
-      data-component-name="PaginationButton"
+      {...getDataAttributes('PaginationButton')}
       data-current={current}
       data-page={page}
       data-type={type}

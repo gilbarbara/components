@@ -144,7 +144,7 @@ const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
   };
 
   return (
-    <Spacer ref={ref} data-component-name="UserHeader" mb="lg">
+    <Spacer ref={ref} data-testid="UserHeader" mb="lg">
       <ComponentWrapper data-flex="1" prefix={<Icon name="search" size={24} />}>
         <Input
           accent={accent}
@@ -287,7 +287,7 @@ function DataTableWrapper(props: DataTableProps) {
         status={status}
         team={team}
       />
-      <Box data-component-name="DataTableWrapper">
+      <Box data-testid="DataTableWrapper">
         <DataTable<WrapperColumns>
           {...props}
           columns={columns}

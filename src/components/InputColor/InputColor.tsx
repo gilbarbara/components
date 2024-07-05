@@ -11,6 +11,8 @@ import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getDisableStyles, getStyledOptions, isDarkMode } from '~/modules/system';
@@ -80,7 +82,7 @@ const StyledInputColor = styled(
   >
 >(props => {
   const { accent, borderless, disabled, isFilled, width } = props;
-  const { grayScale, radius, white, ...theme } = getTheme(props);
+  const { dataAttributeName, grayScale, radius, white, ...theme } = getTheme(props);
   const darkMode = isDarkMode(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
@@ -114,7 +116,7 @@ const StyledInputColor = styled(
       color: ${grayScale['500']};
     `};
 
-    [data-component-name='Text'] {
+    [data-${dataAttributeName}='Text'] {
       min-width: 75px;
     }
   `;
@@ -173,6 +175,8 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
   } = mergeProps(defaultProps, props);
   const [value, setValue] = useState<string>(initialValue ?? '');
   const debounceTimeout = useRef<number>(0);
+  const { getDataAttributes } = useTheme();
+
   const isDisabled = disabled || readOnly;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -209,13 +213,13 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
     <StyledInputColor
       accent={accent}
       borderless={borderless}
-      data-component-name="InputColor"
+      {...getDataAttributes('InputColor')}
       disabled={isDisabled}
       height={height}
       isFilled={!!value}
       width={width}
     >
-      <StyledLabel data-component-name="InputColorLabel" height={height}>
+      <StyledLabel {...getDataAttributes('InputColorLabel')} height={height}>
         <input
           ref={ref}
           disabled={isDisabled}

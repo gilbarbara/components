@@ -13,6 +13,8 @@ import { RequireAtLeastOne, Simplify, StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { horizontalScale } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -187,6 +189,8 @@ export function ProgressBar(props: ProgressBarProps) {
     ...rest
   } = mergeProps(defaultProps, props);
   const labelId = useId();
+  const { getDataAttributes } = useTheme();
+
   const percentage = is.number(value)
     ? round((value - minValue) / (maxValue - minValue))
     : undefined;
@@ -216,7 +220,7 @@ export function ProgressBar(props: ProgressBarProps) {
   if (content.label || content.value) {
     content.header = (
       <Box
-        data-component-name="ProgressBarHeader"
+        {...getDataAttributes('ProgressBarHeader')}
         flexBox
         justify={headerJustify}
         mb={headerPosition === 'top' ? 'xs' : 0}
@@ -237,7 +241,7 @@ export function ProgressBar(props: ProgressBarProps) {
       aria-valuenow={value}
       aria-valuetext={formattedValue}
       data-busy={busy}
-      data-component-name="ProgressBar"
+      {...getDataAttributes('ProgressBar')}
       headerPosition={headerPosition}
       role="progressbar"
     >

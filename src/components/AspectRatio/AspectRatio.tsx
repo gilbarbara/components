@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { px, round } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
 import { StyledProps, WithChildren, WithHTMLAttributes, WithMargin } from '~/types';
@@ -59,9 +61,10 @@ export const StyledAspectRatio = styled(
 
 export const AspectRatio = forwardRef<HTMLDivElement, AspectRatioProps>((props, ref) => {
   const { children, ...rest } = props;
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledAspectRatio ref={ref} data-component-name="AspectRatio" {...rest}>
+    <StyledAspectRatio ref={ref} {...getDataAttributes('AspectRatio')} {...rest}>
       {children}
     </StyledAspectRatio>
   );

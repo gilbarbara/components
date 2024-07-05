@@ -55,6 +55,9 @@ export * from './components/Toggle';
 export * from './components/Tooltip';
 export * from './components/Truncate';
 
+// Hooks
+export { useTheme } from './hooks/useTheme';
+
 // Modules
 export {
   animateIcon,

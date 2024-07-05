@@ -1,7 +1,10 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { textDefaultOptions } from '~/modules/options';
 import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules/system';
@@ -36,8 +39,11 @@ export const StyledText = styled(
   `;
 });
 
-export const Text = forwardRef<HTMLSpanElement, TextProps>((props, ref) => (
-  <StyledText ref={ref} data-component-name="Text" {...textDefaultOptions} {...props} />
-));
+export const Text = forwardRef<HTMLSpanElement, TextProps>((props, ref) => {
+  const mergedProps = mergeProps(textDefaultOptions, props);
+  const { getDataAttributes } = useTheme();
+
+  return <StyledText ref={ref} {...getDataAttributes('Text')} {...mergedProps} />;
+});
 
 Text.displayName = 'Text';

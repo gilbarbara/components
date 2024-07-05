@@ -6,6 +6,8 @@ import { usePrevious } from '@gilbarbara/hooks';
 import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, marginStyles } from '~/modules/system';
 
@@ -142,6 +144,7 @@ export function Collapse(props: CollapseProps) {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const previousIsOpen = usePrevious(isOpen);
+  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     if (isControlled) {
@@ -165,19 +168,19 @@ export function Collapse(props: CollapseProps) {
 
   return (
     <StyledCollapse
-      data-component-name="Collapse"
+      {...getDataAttributes('Collapse')}
       data-state={isOpen ? 'open' : 'closed'}
       {...rest}
     >
       {Boolean(title) && (
-        <Header data-component-name="CollapseHeader" onClick={handleClickToggle}>
+        <Header {...getDataAttributes('CollapseHeader')} onClick={handleClickToggle}>
           {isValidElement(title) ? title : <Paragraph>{title}</Paragraph>}
           {!hideToggle && isOpen ? <Icon name="chevron-up" /> : <Icon name="chevron-down" />}
         </Header>
       )}
       <Content
         ref={contentRef}
-        data-component-name="CollapseContent"
+        {...getDataAttributes('CollapseContent')}
         hasTitle={Boolean(title)}
         isOpen={isOpen}
         onAnimationEnd={handleAnimationEnd}

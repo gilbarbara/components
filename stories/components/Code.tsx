@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { mergeTheme } from '~';
+import { useTheme } from '~';
 
 import { getColorTokens } from '~/modules/colors';
 
@@ -13,7 +13,9 @@ interface Props {
 }
 
 export default function Code({ bg, children, color }: Props) {
-  const { darkMode, fontMonospace, grayScale, ...theme } = mergeTheme();
+  const {
+    theme: { darkMode, fontMonospace, grayScale, ...theme },
+  } = useTheme();
 
   const { mainColor, textColor } = getColorTokens(
     bg ?? (darkMode ? grayScale['800'] : grayScale['100']),

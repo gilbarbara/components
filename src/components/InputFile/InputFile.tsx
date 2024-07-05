@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify, StringOrNull } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
@@ -41,7 +43,7 @@ export const StyledFileInput = styled(
   getStyledOptions(),
 )<Partial<InputFileProps>>(props => {
   const { width } = props;
-  const { spacing } = getTheme(props);
+  const { dataAttributeName, spacing } = getTheme(props);
 
   return css`
     ${baseStyles(props)};
@@ -49,7 +51,7 @@ export const StyledFileInput = styled(
     display: flex;
     width: ${px(width)};
 
-    [data-component-name='Truncate'] {
+    [data-${dataAttributeName}='Truncate'] {
       flex: 1;
       margin-left: ${spacing.xs};
 
@@ -79,6 +81,8 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
   const { accent, disabled, height, name, onChange, placeholder, readOnly, solid, value, ...rest } =
     mergeProps(defaultProps, props);
   const [localValue, setLocalValue] = useState<StringOrNull>(null);
+  const { getDataAttributes } = useTheme();
+
   const isDisabled = disabled || readOnly;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +94,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
   };
 
   return (
-    <StyledFileInput data-component-name="InputFile" {...rest}>
+    <StyledFileInput {...getDataAttributes('InputFile')} {...rest}>
       <BoxInline position="relative">
         <Button
           bg={accent}

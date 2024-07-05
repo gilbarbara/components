@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import {
@@ -74,7 +76,7 @@ function getColor(type: AlertProps['type'], light?: boolean) {
   return colors[type];
 }
 
-function getIconOptions(props: AlertProps) {
+function getIconOptions(props: Pick<AlertProps, 'light' | 'type'>) {
   const { light, type } = props;
   const color = light
     ? getColor(type, false)
@@ -146,16 +148,15 @@ export const StyledAlert = styled(
 });
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
-  const { children, direction, hideIcon, icon, iconSize, light, type, ...rest } = mergeProps(
-    defaultProps,
-    props,
-  );
-  const selected = getIconOptions(mergeProps(defaultProps, props));
+  const mergedProps = mergeProps(defaultProps, props);
+  const { children, direction, hideIcon, icon, iconSize, light, type, ...rest } = mergedProps;
+  const { getDataAttributes } = useTheme();
+  const selected = getIconOptions(mergedProps);
 
   return (
     <StyledAlert
       ref={ref}
-      data-component-name="Alert"
+      {...getDataAttributes('Alert')}
       direction={direction}
       light={light}
       role="alert"

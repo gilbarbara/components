@@ -1,5 +1,7 @@
 import { memo } from 'react';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { Box, BoxCenter } from '~/components/Box';
 import { getBorder, getRowContent, getRowKey } from '~/components/DataTable/utils';
 import { Loader } from '~/components/Loader';
@@ -20,11 +22,13 @@ function DataTableBody(props: DataTableBodyProps) {
     loading,
     sortColumn,
   } = props;
+  const { getDataAttributes } = useTheme();
+
   const isInitialLoad = loading && !data.length;
 
   return (
     <Box
-      data-component-name="DataTableBody"
+      {...getDataAttributes('DataTableBody')}
       minHeight={55}
       mt={!clean ? 'sm' : undefined}
       pb={!clean ? 'sm' : undefined}
@@ -35,7 +39,7 @@ function DataTableBody(props: DataTableBodyProps) {
           key={getRowKey(item, index)}
           bg={darkMode ? 'gray.900' : 'white'}
           border={isResponsive ? getBorder(darkMode) : undefined}
-          data-component-name="DataTableBodyRow"
+          {...getDataAttributes('DataTableBodyRow')}
           display="flex"
           mt={!clean && index > 0 ? 'sm' : undefined}
           radius={clean ? undefined : 'xs'}
@@ -54,7 +58,7 @@ function DataTableBody(props: DataTableBodyProps) {
                   key={key}
                   align="flex-start"
                   border={clean && !isResponsive ? getBorder(darkMode) : undefined}
-                  data-component-name="DataTableBodyColumn"
+                  {...getDataAttributes('DataTableBodyColumn')}
                   direction="column"
                   display="flex"
                   flex="grow"

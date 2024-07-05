@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 import { easing } from '~/modules/theme';
@@ -116,11 +118,12 @@ const StyledMenuItems = styled(
 
 export function MenuItems(props: MenuItemsProps) {
   const { active, children, id, minWidth, position } = props;
+  const { getDataAttributes } = useTheme();
 
   return (
     <StyledMenuItems
       active={active}
-      data-component-name="MenuItems"
+      {...getDataAttributes('MenuItems')}
       data-state={active ? 'open' : 'closed'}
       minWidth={minWidth}
       position={position}

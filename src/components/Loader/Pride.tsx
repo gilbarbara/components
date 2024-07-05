@@ -2,6 +2,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { rotate } from '~/modules/animations';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
@@ -33,9 +35,10 @@ const StyledLoaderPride = styled(
 
 export default function LoaderPride(props: LoaderPrideProps) {
   const { size } = props;
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledLoaderPride data-component-name="LoaderPride" {...props}>
+    <StyledLoaderPride {...getDataAttributes('LoaderPride')} {...props}>
       <svg
         height={size}
         version="1.1"

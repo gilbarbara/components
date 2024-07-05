@@ -55,17 +55,17 @@ function Component(props: Props) {
       <h2>Title</h2>
       <p>My awesome content</p>
       <footer>
-        <button data-component-name="skip" type="button">
+        <button data-testid="skip" type="button">
           SKIP
         </button>
-        <button data-component-name="back" type="button">
+        <button data-testid="back" type="button">
           BACK
         </button>
-        <button data-component-name="primary" type="button">
+        <button data-testid="primary" type="button">
           GO
         </button>
       </footer>
-      <a data-component-name="close" href="#close">
+      <a data-testid="close" href="#close">
         X
       </a>
     </div>
@@ -178,7 +178,7 @@ describe('modules/keyboardScope', () => {
         <Component
           arrowNavigation="horizontal"
           escCallback={mockEscCallback}
-          initialFocusedElement="[data-component-name='primary']"
+          initialFocusedElement="[data-testid='primary']"
         />,
       ));
       scopeInstance.addScope();

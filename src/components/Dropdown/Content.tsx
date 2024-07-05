@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
@@ -78,6 +80,7 @@ function DropdownContent(props: ComponentProps) {
     props: { multi, placeholder },
     state: { values },
   } = props;
+  const { getDataAttributes } = useTheme();
 
   const handleClickRemove = (value: Option) => {
     return (event: MouseEvent) => {
@@ -97,17 +100,17 @@ function DropdownContent(props: ComponentProps) {
             <Item
               key={value}
               color={getStyles().color}
-              data-component-name="ContentItem"
+              {...getDataAttributes('ContentItem')}
               multi={multi}
             >
               {!!prefix && (
-                <BoxInline data-component-name="ContentItemPrefix" mr="xxs">
+                <BoxInline {...getDataAttributes('ContentItemPrefix')} mr="xxs">
                   {prefix}
                 </BoxInline>
               )}
               <span>{label ?? value}</span>
               {!!suffix && (
-                <BoxInline data-component-name="ContentItemSuffix" ml="xxs">
+                <BoxInline {...getDataAttributes('ContentItemSuffix')} ml="xxs">
                   {suffix}
                 </BoxInline>
               )}

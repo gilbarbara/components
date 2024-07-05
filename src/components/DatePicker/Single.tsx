@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { DayPicker, DayPickerSingleProps, SelectSingleEventHandler } from 'react-day-picker';
 import styled from '@emotion/styled';
-import { omit } from '@gilbarbara/helpers';
+import { mergeProps, omit } from '@gilbarbara/helpers';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getStyledOptions } from '~/modules/system';
 
@@ -21,13 +23,12 @@ export const singleDefaultProps = {
 } satisfies DatePickerSingleProps;
 
 export function DatePicker(props: DatePickerSingleProps) {
-  const { currentMonthLabel, fromDate, month, onChange, readOnly, selected, toDate, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { currentMonthLabel, fromDate, month, onChange, readOnly, selected, toDate, ...rest } =
+    mergeProps(defaultProps, props);
   const [selectedDate, setSelectedDate] = useState<string | undefined>(selected);
   const selectedDateObject = selectedDate ? new Date(selectedDate) : undefined;
   const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(month ?? selectedDateObject);
+  const { getDataAttributes } = useTheme();
 
   const handleSelect: SelectSingleEventHandler = (_day, selectedDay, modifiers) => {
     if (modifiers.disabled || modifiers.outside) {
@@ -47,7 +48,7 @@ export function DatePicker(props: DatePickerSingleProps) {
 
   return (
     <StyledDatePicker
-      data-component-name="DatePicker"
+      {...getDataAttributes('DatePicker')}
       {...omit(props, 'hidden', 'onDayClick', 'onChange')}
     >
       <DayPicker

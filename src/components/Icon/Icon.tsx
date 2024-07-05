@@ -3,8 +3,10 @@ import SVG from 'react-inlinesvg';
 import innerText from 'react-innertext';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { RequireExactlyOne, SetRequired, Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { rotate } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
@@ -114,7 +116,8 @@ export const StyledIcon = styled(
 });
 
 export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
-  const { name, size = 16, title, url, ...rest } = { ...defaultProps, ...props };
+  const { name, size = 16, title, url, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   const iconURL = useMemo(() => {
     if (name) {
@@ -143,7 +146,7 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
   }
 
   return (
-    <StyledIcon ref={ref} data-component-name="Icon" name={name} size={size} {...rest}>
+    <StyledIcon ref={ref} {...getDataAttributes('Icon')} name={name} size={size} {...rest}>
       <SVG height={size} src={iconURL} title={titleSVG} width={size} />
     </StyledIcon>
   );

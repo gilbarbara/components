@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
 
@@ -66,6 +68,7 @@ const Empty = styled(
 const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) => {
   const { accent, active, cursor, height, isBusy, items, noResultsLabel, onSelect } = props;
   const isActive = useRef(false);
+  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     isActive.current = true;
@@ -96,7 +99,7 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
     <StyledSearchItems
       ref={ref}
       active={active}
-      data-component-name="SearchItems"
+      {...getDataAttributes('SearchItems')}
       height={height}
       role="list"
     >

@@ -46,6 +46,4 @@ export type VariantWithTones = LiteralUnion<
   string
 >;
 
-export interface Theme extends BaseTheme {
-  darkMode?: boolean;
-}
+export interface Theme extends BaseTheme {}

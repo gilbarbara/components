@@ -1,8 +1,11 @@
 import { CSSProperties, forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { PlainObject, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -69,7 +72,7 @@ export const StyledFormGroup = styled(
   'div',
   getStyledOptions(),
 )<Partial<FormGroupProps>>(props => {
-  const { spacing } = getTheme(props);
+  const { dataAttributeName, spacing } = getTheme(props);
 
   return css`
     ${baseStyles(props)};
@@ -81,21 +84,21 @@ export const StyledFormGroup = styled(
     ${paddingStyles(props)};
     ${radiusStyles(props)};
 
-    [data-component-name='FormGroupContent'] {
+    [data-${dataAttributeName}='FormGroupContent'] {
       > * {
         margin-bottom: 0;
         margin-top: 0;
       }
 
-      [data-component-name='Label'] {
+      [data-${dataAttributeName}='Label'] {
         margin-right: ${spacing.xs};
       }
 
-      [data-component-name='FormGroupContent'] {
+      [data-${dataAttributeName}='FormGroupContent'] {
         flex: 1;
       }
 
-      [data-component-name='AssistiveContent'] {
+      [data-${dataAttributeName}='AssistiveContent'] {
         margin-left: ${spacing.xs};
 
         &:empty {
@@ -149,7 +152,9 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     skipIcon,
     valid,
     ...rest
-  } = { ...defaultProps, ...props };
+  } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
   const content: PlainObject<ReactNode> = {
     assistiveText,
   };
@@ -192,7 +197,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
       {content.label}
       {content.children}
       {!hideAssistiveText && (
-        <AssistiveContent data-component-name="AssistiveContent">
+        <AssistiveContent {...getDataAttributes('AssistiveContent')}>
           {content.assistiveText}
         </AssistiveContent>
       )}
@@ -201,14 +206,14 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
 
   if (inline) {
     content.main = (
-      <Box data-component-name="FormGroupContent" display="flex">
+      <Box {...getDataAttributes('FormGroupContent')} display="flex">
         {content.main}
       </Box>
     );
   }
 
   return (
-    <StyledFormGroup ref={ref} data-component-name="FormGroup" inline={inline} {...rest}>
+    <StyledFormGroup ref={ref} {...getDataAttributes('FormGroup')} inline={inline} {...rest}>
       {content.main}
     </StyledFormGroup>
   );

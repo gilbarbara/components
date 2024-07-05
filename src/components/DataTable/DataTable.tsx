@@ -1,6 +1,8 @@
 import { MouseEvent, useCallback, useMemo, useRef } from 'react';
-import { useTheme } from '@emotion/react';
+import { mergeProps } from '@gilbarbara/helpers';
 import { useMount, useSetState, useUpdateEffect } from '@gilbarbara/hooks';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { scrollTo } from '~/modules/animations';
 
@@ -62,8 +64,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     stickyHeader,
     width,
     ...rest
-  } = { ...defaultProps, ...props };
-  const { darkMode = false } = useTheme();
+  } = mergeProps(defaultProps, props);
   const element = useRef<HTMLDivElement>(null);
   const resizeTimeout = useRef<number | null>(null);
 
@@ -73,6 +74,10 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     sortBy: defaultSortColumn ?? null,
     sortDirection: defaultSortDirection,
   });
+  const {
+    getDataAttributes,
+    theme: { darkMode },
+  } = useTheme();
 
   useUpdateEffect(() => {
     const minLength = currentPage * maxRows - maxRows;
@@ -203,7 +208,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
   return (
     <Box
       ref={element}
-      data-component-name="DataTable"
+      {...getDataAttributes('DataTable')}
       maxWidth="100%"
       radius={!clean ? radius : undefined}
       width={width}

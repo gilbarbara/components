@@ -1,8 +1,10 @@
 import { CSSProperties, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { getInitials } from '@gilbarbara/helpers';
+import { getInitials, mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import { colorStyles, getStyledOptions } from '~/modules/system';
@@ -49,15 +51,15 @@ const Circle = styled(
 });
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
-  const { image, name, size, ...rest } = { ...defaultProps, ...props };
+  const { image, name, size, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes, theme } = useTheme();
 
-  const { avatar } = getTheme(props);
-  const selectedSize = avatar[size];
+  const selectedSize = theme.avatar[size];
 
   return (
     <BoxCenter
       ref={ref}
-      data-component-name="Avatar"
+      {...getDataAttributes('Avatar')}
       flex={{ shrink: 0 }}
       height={selectedSize.size}
       overflow="hidden"

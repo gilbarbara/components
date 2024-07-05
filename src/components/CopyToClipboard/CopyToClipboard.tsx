@@ -1,10 +1,12 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { animateIcon, fadeInOut } from '~/modules/animations';
-import { getTheme } from '~/modules/helpers';
 import { baseStyles, colorStyles, getStyledOptions, marginStyles } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
@@ -65,13 +67,11 @@ const StyledIcon = styled(Icon)`
 `;
 
 export function CopyToClipboard(props: CopyToClipboardProps) {
-  const { disableAnimation, icon, onCopy, size, text, tooltipCopiedText, tooltipText, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { disableAnimation, icon, onCopy, size, text, tooltipCopiedText, tooltipText, ...rest } =
+    mergeProps(defaultProps, props);
   const [content, setContent] = useState(tooltipText);
   const isActive = useRef(false);
-  const theme = getTheme({ theme: useTheme() });
+  const { getDataAttributes, theme } = useTheme();
 
   useEffect(() => {
     isActive.current = true;
@@ -105,7 +105,11 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
   };
 
   return (
-    <StyledCopyToClipboard data-component-name="CopyToClipboard" onClick={handleClick} {...rest}>
+    <StyledCopyToClipboard
+      {...getDataAttributes('CopyToClipboard')}
+      onClick={handleClick}
+      {...rest}
+    >
       <Tooltip content={content} placement="right-middle" size="xs">
         <StyledIcon name={icon} size={size} title={null} />
       </Tooltip>

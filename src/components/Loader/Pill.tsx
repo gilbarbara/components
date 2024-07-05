@@ -4,6 +4,8 @@ import { px } from '@gilbarbara/helpers';
 import is from 'is-lite';
 import { rgba } from 'polished';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
@@ -80,10 +82,12 @@ export const StyledLoaderPill = styled(
 
 export default function LoaderPill(props: LoaderComponentProps<LoaderSize>) {
   const { size } = props;
+  const { getDataAttributes } = useTheme();
+
   const [width, height] = is.array(size) ? size : [size, size];
 
   return (
-    <StyledLoaderPill data-component-name="LoaderPill" height={height} width={width} {...props}>
+    <StyledLoaderPill {...getDataAttributes('LoaderPill')} height={height} width={width} {...props}>
       <div />
       <div />
       <div />

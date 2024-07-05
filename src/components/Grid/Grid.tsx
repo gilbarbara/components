@@ -1,9 +1,11 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties, StandardShorthandProperties } from 'csstype';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import {
   baseStyles,
@@ -131,8 +133,11 @@ export const StyledGrid = styled(
   `;
 });
 
-export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => (
-  <StyledGrid ref={ref} data-component-name="Grid" {...defaultProps} {...props} />
-));
+export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
+  const mergedProps = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
+  return <StyledGrid ref={ref} {...getDataAttributes('Grid')} {...mergedProps} />;
+});
 
 Grid.displayName = 'Grid';
