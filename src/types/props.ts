@@ -59,7 +59,7 @@ export type { SpacerProps } from '../components/Spacer/Spacer';
 export type { StatusIndicatorProps } from '../components/StatusIndicator/StatusIndicator';
 export type { TabProps } from '../components/Tabs/Tab';
 export type { TabsProps } from '../components/Tabs/Tabs';
-export type { TagProps } from '../components/Tag/Tag';
+export type { ChipProps } from '~/components/Chip/Chip';
 export type { TextProps } from '../components/Text/Text';
 export type { TextareaProps } from '../components/Textarea/Textarea';
 export type { ToggleProps } from '../components/Toggle/Toggle';

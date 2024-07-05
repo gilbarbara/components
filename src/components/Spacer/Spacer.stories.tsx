@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, Button, H2, Icon, Input, Tag } from '~';
+import { Box, Button, Chip, H2, Icon, Input } from '~';
 
 import {
   disableControl,
@@ -70,7 +70,7 @@ export const WithGapVertical: Story = {
     <Box width={480}>
       <Spacer {...props}>
         {['react', 'react-component', 'react-mixin', 'joyride', 'walkthroughs', 'tour'].map(tag => (
-          <Tag key={tag}>{tag}</Tag>
+          <Chip key={tag}>{tag}</Chip>
         ))}
       </Spacer>
     </Box>
