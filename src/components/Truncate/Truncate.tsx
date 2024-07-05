@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getStyledOptions } from '~/modules/system';
 
@@ -45,10 +47,11 @@ const StyledTruncate = styled(
 });
 
 export function Truncate(props: TruncateProps) {
-  const { children, ...rest } = { ...defaultProps, ...props };
+  const { children, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledTruncate data-component-name="Truncate" {...rest}>
+    <StyledTruncate {...getDataAttributes('Truncate')} {...rest}>
       {children}
     </StyledTruncate>
   );

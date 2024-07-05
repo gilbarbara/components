@@ -10,8 +10,10 @@ import {
 } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { useMount, useSetState } from '@gilbarbara/hooks';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import KeyboardScope from '~/modules/keyboardScope';
 import { getStyledOptions, marginStyles } from '~/modules/system';
@@ -75,8 +77,7 @@ function SearchComponent(props: SearchProps) {
     remote,
     showListOnFocus,
     ...rest
-  } = { ...defaultProps, ...props };
-
+  } = mergeProps(defaultProps, props);
   const [{ active, currentItems, cursor, focus, typing, value }, setState] = useSetState({
     active: false,
     currentItems: remote ? [] : items,
@@ -90,13 +91,17 @@ function SearchComponent(props: SearchProps) {
   const isMounted = useRef(false);
   const scopeManager = useRef<KeyboardScope>();
   const timeout = useRef(0);
+  const {
+    getDataAttributes,
+    theme: { dataAttributeName },
+  } = useTheme();
 
   useMount(() => {
     if (!disableKeyboardNavigation) {
       scopeManager.current = new KeyboardScope(mainRef.current, {
         arrowNavigation: 'both',
         escCallback: handleToggleList(false),
-        selector: '[data-component-name="SearchItem"]',
+        selector: `[data-${dataAttributeName}="SearchItem"]`,
       });
     }
   });
@@ -256,7 +261,7 @@ function SearchComponent(props: SearchProps) {
   const isBusy = typing || loading;
 
   return (
-    <StyledSearch ref={mainRef} data-component-name="Search" {...rest}>
+    <StyledSearch ref={mainRef} {...getDataAttributes('Search')} {...rest}>
       <ClickOutside active={active} onClick={close}>
         <ComponentWrapper
           prefix={
@@ -271,7 +276,7 @@ function SearchComponent(props: SearchProps) {
             accent={accent}
             autoComplete="off"
             borderless={borderless}
-            data-component-name="SearchInput"
+            {...getDataAttributes('SearchInput')}
             disabled={disabled}
             name="search"
             onBlur={handleBlur}

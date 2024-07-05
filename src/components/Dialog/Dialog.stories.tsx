@@ -46,7 +46,7 @@ export const Basic: Story = {
 
     return (
       <div className="flex-center">
-        <Button data-component-name="OpenDialog" onClick={handleClicks}>
+        <Button data-testid="OpenDialog" onClick={handleClicks}>
           Open Dialog
         </Button>
 

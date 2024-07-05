@@ -2,6 +2,8 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
@@ -62,8 +64,10 @@ const StyledLoaderPulse = styled(
 });
 
 export default function LoaderPulse(props: LoaderComponentProps) {
+  const { getDataAttributes } = useTheme();
+
   return (
-    <StyledLoaderPulse data-component-name="LoaderPulse" {...props}>
+    <StyledLoaderPulse {...getDataAttributes('LoaderPulse')} {...props}>
       <div />
       <div />
     </StyledLoaderPulse>

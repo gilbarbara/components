@@ -5,6 +5,8 @@ import { mergeProps } from '@gilbarbara/helpers';
 import { StandardLonghandProperties } from 'csstype';
 import is from 'is-lite';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 
 import { Box } from '~/components/Box';
@@ -77,6 +79,7 @@ export function Loader(props: LoaderProps) {
     defaultProps,
     props,
   );
+  const { getDataAttributes } = useTheme();
   const labelId = useId();
 
   const componentSize = is.array(size) ? size[0] : size;
@@ -145,7 +148,7 @@ export function Loader(props: LoaderProps) {
       aria-label={!label ? 'Loading...' : undefined}
       aria-labelledby={label ? labelId : undefined}
       aria-live="polite"
-      data-component-name="Loader"
+      {...getDataAttributes('Loader')}
       direction={direction}
       flexBox
       justify="center"

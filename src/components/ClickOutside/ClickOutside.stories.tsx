@@ -44,7 +44,7 @@ function Render(props: ClickOutsideProps) {
           Culpa incididunt cillum aliquip dolore
         </Paragraph>
         {isActive && (
-          <Box data-component-name="Content" mt="md">
+          <Box data-testid="Content" mt="md">
             <Paragraph>
               Culpa exercitation magna cupidatat veniam irure sit mollit et est aliquip nulla
               officia. Exercitation sint ea mollit esse proident eu sint qui duis et officia commodo

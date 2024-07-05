@@ -1,7 +1,9 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { omit } from '@gilbarbara/helpers';
+import { mergeProps, omit } from '@gilbarbara/helpers';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { recursiveChildrenEnhancer } from '~/modules/helpers';
 import {
@@ -58,10 +60,11 @@ export const StyledList = styled(
 });
 
 export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
-  const { children, ...rest } = { ...defaultProps, ...props };
+  const { children, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledList ref={ref} data-component-name="List" {...rest}>
+    <StyledList ref={ref} {...getDataAttributes('List')} {...rest}>
       {recursiveChildrenEnhancer(children, omit(rest, 'radius', 'shadow'), {
         componentType: ListItem,
         overrideProps: false,

@@ -1,7 +1,10 @@
 import { MouseEventHandler, useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { SetRequired, Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -65,7 +68,7 @@ export const StyledButtonSplit = styled(
   getStyledOptions(),
 )<SetRequired<Omit<ButtonSplitProps, 'label' | 'onClick'>, keyof typeof defaultProps>>(props => {
   const { block, bordered, disabled, size } = props;
-  const { button, grayScale, spacing } = getTheme(props);
+  const { button, dataAttributeName, grayScale, spacing } = getTheme(props);
   const darkMode = isDarkMode(props);
 
   const { borderRadius, height, padding } = button[size];
@@ -92,7 +95,7 @@ export const StyledButtonSplit = styled(
     min-width: ${height};
     width: ${block ? '100%' : 'auto'};
 
-    [data-component-name='ButtonSplitMainButton'] {
+    [data-${dataAttributeName}='ButtonSplitMainButton'] {
       ${styles};
       border-bottom-left-radius: ${borderRadius};
       border-right: 0;
@@ -110,7 +113,7 @@ export const StyledButtonSplit = styled(
       }
     }
 
-    [data-component-name='MenuButton'] {
+    [data-${dataAttributeName}='MenuButton'] {
       ${styles};
       ${disabledStyles};
       align-items: center;
@@ -130,12 +133,13 @@ export const StyledButtonSplit = styled(
 });
 
 export function ButtonSplit(props: ButtonSplitProps) {
-  const { busy, buttonProps, children, label, onClick, onToggle, position, ...rest } = {
-    ...defaultProps,
-    ...props,
-  };
+  const { busy, buttonProps, children, label, onClick, onToggle, position, ...rest } = mergeProps(
+    defaultProps,
+    props,
+  );
   const { bg, disabled, size } = rest;
   const [active, setActive] = useState(false);
+  const { getDataAttributes } = useTheme();
 
   const handleToggle = useCallback(
     (status: boolean) => {
@@ -167,10 +171,15 @@ export function ButtonSplit(props: ButtonSplitProps) {
   }
 
   return (
-    <StyledButtonSplit busy={busy} data-component-name="ButtonSplit" position={position} {...rest}>
+    <StyledButtonSplit
+      busy={busy}
+      {...getDataAttributes('ButtonSplit')}
+      position={position}
+      {...rest}
+    >
       <ButtonUnstyled
         busy={busy}
-        data-component-name="ButtonSplitMainButton"
+        {...getDataAttributes('ButtonSplitMainButton')}
         disabled={disabled}
         onClick={onClick}
         size={size}

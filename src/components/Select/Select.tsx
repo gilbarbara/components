@@ -1,8 +1,11 @@
 import { ChangeEvent, forwardRef, useCallback, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { useMergeRefs, useMount } from '@gilbarbara/hooks';
 import { Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -98,10 +101,11 @@ export const StyledSelect = styled(
 });
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const { name, onChange, ...rest } = { ...defaultProps, ...props };
+  const { name, onChange, ...rest } = mergeProps(defaultProps, props);
+  const [isFilled, setFilled] = useState(!!rest.defaultValue || !!rest.value);
   const localRef = useRef<HTMLSelectElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
-  const [isFilled, setFilled] = useState(!!rest.defaultValue || !!rest.value);
+  const { getDataAttributes } = useTheme();
 
   useMount(() => {
     setFilled(!!localRef.current?.value);
@@ -119,7 +123,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
   return (
     <StyledSelect
       ref={mergedRefs}
-      data-component-name="Select"
+      {...getDataAttributes('Select')}
       filled={isFilled}
       id={name}
       name={name}

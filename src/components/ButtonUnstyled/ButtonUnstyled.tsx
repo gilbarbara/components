@@ -1,7 +1,10 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -115,11 +118,12 @@ export const StyledButtonUnstyled = styled(
 });
 
 export const ButtonUnstyled = forwardRef<HTMLButtonElement, ButtonUnstyledProps>((props, ref) => {
-  const { busy, children, ...rest } = { ...defaultProps, ...props };
+  const { busy, children, ...rest } = mergeProps(defaultProps, props);
   const { fontSize = '16px' } = textStyles(props);
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledButtonUnstyled ref={ref} busy={busy} data-component-name="ButtonUnstyled" {...rest}>
+    <StyledButtonUnstyled ref={ref} busy={busy} {...getDataAttributes('ButtonUnstyled')} {...rest}>
       {children}
       {busy && <Icon ml="xxs" name="spinner" size={parseInt(`${fontSize}`, 10) + 2} spin />}
     </StyledButtonUnstyled>

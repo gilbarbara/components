@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Simplify, ValueOf } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getStyledOptions, layoutStyles } from '~/modules/system';
 
 import { WithChildren, WithLayout } from '~/types';
@@ -40,6 +42,7 @@ function ClickOutsideComponent(props: ClickOutsideProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isReady, setReady] = useState(false);
   const isTouch = useRef(false);
+  const { getDataAttributes } = useTheme();
 
   const handleClick = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -79,7 +82,7 @@ function ClickOutsideComponent(props: ClickOutsideProps) {
   return (
     <StyledClickOutside
       ref={containerRef}
-      data-component-name="ClickOutside"
+      {...getDataAttributes('ClickOutside')}
       data-ready={isReady}
       {...rest}
     >

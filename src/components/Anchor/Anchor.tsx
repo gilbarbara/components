@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { textDefaultOptions } from '~/modules/options';
 import {
   appearanceStyles,
@@ -82,6 +84,8 @@ export const StyledAnchor = styled(
 
 export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
   const { children, external, iconAfter, iconBefore } = props;
+
+  const { getDataAttributes } = useTheme();
   const { fontSize } = textStyles(props);
   let iconSize;
 
@@ -97,7 +101,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =>
   }
 
   return (
-    <StyledAnchor ref={ref} data-component-name="Anchor" {...additionalProps} {...props}>
+    <StyledAnchor ref={ref} {...getDataAttributes('Anchor')} {...additionalProps} {...props}>
       {iconBefore && <Icon mr="xxs" name={iconBefore} size={iconSize} />}
       <span>{children}</span>
       {iconAfter && <Icon ml="xxs" name={iconAfter} size={iconSize} />}

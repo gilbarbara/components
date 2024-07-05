@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
@@ -64,6 +66,7 @@ export const StyledMenuItemContent = styled('span')`
 export function MenuItem(props: MenuItemProps) {
   const { children, disableAutoClose = false, disabled, onToggle, ...rest } = props;
   const { closeMenu, state } = useMenuContext();
+  const { getDataAttributes } = useTheme();
 
   const handleToggle = (event: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>) => {
     if (disabled) {
@@ -100,7 +103,7 @@ export function MenuItem(props: MenuItemProps) {
   return (
     <StyledMenuItem
       accent={state.accent}
-      data-component-name="MenuItem"
+      {...getDataAttributes('MenuItem')}
       disabled={disabled}
       onClick={handleToggle}
       onKeyDown={handleToggle}

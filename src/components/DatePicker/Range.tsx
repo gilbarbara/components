@@ -1,11 +1,11 @@
 import { ReactNode, useState } from 'react';
 import { DayPicker, DayPickerRangeProps, SelectRangeEventHandler } from 'react-day-picker';
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { formatDateLocale, omit } from '@gilbarbara/helpers';
+import { formatDateLocale, mergeProps, omit } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
-import { getTheme } from '~/modules/helpers';
+import { useTheme } from '~/hooks/useTheme';
+
 import { getStyledOptions } from '~/modules/system';
 
 import { BoxCenter } from '~/components/Box';
@@ -44,10 +44,14 @@ export function DatePickerRange(props: DatePickerRangeProps) {
     showApply,
     toDate,
     ...rest
-  } = { ...rangeDefaultProps, ...props };
+  } = mergeProps(rangeDefaultProps, props);
   const [selectedDates, setSelectedDates] = useState<DatePickerRangeParameter | undefined>(
     selected,
   );
+  const {
+    getDataAttributes,
+    theme: { radius, spacing },
+  } = useTheme();
 
   let initialDate: Date | undefined;
   let endDate: Date | undefined;
@@ -58,8 +62,6 @@ export function DatePickerRange(props: DatePickerRangeProps) {
   }
 
   const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(month ?? initialDate);
-
-  const { radius, spacing } = getTheme({ theme: useTheme() });
 
   const handleClickSelect: SelectRangeEventHandler = selectedRange => {
     setSelectedDates([selectedRange?.from?.toISOString(), selectedRange?.to?.toISOString()]);
@@ -143,7 +145,7 @@ export function DatePickerRange(props: DatePickerRangeProps) {
   return (
     <StyledDatePicker
       accent={accent}
-      data-component-name="DatePickerRange"
+      {...getDataAttributes('DatePickerRange')}
       {...omit(props, 'hidden', 'onChange')}
     >
       <BoxCenter mb="md" minHeight={30}>

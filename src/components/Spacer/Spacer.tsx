@@ -1,8 +1,11 @@
 import { Children, forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 import { StandardShorthandProperties } from 'csstype';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -146,21 +149,22 @@ const StyledSpacerItem = styled(
  * You can use a "data-flex" property on the children to grow or shrink to fit the space available.
  */
 export const Spacer = forwardRef<HTMLDivElement, SpacerProps>((props, ref) => {
-  const { children, ...rest } = { ...defaultProps, ...props };
+  const { children, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   const nodes = Children.toArray(children).map((child, index) => {
     const key = `SpacerItem-${index}`;
     const flex = isValidElement(child) ? child.props['data-flex'] : undefined;
 
     return (
-      <StyledSpacerItem key={key} flex={flex} {...rest} data-component-name="SpacerItem">
+      <StyledSpacerItem key={key} flex={flex} {...rest} {...getDataAttributes('SpacerItem')}>
         {child}
       </StyledSpacerItem>
     );
   });
 
   return (
-    <StyledSpacer ref={ref} data-component-name="Spacer" {...rest}>
+    <StyledSpacer ref={ref} {...getDataAttributes('Spacer')} {...rest}>
       {nodes}
     </StyledSpacer>
   );

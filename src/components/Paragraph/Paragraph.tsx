@@ -1,8 +1,10 @@
 import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
@@ -72,10 +74,11 @@ export const StyledParagraph = styled(
 });
 
 export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
-  const { children, id, ...rest } = { ...defaultProps, ...props };
+  const { children, id, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledParagraph ref={ref} data-component-name="Paragraph" {...props}>
+    <StyledParagraph ref={ref} {...getDataAttributes('Paragraph')} {...props}>
       {isValidElement(children) ? children : <Text {...rest}>{children}</Text>}
     </StyledParagraph>
   );

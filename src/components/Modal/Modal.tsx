@@ -1,9 +1,11 @@
 import { CSSProperties, ReactNode, useCallback } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { StandardLonghandProperties } from 'csstype';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import {
@@ -106,9 +108,13 @@ export function Modal(props: ModalProps) {
     title,
     zIndex,
     ...rest
-  } = { ...defaultProps, ...props };
+  } = mergeProps(defaultProps, props);
+  const {
+    getDataAttributes,
+    theme: { black, darkMode, white },
+  } = useTheme();
+
   const { padding } = rest;
-  const { black, darkMode, white } = getTheme({ theme: useTheme() });
 
   const handlePortalClose = useCallback(() => {
     onClose?.();
@@ -139,7 +145,7 @@ export function Modal(props: ModalProps) {
       onOpen={onOpen}
       zIndex={zIndex}
     >
-      <StyledModal data-component-name="Modal" {...rest} style={style}>
+      <StyledModal {...getDataAttributes('Modal')} {...rest} style={style}>
         {header}
         <StyledModalContent maxHeight={maxHeight} padding={padding}>
           {children}

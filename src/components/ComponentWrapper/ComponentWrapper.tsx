@@ -1,9 +1,11 @@
 import { CSSProperties, forwardRef, ReactElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { PlainObject, Simplify, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
@@ -46,7 +48,8 @@ const StyledComponentWrapper = styled(
 });
 
 export const ComponentWrapper = forwardRef<HTMLDivElement, ComponentWrapperProps>((props, ref) => {
-  const { children, prefix, size, suffix, ...rest } = { ...defaultProps, ...props };
+  const { children, prefix, size, suffix, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   const content: PlainObject<ReactNode> = {};
   const height = is.array(size) ? size[1] : size;
@@ -69,7 +72,7 @@ export const ComponentWrapper = forwardRef<HTMLDivElement, ComponentWrapperProps
   }
 
   return (
-    <StyledComponentWrapper ref={ref} data-component-name="ComponentWrapper" {...rest}>
+    <StyledComponentWrapper ref={ref} {...getDataAttributes('ComponentWrapper')} {...rest}>
       {content.prefix}
       {children}
       {content.suffix}

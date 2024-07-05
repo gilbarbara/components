@@ -3,13 +3,6 @@ import { generatePalette } from './palette';
 /**
  * Basics
  */
-export const fontFamily = 'inherit';
-export const fontMonospace = 'Courier, monospace';
-export const fontWeights = {
-  normal: 400,
-  bold: 700,
-};
-
 export const breakpoints = {
   /** @default 320px */
   xxs: '320px',
@@ -29,7 +22,17 @@ export const breakpoints = {
   xxxl: '1680px',
 };
 
+export const dataAttributeName = 'component-name';
+export const darkMode = false;
+
 export const easing = 'cubic-bezier(0.65, 0.815, 0.735, 0.395)';
+
+export const fontFamily = 'inherit';
+export const fontMonospace = 'Courier, monospace';
+export const fontWeights = {
+  normal: 400,
+  bold: 700,
+};
 
 export const opacity = {
   /** @default 0.72 */

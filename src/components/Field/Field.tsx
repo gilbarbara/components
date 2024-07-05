@@ -3,6 +3,8 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useSetState, useUnmount } from '@gilbarbara/hooks';
 import { PlainObject } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { FormGroup } from '~/components/FormGroup';
 
 import FieldCheckbox from './Checkbox';
@@ -62,6 +64,7 @@ export function Field<T extends FieldProps>(props: T) {
     isDirty: false,
   });
   const formContext = useFormContext();
+  const { getDataAttributes } = useTheme();
 
   if (!formContext) {
     throw new Error(
@@ -225,7 +228,7 @@ export function Field<T extends FieldProps>(props: T) {
   }
 
   return (
-    <FormGroup data-component-name="Field" {...groupProps}>
+    <FormGroup {...getDataAttributes('Field')} {...groupProps}>
       {output.content}
       <FieldDebug {...props} />
     </FormGroup>

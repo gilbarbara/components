@@ -1,8 +1,11 @@
 import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
 import { textDefaultOptions } from '~/modules/options';
@@ -52,7 +55,7 @@ export const StyledLabel = styled(
   getStyledOptions(),
 )<LabelProps>(props => {
   const { inline } = props;
-  const { spacing } = getTheme(props);
+  const { dataAttributeName, spacing } = getTheme(props);
 
   return css`
     ${baseStyles(props)};
@@ -67,7 +70,7 @@ export const StyledLabel = styled(
     ${marginStyles(props)};
     ${textStyles(props)};
 
-    [data-component-name='Text'] {
+    [data-${dataAttributeName}='Text'] {
       line-height: 1;
       margin-left: ${spacing.xxs};
     }
@@ -75,7 +78,8 @@ export const StyledLabel = styled(
 });
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
-  const { children, labelId, labelInfo, ...rest } = { ...defaultProps, ...props };
+  const { children, labelId, labelInfo, ...rest } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   let info;
 
@@ -90,7 +94,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
   }
 
   return (
-    <StyledLabel ref={ref} data-component-name="Label" {...rest} htmlFor={labelId}>
+    <StyledLabel ref={ref} {...getDataAttributes('Label')} {...rest} htmlFor={labelId}>
       {children}
       {info}
     </StyledLabel>

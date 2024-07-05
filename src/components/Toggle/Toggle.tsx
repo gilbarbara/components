@@ -19,6 +19,8 @@ import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
 import { VisuallyHidden } from '@react-aria/visually-hidden';
 import is from 'is-lite';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { baseStyles, getOutlineStyles, getStyledOptions, isDarkMode } from '~/modules/system';
@@ -109,7 +111,7 @@ const StyledLabel = styled(
   getStyledOptions(),
 )<Pick<InnerProps, 'accent'>>(props => {
   const { accent = 'primary' } = props;
-  const { radius } = getTheme(props);
+  const { dataAttributeName, radius } = getTheme(props);
 
   return css`
     display: inline-flex;
@@ -117,7 +119,7 @@ const StyledLabel = styled(
     &:focus {
       outline: none;
 
-      [data-component-name='ToggleElement'] {
+      [data-${dataAttributeName}='ToggleElement'] {
         border-radius: ${radius.sm};
         outline: none;
         ${getOutlineStyles(getColorTokens(accent, null, getTheme(props)).mainColor)};
@@ -269,6 +271,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
   const [isChecked, setChecked] = useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
   const labelId = useId();
+  const { getDataAttributes } = useTheme();
 
   useUpdateEffect(() => {
     if (is.boolean(checked) && previousChecked !== checked) {
@@ -339,7 +342,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
       accent={accent}
       as={as}
       data-checked={isChecked}
-      data-component-name="Toggle"
+      {...getDataAttributes('Toggle')}
       data-disabled={disabled}
       onClick={handleClickLabel}
       onKeyDown={handleKeyDown}
@@ -369,7 +372,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
       <StyledToggle
         accent={accent}
         aria-hidden
-        data-component-name="ToggleElement"
+        {...getDataAttributes('ToggleElement')}
         disabled={disabled}
         label={label}
         name={name}
@@ -378,14 +381,14 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         <StyledTrack
           accent={accent}
           colorTrack={colorTrack}
-          data-component-name="ToggleTrack"
+          {...getDataAttributes('ToggleTrack')}
           isChecked={isChecked}
           size={size}
         />
         <StyledButton
           accent={accent}
           colorButton={colorButton}
-          data-component-name="ToggleButton"
+          {...getDataAttributes('ToggleButton')}
           disabled={disabled}
           isChecked={isChecked}
           size={size}
@@ -395,7 +398,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         {!isChecked && iconStart && (
           <StyledTrackIcon
             accent={accent}
-            data-component-name="ToggleTrackIcon"
+            {...getDataAttributes('ToggleTrackIcon')}
             isChecked={isChecked}
             size={size}
           >
@@ -405,7 +408,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         {isChecked && iconEnd && (
           <StyledTrackIcon
             accent={accent}
-            data-component-name="ToggleTrackIcon"
+            {...getDataAttributes('ToggleTrackIcon')}
             isChecked={isChecked}
             size={size}
           >

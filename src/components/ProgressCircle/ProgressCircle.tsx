@@ -7,11 +7,13 @@ import {
   useId,
   useMemo,
 } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, px, round } from '@gilbarbara/helpers';
 import { RequireAtLeastOne, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { rotate } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
@@ -231,8 +233,11 @@ export function ProgressCircle(props: ProgressCircleProps) {
     value,
     ...rest
   } = mergeProps(defaultProps, props);
-  const { grayScale, ...theme } = getTheme({ theme: useTheme() });
   const labelId = useId();
+  const {
+    getDataAttributes,
+    theme: { grayScale, ...theme },
+  } = useTheme();
 
   const darkMode = isDarkMode(props);
 
@@ -288,7 +293,7 @@ export function ProgressCircle(props: ProgressCircleProps) {
       aria-valuenow={value}
       aria-valuetext={formattedValue}
       data-busy={busy}
-      data-component-name="ProgressCircle"
+      {...getDataAttributes('ProgressCircle')}
       labelPosition={labelPosition}
       role="progressbar"
     >

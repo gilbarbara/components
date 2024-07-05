@@ -1,10 +1,12 @@
 import { CSSProperties, isValidElement, ReactNode, useEffect, useMemo, useState } from 'react';
 import innerText from 'react-innertext';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import { mergeProps, omit, px } from '@gilbarbara/helpers';
 import { SetRequired, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { fadeIn } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
@@ -393,6 +395,7 @@ function TooltipBody(
     wrap,
     ...rest
   } = props;
+  const { getDataAttributes } = useTheme();
 
   return (
     <StyledBody
@@ -401,7 +404,7 @@ function TooltipBody(
       arrowMargin={arrowMargin}
       bg={bg}
       color={color}
-      data-component-name="TooltipBody"
+      {...getDataAttributes('TooltipBody')}
       placement={placement}
       radius={radius}
       shadow={shadow}
@@ -413,7 +416,12 @@ function TooltipBody(
       {isValidElement(content) ? (
         content
       ) : (
-        <StyledContent bold={bold} data-component-name="TooltipContent" italic={italic} size={size}>
+        <StyledContent
+          bold={bold}
+          {...getDataAttributes('TooltipContent')}
+          italic={italic}
+          size={size}
+        >
           {content}
         </StyledContent>
       )}
@@ -423,7 +431,7 @@ function TooltipBody(
         arrowMargin={arrowMargin}
         bg={bg}
         color={color}
-        data-component-name="TooltipArrow"
+        {...getDataAttributes('TooltipArrow')}
         placement={placement}
       />
     </StyledBody>
@@ -435,7 +443,7 @@ export function Tooltip(props: TooltipProps) {
   const { ariaLabel, bg, children, color, content, disabled, eventType, open, title, ...rest } =
     mergedProps;
   const [isOpen, setOpen] = useState(open ?? false);
-  const theme = getTheme({ theme: useTheme() });
+  const { getDataAttributes, theme } = useTheme();
 
   const label = useMemo(() => ariaLabel ?? innerText(content), [ariaLabel, content]);
 
@@ -466,7 +474,7 @@ export function Tooltip(props: TooltipProps) {
   return (
     <StyledTooltip
       aria-label={label}
-      data-component-name="Tooltip"
+      {...getDataAttributes('Tooltip')}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

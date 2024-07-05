@@ -1,4 +1,7 @@
 import { forwardRef } from 'react';
+import { mergeProps } from '@gilbarbara/helpers';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import {
   getMarginProps,
@@ -36,16 +39,14 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     size,
     style,
     ...rest
-  } = {
-    ...defaultProps,
-    ...props,
-  };
+  } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   return (
     <StyledLabel
       align={align}
       category="radio"
-      data-component-name="Radio"
+      {...getDataAttributes('Radio')}
       disabled={disabled}
       htmlFor={id}
       {...getMarginProps(props)}
@@ -66,7 +67,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
         accent={accent}
         borderless={borderless}
         category="radio"
-        data-component-name="RadioElement"
+        {...getDataAttributes('RadioElement')}
         label={label}
         onKeyDown={handleKeyDown}
         size={size}

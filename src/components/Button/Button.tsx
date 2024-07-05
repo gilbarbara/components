@@ -1,8 +1,10 @@
 import { ForwardedRef, forwardRef, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -161,12 +163,11 @@ export const StyledButton = styled(
 });
 
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
-  const { busy, children, endContent, iconOnly, size, spinner, spinnerPosition, startContent } = {
-    ...defaultProps,
-    ...props,
-  };
-  const { button } = getTheme(props);
-  const { fontSize } = button[size];
+  const mergedProps = mergeProps(defaultProps, props);
+  const { busy, children, endContent, iconOnly, size, spinner, spinnerPosition, startContent } =
+    mergedProps;
+  const { getDataAttributes, theme } = useTheme();
+  const { fontSize } = theme.button[size];
 
   const content: PlainObject<ReactNode> = {
     children,
@@ -193,9 +194,8 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
   return (
     <StyledButton
       ref={ref as ForwardedRef<HTMLButtonElement>}
-      data-component-name="Button"
-      {...defaultProps}
-      {...props}
+      {...getDataAttributes('Button')}
+      {...mergedProps}
     >
       {content.startContent}
       {spinnerPosition === 'start' && content.spinner}

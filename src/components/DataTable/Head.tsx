@@ -2,6 +2,8 @@ import { memo, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getStyledOptions } from '~/modules/system';
 
 import { Box } from '~/components/Box';
@@ -38,6 +40,7 @@ function DataTableHead(props: DataTableHeadProps) {
     sortDirection,
     stickyHeader,
   } = props;
+  const { getDataAttributes } = useTheme();
 
   if (isResponsive) {
     return null;
@@ -56,7 +59,7 @@ function DataTableHead(props: DataTableHeadProps) {
   }
 
   return (
-    <Box data-component-name="DataTableHead" {...wrapperProps}>
+    <Box {...getDataAttributes('DataTableHead')} {...wrapperProps}>
       {columns.map(({ disableSort, key, max, min, size, title }) => {
         let icon: ReactNode;
 
@@ -77,7 +80,7 @@ function DataTableHead(props: DataTableHeadProps) {
           <Box
             key={key}
             align="center"
-            data-component-name="DataTableHeadColumn"
+            {...getDataAttributes('DataTableHeadColumn')}
             direction="row"
             flex="grow"
             maxWidth={max ?? size}

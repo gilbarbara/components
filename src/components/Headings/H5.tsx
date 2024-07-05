@@ -1,5 +1,8 @@
 import { forwardRef } from 'react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getStyledOptions } from '~/modules/system';
 
@@ -12,8 +15,11 @@ export const StyledH5 = styled(
   return getStyles('h5', props);
 });
 
-export const H5 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => (
-  <StyledH5 ref={ref} data-component-name="H5" {...defaultProps} {...props} />
-));
+export const H5 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
+  const mergedProps = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
+  return <StyledH5 ref={ref} {...getDataAttributes('H5')} {...mergedProps} />;
+});
 
 H5.displayName = 'H5';

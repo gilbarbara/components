@@ -1,8 +1,11 @@
 import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { borderStyles, getStyledOptions, marginStyles, paddingStyles } from '~/modules/system';
 
@@ -71,7 +74,9 @@ export function Pagination(props: PaginationProps) {
     onClick,
     totalPages,
     ...rest
-  } = { ...defaultProps, ...props };
+  } = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
+
   const items: Item[] = [];
 
   if (totalPages <= 1) {
@@ -158,7 +163,7 @@ export function Pagination(props: PaginationProps) {
   }
 
   return (
-    <StyledPagination data-component-name="Pagination" {...rest}>
+    <StyledPagination {...getDataAttributes('Pagination')} {...rest}>
       {items.map((d, index) =>
         is.number(d.page) ? (
           <PaginationButton

@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import ReactDropdown, { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 import { SetRequired } from '@gilbarbara/types';
 import { transparentize } from 'polished';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
@@ -176,13 +178,13 @@ export function Dropdown(props: DropdownProps) {
     showClearButton,
     values = [],
     ...rest
-  } = {
-    ...defaultProps,
-    ...props,
-  };
+  } = mergeProps(defaultProps, props);
   const [isFilled, setFilled] = useState(!!values.length);
+  const {
+    getDataAttributes,
+    theme: { darkMode, grayScale, inputHeight, white, ...theme },
+  } = useTheme();
 
-  const { darkMode, grayScale, inputHeight, white, ...theme } = getTheme({ theme: useTheme() });
   const { mainColor } = getColorTokens(rest.accent ?? 'primary', null, theme);
 
   const handleChange = (value: Option[]) => {
@@ -192,7 +194,7 @@ export function Dropdown(props: DropdownProps) {
   };
 
   return (
-    <StyledDropdown data-component-name="DropdownWrapper" isFilled={isFilled} {...rest}>
+    <StyledDropdown {...getDataAttributes('DropdownWrapper')} isFilled={isFilled} {...rest}>
       <ReactDropdown
         closeOnSelect={closeMultiOnSelect}
         contentComponent={Content}

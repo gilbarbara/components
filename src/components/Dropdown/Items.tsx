@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { ComponentProps } from '@gilbarbara/react-dropdown';
 import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, isDarkMode } from '~/modules/system';
@@ -185,6 +187,7 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
   const { addItem, getLabels, getStyles, removeItem, setSearch } = methods;
   const { autoFocus, create, options, searchable } = props;
   const { cursor, search, values } = state;
+  const { getDataAttributes } = useTheme();
 
   const searchInput = useRef<HTMLInputElement>(null);
 
@@ -225,7 +228,7 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
         <Item
           key={option.value}
           accent={accent}
-          data-component-name="DropdownItem"
+          {...getDataAttributes('DropdownItem')}
           disabled={disabled}
           hovered={isHovered}
           onClick={() => (isSelected ? removeItem(null, option, false) : addItem(option))}
@@ -233,13 +236,13 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
           selected={isSelected}
         >
           {prefix && (
-            <BoxInline data-component-name="DropdownOptionPrefix" mr="xxs">
+            <BoxInline {...getDataAttributes('DropdownOptionPrefix')} mr="xxs">
               {prefix}
             </BoxInline>
           )}
           <BoxInline flex="grow">{label ?? value}</BoxInline>
           {suffix && (
-            <BoxInline data-component-name="DropdownOptionSuffix" ml="xxs">
+            <BoxInline {...getDataAttributes('DropdownOptionSuffix')} ml="xxs">
               {suffix}
             </BoxInline>
           )}
@@ -260,9 +263,9 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
   }
 
   return (
-    <List data-component-name="DropdownItems" maxHeight={getStyles().menuMaxHeight}>
+    <List {...getDataAttributes('DropdownItems')} maxHeight={getStyles().menuMaxHeight}>
       {searchable && (
-        <Search data-component-name="DropdownItemsSearch">
+        <Search {...getDataAttributes('DropdownItemsSearch')}>
           <Input
             ref={searchInput}
             accent={accent}
@@ -272,7 +275,7 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
           />
         </Search>
       )}
-      <Items data-component-name="DropdownItemsList">{output.options}</Items>
+      <Items {...getDataAttributes('DropdownItemsList')}>{output.options}</Items>
       {output.create}
     </List>
   );

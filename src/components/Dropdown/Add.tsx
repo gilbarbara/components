@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { ComponentProps } from '@gilbarbara/react-dropdown';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
 import { WithAccent } from '~/types';
@@ -27,13 +29,14 @@ function DropdownAdd(props: Props) {
     onCreate,
     state: { search },
   } = props;
+  const { getDataAttributes } = useTheme();
 
   const handleClick = () => {
     onCreate?.(search, () => setStatus('close'));
   };
 
   return (
-    <StyledDropdownAdd data-component-name="DropdownAdd">
+    <StyledDropdownAdd {...getDataAttributes('DropdownAdd')}>
       <ButtonUnstyled color={accent} onClick={handleClick}>
         {getLabels().create.replace(/{search}/, `"${search}"`)}
       </ButtonUnstyled>

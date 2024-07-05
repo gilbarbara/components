@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
@@ -20,7 +22,11 @@ const StyledMenuSeparator = styled(
 });
 
 export function MenuSeparator(props: MenuSeparatorProps) {
-  return <StyledMenuSeparator data-component-name="MenuSeparator" role="separator" {...props} />;
+  const { getDataAttributes } = useTheme();
+
+  return (
+    <StyledMenuSeparator {...getDataAttributes('MenuSeparator')} role="separator" {...props} />
+  );
 }
 
 MenuSeparator.displayName = 'MenuSeparator';

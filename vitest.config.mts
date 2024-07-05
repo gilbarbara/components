@@ -7,7 +7,8 @@ export default defineConfig({
   test: {
     coverage: {
       all: true,
-      include: ['src/modules/**/*.ts?(x)'],
+      include: ['src/hooks/**/*.ts?(x)', 'src/modules/**/*.ts?(x)'],
+      provider: 'v8',
       reporter: ['text', 'html', 'lcov', 'json'],
       thresholds: {
         statements: 90,

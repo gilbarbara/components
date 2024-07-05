@@ -6,6 +6,8 @@ import { useSetState } from '@gilbarbara/hooks';
 import is from 'is-lite';
 import { transparentize } from 'polished';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { getColorTokens } from '~/modules/colors';
 import { getTheme } from '~/modules/helpers';
 import {
@@ -193,6 +195,8 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
     isFilled: false,
     selectedDates: mode === 'range' ? (selected ?? [undefined, undefined]) : (selected ?? ''),
   });
+  const { getDataAttributes } = useTheme();
+
   const isRange = mode === 'range';
 
   const toggle = useCallback(() => {
@@ -270,10 +274,10 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
   const numberOfMonths = getNumberOfMonths(rest.fromDate, rest.toDate);
 
   return (
-    <Box data-component-name="DatePickerSelector" position="relative">
+    <Box {...getDataAttributes('DatePickerSelector')} position="relative">
       <ClickOutside active={isActive} onClick={toggle}>
         <StyledButton
-          data-component-name="DatePickerSelectorButton"
+          {...getDataAttributes('DatePickerSelectorButton')}
           height={height}
           isActive={isActive}
           isFilled={isFilled}
@@ -286,7 +290,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
           </BoxCenter>
         </StyledButton>
         <StyledContent
-          data-component-name="DatePickerSelectorContent"
+          {...getDataAttributes('DatePickerSelectorContent')}
           data-state={isActive ? 'open' : 'closed'}
           isActive={isActive}
           position={position}

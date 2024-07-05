@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { mergeProps } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
 import {
@@ -57,9 +59,10 @@ export const StyledInput = styled(
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const mergedProps = mergeProps(defaultProps, props);
+  const { getDataAttributes } = useTheme();
 
   return (
-    <StyledInput ref={ref} data-component-name="Input" id={mergedProps.name} {...mergedProps} />
+    <StyledInput ref={ref} {...getDataAttributes('Input')} id={mergedProps.name} {...mergedProps} />
   );
 });
 

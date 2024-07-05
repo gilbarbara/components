@@ -1,8 +1,11 @@
 import { forwardRef, isValidElement } from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mergeProps } from '@gilbarbara/helpers';
 import { useIsFirstMount } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
+
+import { useTheme } from '~/hooks/useTheme';
 
 import { fadeIn } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
@@ -83,15 +86,16 @@ const StyledContent = styled(
 });
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
-  const { appearDuration, children, isLoaded, ...rest } = { ...defaultProps, ...props };
+  const { appearDuration, children, isLoaded, ...rest } = mergeProps(defaultProps, props);
   const isFirstRender = useIsFirstMount();
+  const { getDataAttributes } = useTheme();
 
   if (isLoaded) {
     return (
       <StyledContent
         ref={ref}
         appearDuration={appearDuration}
-        data-component-name="Skeleton"
+        {...getDataAttributes('Skeleton')}
         isFirstRender={isFirstRender}
       >
         {children}
@@ -106,7 +110,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) =
   }
 
   return (
-    <StyledSkeleton ref={ref} data-component-name="Skeleton" {...rest}>
+    <StyledSkeleton ref={ref} {...getDataAttributes('Skeleton')} {...rest}>
       {content}
     </StyledSkeleton>
   );

@@ -2,6 +2,8 @@ import { JSX } from 'react';
 import { FieldValues, FormProvider, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
 import { PlainObject, Simplify } from '@gilbarbara/types';
 
+import { useTheme } from '~/hooks/useTheme';
+
 export interface FormRenderProps<T extends FieldValues = FieldValues> {
   formMethods: UseFormReturn<T>;
 }
@@ -55,9 +57,10 @@ export function Form<T extends PlainObject<any> = PlainObject<any>>({
     mode: 'onChange',
     ...props,
   });
+  const { getDataAttributes } = useTheme();
 
   return (
-    <FormProvider data-component-name="Form" {...formMethods}>
+    <FormProvider {...getDataAttributes('Form')} {...formMethods}>
       {children({ formMethods })}
     </FormProvider>
   );
