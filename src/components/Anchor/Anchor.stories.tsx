@@ -1,8 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { H1 } from '~';
+import { H1, Icon, Spacer } from '~';
 
-import { colorProps, hideProps, spacingProps, textOptionsProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  hideProps,
+  spacingProps,
+  textOptionsProps,
+} from '~/stories/__helpers__';
 
 import { Anchor, defaultProps } from './Anchor';
 
@@ -16,7 +22,6 @@ export default {
     children: 'Open in GitHub',
     external: true,
     href: 'https://github.com/gilbarbara/components',
-    iconBefore: 'github',
   },
   argTypes: {
     ...hideProps(),
@@ -24,17 +29,28 @@ export default {
     ...spacingProps(),
     ...textOptionsProps(),
     children: { control: 'text' },
-    display: { control: 'text' },
   },
 } satisfies Meta<typeof Anchor>;
 
 export const Basic: Story = {};
 
+export const WithIcons: Story = {
+  argTypes: {
+    endContent: disableControl(),
+    startContent: disableControl(),
+  },
+  render: props => (
+    <Spacer gap="sm">
+      <Anchor {...props} startContent={<Icon name="github" />} />
+      <Anchor {...props} endContent={<Icon name="external" size={24} />} />
+    </Spacer>
+  ),
+};
+
 export const WithH1: Story = {
   name: 'With an H1 parent',
   args: {
     children: 'Check our docs',
-    iconBefore: undefined,
   },
   render: props => (
     <H1>
