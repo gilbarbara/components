@@ -91,4 +91,5 @@ export const baseDefaultProps = {
   appearDuration: 0.4,
   bg: 'gray.50',
   isLoaded: false,
+  radius: 'xs',
 } satisfies SkeletonProps;
