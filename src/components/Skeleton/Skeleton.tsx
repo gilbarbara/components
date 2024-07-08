@@ -56,6 +56,8 @@ export const StyledSkeleton = styled(
     background-position: 60% 0;
     background-repeat: no-repeat;
     background-size: 200% 100%;
+    display: flex;
+    flex-direction: column;
     pointer-events: none;
     user-select: none;
     width: ${fitContent ? 'fit-content' : undefined};
@@ -81,6 +83,8 @@ const StyledContent = styled(
       : css`
           ${fadeIn} ${appearDuration}s ease-in-out forwards
         `};
+    display: flex;
+    flex-direction: column;
     opacity: ${isFirstRender ? 1 : 0};
   `;
 });
