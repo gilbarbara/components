@@ -292,10 +292,6 @@ export const variants = {
  * Components
  */
 export const avatar = {
-  xxs: {
-    size: '16px',
-    fontSize: '8px',
-  },
   xs: {
     size: '24px',
     fontSize: '12px',

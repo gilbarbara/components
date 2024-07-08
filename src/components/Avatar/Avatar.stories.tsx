@@ -1,11 +1,19 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { BoxCenter, Paragraph, Spacer } from '~';
+import { BoxCenter, Grid, Icon, Paragraph, Spacer } from '~';
 
-import { avatar } from '~/modules/theme';
+import { avatar, radius } from '~/modules/theme';
 
-import { colorProps, disableControl, flexItemProps, hideProps } from '~/stories/__helpers__';
+import users from '~/stories/__fixtures__/users.json';
+import {
+  colorProps,
+  disableControl,
+  flexItemProps,
+  hideProps,
+  radiusProps,
+  VARIANTS,
+} from '~/stories/__helpers__';
 
 import { Avatar, defaultProps } from './Avatar';
 
@@ -16,17 +24,111 @@ export default {
   component: Avatar,
   args: {
     ...defaultProps,
-    image: 'https://images.unsplash.com/photo-1564164841584-391b5c7b590c?w=800',
-    name: 'Test User',
+    image: users[0].avatar,
+    name: users[0].name,
   },
   argTypes: {
     ...hideProps(),
-    ...colorProps(['bg', 'color']),
+    ...colorProps(['bg', 'borderColor', 'color']),
     ...flexItemProps(),
+    ...radiusProps(),
   },
 } satisfies Meta<typeof Avatar>;
 
 export const Basic: Story = {};
+
+export const WithoutImage: Story = {
+  args: {
+    image: undefined,
+  },
+};
+
+export const WithoutName: Story = {
+  args: {
+    image: undefined,
+    name: undefined,
+  },
+};
+
+export const WithFallback: Story = {
+  args: {
+    fallback: <Icon name="star" size={32} />,
+    image: undefined,
+    name: undefined,
+  },
+};
+
+export const BorderColors: Story = {
+  args: {
+    bordered: true,
+  },
+  argTypes: {
+    borderColor: disableControl(),
+    image: disableControl(),
+  },
+  render: props => (
+    <Grid gap={20} templateColumns="repeat(4, 1fr)">
+      {VARIANTS.map((d, index) => (
+        <BoxCenter key={d}>
+          <Avatar
+            key={d}
+            {...props}
+            borderColor={d}
+            image={users[index].avatar}
+            name={users[index].name}
+          />
+          <Paragraph mt="xs">{d}</Paragraph>
+        </BoxCenter>
+      ))}
+    </Grid>
+  ),
+};
+
+export const Colors: Story = {
+  name: 'Colors (bg)',
+  args: {
+    image: undefined,
+  },
+  argTypes: {
+    bg: disableControl(),
+    size: disableControl(),
+  },
+  render: props => (
+    <Grid gap={20} templateColumns="repeat(4, 1fr)">
+      {VARIANTS.map(d => (
+        <BoxCenter key={d}>
+          <Avatar key={d} {...props} bg={d} />
+          <Paragraph mt="xs">{d}</Paragraph>
+        </BoxCenter>
+      ))}
+    </Grid>
+  ),
+};
+
+export const Radius: Story = {
+  args: {
+    size: 'xl',
+  },
+  argTypes: {
+    size: disableControl(),
+  },
+  render: props => (
+    <Grid gap={20} templateColumns="repeat(4, 1fr)">
+      {objectKeys(radius).map((d, index) => (
+        <BoxCenter key={d}>
+          <Avatar
+            key={d}
+            {...props}
+            image={users[index].avatar}
+            name={users[index].name}
+            radius={d}
+          />
+          <Paragraph mt="xs">{d}</Paragraph>
+        </BoxCenter>
+      ))}
+    </Grid>
+  ),
+};
 
 export const Sizes: Story = {
   argTypes: {
@@ -34,18 +136,18 @@ export const Sizes: Story = {
   },
   render: props => (
     <Spacer gap="xl">
-      {objectKeys(avatar).map(d => (
+      {objectKeys(avatar).map((d, index) => (
         <BoxCenter key={d}>
-          <Avatar key={d} {...props} size={d} />
+          <Avatar
+            key={d}
+            {...props}
+            image={users[index].avatar}
+            name={users[index].name}
+            size={d}
+          />
           <Paragraph mt="xs">{d}</Paragraph>
         </BoxCenter>
       ))}
     </Spacer>
   ),
-};
-
-export const WithoutImage: Story = {
-  args: {
-    image: undefined,
-  },
 };

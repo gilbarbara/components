@@ -27,10 +27,6 @@ exports[`useTheme > should return properly 1`] = `
       "fontSize": "12px",
       "size": "24px",
     },
-    "xxs": {
-      "fontSize": "8px",
-      "size": "16px",
-    },
   },
   "black": "#000",
   "breakpoints": {
