@@ -182,7 +182,7 @@ describe('getDisableStyles', () => {
 describe('getOutlineStyles', () => {
   it('should return properly', () => {
     expect(getOutlineStyles('#000')).toEqual({
-      outline: 'rgba(0,0,0,0.6) solid 3px',
+      outline: 'rgba(0, 0, 0, 0.6) solid 3px',
       outlineOffset: '1px',
       zIndex: 10,
     });

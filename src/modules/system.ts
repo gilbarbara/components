@@ -4,7 +4,6 @@ import { capitalize, objectEntries, px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { fade } from 'colorizr';
 import is from 'is-lite';
-import { transparentize } from 'polished';
 
 import { getColorTokens } from '~/modules/colors';
 
@@ -132,7 +131,7 @@ export function getDisableStyles<T extends WithBorderless & WithTheme & WithVari
 
 export function getOutlineStyles(color: string, amount = 0.4): CSSObject {
   return {
-    outline: `${transparentize(amount, color)} solid 3px`,
+    outline: `${fade(color, amount * 100)} solid 3px`,
     outlineOffset: '1px',
     zIndex: 10,
   };
@@ -325,7 +324,7 @@ export function colorStyles<T extends WithColors & WithTheme & WithVariant>(
     }
 
     if (variant === 'shadow') {
-      const shadowColor = fade(mainColor, 0.5);
+      const shadowColor = fade(mainColor, 50);
 
       styles.boxShadow = `0 6px 12px -3px ${shadowColor},0 4px 6px -4px ${shadowColor}`;
     }
@@ -546,7 +545,7 @@ export function inputStyles<
     &:focus {
       ${!!borderless &&
       `
-box-shadow: 0 3px 0 0 ${transparentize(0.5, mainColor)};
+box-shadow: 0 3px 0 0 ${fade(mainColor, 50)};
 outline: none;
 `}
       ${!borderless && getOutlineStyles(mainColor)}

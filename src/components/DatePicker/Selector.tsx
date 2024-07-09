@@ -3,8 +3,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { formatDateLocale, mergeProps, omit, px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
+import { fade } from 'colorizr';
 import is from 'is-lite';
-import { transparentize } from 'polished';
 
 import { useTheme } from '~/hooks/useTheme';
 
@@ -123,7 +123,7 @@ const StyledButton = styled(
     ${isActive &&
     !!borderless &&
     css`
-      box-shadow: 0 3px 0 0 ${transparentize(0.5, mainColor)};
+      box-shadow: 0 3px 0 0 ${fade(mainColor, 50)};
       outline: none;
     `}
     ${isActive && !borderless && getOutlineStyles(mainColor)}
