@@ -23,28 +23,22 @@ export function animateIcon(
     return;
   }
 
-  const icon = target.querySelector(`[data-${theme.dataAttributeName}="Icon"]`) as HTMLSpanElement;
-
-  if (!icon) {
-    return;
-  }
+  const style = `color: ${mainColor}; position: absolute; top: ${target.offsetTop}px;
+    left: ${target.offsetLeft}px;
+    transition: opacity 0.6s, transform 0.6s;`;
 
   const iconClone = document.createElement('span');
 
-  iconClone.innerHTML = icon.innerHTML;
-  iconClone.classList.add(icon.className, 'will-animate');
-  iconClone.setAttribute(
-    'style',
-    `color: ${mainColor}; position: absolute; top: ${icon.offsetTop}px; left: ${icon.offsetLeft}px`,
-  );
-  target.appendChild(iconClone);
+  iconClone.innerHTML = target.innerHTML;
+  iconClone.setAttribute('style', style);
+  target.parentElement?.appendChild(iconClone);
 
   setTimeout(() => {
-    iconClone.classList.add('is-animating');
+    iconClone.setAttribute('style', `${style}opacity:0;transform: scale(4);`);
   }, 100);
 
-  target.addEventListener('transitionend', () => {
-    if (iconClone.parentNode !== null && iconClone.classList.contains('is-animating')) {
+  iconClone.addEventListener('transitionend', () => {
+    if (iconClone.parentNode !== null) {
       iconClone.parentNode.removeChild(iconClone);
     }
   });
