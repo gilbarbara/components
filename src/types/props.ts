@@ -56,6 +56,7 @@ export type { RippleProps } from '../components/Ripple/Ripple';
 export type { SearchProps } from '../components/Search/types';
 export type { SelectProps } from '../components/Select/Select';
 export type { SkeletonProps } from '../components/Skeleton/utils';
+export type { SnippetProps } from '../components/Snippet/Snippet';
 export type { SpacerProps } from '../components/Spacer/Spacer';
 export type { StatusIndicatorProps } from '../components/StatusIndicator/StatusIndicator';
 export type { TabProps } from '../components/Tabs/Tab';
