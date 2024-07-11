@@ -565,6 +565,7 @@ export const iconsCustom = [
   { name: 'hourglass' as const, categories: ['time'] },
   { name: 'inbox' as const, categories: ['ui'] },
   { name: 'infinity' as const, categories: ['misc'] },
+  { name: 'info' as const, categories: ['ui'] },
   { name: 'info-circle' as const, categories: ['ui', 'circle'] },
   { name: 'info-o' as const, categories: ['ui', 'circle'] },
   { name: 'instagram' as const, categories: ['brand'] },
