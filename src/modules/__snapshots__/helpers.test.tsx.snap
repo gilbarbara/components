@@ -148,6 +148,13 @@ exports[`getTheme > should return the theme 1`] = `
     "900": "#1a1a1a",
     "950": "#0d0d0d",
   },
+  "image": {
+    "animationDuration": 1.5,
+    "radius": "none",
+    "skeletonBg": "#f2f2f2",
+    "skeletonColor": "#e6e6e6",
+    "timingFunction": "ease-in-out",
+  },
   "inputHeight": {
     "lg": "48px",
     "md": "40px",
@@ -554,6 +561,13 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     "900": "#1a1a1a",
     "950": "#0d0d0d",
   },
+  "image": {
+    "animationDuration": 1.5,
+    "radius": "none",
+    "skeletonBg": "#f2f2f2",
+    "skeletonColor": "#e6e6e6",
+    "timingFunction": "ease-in-out",
+  },
   "inputHeight": {
     "lg": "48px",
     "md": "40px",
@@ -959,6 +973,13 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "850": "#262626",
     "900": "#1a1a1a",
     "950": "#0d0d0d",
+  },
+  "image": {
+    "animationDuration": 1.5,
+    "radius": "none",
+    "skeletonBg": "#f2f2f2",
+    "skeletonColor": "#e6e6e6",
+    "timingFunction": "ease-in-out",
   },
   "inputHeight": {
     "lg": "48px",

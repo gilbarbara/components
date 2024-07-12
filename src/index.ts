@@ -25,6 +25,7 @@ export * from './components/FormGroup';
 export * from './components/Grid';
 export * from './components/Headings';
 export * from './components/Icon';
+export * from './components/Image';
 export * from './components/Input';
 export * from './components/InputColor';
 export * from './components/InputFile';
@@ -58,6 +59,7 @@ export * from './components/Tooltip';
 export * from './components/Truncate';
 
 // Hooks
+export { useImage } from './hooks/useImage';
 export { useTheme } from './hooks/useTheme';
 
 // Modules
