@@ -353,6 +353,14 @@ export const button = {
   },
 };
 
+export const image = {
+  animationDuration: 1.5,
+  radius: 'none' as keyof typeof radius,
+  skeletonBg: grayScale[50],
+  skeletonColor: grayScale[100],
+  timingFunction: 'ease-in-out',
+};
+
 export const inputHeight = {
   /** @default 32px */
   sm: '32px',

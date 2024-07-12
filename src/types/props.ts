@@ -35,6 +35,7 @@ export type { FormGroupProps } from '../components/FormGroup/FormGroup';
 export type { GridProps } from '../components/Grid/Grid';
 export type { HeadingProps, HeadingLargeProps } from '../components/Headings/utils';
 export type { IconProps } from '../components/Icon/Icon';
+export type { ImageProps } from '../components/Image/Image';
 export type { InputProps } from '../components/Input/Input';
 export type { InputColorProps } from '../components/InputColor/InputColor';
 export type { InputFileProps } from '../components/InputFile/InputFile';
