@@ -161,6 +161,10 @@ exports[`useTheme > should return properly 1`] = `
     "semiTransparent": 0.08,
   },
   "opacityDisabled": 0.64,
+  "outlineOffset": 1,
+  "outlineOpacity": 0.4,
+  "outlineWidth": 3,
+  "outlineZIndex": 10,
   "radius": {
     "full": "9999px",
     "lg": "24px",

@@ -157,7 +157,7 @@ export const StyledElement = styled(
     width: ${px(dimensions)};
 
     input:not(:disabled) ~ &:focus {
-      ${getOutlineStyles(mainColor)};
+      ${getOutlineStyles(mainColor, theme)};
     }
 
     &:after {

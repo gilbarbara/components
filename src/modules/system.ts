@@ -6,6 +6,7 @@ import { fade } from 'colorizr';
 import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';
+import * as defaultTheme from '~/modules/theme';
 
 import {
   BorderItem,
@@ -20,6 +21,7 @@ import {
   WithColors,
   WithDimension,
   WithDisabled,
+  WithDisableOutline,
   WithDisplay,
   WithElementSpacing,
   WithFlexBox,
@@ -27,6 +29,7 @@ import {
   WithHeight,
   WithLayout,
   WithMargin,
+  WithOutline,
   WithPadding,
   WithPositioning,
   WithRadius,
@@ -129,11 +132,14 @@ export function getDisableStyles<T extends WithBorderless & WithTheme & WithVari
   `;
 }
 
-export function getOutlineStyles(color: string, amount = 0.4): CSSObject {
+export function getOutlineStyles(
+  color: string,
+  { outlineOffset, outlineOpacity, outlineWidth, outlineZIndex }: WithOutline = defaultTheme,
+): CSSObject {
   return {
-    outline: `${fade(color, amount * 100)} solid 3px`,
-    outlineOffset: '1px',
-    zIndex: 10,
+    outline: `${fade(color, outlineOpacity * 100)} solid ${px(outlineWidth)}`,
+    outlineOffset: px(outlineOffset),
+    zIndex: outlineZIndex,
   };
 }
 
@@ -545,10 +551,10 @@ export function inputStyles<
     &:focus {
       ${!!borderless &&
       `
-box-shadow: 0 3px 0 0 ${fade(mainColor, 50)};
+box-shadow: 0 3px 0 0 ${fade(mainColor, theme.outlineOpacity)};
 outline: none;
 `}
-      ${!borderless && getOutlineStyles(mainColor)}
+      ${!borderless && getOutlineStyles(mainColor, theme)}
     }
 
     &:disabled {
@@ -643,6 +649,32 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
   }
 
   return output;
+}
+
+export function outlineStyles<T extends WithTheme & WithDisableOutline>(color: string, props: T) {
+  const { disableOutline } = props;
+  const theme = getTheme(props);
+  const outline = getOutlineStyles(color, theme);
+
+  if (disableOutline) {
+    return css`
+      &:focus {
+        outline: none;
+      }
+    `;
+  }
+
+  return css`
+    @supports not selector(:focus-visible) {
+      &:focus {
+        ${outline}
+      }
+    }
+
+    &:focus-visible {
+      ${outline}
+    }
+  `;
 }
 
 export function paddingStyles<T extends WithPadding>(props: T, force = false): CSSObject {

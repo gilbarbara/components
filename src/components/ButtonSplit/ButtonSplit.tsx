@@ -10,9 +10,9 @@ import { getTheme } from '~/modules/helpers';
 import {
   colorStyles,
   getDisableStyles,
-  getOutlineStyles,
   getStyledOptions,
   isDarkMode,
+  outlineStyles,
 } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
@@ -28,6 +28,7 @@ import {
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
+  WithDisableOutline,
   WithLabel,
   WithTextOptions,
 } from '~/types';
@@ -39,6 +40,7 @@ export interface ButtonSplitKnownProps
     WithBusy,
     WithChildren,
     WithColorsDefaultBg,
+    WithDisableOutline,
     Required<WithLabel> {
   /**
    * Whether the button should only have a border
@@ -59,6 +61,7 @@ export const defaultProps = {
   bordered: false,
   busy: false,
   disabled: false,
+  disableOutline: false,
   position: 'bottom-right',
   size: 'md',
 } satisfies Omit<ButtonSplitProps, 'children' | 'label' | 'onClick'>;
@@ -88,6 +91,7 @@ export const StyledButtonSplit = styled(
         border-color: ${darkMode ? grayScale['850'] : grayScale['100']};
       `
     : undefined;
+  const outlineStyle = outlineStyles(styles.backgroundColor as string, props);
 
   return css`
     display: inline-flex;
@@ -107,10 +111,7 @@ export const StyledButtonSplit = styled(
       padding: ${buttonPadding};
 
       ${disabledStyles};
-
-      &:focus {
-        ${getOutlineStyles(styles.backgroundColor as string)};
-      }
+      ${outlineStyle};
     }
 
     [data-${dataAttributeName}='MenuButton'] {
@@ -124,10 +125,7 @@ export const StyledButtonSplit = styled(
       opacity: 1;
       padding: 0 ${spacing[size === 'xs' ? 'xxs' : 'xs']};
       width: 100%;
-
-      &:focus {
-        ${getOutlineStyles(styles.backgroundColor as string)};
-      }
+      ${outlineStyle};
     }
   `;
 });

@@ -48,6 +48,11 @@ export const opacity = {
 };
 export const opacityDisabled = opacity.intense;
 
+export const outlineOffset: string | number = 1;
+export const outlineOpacity = 0.4;
+export const outlineWidth: string | number = 3;
+export const outlineZIndex = 10;
+
 export const radius = {
   /** @default 0px */
   none: '0px',

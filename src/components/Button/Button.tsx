@@ -14,9 +14,9 @@ import {
   baseStyles,
   colorStyles,
   getDisableStyles,
-  getOutlineStyles,
   getStyledOptions,
   hoverStyles,
+  outlineStyles,
   paddingStyles,
   radiusStyles,
 } from '~/modules/system';
@@ -34,6 +34,7 @@ import {
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
+  WithDisableOutline,
   WithEndContent,
   WithLight,
   WithPadding,
@@ -49,6 +50,7 @@ export interface ButtonKnownProps
     WithButtonSize,
     WithChildren,
     WithColorsDefaultBg,
+    WithDisableOutline,
     WithEndContent,
     WithLight,
     WithPadding,
@@ -98,6 +100,7 @@ export const defaultProps = {
   block: false,
   busy: false,
   disabled: false,
+  disableOutline: false,
   disableRipple: false,
   gap: 'xs',
   iconOnly: false,
@@ -150,6 +153,7 @@ export const StyledButton = styled(
     ${colorStyles(props)};
     ${paddingStyles(props)};
     ${radiusStyles(props)};
+    ${outlineStyles(mainColor, props)}
 
     &:disabled {
       ${getDisableStyles(props, { isButton: true })};
@@ -157,10 +161,6 @@ export const StyledButton = styled(
 
     &:hover {
       ${hoverStyles(props)};
-    }
-
-    &:focus {
-      ${getOutlineStyles(mainColor)};
     }
 
     ${busy &&

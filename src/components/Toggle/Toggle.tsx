@@ -111,7 +111,8 @@ const StyledLabel = styled(
   getStyledOptions(),
 )<Pick<InnerProps, 'accent'>>(props => {
   const { accent = 'primary' } = props;
-  const { dataAttributeName, radius } = getTheme(props);
+  const { dataAttributeName, radius, ...theme } = getTheme(props);
+  const { mainColor } = getColorTokens(accent, null, theme);
 
   return css`
     display: inline-flex;
@@ -122,7 +123,7 @@ const StyledLabel = styled(
       [data-${dataAttributeName}='ToggleElement'] {
         border-radius: ${radius.sm};
         outline: none;
-        ${getOutlineStyles(getColorTokens(accent, null, getTheme(props)).mainColor)};
+        ${getOutlineStyles(mainColor, theme)};
         z-index: unset;
       }
     }

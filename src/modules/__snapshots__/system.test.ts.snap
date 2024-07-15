@@ -242,6 +242,28 @@ exports[`getDisableStyles > should return properly with "isButton: true" 1`] = `
   "
 `;
 
+exports[`hoverStyles > should return "backgroundColor" and "borderColor" 1`] = `
+{
+  "backgroundColor": "#5e5eed",
+  "borderColor": "#5e5eed",
+}
+`;
+
+exports[`hoverStyles > should return "borderColor" and "color" for variant "bordered 1`] = `
+{
+  "borderColor": "#5e5eed",
+  "color": "#5e5eed",
+}
+`;
+
+exports[`hoverStyles > should return an empty object with "disabled" 1`] = `{}`;
+
+exports[`hoverStyles > should return only and "color" for variant "clean 1`] = `
+{
+  "color": "#5e5eed",
+}
+`;
+
 exports[`inputStyles > should return custom styles for "input" 1`] = `
 "
     color: #101010;
@@ -260,7 +282,7 @@ exports[`inputStyles > should return custom styles for "input" 1`] = `
 
     &:focus {
       
-box-shadow: 0 3px 0 0 rgba(48, 48, 232, 0.5);
+box-shadow: 0 3px 0 0 rgba(48, 48, 232, 0.996);
 outline: none;
 
       
@@ -442,6 +464,47 @@ exports[`marginStyles > should return properly for side values 1`] = `
   "marginLeft": "auto",
   "marginRight": "auto",
   "marginTop": "32px",
+}
+`;
+
+exports[`outlineStyles > should return "focus: none" with "disableOutline" 1`] = `
+"
+      &:focus {
+        outline: none;
+      }
+    "
+`;
+
+exports[`outlineStyles > should return properly 1`] = `
+"
+    @supports not selector(:focus-visible) {
+      &:focus {
+        outline:rgba(255, 0, 68, 0.6) solid 3px;outline-offset:1px;z-index:10;
+      }
+    }
+
+    &:focus-visible {
+      outline:rgba(255, 0, 68, 0.6) solid 3px;outline-offset:1px;z-index:10;
+    }
+  "
+`;
+
+exports[`paddingStyles > should handle zero values 1`] = `
+{
+  "padding": 0,
+  "paddingBottom": 0,
+  "paddingLeft": 0,
+  "paddingRight": 0,
+  "paddingTop": 0,
+}
+`;
+
+exports[`paddingStyles > should handle zero values for "px" and "py" 1`] = `
+{
+  "paddingBottom": 0,
+  "paddingLeft": 0,
+  "paddingRight": 0,
+  "paddingTop": 0,
 }
 `;
 
