@@ -121,12 +121,12 @@ const StyledButton = styled(
     `};
 
     ${isActive &&
-    !!borderless &&
-    css`
-      box-shadow: 0 3px 0 0 ${fade(mainColor, 50)};
-      outline: none;
-    `}
-    ${isActive && !borderless && getOutlineStyles(mainColor)}
+    (borderless
+      ? css`
+          box-shadow: 0 ${theme.outlineWidth} 0 0 ${fade(mainColor, theme.outlineOpacity)};
+          outline: none;
+        `
+      : getOutlineStyles(mainColor, theme))};
   `;
 });
 

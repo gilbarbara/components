@@ -12,10 +12,12 @@ import {
   getDisableStyles,
   getOutlineStyles,
   getStyledOptions,
+  hoverStyles,
   inputStyles,
   isDarkMode,
   layoutStyles,
   marginStyles,
+  outlineStyles,
   paddingStyles,
   positioningStyles,
   radiusStyles,
@@ -187,6 +189,21 @@ describe('getOutlineStyles', () => {
       zIndex: 10,
     });
   });
+
+  it('should return values from a custom theme', () => {
+    expect(
+      getOutlineStyles('#000', {
+        outlineOpacity: 0.8,
+        outlineOffset: 2,
+        outlineZIndex: 20,
+        outlineWidth: '4px',
+      }),
+    ).toEqual({
+      outline: 'rgba(0, 0, 0, 0.2) solid 4px',
+      outlineOffset: '2px',
+      zIndex: 20,
+    });
+  });
 });
 
 describe('getStyledOptions', () => {
@@ -197,6 +214,24 @@ describe('getStyledOptions', () => {
     const { shouldForwardProp } = getStyledOptions();
 
     expect(shouldForwardProp(prop)).toBe(expected);
+  });
+});
+
+describe('hoverStyles', () => {
+  it('should return "backgroundColor" and "borderColor"', () => {
+    expect(hoverStyles({ bg: 'primary' })).toMatchSnapshot();
+  });
+
+  it('should return "borderColor" and "color" for variant "bordered', () => {
+    expect(hoverStyles({ bg: 'primary', variant: 'bordered' })).toMatchSnapshot();
+  });
+
+  it('should return only and "color" for variant "clean', () => {
+    expect(hoverStyles({ bg: 'primary', variant: 'clean' })).toMatchSnapshot();
+  });
+
+  it('should return an empty object with "disabled"', () => {
+    expect(hoverStyles({ bg: 'primary', disabled: true })).toMatchSnapshot();
   });
 });
 
@@ -276,6 +311,16 @@ describe('marginStyles', () => {
   });
 });
 
+describe('outlineStyles', () => {
+  it('should return properly', () => {
+    expect(outlineStyles('#f04', {}).styles).toMatchSnapshot();
+  });
+
+  it('should return "focus: none" with "disableOutline"', () => {
+    expect(outlineStyles('#f04', { disableOutline: true }).styles).toMatchSnapshot();
+  });
+});
+
 describe('paddingStyles', () => {
   it('should return properly', () => {
     expect(
@@ -298,6 +343,27 @@ describe('paddingStyles', () => {
         },
         true,
       ),
+    ).toMatchSnapshot();
+  });
+
+  it('should handle zero values', () => {
+    expect(
+      paddingStyles({
+        p: 0,
+        pb: 0,
+        pl: 0,
+        pr: 0,
+        pt: 0,
+      }),
+    ).toMatchSnapshot();
+  });
+
+  it('should handle zero values for "px" and "py"', () => {
+    expect(
+      paddingStyles({
+        px: 0,
+        py: 0,
+      }),
     ).toMatchSnapshot();
   });
 

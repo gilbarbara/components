@@ -15,10 +15,10 @@ import {
   borderStyles,
   colorStyles,
   displayStyles,
-  getOutlineStyles,
   getStyledOptions,
   layoutStyles,
   marginStyles,
+  outlineStyles,
   paddingStyles,
   radiusStyles,
   textStyles,
@@ -33,6 +33,7 @@ import {
   WithBusy,
   WithChildren,
   WithColors,
+  WithDisableOutline,
   WithDisplay,
   WithFlexBox,
   WithLayout,
@@ -49,6 +50,7 @@ export interface ButtonUnstyledKnownProps
     WithChildren,
     Pick<WithColors, 'color'>,
     WithDisplay,
+    WithDisableOutline,
     Pick<WithFlexBox, 'align' | 'justify'>,
     WithLayout,
     WithMargin,
@@ -67,6 +69,7 @@ export const defaultProps = {
   align: 'center',
   busy: false,
   disabled: false,
+  disableOutline: false,
   type: 'button',
 } satisfies Omit<ButtonUnstyledProps, 'children'>;
 
@@ -78,6 +81,7 @@ export const StyledButtonUnstyled = styled(
 
   const { darkMode, opacityDisabled, ...theme } = getTheme(props);
   const selectedColor = (color ?? darkMode) ? 'white' : 'black';
+  const { mainColor } = getColorTokens(selectedColor, null, theme);
 
   return css`
     ${appearanceStyles};
@@ -100,14 +104,11 @@ export const StyledButtonUnstyled = styled(
     ${paddingStyles(props)};
     ${radiusStyles(props)};
     ${textStyles(props)};
+    ${outlineStyles(mainColor, props)};
 
     :disabled {
       cursor: not-allowed;
       opacity: ${opacityDisabled};
-    }
-
-    :focus {
-      ${getOutlineStyles(getColorTokens(selectedColor, null, theme).mainColor)};
     }
 
     ${!!busy &&
