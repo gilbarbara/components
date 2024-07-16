@@ -21,10 +21,13 @@ import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { H3 } from '~/components/Headings';
 import { Icon } from '~/components/Icon';
-import { Portal } from '~/components/Portal';
+import {
+  defaultProps as portalDefaultProps,
+  Portal,
+  type PortalProps,
+} from '~/components/Portal/Portal';
 
 import { StyledProps, WithBorder, WithPadding, WithRadius, WithShadow } from '~/types';
-import type { PortalProps } from '~/types/props';
 
 export interface ModalKnownProps
   extends StyledProps,
@@ -32,30 +35,40 @@ export interface ModalKnownProps
     WithPadding,
     WithRadius,
     WithShadow,
-    Omit<PortalProps, 'isActive' | 'showCloseButton'> {
+    Omit<PortalProps, 'showCloseButton'> {
+  /**
+   * Hide the close button.
+   * @default false
+   */
   hideCloseButton?: boolean;
-  isActive: boolean;
+  /**
+   * The maximum height of the modal.
+   * @default '80vh'
+   */
   maxHeight?: StandardLonghandProperties['maxHeight'] | number;
+  /**
+   * The maximum width of the modal.
+   * @default '100vw'
+   */
   maxWidth?: StandardLonghandProperties['maxWidth'] | number;
   style?: CSSProperties;
   title?: ReactNode;
+  /**
+   * The width of the modal.
+   */
   width?: StringOrNumber;
 }
 
 export type ModalProps = Simplify<ModalKnownProps>;
 
 export const defaultProps = {
-  closeOnClickOverlay: true,
-  closeOnEsc: true,
+  ...portalDefaultProps,
   hideCloseButton: false,
-  hideOverlay: false,
-  isActive: false,
   maxHeight: '80vh',
   maxWidth: '100vw',
   padding: 'lg',
   radius: 'lg',
   shadow: 'high',
-  zIndex: 1000,
 } satisfies Omit<ModalProps, 'children'>;
 
 const StyledModal = styled(
@@ -96,11 +109,11 @@ const StyledModalContent = styled(
 export function Modal(props: ModalProps) {
   const {
     children,
-    closeOnClickOverlay,
-    closeOnEsc,
+    disableCloseOnClickOverlay,
+    disableCloseOnEsc,
     hideCloseButton,
     hideOverlay,
-    isActive,
+    isOpen,
     maxHeight,
     onClose,
     onOpen,
@@ -137,10 +150,10 @@ export function Modal(props: ModalProps) {
 
   return (
     <Portal
-      closeOnClickOverlay={closeOnClickOverlay}
-      closeOnEsc={closeOnEsc}
+      disableCloseOnClickOverlay={disableCloseOnClickOverlay}
+      disableCloseOnEsc={disableCloseOnEsc}
       hideOverlay={hideOverlay}
-      isActive={isActive}
+      isOpen={isOpen}
       onClose={handlePortalClose}
       onOpen={onOpen}
       zIndex={zIndex}

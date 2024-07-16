@@ -301,7 +301,7 @@ function DataTableWrapper(props: DataTableProps) {
       </Box>
       <Dialog
         content="Do you want to remove this user?"
-        isActive={showDialog}
+        isOpen={showDialog}
         onClickCancel={handleClickCancel}
         onClickConfirmation={handleClickConfirmation}
         title="Remove user"
