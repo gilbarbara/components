@@ -22,7 +22,7 @@ function FieldRadio(props: Props) {
   };
 
   return (
-    <Spacer gapVertical="xs">
+    <Spacer gap="xs">
       {items.map((d: RadioItem) => (
         <Radio
           key={d.value}

@@ -76,7 +76,7 @@ export const Tones: Story = {
     const [variant] = bg?.split('.') ?? [];
 
     return (
-      <Spacer gapVertical="sm">
+      <Spacer>
         {TONES.map(d => (
           <Chip key={d} {...props} bg={`${variant}.${d}`}>
             {d}
@@ -92,7 +92,7 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer gapVertical="sm">
+    <Spacer>
       {textSizes.map(d => (
         <Chip key={d} {...props} size={d}>
           {d}

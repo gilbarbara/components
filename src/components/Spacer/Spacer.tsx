@@ -2,7 +2,7 @@ import { Children, forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
+import { SetRequired, Simplify } from '@gilbarbara/types';
 import { StandardShorthandProperties } from 'csstype';
 
 import { useTheme } from '~/hooks/useTheme';
@@ -57,17 +57,20 @@ export interface SpacerKnownProps
    */
   distribution?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
   /**
-   * The horizontal gap between the children.
+   * The gap between the children.
    * @default sm
    */
-  gap?: Spacing;
-  /** The vertical gap between the children. */
-  gapVertical?: Spacing;
+  gap?: Spacing | [rowGap: Spacing, columnGap: Spacing];
   /**
    * Expand child width (Vertical only)
    * @default false
    */
   grow?: boolean;
+  /**
+   * Reverse the order of the children.
+   * @default false
+   */
+  reverse?: boolean;
   /**
    * The vertical alignment of the children.
    * @default center
@@ -87,6 +90,7 @@ export const defaultProps = {
   distribution: 'start',
   gap: 'sm',
   grow: false,
+  reverse: false,
   shadow: false,
   verticalAlign: 'center',
   wrap: true,
@@ -95,9 +99,12 @@ export const defaultProps = {
 export const StyledSpacer = styled(
   'div',
   getStyledOptions('fill'),
-)<SpacerProps>(props => {
-  const { direction, distribution, verticalAlign, wrap } = props;
+)<SetRequired<SpacerProps, 'gap'>>(props => {
+  const { direction, distribution, gap, reverse, verticalAlign, wrap } = props;
+  const { spacing } = getTheme(props);
   const isHorizontal = direction === 'horizontal';
+
+  const flexGap = Array.isArray(gap) ? gap.map(value => spacing[value]).join(' ') : spacing[gap];
 
   let distributionStyles;
 
@@ -111,8 +118,11 @@ export const StyledSpacer = styled(
     ${baseStyles(props)};
     align-items: ${isHorizontal ? verticalAlign : distribution};
     display: flex;
-    flex-direction: ${direction === 'vertical' ? 'column' : 'row'};
+    flex-direction: ${direction === 'vertical'
+      ? `column${reverse ? '-reverse' : ''}`
+      : `row${reverse ? '-reverse' : ''}`};
     flex-wrap: ${wrap ? 'wrap' : 'nowrap'};
+    gap: ${flexGap};
     ${distributionStyles};
     ${borderStyles(props)};
     ${flexItemStyles(props)};
@@ -128,20 +138,13 @@ const StyledSpacerItem = styled(
   'div',
   getStyledOptions('fill'),
 )<Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }>(props => {
-  const { direction, flex, gap = 'sm', gapVertical, grow } = props;
-  const { spacing } = getTheme(props);
+  const { direction, flex, grow } = props;
   const isHorizontal = direction === 'horizontal';
 
   return css`
     display: ${isHorizontal ? 'flex' : 'block'};
     flex: ${flex};
-    margin-bottom: ${gapVertical ? spacing[gapVertical] : undefined};
     width: ${!isHorizontal && grow ? '100%' : 'auto'};
-
-    &:not(:last-of-type) {
-      margin-right: ${isHorizontal ? spacing[gap] : undefined};
-      margin-bottom: ${!isHorizontal ? spacing[gap] : undefined};
-    }
   `;
 });
 

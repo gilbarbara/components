@@ -111,7 +111,7 @@ export const Colors: Story = {
     accent: disableControl(),
   },
   render: props => (
-    <Spacer distribution="center" gapVertical="md">
+    <Spacer distribution="center" gap="md">
       {VARIANTS.map(d => (
         <ProgressBar key={d} {...props} accent={d} label={capitalize(d)} />
       ))}

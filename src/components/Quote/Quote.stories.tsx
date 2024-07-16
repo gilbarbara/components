@@ -40,7 +40,7 @@ export const BorderPosition: Story = {
     border: disableControl(),
   },
   render: props => (
-    <Spacer gap="xl" gapVertical="xl">
+    <Spacer gap="xl">
       <Quote {...props} attribution="top" border="top" />
       <Quote {...props} attribution="right" border="right" />
       <Quote {...props} attribution="bottom" border="bottom" />
@@ -54,7 +54,7 @@ export const BorderSize: Story = {
     borderSize: disableControl(),
   },
   render: props => (
-    <Spacer gap="xl" gapVertical="xl">
+    <Spacer gap="xl">
       <Quote {...props} attribution="sm" borderSize="sm" />
       <Quote {...props} attribution="md" borderSize="md" />
       <Quote {...props} attribution="lg" borderSize="lg" />
