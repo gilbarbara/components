@@ -1,6 +1,9 @@
+import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, Chip, H2, Icon, Input } from '~';
+
+import { spacing } from '~/modules/theme';
 
 import {
   disableControl,
@@ -25,6 +28,7 @@ export default {
     ...layoutProps({ display: 'flex' }),
     ...radiusProps(),
     ...spacingProps(),
+    gap: { control: 'select', options: objectKeys(spacing) },
     children: disableControl(),
   },
 } satisfies Meta<typeof Spacer>;
@@ -43,11 +47,7 @@ export const Vertical: Story = {
     direction: 'vertical',
     distribution: 'center',
     fill: true,
-    gap: 'xl',
-  },
-  argTypes: {
-    direction: disableControl(),
-    gap: disableControl(),
+    gap: 'lg',
   },
   render: props => (
     <Spacer {...props}>
@@ -62,9 +62,12 @@ export const Vertical: Story = {
   ),
 };
 
-export const WithGapVertical: Story = {
+export const WithTwoValueGap: Story = {
   args: {
-    gapVertical: 'sm',
+    gap: ['xs', 'md'],
+  },
+  argTypes: {
+    gap: disableControl(),
   },
   render: props => (
     <Box width={480}>
@@ -95,6 +98,7 @@ export const WithDifferentHeights: Story = {
 export const WithInput: Story = {
   args: {
     distribution: 'center',
+    gap: 'xxs',
   },
   render: props => (
     <Spacer {...props}>

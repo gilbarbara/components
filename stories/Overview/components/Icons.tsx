@@ -184,7 +184,7 @@ function Icons() {
         and hundreds of handcrafted icons.
       </Paragraph>
 
-      <Spacer gap="md" gapVertical="md" mb="lg">
+      <Spacer gap="md" mb="lg">
         <Input
           name="search"
           onChange={handleChangeSearch}

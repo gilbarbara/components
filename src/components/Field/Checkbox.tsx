@@ -49,7 +49,7 @@ function FieldCheckbox(props: Props) {
   };
 
   return (
-    <Spacer gapVertical="xs">
+    <Spacer gap="xs">
       {items.map(d => (
         <Checkbox
           key={d.name}
