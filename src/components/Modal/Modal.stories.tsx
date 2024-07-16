@@ -29,26 +29,26 @@ export default {
     ...paddingProps(),
     ...radiusProps(),
     children: disableControl(),
-    isActive: disableControl(),
+    isOpen: disableControl(),
     maxWidth: { control: 'text' },
   },
 } satisfies Meta<typeof Modal>;
 
 export const Basic: Story = {
   render: function Render(props) {
-    const [isActive, setActive] = useState(false);
+    const [isOpen, setOpen] = useState(false);
 
     const handleClick = () => {
-      setActive(previousState => !previousState);
+      setOpen(previousState => !previousState);
     };
 
     return (
       <div className="flex-center">
-        <Button data-testid="OpenModal" onClick={handleClick}>
+        <Button data-testid="OpenModal" onClick={handleClick} size="sm">
           Open Modal
         </Button>
 
-        <Modal {...props} isActive={isActive} onClose={handleClick}>
+        <Modal {...props} isOpen={isOpen} onClose={handleClick}>
           <FormGroup data-testid="Dialog" label="Name" required>
             <Input name="name" placeholder="Name" />
           </FormGroup>

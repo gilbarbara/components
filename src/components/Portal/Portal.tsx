@@ -1,45 +1,66 @@
-import { useCallback, useRef, useState } from 'react';
+import { MouseEvent, useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps } from '@gilbarbara/helpers';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from '@gilbarbara/hooks';
 import { Simplify } from '@gilbarbara/types';
-import is from 'is-lite';
 
 import { useTheme } from '~/hooks/useTheme';
 
-import { baseStyles, buttonStyles } from '~/modules/system';
-import { black } from '~/modules/theme';
-
+import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
 
 import { StyledProps, WithChildren } from '~/types';
 
 export interface PortalKnownProps extends StyledProps, WithChildren {
-  /** @default true */
-  closeOnClickOverlay?: boolean;
-  /** @default true */
-  closeOnEsc?: boolean;
-  /** @default false */
+  /**
+   * Close the portal when the overlay is clicked.
+   * @default false
+   */
+  disableCloseOnClickOverlay?: boolean;
+  /**
+   * Close the portal when the escape key is pressed.
+   * @default false
+   */
+  disableCloseOnEsc?: boolean;
+  /**
+   * Hide the overlay.
+   * @default false
+   */
   hideOverlay?: boolean;
-  /** @default false */
-  isActive?: boolean;
+  /**
+   * Whether the portal is visible.
+   * @default false
+   */
+  isOpen?: boolean;
+  /**
+   * Callback when the portal is closed.
+   */
   onClose?: () => void;
+  /**
+   * Callback when the portal is opened.
+   */
   onOpen?: () => void;
-  /** @default false */
+  /**
+   * Show a close button in the top right corner.
+   * @default false
+   */
   showCloseButton?: boolean;
-  /** @default 1000 */
+  /**
+   * The z-index of the portal.
+   * @default 1000
+   */
   zIndex?: number;
 }
 
 export type PortalProps = Simplify<PortalKnownProps>;
 
 export const defaultProps = {
-  closeOnClickOverlay: true,
-  closeOnEsc: true,
+  disableCloseOnClickOverlay: false,
+  disableCloseOnEsc: false,
   hideOverlay: false,
-  isActive: false,
+  isOpen: false,
   showCloseButton: false,
   zIndex: 1000,
 } satisfies Omit<PortalProps, 'children'>;
@@ -80,24 +101,12 @@ const portalShow = keyframes`
   }
 `;
 
-const CloseButton = styled.button(
-  props => css`
-    ${baseStyles(props)};
-    ${buttonStyles};
-    align-items: center;
-    color: ${black};
-    display: inline-flex;
-    height: 30px;
-    justify-content: center;
-    line-height: 1;
-    pointer-events: all;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 30px;
-    z-index: 20;
-  `,
-);
+const CloseButton = styled(ButtonUnstyled)`
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 20;
+`;
 
 const Content = styled.div`
   max-height: 100%;
@@ -106,14 +115,14 @@ const Content = styled.div`
   z-index: 10;
 `;
 
-const Overlay = styled.div<Pick<PortalProps, 'isActive'> & { darkMode: boolean }>(props => {
-  const { darkMode, isActive } = props;
+const Overlay = styled.div<Pick<PortalProps, 'isOpen'> & { darkMode: boolean }>(props => {
+  const { darkMode, isOpen } = props;
 
   return css`
     background-color: ${darkMode ? 'rgba(222, 222, 222, 0.3)' : 'rgba(0, 0, 0, 0.3)'};
     bottom: 0;
     left: 0;
-    opacity: ${isActive ? 1 : 0};
+    opacity: ${isOpen ? 1 : 0};
     position: absolute;
     right: 0;
     top: 0;
@@ -121,16 +130,16 @@ const Overlay = styled.div<Pick<PortalProps, 'isActive'> & { darkMode: boolean }
   `;
 });
 
-const StyledPortal = styled.div<Pick<PortalProps, 'isActive' | 'zIndex'>>(props => {
-  const { isActive, zIndex } = props;
+const StyledPortal = styled.div<Pick<PortalProps, 'isOpen' | 'zIndex'>>(props => {
+  const { isOpen, zIndex } = props;
 
   return css`
     align-items: center;
     animation-duration: 0.5s;
     animation-name: ${portalHide};
-    animation-play-state: ${isActive ? 'running' : 'paused'};
-    animation-name: ${isActive ? portalShow : portalHide};
-    animation-direction: ${isActive ? 'normal' : 'reverse'};
+    animation-play-state: ${isOpen ? 'running' : 'paused'};
+    animation-name: ${isOpen ? portalShow : portalHide};
+    animation-direction: ${isOpen ? 'normal' : 'reverse'};
     bottom: 0;
     display: flex;
     justify-content: center;
@@ -145,10 +154,10 @@ const StyledPortal = styled.div<Pick<PortalProps, 'isActive' | 'zIndex'>>(props 
 export function Portal(props: PortalProps) {
   const {
     children,
-    closeOnClickOverlay,
-    closeOnEsc,
+    disableCloseOnClickOverlay,
+    disableCloseOnEsc,
     hideOverlay,
-    isActive,
+    isOpen,
     onClose,
     onOpen,
     showCloseButton,
@@ -158,24 +167,23 @@ export function Portal(props: PortalProps) {
   const portal = useRef<Element | null>(null);
   const {
     getDataAttributes,
-    theme: { darkMode },
+    theme: { darkMode, dataAttributeName },
   } = useTheme();
 
   const closePortal = useRef(() => {
     destroyPortal.current();
 
-    if (is.function(onClose)) {
-      onClose();
-    }
+    onClose?.();
   });
+
   const destroyPortal = useRef(() => {
-    if (closeOnEsc) {
+    if (!disableCloseOnEsc) {
       document.removeEventListener('keydown', handleKeyDown);
     }
   });
 
-  const previousIsActive = usePrevious(isActive);
-  const previousCloseOnEsc = usePrevious(closeOnEsc);
+  const previousIsActive = usePrevious(isOpen);
+  const previousDisableCloseOnEsc = usePrevious(disableCloseOnEsc);
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (event.code === 'Escape') {
@@ -195,7 +203,7 @@ export function Portal(props: PortalProps) {
     portal.current = element;
     setReady(true);
 
-    if (isActive && closeOnEsc) {
+    if (isOpen && !disableCloseOnEsc) {
       document.addEventListener('keydown', handleKeyDown);
     }
   });
@@ -205,52 +213,55 @@ export function Portal(props: PortalProps) {
   });
 
   const openPortal = useCallback(() => {
-    if (is.function(onOpen)) {
-      onOpen();
-    }
+    onOpen?.();
 
-    if (closeOnEsc) {
+    if (!disableCloseOnEsc) {
       document.addEventListener('keydown', handleKeyDown);
     }
-  }, [closeOnEsc, handleKeyDown, onOpen]);
+  }, [disableCloseOnEsc, handleKeyDown, onOpen]);
 
   useUpdateEffect(() => {
-    const hasChanged = previousIsActive !== isActive;
+    const hasChanged = previousIsActive !== isOpen;
 
-    if (hasChanged && isActive) {
+    if (hasChanged && isOpen) {
       openPortal();
-    } else if (hasChanged && !isActive) {
+    } else if (hasChanged && !isOpen) {
       destroyPortal.current();
     }
 
-    if (previousCloseOnEsc !== closeOnEsc) {
-      if (closeOnEsc) {
+    if (previousDisableCloseOnEsc !== disableCloseOnEsc) {
+      if (disableCloseOnEsc) {
         document.addEventListener('keydown', handleKeyDown);
       } else {
         document.removeEventListener('keydown', handleKeyDown);
       }
     }
   }, [
-    closeOnEsc,
+    disableCloseOnEsc,
     destroyPortal,
     handleKeyDown,
-    isActive,
+    isOpen,
     openPortal,
     previousIsActive,
-    previousCloseOnEsc,
+    previousDisableCloseOnEsc,
   ]);
 
-  const handleClickClose = useCallback(() => {
-    if (!closeOnClickOverlay) {
-      return;
-    }
+  const handleClickClose = useCallback(
+    (event: MouseEvent<HTMLElement>) => {
+      const { dataset } = event.currentTarget;
 
-    closePortal.current();
-  }, [closeOnClickOverlay, closePortal]);
+      if (dataset[dataAttributeName] === 'PortalOverlay' && disableCloseOnClickOverlay) {
+        return;
+      }
+
+      closePortal.current();
+    },
+    [dataAttributeName, disableCloseOnClickOverlay],
+  );
 
   const content = [];
 
-  if (isActive) {
+  if (isOpen) {
     content.push(children);
   }
 
@@ -259,18 +270,18 @@ export function Portal(props: PortalProps) {
   }
 
   return createPortal(
-    <StyledPortal {...getDataAttributes('Portal')} isActive={isActive} zIndex={zIndex}>
+    <StyledPortal {...getDataAttributes('Portal')} isOpen={isOpen} zIndex={zIndex}>
       {!hideOverlay && (
         <Overlay
           darkMode={darkMode}
           {...getDataAttributes('PortalOverlay')}
-          isActive={isActive}
+          isOpen={isOpen}
           onClick={handleClickClose}
         />
       )}
       {showCloseButton && (
-        <CloseButton onClick={handleClickClose} title="Close" type="button">
-          <Icon name="close-o" size={20} title="Close" />
+        <CloseButton onClick={handleClickClose} p="xs" radius="round" title="Close">
+          <Icon name="close-o" size={24} title="Close" />
         </CloseButton>
       )}
       <Content {...getDataAttributes('PortalContent')}>{content}</Content>

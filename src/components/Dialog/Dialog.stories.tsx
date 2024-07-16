@@ -23,14 +23,14 @@ export default {
   args: {
     ...defaultProps,
     content: 'You are adding a partner',
-    title: 'Do you really want to add it?',
+    title: <strong>Do you really want to add it?</strong>,
   },
   argTypes: {
     ...hideProps(),
     ...colorProps(['accent']),
     ...paddingProps(),
     ...radiusProps(),
-    isActive: disableControl(),
+    isOpen: disableControl(),
     onClickCancel: disableControl(),
     onClickConfirmation: disableControl(),
   },
@@ -38,21 +38,21 @@ export default {
 
 export const Basic: Story = {
   render: function Render(props) {
-    const [isActive, setActive] = useState(false);
+    const [isOpen, setOpen] = useState(false);
 
     const handleClicks = () => {
-      setActive(previousState => !previousState);
+      setOpen(previousState => !previousState);
     };
 
     return (
       <div className="flex-center">
-        <Button data-testid="OpenDialog" onClick={handleClicks}>
+        <Button data-testid="OpenDialog" onClick={handleClicks} size="sm">
           Open Dialog
         </Button>
 
         <Dialog
           {...props}
-          isActive={isActive}
+          isOpen={isOpen}
           onClickCancel={handleClicks}
           onClickConfirmation={handleClicks}
         />

@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useCallback } from 'react';
+import { CSSProperties, isValidElement, ReactNode, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
@@ -16,10 +16,15 @@ import {
   shadowStyles,
 } from '~/modules/system';
 
+import { Box } from '~/components/Box';
 import { Button } from '~/components/Button';
 import { H3 } from '~/components/Headings';
 import { Paragraph } from '~/components/Paragraph';
-import { Portal } from '~/components/Portal';
+import {
+  defaultProps as portalDefaultProps,
+  Portal,
+  type PortalProps,
+} from '~/components/Portal/Portal';
 import { Spacer } from '~/components/Spacer';
 
 import {
@@ -31,7 +36,6 @@ import {
   WithRadius,
   WithShadow,
 } from '~/types';
-import type { PortalProps } from '~/types/props';
 
 export interface DialogKnownProps
   extends StyledProps,
@@ -40,36 +44,59 @@ export interface DialogKnownProps
     WithPadding,
     WithRadius,
     WithShadow,
-    Omit<PortalProps, 'children' | 'isActive' | 'showCloseButton'> {
-  /** @default 'Cancel' */
+    Omit<PortalProps, 'children' | 'showCloseButton'> {
+  /**
+   * The text of the cancel button.
+   * @default 'Cancel'
+   */
   buttonCancelText?: string;
-  /** @default 'Confirm' */
+  /**
+   * The text of the confirm button.
+   * @default 'Confirm'
+   */
   buttonConfirmText?: string;
-  /** @default ltr */
+  /**
+   * The button order.
+   * @default ltr
+   */
   buttonOrder?: 'ltr' | 'rtl';
+  /**
+   * The content of the dialog.
+   */
   content: ReactNode;
-  isActive: boolean;
+  /**
+   * Callback when the cancel button is clicked.
+   */
   onClickCancel: () => void;
+  /**
+   * Callback when the confirm button is clicked.
+   */
   onClickConfirmation: () => void;
   style?: CSSProperties;
-  /** @default left */
+  /**
+   * The alignment of the text.
+   * @default left
+   */
   textAlign?: Alignment;
+  /**
+   * The title of the dialog.
+   */
   title: ReactNode;
-  /** @default 380 */
+  /**
+   * The width of the dialog.
+   * @default 380
+   */
   width?: StringOrNumber;
 }
 
 export type DialogProps = Simplify<DialogKnownProps>;
 
 export const defaultProps = {
+  ...portalDefaultProps,
   accent: 'primary',
   buttonCancelText: 'Cancel',
   buttonConfirmText: 'Confirm',
   buttonOrder: 'ltr',
-  closeOnClickOverlay: false,
-  closeOnEsc: true,
-  hideOverlay: false,
-  isActive: false,
   padding: 'xl',
   radius: 'lg',
   shadow: 'high',
@@ -106,11 +133,11 @@ export function Dialog(props: DialogProps) {
     buttonCancelText,
     buttonConfirmText,
     buttonOrder,
-    closeOnClickOverlay,
-    closeOnEsc,
     content,
+    disableCloseOnClickOverlay,
+    disableCloseOnEsc,
     hideOverlay,
-    isActive,
+    isOpen,
     onClickCancel,
     onClickConfirmation,
     onClose,
@@ -140,30 +167,25 @@ export function Dialog(props: DialogProps) {
 
   return (
     <Portal
-      closeOnClickOverlay={closeOnClickOverlay}
-      closeOnEsc={closeOnEsc}
+      disableCloseOnClickOverlay={disableCloseOnClickOverlay}
+      disableCloseOnEsc={disableCloseOnEsc}
       hideOverlay={hideOverlay}
-      isActive={isActive}
+      isOpen={isOpen}
       onClose={handlePortalClose}
       onOpen={onOpen}
       zIndex={zIndex}
     >
       <StyledDialog {...getDataAttributes('Dialog')} style={style} {...rest}>
-        {title && <H3 mb="sm">{title}</H3>}
+        <Box mb="sm" {...getDataAttributes('DialogTitle')}>
+          {title && isValidElement(title) ? title : <H3 mb={0}>{title}</H3>}
+        </Box>
 
         <Paragraph mb="xl">{content}</Paragraph>
 
-        {buttonOrder === 'ltr' ? (
-          <Spacer distribution="space-between">
-            {cancelButton}
-            {actionButton}
-          </Spacer>
-        ) : (
-          <Spacer distribution="space-between">
-            {actionButton}
-            {cancelButton}
-          </Spacer>
-        )}
+        <Spacer distribution="space-between" reverse={buttonOrder === 'rtl'}>
+          {cancelButton}
+          {actionButton}
+        </Spacer>
       </StyledDialog>
     </Portal>
   );
