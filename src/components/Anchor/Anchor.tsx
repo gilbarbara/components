@@ -13,6 +13,7 @@ import {
   baseStyles,
   colorStyles,
   displayStyles,
+  flexItemStyles,
   getStyledOptions,
   marginStyles,
   paddingStyles,
@@ -27,6 +28,7 @@ import {
   WithColorsDefaultColor,
   WithDisplay,
   WithEndContent,
+  WithFlexItem,
   WithMargin,
   WithPadding,
   WithStartContent,
@@ -39,6 +41,7 @@ export interface AnchorKnownProps
     Pick<WithColorsDefaultColor, 'color'>,
     WithDisplay,
     WithEndContent,
+    WithFlexItem,
     WithMargin,
     WithPadding,
     WithStartContent,
@@ -92,6 +95,7 @@ export const StyledAnchor = styled(
     text-decoration: ${hideDecoration ? 'none' : 'underline'};
     ${colorStyles(props)};
     ${displayStyles(props)};
+    ${flexItemStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};
     ${textStyles(props, 1)};

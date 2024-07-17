@@ -13,6 +13,7 @@ import {
   appearanceStyles,
   baseStyles,
   colorStyles,
+  flexItemStyles,
   getDisableStyles,
   getStyledOptions,
   hoverStyles,
@@ -36,6 +37,7 @@ import {
   WithColorsDefaultBg,
   WithDisableOutline,
   WithEndContent,
+  WithFlexItem,
   WithLight,
   WithPadding,
   WithRadius,
@@ -52,6 +54,7 @@ export interface ButtonKnownProps
     WithColorsDefaultBg,
     WithDisableOutline,
     WithEndContent,
+    WithFlexItem,
     WithLight,
     WithPadding,
     WithRadius,
@@ -151,6 +154,7 @@ export const StyledButton = styled(
       border-color 0.6s;
     width: ${block ? '100%' : 'auto'};
     ${colorStyles(props)};
+    ${flexItemStyles(props)};
     ${paddingStyles(props)};
     ${radiusStyles(props)};
     ${outlineStyles(mainColor, props)}
