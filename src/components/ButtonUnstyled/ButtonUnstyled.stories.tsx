@@ -6,6 +6,7 @@ import {
   colorProps,
   disableControl,
   flexContent,
+  flexItemProps,
   flexItems,
   hideProps,
   layoutProps,
@@ -28,6 +29,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexItemProps(),
     ...layoutProps(),
     ...radiusProps(),
     ...spacingProps(),

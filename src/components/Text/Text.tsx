@@ -7,12 +7,19 @@ import { Simplify } from '@gilbarbara/types';
 import { useTheme } from '~/hooks/useTheme';
 
 import { textDefaultOptions } from '~/modules/options';
-import { baseStyles, colorStyles, getStyledOptions, textStyles } from '~/modules/system';
+import {
+  baseStyles,
+  colorStyles,
+  flexItemStyles,
+  getStyledOptions,
+  textStyles,
+} from '~/modules/system';
 
 import {
   StyledProps,
   WithChildren,
   WithColors,
+  WithFlexItem,
   WithHTMLAttributes,
   WithTextOptions,
 } from '~/types';
@@ -21,6 +28,7 @@ export interface TextKnownProps
   extends StyledProps,
     WithChildren,
     Pick<WithColors, 'color'>,
+    WithFlexItem,
     WithHTMLAttributes,
     WithTextOptions {}
 
@@ -35,6 +43,7 @@ export const StyledText = styled(
     display: inline-block;
     text-decoration: inherit;
     ${colorStyles(props)};
+    ${flexItemStyles(props)}
     ${textStyles(props)};
   `;
 });

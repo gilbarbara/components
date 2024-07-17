@@ -4,7 +4,13 @@ import { Chip, Paragraph } from '~';
 
 import { textDefaultOptions, textSizes } from '~/modules/options';
 
-import { colorProps, disableControl, hideProps, textOptionsProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  flexItemProps,
+  hideProps,
+  textOptionsProps,
+} from '~/stories/__helpers__';
 
 import { Text } from './Text';
 
@@ -21,6 +27,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexItemProps(),
     ...textOptionsProps(),
     children: { control: 'text' },
   },

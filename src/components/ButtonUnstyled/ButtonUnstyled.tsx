@@ -15,6 +15,7 @@ import {
   borderStyles,
   colorStyles,
   displayStyles,
+  flexItemStyles,
   getStyledOptions,
   layoutStyles,
   marginStyles,
@@ -36,6 +37,7 @@ import {
   WithDisableOutline,
   WithDisplay,
   WithFlexBox,
+  WithFlexItem,
   WithLayout,
   WithMargin,
   WithPadding,
@@ -52,6 +54,7 @@ export interface ButtonUnstyledKnownProps
     WithDisplay,
     WithDisableOutline,
     Pick<WithFlexBox, 'align' | 'justify'>,
+    WithFlexItem,
     WithLayout,
     WithMargin,
     WithPadding,
@@ -99,6 +102,7 @@ export const StyledButtonUnstyled = styled(
     ${borderStyles(props)};
     ${colorStyles(props)};
     ${displayStyles(props)};
+    ${flexItemStyles(props)};
     ${layoutStyles(props)};
     ${marginStyles(props)};
     ${paddingStyles(props)};

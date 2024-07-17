@@ -9,6 +9,7 @@ import {
   colorProps,
   COMPONENT_SIZES,
   disableControl,
+  flexItemProps,
   hideProps,
   paddingProps,
   radiusProps,
@@ -33,6 +34,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
+    ...flexItemProps(),
     ...paddingProps(),
     ...radiusProps(),
     children: { control: 'text' },

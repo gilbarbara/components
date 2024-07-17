@@ -5,6 +5,7 @@ import { H1, Icon, Spacer } from '~';
 import {
   colorProps,
   disableControl,
+  flexItemProps,
   hideProps,
   spacingProps,
   textOptionsProps,
@@ -26,6 +27,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(),
+    ...flexItemProps(),
     ...spacingProps(),
     ...textOptionsProps(),
     children: { control: 'text' },
