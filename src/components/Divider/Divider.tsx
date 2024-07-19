@@ -14,6 +14,7 @@ import {
   Direction,
   Sizes,
   Spacing,
+  SpacingOrZero,
   StyledProps,
   VariantWithTones,
   WithAlign,
@@ -59,6 +60,11 @@ export interface DividerKnownProps
    * @default 50
    */
   minBorderWidth?: StringOrNumber;
+  /**
+   * The divider margin
+   * @default md
+   */
+  spacing?: SpacingOrZero | [start: SpacingOrZero, end: SpacingOrZero];
 }
 
 export type DividerProps = Simplify<DividerKnownProps>;
@@ -79,6 +85,7 @@ export const defaultProps = {
   gap: 'xs',
   length: '100%',
   minBorderWidth: 50,
+  spacing: 'md',
   size: 'md',
 } satisfies DividerProps;
 
@@ -96,21 +103,38 @@ const StyledDivider = styled(
     gap,
     length,
     minBorderWidth,
+    spacing,
   } = props;
-  const { spacing, ...theme } = getTheme(props);
+  const { spacing: spacingTheme, ...theme } = getTheme(props);
   const isHorizontal = direction === 'horizontal';
 
-  const { mainColor } = getColorTokens(color, null, theme);
+  let marginStart: string | number = 0;
+  let marginEnd: string | number = 0;
+  let mainColor = color;
+
+  if (spacing) {
+    if (Array.isArray(spacing)) {
+      marginStart = spacing[0] ? spacingTheme[spacing[0]] : 0;
+      marginEnd = spacing[1] ? spacingTheme[spacing[1]] : 0;
+    } else {
+      marginStart = spacingTheme[spacing];
+      marginEnd = spacingTheme[spacing];
+    }
+  }
+
+  if (color !== 'transparent') {
+    ({ mainColor } = getColorTokens(color, null, theme));
+  }
 
   const selectedDimension = borderSizes[borderSize];
   const margin = isHorizontal
     ? css`
-        margin-bottom: ${spacing.md};
-        margin-top: ${spacing.md};
+        margin-bottom: ${marginStart};
+        margin-top: ${marginEnd};
       `
     : css`
-        margin-left: ${spacing.md};
-        margin-right: ${spacing.md};
+        margin-left: ${marginStart};
+        margin-right: ${marginEnd};
       `;
 
   if (isHorizontal && children) {
@@ -148,11 +172,11 @@ const StyledDivider = styled(
       }
 
       &:before {
-        margin-right: ${spacing[gap]};
+        margin-right: ${spacingTheme[gap]};
       }
 
       &:after {
-        margin-left: ${spacing[gap]};
+        margin-left: ${spacingTheme[gap]};
       }
     `;
   }
