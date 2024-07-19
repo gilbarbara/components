@@ -91,7 +91,7 @@ export const StyledNonIdealState = styled(
     text-align: ${direction === 'horizontal' ? 'left' : 'center'};
     width: 100%;
     ${baseStyles(props)};
-    ${colorStyles(props, false)};
+    ${colorStyles(props, { withoutBorder: true })};
     ${borderStyles(props)};
     ${flexItemStyles(props)};
     ${layoutStyles(props)};
@@ -182,7 +182,7 @@ export function NonIdealState(props: NonIdealStateProps) {
 
   if (children) {
     output.content = (
-      <Box mt={output.title ?? output.description ? 'xl' : undefined}>{children}</Box>
+      <Box mt={(output.title ?? output.description) ? 'xl' : undefined}>{children}</Box>
     );
   }
 

@@ -286,7 +286,7 @@ export function boxStyles<
 >(props: T) {
   return css`
     ${baseStyles(props)};
-    ${colorStyles(props, false)};
+    ${colorStyles(props, { withoutBorder: true })};
     ${borderStyles(props)};
     ${flexBoxStyles(props)};
     ${flexItemStyles(props)};
@@ -305,10 +305,16 @@ export const buttonStyles: CSSObject = {
   border: 0,
 };
 
-export function colorStyles<T extends WithColors & WithTheme & WithVariant>(
+interface ColorStylesOptions {
+  skipShadow?: boolean;
+  withoutBorder?: boolean;
+}
+
+export function colorStyles<T extends WithColors & WithTheme & { variant?: string }>(
   props: T,
-  withBorder = true,
+  options: ColorStylesOptions = {},
 ): CSSObject {
+  const { skipShadow, withoutBorder = false } = options;
   const theme = getTheme(props);
   const { bg, color, variant } = props;
   const isTransparent = !!variant && ['bordered', 'clean'].includes(variant);
@@ -325,11 +331,11 @@ export function colorStyles<T extends WithColors & WithTheme & WithVariant>(
       styles.color = textColor;
     }
 
-    if (withBorder) {
+    if (!withoutBorder) {
       styles.border = variant === 'clean' ? 0 : `1px solid ${mainColor}`;
     }
 
-    if (variant === 'shadow') {
+    if (variant === 'shadow' && !skipShadow) {
       const shadowColor = fade(mainColor, 50);
 
       styles.boxShadow = `0 6px 12px -3px ${shadowColor},0 4px 6px -4px ${shadowColor}`;
