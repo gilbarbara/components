@@ -120,7 +120,7 @@ export const StyledGrid = styled(
     row-gap: ${rowGap && px(rowGap)};
 
     ${baseStyles(props)};
-    ${colorStyles(props, false)};
+    ${colorStyles(props, { withoutBorder: true })};
     ${borderStyles(props)};
     ${displayStyles(props)};
     ${flexItemStyles(props)};
