@@ -1,3 +1,5 @@
+export type { AccordionProps } from '../components/Accordion/Accordion';
+export type { AccordionItemProps } from '../components/Accordion/AccordionItem';
 export type { AlertProps } from '../components/Alert/Alert';
 export type { AnchorProps } from '../components/Anchor/Anchor';
 export type { AspectRatioProps } from '../components/AspectRatio/AspectRatio';
