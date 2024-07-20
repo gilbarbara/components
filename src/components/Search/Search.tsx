@@ -11,11 +11,11 @@ import {
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, px } from '@gilbarbara/helpers';
-import { useMount, useSetState } from '@gilbarbara/hooks';
+import { useSetState } from '@gilbarbara/hooks';
 
+import { useKeyboardNavigation } from '~/hooks/useKeyboardNavigation';
 import { useTheme } from '~/hooks/useTheme';
 
-import KeyboardScope from '~/modules/keyboardScope';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
 import { ClickOutside } from '~/components/ClickOutside';
@@ -89,22 +89,11 @@ function SearchComponent(props: SearchProps) {
   const mainRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<HTMLDivElement>(null);
   const isMounted = useRef(false);
-  const scopeManager = useRef<KeyboardScope>();
   const timeout = useRef(0);
   const {
     getDataAttributes,
     theme: { dataAttributeName },
   } = useTheme();
-
-  useMount(() => {
-    if (!disableKeyboardNavigation) {
-      scopeManager.current = new KeyboardScope(mainRef.current, {
-        arrowNavigation: 'both',
-        escCallback: handleToggleList(false),
-        selector: `[data-${dataAttributeName}="SearchItem"]`,
-      });
-    }
-  });
 
   useEffect(() => {
     isMounted.current = true;
@@ -113,16 +102,6 @@ function SearchComponent(props: SearchProps) {
       isMounted.current = false;
     };
   }, []);
-
-  useEffect(() => {
-    if (active) {
-      scopeManager.current?.addScope();
-    }
-
-    return () => {
-      scopeManager.current?.removeScope();
-    };
-  }, [active]);
 
   const updateState = useCallback(
     (state: Parameters<typeof setState>[0]) => {
@@ -251,6 +230,23 @@ function SearchComponent(props: SearchProps) {
       updateState({ active: force ?? !active });
     };
   };
+
+  const { addScope, removeScope } = useKeyboardNavigation(mainRef, {
+    arrowNavigation: 'both',
+    disabled: disableKeyboardNavigation,
+    escCallback: handleToggleList(false),
+    selector: `[data-${dataAttributeName}="SearchItem"]`,
+  });
+
+  useEffect(() => {
+    if (active) {
+      addScope();
+    }
+
+    return () => {
+      removeScope();
+    };
+  }, [active, addScope, removeScope]);
 
   let prefixSpacing = borderless ? 32 : true;
 

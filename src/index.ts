@@ -59,6 +59,7 @@ export * from './components/Tooltip';
 export * from './components/Truncate';
 
 // Hooks
+export { useKeyboardNavigation } from './hooks/useKeyboardNavigation';
 export { useImage } from './hooks/useImage';
 export { useTheme } from './hooks/useTheme';
 
