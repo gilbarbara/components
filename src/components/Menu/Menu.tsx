@@ -2,14 +2,14 @@ import { forwardRef, KeyboardEvent, useCallback, useEffect, useId, useRef, useSt
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { mergeProps, omit } from '@gilbarbara/helpers';
-import { useLatest, useMergeRefs, useMount, useUpdateEffect } from '@gilbarbara/hooks';
+import { useLatest, useMergeRefs, useUpdateEffect } from '@gilbarbara/hooks';
 import { deepmerge } from 'deepmerge-ts';
 import is from 'is-lite';
 
+import { useKeyboardNavigation } from '~/hooks/useKeyboardNavigation';
 import { useTheme } from '~/hooks/useTheme';
 
 import { getTheme } from '~/modules/helpers';
-import KeyboardScope from '~/modules/keyboardScope';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { ClickOutside } from '~/components/ClickOutside';
@@ -65,44 +65,17 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
   const [active, setActive] = useState(open ?? false);
   const localRef = useRef<HTMLElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
-  const keyboardScope = useRef<KeyboardScope>();
   const onToggleRef = useLatest(onToggle);
   const id = useId();
   const { getDataAttributes, theme } = useTheme();
 
   const labels = deepmerge(defaultProps.labels, mergedProps.labels);
 
-  useMount(() => {
-    if (!disableKeyboardNavigation) {
-      keyboardScope.current = new KeyboardScope(localRef.current, {
-        arrowNavigation: 'both',
-        escCallback: handleToggleMenu(false),
-        selector: `#${id.replace(/:/g, '\\:')} > [data-${theme.dataAttributeName}="MenuItem"]`,
-      });
-    }
-  });
-
   useEffect(() => {
     if (is.boolean(open)) {
       setActive(open);
     }
   }, [open]);
-
-  useUpdateEffect(() => {
-    const scope = keyboardScope.current;
-
-    if (active) {
-      scope?.addScope();
-    }
-
-    onToggleRef.current?.(active);
-
-    return () => {
-      if (!is.boolean(open)) {
-        scope?.removeScope();
-      }
-    };
-  }, [active, onToggleRef, open]);
 
   const handleClickOutside = useCallback(() => {
     if (is.boolean(open) || disableCloseOnBlur) {
@@ -133,6 +106,27 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
     },
     [disabled, open],
   );
+
+  const { addScope, removeScope } = useKeyboardNavigation(localRef, {
+    arrowNavigation: 'both',
+    disabled: disableKeyboardNavigation,
+    escCallback: handleToggleMenu(false),
+    selector: `#${id.replace(/:/g, '\\:')} > [data-${theme.dataAttributeName}="MenuItem"]`,
+  });
+
+  useUpdateEffect(() => {
+    if (active) {
+      addScope();
+    }
+
+    onToggleRef.current?.(active);
+
+    return () => {
+      if (!is.boolean(open)) {
+        removeScope();
+      }
+    };
+  }, [active, addScope, onToggleRef, open, removeScope]);
 
   return (
     <StyledMenu
