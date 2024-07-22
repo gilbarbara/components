@@ -4,6 +4,7 @@ export type { AlertProps } from '../components/Alert/Alert';
 export type { AnchorProps } from '../components/Anchor/Anchor';
 export type { AspectRatioProps } from '../components/AspectRatio/AspectRatio';
 export type { AvatarProps } from '../components/Avatar/Avatar';
+export type { BadgeProps } from '../components/Badge/Badge';
 export type { BoxProps } from '../components/Box/Box';
 export type { ButtonProps } from '../components/Button/Button';
 export type { ButtonGroupProps } from '../components/ButtonGroup/ButtonGroup';
