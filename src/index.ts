@@ -3,6 +3,7 @@ export * from './components/Alert';
 export * from './components/Anchor';
 export * from './components/AspectRatio';
 export * from './components/Avatar';
+export * from './components/Badge';
 export * from './components/Box';
 export * from './components/Button';
 export * from './components/ButtonGroup';
