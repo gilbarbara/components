@@ -19,7 +19,7 @@ import { useTheme } from '~/hooks/useTheme';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
 import { ClickOutside } from '~/components/ClickOutside';
-import { ComponentWrapper } from '~/components/ComponentWrapper';
+import { FormElementWrapper } from '~/components/FormElementWrapper';
 import { Icon } from '~/components/Icon';
 import { Input } from '~/components/Input';
 
@@ -259,14 +259,14 @@ function SearchComponent(props: SearchProps) {
   return (
     <StyledSearch ref={mainRef} {...getDataAttributes('Search')} {...rest}>
       <ClickOutside active={active} onClick={close}>
-        <ComponentWrapper
-          prefix={
+        <FormElementWrapper
+          endContent={isBusy ? <Icon name="spinner" spin /> : undefined}
+          size={borderless ? [24, 40] : 40}
+          startContent={
             hideIcon ? undefined : (
               <Icon color={focus || value ? accent : undefined} name={icon} size={24} />
             )
           }
-          size={borderless ? [24, 40] : 40}
-          suffix={isBusy ? <Icon name="spinner" spin /> : undefined}
         >
           <Input
             accent={accent}
@@ -283,7 +283,7 @@ function SearchComponent(props: SearchProps) {
             prefixSpacing={prefixSpacing}
             value={value}
           />
-        </ComponentWrapper>
+        </FormElementWrapper>
         <Items
           ref={itemsRef}
           accent={accent}

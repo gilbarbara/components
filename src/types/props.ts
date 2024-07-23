@@ -13,7 +13,6 @@ export type { ButtonUnstyledProps } from '../components/ButtonUnstyled/ButtonUns
 export type { CheckboxProps, RadioProps } from '../components/CheckboxAndRadio/utils';
 export type { ClickOutsideProps } from '../components/ClickOutside/ClickOutside';
 export type { CollapseProps } from '../components/Collapse/Collapse';
-export type { ComponentWrapperProps } from '../components/ComponentWrapper/ComponentWrapper';
 export type { ContainerProps } from '../components/Container/Container';
 export type { CopyToClipboardProps } from '../components/CopyToClipboard/CopyToClipboard';
 export type {
@@ -34,6 +33,7 @@ export type { DropdownProps } from '../components/Dropdown/types';
 export type { EmojiProps } from '../components/Emoji/Emoji';
 export type { FieldProps } from '../components/Field/Field';
 export type { FormProps, FormRenderProps, FormSubmitHandler } from '../components/Form/Form';
+export type { FormElementWrapperProps } from '../components/FormElementWrapper/FormElementWrapper';
 export type { FormGroupProps } from '../components/FormGroup/FormGroup';
 export type { GridProps } from '../components/Grid/Grid';
 export type { HeadingProps, HeadingLargeProps } from '../components/Headings/utils';
