@@ -1,9 +1,10 @@
 import { ChangeEvent, forwardRef, useCallback, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
+import { mergeProps, px } from '@gilbarbara/helpers';
 import { useMergeRefs, useMount } from '@gilbarbara/hooks';
 import { Simplify } from '@gilbarbara/types';
+import is from 'is-lite';
 
 import { useTheme } from '~/hooks/useTheme';
 
@@ -28,7 +29,7 @@ export interface SelectKnownProps
     WithAccent,
     WithBorderless,
     WithChildren,
-    Omit<WithElementSpacing, 'suffixSpacing'>,
+    WithElementSpacing,
     WithFormElements,
     WithHeight {}
 
@@ -41,6 +42,7 @@ export const defaultProps = {
   height: 'md',
   multiple: false,
   prefixSpacing: false,
+  suffixSpacing: false,
   width: '100%',
 } satisfies Omit<SelectProps, 'children' | 'name'>;
 
@@ -48,10 +50,17 @@ export const StyledSelect = styled(
   'select',
   getStyledOptions(),
 )<SelectProps & { filled: boolean }>(props => {
-  const { accent = defaultProps.accent, filled, height = defaultProps.height, multiple } = props;
+  const {
+    accent = defaultProps.accent,
+    filled,
+    height = defaultProps.height,
+    multiple,
+    suffixSpacing,
+  } = props;
   const { darkColor, darkMode, grayScale, spacing, white, ...theme } = getTheme(props);
   const { mainColor } = getColorTokens(accent, null, theme);
 
+  let backgroundPosition = '12px';
   let color = grayScale['500'];
   const paddingY = selectPaddingY[height];
 
@@ -63,6 +72,10 @@ export const StyledSelect = styled(
     color = grayScale['500'];
   }
 
+  if (suffixSpacing) {
+    backgroundPosition = is.boolean(suffixSpacing) ? '40px' : px(suffixSpacing);
+  }
+
   return css`
     ${appearanceStyles};
     ${baseStyles(props)};
@@ -71,7 +84,7 @@ export const StyledSelect = styled(
       '%23',
     )}" /%3E%3C/svg%3E`}');
     background-repeat: no-repeat;
-    background-position: right 12px center;
+    background-position: right ${backgroundPosition} center;
     ${inputStyles(props, 'select')};
     color: ${color};
 

@@ -1,1 +1,0 @@
-export { ComponentWrapper } from './ComponentWrapper';

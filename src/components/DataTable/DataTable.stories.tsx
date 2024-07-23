@@ -11,9 +11,9 @@ import {
   Button,
   ButtonUnstyled,
   Chip,
-  ComponentWrapper,
   Dialog,
   Dropdown,
+  FormElementWrapper,
   H1,
   Icon,
   Input,
@@ -145,7 +145,7 @@ const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <Spacer ref={ref} data-testid="UserHeader" mb="lg">
-      <ComponentWrapper data-flex="1" prefix={<Icon name="search" size={24} />}>
+      <FormElementWrapper data-flex="1" startContent={<Icon name="search" size={24} />}>
         <Input
           accent={accent}
           name="name"
@@ -154,7 +154,7 @@ const UserHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
           prefixSpacing
           value={searchValue}
         />
-      </ComponentWrapper>
+      </FormElementWrapper>
       <Dropdown
         accent={accent}
         items={teams}

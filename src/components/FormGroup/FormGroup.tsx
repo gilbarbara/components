@@ -20,7 +20,7 @@ import {
 } from '~/modules/system';
 
 import { Box } from '~/components/Box';
-import { ComponentWrapper } from '~/components/ComponentWrapper';
+import { FormElementWrapper } from '~/components/FormElementWrapper';
 import { Icon } from '~/components/Icon';
 import { Label } from '~/components/Label';
 
@@ -169,11 +169,11 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
   }
 
   content.children = !skipIcon ? (
-    <ComponentWrapper
-      suffix={is.boolean(valid) && valid ? <Icon name="check-o" title="valid" /> : undefined}
+    <FormElementWrapper
+      endContent={is.boolean(valid) && valid ? <Icon name="check-o" title="valid" /> : undefined}
     >
       {children}
-    </ComponentWrapper>
+    </FormElementWrapper>
   ) : (
     children
   );
