@@ -103,6 +103,7 @@ export const StyledBadgeWrapper = styled(
     ${baseStyles(props)};
     display: flex;
     position: relative;
+    width: min-content;
     ${marginStyles(props)};
   `;
 });
