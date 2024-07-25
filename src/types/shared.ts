@@ -117,14 +117,6 @@ export interface WithDisabled {
   disabled?: boolean;
 }
 
-export interface WithDisableOutline {
-  /**
-   * Disable the outline on focus
-   * @default false
-   */
-  disableOutline?: boolean;
-}
-
 export interface WithDisplay {
   display?: StandardLonghandProperties['display'];
 }

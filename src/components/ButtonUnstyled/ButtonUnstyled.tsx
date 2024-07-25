@@ -34,7 +34,6 @@ import {
   WithBusy,
   WithChildren,
   WithColors,
-  WithDisableOutline,
   WithDisplay,
   WithFlexBox,
   WithFlexItem,
@@ -52,7 +51,6 @@ export interface ButtonUnstyledKnownProps
     WithChildren,
     Pick<WithColors, 'color'>,
     WithDisplay,
-    WithDisableOutline,
     Pick<WithFlexBox, 'align' | 'justify'>,
     WithFlexItem,
     WithLayout,
@@ -72,7 +70,6 @@ export const defaultProps = {
   align: 'center',
   busy: false,
   disabled: false,
-  disableOutline: false,
   type: 'button',
 } satisfies Omit<ButtonUnstyledProps, 'children'>;
 
