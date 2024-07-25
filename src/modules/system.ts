@@ -21,7 +21,6 @@ import {
   WithColors,
   WithDimension,
   WithDisabled,
-  WithDisableOutline,
   WithDisplay,
   WithElementSpacing,
   WithFlexBox,
@@ -651,18 +650,9 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
   return output;
 }
 
-export function outlineStyles<T extends WithTheme & WithDisableOutline>(color: string, props: T) {
-  const { disableOutline } = props;
+export function outlineStyles<T extends WithTheme>(color: string, props: T) {
   const theme = getTheme(props);
   const outline = getOutlineStyles(color, theme);
-
-  if (disableOutline) {
-    return css`
-      &:focus {
-        outline: none;
-      }
-    `;
-  }
 
   return css`
     @supports not selector(:focus-visible) {

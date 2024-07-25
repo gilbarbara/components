@@ -315,10 +315,6 @@ describe('outlineStyles', () => {
   it('should return properly', () => {
     expect(outlineStyles('#f04', {}).styles).toMatchSnapshot();
   });
-
-  it('should return "focus: none" with "disableOutline"', () => {
-    expect(outlineStyles('#f04', { disableOutline: true }).styles).toMatchSnapshot();
-  });
 });
 
 describe('paddingStyles', () => {

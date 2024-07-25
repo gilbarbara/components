@@ -28,7 +28,6 @@ import {
   WithButtonSize,
   WithChildren,
   WithColorsDefaultBg,
-  WithDisableOutline,
   WithLabel,
   WithTextOptions,
 } from '~/types';
@@ -40,7 +39,6 @@ export interface ButtonSplitKnownProps
     WithBusy,
     WithChildren,
     WithColorsDefaultBg,
-    WithDisableOutline,
     Required<WithLabel> {
   /**
    * Whether the button should only have a border
@@ -61,7 +59,6 @@ export const defaultProps = {
   bordered: false,
   busy: false,
   disabled: false,
-  disableOutline: false,
   position: 'bottom-right',
   size: 'md',
 } satisfies Omit<ButtonSplitProps, 'children' | 'label' | 'onClick'>;

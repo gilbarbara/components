@@ -467,14 +467,6 @@ exports[`marginStyles > should return properly for side values 1`] = `
 }
 `;
 
-exports[`outlineStyles > should return "focus: none" with "disableOutline" 1`] = `
-"
-      &:focus {
-        outline: none;
-      }
-    "
-`;
-
 exports[`outlineStyles > should return properly 1`] = `
 "
     @supports not selector(:focus-visible) {
