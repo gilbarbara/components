@@ -299,12 +299,6 @@ export function boxStyles<
   `;
 }
 
-export const buttonStyles: CSSObject = {
-  ...appearanceStyles,
-  backgroundColor: 'transparent',
-  border: 0,
-};
-
 interface ColorStylesOptions {
   skipShadow?: boolean;
   withoutBorder?: boolean;

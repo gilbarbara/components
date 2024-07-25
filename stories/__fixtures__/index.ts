@@ -1,17 +1,3 @@
-import { faker } from '@faker-js/faker';
-
-interface User {
-  avatar?: string;
-  code?: string;
-  createdAt: string;
-  email: string;
-  id?: string;
-  name: string;
-  role: string;
-  team: string;
-  username: string;
-}
-
 export const areas = [
   { label: 'Data', value: 'data' },
   { label: 'Design', value: 'design' },
@@ -62,27 +48,3 @@ export const seniorities = [
   { label: 'Specialist', value: 'specialist' },
   { label: 'Leadership', value: 'leadership' },
 ];
-
-function randomValue(value: string) {
-  return Math.round(Math.random()) ? value : '';
-}
-
-export function createRandomUser(): User {
-  const firstName = faker.person.firstName();
-  const lastName = faker.person.lastName();
-  const code = randomValue(faker.string.nanoid());
-
-  return {
-    avatar: faker.image.avatar(),
-    createdAt: faker.date.past().toISOString(),
-    code,
-    email: faker.internet
-      .email({ firstName, lastName, provider: 'example.com' })
-      .toLocaleLowerCase(),
-    name: `${firstName} ${lastName}`,
-    id: code ? '' : faker.string.uuid(),
-    username: faker.internet.userName({ firstName, lastName }),
-    team: faker.commerce.department(),
-    role: faker.helpers.fake(['admin', 'user']),
-  };
-}

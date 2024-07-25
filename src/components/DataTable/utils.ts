@@ -19,12 +19,6 @@ export function getRowKey<T extends DataTableRow<string>>(input: T, index: numbe
   return is.string(input.id) || is.number(input.id) ? input.id : index;
 }
 
-export function getRowValue<T extends DataTableRow<string>>(input: T, key: string) {
-  const item = input[key];
-
-  return is.plainObject(item) && 'value' in item ? item.value : innerText(item);
-}
-
 export function sortData<T extends string>(
   data: Array<DataTableRow<T>>,
   sortBy: T,
