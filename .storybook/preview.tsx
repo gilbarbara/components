@@ -8,30 +8,10 @@ import { DocsContainer } from '@storybook/addon-docs';
 import { useGlobals } from '@storybook/preview-api';
 import { GlobalTypes } from '@storybook/types';
 
-import { Box, mergeTheme } from '../src';
-import { colors as themeColors } from '../src/modules/theme';
-import { Theme, WithFlexBox, WithPadding } from '../src/types';
+import { Context, Story } from './Story';
 
-interface Context {
-  globals: {
-    appearance: 'light' | 'dark' | 'side-by-side';
-    backgrounds: { value: string };
-    color: keyof Theme['colors'];
-  };
-  parameters: {
-    align: string;
-    direction: WithFlexBox['direction'];
-    display: string;
-    justify: string;
-    layout: string;
-    maxWidth: number;
-    minHeight?: string;
-    minWidth: number;
-    padding: WithPadding['padding'];
-    paddingDocs: WithPadding['padding'];
-  };
-  viewMode: string;
-}
+import { mergeTheme } from '../src';
+import { colors as themeColors } from '../src/modules/theme';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -191,10 +171,9 @@ function Preview(StoryFn: FC, context: Context) {
   if (isDocs) {
     return (
       <ThemeProvider theme={customTheme(isDarkMode)}>
-        <Box
+        <Story
           ref={docsRef}
           align={align}
-          data-testid="StoryDocs"
           direction={direction}
           display={display}
           justify={justify}
@@ -204,7 +183,7 @@ function Preview(StoryFn: FC, context: Context) {
           style={{ color: isDarkMode ? '#fff' : '#101010' }}
         >
           <StoryFn />
-        </Box>
+        </Story>
       </ThemeProvider>
     );
   }
@@ -214,7 +193,7 @@ function Preview(StoryFn: FC, context: Context) {
       <>
         <ThemeProvider theme={customTheme(false)}>
           <ThemeBlock data-side="left" side="left">
-            <Box
+            <Story
               align={align}
               data-testid="Story-Left"
               direction={direction}
@@ -226,12 +205,12 @@ function Preview(StoryFn: FC, context: Context) {
               width="100%"
             >
               <StoryFn />
-            </Box>
+            </Story>
           </ThemeBlock>
         </ThemeProvider>
         <ThemeProvider theme={customTheme(true)}>
           <ThemeBlock data-side="right" side="right">
-            <Box
+            <Story
               align={align}
               data-testid="Story-Right"
               direction={direction}
@@ -243,7 +222,7 @@ function Preview(StoryFn: FC, context: Context) {
               width="100%"
             >
               <StoryFn />
-            </Box>
+            </Story>
           </ThemeBlock>
         </ThemeProvider>
       </>
@@ -252,7 +231,7 @@ function Preview(StoryFn: FC, context: Context) {
 
   return (
     <ThemeProvider theme={customTheme(isDarkMode)}>
-      <Box
+      <Story
         align={align}
         data-testid="Story"
         direction={direction}
@@ -266,7 +245,7 @@ function Preview(StoryFn: FC, context: Context) {
         width="100%"
       >
         <StoryFn />
-      </Box>
+      </Story>
     </ThemeProvider>
   );
 }
