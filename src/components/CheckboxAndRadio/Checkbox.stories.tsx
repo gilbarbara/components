@@ -1,11 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fireEvent, within } from '@storybook/test';
+import { expect, fireEvent, fn, within } from '@storybook/test';
 
 import { Spacer } from '~';
 
+import { sizes } from '~/modules/options';
+
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
-import { Checkbox, defaultProps } from './Checkbox';
+import { Checkbox, checkBoxDefaultProps } from './Checkbox';
 
 type Story = StoryObj<typeof Checkbox>;
 
@@ -13,7 +15,7 @@ export default {
   title: 'Inputs/Checkbox',
   component: Checkbox,
   args: {
-    ...defaultProps,
+    ...checkBoxDefaultProps,
     label: 'Label',
     name: 'checkbox',
   },
@@ -22,7 +24,6 @@ export default {
     ...colorProps(['accent']),
     ...marginProps(),
     label: { control: 'text' },
-    onChange: { action: 'onChange' },
   },
 } satisfies Meta<typeof Checkbox>;
 
@@ -35,10 +36,10 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer>
-      <Checkbox {...props} defaultChecked label="Small" name="sm" size="sm" />
-      <Checkbox {...props} label="Medium" name="md" size="md" />
-      <Checkbox {...props} label="Large" name="lg" size="lg" />
+    <Spacer distribution="center" gap="lg">
+      {sizes.map(size => (
+        <Checkbox key={size} {...props} label={size} name={size} size={size} />
+      ))}
     </Spacer>
   ),
 };
@@ -55,6 +56,9 @@ export const Disabled: Story = {
 
 export const Tests: Story = {
   tags: ['!dev', '!autodocs'],
+  args: {
+    onChange: fn(),
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

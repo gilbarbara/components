@@ -1,75 +1,17 @@
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FocusEventHandler,
-  forwardRef,
-  useRef,
-  useState,
-} from 'react';
+import { ChangeEvent, forwardRef, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
+import { px } from '@gilbarbara/helpers';
 
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { getDisableStyles, getStyledOptions, isDarkMode } from '~/modules/system';
+import { getDisableStyles, getStyledOptions } from '~/modules/system';
 import { inputHeight } from '~/modules/theme';
 
 import { Text } from '~/components/Text';
 
-import {
-  OmitElementProps,
-  StyledProps,
-  WithAccent,
-  WithBorderless,
-  WithFormElements,
-  WithHeight,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface InputColorKnownProps
-  extends StyledProps,
-    WithAccent,
-    WithBorderless,
-    WithFormElements,
-    WithHeight {
-  /**
-   * Get the value only when the color picker is closed.
-   */
-  onBlur?: FocusEventHandler<HTMLInputElement>;
-  /**
-   * Get the value every time the color changes.
-   */
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  /**
-   * Debounce onChange event in milliseconds.
-   * Set it to 0 for real-time events.
-   * @default 250
-   */
-  onChangeDebounce?: number;
-  placeholder?: string;
-  /**
-   * A 7-character string specifying an RGB color in hexadecimal format.
-   */
-  value?: string;
-}
-
-export type InputColorProps = Simplify<
-  OmitElementProps<HTMLInputElement, InputColorKnownProps, 'name' | 'type' | 'width'>
->;
-
-export const defaultProps = {
-  accent: 'primary',
-  borderless: false,
-  disabled: false,
-  height: 'md',
-  onChangeDebounce: 250,
-  placeholder: 'Select a color',
-  readOnly: false,
-  width: 'auto',
-} satisfies Omit<InputColorProps, 'name'>;
+import { InputColorProps, useInputColor } from './useInputColor';
 
 const StyledInputColor = styled(
   'div',
@@ -79,11 +21,11 @@ const StyledInputColor = styled(
     Pick<InputColorProps, 'accent' | 'borderless' | 'disabled' | 'height' | 'width'> & {
       isFilled: boolean;
     }
-  >
+  > &
+    WithTheme
 >(props => {
-  const { accent, borderless, disabled, isFilled, width } = props;
-  const { dataAttributeName, grayScale, radius, white, ...theme } = getTheme(props);
-  const darkMode = isDarkMode(props);
+  const { accent, borderless, disabled, isFilled, theme, width } = props;
+  const { darkMode, dataAttributeName, grayScale, radius, white } = theme;
   const { mainColor } = getColorTokens(accent, null, theme);
 
   let borderColor = darkMode ? grayScale['700'] : grayScale['500'];
@@ -125,10 +67,9 @@ const StyledInputColor = styled(
 const StyledLabel = styled(
   'label',
   getStyledOptions(),
-)<Required<Pick<InputColorProps, 'height'>>>(props => {
-  const { height } = props;
-  const { grayScale, radius, spacing } = getTheme(props);
-  const darkMode = isDarkMode(props);
+)<Required<Pick<InputColorProps, 'height'>> & WithTheme>(props => {
+  const { height, theme } = props;
+  const { darkMode, grayScale, radius, spacing } = theme;
   const size = parseInt(inputHeight[height], 10) - 10;
   const inputSize = px(size + 16);
 
@@ -159,6 +100,7 @@ const StyledLabel = styled(
 });
 
 export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useInputColor(props);
   const {
     accent,
     borderless,
@@ -169,13 +111,13 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
     onChangeDebounce,
     placeholder,
     readOnly,
+    theme,
     value: initialValue,
     width,
     ...rest
-  } = mergeProps(defaultProps, props);
+  } = componentProps;
   const [value, setValue] = useState<string>(initialValue ?? '');
   const debounceTimeout = useRef<number>(0);
-  const { getDataAttributes } = useTheme();
 
   const isDisabled = disabled || readOnly;
 
@@ -217,9 +159,10 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
       disabled={isDisabled}
       height={height}
       isFilled={!!value}
+      theme={theme}
       width={width}
     >
-      <StyledLabel {...getDataAttributes('InputColorLabel')} height={height}>
+      <StyledLabel {...getDataAttributes('InputColorLabel')} height={height} theme={theme}>
         <input
           ref={ref}
           disabled={isDisabled}
@@ -237,3 +180,5 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>((props, 
 });
 
 InputColor.displayName = 'InputColor';
+
+export { defaultProps, type InputColorProps } from './useInputColor';

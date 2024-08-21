@@ -1,5 +1,4 @@
 import {
-  AriaAttributes,
   ChangeEvent,
   cloneElement,
   forwardRef,
@@ -13,70 +12,16 @@ import {
 } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
+import { px } from '@gilbarbara/helpers';
 import { usePrevious, useUpdateEffect } from '@gilbarbara/hooks';
-import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
+import { PlainObject, SetRequired } from '@gilbarbara/types';
 import { VisuallyHidden } from '@react-aria/visually-hidden';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { baseStyles, getOutlineStyles, getStyledOptions, isDarkMode } from '~/modules/system';
+import { baseStyles, getOutlineStyles, getStyledOptions } from '~/modules/system';
 
-import {
-  StyledProps,
-  VariantWithTones,
-  WithAccent,
-  WithComponentSize,
-  WithDisabled,
-  WithHTMLAttributes,
-  WithLabel,
-} from '~/types';
-
-export interface ToggleKnownProps
-  extends StyledProps,
-    AriaAttributes,
-    WithAccent,
-    WithComponentSize,
-    WithDisabled,
-    WithHTMLAttributes,
-    WithLabel {
-  /** Status (controlled mode) */
-  checked?: boolean;
-  colorButton?: VariantWithTones | [unchecked: VariantWithTones, checked: VariantWithTones];
-  colorTrack?: VariantWithTones;
-  /**
-   * Initial status (uncontrolled mode)
-   * @default false
-   */
-  defaultChecked?: boolean;
-  iconEnd?: ReactNode;
-  iconStart?: ReactNode;
-  /**
-   * The name for the input element, used when submitting an HTML form.
-   */
-  name?: string;
-  /**
-   * Callback when the status changes (uncontrolled mode)
-   */
-  onChange?: (value: boolean) => void;
-  /**
-   * Callback when clicking/key down the toggle
-   */
-  onToggle?: (value: boolean) => void;
-  thumbIconChecked?: ReactNode;
-  thumbIconUnchecked?: ReactNode;
-}
-
-export type ToggleProps = Simplify<ToggleKnownProps>;
-
-interface InnerProps
-  extends SetRequired<ToggleProps, 'accent' | 'size'>,
-    Pick<ToggleProps, 'colorButton' | 'colorTrack'> {
-  isChecked: boolean;
-}
+import { ToggleInnerProps, ToggleProps, useToggle } from './useToggle';
 
 const styles = {
   sm: {
@@ -99,19 +44,12 @@ const styles = {
   },
 };
 
-export const defaultProps = {
-  accent: 'primary',
-  defaultChecked: false,
-  disabled: false,
-  size: 'md',
-} satisfies Omit<ToggleProps, 'label'>;
-
 const StyledLabel = styled(
   'label',
   getStyledOptions(),
-)<Pick<InnerProps, 'accent'>>(props => {
-  const { accent = 'primary' } = props;
-  const { dataAttributeName, radius, ...theme } = getTheme(props);
+)<Pick<ToggleInnerProps, 'accent' | 'theme'>>(props => {
+  const { accent, theme } = props;
+  const { dataAttributeName, radius } = theme;
   const { mainColor } = getColorTokens(accent, null, theme);
 
   return css`
@@ -133,12 +71,12 @@ const StyledLabel = styled(
 const StyledTrack = styled(
   'span',
   getStyledOptions(),
-)<InnerProps>(props => {
-  const { accent, colorTrack, isChecked } = props;
-  const { grayScale, radius, ...theme } = getTheme(props);
+)<ToggleInnerProps>(props => {
+  const { accent, colorTrack, isChecked, theme } = props;
+  const { darkMode, grayScale, radius } = theme;
 
   const { mainColor } = getColorTokens(accent, null, theme);
-  let backgroundColor = isDarkMode(props) ? grayScale['700'] : grayScale['200'];
+  let backgroundColor = darkMode ? grayScale['700'] : grayScale['200'];
 
   if (colorTrack) {
     backgroundColor = getColorTokens(colorTrack, null, theme).mainColor;
@@ -160,9 +98,9 @@ const StyledTrack = styled(
   `;
 });
 
-const StyledTrackIcon = styled('span')<InnerProps>(props => {
-  const { accent, isChecked, size } = props;
-  const { darkColor, grayScale, white, ...theme } = getTheme(props);
+const StyledTrackIcon = styled('span')<ToggleInnerProps>(props => {
+  const { accent, isChecked, size, theme } = props;
+  const { darkColor } = theme;
   const { textColor } = getColorTokens(accent, null, theme);
   const { height, space } = styles[size];
 
@@ -183,9 +121,9 @@ const StyledTrackIcon = styled('span')<InnerProps>(props => {
 const StyledButton = styled(
   'span',
   getStyledOptions(),
-)<InnerProps>(props => {
-  const { accent, colorButton, disabled, isChecked, size } = props;
-  const { grayScale, opacityDisabled, white, ...theme } = getTheme(props);
+)<ToggleInnerProps>(props => {
+  const { accent, colorButton, disabled, isChecked, size, theme } = props;
+  const { grayScale, opacityDisabled, white } = theme;
   const { mainColor } = getColorTokens(accent, null, theme);
 
   let backgroundColor = white;
@@ -225,13 +163,13 @@ const StyledButton = styled(
 
 export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggle'>, 'size'>>(
   props => {
-    const { disabled, label, size } = props;
-    const { opacityDisabled } = getTheme(props);
+    const { disabled, label, size, theme } = props;
+    const { opacityDisabled } = theme;
 
     const { height, width } = styles[size];
 
     return css`
-      ${baseStyles(props)};
+      ${baseStyles(theme)};
       cursor: ${disabled ? 'default' : 'pointer'};
       height: ${px(height)};
       margin-right: ${label ? '8px' : 0};
@@ -249,6 +187,7 @@ export const StyledToggle = styled('div')<SetRequired<Omit<ToggleProps, 'onToggl
  * This is required for accessibility.
  */
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useToggle(props);
   const {
     accent,
     as,
@@ -264,15 +203,13 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
     onChange,
     onToggle,
     size,
-    theme,
     thumbIconChecked,
     thumbIconUnchecked,
     ...rest
-  } = mergeProps(defaultProps, props);
+  } = componentProps;
   const [isChecked, setChecked] = useState(is.boolean(checked) ? checked : defaultChecked);
   const previousChecked = usePrevious(checked);
   const labelId = useId();
-  const { getDataAttributes } = useTheme();
 
   useUpdateEffect(() => {
     if (is.boolean(checked) && previousChecked !== checked) {
@@ -378,6 +315,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
         label={label}
         name={name}
         size={size}
+        theme={rest.theme}
       >
         <StyledTrack
           accent={accent}
@@ -385,6 +323,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
           {...getDataAttributes('ToggleTrack')}
           isChecked={isChecked}
           size={size}
+          theme={rest.theme}
         />
         <StyledButton
           accent={accent}
@@ -393,6 +332,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
           disabled={disabled}
           isChecked={isChecked}
           size={size}
+          theme={rest.theme}
         >
           {isChecked ? thumbIconChecked : thumbIconUnchecked}
         </StyledButton>
@@ -402,6 +342,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
             {...getDataAttributes('ToggleTrackIcon')}
             isChecked={isChecked}
             size={size}
+            theme={rest.theme}
           >
             {iconStart}
           </StyledTrackIcon>
@@ -412,6 +353,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
             {...getDataAttributes('ToggleTrackIcon')}
             isChecked={isChecked}
             size={size}
+            theme={rest.theme}
           >
             {iconEnd}
           </StyledTrackIcon>
@@ -423,3 +365,5 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
 });
 
 Toggle.displayName = 'Toggle';
+
+export { defaultProps, type ToggleProps } from './useToggle';

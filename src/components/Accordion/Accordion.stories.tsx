@@ -1,5 +1,6 @@
 import { cloneElement, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, within } from '@storybook/test';
 
 import { Avatar, Box, Icon, Paragraph, Spacer, Text } from '~';
 
@@ -7,6 +8,7 @@ import users from '~/stories/__fixtures__/users.json';
 import {
   colorProps,
   disableControl,
+  flexItems,
   hideProps,
   layoutProps,
   radiusProps,
@@ -102,6 +104,7 @@ export default {
     ...radiusProps(),
     ...spacingProps(),
     children: disableControl(),
+    headerAlign: { control: 'select', options: ['', ...flexItems] },
   },
 } satisfies Meta<typeof Accordion>;
 
@@ -178,7 +181,7 @@ export const Variants: Story = {
         Accordion has 4 variants: <Code>clean</Code>, <Code>bordered</Code>, <Code>shadow</Code> and{' '}
         <Code>split</Code>.{' '}
       </Description>
-      <Spacer direction="vertical" gap="xxxl">
+      <Spacer gap="xxxl" orientation="vertical">
         <Box>
           <Paragraph mb="lg" size="lg">
             clean
@@ -249,6 +252,7 @@ export const CustomToggle: Story = {
 
 export const Customized: Story = {
   args: {
+    compact: true,
     hideDivider: true,
     variant: 'shadow',
     width: 330,
@@ -347,4 +351,77 @@ export const DisabledIds: Story = {
       </Description>
     </>
   ),
+};
+
+export const Tests: Story = {
+  tags: ['!dev', '!autodocs'],
+  args: {
+    onChange: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Accordion');
+
+    const [first, second, third] = canvas.getAllByRole('region');
+
+    await expect(first).toHaveAttribute('aria-expanded', 'false');
+    await expect(second).toHaveAttribute('aria-expanded', 'false');
+    await expect(third).toHaveAttribute('aria-expanded', 'false');
+
+    await userEvent.click(first);
+    await expect(first).toHaveAttribute('aria-expanded', 'true');
+    await expect(second).toHaveAttribute('aria-expanded', 'false');
+    await expect(third).toHaveAttribute('aria-expanded', 'false');
+    await expect(args.onChange).toHaveBeenCalledWith(['1']);
+
+    await userEvent.click(second);
+    await expect(second).toHaveAttribute('aria-expanded', 'true');
+    await expect(first).toHaveAttribute('aria-expanded', 'false');
+    await expect(third).toHaveAttribute('aria-expanded', 'false');
+    await expect(args.onChange).toHaveBeenCalledWith(['2']);
+
+    await userEvent.click(third);
+    await expect(third).toHaveAttribute('aria-expanded', 'true');
+    await expect(first).toHaveAttribute('aria-expanded', 'false');
+    await expect(second).toHaveAttribute('aria-expanded', 'false');
+    await expect(args.onChange).toHaveBeenCalledWith(['3']);
+  },
+};
+
+export const TestsWithMultiple: Story = {
+  tags: ['!dev', '!autodocs'],
+  args: {
+    selectionMode: 'multiple',
+    onChange: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Accordion');
+
+    const [first, second, third] = canvas.getAllByRole('region');
+
+    await expect(first).toHaveAttribute('aria-expanded', 'false');
+    await expect(second).toHaveAttribute('aria-expanded', 'false');
+    await expect(third).toHaveAttribute('aria-expanded', 'false');
+
+    await userEvent.click(first);
+    await expect(first).toHaveAttribute('aria-expanded', 'true');
+    await expect(second).toHaveAttribute('aria-expanded', 'false');
+    await expect(third).toHaveAttribute('aria-expanded', 'false');
+    await expect(args.onChange).toHaveBeenCalledWith(['1']);
+
+    await userEvent.click(second);
+    await expect(second).toHaveAttribute('aria-expanded', 'true');
+    await expect(first).toHaveAttribute('aria-expanded', 'true');
+    await expect(third).toHaveAttribute('aria-expanded', 'false');
+    await expect(args.onChange).toHaveBeenCalledWith(['1', '2']);
+
+    await userEvent.click(third);
+    await expect(third).toHaveAttribute('aria-expanded', 'true');
+    await expect(first).toHaveAttribute('aria-expanded', 'true');
+    await expect(second).toHaveAttribute('aria-expanded', 'true');
+    await expect(args.onChange).toHaveBeenCalledWith(['1', '2', '3']);
+  },
 };

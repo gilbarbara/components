@@ -1,15 +1,14 @@
-import { useTheme } from '@emotion/react';
-import { objectKeys, sleep } from '@gilbarbara/helpers';
+import { sleep } from '@gilbarbara/helpers';
 import { SetRequired } from '@gilbarbara/types';
 import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
 import { clearAllMocks, expect, fireEvent, fn, waitFor, within } from '@storybook/test';
 
-import { Box, Grid, Icon, Paragraph, Tooltip } from '~';
+import { Flex, Grid, Icon, Paragraph, Tooltip } from '~';
 
-import { getTheme } from '~/modules/helpers';
+import { sizes } from '~/modules/options';
 
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, VARIANTS } from '~/stories/__helpers__';
 
 import { defaultProps, Toggle, ToggleProps } from './Toggle';
 
@@ -23,7 +22,6 @@ export default {
     ...hideProps(),
     ...colorProps(['accent']),
     label: { control: 'text' },
-    onToggle: { action: 'onToggle' },
   },
 } satisfies Meta<typeof Toggle>;
 
@@ -85,8 +83,8 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      {(['sm', 'md', 'lg'] as const).map(size => (
+    <Grid gap="lg" templateColumns="repeat(3, 1fr)">
+      {sizes.map(size => (
         <Toggle key={size} {...props} defaultChecked label={size} size={size} />
       ))}
     </Grid>
@@ -100,11 +98,9 @@ export const Colors: Story = {
     name: disableControl(),
   },
   render: function Render(props) {
-    const { variants } = getTheme({ theme: useTheme() });
-
     return (
-      <Grid gap={30} templateColumns="repeat(3, 1fr)">
-        {([...objectKeys(variants), 'black', 'white'] as const).map(color => (
+      <Grid gap="lg" templateColumns="repeat(3, 1fr)">
+        {VARIANTS.map(color => (
           <Toggle key={color} {...props} accent={color} defaultChecked label={color} name={color} />
         ))}
       </Grid>
@@ -125,10 +121,10 @@ export const Controlled: Story = {
     };
 
     return (
-      <Box direction="column" flexBox justify="start">
+      <Flex direction="column" justify="start">
         <Toggle {...props} onToggle={handleToggle} title={props.label as string} />
         <Paragraph mt="xs">Selected: {checked?.toString()}</Paragraph>
-      </Box>
+      </Flex>
     );
   },
 };

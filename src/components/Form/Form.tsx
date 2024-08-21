@@ -1,18 +1,7 @@
-import { JSX } from 'react';
-import { FieldValues, FormProvider, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
-import { PlainObject, Simplify } from '@gilbarbara/types';
+import { FormProvider, useForm as useHookForm } from 'react-hook-form';
+import { PlainObject } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
-export interface FormRenderProps<T extends FieldValues = FieldValues> {
-  formMethods: UseFormReturn<T>;
-}
-
-export type FormProps<T extends FieldValues> = Simplify<
-  UseFormProps<T> & {
-    children: (props: FormRenderProps<T>) => JSX.Element;
-  }
->;
+import { FormProps, useForm } from './useForm';
 
 /**
  A wrapper for the `react-hook-form` FormProvider for use with the **Field** component.
@@ -49,23 +38,20 @@ export type FormProps<T extends FieldValues> = Simplify<
  }
  ```
  */
-export function Form<T extends PlainObject<any> = PlainObject<any>>({
-  children,
-  ...props
-}: FormProps<T>) {
-  const formMethods = useForm<T>({
+export function Form<T extends PlainObject<any> = PlainObject<any>>(props: FormProps<T>) {
+  const {
+    componentProps: { children, ...rest },
+  } = useForm(props);
+  const formMethods = useHookForm<T>({
     mode: 'onChange',
-    ...props,
+    ...rest,
   });
-  const { getDataAttributes } = useTheme();
 
-  return (
-    <FormProvider {...getDataAttributes('Form')} {...formMethods}>
-      {children({ formMethods })}
-    </FormProvider>
-  );
+  return <FormProvider {...formMethods}>{children({ formMethods })}</FormProvider>;
 }
 
 Form.displayName = 'Form';
 
 export type { SubmitHandler as FormSubmitHandler } from 'react-hook-form';
+
+export type { FormProps, FormRenderProps } from './useForm';

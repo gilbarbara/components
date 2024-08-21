@@ -87,6 +87,8 @@ export const shadow = {
 };
 
 export const spacing = {
+  /** @default 2px */
+  xxxs: '2px',
   /** @default 4px */
   xxs: '4px',
   /** @default 8px */
@@ -355,6 +357,14 @@ export const button = {
     height: '48px',
     lineHeight: 1.4,
     padding: ['10px', '20px'],
+  },
+  xl: {
+    borderRadius: '8px',
+    fontSize: '24px',
+    fontWeight: 700,
+    height: '56px',
+    lineHeight: 1.4,
+    padding: ['12px', '24px'],
   },
 };
 

@@ -657,6 +657,7 @@ export const iconsCustom = [
   { name: 'organization' as const, categories: ['ui'] },
   { name: 'package' as const, categories: ['misc'] },
   { name: 'paintbrush' as const, categories: ['ui'] },
+  { name: 'palette' as const, categories: ['ui'] },
   { name: 'paperclip' as const, categories: ['ui'] },
   { name: 'password' as const, categories: ['ui'] },
   { name: 'patreon' as const, categories: ['brand'] },

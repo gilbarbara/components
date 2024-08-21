@@ -1,52 +1,28 @@
 import { ChangeEvent, forwardRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { Simplify, StringOrNull } from '@gilbarbara/types';
+import { px } from '@gilbarbara/helpers';
+import { StringOrNull } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
 import { baseStyles, getStyledOptions } from '~/modules/system';
 
-import { BoxInline } from '~/components/Box';
 import { Button } from '~/components/Button';
+import { FlexInline } from '~/components/Flex';
 import { Truncate } from '~/components/Truncate';
 
-import { OmitElementProps, StyledProps, WithAccent, WithFormElements, WithHeight } from '~/types';
+import { WithTheme } from '~/types';
 
-export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormElements, WithHeight {
-  /**
-   * Solid color
-   * @default false
-   */
-  solid?: boolean;
-  value?: string;
-}
-
-export type InputFileProps = Simplify<
-  OmitElementProps<HTMLInputElement, InputFileKnownProps, 'name' | 'type' | 'width'>
->;
-
-export const defaultProps = {
-  accent: 'primary',
-  disabled: false,
-  height: 'md',
-  placeholder: 'Upload a file',
-  readOnly: false,
-  solid: false,
-  width: '100%',
-} satisfies Omit<InputFileProps, 'name'>;
+import { InputFileProps, useInputFile } from './useInputFile';
 
 export const StyledFileInput = styled(
   'div',
   getStyledOptions(),
-)<Partial<InputFileProps>>(props => {
-  const { width } = props;
-  const { dataAttributeName, spacing } = getTheme(props);
+)<Partial<InputFileProps> & WithTheme>(props => {
+  const { theme, width } = props;
+  const { dataAttributeName, spacing } = theme;
 
   return css`
-    ${baseStyles(props)};
+    ${baseStyles(theme)};
     align-items: center;
     display: flex;
     width: ${px(width)};
@@ -78,10 +54,10 @@ export const StyledInput = styled('input', getStyledOptions())`
 `;
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useInputFile(props);
   const { accent, disabled, height, name, onChange, placeholder, readOnly, solid, value, ...rest } =
-    mergeProps(defaultProps, props);
+    componentProps;
   const [localValue, setLocalValue] = useState<StringOrNull>(null);
-  const { getDataAttributes } = useTheme();
 
   const isDisabled = disabled || readOnly;
 
@@ -95,7 +71,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
 
   return (
     <StyledFileInput {...getDataAttributes('InputFile')} {...rest}>
-      <BoxInline position="relative">
+      <FlexInline position="relative">
         <Button
           bg={accent}
           disabled={isDisabled}
@@ -106,10 +82,12 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>((props, re
           {placeholder}
         </Button>
         <StyledInput ref={ref} id={name} name={name} onChange={handleChange} type="file" />
-      </BoxInline>
+      </FlexInline>
       <Truncate maxWidth="100%">{localValue ?? value}</Truncate>
     </StyledFileInput>
   );
 });
 
 InputFile.displayName = 'InputFile';
+
+export { defaultProps, type InputFileProps } from './useInputFile';

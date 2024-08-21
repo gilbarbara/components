@@ -1,62 +1,14 @@
 import { isValidElement, ReactNode } from 'react';
-import { Simplify } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { Box } from '~/components/Box';
-import { Collapse, CollapseProps } from '~/components/Collapse/Collapse';
+import { Collapse } from '~/components/Collapse/Collapse';
+import { FlexInline } from '~/components/Flex';
 import { Text } from '~/components/Text';
 
-export interface AccordionItemKnownProps
-  extends Omit<
-    CollapseProps,
-    | 'bottomToggle'
-    | 'defaultOpen'
-    | 'hideHeaderToggle'
-    | 'initialHeight'
-    | 'maxHeight'
-    | 'showBottomToggle'
-  > {
-  /**
-   * Make the accordion item compact.
-   */
-  compact?: boolean;
-  /**
-   * Disable the accordion item.
-   * @default false
-   */
-  disabled?: boolean;
-  // indicator	IndicatorProps	The accordion item expanded indicator, usually an arrow icon.
-  /**
-   * Hide the toggle.
-   * @default false
-   */
-  hideToggle?: boolean;
-  /**
-   * The accordion item id.
-   */
-  id: string;
-  /**
-   * The accordion item start content, usually an icon or avatar.
-   */
-  startContent?: ReactNode;
-  /**
-   * The accordion item subtitle.
-   */
-  subtitle?: ReactNode;
-  /**
-   * The accordion item title.
-   */
-  title: ReactNode;
-}
-
-export type AccordionItemBaseProps = Simplify<AccordionItemKnownProps>;
-export type AccordionItemProps = Omit<AccordionItemBaseProps, 'compact' | 'open' | 'onToggle' | ''>;
+import { AccordionItemBaseProps, AccordionItemProps, useAccordionItem } from './useAccordion';
 
 export function AccordionItemBase(props: AccordionItemBaseProps) {
-  const { children, compact, hideToggle, startContent, subtitle, title } = props;
-
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useAccordionItem(props);
+  const { children, compact, headerAlign, hideToggle, subtitle, title, ...rest } = componentProps;
 
   const content: Record<string, ReactNode> = {
     title: isValidElement(title) ? title : <Text size={compact ? 'md' : 'lg'}>{title}</Text>,
@@ -70,37 +22,25 @@ export function AccordionItemBase(props: AccordionItemBaseProps) {
     );
   }
 
-  if (startContent) {
-    content.startContent = isValidElement(startContent) ? (
-      startContent
-    ) : (
-      <span {...getDataAttributes('AccordionItemStartContent')}>{startContent}</span>
-    );
-  }
-
   content.header = (
-    <Box
-      align="center"
-      as="span"
+    <FlexInline
       {...getDataAttributes('AccordionItemWrapper')}
+      align={headerAlign}
+      direction="column"
       flex
-      flexBox
-      gap={12}
       py={compact ? undefined : 'xs'}
     >
-      {content.startContent}
-      <Box as="span" {...getDataAttributes('AccordionItemHeading')} direction="column" flex flexBox>
-        {content.title}
-        {content.subtitle}
-      </Box>
-    </Box>
+      {content.title}
+      {content.subtitle}
+    </FlexInline>
   );
 
   return (
     <Collapse
       componentName="AccordionItem"
       hideHeaderToggle={hideToggle}
-      {...props}
+      {...rest}
+      role="region"
       title={content.header}
     >
       {children}
@@ -111,3 +51,5 @@ export function AccordionItemBase(props: AccordionItemBaseProps) {
 export function AccordionItem(props: AccordionItemProps) {
   return <AccordionItemBase {...props} />;
 }
+
+export { type AccordionItemProps } from './useAccordion';

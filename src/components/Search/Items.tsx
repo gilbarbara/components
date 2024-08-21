@@ -4,23 +4,19 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
+import { getStyledOptions } from '~/modules/system';
 
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
-
-import { Theme } from '~/types';
+import { Theme, WithTheme } from '~/types';
 
 import Item from './Item';
-import { SearchItemsProps } from './types';
+import { SearchItemsProps } from './useSearch';
 
 const StyledSearchItems = styled(
   'div',
   getStyledOptions(),
-)<{ active: boolean; height: StringOrNumber }>(props => {
-  const { active, height } = props;
-  const { grayScale, radius, shadow, spacing, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
+)<WithTheme & { active: boolean; height: StringOrNumber }>(props => {
+  const { active, height, theme } = props;
+  const { darkMode, grayScale, radius, shadow, spacing, white } = theme;
 
   return css`
     background-color: ${darkMode ? grayScale['800'] : white};
@@ -56,8 +52,8 @@ function getSharedStyles(spacing: Theme['spacing']) {
 const Empty = styled(
   'div',
   getStyledOptions(),
-)(props => {
-  const { spacing } = getTheme(props);
+)<WithTheme>(props => {
+  const { spacing } = props.theme;
 
   return css`
     ${getSharedStyles(spacing)};
@@ -66,9 +62,19 @@ const Empty = styled(
 });
 
 const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) => {
-  const { accent, active, cursor, height, isBusy, items, noResultsLabel, onSelect } = props;
+  const {
+    accent,
+    active,
+    cursor,
+    getDataAttributes,
+    height,
+    isBusy,
+    items,
+    noResultsLabel,
+    onSelect,
+    theme,
+  } = props;
   const isActive = useRef(false);
-  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     isActive.current = true;
@@ -80,14 +86,16 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
 
   const content =
     !items.length && !isBusy ? (
-      <Empty>{noResultsLabel}</Empty>
+      <Empty theme={theme}>{noResultsLabel}</Empty>
     ) : (
       items.map((data, index) => (
         <Item
           key={data.value}
           accent={data.accent ?? accent}
+          getDataAttributes={getDataAttributes}
           isSelected={cursor === index}
           onSelect={onSelect}
+          theme={theme}
           value={data.value}
         >
           {data.label ?? data.value}
@@ -102,6 +110,7 @@ const SearchItems = forwardRef<HTMLDivElement, SearchItemsProps>((props, ref) =>
       {...getDataAttributes('SearchItems')}
       height={height}
       role="list"
+      theme={theme}
     >
       {content}
     </StyledSearchItems>

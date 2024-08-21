@@ -7,15 +7,14 @@ import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 import { useTheme } from '~/hooks/useTheme';
 
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
+import { getStyledOptions } from '~/modules/system';
 
-import { BoxInline } from '~/components/Box';
+import { FlexInline } from '~/components/Flex';
 
-import { Theme, WithAccent, WithDisabled } from '~/types';
+import { Theme, WithAccent, WithDisabled, WithTheme } from '~/types';
 
 import Add from './Add';
-import { DropdownProps } from './types';
+import { DropdownProps } from './useDropdown';
 
 interface DropdownItemsProps
   extends WithAccent,
@@ -32,9 +31,9 @@ const getSharedStyles = (spacing: Theme['spacing']) => css`
 const Centered = styled(
   'div',
   getStyledOptions(),
-)<{ withBorder: boolean }>(props => {
-  const { withBorder } = props;
-  const { grayScale, spacing } = getTheme(props);
+)<WithTheme & { withBorder: boolean }>(props => {
+  const { theme, withBorder } = props;
+  const { grayScale, spacing } = theme;
 
   return css`
     ${getSharedStyles(spacing)};
@@ -47,8 +46,8 @@ const Centered = styled(
 const Empty = styled(
   'div',
   getStyledOptions(),
-)(props => {
-  const { spacing } = getTheme(props);
+)<WithTheme>(props => {
+  const { spacing } = props.theme;
 
   return css`
     ${getSharedStyles(spacing)};
@@ -59,9 +58,9 @@ const Empty = styled(
 const Input = styled(
   'input',
   getStyledOptions(),
-)<WithAccent>(props => {
-  const { accent = 'primary' } = props;
-  const { radius, ...theme } = getTheme(props);
+)<WithAccent & WithTheme>(props => {
+  const { accent = 'primary', theme } = props;
+  const { radius } = theme;
   const { mainColor } = getColorTokens(accent, null, theme);
 
   return css`
@@ -77,9 +76,9 @@ const Input = styled(
 const Item = styled(
   'div',
   getStyledOptions(),
-)<WithAccent & WithDisabled & { hovered: boolean; selected: boolean }>(props => {
-  const { accent = 'primary', disabled, hovered, selected } = props;
-  const { darkMode, grayScale, spacing, white, ...theme } = getTheme(props);
+)<WithAccent & WithDisabled & WithTheme & { hovered: boolean; selected: boolean }>(props => {
+  const { accent = 'primary', disabled, hovered, selected, theme } = props;
+  const { darkMode, grayScale, spacing, white } = theme;
   const { mainColor, textColor } = getColorTokens(accent, null, theme);
   const { mainColor: bgHoverLight, textColor: colorHoverLight } = getColorTokens(
     `${accent}.50`,
@@ -130,10 +129,9 @@ const Item = styled(
 const List = styled(
   'div',
   getStyledOptions(),
-)<{ maxHeight?: StringOrNumber }>(props => {
-  const { maxHeight } = props;
-  const { grayScale, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
+)<WithTheme & { maxHeight?: StringOrNumber }>(props => {
+  const { maxHeight, theme } = props;
+  const { darkMode, grayScale, white } = theme;
 
   return css`
     background-color: ${darkMode ? grayScale['800'] : white};
@@ -147,9 +145,8 @@ const List = styled(
 const Items = styled(
   'div',
   getStyledOptions(),
-)(props => {
-  const { grayScale, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
+)<WithTheme>(props => {
+  const { darkMode, grayScale, white } = props.theme;
 
   return css`
     background-color: ${darkMode ? grayScale['800'] : white};
@@ -160,9 +157,8 @@ const Items = styled(
 const Search = styled(
   'div',
   getStyledOptions(),
-)(props => {
-  const { darkColor, grayScale, lightColor, spacing, typography, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
+)<WithTheme>(props => {
+  const { darkColor, darkMode, grayScale, lightColor, spacing, typography, white } = props.theme;
 
   return css`
     ${getSharedStyles(spacing)};
@@ -187,7 +183,7 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
   const { addItem, getLabels, getStyles, removeItem, setSearch } = methods;
   const { autoFocus, create, options, searchable } = props;
   const { cursor, search, values } = state;
-  const { getDataAttributes } = useTheme();
+  const { getDataAttributes, theme } = useTheme();
 
   const searchInput = useRef<HTMLInputElement>(null);
 
@@ -195,7 +191,14 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
 
   if (create) {
     children = (
-      <Add accent={accent} methods={methods} onCreate={onCreate} props={props} state={state} />
+      <Add
+        accent={accent}
+        methods={methods}
+        onCreate={onCreate}
+        props={props}
+        state={state}
+        theme={theme}
+      />
     );
   }
 
@@ -234,17 +237,18 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
           onClick={() => (isSelected ? removeItem(null, option, false) : addItem(option))}
           role="listitem"
           selected={isSelected}
+          theme={theme}
         >
           {prefix && (
-            <BoxInline {...getDataAttributes('DropdownOptionPrefix')} mr="xxs">
+            <FlexInline {...getDataAttributes('DropdownOptionPrefix')} mr="xxs">
               {prefix}
-            </BoxInline>
+            </FlexInline>
           )}
-          <BoxInline flex="grow">{label ?? value}</BoxInline>
+          <FlexInline flex="grow">{label ?? value}</FlexInline>
           {suffix && (
-            <BoxInline {...getDataAttributes('DropdownOptionSuffix')} ml="xxs">
+            <FlexInline {...getDataAttributes('DropdownOptionSuffix')} ml="xxs">
               {suffix}
-            </BoxInline>
+            </FlexInline>
           )}
         </Item>
       );
@@ -255,27 +259,38 @@ function DropdownItems({ accent, methods, onCreate, onSearch, props, state }: Dr
   };
 
   if (children && !availableOptions.length) {
-    output.create = <Centered withBorder={!!availableOptions.length}>{children}</Centered>;
+    output.create = (
+      <Centered theme={theme} withBorder={!!availableOptions.length}>
+        {children}
+      </Centered>
+    );
   }
 
   if (!children && !availableOptions.length) {
-    output.options = <Empty>{getLabels().noData}</Empty>;
+    output.options = <Empty theme={theme}>{getLabels().noData}</Empty>;
   }
 
   return (
-    <List {...getDataAttributes('DropdownItems')} maxHeight={getStyles().menuMaxHeight}>
+    <List
+      {...getDataAttributes('DropdownItems')}
+      maxHeight={getStyles().menuMaxHeight}
+      theme={theme}
+    >
       {searchable && (
-        <Search {...getDataAttributes('DropdownItemsSearch')}>
+        <Search {...getDataAttributes('DropdownItemsSearch')} theme={theme}>
           <Input
             ref={searchInput}
             accent={accent}
             onChange={handleSearch}
+            theme={theme}
             type="text"
             value={search}
           />
         </Search>
       )}
-      <Items {...getDataAttributes('DropdownItemsList')}>{output.options}</Items>
+      <Items {...getDataAttributes('DropdownItemsList')} theme={theme}>
+        {output.options}
+      </Items>
       {output.create}
     </List>
   );

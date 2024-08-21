@@ -1,148 +1,98 @@
 import { cloneElement, isValidElement, ReactElement, ReactNode, useId } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { SetRequired, Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
+import { px } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 
 import { getColorTokens, getColorWithTone } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
 import { Text } from '~/components/Text';
 
-import {
-  Position,
-  Spacing,
-  StyledProps,
-  Tone,
-  Variant,
-  WithHTMLAttributes,
-  WithMargin,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface StatusIndicatorKnownProps extends StyledProps, WithHTMLAttributes, WithMargin {
-  /**
-   * The size of the inner circle relative to the outer circle.
-   * @default 0.7
-   */
-  borderRatio?: number;
-  /** Component color */
-  color?: Variant | string;
-  /**
-   * The gap between the component and the label.
-   * @default xxs
-   */
-  gap?: Spacing;
-  /**
-   * The icon to display inside the component.
-   */
-  icon?: ReactNode;
-  label?: ReactNode;
-  /**
-   * The position of the label.
-   * @default 'bottom'
-   */
-  labelPosition?: Position;
-  /**
-   * The size of the component.
-   * @default 24
-   */
-  size?: number;
-  /**
-   * The inner circle color tone.
-   * @default 100
-   */
-  tone?: Tone;
-}
+import { StatusIndicatorProps, useStatusIndicator } from './useStatusIndicator';
 
-export type StatusIndicatorProps = Simplify<StatusIndicatorKnownProps>;
+const StyledStatusIndicatorWrapper = styled('div', getStyledOptions())<
+  Required<Pick<StatusIndicatorProps, 'gap' | 'labelPosition'>> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    display: 'inline-flex',
+    justifyContent: 'center',
+  },
+  props => {
+    const { gap, labelPosition, theme } = props;
+    const { spacing } = theme;
 
-export const defaultProps = {
-  borderRatio: 0.7,
-  color: 'green',
-  gap: 'xxs',
-  labelPosition: 'bottom',
-  tone: '100',
-  size: 24,
-} satisfies StatusIndicatorProps;
+    const flexDirectionMap = {
+      bottom: 'column',
+      left: 'row-reverse',
+      right: 'row',
+      top: 'column-reverse',
+    };
 
-const StyledStatusIndicatorWrapper = styled(
-  'div',
-  getStyledOptions(),
-)<Required<Pick<StatusIndicatorProps, 'gap' | 'labelPosition'>>>(props => {
-  const { gap, labelPosition } = props;
-  const { spacing } = getTheme(props);
+    return css`
+      flex-direction: ${flexDirectionMap[labelPosition]};
+      gap: ${spacing[gap]};
+    `;
+  },
+);
 
-  const flexDirectionMap = {
-    bottom: 'column',
-    left: 'row-reverse',
-    right: 'row',
-    top: 'column-reverse',
-  };
+const StyledStatusIndicator = styled('div', getStyledOptions())<
+  SetRequired<StatusIndicatorProps, 'borderRatio' | 'color' | 'size' | 'tone'> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    borderRadius: '50%',
+    display: 'inline-flex',
+    justifyContent: 'center',
+    lineHeight: 1,
+    position: 'relative',
+  },
+  props => {
+    const { borderRatio, color, size, theme, tone } = props;
+    const { mainColor, variant } = getColorTokens(color, null, theme);
+    let centerBg: string;
 
-  return css`
-    align-items: center;
-    display: flex;
-    flex-direction: ${flexDirectionMap[labelPosition]};
-    gap: ${spacing[gap]};
-    justify-content: center;
-  `;
-});
-
-const StyledStatusIndicator = styled(
-  'div',
-  getStyledOptions(),
-)<SetRequired<StatusIndicatorProps, 'borderRatio' | 'color' | 'size' | 'tone'>>(props => {
-  const { borderRatio, color, size, tone } = props;
-  const { white, ...theme } = getTheme(props);
-  const { mainColor, variant } = getColorTokens(color, null, theme);
-  let centerBg: string;
-
-  if (variant) {
-    ({ mainColor: centerBg } = getColorTokens(`${variant}.${tone}`, null, theme));
-  } else {
-    centerBg = getColorWithTone(mainColor, tone);
-  }
-
-  const innerSize = size * borderRatio < size ? size * borderRatio : size;
-
-  return css`
-    align-items: center;
-    background-color: ${mainColor};
-    border-radius: 50%;
-    display: inline-flex;
-    height: ${px(size)};
-    justify-content: center;
-    line-height: 1;
-    position: relative;
-    width: ${px(size)};
-    ${marginStyles(props)};
-
-    &:before {
-      background-color: ${centerBg};
-      border-radius: 50%;
-      content: '';
-      display: block;
-      height: ${px(innerSize)};
-      position: absolute;
-      width: ${px(innerSize)};
+    if (variant) {
+      ({ mainColor: centerBg } = getColorTokens(`${variant}.${tone}`, null, theme));
+    } else {
+      centerBg = getColorWithTone(mainColor, tone);
     }
 
-    > * {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-  `;
-});
+    const innerSize = size * borderRatio < size ? size * borderRatio : size;
+
+    return css`
+      background-color: ${mainColor};
+      height: ${px(size)};
+      width: ${px(size)};
+      ${marginStyles(props)};
+
+      &:before {
+        background-color: ${centerBg};
+        border-radius: 50%;
+        content: '';
+        display: block;
+        height: ${px(innerSize)};
+        position: absolute;
+        width: ${px(innerSize)};
+      }
+
+      > * {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    `;
+  },
+);
 
 export function StatusIndicator(props: StatusIndicatorProps) {
-  const { gap, icon, label, labelPosition, ...rest } = mergeProps(defaultProps, props);
+  const { componentProps, getDataAttributes } = useStatusIndicator(props);
+  const { gap, icon, label, labelPosition, ...rest } = componentProps;
   const labelId = useId();
-  const { getDataAttributes } = useTheme();
 
   const content: Record<string, ReactNode> = {};
 
@@ -161,6 +111,7 @@ export function StatusIndicator(props: StatusIndicatorProps) {
       {...getDataAttributes('StatusIndicator')}
       gap={gap}
       labelPosition={labelPosition}
+      theme={rest.theme}
     >
       <StyledStatusIndicator {...rest}>{icon}</StyledStatusIndicator>
       {content.label}
@@ -169,3 +120,5 @@ export function StatusIndicator(props: StatusIndicatorProps) {
 }
 
 StatusIndicator.displayName = 'StatusIndicator';
+
+export { defaultProps, type StatusIndicatorProps } from './useStatusIndicator';

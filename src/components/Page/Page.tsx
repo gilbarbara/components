@@ -1,69 +1,18 @@
-import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { Simplify, StringOrNumber } from '@gilbarbara/types';
+import { px } from '@gilbarbara/helpers';
 import { Property } from 'csstype';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { getContainerStyles, paddingStyles } from '~/modules/system';
 
 import { Box } from '~/components/Box';
 import { Loader } from '~/components/Loader';
 
-import {
-  Alignment,
-  StyledProps,
-  WithColors,
-  WithFlexBox,
-  WithHTMLAttributes,
-  WithPadding,
-} from '~/types';
+import { Alignment, WithTheme } from '~/types';
 
-export interface PageKnownProps
-  extends StyledProps,
-    WithColors,
-    Pick<WithFlexBox, 'align' | 'justify'>,
-    WithHTMLAttributes,
-    WithPadding {
-  /**
-   * Override `align` and `justify` to "center"
-   *
-   * @default false
-   */
-  centered?: boolean;
-  children: ReactNode;
-  /** @default false */
-  isLoading?: boolean;
-  maxWidth?: StringOrNumber;
-  /** @default 100vh */
-  minHeight?: StringOrNumber;
-  /**
-   * Set the `data` attribute property
-   * @default Page
-   */
-  name?: string;
-  /**
-   * Don't add the default padding
-   * @default false
-   */
-  skipSpacing?: boolean;
-  style?: CSSProperties;
-  textAlign?: Alignment;
-}
+import { PageProps, usePage } from './usePage';
 
-export type PageProps = Simplify<PageKnownProps>;
-
-export const defaultProps = {
-  centered: false,
-  isLoading: false,
-  minHeight: '100vh',
-  name: 'Page',
-  skipSpacing: false,
-} satisfies Omit<PageProps, 'children'>;
-
-export const StyledPage = styled(Box)<Omit<PageProps, 'name'>>(props => {
+export const StyledPage = styled(Box)<Omit<PageProps, 'name'> & WithTheme>(props => {
   const { minHeight, skipSpacing } = props;
 
   return css`
@@ -78,9 +27,9 @@ export const StyledPage = styled(Box)<Omit<PageProps, 'name'>>(props => {
 });
 
 export function Page(props: PageProps) {
+  const { componentProps, getDataAttributes } = usePage(props);
   const { align, centered, children, isLoading, justify, maxWidth, name, textAlign, ...rest } =
-    mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+    componentProps;
 
   const textAlignMap: Partial<Record<Property.AlignItems, Alignment>> = {
     start: 'left',
@@ -120,3 +69,5 @@ export function Page(props: PageProps) {
 }
 
 Page.displayName = 'Page';
+
+export { defaultProps, type PageProps } from './usePage';

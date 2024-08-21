@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, BoxCenter, Paragraph } from '~';
+import { Flex, FlexCenter, Paragraph } from '~';
 
 import { radius } from '~/modules/theme';
 
@@ -47,7 +47,7 @@ export const Loading: Story = {
   },
 
   render: props => (
-    <BoxCenter>
+    <FlexCenter>
       <Image {...props} />
       <Description>
         <Paragraph>
@@ -61,7 +61,7 @@ export const Loading: Story = {
           Note: The URL uses https://app.requestly.io/delay to simulate a slow network.
         </Info>
       </Description>
-    </BoxCenter>
+    </FlexCenter>
   ),
 };
 
@@ -72,12 +72,12 @@ export const ZoomOnHover: Story = {
     zoomOnHover: true,
   },
   render: props => (
-    <BoxCenter>
+    <FlexCenter>
       <Image {...props} />
       <Description>
         You can use the <Code>zoomOnHover</Code> prop make the image zoomed when hovered.
       </Description>
-    </BoxCenter>
+    </FlexCenter>
   ),
 };
 
@@ -94,7 +94,7 @@ export const Fallback: Story = {
     const [error, setError] = useState(false);
 
     return (
-      <BoxCenter>
+      <FlexCenter>
         <Image {...props} onError={() => setError(true)} />
         <Info
           bg="white"
@@ -114,7 +114,7 @@ export const Fallback: Story = {
             Note: The URL uses https://app.requestly.io/delay to simulate a slow network.
           </Info>
         </Description>
-      </BoxCenter>
+      </FlexCenter>
     );
   },
 };
@@ -126,9 +126,9 @@ export const Radius: Story = {
   },
   render: props => (
     <>
-      <Box flexBox gap={24} maxWidth={768} wrap="wrap">
+      <Flex gap={24} maxWidth={768} wrap="wrap">
         {objectKeys(radius).map((d, index) => (
-          <BoxCenter key={d} width={150}>
+          <FlexCenter key={d} width={150}>
             <Image
               key={d}
               {...props}
@@ -137,9 +137,9 @@ export const Radius: Story = {
               src={users[index].avatar}
             />
             <Paragraph mt="xs">{d}</Paragraph>
-          </BoxCenter>
+          </FlexCenter>
         ))}
-      </Box>
+      </Flex>
       <Info icon="paintbrush">
         You can update the theme <Code>image.radius</Code> to customize the default.
       </Info>

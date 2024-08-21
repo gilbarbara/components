@@ -1,7 +1,4 @@
 import { forwardRef } from 'react';
-import { mergeProps } from '@gilbarbara/helpers';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import {
   CheckboxProps,
@@ -11,17 +8,11 @@ import {
   StyledElement,
   StyledLabel,
   StyledText,
-} from './utils';
-
-export const defaultProps = {
-  accent: 'primary',
-  align: 'center',
-  borderless: false,
-  disabled: false,
-  size: 'md',
-} satisfies Omit<CheckboxProps, 'name'>;
+  useCheckboxAndRadio,
+} from './useCheckboxAndRadio';
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useCheckboxAndRadio(props, 'checkbox');
   const {
     accent,
     align,
@@ -35,8 +26,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     size,
     style,
     ...rest
-  } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  } = componentProps;
 
   const inputId = id ?? name;
 
@@ -47,7 +37,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
       disabled={disabled}
       htmlFor={inputId}
       size={size}
-      {...getMarginProps(props)}
+      {...getMarginProps(componentProps)}
     >
       <StyledCheckboxRadioInput
         ref={ref}
@@ -70,9 +60,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
         size={size}
         style={style}
         tabIndex={disabled ? -1 : 0}
+        theme={rest.theme}
       />
       {label && (
-        <StyledText category="checkbox" size={size}>
+        <StyledText category="checkbox" size={size} theme={rest.theme}>
           {label}
         </StyledText>
       )}
@@ -82,4 +73,4 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
 
 Checkbox.displayName = 'Checkbox';
 
-export type { CheckboxProps } from './utils';
+export { checkBoxDefaultProps, type CheckboxProps } from './useCheckboxAndRadio';

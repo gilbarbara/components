@@ -92,13 +92,11 @@ export const Sizes: Story = {
     value: disableControl(),
   },
   render: props => (
-    <>
-      <ProgressBar {...props} label="SM" size="sm" value={13} />
-      <br />
-      <ProgressBar {...props} label="MD" size="md" value={50} />
-      <br />
-      <ProgressBar {...props} label="LG" size="lg" value={75} />
-    </>
+    <Spacer distribution="center" gap="lg" orientation="vertical">
+      <ProgressBar {...props} label="sm" size="sm" value={13} />
+      <ProgressBar {...props} label="md" size="md" value={50} />
+      <ProgressBar {...props} label="lg" size="lg" value={75} />
+    </Spacer>
   ),
 };
 

@@ -2,22 +2,21 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { rotate } from '~/modules/animations';
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderComponentProps } from './types';
+import { WithTheme } from '~/types';
+
+import { LoaderComponentProps } from './useLoader';
 
 type LoaderPrideProps = Omit<LoaderComponentProps, 'color'>;
 
 const StyledLoaderPride = styled(
   'div',
   getStyledOptions(),
-)<LoaderPrideProps>(props => {
-  const { block, size = 32 } = props;
-  const { spacing } = getTheme(props);
+)<LoaderPrideProps & WithTheme>(props => {
+  const { block, size = 32, theme } = props;
+  const { spacing } = theme;
 
   return css`
     display: ${block ? 'flex' : 'inline-flex'};
@@ -34,8 +33,7 @@ const StyledLoaderPride = styled(
 });
 
 export default function LoaderPride(props: LoaderPrideProps) {
-  const { size } = props;
-  const { getDataAttributes } = useTheme();
+  const { getDataAttributes, size } = props;
 
   return (
     <StyledLoaderPride {...getDataAttributes('LoaderPride')} {...props}>

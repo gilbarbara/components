@@ -1,6 +1,9 @@
 import { CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
+import { useComponentProps } from '~/hooks/useComponentProps';
+import { UseThemeReturn } from '~/hooks/useTheme';
+
 import {
   Icons,
   StyledProps,
@@ -19,7 +22,8 @@ export type SearchOnSelect = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTM
 
 export interface SearchItemsProps
   extends Required<WithAccent>,
-    Pick<SearchProps, 'noResultsLabel'> {
+    Pick<SearchProps, 'noResultsLabel'>,
+    UseThemeReturn {
   active: boolean;
   cursor: number;
   height: StringOrNumber;
@@ -28,7 +32,7 @@ export interface SearchItemsProps
   onSelect: SearchOnSelect;
 }
 
-export interface SearchItemProps extends Required<WithAccent>, WithChildren {
+export interface SearchItemProps extends Required<WithAccent>, WithChildren, UseThemeReturn {
   isSelected: boolean;
   onSelect: SearchOnSelect;
   value: string;
@@ -87,3 +91,23 @@ export interface SearchKnownProps extends StyledProps, WithAccent, WithBorderles
 }
 
 export type SearchProps = Simplify<SearchKnownProps>;
+
+export const defaultProps = {
+  accent: 'primary',
+  borderless: false,
+  disableCloseOnBlur: false,
+  disableKeyboardNavigation: false,
+  disabled: false,
+  height: 230,
+  hideIcon: false,
+  icon: 'search',
+  loading: false,
+  noResultsLabel: 'Nothing found',
+  onSearchDebounce: 250,
+  placeholder: 'Search for...',
+  showListOnFocus: true,
+} satisfies Omit<SearchProps, 'items' | 'onSelect'>;
+
+export function useSearch(props: SearchProps) {
+  return useComponentProps(props, defaultProps);
+}

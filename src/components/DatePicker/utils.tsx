@@ -5,26 +5,13 @@ import { textColor } from 'colorizr';
 import { isSameMonth } from 'date-fns';
 import is from 'is-lite';
 
-import { getTheme } from '~/modules/helpers';
-import {
-  borderStyles,
-  isDarkMode,
-  marginStyles,
-  paddingStyles,
-  radiusStyles,
-  shadowStyles,
-} from '~/modules/system';
+import { getStyles } from '~/modules/system';
 
 import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
+import { DatePickerBaseProps, DatePickerLayoutProps } from '~/components/DatePicker/useDatePicker';
 
-import { DatePickerBaseProps, DatePickerLayoutProps } from './types';
-
-export const defaultProps = {
-  accent: 'primary',
-  formatLocale: 'en-US',
-  currentMonthLabel: 'Go to today',
-} as const;
+import { Theme } from '~/types';
 
 export function getNumberOfMonths(fromDate?: Date | string, toDate?: Date | string): number {
   if (fromDate && toDate) {
@@ -102,10 +89,11 @@ export function getRange<T extends DayPickerProps>(
   return additionalProps;
 }
 
-export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
-  const { accent = 'primary' } = props;
-  const { colors, grayScale, spacing, typography, variants } = getTheme(props);
-  const darkMode = isDarkMode(props);
+export function getPickerStyles(
+  props: DatePickerBaseProps & DatePickerLayoutProps & { theme: Theme },
+) {
+  const { accent = 'primary', theme } = props;
+  const { colors, darkMode, grayScale, spacing, typography, variants } = theme;
 
   const className = 'rdp';
   const colorMain = colors[accent];
@@ -114,13 +102,10 @@ export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
   const disabledDays = darkMode ? grayScale['500'] : grayScale['200'];
 
   return css`
-    ${borderStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${shadowStyles(props)};
+    ${getStyles(props)};
 
     /* Hide elements for devices that are not screen readers */
+
     .${className}-vhidden {
       -moz-appearance: none;
       -webkit-appearance: none;
@@ -139,6 +124,7 @@ export function getStyles(props: DatePickerBaseProps & DatePickerLayoutProps) {
     }
 
     /* Buttons */
+
     .${className}-button_reset {
       -moz-appearance: none;
       -webkit-appearance: none;

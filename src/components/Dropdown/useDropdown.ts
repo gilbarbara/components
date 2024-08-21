@@ -1,6 +1,8 @@
 import { HiddenInput, Option, Props } from '@gilbarbara/react-dropdown';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
+import { useComponentProps } from '~/hooks/useComponentProps';
+
 import { StyledProps, WithAccent, WithBorderless, WithHeight, WithMargin, WithOpen } from '~/types';
 
 export type DropdownBaseProps = Omit<
@@ -56,3 +58,33 @@ export interface DropdownKnownProps
 }
 
 export type DropdownProps = Simplify<DropdownKnownProps>;
+
+export const defaultProps = {
+  accent: 'primary',
+  allowCreate: false,
+  autoFocus: false,
+  borderless: false,
+  closeOnScroll: false,
+  closeMultiOnSelect: false,
+  direction: 'ltr',
+  disabled: false,
+  height: 'md',
+  keepSelectedInList: true,
+  labels: {
+    create: 'Create {search}',
+    noData: 'Nothing found',
+  },
+  loading: false,
+  menuMaxHeight: 260,
+  multi: false,
+  placeholder: 'Select an option',
+  searchBy: 'label',
+  searchable: true,
+  showClearButton: false,
+  showSeparator: false,
+  width: 260,
+} satisfies Omit<DropdownProps, 'items'>;
+
+export function useDropdown(props: DropdownProps) {
+  return useComponentProps(props, defaultProps);
+}

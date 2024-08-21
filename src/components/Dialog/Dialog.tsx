@@ -1,153 +1,64 @@
-import { CSSProperties, isValidElement, ReactNode, useCallback } from 'react';
+import { isValidElement, useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { Simplify, StringOrNumber } from '@gilbarbara/types';
+import { px } from '@gilbarbara/helpers';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
-import {
-  borderStyles,
-  getStyledOptions,
-  isDarkMode,
-  paddingStyles,
-  radiusStyles,
-  shadowStyles,
-} from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Box } from '~/components/Box';
 import { Button } from '~/components/Button';
 import { H3 } from '~/components/Headings';
 import { Paragraph } from '~/components/Paragraph';
-import {
-  defaultProps as portalDefaultProps,
-  Portal,
-  type PortalProps,
-} from '~/components/Portal/Portal';
+import { Portal } from '~/components/Portal/Portal';
 import { Spacer } from '~/components/Spacer';
 
-import {
-  Alignment,
-  StyledProps,
-  WithAccent,
-  WithBorder,
-  WithPadding,
-  WithRadius,
-  WithShadow,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface DialogKnownProps
-  extends StyledProps,
-    WithAccent,
-    WithBorder,
-    WithPadding,
-    WithRadius,
-    WithShadow,
-    Omit<PortalProps, 'children' | 'showCloseButton'> {
-  /**
-   * The text of the cancel button.
-   * @default 'Cancel'
-   */
-  buttonCancelText?: string;
-  /**
-   * The text of the confirm button.
-   * @default 'Confirm'
-   */
-  buttonConfirmText?: string;
-  /**
-   * The button order.
-   * @default ltr
-   */
-  buttonOrder?: 'ltr' | 'rtl';
-  /**
-   * The content of the dialog.
-   */
-  content: ReactNode;
-  /**
-   * Callback when the cancel button is clicked.
-   */
-  onClickCancel: () => void;
-  /**
-   * Callback when the confirm button is clicked.
-   */
-  onClickConfirmation: () => void;
-  style?: CSSProperties;
-  /**
-   * The alignment of the text.
-   * @default left
-   */
-  textAlign?: Alignment;
-  /**
-   * The title of the dialog.
-   */
-  title: ReactNode;
-  /**
-   * The width of the dialog.
-   * @default 380
-   */
-  width?: StringOrNumber;
-}
-
-export type DialogProps = Simplify<DialogKnownProps>;
-
-export const defaultProps = {
-  ...portalDefaultProps,
-  accent: 'primary',
-  buttonCancelText: 'Cancel',
-  buttonConfirmText: 'Confirm',
-  buttonOrder: 'ltr',
-  padding: 'xl',
-  radius: 'lg',
-  shadow: 'high',
-  textAlign: 'left',
-  width: 380,
-} satisfies Omit<DialogProps, 'content' | 'onClickCancel' | 'onClickConfirmation' | 'title'>;
+import { DialogProps, useDialog } from './useDialog';
 
 const StyledDialog = styled(
   'div',
   getStyledOptions(),
-)<Omit<DialogProps, 'content' | 'isActive' | 'onClickCancel' | 'onClickConfirmation' | 'title'>>(
-  props => {
-    const { textAlign, width } = props;
-    const { black, darkColor, white } = getTheme(props);
-    const darkMode = isDarkMode(props);
+)<
+  Omit<DialogProps, 'content' | 'isActive' | 'onClickCancel' | 'onClickConfirmation' | 'title'> &
+    WithTheme
+>(props => {
+  const { textAlign, theme, width } = props;
+  const { black, darkColor, darkMode, white } = theme;
 
-    return css`
-      background-color: ${darkMode ? darkColor : white};
-      color: ${darkMode ? white : black};
-      max-width: 100%;
-      text-align: ${textAlign};
-      width: ${px(width)};
-      ${borderStyles(props)};
-      ${paddingStyles(props)};
-      ${radiusStyles(props)};
-      ${shadowStyles(props)};
-    `;
-  },
-);
+  return css`
+    background-color: ${darkMode ? darkColor : white};
+    color: ${darkMode ? white : black};
+    max-width: 100%;
+    text-align: ${textAlign};
+    width: ${px(width)};
+    ${getStyles(props)};
+  `;
+});
 
 export function Dialog(props: DialogProps) {
   const {
-    accent,
-    buttonCancelText,
-    buttonConfirmText,
-    buttonOrder,
-    content,
-    disableCloseOnClickOverlay,
-    disableCloseOnEsc,
-    hideOverlay,
-    isOpen,
-    onClickCancel,
-    onClickConfirmation,
-    onClose,
-    onOpen,
-    style,
-    title,
-    zIndex,
-    ...rest
-  } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+    componentProps: {
+      accent,
+      buttonCancelText,
+      buttonConfirmText,
+      buttonOrder,
+      content,
+      disableCloseOnClickOverlay,
+      disableCloseOnEsc,
+      hideOverlay,
+      isOpen,
+      onClickCancel,
+      onClickConfirmation,
+      onClose,
+      onOpen,
+      style,
+      title,
+      zIndex,
+      ...rest
+    },
+    getDataAttributes,
+  } = useDialog(props);
 
   const handlePortalClose = useCallback(() => {
     onClickCancel();
@@ -192,3 +103,5 @@ export function Dialog(props: DialogProps) {
 }
 
 Dialog.displayName = 'Dialog';
+
+export { defaultProps, type DialogProps } from './useDialog';

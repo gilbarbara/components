@@ -5,11 +5,12 @@ import { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 
 import { useTheme } from '~/hooks/useTheme';
 
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
+import { getStyledOptions } from '~/modules/system';
 
-import { BoxInline } from '~/components/Box';
+import { FlexInline } from '~/components/Flex';
 import { Icon } from '~/components/Icon';
+
+import { WithTheme } from '~/types';
 
 export const StyledContent = styled('div', getStyledOptions())`
   align-items: center;
@@ -21,10 +22,9 @@ export const StyledContent = styled('div', getStyledOptions())`
 const Item = styled(
   'div',
   getStyledOptions(),
-)<{ multi?: boolean }>(props => {
-  const { color, multi } = props;
-  const { grayScale, radius, spacing, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
+)<WithTheme & { multi?: boolean }>(props => {
+  const { color, multi, theme } = props;
+  const { darkMode, grayScale, radius, spacing, white } = theme;
 
   let multiStyles;
 
@@ -51,8 +51,8 @@ const Item = styled(
 const ItemClose = styled(
   'span',
   getStyledOptions(),
-)(props => {
-  const { spacing } = getTheme(props);
+)<WithTheme>(props => {
+  const { spacing } = props.theme;
 
   return css`
     display: inline-flex;
@@ -64,8 +64,8 @@ const ItemClose = styled(
 const Placeholder = styled(
   'div',
   getStyledOptions(),
-)(props => {
-  const { grayScale } = getTheme(props);
+)<WithTheme>(props => {
+  const { grayScale } = props.theme;
 
   return css`
     align-items: center;
@@ -80,7 +80,7 @@ function DropdownContent(props: ComponentProps) {
     props: { multi, placeholder },
     state: { values },
   } = props;
-  const { getDataAttributes } = useTheme();
+  const { getDataAttributes, theme } = useTheme();
 
   const handleClickRemove = (value: Option) => {
     return (event: MouseEvent) => {
@@ -102,20 +102,21 @@ function DropdownContent(props: ComponentProps) {
               color={getStyles().color}
               {...getDataAttributes('ContentItem')}
               multi={multi}
+              theme={theme}
             >
               {!!prefix && (
-                <BoxInline {...getDataAttributes('ContentItemPrefix')} mr="xxs">
+                <FlexInline {...getDataAttributes('ContentItemPrefix')} mr="xxs">
                   {prefix}
-                </BoxInline>
+                </FlexInline>
               )}
               <span>{label ?? value}</span>
               {!!suffix && (
-                <BoxInline {...getDataAttributes('ContentItemSuffix')} ml="xxs">
+                <FlexInline {...getDataAttributes('ContentItemSuffix')} ml="xxs">
                   {suffix}
-                </BoxInline>
+                </FlexInline>
               )}
               {multi && (
-                <ItemClose onClick={handleClickRemove(item)}>
+                <ItemClose onClick={handleClickRemove(item)} theme={theme}>
                   <Icon name="close" />
                 </ItemClose>
               )}
@@ -126,7 +127,7 @@ function DropdownContent(props: ComponentProps) {
     );
   }
 
-  return <Placeholder>{placeholder}</Placeholder>;
+  return <Placeholder theme={theme}>{placeholder}</Placeholder>;
 }
 
 DropdownContent.displayName = 'DropdownContent';

@@ -1,28 +1,27 @@
 import { memo } from 'react';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { Box, BoxCenter } from '~/components/Box';
-import { getBorder, getRowContent, getRowKey } from '~/components/DataTable/utils';
+import { Box } from '~/components/Box';
+import { FlexCenter } from '~/components/Flex';
 import { Loader } from '~/components/Loader';
 import { Paragraph } from '~/components/Paragraph';
 
-import { DataTableBodyProps } from './types';
+import { DataTableBodyProps, getBorder, getRowContent, getRowKey } from './useDataTable';
 
 function DataTableBody(props: DataTableBodyProps) {
   const {
     accent,
     clean,
     columns,
-    darkMode,
     data,
+    getDataAttributes,
     isResponsive,
     loaderSize,
     loaderType,
     loading,
     sortColumn,
+    theme,
   } = props;
-  const { getDataAttributes } = useTheme();
+  const { darkMode } = theme;
 
   const isInitialLoad = loading && !data.length;
 
@@ -87,7 +86,7 @@ function DataTableBody(props: DataTableBodyProps) {
         </Box>
       ))}
       {loading && (
-        <BoxCenter
+        <FlexCenter
           bg={!isInitialLoad ? 'rgba(200, 200, 200, 0.5)' : undefined}
           bottom={0}
           left={0}
@@ -98,7 +97,7 @@ function DataTableBody(props: DataTableBodyProps) {
           zIndex={10}
         >
           <Loader color={accent} size={loaderSize} type={loaderType} />
-        </BoxCenter>
+        </FlexCenter>
       )}
     </Box>
   );

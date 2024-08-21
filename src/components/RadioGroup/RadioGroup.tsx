@@ -1,48 +1,27 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
 import { usePrevious } from '@gilbarbara/hooks';
-import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, marginStyles } from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Radio } from '~/components/CheckboxAndRadio';
-import { RadioProps } from '~/components/CheckboxAndRadio/utils';
 
-import { RadioItem, WithComponentSize } from '~/types';
+import { WithTheme } from '~/types';
 
-export interface RadioGroupKnownProps
-  extends WithComponentSize,
-    Omit<RadioProps, 'align' | 'checked' | 'defaultChecked' | 'label'> {
-  defaultValue?: StringOrNumber;
-  inline?: boolean;
-  items: RadioItem[];
-}
-
-export type RadioGroupProps = Simplify<RadioGroupKnownProps>;
-
-export const defaultProps = {
-  accent: 'primary',
-  disabled: false,
-  inline: false,
-  size: 'md',
-} satisfies Omit<RadioGroupProps, 'items' | 'name' | 'value'>;
+import { RadioGroupProps, useRadioGroup } from './useRadioGroup';
 
 const StyledRadioGroup = styled(
   'div',
   getStyledOptions(),
-)<Pick<RadioGroupProps, 'inline'>>(props => {
-  const { inline } = props;
-  const { dataAttributeName, spacing } = getTheme(props);
+)<Pick<RadioGroupProps, 'inline'> & WithTheme>(props => {
+  const { inline, theme } = props;
+  const { dataAttributeName, spacing } = theme;
 
   return css`
     display: flex;
     flex-direction: ${inline ? 'row' : 'column'};
-    ${marginStyles(props)};
+    ${getStyles(props)};
 
     ${inline &&
     css`
@@ -56,11 +35,22 @@ const StyledRadioGroup = styled(
 });
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { accent, defaultValue, disabled, inline, items, name, onChange, size, value, ...rest } =
-    mergeProps(defaultProps, props);
+  const { componentProps, getDataAttributes } = useRadioGroup(props);
+  const {
+    accent,
+    borderless,
+    defaultValue,
+    disabled,
+    inline,
+    items,
+    name,
+    onChange,
+    size,
+    value,
+    ...rest
+  } = componentProps;
   const [selectedValue, setSelectedValue] = useState(value ?? defaultValue);
   const previousProps = usePrevious(props);
-  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     if (previousProps && value && previousProps.value !== value) {
@@ -91,16 +81,17 @@ export function RadioGroup(props: RadioGroupProps) {
 
   return (
     <StyledRadioGroup
-      inline={inline}
-      {...rest}
       {...getDataAttributes('RadioGroup')}
+      inline={inline}
       role="radiogroup"
+      {...rest}
     >
       {items.map(item => (
         <Radio
           key={item.value}
           accent={item.accent ?? accent}
           align="start"
+          borderless={borderless}
           checked={item.value === currentValue}
           disabled={disabled || item.disabled}
           label={item.label ?? item.value}
@@ -117,3 +108,5 @@ export function RadioGroup(props: RadioGroupProps) {
 }
 
 RadioGroup.displayName = 'RadioGroup';
+
+export { defaultProps, type RadioGroupProps } from './useRadioGroup';

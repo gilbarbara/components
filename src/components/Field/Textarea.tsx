@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Textarea } from '~/components/Textarea';
 
-import { FieldTextareaProps } from './types';
+import { FieldTextareaProps } from './useField';
 import { getInputParameters } from './utils';
 
 interface Props extends FieldTextareaProps {

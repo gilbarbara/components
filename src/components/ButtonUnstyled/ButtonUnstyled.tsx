@@ -1,131 +1,48 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { textDefaultOptions } from '~/modules/options';
-import {
-  appearanceStyles,
-  baseStyles,
-  borderStyles,
-  colorStyles,
-  displayStyles,
-  flexItemStyles,
-  getStyledOptions,
-  layoutStyles,
-  marginStyles,
-  outlineStyles,
-  paddingStyles,
-  radiusStyles,
-  textStyles,
-} from '~/modules/system';
+import { appearanceStyles, getStyledOptions, getStyles, textStyles } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
 
-import {
-  OmitElementProps,
-  StyledProps,
-  WithBorder,
-  WithBusy,
-  WithChildren,
-  WithColors,
-  WithDisplay,
-  WithFlexBox,
-  WithFlexItem,
-  WithLayout,
-  WithMargin,
-  WithPadding,
-  WithRadius,
-  WithTextOptions,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface ButtonUnstyledKnownProps
-  extends StyledProps,
-    WithBorder,
-    WithBusy,
-    WithChildren,
-    Pick<WithColors, 'color'>,
-    WithDisplay,
-    Pick<WithFlexBox, 'align' | 'justify'>,
-    WithFlexItem,
-    WithLayout,
-    WithMargin,
-    WithPadding,
-    WithRadius,
-    WithTextOptions {
-  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
-}
+import { ButtonUnstyledProps, useButtonUnstyled } from './useButtonUnstyled';
 
-export type ButtonUnstyledProps = Simplify<
-  OmitElementProps<HTMLButtonElement, ButtonUnstyledKnownProps>
->;
+export const StyledButtonUnstyled = styled('button', getStyledOptions())<
+  Omit<ButtonUnstyledProps, 'children'> & WithTheme
+>(
+  {
+    backgroundColor: 'transparent',
+    border: 0,
+    color: 'inherit',
+    cursor: 'pointer',
+    display: 'inline-flex',
+    fontFamily: 'inherit',
+    lineHeight: 1,
+    padding: 0,
+  },
+  props => {
+    return css`
+      ${appearanceStyles};
+      ${getStyles(props, { useFontSize: true })};
 
-export const defaultProps = {
-  ...textDefaultOptions,
-  align: 'center',
-  busy: false,
-  disabled: false,
-  type: 'button',
-} satisfies Omit<ButtonUnstyledProps, 'children'>;
-
-export const StyledButtonUnstyled = styled(
-  'button',
-  getStyledOptions(),
-)<Omit<ButtonUnstyledProps, 'children'>>(props => {
-  const { align, busy, color, justify } = props;
-
-  const { darkMode, opacityDisabled, ...theme } = getTheme(props);
-  const selectedColor = (color ?? darkMode) ? 'white' : 'black';
-  const { mainColor } = getColorTokens(selectedColor, null, theme);
-
-  return css`
-    ${appearanceStyles};
-    ${baseStyles(props)};
-    align-items: ${align};
-    background-color: transparent;
-    border: 0;
-    color: inherit;
-    cursor: pointer;
-    display: inline-flex;
-    font-family: inherit;
-    justify-content: ${justify};
-    line-height: 1;
-    padding: 0;
-    ${borderStyles(props)};
-    ${colorStyles(props)};
-    ${displayStyles(props)};
-    ${flexItemStyles(props)};
-    ${layoutStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${textStyles(props)};
-    ${outlineStyles(mainColor, props)};
-
-    :disabled {
-      cursor: not-allowed;
-      opacity: ${opacityDisabled};
-    }
-
-    ${!!busy &&
-    css`
-      pointer-events: none;
-    `};
-  `;
-});
+      :disabled {
+        cursor: not-allowed;
+        opacity: ${props.theme.opacityDisabled};
+      }
+    `;
+  },
+);
 
 export const ButtonUnstyled = forwardRef<HTMLButtonElement, ButtonUnstyledProps>((props, ref) => {
-  const { busy, children, ...rest } = mergeProps(defaultProps, props);
-  const { fontSize = '16px' } = textStyles(props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useButtonUnstyled(props);
+  const { busy, children } = componentProps;
+  const { fontSize = '16px' } = textStyles(componentProps);
 
   return (
-    <StyledButtonUnstyled ref={ref} busy={busy} {...getDataAttributes('ButtonUnstyled')} {...rest}>
+    <StyledButtonUnstyled ref={ref} {...getDataAttributes('ButtonUnstyled')} {...componentProps}>
       {children}
       {busy && <Icon ml="xxs" name="spinner" size={parseInt(`${fontSize}`, 10) + 2} spin />}
     </StyledButtonUnstyled>
@@ -133,3 +50,5 @@ export const ButtonUnstyled = forwardRef<HTMLButtonElement, ButtonUnstyledProps>
 });
 
 ButtonUnstyled.displayName = 'ButtonUnstyled';
+
+export { defaultProps, type ButtonUnstyledProps } from './useButtonUnstyled';

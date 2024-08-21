@@ -1,25 +1,23 @@
 import { forwardRef } from 'react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { getStyledOptions } from '~/modules/system';
 
-import { defaultProps, getStyles, HeadingProps } from './utils';
+import { WithTheme } from '~/types';
+
+import { HeadingProps, headingStyle, useHeading } from './useHeading';
 
 export const StyledH3 = styled(
   'h3',
   getStyledOptions(),
-)<HeadingProps>(props => {
-  return getStyles('h3', props);
+)<HeadingProps & WithTheme>(props => {
+  return headingStyle('h3', props);
 });
 
 export const H3 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  const mergedProps = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useHeading(props);
 
-  return <StyledH3 ref={ref} {...getDataAttributes('H3')} {...mergedProps} />;
+  return <StyledH3 ref={ref} {...getDataAttributes('H3')} {...componentProps} />;
 });
 
 H3.displayName = 'H3';

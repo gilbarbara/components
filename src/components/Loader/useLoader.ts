@@ -1,6 +1,9 @@
 import { AriaAttributes } from 'react';
 import { Simplify } from '@gilbarbara/types';
 
+import { useComponentProps } from '~/hooks/useComponentProps';
+import { UseThemeReturn } from '~/hooks/useTheme';
+
 import {
   StyledProps,
   TextSizes,
@@ -46,6 +49,21 @@ export type LoaderKnownProps = LoaderBaseProps &
 
 export type LoaderProps = Simplify<LoaderKnownProps>;
 
-export interface LoaderComponentProps<T = number> extends Omit<LoaderProps, 'size' | 'type'> {
+export interface LoaderComponentProps<T = number>
+  extends Omit<LoaderProps, 'size' | 'type' | 'theme'>,
+    UseThemeReturn {
   size: T;
+}
+
+export const defaultProps = {
+  color: 'primary',
+  block: false,
+  labelPosition: 'bottom',
+  labelSize: 'sm',
+  size: 32,
+  type: 'pill',
+} satisfies LoaderProps;
+
+export function useLoader(props: LoaderProps) {
+  return useComponentProps(props, defaultProps);
 }

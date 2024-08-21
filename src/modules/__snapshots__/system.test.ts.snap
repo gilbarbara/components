@@ -64,28 +64,6 @@ exports[`borderStyles > should return properly with an array 1`] = `
 }
 `;
 
-exports[`boxStyles > should return properly 1`] = `
-{
-  "map": undefined,
-  "name": "1dn1kmt",
-  "next": undefined,
-  "styles": "
-    box-sizing:border-box;font-family:inherit;;
-    background-color:#3030e8;color:#ffffff;;
-    ;
-    ;
-    ;
-    ;
-    ;
-    ;
-    ;
-    ;
-    box-shadow:2px 4px 16px 4px rgba(148, 148, 148, 0.24);;
-  ",
-  "toString": [Function],
-}
-`;
-
 exports[`colorStyles > should return properly with "background" and "color" 1`] = `
 {
   "backgroundColor": "#3030e8",
@@ -103,14 +81,11 @@ exports[`colorStyles > should return properly with just "color" 1`] = `
 exports[`dimensionStyles > should return properly 1`] = `
 {
   "height": "200px",
+  "maxHeight": "100px",
   "maxWidth": "100%",
+  "minHeight": "40px",
+  "minWidth": "290px",
   "width": "480px",
-}
-`;
-
-exports[`displayStyles > should return properly 1`] = `
-{
-  "display": "flex",
 }
 `;
 
@@ -123,6 +98,8 @@ exports[`flexBoxStyles > should return properly 1`] = `
   "gap": "20px",
   "justifyContent": undefined,
   "justifyItems": undefined,
+  "placeContent": undefined,
+  "placeItems": undefined,
 }
 `;
 
@@ -240,6 +217,70 @@ exports[`getDisableStyles > should return properly with "isButton: true" 1`] = `
 
     
   "
+`;
+
+exports[`getDisableStyles > should return properly with "variation: clean" 1`] = `
+"
+    background-color: transparent;
+    border-color: transparent;
+    color: #808080;
+    cursor: not-allowed;
+
+    
+  "
+`;
+
+exports[`getStyles > should return an object with the basic styles 1`] = `
+{
+  "boxSizing": "border-box",
+  "fontFamily": "inherit",
+}
+`;
+
+exports[`getStyles > should return properly 1`] = `
+{
+  "backgroundColor": "#3030e8",
+  "border": "1px solid #3030e8",
+  "borderRadius": "16px",
+  "boxShadow": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
+  "boxSizing": "border-box",
+  "color": "white",
+  "display": "flex",
+  "flex": "1 1",
+  "flexDirection": "column",
+  "fontFamily": "inherit",
+  "fontWeight": 700,
+  "gap": "12px",
+  "height": "200px",
+  "lineHeight": 1.2,
+  "margin": "16px",
+  "padding": "12px",
+  "pointerEvents": "none",
+  "width": "100px",
+  "zIndex": 10,
+}
+`;
+
+exports[`gridStyles > should return properly 1`] = `
+{
+  "columnGap": "12px",
+  "grid": "auto-flow / 1fr 1fr 1fr",
+  "gridArea": "1 / 1 / 2 / 2",
+  "gridAutoColumns": "auto",
+  "gridAutoFlow": "row",
+  "gridAutoRows": "auto",
+  "gridColumn": "1 / 2",
+  "gridColumnEnd": "auto",
+  "gridColumnStart": "auto",
+  "gridRow": "2 / -1",
+  "gridRowEnd": "span 3",
+  "gridRowStart": "auto",
+  "gridTemplate": ""a a a" 40px "b c c" 40px "b c c" 40px / 1fr 1fr 1fr",
+  "gridTemplateAreas": "a b c",
+  "gridTemplateColumns": "1fr 60px",
+  "gridTemplateRows": "1fr 2fr 1fr",
+  "rowGap": "16px",
+}
 `;
 
 exports[`hoverStyles > should return "backgroundColor" and "borderColor" 1`] = `
@@ -436,15 +477,9 @@ exports[`inputStyles > should return the default styles for "textarea" 1`] = `
 exports[`layoutStyles > should return properly 1`] = `
 {
   "display": "flex",
-  "height": "100px",
-  "maxHeight": "80px",
-  "maxWidth": "80px",
-  "minHeight": "20px",
-  "minWidth": "20px",
   "opacity": 1,
   "pointerEvents": "none",
   "transition": "all 0.2s",
-  "width": "100px",
 }
 `;
 
@@ -564,7 +599,7 @@ exports[`shadowStyles > should return properly for "'filter (dark)'" 1`] = `
 
 exports[`shadowStyles > should return properly for "'filter (light)'" 1`] = `
 {
-  "filter": "drop-shadow(2px 4px 8px rgba(222, 222, 222, 0.4))",
+  "filter": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
 }
 `;
 

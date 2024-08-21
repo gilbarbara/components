@@ -1,6 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { inputTypes } from '~/modules/options';
+import { Paragraph, Spacer } from '~';
+
+import { inputTypes, sizes } from '~/modules/options';
 
 import { colorProps, disableControl, hideProps, PANGRAM } from '~/stories/__helpers__';
 
@@ -35,14 +37,16 @@ export const Sizes: Story = {
     height: disableControl(),
   },
   render: props => (
-    <>
-      <Input {...props} height="sm" name="sm" placeholder={`(sm) ${PANGRAM}`} />
-      <br />
-      <Input {...props} height="md" name="md" placeholder={`(md) ${PANGRAM}`} />
-      <br />
-      <Input {...props} height="lg" name="lg" placeholder={`(lg) ${PANGRAM}`} />
-      <br />
-    </>
+    <Spacer distribution="center" gap="lg" orientation="vertical">
+      {sizes.map(size => (
+        <div key={size}>
+          <Paragraph align="center" mb="xs" size="lg">
+            {size}
+          </Paragraph>
+          <Input {...props} height={size} name={size} placeholder={PANGRAM} width="90vw" />
+        </div>
+      ))}
+    </Spacer>
   ),
 };
 

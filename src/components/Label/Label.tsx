@@ -1,85 +1,43 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
-import { textDefaultOptions } from '~/modules/options';
-import {
-  baseStyles,
-  colorStyles,
-  getStyledOptions,
-  marginStyles,
-  textStyles,
-} from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Text } from '~/components/Text';
 
-import {
-  StyledProps,
-  WithChildren,
-  WithColors,
-  WithHTMLAttributes,
-  WithInline,
-  WithMargin,
-  WithTextOptions,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface LabelKnownProps
-  extends StyledProps,
-    Pick<WithColors, 'color'>,
-    WithChildren,
-    WithHTMLAttributes<HTMLLabelElement>,
-    WithInline,
-    WithMargin,
-    WithTextOptions {
-  /** For the htmlFor attribute */
-  labelId?: string;
-  labelInfo?: ReactNode;
-}
+import { LabelProps, useLabel } from './useLabel';
 
-export type LabelProps = Simplify<LabelKnownProps>;
+export const StyledLabel = styled('label', getStyledOptions())<LabelProps & WithTheme>(
+  {
+    alignItems: 'center',
+    cursor: 'pointer',
+    lineHeight: 1,
+    position: 'relative',
+  },
+  props => {
+    const { inline, theme } = props;
+    const { dataAttributeName, spacing } = theme;
 
-export const defaultProps = {
-  ...textDefaultOptions,
-  bold: true,
-  inline: false,
-} satisfies Omit<LabelProps, 'children'>;
+    return css`
+      display: ${inline ? 'inline-flex' : 'flex'};
+      ${!inline ? `margin-bottom: ${spacing.sm}` : ''};
+      ${getStyles(props, { useFontSize: true })};
 
-export const StyledLabel = styled(
-  'label',
-  getStyledOptions(),
-)<LabelProps>(props => {
-  const { inline } = props;
-  const { dataAttributeName, spacing } = getTheme(props);
-
-  return css`
-    ${baseStyles(props)};
-    align-items: center;
-    cursor: pointer;
-    display: ${inline ? 'inline-flex' : 'flex'};
-    font-family: inherit;
-    line-height: 1;
-    ${!inline ? `margin-bottom: ${spacing.sm}` : ''};
-    position: relative;
-    ${colorStyles(props)};
-    ${marginStyles(props)};
-    ${textStyles(props)};
-
-    [data-${dataAttributeName}='Text'] {
-      line-height: 1;
-      margin-left: ${spacing.xxs};
-    }
-  `;
-});
+      [data-${dataAttributeName}='Text'] {
+        line-height: 1;
+        margin-left: ${spacing.xxs};
+      }
+    `;
+  },
+);
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
-  const { children, labelId, labelInfo, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useLabel(props);
+  const { children, labelId, labelInfo, ...rest } = componentProps;
 
   let info;
 
@@ -102,3 +60,5 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
 });
 
 Label.displayName = 'Label';
+
+export { defaultProps, type LabelProps } from './useLabel';

@@ -21,6 +21,7 @@ export * from './components/Divider';
 export * from './components/Dropdown';
 export * from './components/Emoji';
 export * from './components/Field';
+export * from './components/Flex';
 export * from './components/Form';
 export * from './components/FormElementWrapper';
 export * from './components/FormGroup';
@@ -85,4 +86,5 @@ export { px } from '@gilbarbara/helpers';
 // Types
 export * as Types from './types';
 export * as Props from './types/props';
+export * from './types/props';
 export type { Theme } from './types/theme';

@@ -15,7 +15,7 @@ import {
   spacingProps,
 } from '~/stories/__helpers__';
 
-import { defaultProps, Grid } from './Grid';
+import { Grid } from './Grid';
 
 type Story = StoryObj<typeof Grid>;
 
@@ -23,11 +23,10 @@ export default {
   title: 'Layout/Grid',
   component: Grid,
   args: {
-    ...defaultProps,
+    align: 'center',
     alignContent: 'space-evenly',
-    alignItems: 'center',
-    gap: 16,
-    justifyContent: 'space-evenly',
+    gap: 'md',
+    justify: 'space-evenly',
     justifyItems: 'center',
     templateColumns: 'repeat(3, auto)',
   },
@@ -40,7 +39,7 @@ export default {
     ...radiusProps(),
     ...spacingProps(),
     alignContent: { options: flexContent },
-    alignItems: { options: flexItems },
+    align: { options: flexItems },
     autoColumns: { control: 'text' },
     autoFlow: { control: 'text' },
     autoRows: { control: 'text' },
@@ -49,7 +48,7 @@ export default {
     display: { control: 'radio', options: ['grid', 'inline-grid'] },
     gap: { control: 'number' },
     grid: { control: 'text' },
-    justifyContent: { options: flexContent },
+    justify: { options: flexContent },
     justifyItems: { options: flexItems },
     placeContent: { control: 'text' },
     placeItems: { control: 'text' },

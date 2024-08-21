@@ -1,25 +1,10 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { Simplify, StringOrNumber } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
+import { px } from '@gilbarbara/helpers';
 
 import { getStyledOptions } from '~/modules/system';
 
-import { StyledProps, WithChildren } from '~/types';
-
-export interface TruncateKnownProps extends StyledProps, WithChildren {
-  /** @default 2 */
-  lines?: number;
-  maxWidth?: StringOrNumber;
-}
-
-export type TruncateProps = Simplify<TruncateKnownProps>;
-
-export const defaultProps = {
-  lines: 2,
-} satisfies Omit<TruncateProps, 'children'>;
+import { TruncateProps, useTruncate } from './useTruncate';
 
 const StyledTruncate = styled(
   'span',
@@ -47,8 +32,10 @@ const StyledTruncate = styled(
 });
 
 export function Truncate(props: TruncateProps) {
-  const { children, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const {
+    componentProps: { children, ...rest },
+    getDataAttributes,
+  } = useTruncate(props);
 
   return (
     <StyledTruncate {...getDataAttributes('Truncate')} {...rest}>
@@ -58,3 +45,5 @@ export function Truncate(props: TruncateProps) {
 }
 
 Truncate.displayName = 'Truncate';
+
+export { defaultProps, type TruncateProps } from './useTruncate';

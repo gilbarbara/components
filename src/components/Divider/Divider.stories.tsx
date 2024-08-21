@@ -2,7 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from '~';
 
-import { colorProps, hideProps, marginProps, textOptionsProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  hideProps,
+  marginProps,
+  spacingProps,
+  textOptionsProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, Divider } from './Divider';
 
@@ -17,6 +23,7 @@ export default {
     ...colorProps(),
     ...marginProps(),
     ...textOptionsProps(),
+    ...spacingProps('spacing'),
     children: { control: 'text' },
     length: { control: 'text' },
   },
@@ -26,7 +33,7 @@ export const Basic: Story = {};
 
 export const Vertical: Story = {
   args: {
-    direction: 'vertical',
+    orientation: 'vertical',
   },
   render: props => (
     <Box height={100}>

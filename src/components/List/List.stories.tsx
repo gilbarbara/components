@@ -1,6 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Avatar, Box, H3, H6, Paragraph, Spacer } from '~';
+import { Avatar, Box, H3, H6, ListProps, Paragraph, Spacer } from '~';
+
+import { sizes } from '~/modules/options';
 
 import {
   addChromaticModes,
@@ -37,8 +39,8 @@ export default {
   },
 } satisfies Meta<typeof List>;
 
-export const Basic: Story = {
-  render: props => (
+function Component(props: ListProps) {
+  return (
     <List {...props}>
       <ListItem bg="primary" hideDivider px="md">
         The first item
@@ -48,18 +50,40 @@ export const Basic: Story = {
       <ListItem>The forth item</ListItem>
       <ListItem>The fifth item</ListItem>
     </List>
+  );
+}
+
+export const Basic: Story = {
+  render: props => <Component {...props} />,
+};
+
+export const Sizes: Story = {
+  argTypes: {
+    size: disableControl(),
+  },
+  render: props => (
+    <Spacer distribution="center" gap="lg">
+      {sizes.map(size => (
+        <div key={size}>
+          <Paragraph align="center" mb="xs" size="lg">
+            {size}
+          </Paragraph>
+          <Component {...props} size={size} />
+        </div>
+      ))}
+    </Spacer>
   ),
 };
 
 export const Horizontal: Story = {
   args: {
-    direction: 'horizontal',
     minWidth: 150,
+    orientation: 'horizontal',
     radius: 'xl',
     shadow: 'low',
   },
   argTypes: {
-    direction: disableControl(),
+    orientation: disableControl(),
   },
   render: props => (
     <List {...props}>

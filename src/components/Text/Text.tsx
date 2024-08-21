@@ -1,58 +1,26 @@
 import { forwardRef } from 'react';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { textDefaultOptions } from '~/modules/options';
-import {
-  baseStyles,
-  colorStyles,
-  flexItemStyles,
-  getStyledOptions,
-  textStyles,
-} from '~/modules/system';
+import { TextProps, useText } from '~/components/Text/useText';
 
-import {
-  StyledProps,
-  WithChildren,
-  WithColors,
-  WithFlexItem,
-  WithHTMLAttributes,
-  WithTextOptions,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface TextKnownProps
-  extends StyledProps,
-    WithChildren,
-    Pick<WithColors, 'color'>,
-    WithFlexItem,
-    WithHTMLAttributes,
-    WithTextOptions {}
-
-export type TextProps = Simplify<TextKnownProps>;
-
-export const StyledText = styled(
-  'span',
-  getStyledOptions(),
-)<TextProps>(props => {
-  return css`
-    ${baseStyles(props)};
-    display: inline-block;
-    text-decoration: inherit;
-    ${colorStyles(props)};
-    ${flexItemStyles(props)}
-    ${textStyles(props)};
-  `;
-});
+export const StyledText = styled('span', getStyledOptions())<TextProps & WithTheme>(
+  {
+    display: 'inline-block',
+    textDecoration: 'inherit',
+  },
+  props => getStyles(props, { skipSpacing: true, useFontSize: true }),
+);
 
 export const Text = forwardRef<HTMLSpanElement, TextProps>((props, ref) => {
-  const mergedProps = mergeProps(textDefaultOptions, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useText(props);
 
-  return <StyledText ref={ref} {...getDataAttributes('Text')} {...mergedProps} />;
+  return <StyledText ref={ref} {...getDataAttributes('Text')} {...componentProps} />;
 });
 
 Text.displayName = 'Text';
+
+export { type TextProps } from './useText';

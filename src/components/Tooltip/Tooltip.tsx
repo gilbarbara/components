@@ -1,257 +1,150 @@
-import { CSSProperties, isValidElement, ReactNode, useEffect, useMemo, useState } from 'react';
+import { isValidElement, useEffect, useMemo, useState } from 'react';
 import innerText from 'react-innertext';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
-import { mergeProps, omit, px } from '@gilbarbara/helpers';
-import { SetRequired, Simplify } from '@gilbarbara/types';
+import { omit, px } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
+import { UseThemeReturn } from '~/hooks/useTheme';
 
 import { fadeIn } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { textDefaultOptions } from '~/modules/options';
-import {
-  baseStyles,
-  getStyledOptions,
-  paddingStyles,
-  radiusStyles,
-  shadowStyles,
-  textStyles,
-} from '~/modules/system';
+import { baseStyles, getStyledOptions, getStyles } from '~/modules/system';
 
 import { Text } from '~/components/Text';
 
+import { WithPadding, WithRadius, WithShadow, WithTextSize, WithTheme } from '~/types';
+
 import {
-  Placement,
-  Sizes,
-  WithChildren,
-  WithColors,
-  WithDisabled,
-  WithOpen,
-  WithPadding,
-  WithRadius,
-  WithShadow,
-  WithTextOptions,
-  WithTextSize,
-} from '~/types';
-
-interface SharedProps {
-  /**
-   * The placement of the tooltip.
-   * @default bottom-middle
-   */
-  placement: Placement;
-  /**
-   * Optional title for the tooltip.
-   */
-  title?: string;
-  /** Content wrapping */
-  wrap?: Sizes;
-  /** @default 100 */
-  zIndex?: number;
-}
-
-interface AnimationProps {
-  /**
-   * The delay before the tooltip is shown in milliseconds.
-   * @default 180
-   */
-  delay: number;
-  /**
-   * The duration of the animation in milliseconds.
-   * @default 260
-   */
-  duration: number;
-  /**
-   * The easing function.
-   * @default ease-in-out
-   */
-  easing: string;
-}
-
-interface ArrowProps {
-  /**
-   * The distance between the arrow and the target.
-   * @default 4
-   */
-  arrowDistance: number;
-  /** @default 8 */
-  arrowLength: number;
-  /**
-   * The margin for the arrow with start/end alignment.
-   * @default 4 */
-  arrowMargin: number;
-}
-
-interface ColorProps {
-  bg: string;
-  color: string;
-}
-
-export interface TooltipKnownProps
-  extends Partial<SharedProps>,
-    Partial<AnimationProps>,
-    Partial<ArrowProps>,
-    WithChildren,
-    WithColors,
-    WithDisabled,
-    WithOpen,
-    WithPadding,
-    WithRadius,
-    WithShadow,
-    WithTextOptions {
-  /**
-   * Optional aria label for the tooltip.
-   * @default innerText of the content
-   */
-  ariaLabel?: string;
-  content: ReactNode;
-  /**
-   * Trigger type.
-   * @default hover
-   */
-  eventType?: 'click' | 'hover';
-  style?: CSSProperties;
-}
-
-export type TooltipProps = Simplify<TooltipKnownProps>;
-
-export const defaultProps = {
-  ...omit(textDefaultOptions, 'size'),
-  arrowDistance: 4,
-  arrowMargin: 4,
-  arrowLength: 8,
-  bg: 'gray.700',
-  delay: 180,
-  disabled: false,
-  duration: 260,
-  easing: 'ease-in-out',
-  eventType: 'hover',
-  placement: 'bottom-middle',
-  radius: 'xxs',
-  size: 'sm',
-  zIndex: 100,
-} satisfies Omit<TooltipProps, 'children' | 'content'>;
+  TooltipAnimationProps,
+  TooltipArrowProps,
+  TooltipColorProps,
+  TooltipProps,
+  TooltipSharedProps,
+  useTooltip,
+} from './useTooltip';
 
 const arrowSize = 6;
 
 const StyledTooltip = styled(
   'div',
   getStyledOptions(),
-)(
+)<WithTheme>(
   props => css`
-    ${baseStyles(props)};
+    ${baseStyles(props.theme)};
     display: inline-flex;
     line-height: 1;
     position: relative;
   `,
 );
 
-const StyledArrow = styled.span<SharedProps & ArrowProps & ColorProps>(props => {
-  const { arrowLength, arrowMargin, bg, placement } = props;
-  const [position, align] = placement.split('-');
+const StyledArrow = styled.span<TooltipSharedProps & TooltipArrowProps & TooltipColorProps>(
+  props => {
+    const { arrowLength, arrowMargin, bg, placement } = props;
+    const [position, align] = placement.split('-');
 
-  const arrowStyles: CSSObject = {};
-  const styles: CSSObject = {};
+    const arrowStyles: CSSObject = {};
+    const styles: CSSObject = {};
 
-  switch (position) {
-    case 'bottom': {
-      arrowStyles.borderLeft = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderRight = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderBottom = `${px(arrowLength)} solid ${bg}`;
+    switch (position) {
+      case 'bottom': {
+        arrowStyles.borderLeft = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderRight = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderBottom = `${px(arrowLength)} solid ${bg}`;
 
-      styles.top = `-${px(arrowLength)}`;
-      styles.height = arrowLength;
-      styles.width = arrowSize * 2;
+        styles.top = `-${px(arrowLength)}`;
+        styles.height = arrowLength;
+        styles.width = arrowSize * 2;
 
-      break;
+        break;
+      }
+      case 'left': {
+        arrowStyles.borderTop = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderBottom = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderLeft = `${px(arrowLength)} solid ${bg}`;
+
+        styles.right = `-${px(arrowLength)}`;
+        styles.height = arrowSize * 2;
+        styles.width = arrowLength;
+
+        break;
+      }
+      case 'right': {
+        arrowStyles.borderTop = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderBottom = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderRight = `${px(arrowLength)} solid ${bg}`;
+
+        styles.left = `-${px(arrowLength)}`;
+        styles.height = arrowSize * 2;
+        styles.width = arrowLength;
+
+        break;
+      }
+      case 'top': {
+        arrowStyles.borderLeft = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderRight = `${px(arrowSize)} solid transparent`;
+        arrowStyles.borderTop = `${px(arrowLength)} solid ${bg}`;
+
+        styles.bottom = `-${px(arrowLength)}`;
+        styles.height = arrowLength;
+        styles.width = arrowSize * 2;
+
+        break;
+      }
+      // No default
     }
-    case 'left': {
-      arrowStyles.borderTop = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderBottom = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderLeft = `${px(arrowLength)} solid ${bg}`;
 
-      styles.right = `-${px(arrowLength)}`;
-      styles.height = arrowSize * 2;
-      styles.width = arrowLength;
-
-      break;
+    if (['bottom', 'top'].includes(position)) {
+      if (align === 'start') {
+        styles.left = arrowMargin;
+      } else if (align === 'middle') {
+        styles.left = '50%';
+        styles.transform = 'translateX(-50%)';
+      } else {
+        styles.right = arrowMargin;
+      }
+    } else if (['left', 'right'].includes(position)) {
+      if (align === 'start') {
+        styles.top = arrowMargin;
+      } else if (align === 'middle') {
+        styles.top = '50%';
+        styles.transform = 'translateY(-50%)';
+      } else {
+        styles.bottom = arrowMargin;
+      }
     }
-    case 'right': {
-      arrowStyles.borderTop = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderBottom = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderRight = `${px(arrowLength)} solid ${bg}`;
 
-      styles.left = `-${px(arrowLength)}`;
-      styles.height = arrowSize * 2;
-      styles.width = arrowLength;
-
-      break;
-    }
-    case 'top': {
-      arrowStyles.borderLeft = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderRight = `${px(arrowSize)} solid transparent`;
-      arrowStyles.borderTop = `${px(arrowLength)} solid ${bg}`;
-
-      styles.bottom = `-${px(arrowLength)}`;
-      styles.height = arrowLength;
-      styles.width = arrowSize * 2;
-
-      break;
-    }
-    // No default
-  }
-
-  if (['bottom', 'top'].includes(position)) {
-    if (align === 'start') {
-      styles.left = arrowMargin;
-    } else if (align === 'middle') {
-      styles.left = '50%';
-      styles.transform = 'translateX(-50%)';
-    } else {
-      styles.right = arrowMargin;
-    }
-  } else if (['left', 'right'].includes(position)) {
-    if (align === 'start') {
-      styles.top = arrowMargin;
-    } else if (align === 'middle') {
-      styles.top = '50%';
-      styles.transform = 'translateY(-50%)';
-    } else {
-      styles.bottom = arrowMargin;
-    }
-  }
-
-  return css`
-    display: block;
-    position: absolute;
-    z-index: 5;
-    ${styles};
-
-    &:before {
-      content: '';
+    return css`
       display: block;
-      height: 0;
-      width: 0;
-      ${arrowStyles};
-    }
-  `;
-});
+      position: absolute;
+      z-index: 5;
+      ${styles};
+
+      &:before {
+        content: '';
+        display: block;
+        height: 0;
+        width: 0;
+        ${arrowStyles};
+      }
+    `;
+  },
+);
 
 const StyledBody = styled(
   'span',
   getStyledOptions(),
 )<
-  SharedProps &
-    AnimationProps &
-    ArrowProps &
-    ColorProps &
+  TooltipSharedProps &
+    TooltipAnimationProps &
+    TooltipArrowProps &
+    TooltipColorProps &
     WithPadding &
     WithRadius &
     WithShadow &
-    WithTextSize
+    WithTextSize &
+    WithTheme
 >(props => {
   const {
     arrowDistance,
@@ -263,10 +156,11 @@ const StyledBody = styled(
     easing,
     placement,
     size,
+    theme,
     wrap,
     zIndex,
   } = props;
-  const { spacing } = getTheme(props);
+  const { spacing } = theme;
   const arrowSpacing = arrowLength + arrowDistance;
   const [position, align] = placement.split('-');
 
@@ -360,10 +254,7 @@ const StyledBody = styled(
     width: ${width};
     z-index: ${zIndex};
     ${styles};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${shadowStyles(props, true)};
-    ${textStyles(props)};
+    ${getStyles(omit(props, 'wrap'), { useFontSize: true })};
   `;
 });
 
@@ -374,9 +265,10 @@ const StyledContent = styled(Text)`
 
 function TooltipBody(
   props: SetRequired<Omit<TooltipProps, 'children' | 'open'>, 'placement'> &
-    AnimationProps &
-    ArrowProps &
-    ColorProps,
+    TooltipAnimationProps &
+    TooltipArrowProps &
+    TooltipColorProps &
+    UseThemeReturn,
 ) {
   const {
     arrowDistance,
@@ -386,16 +278,17 @@ function TooltipBody(
     bold,
     color,
     content,
+    getDataAttributes,
     italic,
     placement,
     radius,
     shadow,
     size,
     style,
+    theme,
     wrap,
     ...rest
   } = props;
-  const { getDataAttributes } = useTheme();
 
   return (
     <StyledBody
@@ -410,6 +303,7 @@ function TooltipBody(
       shadow={shadow}
       size={size}
       style={style}
+      theme={theme}
       wrap={wrap}
       {...rest}
     >
@@ -433,17 +327,28 @@ function TooltipBody(
         color={color}
         {...getDataAttributes('TooltipArrow')}
         placement={placement}
+        theme={theme}
       />
     </StyledBody>
   );
 }
 
 export function Tooltip(props: TooltipProps) {
-  const mergedProps = mergeProps(defaultProps, props);
-  const { ariaLabel, bg, children, color, content, disabled, eventType, open, title, ...rest } =
-    mergedProps;
+  const { componentProps, getDataAttributes } = useTooltip(props);
+  const {
+    ariaLabel,
+    bg,
+    children,
+    color,
+    content,
+    disabled,
+    eventType,
+    open,
+    theme,
+    title,
+    ...rest
+  } = componentProps;
   const [isOpen, setOpen] = useState(open ?? false);
-  const { getDataAttributes, theme } = useTheme();
 
   const label = useMemo(() => ariaLabel ?? innerText(content), [ariaLabel, content]);
 
@@ -479,13 +384,24 @@ export function Tooltip(props: TooltipProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       role="tooltip"
+      theme={theme}
       title={title}
       {...rest}
     >
       {children}
-      {isOpen && <TooltipBody {...mergedProps} bg={mainColor} color={textColor} />}
+      {isOpen && (
+        <TooltipBody
+          getDataAttributes={getDataAttributes}
+          {...componentProps}
+          bg={mainColor}
+          color={textColor}
+          theme={theme}
+        />
+      )}
     </StyledTooltip>
   );
 }
 
 Tooltip.displayName = 'Tooltip';
+
+export { defaultProps, type TooltipProps } from './useTooltip';

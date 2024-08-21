@@ -26,7 +26,7 @@ export interface DropdownOption extends Option {
 }
 
 export type OmitElementProps<TElement, TProps, TProperties extends string = never> = TProps &
-  Omit<HTMLProps<TElement>, 'ref' | 'size' | keyof TProps | TProperties>;
+  Omit<HTMLProps<TElement>, 'ref' | 'size' | 'wrap' | keyof TProps | TProperties>;
 
 export interface RadioItem extends WithDisabled, WithLabel {
   accent?: VariantWithTones;

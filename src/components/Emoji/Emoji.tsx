@@ -2,35 +2,24 @@ import { forwardRef } from 'react';
 import innerText from 'react-innertext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
+import { omit, px } from '@gilbarbara/helpers';
 
-import { useTheme } from '~/hooks/useTheme';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { baseStyles, getStyledOptions } from '~/modules/system';
+import { WithTheme } from '~/types';
 
-import { StyledProps, WithHTMLAttributes, WithLabel } from '~/types';
-
-export interface EmojiKnownProps
-  extends StyledProps,
-    WithHTMLAttributes<HTMLSpanElement>,
-    WithLabel {
-  size?: number;
-  symbol: string;
-}
-
-export type EmojiProps = Simplify<EmojiKnownProps>;
+import { EmojiProps, useEmoji } from './useEmoji';
 
 export const StyledEmoji = styled(
   'span',
   getStyledOptions(),
-)<{ size?: number }>(props => {
+)<WithTheme & { size?: number }>(props => {
   const { size } = props;
 
   return css`
-    ${baseStyles(props)};
     display: inline-flex;
     line-height: 1;
+    ${getStyles(omit(props, 'size'))};
 
     ${size &&
     css`
@@ -42,8 +31,8 @@ export const StyledEmoji = styled(
 });
 
 export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
-  const { label, size, symbol } = props;
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useEmoji(props);
+  const { label, size, symbol, theme } = componentProps;
 
   return (
     <StyledEmoji
@@ -52,6 +41,7 @@ export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
       aria-label={label ? innerText(label) : ''}
       {...getDataAttributes('Emoji')}
       size={size}
+      theme={theme}
     >
       {symbol}
     </StyledEmoji>
@@ -59,3 +49,5 @@ export const Emoji = forwardRef<HTMLSpanElement, EmojiProps>((props, ref) => {
 });
 
 Emoji.displayName = 'Emoji';
+
+export type { EmojiProps } from './useEmoji';

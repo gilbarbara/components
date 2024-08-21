@@ -3,7 +3,7 @@ import { PlainObject } from '@gilbarbara/types';
 import { InputType } from '@storybook/types';
 
 import { sizes as sizeOptions } from '~/modules/options';
-import { variants as themeVariants } from '~/modules/theme';
+import { spacing, variants as themeVariants } from '~/modules/theme';
 
 import { VariantWithTones, WithFlexBox } from '~/types';
 
@@ -18,9 +18,10 @@ export const flexContent = [...flexBase, ...flexContentDistribution, ...flexCont
 
 export const PANGRAM = 'The quick brown fox jumps over the lazy dog';
 
-export const COMPONENT_SIZES = ['xs', ...sizeOptions] as const;
+export const COMPONENT_SIZES = ['xs', ...sizeOptions, 'xl'] as const;
 
 export const TONES = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'] as const;
+export const SPACING = objectKeys(spacing);
 export const VARIANTS = [...objectKeys(themeVariants), 'black', 'white'] as const;
 export const VARIANTS_WITH_TONES = [...objectKeys(themeVariants), 'black', 'white'].reduce<
   Array<string>
@@ -119,27 +120,37 @@ export function dimensionProps(): ControlMap {
   };
 }
 
-export function flexBoxProps(...exclude: Array<keyof WithFlexBox>) {
-  const options = {
-    align: { control: 'select', options: ['', ...flexItems] },
+interface FlexBoxPropsOptions {
+  exclude?: Array<keyof WithFlexBox>;
+  showCategory?: boolean;
+}
+
+export function flexBoxProps(options: FlexBoxPropsOptions = {}) {
+  const { exclude, showCategory } = options;
+  const category = showCategory ? 'Flex Box' : undefined;
+
+  const items = {
+    align: { control: 'select', options: ['', ...flexItems], table: { category } },
     alignContent: {
       control: 'select',
       options: ['', ...flexContent],
+      table: { category },
     },
     direction: {
       control: 'select',
       options: ['row', 'row-reverse', 'column', 'column-reverse'],
+      table: { category },
     },
-    gap: {
-      control: 'text',
-    },
-    justify: { control: 'select', options: ['', ...flexContent] },
-    justifyItems: { control: 'select', options: ['', ...flexItems] },
-    wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
+    gap: { control: 'select', options: ['', ...SPACING], table: { category } },
+    justify: { control: 'select', options: ['', ...flexContent], table: { category } },
+    justifyItems: { control: 'select', options: ['', ...flexItems], table: { category } },
+    placeContent: { control: 'select', options: ['', ...flexContent], table: { category } },
+    placeItems: { control: 'select', options: ['', ...flexItems], table: { category } },
+    wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'], table: { category } },
   };
 
-  return objectEntries(options).reduce<PlainObject>((acc, [key, value]) => {
-    if (exclude.includes(key)) {
+  return objectEntries(items).reduce<PlainObject>((acc, [key, value]) => {
+    if (exclude?.includes(key)) {
       return acc;
     }
 
@@ -217,12 +228,18 @@ export function radiusProps(): ControlMap {
   return {
     radius: {
       control: 'select',
-      options: ['', 'none', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'round'],
+      options: [undefined, 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'round'],
     },
   };
 }
 
-export function spacingProps(): ControlMap {
+export function spacingProps(key?: string): ControlMap {
+  if (key) {
+    return {
+      [key]: { control: 'select', options: [0, SPACING] },
+    };
+  }
+
   return {
     ...marginProps(),
     ...paddingProps(),

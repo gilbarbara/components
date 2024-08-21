@@ -3,59 +3,66 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
+import { getStyledOptions, paddingStyles } from '~/modules/system';
 
-import { WithAccent } from '~/types';
+import { WithAccent, WithPadding, WithTheme } from '~/types';
 
-import { MenuItemProps } from './types';
-import { useMenuContext } from './utils';
+import { MenuItemProps, useMenu, useMenuContext } from './useMenu';
 
-export const StyledMenuItem = styled(
-  'li',
-  getStyledOptions(),
-)<MenuItemProps & WithAccent>(props => {
-  const { accent = 'primary', bg, color, disabled = false, wrap } = props;
-  const { grayScale, opacityDisabled, spacing, typography, ...theme } = getTheme(props);
-  const darkMode = isDarkMode(props);
+export const StyledMenuItem = styled('li', getStyledOptions())<
+  MenuItemProps & WithAccent & WithPadding & WithTheme & { disableHover: boolean }
+>(
+  {
+    display: 'flex',
+    transition: 'background-color 0.3s',
+  },
+  props => {
+    const { accent = 'primary', bg, color, disabled = false, disableHover, theme, wrap } = props;
+    const { darkMode, grayScale, opacityDisabled, spacing, typography } = theme;
 
-  const themeColor = darkMode ? grayScale['200'] : grayScale['800'];
+    const themeColor = darkMode ? grayScale['200'] : grayScale['800'];
 
-  const { mainColor, textColor } = getColorTokens(bg ?? accent, color, theme);
+    const { mainColor, textColor } = getColorTokens(accent, color, theme);
 
-  return css`
-    color: ${themeColor};
-    cursor: ${disabled ? 'not-allowed' : 'pointer'};
-    display: flex;
-    font-size: ${typography.md.fontSize};
-    opacity: ${disabled ? opacityDisabled : 1};
-    padding: ${spacing.xs} ${spacing.sm} !important;
-    transition: background-color 0.3s;
-    white-space: ${wrap ? 'normal' : 'nowrap'};
+    let bgColor;
 
-    a {
-      color: ${themeColor};
-      text-decoration: none;
+    if (bg) {
+      bgColor = getColorTokens(bg, null, theme).mainColor;
     }
 
-    ${!disabled &&
-    css`
-      &:focus-visible,
-      &:hover,
-      &:active {
-        background-color: ${mainColor};
-        color: ${textColor};
+    return css`
+      background-color: ${bgColor};
+      color: ${themeColor};
+      cursor: ${disabled ? 'not-allowed' : 'pointer'};
+      font-size: ${typography.md.fontSize};
+      opacity: ${disabled ? opacityDisabled : 1};
+      padding: ${spacing.xs} ${spacing.sm};
+      white-space: ${wrap ? 'normal' : 'nowrap'};
+      ${paddingStyles(props)};
 
-        * {
-          color: ${textColor};
-        }
+      a {
+        color: ${themeColor};
+        text-decoration: none;
       }
-    `};
-  `;
-});
+
+      ${!disabled &&
+      !disableHover &&
+      css`
+        &:focus-visible,
+        &:hover,
+        &:active {
+          background-color: ${mainColor};
+          color: ${textColor};
+
+          * {
+            color: ${textColor};
+          }
+        }
+      `};
+    `;
+  },
+);
 
 export const StyledMenuItemContent = styled('span')`
   align-items: center;
@@ -64,9 +71,19 @@ export const StyledMenuItemContent = styled('span')`
 `;
 
 export function MenuItem(props: MenuItemProps) {
-  const { children, disableAutoClose = false, disabled, onToggle, ...rest } = props;
+  const {
+    componentProps: {
+      accent,
+      children,
+      disableAutoClose = false,
+      disabled,
+      disableHover = false,
+      onToggle,
+      ...rest
+    },
+    getDataAttributes,
+  } = useMenu<MenuItemProps>(props);
   const { closeMenu, state } = useMenuContext();
-  const { getDataAttributes } = useTheme();
 
   const handleToggle = (event: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>) => {
     if (disabled) {
@@ -102,8 +119,9 @@ export function MenuItem(props: MenuItemProps) {
 
   return (
     <StyledMenuItem
-      accent={state.accent}
+      accent={accent ?? state.accent}
       {...getDataAttributes('MenuItem')}
+      disableHover={disableHover}
       disabled={disabled}
       onClick={handleToggle}
       onKeyDown={handleToggle}

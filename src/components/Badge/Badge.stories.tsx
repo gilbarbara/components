@@ -45,7 +45,7 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer gap="lg">
+    <Spacer distribution="center" gap="lg">
       <Badge {...props} size="sm">
         <Avatar image={users[0].avatar} name={users[0].name} radius="xs" size="md" />
       </Badge>
@@ -68,14 +68,14 @@ export const Colors: Story = {
 
     return (
       <>
-        <Grid gap={30} templateColumns="repeat(4, 1fr)">
+        <Grid gap="lg" templateColumns="repeat(4, 1fr)">
           {VARIANTS.map((d, index) => (
             <Badge
               key={d}
               {...rest}
               bg={d}
               borderColor={d === 'white' ? 'red' : undefined}
-              color={color || (!['yellow', 'white'].includes(d) ? 'white' : undefined)}
+              color={color ?? (!['yellow', 'white'].includes(d) ? 'white' : undefined)}
             >
               <Avatar image={users[index].avatar} name={users[index].name} radius="md" size="md" />
             </Badge>

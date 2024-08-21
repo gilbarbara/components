@@ -1,120 +1,48 @@
 import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, omit } from '@gilbarbara/helpers';
-import { PlainObject, Simplify } from '@gilbarbara/types';
+import { omit } from '@gilbarbara/helpers';
+import { PlainObject } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import {
-  baseStyles,
-  borderStyles,
-  colorStyles,
-  flexItemStyles,
-  getStyledOptions,
-  layoutStyles,
-  marginStyles,
-  paddingStyles,
-  radiusStyles,
-  shadowStyles,
-} from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Box } from '~/components/Box';
+import { Flex } from '~/components/Flex';
 import { H1, H2, H3 } from '~/components/Headings';
 import { Icon } from '~/components/Icon';
 import { Paragraph } from '~/components/Paragraph';
 
-import {
-  Direction,
-  Icons,
-  Sizes,
-  StyledProps,
-  WithBorder,
-  WithChildrenOptional,
-  WithColors,
-  WithFlexItem,
-  WithHTMLAttributes,
-  WithLayout,
-  WithMargin,
-  WithPadding,
-  WithRadius,
-  WithShadow,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface NonIdealStateKnownProps
-  extends StyledProps,
-    WithBorder,
-    WithColors,
-    WithChildrenOptional,
-    WithFlexItem,
-    Omit<WithHTMLAttributes, 'title'>,
-    WithLayout,
-    WithMargin,
-    WithPadding,
-    WithRadius,
-    WithShadow {
-  description?: ReactNode;
-  /** @default vertical */
-  direction?: Direction;
-  /** @default false */
-  hideIcon?: boolean;
-  icon?: Icons;
-  /** @default md */
-  size?: Sizes;
-  title?: ReactNode;
-  /** @default not-found */
-  type?: 'error' | 'no-results' | 'not-found' | 'offline' | null;
-}
-
-export type NonIdealStateProps = Simplify<NonIdealStateKnownProps>;
-
-export const defaultProps = {
-  direction: 'vertical',
-  hideIcon: false,
-  maxWidth: '600px',
-  padding: 'md',
-  shadow: false,
-  size: 'md',
-  type: 'not-found',
-} satisfies NonIdealStateProps;
+import { NonIdealStateProps, useNonIdealState } from './useNonIdealState';
 
 export const StyledNonIdealState = styled(
   'div',
   getStyledOptions('type'),
-)<NonIdealStateProps>(props => {
-  const { direction } = props;
+)<NonIdealStateProps & WithTheme>(props => {
+  const { orientation } = props;
+  const isHorizontal = orientation === 'horizontal';
 
   return css`
-    ${direction === 'horizontal' ? 'align-items: center;' : ''};
-    display: ${direction === 'horizontal' ? 'flex' : 'block'};
+    ${isHorizontal ? 'align-items: center;' : ''};
+    display: ${isHorizontal ? 'flex' : 'block'};
     margin: 0 auto;
-    text-align: ${direction === 'horizontal' ? 'left' : 'center'};
+    text-align: ${isHorizontal ? 'left' : 'center'};
     width: 100%;
-    ${baseStyles(props)};
-    ${colorStyles(props, { withoutBorder: true })};
-    ${borderStyles(props)};
-    ${flexItemStyles(props)};
-    ${layoutStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${shadowStyles(props)};
+    ${getStyles(props, { skipBorder: true })};
   `;
 });
 
 export function NonIdealState(props: NonIdealStateProps) {
-  const { children, description, direction, hideIcon, icon, size, title, type } = mergeProps(
-    defaultProps,
-    props,
-  );
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useNonIdealState(props);
+  const { children, description, hideIcon, icon, orientation, size, title, type } = componentProps;
 
   const iconSize = {
     sm: 48,
     md: 64,
     lg: 96,
   };
-  const isVertical = direction === 'vertical';
+  const isVertical = orientation === 'vertical';
   const template: PlainObject<ReactNode> = {};
   const output: PlainObject<ReactNode> = {};
 
@@ -147,9 +75,9 @@ export function NonIdealState(props: NonIdealStateProps) {
 
   if (!hideIcon && (icon ?? template.icon)) {
     output.icon = (
-      <Box align="center" flexBox justify="center">
+      <Flex align="center" justify="center">
         {icon ? <Icon name={icon} size={iconSize[size]} /> : template.icon}
-      </Box>
+      </Flex>
     );
   }
 
@@ -187,7 +115,10 @@ export function NonIdealState(props: NonIdealStateProps) {
   }
 
   return (
-    <StyledNonIdealState {...getDataAttributes('NonIdealState')} {...omit(props, 'title', 'type')}>
+    <StyledNonIdealState
+      {...getDataAttributes('NonIdealState')}
+      {...omit(componentProps, 'title', 'type')}
+    >
       {output.icon}
       <Box ml={!isVertical ? 'xs' : undefined} mt={isVertical && output.icon ? 'sm' : undefined}>
         {output.title}
@@ -199,3 +130,5 @@ export function NonIdealState(props: NonIdealStateProps) {
 }
 
 NonIdealState.displayName = 'NonIdealState';
+
+export { defaultProps, type NonIdealStateProps } from './useNonIdealState';

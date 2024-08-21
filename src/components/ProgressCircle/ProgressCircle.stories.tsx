@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { capitalize } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, Grid, Paragraph } from '~';
+import { Flex, Grid, Paragraph } from '~';
 
 import { sizes } from '~/modules/options';
 
@@ -88,10 +88,10 @@ export const Sizes: Story = {
     value: disableControl(),
   },
   render: props => (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
-      <ProgressCircle {...props} label="SM" size="sm" value={13} />
-      <ProgressCircle {...props} label="MD" size="md" value={50} />
-      <ProgressCircle {...props} label="LG" size="lg" value={75} />
+    <Grid gap="lg" templateColumns="repeat(3, 1fr)">
+      <ProgressCircle {...props} label="sm" size="sm" value={13} />
+      <ProgressCircle {...props} label="md" size="md" value={50} />
+      <ProgressCircle {...props} label="lg" size="lg" value={75} />
     </Grid>
   ),
 };
@@ -104,7 +104,7 @@ export const Colors: Story = {
     accent: disableControl(),
   },
   render: props => (
-    <Grid gap={30} templateColumns="repeat(4, 1fr)">
+    <Grid gap="lg" templateColumns="repeat(4, 1fr)">
       {VARIANTS.map(d => (
         <ProgressCircle key={d} {...props} accent={d} label={capitalize(d)} />
       ))}
@@ -138,8 +138,8 @@ export const Customized: Story = {
     value: 72.5,
   },
   render: props => (
-    <Box bg="red" color="white" flexBox justify="center" padding="xl" radius="xl">
+    <Flex bg="red" color="white" justify="center" padding="xl" radius="xl">
       <ProgressCircle {...props} />
-    </Box>
+    </Flex>
   ),
 };

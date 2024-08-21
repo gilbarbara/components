@@ -11,7 +11,7 @@ import { InputFile } from '~/components/InputFile';
 
 import { InputTypes, ValidatePasswordOptions } from '~/types';
 
-import { FieldInputProps } from './types';
+import { FieldInputProps } from './useField';
 import { getInputParameters } from './utils';
 
 interface Props extends Omit<FieldInputProps, 'type' | 'validationOptions'> {

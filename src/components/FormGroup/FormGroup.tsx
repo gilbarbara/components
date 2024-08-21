@@ -1,88 +1,30 @@
-import { CSSProperties, forwardRef, ReactNode } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { PlainObject, Simplify } from '@gilbarbara/types';
+import { PlainObject } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
-import {
-  baseStyles,
-  borderStyles,
-  getStyledOptions,
-  isDarkMode,
-  layoutStyles,
-  marginStyles,
-  paddingStyles,
-  radiusStyles,
-} from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Box } from '~/components/Box';
 import { FormElementWrapper } from '~/components/FormElementWrapper';
 import { Icon } from '~/components/Icon';
 import { Label } from '~/components/Label';
 
-import {
-  StyledProps,
-  WithBorder,
-  WithChildren,
-  WithHTMLAttributes,
-  WithInline,
-  WithLabel,
-  WithLayout,
-  WithMargin,
-  WithPadding,
-  WithRadius,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface FormGroupKnownProps
-  extends StyledProps,
-    WithBorder,
-    WithChildren,
-    WithHTMLAttributes,
-    WithInline,
-    WithLabel,
-    WithLayout,
-    WithMargin,
-    WithPadding,
-    WithRadius {
-  assistiveText?: ReactNode;
-  error?: ReactNode;
-  hideAssistiveText?: boolean;
-  labelId?: string;
-  labelInfo?: ReactNode;
-  labelStyles?: CSSProperties;
-  required?: boolean;
-  skipIcon?: boolean;
-  valid?: boolean;
-}
-
-export type FormGroupProps = Simplify<FormGroupKnownProps>;
-
-export const defaultProps = {
-  hideAssistiveText: false,
-  inline: false,
-  required: false,
-  skipIcon: false,
-} satisfies Omit<FormGroupProps, 'children'>;
+import { FormGroupProps, useFormGroup } from './useFormGroup';
 
 export const StyledFormGroup = styled(
   'div',
   getStyledOptions(),
-)<Partial<FormGroupProps>>(props => {
-  const { dataAttributeName, spacing } = getTheme(props);
+)<Partial<FormGroupProps> & WithTheme>(props => {
+  const { dataAttributeName, spacing } = props.theme;
 
   return css`
-    ${baseStyles(props)};
     margin-bottom: ${spacing.md};
     width: 100%;
-    ${borderStyles(props)};
-    ${layoutStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
+    ${getStyles(props)};
 
     [data-${dataAttributeName}='FormGroupContent'] {
       > * {
@@ -112,23 +54,23 @@ export const StyledFormGroup = styled(
 const AssistiveContent = styled(
   'div',
   getStyledOptions(),
-)<Partial<FormGroupProps>>(props => {
-  const { grayScale, spacing, typography } = getTheme(props);
+)<Partial<FormGroupProps> & WithTheme>(props => {
+  const { darkMode, grayScale, spacing, typography } = props.theme;
 
   return css`
     align-items: center;
-    color: ${isDarkMode(props) ? grayScale['200'] : grayScale['500']};
+    color: ${darkMode ? grayScale['200'] : grayScale['500']};
     display: flex;
     font-size: ${typography.sm.fontSize};
     line-height: 16px;
-    margin-top: ${spacing.xxs};
+    margin-top: ${spacing.xs};
     min-height: ${spacing.md};
     text-align: left;
   `;
 });
 
-const ErrorComponent = styled.div(props => {
-  const { colors } = getTheme(props);
+const ErrorComponent = styled.div<WithTheme>(props => {
+  const { colors } = props.theme;
 
   return css`
     align-items: center;
@@ -138,6 +80,7 @@ const ErrorComponent = styled.div(props => {
 });
 
 export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useFormGroup(props);
   const {
     assistiveText,
     children,
@@ -152,8 +95,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
     skipIcon,
     valid,
     ...rest
-  } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  } = componentProps;
 
   const content: PlainObject<ReactNode> = {
     assistiveText,
@@ -161,7 +103,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
 
   if (error && valid === false) {
     content.assistiveText = (
-      <ErrorComponent>
+      <ErrorComponent theme={rest.theme}>
         <Icon mr="xxs" name="danger-o" title="Invalid" />
         <span>{error}</span>
       </ErrorComponent>
@@ -170,7 +112,11 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
 
   content.children = !skipIcon ? (
     <FormElementWrapper
-      endContent={is.boolean(valid) && valid ? <Icon name="check-o" title="valid" /> : undefined}
+      endContent={
+        is.boolean(valid) && valid ? (
+          <Icon color="green" name="check-o" size={24} title="valid" />
+        ) : undefined
+      }
     >
       {children}
     </FormElementWrapper>
@@ -197,7 +143,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
       {content.label}
       {content.children}
       {!hideAssistiveText && (
-        <AssistiveContent {...getDataAttributes('AssistiveContent')}>
+        <AssistiveContent {...getDataAttributes('AssistiveContent')} theme={rest.theme}>
           {content.assistiveText}
         </AssistiveContent>
       )}
@@ -220,3 +166,5 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>((props, ref)
 });
 
 FormGroup.displayName = 'FormGroup';
+
+export { defaultProps, type FormGroupProps } from './useFormGroup';

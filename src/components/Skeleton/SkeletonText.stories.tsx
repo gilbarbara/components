@@ -14,7 +14,7 @@ import {
 } from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonText } from './SkeletonText';
-import { SkeletonTextProps } from './utils';
+import { SkeletonTextProps } from './useSkeleton';
 
 type Story = StoryObj<typeof SkeletonText>;
 

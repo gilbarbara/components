@@ -1,57 +1,28 @@
 import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { baseStyles, getStyledOptions, inputStyles } from '~/modules/system';
 
-import {
-  OmitElementProps,
-  StyledProps,
-  WithAccent,
-  WithBorderless,
-  WithElementSpacing,
-  WithFormElements,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface TextareaKnownProps
-  extends StyledProps,
-    WithAccent,
-    WithBorderless,
-    WithElementSpacing,
-    WithFormElements {}
-
-export type TextareaProps = Simplify<
-  OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'height' | 'name'>
->;
-
-export const defaultProps = {
-  accent: 'primary',
-  borderless: false,
-  disabled: false,
-  prefixSpacing: false,
-  readOnly: false,
-  rows: 3,
-  suffixSpacing: false,
-  width: '100%',
-} satisfies Omit<TextareaProps, 'name'>;
+import { TextareaProps, useTextarea } from './useTextarea';
 
 export const StyledTextarea = styled(
   'textarea',
   getStyledOptions(),
-)<TextareaProps>(props => {
+)<TextareaProps & WithTheme>(props => {
   return css`
-    ${baseStyles(props)};
+    ${baseStyles(props.theme)};
     ${inputStyles(props, 'textarea')};
   `;
 });
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
-  const { name, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const {
+    componentProps: { name, ...rest },
+    getDataAttributes,
+  } = useTextarea(props);
 
   return (
     <StyledTextarea ref={ref} {...getDataAttributes('Textarea')} id={name} name={name} {...rest} />
@@ -59,3 +30,5 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
 });
 
 Textarea.displayName = 'Textarea';
+
+export { defaultProps, type TextareaProps } from './useTextarea';

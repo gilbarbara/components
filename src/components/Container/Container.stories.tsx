@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, Jumbo, Paragraph } from '~';
+import { Box, Flex, Jumbo, Paragraph } from '~';
 
 import {
   colorProps,
@@ -9,6 +9,7 @@ import {
   flexItemProps,
   hideProps,
   layoutProps,
+  positioningProps,
   spacingProps,
 } from '~/stories/__helpers__';
 
@@ -23,9 +24,10 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
-    ...flexBoxProps(),
+    ...flexBoxProps({ showCategory: true }),
     ...flexItemProps(),
     ...layoutProps(),
+    ...positioningProps(),
     ...spacingProps(),
     children: disableControl(),
     fullScreenOffset: { control: 'text' },
@@ -62,7 +64,7 @@ export const WithParent: Story = {
     justify: 'center',
   },
   render: props => (
-    <Box bg="primary.100" flexBox minHeight={300}>
+    <Flex bg="primary.100" minHeight={300}>
       <Container {...props}>
         <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
         <Paragraph>
@@ -70,6 +72,6 @@ export const WithParent: Story = {
           an optional vertical padding
         </Paragraph>
       </Container>
-    </Box>
+    </Flex>
   ),
 };

@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
 
-import { Icon } from '~';
+import { Icon, Paragraph, Spacer } from '~';
+
+import { sizes } from '~/modules/options';
 
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 import { DropdownOption } from '~/types';
@@ -48,13 +50,16 @@ export const Sizes: Story = {
     height: disableControl(),
   },
   render: props => (
-    <>
-      <Dropdown {...props} height="sm" items={items} />
-      <br />
-      <Dropdown {...props} height="md" items={items} />
-      <br />
-      <Dropdown {...props} height="lg" items={items} />
-    </>
+    <Spacer distribution="center" gap="lg" orientation="vertical">
+      {sizes.map(size => (
+        <div key={size}>
+          <Paragraph align="center" mb="xs" size="lg">
+            {size}
+          </Paragraph>
+          <Dropdown key={size} {...props} height={size} items={items} />
+        </div>
+      ))}
+    </Spacer>
   ),
 };
 

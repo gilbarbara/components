@@ -1,125 +1,70 @@
-import { forwardRef, isValidElement } from 'react';
+import { forwardRef, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, omit } from '@gilbarbara/helpers';
-import { SetRequired, Simplify } from '@gilbarbara/types';
+import { SetRequired } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { getTheme } from '~/modules/helpers';
-import { textDefaultOptions } from '~/modules/options';
-import {
-  appearanceStyles,
-  baseStyles,
-  colorStyles,
-  displayStyles,
-  flexItemStyles,
-  getStyledOptions,
-  marginStyles,
-  paddingStyles,
-  textStyles,
-} from '~/modules/system';
+import { WithTheme } from '~/types';
 
-import {
-  OmitElementProps,
-  Spacing,
-  StyledProps,
-  WithChildren,
-  WithColorsDefaultColor,
-  WithDisplay,
-  WithEndContent,
-  WithFlexItem,
-  WithMargin,
-  WithPadding,
-  WithStartContent,
-  WithTextOptions,
-} from '~/types';
+import { AnchorProps, useAnchor } from './useAnchor';
 
-export interface AnchorKnownProps
-  extends StyledProps,
-    WithChildren,
-    Pick<WithColorsDefaultColor, 'color'>,
-    WithDisplay,
-    WithEndContent,
-    WithFlexItem,
-    WithMargin,
-    WithPadding,
-    WithStartContent,
-    WithTextOptions {
-  /**
-   * Open the link in a new tab and add `rel="noopener noreferrer"`.
-   * @default false
-   */
-  external?: boolean;
-  /**
-   * Space between the start and end content.
-   * @default xxs
-   */
-  gap?: Spacing;
-  /**
-   * Remove the underline from the link.
-   * @default false
-   */
-  hideDecoration?: boolean;
-  href: string;
-}
+export const StyledAnchor = styled('a', getStyledOptions())<
+  SetRequired<AnchorProps, 'gap' | 'hideDecoration'> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    color: 'inherit',
+    cursor: 'pointer',
+    display: 'inline-flex',
+    padding: 0,
+  },
+  props => {
+    const { gap, hideDecoration, theme } = props;
+    const { spacing } = theme;
 
-export type AnchorProps = Simplify<OmitElementProps<HTMLAnchorElement, AnchorKnownProps>>;
-
-export const defaultProps = {
-  ...omit(textDefaultOptions, 'size'),
-  color: 'primary',
-  display: 'inline-flex',
-  external: false,
-  gap: 'xxs',
-  hideDecoration: false,
-} satisfies Omit<AnchorProps, 'children' | 'href'>;
-
-export const StyledAnchor = styled(
-  'a',
-  getStyledOptions(),
-)<SetRequired<AnchorProps, 'gap' | 'hideDecoration'>>(props => {
-  const { gap, hideDecoration } = props;
-  const { spacing } = getTheme(props);
-
-  return css`
-    ${appearanceStyles};
-    ${baseStyles(props)};
-    align-items: center;
-    color: inherit;
-    cursor: pointer;
-    display: inline-flex;
-    font-family: inherit;
-    gap: ${spacing[gap]};
-    padding: 0;
-    text-decoration: ${hideDecoration ? 'none' : 'underline'};
-    ${colorStyles(props)};
-    ${displayStyles(props)};
-    ${flexItemStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${textStyles(props, 1)};
-  `;
-});
+    return css`
+      gap: ${spacing[gap]};
+      text-decoration: ${hideDecoration ? 'none' : 'underline'};
+      ${getStyles(props, { lineHeightCustom: 1, useFontSize: true })};
+    `;
+  },
+);
 
 export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
-  const { children, endContent, external, startContent, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useAnchor(props);
+  const { children, endContent, external, startContent, ...rest } = componentProps;
 
-  const additionalProps: Record<string, any> = defaultProps;
+  const additionalProps: Record<string, any> = {};
 
   if (external) {
     additionalProps.rel = 'noopener noreferrer';
     additionalProps.target = '_blank';
   }
 
+  const content: Record<string, ReactNode> = {};
+
+  if (startContent) {
+    content.startContent = isValidElement(startContent) ? (
+      startContent
+    ) : (
+      <span>{startContent}</span>
+    );
+  }
+
+  if (endContent) {
+    content.endContent = isValidElement(endContent) ? endContent : <span>{endContent}</span>;
+  }
+
   return (
     <StyledAnchor ref={ref} {...getDataAttributes('Anchor')} {...additionalProps} {...rest}>
-      {isValidElement(startContent) ? startContent : <span>{startContent}</span>}
+      {content.startContent}
       <span>{children}</span>
-      {isValidElement(endContent) ? endContent : <span>{endContent}</span>}
+      {content.endContent}
     </StyledAnchor>
   );
 });
 
 Anchor.displayName = 'Anchor';
+
+export { defaultProps, type AnchorProps } from './useAnchor';

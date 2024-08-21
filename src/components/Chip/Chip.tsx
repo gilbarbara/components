@@ -1,111 +1,39 @@
-import { CSSProperties, forwardRef, isValidElement, MouseEvent, ReactNode } from 'react';
+import { forwardRef, isValidElement, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, omit } from '@gilbarbara/helpers';
-import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
+import { PlainObject, SetRequired } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
-import { textDefaultOptions } from '~/modules/options';
-import {
-  baseStyles,
-  colorStyles,
-  dimensionStyles,
-  flexItemStyles,
-  getStyledOptions,
-  marginStyles,
-  paddingStyles,
-  radiusStyles,
-  textStyles,
-} from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
-import {
-  Spacing,
-  StyledProps,
-  VariantWithTones,
-  WithChildren,
-  WithColors,
-  WithDimension,
-  WithEndContent,
-  WithFlexItem,
-  WithMargin,
-  WithPadding,
-  WithRadius,
-  WithStartContent,
-  WithTextOptions,
-  WithVariant,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface ChipKnownProps
-  extends StyledProps,
-    WithChildren,
-    WithEndContent,
-    WithColors,
-    WithDimension,
-    WithFlexItem,
-    WithMargin,
-    WithPadding,
-    WithRadius,
-    WithStartContent,
-    WithTextOptions,
-    WithVariant {
-  /**
-   * Component background color
-   * @default primary
-   */
-  bg?: VariantWithTones;
-  endContentOnClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-  /**
-   * Space between the start and end content
-   * @default xxs
-   */
-  gap?: Spacing;
-  startContentOnClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-  style?: CSSProperties;
-}
+import { ChipProps, defaultProps, useChip } from './useChip';
 
-export type ChipProps = Simplify<ChipKnownProps>;
+export const StyledChip = styled('span', getStyledOptions())<
+  SetRequired<ChipProps, keyof typeof defaultProps> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    display: 'inline-flex',
+    justifyContent: 'center',
+  },
+  props => {
+    const { theme } = props;
+    const { spacing } = theme;
 
-export const defaultProps = {
-  ...omit(textDefaultOptions, 'size'),
-  bg: 'primary',
-  gap: 'xxs',
-  radius: 'md',
-  size: 'sm',
-  variant: 'solid',
-} satisfies Omit<ChipProps, 'children'>;
-
-export const StyledChip = styled(
-  'span',
-  getStyledOptions(),
-)<SetRequired<ChipProps, keyof typeof defaultProps>>(props => {
-  const { gap } = props;
-  const { spacing } = getTheme(props);
-
-  return css`
-    ${baseStyles(props)};
-    align-items: center;
-    display: inline-flex;
-    gap: ${spacing[gap]};
-    justify-content: center;
-    padding: ${spacing.xxs} ${spacing.xs};
-    ${colorStyles(props)};
-    ${dimensionStyles(props)};
-    ${flexItemStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${textStyles(props, 1)};
-  `;
-});
+    return css`
+      padding: ${spacing.xxs} ${spacing.xs};
+      ${getStyles(props, { lineHeightCustom: 1, useFontSize: true })};
+    `;
+  },
+);
 
 export const Chip = forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useChip(props);
   const { children, endContent, endContentOnClick, startContent, startContentOnClick, ...rest } =
-    mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+    componentProps;
 
   const content: PlainObject<ReactNode> = {
     startContent,
@@ -138,3 +66,5 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
 });
 
 Chip.displayName = 'Chip';
+
+export { defaultProps, type ChipProps } from './useChip';

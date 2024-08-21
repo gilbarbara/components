@@ -1,71 +1,36 @@
-import { CSSProperties, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
+import { omit } from '@gilbarbara/helpers';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { borderStyles, getStyledOptions, marginStyles, paddingStyles } from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
 
-import { WithAccent, WithBorder, WithDisabled, WithMargin, WithPadding } from '~/types';
+import { WithTheme } from '~/types';
 
 import PaginationButton from './Button';
+import { PaginationItem, PaginationProps, usePagination } from './usePagination';
 
-export interface PaginationKnownProps extends WithAccent, WithBorder, WithMargin, WithPadding {
-  /** @default end */
-  align?: 'start' | 'center' | 'end';
-  currentPage: number;
-  /**
-   * Hide First/Last links
-   * @default false
-   */
-  disableEdgeNavigation?: boolean;
-  /**
-   * Limit to show the First/Last buttons
-   * @default 3
-   */
-  edgeNavigationLimit?: number;
-  onClick: (currentPage: number, type?: string) => void;
-  style?: CSSProperties;
-  totalPages: number;
-}
+const StyledPagination = styled('div', getStyledOptions())<
+  Omit<PaginationProps, 'currentPage' | 'onClick' | 'totalPages'> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    display: 'flex',
+  },
+  props => {
+    const { align } = props;
 
-export type PaginationProps = Simplify<PaginationKnownProps>;
-
-interface Item extends WithDisabled {
-  content?: ReactNode;
-  page?: number;
-  type: string;
-}
-
-export const defaultProps = {
-  accent: 'primary',
-  align: 'end',
-  disableEdgeNavigation: false,
-  edgeNavigationLimit: 3,
-} satisfies Omit<PaginationProps, 'currentPage' | 'onClick' | 'totalPages'>;
-
-const StyledPagination = styled(
-  'div',
-  getStyledOptions(),
-)<Omit<PaginationProps, 'currentPage' | 'onClick' | 'totalPages'>>(props => {
-  const { align } = props;
-
-  return css`
-    align-items: center;
-    display: flex;
-    justify-content: ${align};
-    ${borderStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-  `;
-});
+    return css`
+      justify-content: ${align};
+      ${getStyles(omit(props, 'align'))};
+    `;
+  },
+);
 
 export function Pagination(props: PaginationProps) {
+  const { componentProps, getDataAttributes } = usePagination(props);
   const {
     accent,
     currentPage,
@@ -74,10 +39,9 @@ export function Pagination(props: PaginationProps) {
     onClick,
     totalPages,
     ...rest
-  } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  } = componentProps;
 
-  const items: Item[] = [];
+  const items: PaginationItem[] = [];
 
   if (totalPages <= 1) {
     return null;
@@ -186,3 +150,5 @@ export function Pagination(props: PaginationProps) {
 }
 
 Pagination.displayName = 'Pagination';
+
+export { defaultProps, type PaginationProps } from './usePagination';

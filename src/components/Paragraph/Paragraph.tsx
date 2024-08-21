@@ -1,87 +1,49 @@
 import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
+import { omit, px } from '@gilbarbara/helpers';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
-import { textDefaultOptions } from '~/modules/options';
-import {
-  alignStyles,
-  baseStyles,
-  colorStyles,
-  getStyledOptions,
-  marginStyles,
-} from '~/modules/system';
+import { alignStyles, getStyledOptions, getStyles } from '~/modules/system';
 
 import { Text } from '~/components/Text';
 
-import {
-  OmitElementProps,
-  StyledProps,
-  WithAlign,
-  WithChildren,
-  WithColors,
-  WithMargin,
-  WithTextOptions,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface ParagraphKnownProps
-  extends StyledProps,
-    WithAlign,
-    WithChildren,
-    Pick<WithColors, 'color'>,
-    WithMargin,
-    WithTextOptions {
-  /**
-   * Skip the top margin for adjacent paragraphs.
-   * @default false
-   */
-  skipMarginTop?: boolean;
-}
+import { ParagraphProps, useParagraph } from './useParagraph';
 
-export type ParagraphProps = Simplify<OmitElementProps<HTMLParagraphElement, ParagraphKnownProps>>;
+export const StyledParagraph = styled('p', getStyledOptions())<ParagraphProps & WithTheme>(
+  {
+    marginBottom: 0,
+    marginTop: 0,
+  },
+  props => {
+    const { skipMarginTop, theme } = props;
 
-export const defaultProps = {
-  skipMarginTop: false,
-  ...textDefaultOptions,
-};
+    return css`
+      ${getStyles(omit(props, 'align'), { useFontSize: true })};
+      ${alignStyles(props)};
 
-export const StyledParagraph = styled(
-  'p',
-  getStyledOptions(),
-)<ParagraphProps>(props => {
-  const { skipMarginTop } = props;
-  const { spacing } = getTheme(props);
-
-  return css`
-    ${baseStyles(props)};
-    margin-bottom: 0;
-    margin-top: 0;
-    ${alignStyles(props)};
-    ${colorStyles(props)};
-    ${marginStyles(props)};
-
-    ${!skipMarginTop &&
-    css`
-      & + & {
-        margin-top: ${px(spacing.sm)};
-      }
-    `};
-  `;
-});
+      ${!skipMarginTop &&
+      css`
+        & + & {
+          margin-top: ${px(theme.spacing.sm)};
+        }
+      `};
+    `;
+  },
+);
 
 export const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
-  const { children, id, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useParagraph(props);
+  const { children } = componentProps;
 
   return (
-    <StyledParagraph ref={ref} {...getDataAttributes('Paragraph')} {...props}>
-      {isValidElement(children) ? children : <Text {...rest}>{children}</Text>}
+    <StyledParagraph ref={ref} {...getDataAttributes('Paragraph')} {...componentProps}>
+      {isValidElement(children) ? children : <Text {...componentProps} />}
     </StyledParagraph>
   );
 });
 
 Paragraph.displayName = 'Paragraph';
+
+export { defaultProps, type ParagraphProps } from './useParagraph';

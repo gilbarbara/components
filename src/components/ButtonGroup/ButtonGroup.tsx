@@ -1,76 +1,21 @@
 /* eslint-disable react/no-array-index-key */
 import { Children, cloneElement, MouseEvent, ReactElement, useState } from 'react';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { RequireAtLeastOne, Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
+import { Button } from '~/components/Button/Button';
 
-import { Button, ButtonProps } from '~/components/Button/Button';
+import { WithTheme } from '~/types';
 
-import {
-  DataAttributes,
-  StyledProps,
-  WithButtonSize,
-  WithColorsDefaultBg,
-  WithDisabled,
-  WithHTMLAttributes,
-  WithMargin,
-  WithVariant,
-} from '~/types';
+import { ButtonGroupProps, useButtonGroup } from './useButtonGroup';
 
-export interface ButtonGroupKnownProps
-  extends StyledProps,
-    WithButtonSize,
-    WithColorsDefaultBg,
-    WithDisabled,
-    WithHTMLAttributes,
-    WithMargin {
-  children?: ReactElement[];
-  /**
-   * The default variant for the buttons if you are using the `items` prop.
-   * @default 'bordered'
-   */
-  defaultVariant?: WithVariant['variant'];
-  items: Array<
-    | (ButtonProps &
-        DataAttributes & {
-          defaultSelected?: boolean;
-        })
-    | string
-  >;
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-  /**
-   * The selected variant for the buttons if you are using the `items` prop.
-   * @default 'solid'
-   */
-  selectedVariant?: WithVariant['variant'];
-}
-
-export type ButtonGroupProps = Simplify<
-  RequireAtLeastOne<ButtonGroupKnownProps, 'children' | 'items'>
->;
-
-export const defaultProps = {
-  bg: 'primary',
-  defaultVariant: 'bordered',
-  disabled: false,
-  selectedVariant: 'solid',
-  size: 'md',
-} satisfies Omit<ButtonGroupProps, 'children'>;
-
-export const StyledButtonGroup = styled(
-  'div',
-  getStyledOptions(),
-)<Partial<ButtonGroupProps>>(
-  props => css`
-    ${baseStyles(props)};
+export const StyledButtonGroup = styled('div', getStyledOptions())<
+  Partial<ButtonGroupProps> & WithTheme
+>(
+  `
     display: inline-flex;
-    ${marginStyles(props)};
 
     > button {
       + button {
@@ -92,9 +37,11 @@ export const StyledButtonGroup = styled(
       }
     }
   `,
+  props => getStyles(props),
 );
 
 export function ButtonGroup(props: ButtonGroupProps) {
+  const { componentProps, getDataAttributes } = useButtonGroup(props);
   const {
     bg,
     children,
@@ -106,8 +53,7 @@ export function ButtonGroup(props: ButtonGroupProps) {
     selectedVariant,
     size,
     ...rest
-  } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  } = componentProps;
   const [active, setActive] = useState(
     items?.findIndex(item => (is.plainObject(item) ? item.defaultSelected : null)) ?? 0,
   );
@@ -132,13 +78,15 @@ export function ButtonGroup(props: ButtonGroupProps) {
   const content = items
     ? items.map((item, index) => {
         const itemProps = is.string(item) ? { children: item } : item;
+        const isSelected = index === active;
 
         return (
           <Button
             key={index}
             data-index={index}
+            data-selected={isSelected}
             onClick={handleClick}
-            variant={index === active ? selectedVariant : defaultVariant}
+            variant={isSelected ? selectedVariant : defaultVariant}
             {...buttonProps}
             {...itemProps}
           />
@@ -154,3 +102,5 @@ export function ButtonGroup(props: ButtonGroupProps) {
 }
 
 ButtonGroup.displayName = 'ButtonGroup';
+
+export { defaultProps, type ButtonGroupProps } from './useButtonGroup';

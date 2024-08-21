@@ -1,8 +1,8 @@
-import { objectKeys } from '@gilbarbara/helpers';
-
 import { Box, Grid, H2, Paragraph, Spacer } from '~';
 
 import { spacing } from '~/modules/theme';
+
+import { SPACING } from '~/stories/__helpers__';
 
 export default function Spacing() {
   return (
@@ -45,7 +45,7 @@ export default function Spacing() {
       </Spacer>
 
       <Grid display="inline-grid" gap={spacing.xl} mt="xl" templateColumns="repeat(3, 1fr)">
-        {objectKeys(spacing).map(d => (
+        {SPACING.map(d => (
           <Spacer key={d}>
             <Box width={spacing.xxl}>
               <Paragraph bold>{d}</Paragraph>

@@ -2,14 +2,13 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { rotate } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderComponentProps } from './types';
+import { WithTheme } from '~/types';
+
+import { LoaderComponentProps } from './useLoader';
 
 const dash = keyframes`
   0% {
@@ -31,9 +30,9 @@ const dash = keyframes`
 const StyledLoaderRotate = styled(
   'div',
   getStyledOptions(),
-)<LoaderComponentProps>(props => {
-  const { block } = props;
-  const { spacing } = getTheme(props);
+)<LoaderComponentProps & WithTheme>(props => {
+  const { block, theme } = props;
+  const { spacing } = theme;
 
   return css`
     display: ${block ? 'flex' : 'inline-flex'};
@@ -66,11 +65,7 @@ const StyledLoaderRotateCircle = styled('circle', getStyledOptions())<{ color: s
 `;
 
 export default function LoaderRotate(props: LoaderComponentProps) {
-  const { color = 'primary', size = 32 } = props;
-  const {
-    getDataAttributes,
-    theme: { darkColor, lightColor, ...theme },
-  } = useTheme();
+  const { color = 'primary', getDataAttributes, size = 32, theme } = props;
   const { mainColor } = getColorTokens(color, null, theme);
 
   return (

@@ -2,13 +2,12 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderComponentProps } from './types';
+import { WithTheme } from '~/types';
+
+import { LoaderComponentProps } from './useLoader';
 
 const grow = ({ size = 32 }: LoaderComponentProps) => keyframes`
   0% {
@@ -32,9 +31,9 @@ const grow = ({ size = 32 }: LoaderComponentProps) => keyframes`
 const StyledLoaderGrow = styled(
   'div',
   getStyledOptions(),
-)<LoaderComponentProps>(props => {
-  const { block, color = 'primary', size = 32 } = props;
-  const { darkColor, lightColor, spacing, ...theme } = getTheme(props);
+)<LoaderComponentProps & WithTheme>(props => {
+  const { block, color = 'primary', size = 32, theme } = props;
+  const { spacing } = theme;
 
   const { mainColor } = getColorTokens(color, null, theme);
 
@@ -60,7 +59,7 @@ const StyledLoaderGrow = styled(
 });
 
 export default function LoaderGrow(props: LoaderComponentProps) {
-  const { getDataAttributes } = useTheme();
+  const { getDataAttributes } = props;
 
   return (
     <StyledLoaderGrow {...getDataAttributes('LoaderGrow')} {...props}>

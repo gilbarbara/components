@@ -11,7 +11,17 @@ import {
   validatePhone,
 } from '~/modules/validations';
 
-import { FieldProps, RegisterOptionsProps } from './types';
+import { FieldProps, RegisterOptionsProps } from './useField';
+
+export function getDefaultValue(value: any, type: FieldProps['type']) {
+  if (type === 'checkbox') {
+    return value ?? [];
+  } else if (type === 'toggle') {
+    return value ?? false;
+  }
+
+  return value;
+}
 
 export function getError(name: string, errors: PlainObject<any>) {
   const { message, type } = errors[name] ?? {};
@@ -156,14 +166,4 @@ export function getRegisterOptions(
   }
 
   return registerOptions;
-}
-
-export function getDefaultValue(value: any, type: FieldProps['type']) {
-  if (type === 'checkbox') {
-    return value ?? [];
-  } else if (type === 'toggle') {
-    return value ?? false;
-  }
-
-  return value;
 }

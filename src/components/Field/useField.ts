@@ -2,7 +2,9 @@ import { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
-import { DatePickerRangeParameter } from '~/components/DatePicker/types';
+import { useComponentProps } from '~/hooks/useComponentProps';
+
+import { DatePickerRangeParameter } from '~/components/DatePicker/useDatePicker';
 
 import {
   CheckboxItem,
@@ -105,7 +107,7 @@ export type FieldCheckboxProps = Simplify<
 export type FieldDatePickerProps = Simplify<
   FieldBaseProps &
     Omit<FieldExcludedProps, 'datePickerProps'> & {
-      datePickerProps?: Simplify<Omit<DatePickerSelectorProps, 'placeholder'>>;
+      datePickerProps?: Simplify<Omit<DatePickerSelectorProps, 'placeholder' | 'theme'>>;
       onChange?: (selection: DatePickerRangeParameter | string) => void;
       type: 'datePicker';
     }
@@ -192,3 +194,21 @@ export type FieldProps =
   | FieldSelectProps
   | FieldTextareaProps
   | FieldToggleProps;
+
+export const defaultProps = {
+  accent: 'primary',
+  borderless: false,
+  debug: false,
+  disabled: false,
+  hideAssistiveText: false,
+  inline: false,
+  label: '',
+  readOnly: false,
+  required: false,
+  skipValidation: false,
+  type: 'text',
+} satisfies Omit<FieldProps, 'name'>;
+
+export function useField(props: FieldProps) {
+  return useComponentProps(props, defaultProps);
+}

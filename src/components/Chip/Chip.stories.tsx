@@ -1,12 +1,9 @@
 import { MouseEvent } from 'react';
-import { useTheme } from '@emotion/react';
-import { objectKeys } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Grid, Icon, Spacer } from '~';
 
-import { getTheme } from '~/modules/helpers';
 import { textSizes } from '~/modules/options';
 
 import {
@@ -19,6 +16,7 @@ import {
   spacingProps,
   textOptionsProps,
   TONES,
+  VARIANTS,
 } from '~/stories/__helpers__';
 
 import { Chip, defaultProps } from './Chip';
@@ -52,11 +50,9 @@ export const Colors: Story = {
     bg: disableControl(),
   },
   render: function Render(props) {
-    const { variants } = getTheme({ theme: useTheme() });
-
     return (
-      <Grid gap={30} justifyItems="center" templateColumns="repeat(3, 1fr)">
-        {objectKeys(variants).map(variant => (
+      <Grid gap="lg" justifyItems="center" templateColumns="repeat(3, 1fr)">
+        {VARIANTS.map(variant => (
           <div key={variant}>
             <Chip {...props} bg={variant}>
               {variant}
@@ -92,10 +88,10 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer>
-      {textSizes.map(d => (
-        <Chip key={d} {...props} size={d}>
-          {d}
+    <Spacer distribution="center" gap="lg">
+      {textSizes.map(size => (
+        <Chip key={size} {...props} size={size}>
+          {size}
         </Chip>
       ))}
     </Spacer>

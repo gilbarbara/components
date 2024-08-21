@@ -5,11 +5,13 @@ import { useTheme } from '~/hooks/useTheme';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
-import { WithAccent } from '~/types';
+import { Theme, WithAccent } from '~/types';
 
-import { DropdownProps } from './types';
+import { DropdownProps } from './useDropdown';
 
-interface Props extends WithAccent, ComponentProps, Pick<DropdownProps, 'onCreate'> {}
+interface Props extends WithAccent, ComponentProps, Pick<DropdownProps, 'onCreate'> {
+  theme: Theme;
+}
 
 const StyledDropdownAdd = styled.div`
   width: 100%;
@@ -29,14 +31,14 @@ function DropdownAdd(props: Props) {
     onCreate,
     state: { search },
   } = props;
-  const { getDataAttributes } = useTheme();
+  const { getDataAttributes, theme } = useTheme();
 
   const handleClick = () => {
     onCreate?.(search, () => setStatus('close'));
   };
 
   return (
-    <StyledDropdownAdd {...getDataAttributes('DropdownAdd')}>
+    <StyledDropdownAdd {...getDataAttributes('DropdownAdd')} theme={theme}>
       <ButtonUnstyled color={accent} onClick={handleClick}>
         {getLabels().create.replace(/{search}/, `"${search}"`)}
       </ButtonUnstyled>

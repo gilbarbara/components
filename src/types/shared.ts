@@ -6,8 +6,8 @@ import {
   Alignment,
   BorderItem,
   BorderItemSide,
-  Direction,
   HeadingSizes,
+  Orientation,
   Sizes,
   TextSizes,
 } from './common';
@@ -95,12 +95,12 @@ export interface WithColorsDefaultColor extends WithColors {
   color?: VariantWithTones;
 }
 
-export interface WithComponentSize {
+export interface WithComponentSize<T = Sizes> {
   /**
    * Component size
    * @default md
    */
-  size?: Sizes;
+  size?: T;
 }
 
 export interface WithDimension {
@@ -154,7 +154,7 @@ export interface WithFlexBox {
    * The gap CSS property sets the gaps (gutters) between rows and columns.
    * It is a shorthand for row-gap and column-gap.
    */
-  gap?: StringOrNumber;
+  gap?: Spacing | ({} & string) | number;
   /**
    * How to align the contents along the main axis.<br />
    * Any 'justify-content' valid CSS value is accepted.
@@ -167,6 +167,8 @@ export interface WithFlexBox {
   /**
    * Sets whether flex items are forced onto one line or can wrap onto multiple lines.
    */
+  placeContent?: StandardShorthandProperties['placeContent'];
+  placeItems?: StandardShorthandProperties['placeItems'];
   wrap?: StandardLonghandProperties['flexWrap'];
 }
 
@@ -182,7 +184,7 @@ export interface WithFlexItem {
   /**
    * Set width and/or height to fill the container.
    */
-  fill?: boolean | Direction;
+  fill?: boolean | Orientation;
   /**
    * Set flex-grow and/or flex-shrink.
    */
@@ -202,6 +204,26 @@ export interface WithFormElements extends WithDisabled {
   /** @default false */
   readOnly?: boolean;
   width?: StringOrNumber;
+}
+
+export interface WithGrid {
+  area?: StandardShorthandProperties['gridArea'];
+  autoColumns?: StandardLonghandProperties['gridAutoColumns'];
+  autoFlow?: StandardLonghandProperties['gridAutoFlow'];
+  autoRows?: StandardLonghandProperties['gridAutoRows'];
+  column?: StandardShorthandProperties['gridColumn'];
+  columnEnd?: StandardLonghandProperties['gridColumnEnd'];
+  columnGap?: Spacing | ({} & string) | number;
+  columnStart?: StandardLonghandProperties['gridColumnStart'];
+  grid?: StandardShorthandProperties['grid'];
+  row?: StandardShorthandProperties['gridRow'];
+  rowEnd?: StandardLonghandProperties['gridRowEnd'];
+  rowGap?: Spacing | ({} & string) | number;
+  rowStart?: StandardLonghandProperties['gridRowStart'];
+  template?: StandardShorthandProperties['gridTemplate'];
+  templateAreas?: StandardLonghandProperties['gridTemplateAreas'];
+  templateColumns?: StandardLonghandProperties['gridTemplateColumns'];
+  templateRows?: StandardLonghandProperties['gridTemplateRows'];
 }
 
 export interface WithHeight {
@@ -356,7 +378,7 @@ export interface WithTextOptions<T extends TextSizes | HeadingSizes = TextSizes>
 }
 
 export interface WithTheme {
-  theme?: Partial<Theme>;
+  theme: Theme;
 }
 
 export interface WithVariant {

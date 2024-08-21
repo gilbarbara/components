@@ -1,48 +1,30 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Simplify, ValueOf } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
+import { flexBoxStyles, getStyledOptions, layoutStyles } from '~/modules/system';
 
-import { getStyledOptions, layoutStyles } from '~/modules/system';
-
-import { WithChildren, WithLayout } from '~/types';
-
-export interface ClickOutsideKnownProps extends WithChildren, WithLayout {
-  active: boolean;
-  display?: ValueOf<typeof DISPLAY>;
-  onClick: () => void;
-}
-
-export type ClickOutsideProps = Simplify<ClickOutsideKnownProps>;
-
-const DISPLAY = {
-  BLOCK: 'block',
-  FLEX: 'flex',
-  INLINE: 'inline',
-  INLINE_BLOCK: 'inline-block',
-  CONTENTS: 'contents',
-} as const;
+import { ClickOutsideProps, useClickOutside } from './useClickOutside';
 
 export const StyledClickOutside = styled(
   'div',
   getStyledOptions(),
 )<Omit<ClickOutsideProps, 'active' | 'onClick'>>(props => {
-  const { display } = props;
+  const { display = 'inline-flex' } = props;
 
   return css`
-    display: ${display && Object.values(DISPLAY).includes(display) ? display : undefined};
+    display: ${display};
     ${layoutStyles(props)};
+    ${flexBoxStyles(props)};
   `;
 });
 
 function ClickOutsideComponent(props: ClickOutsideProps) {
-  const { active, children, onClick, ...rest } = props;
+  const { componentProps, getDataAttributes } = useClickOutside(props);
+  const { active, children, onClick, ...rest } = componentProps;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isReady, setReady] = useState(false);
   const isTouch = useRef(false);
-  const { getDataAttributes } = useTheme();
 
   const handleClick = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -94,3 +76,5 @@ function ClickOutsideComponent(props: ClickOutsideProps) {
 export const ClickOutside = memo(ClickOutsideComponent);
 
 ClickOutside.displayName = 'ClickOutside';
+
+export { type ClickOutsideProps } from './useClickOutside';
