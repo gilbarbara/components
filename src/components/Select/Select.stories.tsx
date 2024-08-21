@@ -1,5 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import { Paragraph, Spacer } from '~';
+
+import { sizes } from '~/modules/options';
+
 import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, Select } from './Select';
@@ -38,18 +42,17 @@ export const Sizes: Story = {
     height: disableControl(),
   },
   render: props => (
-    <>
-      <Select {...props} height="sm">
-        {options}
-      </Select>
-      <br />
-      <Select {...props} height="md">
-        {options}
-      </Select>
-      <br />
-      <Select {...props} height="lg">
-        {options}
-      </Select>
-    </>
+    <Spacer distribution="center" gap="lg" orientation="vertical">
+      {sizes.map(size => (
+        <div key={size}>
+          <Paragraph align="center" mb="xs" size="lg">
+            {size}
+          </Paragraph>
+          <Select {...props} height={size} width="90vw">
+            {options}
+          </Select>
+        </div>
+      ))}
+    </Spacer>
   ),
 };

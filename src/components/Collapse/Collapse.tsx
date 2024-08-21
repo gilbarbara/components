@@ -1,174 +1,47 @@
-import {
-  AriaAttributes,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
+import { isValidElement, ReactNode, useEffect, useId, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
+import { px } from '@gilbarbara/helpers';
 import { usePrevious } from '@gilbarbara/hooks';
-import { SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired, StringOrNumber } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import {
-  baseStyles,
-  colorStyles,
-  marginStyles,
-  outlineStyles,
-  paddingStyles,
-  radiusStyles,
-  shadowStyles,
-} from '~/modules/system';
+import { getStyles, outlineStyles } from '~/modules/system';
 
-import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
+import { Flex, FlexInline } from '~/components/Flex';
 import { Icon } from '~/components/Icon';
-import { Text } from '~/components/Text';
 
-import {
-  Spacing,
-  StyledProps,
-  WithColors,
-  WithDisabled,
-  WithHTMLAttributes,
-  WithMargin,
-  WithPadding,
-  WithRadius,
-  WithShadow,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface CollapseKnownProps
-  extends StyledProps,
-    AriaAttributes,
-    WithColors,
-    WithDisabled,
-    Omit<WithHTMLAttributes, 'id' | 'title'>,
-    WithMargin,
-    WithPadding,
-    WithRadius,
-    WithShadow {
-  /**
-   * The duration of the animation when the content is sliding down in seconds.
-   * @default 0.3
-   */
-  animationEnterDuration?: number;
-  /**
-   * The duration of the animation when the content is sliding up in seconds.
-   * @default 0.3
-   */
-  animationExitDuration?: number;
-  /**
-   * The component to display at the bottom if `showBottomToggle` is true.
-   */
-  bottomToggle?: (props: { isOpen: boolean; toggleProps: Record<string, any> }) => ReactElement;
-  children: ReactNode;
-  /**
-   * The name of the component.
-   * @default "Collapse"
-   */
-  componentName?: string;
-  defaultOpen?: boolean;
-  /**
-   * The distance between the header and the toggle
-   *
-   * @default xs
-   */
-  gap?: Spacing;
-  /**
-   * The component to display at the header.
-   */
-  headerToggle?: ReactNode | ((props: { isDisabled: boolean; isOpen: boolean }) => ReactElement);
-  hideHeaderToggle?: boolean;
-  /**
-   * The id of the component.
-   */
-  id?: string;
-  /**
-   * The height you want the content in its collapsed state.
-   * @default 0
-   */
-  initialHeight?: StringOrNumber;
-  /**
-   * The height you want the content in its expanded state.
-   */
-  maxHeight?: StringOrNumber;
-  onToggle?: (isOpen: boolean, id?: string) => void;
-  open?: boolean;
-  /**
-   * Show a toggle at the bottom of the content to open/close it.
-   * @default false
-   */
-  showBottomToggle?: boolean;
-  title?: ReactNode;
-}
+import { CollapseProps, ContentProps, useCollapse } from './useCollapse';
 
-export type CollapseProps = Simplify<CollapseKnownProps>;
-
-interface ContentProps
-  extends Pick<
-    SetRequired<
-      CollapseProps,
-      'animationEnterDuration' | 'animationExitDuration' | 'initialHeight'
-    >,
-    'animationEnterDuration' | 'animationExitDuration' | 'initialHeight' | 'maxHeight'
-  > {
-  hasTitle: boolean;
-  isOpen: boolean;
-  scrollHeight: number;
-  shouldAnimate: boolean;
-}
-
-export const defaultProps = {
-  animationEnterDuration: 0.3,
-  animationExitDuration: 0.3,
-  'aria-label': 'Toggle the content',
-  componentName: 'Collapse',
-  defaultOpen: false,
-  disabled: false,
-  gap: 'xs',
-  headerToggle: <Icon name="chevron-left" title={null} />,
-  hideHeaderToggle: false,
-  initialHeight: 0,
-  showBottomToggle: false,
-} satisfies Omit<CollapseProps, 'children'>;
-
-const StyledCollapse = styled('div')<Omit<CollapseProps, 'children'>>(props => {
-  return css`
-    ${baseStyles(props)};
-    display: flex;
-    flex-direction: column;
-    ${colorStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${shadowStyles(props)};
-  `;
-});
+const StyledCollapse = styled('div')<Omit<CollapseProps, 'children'> & WithTheme>(
+  {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  props => getStyles(props),
+);
 
 const Header = styled.button<
-  SetRequired<Pick<CollapseProps, 'bg' | 'color' | 'disabled' | 'gap'>, 'disabled' | 'gap'>
+  SetRequired<Pick<CollapseProps, 'bg' | 'color' | 'disabled' | 'gap'>, 'disabled' | 'gap'> &
+    WithTheme
 >(props => {
-  const { bg = 'primary', color, disabled, gap } = props;
-  const { opacity, spacing, ...theme } = getTheme(props);
+  const { bg = 'primary', color, disabled, gap, theme } = props;
+  const { opacity, spacing } = theme;
   const { mainColor } = getColorTokens(bg, color, theme);
 
   return css`
-    align-items: center;
     all: unset;
+    align-items: center;
     cursor: pointer;
     display: flex;
     gap: ${spacing[gap]};
     justify-content: space-between;
-    ${outlineStyles(mainColor, props)};
+    width: 100%;
+    ${outlineStyles(mainColor, theme)};
 
     ${disabled &&
     css`
@@ -187,15 +60,17 @@ const getContentAnimation = (
     height: ${px(initialHeight)};
     opacity: ${initialHeight ? 1 : 0};
     margin-top: 0;
+    visibility: hidden;
   }
   100% {
     height: ${px(endHeight)};
     opacity: 1;
     margin-top: ${marginTop};
+    visibility: visible;
   }
 `;
 
-const Content = styled('div')<ContentProps>(props => {
+const Content = styled('div')<ContentProps & WithTheme>(props => {
   const {
     animationEnterDuration,
     animationExitDuration,
@@ -205,8 +80,9 @@ const Content = styled('div')<ContentProps>(props => {
     maxHeight,
     scrollHeight,
     shouldAnimate,
+    theme,
   } = props;
-  const { spacing } = getTheme(props);
+  const { spacing } = theme;
 
   let animation;
   let height = initialHeight;
@@ -228,6 +104,7 @@ const Content = styled('div')<ContentProps>(props => {
     height: ${px(height)};
     margin-top: ${marginTop};
     overflow: hidden;
+    visibility: ${isOpen ? 'visible' : 'hidden'};
   `;
 });
 
@@ -245,21 +122,27 @@ const HeaderToggle = styled('span')<{ isOpen: boolean }>(props => {
 
 export function Collapse(props: CollapseProps) {
   const {
-    'aria-label': ariaLabel,
-    bottomToggle,
-    componentName,
-    defaultOpen,
-    disabled,
-    gap,
-    headerToggle,
-    hideHeaderToggle,
-    id,
-    onToggle,
-    open,
-    showBottomToggle,
-    title,
-    ...rest
-  } = mergeProps(defaultProps, props);
+    componentProps: {
+      'aria-label': ariaLabel,
+      bottomToggle,
+      componentName,
+      defaultOpen,
+      disabled,
+      gap,
+      headerAlign,
+      headerToggle = <Icon name="chevron-left" title={null} />,
+      hideHeaderToggle,
+      id,
+      onToggle,
+      open,
+      role,
+      showBottomToggle,
+      startContent,
+      title,
+      ...rest
+    },
+    getDataAttributes,
+  } = useCollapse(props);
   const contentId = useId();
 
   const isControlled = is.boolean(open);
@@ -267,7 +150,6 @@ export function Collapse(props: CollapseProps) {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const previousIsOpen = usePrevious(isOpen);
-  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     if (isControlled) {
@@ -310,16 +192,40 @@ export function Collapse(props: CollapseProps) {
     );
   }
 
+  if (startContent) {
+    content.startContent = isValidElement(startContent) ? (
+      startContent
+    ) : (
+      <span {...getDataAttributes('AccordionItemStartContent')}>{startContent}</span>
+    );
+  }
+
   if (hasTitle) {
     content.header = (
-      <Header {...getDataAttributes(`${componentName}Header`)} {...toggleProps} {...rest} gap={gap}>
-        {isValidElement(title) ? (
-          title
-        ) : (
-          <Text {...getDataAttributes(`${componentName}Title`)} flex size="lg">
-            {title}
-          </Text>
-        )}
+      <Header
+        {...getDataAttributes(`${componentName}Header`)}
+        {...toggleProps}
+        role={role}
+        {...rest}
+        gap={gap}
+      >
+        <FlexInline flex gap={gap}>
+          {content.startContent}
+          {isValidElement(title) ? (
+            title
+          ) : (
+            <FlexInline
+              align={headerAlign}
+              {...getDataAttributes(`${componentName}Title`)}
+              direction="column"
+              flex
+              size="lg"
+              theme={rest.theme}
+            >
+              {title}
+            </FlexInline>
+          )}
+        </FlexInline>
         {content.headerToggle}
       </Header>
     );
@@ -327,15 +233,15 @@ export function Collapse(props: CollapseProps) {
 
   if (showBottomToggle) {
     content.footer = (
-      <Box flexBox mt="xs" {...getDataAttributes(`${componentName}Footer`)}>
+      <Flex mt="xs" {...getDataAttributes(`${componentName}Footer`)}>
         {bottomToggle ? (
           bottomToggle({ isOpen, toggleProps })
         ) : (
           <ButtonUnstyled color="gray.500" size="xs" {...toggleProps}>
-            {isOpen ? 'hide' : 'load more'}
+            {isOpen ? 'hide' : 'show more'}
           </ButtonUnstyled>
         )}
-      </Box>
+      </Flex>
     );
   }
 
@@ -359,3 +265,5 @@ export function Collapse(props: CollapseProps) {
 }
 
 Collapse.displayName = 'Collapse';
+
+export { defaultProps, type CollapseProps } from './useCollapse';

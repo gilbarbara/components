@@ -4,7 +4,6 @@ import {
   clearNumber,
   createMediaQuery,
   getMediaQueries,
-  getTheme,
   isCSSUnit,
   mergeTheme,
   recursiveChildrenEnhancer,
@@ -32,12 +31,6 @@ describe('createMediaQuery', () => {
 describe('getMediaQueries', () => {
   it('should return properly', () => {
     expect(getMediaQueries()).toMatchSnapshot();
-  });
-});
-
-describe('getTheme', () => {
-  it('should return the theme', () => {
-    expect(getTheme({})).toMatchSnapshot();
   });
 });
 

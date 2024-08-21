@@ -1,173 +1,60 @@
 import { ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { SetRequired, Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
+import { px } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import {
-  baseStyles,
-  borderStyles,
-  dimensionStyles,
-  getStyledOptions,
-  marginStyles,
-  paddingStyles,
-  radiusStyles,
-  shadowStyles,
-  textStyles,
-} from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import {
-  CopyToClipboard,
-  type CopyToClipboardProps,
-} from '~/components/CopyToClipboard/CopyToClipboard';
+import { CopyToClipboard } from '~/components/CopyToClipboard/CopyToClipboard';
 import { Icon } from '~/components/Icon';
+import { SnippetProps, useSnippet } from '~/components/Snippet/useSnippet';
 
-import {
-  Spacing,
-  StyledProps,
-  WithBorder,
-  WithChildren,
-  WithColors,
-  WithComponentSize,
-  WithDimension,
-  WithMargin,
-  WithPadding,
-  WithRadius,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface SnippetKnownProps
-  extends Pick<
-      CopyToClipboardProps,
-      | 'checkIcon'
-      | 'copyIcon'
-      | 'onCopy'
-      | 'onError'
-      | 'timeout'
-      | 'tooltipCopiedText'
-      | 'tooltipProps'
-      | 'tooltipText'
-    >,
-    StyledProps,
-    WithBorder,
-    WithChildren,
-    WithColors,
-    WithComponentSize,
-    WithDimension,
-    WithMargin,
-    WithPadding,
-    WithRadius {
-  /**
-   * The value to copy.
-   * If it is set, it will be copied instead of the children.
-   */
-  copyValue?: ReactNode;
-  /**
-   * Disable the animation of the copy icon.
-   * @default false
-   */
-  disableAnimation?: boolean;
-  /**
-   * The gap between the elements.
-   * @default xs
-   */
-  gap?: Spacing;
-  /**
-   * Hide the copy button.
-   * @default false
-   */
-  hideCopyButton?: boolean;
-  /**
-   * Hide the symbol.
-   * @default false
-   */
-  hideSymbol?: boolean;
-  /**
-   * Hide the tooltip in the copy button.
-   * @default false
-   */
-  hideTooltip?: boolean;
-  /**
-   * Prevent the text to wrap.
-   * @default false
-   */
-  preventWrap?: boolean;
-  /**
-   * Use the regular font instead of the monospace.
-   * @default false
-   */
-  removeFormatting?: boolean;
-  /**
-   * The symbol to show before the snippet.
-   * @default $
-   */
-  symbol?: ReactNode;
-}
+export const StyledSnippet = styled('div', getStyledOptions())<
+  SetRequired<SnippetProps, 'gap' | 'size'> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    display: 'inline-flex',
+  },
+  props => {
+    const { bg, color, size, theme } = props;
+    const { darkMode, spacing } = theme;
+    const defaultBg = darkMode ? 'gray.800' : 'gray.50';
 
-export type SnippetProps = Simplify<SnippetKnownProps>;
+    const { mainColor, textColor } = getColorTokens(bg ?? defaultBg, color, theme);
 
-export const defaultProps = {
-  checkIcon: <Icon name="check" />,
-  copyIcon: <Icon name="copy" />,
-  disableAnimation: false,
-  gap: 'xs',
-  preventWrap: false,
-  radius: 'xs',
-  removeFormatting: false,
-  size: 'md',
-  symbol: '$',
-} satisfies Omit<SnippetProps, 'children'>;
+    const heightMap = {
+      sm: px(32),
+      md: px(40),
+      lg: px(48),
+    };
 
-export const StyledSnippet = styled(
-  'div',
-  getStyledOptions(),
-)<SetRequired<SnippetProps, 'gap' | 'size'>>(props => {
-  const { bg, color, gap, size } = props;
-  const { darkMode, spacing, ...theme } = getTheme(props);
-  const defaultBg = darkMode ? 'gray.800' : 'gray.50';
+    const paddingMap = {
+      sm: `${spacing.xs} ${spacing.sm}`,
+      md: `${spacing.sm} ${spacing.md}`,
+      lg: `${spacing.sm} ${spacing.md}`,
+    };
 
-  const { mainColor, textColor } = getColorTokens(bg ?? defaultBg, color, theme);
-
-  const heightMap = {
-    sm: px(32),
-    md: px(40),
-    lg: px(48),
-  };
-
-  const paddingMap = {
-    sm: `${spacing.xs} ${spacing.sm}`,
-    md: `${spacing.sm} ${spacing.md}`,
-    lg: `${spacing.sm} ${spacing.md}`,
-  };
-
-  return css`
-    ${baseStyles(props)};
-    align-items: center;
-    background-color: ${mainColor};
-    color: ${textColor};
-    display: inline-flex;
-    gap: ${spacing[gap]};
-    min-height: ${heightMap[size]};
-    padding: ${paddingMap[size]};
-    ${borderStyles(props)};
-    ${dimensionStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${textStyles(props)}
-    ${shadowStyles(props)};
-  `;
-});
+    return css`
+      background-color: ${mainColor};
+      color: ${textColor};
+      min-height: ${heightMap[size]};
+      padding: ${paddingMap[size]};
+      ${getStyles(props, { skipColor: true, useFontSize: true })};
+    `;
+  },
+);
 
 export const StyledWrapper = styled(
   'div',
   getStyledOptions(),
-)<SetRequired<SnippetProps, 'gap'>>(props => {
-  const { gap, removeFormatting } = props;
-  const { fontFamily, fontMonospace, spacing } = getTheme(props);
+)<SetRequired<SnippetProps, 'gap'> & WithTheme>(props => {
+  const { gap, removeFormatting, theme } = props;
+  const { fontFamily, fontMonospace, spacing } = theme;
 
   return css`
     align-items: center;
@@ -184,9 +71,9 @@ const StyledSymbol = styled.span`
 export const StyledPre = styled(
   'pre',
   getStyledOptions(),
-)<SetRequired<SnippetProps, 'gap'>>(props => {
-  const { preventWrap, removeFormatting } = props;
-  const { fontFamily, fontMonospace } = getTheme(props);
+)<SetRequired<SnippetProps, 'gap'> & WithTheme>(props => {
+  const { preventWrap, removeFormatting, theme } = props;
+  const { fontFamily, fontMonospace } = theme;
 
   return css`
     font-family: ${removeFormatting ? fontFamily : fontMonospace};
@@ -197,10 +84,11 @@ export const StyledPre = styled(
 });
 
 export function Snippet(props: SnippetProps) {
+  const { componentProps, getDataAttributes } = useSnippet(props);
   const {
-    checkIcon,
+    checkIcon = <Icon name="check" />,
     children,
-    copyIcon,
+    copyIcon = <Icon name="copy" />,
     copyValue,
     disableAnimation,
     gap,
@@ -212,13 +100,13 @@ export function Snippet(props: SnippetProps) {
     preventWrap,
     removeFormatting,
     symbol,
+    theme,
     timeout,
     tooltipCopiedText,
     tooltipProps,
     tooltipText,
     ...rest
-  } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  } = componentProps;
 
   const content: Record<string, ReactNode> = {};
 
@@ -230,18 +118,28 @@ export function Snippet(props: SnippetProps) {
     <div>
       {children.map((child, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <StyledWrapper key={index} gap={gap} removeFormatting={removeFormatting}>
+        <StyledWrapper key={index} gap={gap} removeFormatting={removeFormatting} theme={theme}>
           {content.symbol}
-          <StyledPre gap={gap} preventWrap={preventWrap} removeFormatting={removeFormatting}>
+          <StyledPre
+            gap={gap}
+            preventWrap={preventWrap}
+            removeFormatting={removeFormatting}
+            theme={theme}
+          >
             {child}
           </StyledPre>
         </StyledWrapper>
       ))}
     </div>
   ) : (
-    <StyledWrapper gap={gap} removeFormatting={removeFormatting}>
+    <StyledWrapper gap={gap} removeFormatting={removeFormatting} theme={theme}>
       {content.symbol}
-      <StyledPre gap={gap} preventWrap={preventWrap} removeFormatting={removeFormatting}>
+      <StyledPre
+        gap={gap}
+        preventWrap={preventWrap}
+        removeFormatting={removeFormatting}
+        theme={theme}
+      >
         {children}
       </StyledPre>
     </StyledWrapper>
@@ -267,9 +165,11 @@ export function Snippet(props: SnippetProps) {
   }
 
   return (
-    <StyledSnippet {...getDataAttributes('Snippet')} gap={gap} {...rest}>
+    <StyledSnippet {...getDataAttributes('Snippet')} gap={gap} theme={theme} {...rest}>
       {content.main}
       {content.copyButton}
     </StyledSnippet>
   );
 }
+
+export { defaultProps, type SnippetProps } from './useSnippet';

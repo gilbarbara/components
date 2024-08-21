@@ -1,1 +1,1 @@
-export { Box, BoxCenter, BoxInline } from './Box';
+export { Box } from './Box';

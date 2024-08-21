@@ -2,43 +2,22 @@ import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px, round } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
+import { WithTheme } from '~/types';
 
-import { StyledProps, WithChildren, WithHTMLAttributes, WithMargin } from '~/types';
+import { AspectRatioProps, useAspectRatio } from './useAspectRatio';
 
-export interface AspectRatioKnownProps
-  extends StyledProps,
-    WithChildren,
-    WithHTMLAttributes,
-    WithMargin {
-  maxWidth?: number;
-  ratio: number;
-}
-
-export type AspectRatioProps = Simplify<AspectRatioKnownProps>;
-
-export const StyledAspectRatio = styled(
-  'div',
-  getStyledOptions(),
-)<AspectRatioProps>(props => {
-  const { maxWidth, ratio } = props;
-
-  return css`
-    ${baseStyles(props)};
-    max-width: ${maxWidth ? px(maxWidth) : 'none'};
+export const StyledAspectRatio = styled('div', getStyledOptions())<AspectRatioProps & WithTheme>(
+  css`
     overflow: hidden;
     position: relative;
     width: 100%;
-    ${marginStyles(props)};
 
     &:before {
       content: '';
       display: flex;
-      padding-bottom: ${`${round((1 / ratio) * 100)}%`};
       width: 100%;
     }
 
@@ -56,18 +35,27 @@ export const StyledAspectRatio = styled(
       position: absolute;
       width: 100%;
     }
-  `;
-});
+  `,
+  props => {
+    const { maxWidth, ratio } = props;
+
+    return css`
+      max-width: ${maxWidth ? px(maxWidth) : 'none'};
+      ${getStyles(props)};
+
+      &:before {
+        padding-bottom: ${`${round((1 / ratio) * 100)}%`};
+      }
+    `;
+  },
+);
 
 export const AspectRatio = forwardRef<HTMLDivElement, AspectRatioProps>((props, ref) => {
-  const { children, ...rest } = props;
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useAspectRatio(props);
 
-  return (
-    <StyledAspectRatio ref={ref} {...getDataAttributes('AspectRatio')} {...rest}>
-      {children}
-    </StyledAspectRatio>
-  );
+  return <StyledAspectRatio ref={ref} {...getDataAttributes('AspectRatio')} {...componentProps} />;
 });
 
 AspectRatio.displayName = 'AspectRatio';
+
+export { type AspectRatioProps } from './useAspectRatio';

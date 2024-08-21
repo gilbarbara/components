@@ -1,50 +1,22 @@
-import {
-  Children,
-  CSSProperties,
-  isValidElement,
-  MouseEvent,
-  ReactNode,
-  useEffect,
-  useRef,
-} from 'react';
+import { Children, isValidElement, MouseEvent, ReactNode, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, omit, px, unique } from '@gilbarbara/helpers';
+import { omit, px, unique } from '@gilbarbara/helpers';
 import { useMeasure, useSetState } from '@gilbarbara/hooks';
-import { PlainObject, SetOptional, SetRequired, Simplify } from '@gilbarbara/types';
-import { StandardLonghandProperties } from 'csstype';
+import { PlainObject, SetOptional, SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
+import { getStyledOptions, marginStyles } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Loader } from '~/components/Loader';
 import { NonIdealState } from '~/components/NonIdealState';
 
-import { Direction, StyledProps, WithAccent, WithChildren, WithMargin } from '~/types';
+import { WithTheme } from '~/types';
 
 import { Tab, TabProps } from './Tab';
-
-export interface TabsKnownProps extends StyledProps, WithAccent, WithChildren, WithMargin {
-  defaultId?: string;
-  /** @default vertical */
-  direction?: Direction;
-  /** @default false */
-  disableActiveBorderRadius?: boolean;
-  id?: string;
-  loader?: ReactNode;
-  maxHeight?: number | StandardLonghandProperties['maxHeight'];
-  minHeight?: number | StandardLonghandProperties['minHeight'];
-  noContent?: ReactNode;
-  onClick?: (id: string) => void;
-  style?: CSSProperties;
-}
-
-export type TabsProps = Simplify<TabsKnownProps>;
+import { TabsProps, useTabs } from './useTabs';
 
 interface State {
   activeId: string;
@@ -54,114 +26,112 @@ interface State {
   width: number | null;
 }
 
-export const defaultProps = {
-  accent: 'primary',
-  direction: 'vertical',
-  disableActiveBorderRadius: false,
-} satisfies Omit<TabsProps, 'children'>;
-
 const StyledTabs = styled(
   'div',
   getStyledOptions(),
-)<TabsProps>(props => {
-  const { direction } = props;
+)<TabsProps & WithTheme>(props => {
+  const { orientation } = props;
 
   return css`
-    display: ${direction === 'vertical' ? 'block' : 'flex'};
+    display: ${orientation === 'vertical' ? 'block' : 'flex'};
     ${marginStyles(props)};
   `;
 });
 
-const StyledMenu = styled(
-  'div',
-  getStyledOptions(),
-)<TabsProps & { width: number | null }>(props => {
-  const { direction, width } = props;
-  const { grayScale, spacing } = getTheme(props);
+const StyledMenu = styled('div', getStyledOptions())<
+  TabsProps & WithTheme & { width: number | null }
+>(
+  {
+    alignItems: 'flex-start',
+    display: 'flex',
+    position: 'relative',
+  },
+  props => {
+    const { orientation, theme, width } = props;
+    const { grayScale, spacing } = theme;
 
-  const isHorizontal = direction === 'horizontal';
-  const isVertical = direction === 'vertical';
+    const isHorizontal = orientation === 'horizontal';
+    const isVertical = orientation === 'vertical';
 
-  return css`
-    align-items: flex-start;
-    display: flex;
-    flex-direction: ${isVertical ? 'row' : 'column'};
-    margin-bottom: ${isVertical ? spacing.md : undefined};
-    margin-right: ${isHorizontal ? spacing.md : undefined};
-    max-width: ${width ? px(width) : undefined};
-    overflow: ${isVertical ? 'auto hidden' : undefined};
-    position: relative;
+    return css`
+      flex-direction: ${isVertical ? 'row' : 'column'};
+      margin-bottom: ${isVertical ? spacing.md : undefined};
+      margin-right: ${isHorizontal ? spacing.md : undefined};
+      max-width: ${width ? px(width) : undefined};
+      overflow: ${isVertical ? 'auto hidden' : undefined};
 
-    &:before {
-      border-bottom: ${isVertical ? `1px solid ${grayScale['100']}` : undefined};
-      border-right: ${isHorizontal ? `1px solid ${grayScale['100']}` : undefined};
-      bottom: 0;
-      content: '';
-      left: ${isVertical ? 0 : undefined};
-      position: absolute;
-      right: ${isHorizontal ? '-1px' : 0};
-      top: ${isHorizontal ? 0 : undefined};
-    }
-  `;
-});
-
-const StyledMenuItem = styled(
-  ButtonUnstyled,
-  getStyledOptions('disabled'),
-)<
-  SetRequired<Pick<TabsProps, 'accent' | 'direction' | 'disableActiveBorderRadius'>, 'accent'> & {
-    disabled: boolean;
-    isActive: boolean;
-  }
->(props => {
-  const { accent, direction, disableActiveBorderRadius, disabled, isActive } = props;
-  const { grayScale, spacing, ...theme } = getTheme(props);
-  const darkMode = isDarkMode(props);
-
-  const { mainColor } = getColorTokens(accent, null, theme);
-  let color = darkMode ? grayScale['200'] : grayScale['800'];
-  const isVertical = direction === 'vertical';
-  const isHorizontal = direction === 'horizontal';
-
-  if (disabled) {
-    color = grayScale['500'];
-  } else if (isActive) {
-    color = mainColor;
-  }
-
-  return css`
-    color: ${disabled ? grayScale['500'] : color};
-    cursor: ${disabled ? 'not-allowed' : 'pointer'};
-    line-height: 1;
-    padding: ${spacing.xs} ${spacing.md};
-    position: relative;
-    width: ${isHorizontal ? '100%' : undefined};
-    white-space: nowrap;
-
-    ${isActive &&
-    css`
       &:before {
-        background-color: ${mainColor};
-        bottom: ${isVertical ? '-1px' : 0};
+        border-bottom: ${isVertical ? `1px solid ${grayScale['100']}` : undefined};
+        border-right: ${isHorizontal ? `1px solid ${grayScale['100']}` : undefined};
+        bottom: 0;
         content: '';
-        display: block;
-        height: ${isVertical ? '3px' : undefined};
         left: ${isVertical ? 0 : undefined};
         position: absolute;
         right: ${isHorizontal ? '-1px' : 0};
         top: ${isHorizontal ? 0 : undefined};
-        width: ${isHorizontal ? '3px' : undefined};
-
-        ${!disableActiveBorderRadius &&
-        css`
-          border-top-left-radius: 3px;
-          border-top-right-radius: ${isVertical ? '3px' : undefined};
-          border-bottom-left-radius: ${isHorizontal ? '3px' : undefined};
-        `};
       }
-    `}
-  `;
-});
+    `;
+  },
+);
+
+const StyledMenuItem = styled(ButtonUnstyled, getStyledOptions('disabled'))<
+  SetRequired<Pick<TabsProps, 'accent' | 'disableActiveBorderRadius' | 'orientation'>, 'accent'> &
+    WithTheme & {
+      disabled: boolean;
+      isActive: boolean;
+    }
+>(
+  {
+    lineHeight: 1,
+    position: 'relative',
+    whiteSpace: 'nowrap',
+  },
+  props => {
+    const { accent, disableActiveBorderRadius, disabled, isActive, orientation, theme } = props;
+    const { darkMode, grayScale, spacing } = theme;
+
+    const { mainColor } = getColorTokens(accent, null, theme);
+    let color = darkMode ? grayScale['200'] : grayScale['800'];
+    const isVertical = orientation === 'vertical';
+    const isHorizontal = orientation === 'horizontal';
+
+    if (disabled) {
+      color = grayScale['500'];
+    } else if (isActive) {
+      color = mainColor;
+    }
+
+    return css`
+      color: ${disabled ? grayScale['500'] : color};
+      cursor: ${disabled ? 'not-allowed' : 'pointer'};
+      padding: ${spacing.xs} ${spacing.md};
+      width: ${isHorizontal ? '100%' : undefined};
+
+      ${isActive &&
+      css`
+        &:before {
+          background-color: ${mainColor};
+          bottom: ${isVertical ? '-1px' : 0};
+          content: '';
+          display: block;
+          height: ${isVertical ? '3px' : undefined};
+          left: ${isVertical ? 0 : undefined};
+          position: absolute;
+          right: ${isHorizontal ? '-1px' : 0};
+          top: ${isHorizontal ? 0 : undefined};
+          width: ${isHorizontal ? '3px' : undefined};
+
+          ${!disableActiveBorderRadius &&
+          css`
+            border-top-left-radius: 3px;
+            border-top-right-radius: ${isVertical ? '3px' : undefined};
+            border-bottom-left-radius: ${isHorizontal ? '3px' : undefined};
+          `};
+        }
+      `}
+    `;
+  },
+);
 
 const StyledContent = styled(
   'div',
@@ -177,6 +147,7 @@ const StyledContent = styled(
 });
 
 export function Tabs(props: TabsProps) {
+  const { componentProps, getDataAttributes } = useTabs(props);
   const {
     accent,
     children,
@@ -188,7 +159,7 @@ export function Tabs(props: TabsProps) {
     noContent,
     onClick,
     ...rest
-  } = mergeProps(defaultProps, props);
+  } = componentProps;
   const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
     activeId: id ?? defaultId,
     error: false,
@@ -200,7 +171,6 @@ export function Tabs(props: TabsProps) {
   const uniqueId = useRef(unique(6));
   const ref = useRef<HTMLDivElement>(null);
   const measurements = useMeasure(ref);
-  const { getDataAttributes } = useTheme();
 
   useEffect(() => {
     isMounted.current = true;
@@ -270,12 +240,13 @@ export function Tabs(props: TabsProps) {
 
   if (isReady) {
     if (tabs.length) {
-      if (width || rest.direction === 'horizontal') {
+      if (width || rest.orientation === 'horizontal') {
         content.menu = (
           <StyledMenu
             {...getDataAttributes('TabsMenu')}
-            direction={rest.direction}
+            orientation={rest.orientation}
             role="tablist"
+            theme={rest.theme}
             width={width}
           >
             {tabs.map(d => (
@@ -287,12 +258,13 @@ export function Tabs(props: TabsProps) {
                 {...getDataAttributes('TabsMenuItem')}
                 data-disabled={!!d.disabled}
                 data-tab-id={d.id}
-                direction={rest.direction}
                 disableActiveBorderRadius={rest.disableActiveBorderRadius}
                 disabled={!!d.disabled}
                 isActive={d.id === activeId}
                 onClick={handleClickItem}
+                orientation={rest.orientation}
                 role="tab"
+                theme={rest.theme}
               >
                 {d.title}
               </StyledMenuItem>
@@ -335,7 +307,7 @@ export function Tabs(props: TabsProps) {
 
   return (
     <StyledTabs {...getDataAttributes('Tabs')} {...rest}>
-      {rest.direction === 'vertical' && <div ref={ref} />}
+      {rest.orientation === 'vertical' && <div ref={ref} />}
       {content.menu}
       {content.main}
     </StyledTabs>
@@ -343,3 +315,5 @@ export function Tabs(props: TabsProps) {
 }
 
 Tabs.displayName = 'Tabs';
+
+export { defaultProps, type TabsProps } from './useTabs';

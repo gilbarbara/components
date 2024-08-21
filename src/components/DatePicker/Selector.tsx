@@ -1,29 +1,28 @@
-import { ReactNode, useCallback } from 'react';
+import { ReactElement, ReactNode, useCallback, useEffect } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { formatDateLocale, mergeProps, omit, px } from '@gilbarbara/helpers';
+import { formatDateLocale, omit, px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
+import { SetRequired } from '@gilbarbara/types';
 import { fade } from 'colorizr';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import {
+  dimensionStyles,
   getDisableStyles,
   getOutlineStyles,
   getStyledOptions,
-  isDarkMode,
   marginStyles,
 } from '~/modules/system';
 
-import { Box, BoxCenter } from '~/components/Box';
 import { ClickOutside } from '~/components/ClickOutside';
+import { getNumberOfMonths } from '~/components/DatePicker/utils';
+import { FlexCenter } from '~/components/Flex';
 import { Icon } from '~/components/Icon';
 import { Text } from '~/components/Text';
 
-import { Alignment } from '~/types';
+import { Alignment, WithTheme } from '~/types';
 
 import { DatePickerRange } from './Range';
 import { DatePicker } from './Single';
@@ -32,152 +31,148 @@ import {
   DatePickerRangeParameter,
   DatePickerSelectorProps,
   DatePickerSingleClickHandler,
-} from './types';
-import { defaultProps, getNumberOfMonths } from './utils';
+  useDatePickerSelector,
+} from './useDatePicker';
 
 interface State {
   isActive: boolean;
   isFilled: boolean;
-  selectedDates: DatePickerRangeParameter | string;
+  selectedDates?: DatePickerRangeParameter | string;
 }
 
-export const selectorDefaultProps = {
-  ...defaultProps,
-  accent: 'primary',
-  borderless: false,
-  disabled: false,
-  height: 'md',
-  mode: 'single',
-  position: 'right',
-  separator: ' — ',
-  showRangeApply: false,
-  width: 'auto',
-} satisfies DatePickerSelectorProps;
-
-const StyledButton = styled(
+const StyledSelector = styled(
   'div',
   getStyledOptions(),
-)<
-  Pick<
-    DatePickerSelectorProps,
+)<DatePickerSelectorProps>(props => {
+  return css`
+    display: inline-flex;
+    position: relative;
+    ${dimensionStyles(props, { width: 'auto' })};
+    ${marginStyles(props)};
+  `;
+});
+
+const StyledButton = styled('div', getStyledOptions())<
+  SetRequired<
+    Omit<DatePickerSelectorProps, 'mode'>,
     'accent' | 'borderless' | 'disabled' | 'height' | 'theme' | 'width'
   > &
-    Required<Pick<DatePickerSelectorProps, 'height'>> & {
+    WithTheme & {
       isActive: boolean;
       isFilled: boolean;
     }
->(props => {
-  const {
-    accent = selectorDefaultProps.accent,
-    borderless,
-    disabled,
-    height,
-    isActive,
-    isFilled,
-    width,
-  } = props;
-  const { darkColor, grayScale, inputHeight, lightColor, radius, spacing, white, ...theme } =
-    getTheme(props);
-  const darkMode = isDarkMode(props);
-  const { mainColor } = getColorTokens(accent, null, theme);
+>(
+  {
+    alignItems: 'center',
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'space-between',
+    minWidth: '200px',
+  },
+  props => {
+    const { accent, borderless, disabled, height, isActive, isFilled, theme } = props;
+    const { darkColor, darkMode, grayScale, inputHeight, lightColor, radius, spacing, white } =
+      theme;
+    const { mainColor } = getColorTokens(accent, null, theme);
 
-  let borderColor = darkMode ? grayScale['700'] : grayScale['500'];
-  let textColor = grayScale['500'];
+    let borderColor = darkMode ? grayScale['700'] : grayScale['500'];
+    let textColor = grayScale['500'];
 
-  if (isFilled) {
-    borderColor = mainColor;
-    textColor = darkMode ? lightColor : darkColor;
-  }
+    if (isFilled) {
+      borderColor = mainColor;
+      textColor = darkMode ? lightColor : darkColor;
+    }
 
-  const styles = borderless
-    ? css`
-        border-bottom: 1px solid ${borderColor};
-        border-radius: 0 !important;
-        padding: ${spacing.xxs} 0;
-      `
-    : css`
-        background-color: ${darkMode ? grayScale['800'] : white};
-        border: 1px solid ${borderColor};
-        border-radius: ${radius.xs};
-        padding-left: ${spacing.md};
-      `;
-
-  return css`
-    align-items: center;
-    color: ${textColor};
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    min-height: ${inputHeight[height]};
-    min-width: 200px;
-    width: ${width ? px(width) : 'auto'};
-    ${styles};
-    ${marginStyles(props)};
-
-    ${disabled &&
-    css`
-      ${getDisableStyles(props)}
-      color: ${grayScale['500']};
-    `};
-
-    ${isActive &&
-    (borderless
+    const styles = borderless
       ? css`
-          box-shadow: 0 ${theme.outlineWidth} 0 0 ${fade(mainColor, theme.outlineOpacity)};
-          outline: none;
+          border-bottom: 1px solid ${borderColor};
+          border-radius: 0 !important;
+          padding: ${spacing.xxs} 0;
         `
-      : getOutlineStyles(mainColor, theme))};
-  `;
-});
+      : css`
+          background-color: ${darkMode ? grayScale['800'] : white};
+          border: 1px solid ${borderColor};
+          border-radius: ${radius.xs};
+          padding-left: ${spacing.md};
+        `;
 
-const StyledContent = styled(
-  'div',
-  getStyledOptions(),
-)<{ isActive: boolean; position: Alignment; wide: boolean }>(props => {
-  const { isActive, position, wide } = props;
-  const { grayScale, radius, shadow, spacing, white } = getTheme(props);
-  const darkMode = isDarkMode(props);
-  let left = position === 'left' ? 0 : 'auto';
-  let translateX = '';
+    return css`
+      color: ${textColor};
+      min-height: ${inputHeight[height]};
+      ${styles};
 
-  if (position === 'center') {
-    left = '50%';
-    translateX = ' translateX(-50%)';
+      ${disabled &&
+      css`
+        ${getDisableStyles(props)}
+        color: ${grayScale['500']};
+      `};
+
+      ${isActive &&
+      (borderless
+        ? css`
+            box-shadow: 0 ${theme.outlineWidth} 0 0 ${fade(mainColor, theme.outlineOpacity)};
+            outline: none;
+          `
+        : getOutlineStyles(mainColor, theme))};
+    `;
+  },
+);
+
+const StyledContent = styled('div', getStyledOptions())<
+  WithTheme & {
+    isActive: boolean;
+    position: Alignment;
+    wide: boolean;
   }
+>(
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    overflowY: 'auto',
+    position: 'absolute',
+    top: '100%',
+    transformOrigin: 'top',
+    transition: 'transform 0.3s',
+    zIndex: 100,
+  },
+  props => {
+    const { isActive, position, theme, wide } = props;
+    const { darkMode, grayScale, radius, shadow, spacing, white } = theme;
+    let left = position === 'left' ? 0 : 'auto';
+    let translateX = '';
 
-  return css`
-    background-color: ${darkMode ? grayScale['800'] : white};
-    border-radius: ${radius.xxs};
-    box-shadow: ${shadow.mid};
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    left: ${left};
-    margin-top: ${spacing.xs};
-    min-width: ${px(wide ? 600 : 300)};
-    overflow-y: auto;
-    padding: ${spacing.md};
-    position: absolute;
-    right: ${position === 'right' ? 0 : 'auto'};
-    top: 100%;
-    transform-origin: top;
-    transform: ${`scaleY(0)${translateX}`};
-    transition: transform 0.3s;
-    z-index: 100;
+    if (position === 'center') {
+      left = '50%';
+      translateX = ' translateX(-50%)';
+    }
 
-    ${isActive &&
-    css`
-      transform: ${`scaleY(1)${translateX}`};
-    `}
-  `;
-});
+    return css`
+      background-color: ${darkMode ? grayScale['800'] : white};
+      border-radius: ${radius.xxs};
+      box-shadow: ${shadow.mid};
+      left: ${left};
+      margin-top: ${spacing.xs};
+      min-width: ${px(wide ? 600 : 300)};
+      padding: ${spacing.md};
+      right: ${position === 'right' ? 0 : 'auto'};
+      transform: ${`scaleY(0)${translateX}`};
+
+      ${isActive &&
+      css`
+        transform: ${`scaleY(1)${translateX}`};
+      `}
+    `;
+  },
+);
 
 export function DatePickerSelector(props: DatePickerSelectorProps) {
+  const { componentProps, getDataAttributes } = useDatePickerSelector(props);
   const {
     borderless,
     disabled,
     formatLocale,
-    height,
+    fromDate,
     mode,
     name,
     onChange,
@@ -187,15 +182,22 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
     selected,
     separator,
     showRangeApply,
-    width,
-    ...rest
-  } = mergeProps(selectorDefaultProps, props);
+    theme,
+    toDate,
+  } = componentProps;
   const [{ isActive, isFilled, selectedDates }, setState] = useSetState<State>({
     isActive: open ?? false,
     isFilled: false,
     selectedDates: mode === 'range' ? (selected ?? [undefined, undefined]) : (selected ?? ''),
   });
-  const { getDataAttributes } = useTheme();
+
+  useEffect(() => {
+    if (mode === 'range' && !is.array(selectedDates)) {
+      setState({ selectedDates: [undefined, undefined] });
+    } else if (mode === 'single' && is.array(selectedDates)) {
+      setState({ selectedDates: '' });
+    }
+  }, [mode, selectedDates, setState]);
 
   const isRange = mode === 'range';
 
@@ -233,21 +235,32 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
     }
   };
 
-  const picker = isRange ? (
-    <DatePickerRange
-      {...rest}
-      onApply={handleApply}
-      onChange={handleSelect as DatePickerRangeClickHandler}
-      selected={selectedDates as DatePickerRangeParameter}
-      showApply={showRangeApply}
-    />
-  ) : (
-    <DatePicker
-      {...rest}
-      onChange={handleSelect as DatePickerSingleClickHandler}
-      selected={selectedDates as string}
-    />
-  );
+  let picker: ReactElement;
+
+  if (isRange) {
+    const dates = is.array(selectedDates) ? selectedDates : [undefined, undefined];
+
+    picker = (
+      <DatePickerRange
+        {...componentProps}
+        onApply={handleApply}
+        onChange={handleSelect as DatePickerRangeClickHandler}
+        selected={dates as DatePickerRangeParameter}
+        showApply={showRangeApply}
+      />
+    );
+  } else {
+    const date = is.array(selectedDates) ? selectedDates[0] : selectedDates;
+
+    picker = (
+      <DatePicker
+        key={mode}
+        {...componentProps}
+        onChange={handleSelect as DatePickerSingleClickHandler}
+        selected={date}
+      />
+    );
+  }
 
   let title: ReactNode = isRange ? 'Select a date range' : 'Select a date';
 
@@ -271,29 +284,33 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
     title = formatDateLocale(selectedDates, { locale: formatLocale });
   }
 
-  const numberOfMonths = getNumberOfMonths(rest.fromDate, rest.toDate);
+  const numberOfMonths = getNumberOfMonths(fromDate, toDate);
 
   return (
-    <Box {...getDataAttributes('DatePickerSelector')} position="relative">
+    <StyledSelector
+      key={mode}
+      {...getDataAttributes('DatePickerSelector')}
+      {...omit(componentProps, 'hidden', 'onChange', 'mode')}
+    >
       <ClickOutside active={isActive} onClick={toggle}>
         <StyledButton
           {...getDataAttributes('DatePickerSelectorButton')}
-          height={height}
           isActive={isActive}
           isFilled={isFilled}
           onClick={toggle}
-          {...omit(props, 'hidden', 'onChange')}
+          {...omit(componentProps, 'hidden', 'onChange', 'mode')}
         >
           {title}
-          <BoxCenter width={borderless ? undefined : 40}>
+          <FlexCenter width={borderless ? undefined : 40}>
             <Icon name="calendar" />
-          </BoxCenter>
+          </FlexCenter>
         </StyledButton>
         <StyledContent
           {...getDataAttributes('DatePickerSelectorContent')}
           data-state={isActive ? 'open' : 'closed'}
           isActive={isActive}
           position={position}
+          theme={theme}
           wide={isRange && numberOfMonths > 1}
         >
           {picker}
@@ -308,8 +325,10 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
           />
         )}
       </ClickOutside>
-    </Box>
+    </StyledSelector>
   );
 }
 
 DatePickerSelector.displayName = 'DatePickerSelector';
+
+export { selectorDefaultProps, type DatePickerSelectorProps } from './useDatePicker';

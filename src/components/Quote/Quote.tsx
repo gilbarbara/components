@@ -1,73 +1,15 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { SetRequired, Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
+import { omit, px } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { textDefaultOptions } from '~/modules/options';
-import { baseStyles, getStyledOptions, marginStyles, textStyles } from '~/modules/system';
+import { baseStyles, getStyledOptions, getStyles, textStyles } from '~/modules/system';
 
-import {
-  HeadingSizes,
-  Position,
-  Sizes,
-  Spacing,
-  StyledProps,
-  TextSizes,
-  WithAccent,
-  WithChildren,
-  WithHTMLAttributes,
-  WithMargin,
-  WithTextOptions,
-} from '~/types';
+import { Spacing, WithTheme } from '~/types';
 
-type TextOptions = WithTextOptions<HeadingSizes | TextSizes>;
-
-export interface QuoteKnownProps
-  extends StyledProps,
-    WithAccent,
-    WithChildren,
-    WithHTMLAttributes,
-    WithMargin,
-    TextOptions {
-  attribution?: ReactNode;
-  /**
-   * The distance between the quote and citation
-   *
-   * @default xs
-   */
-  attributionGap?: Spacing;
-  /**
-   * The font size of the citation
-   *
-   * @default sm
-   */
-  attributionSize?: TextOptions['size'];
-  /**
-   * The placement of the border
-   *
-   * @default left
-   */
-  border?: Position;
-  /**
-   * The size of the border
-   *
-   * @default sm
-   */
-  borderSize?: Sizes;
-  /**
-   * The distance between the border and content
-   *
-   * @default md
-   */
-  gap?: Spacing;
-}
-
-export type QuoteProps = Simplify<QuoteKnownProps>;
+import { QuoteProps, TextOptions, useQuote } from './useQuote';
 
 const borderSizes = {
   sm: '1px',
@@ -75,24 +17,18 @@ const borderSizes = {
   lg: '4px',
 };
 
-export const defaultProps = {
-  ...textDefaultOptions,
-  accent: 'primary',
-  attributionGap: 'md',
-  attributionSize: 'sm',
-  border: 'left',
-  borderSize: 'md',
-  gap: 'md',
-  size: 'lg',
-} satisfies Omit<QuoteProps, 'children'>;
-
-export const StyledFigure = styled(
-  'figure',
-  getStyledOptions(),
-)<SetRequired<Omit<QuoteProps, 'attribution' | 'children'>, 'accent' | 'borderSize' | 'gap'>>(
+export const StyledFigure = styled('figure', getStyledOptions())<
+  SetRequired<Omit<QuoteProps, 'attribution' | 'children'>, 'accent' | 'borderSize' | 'gap'> &
+    WithTheme
+>(
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 0,
+  },
   props => {
-    const { accent, border, borderSize, gap } = props;
-    const { spacing, ...theme } = getTheme(props);
+    const { accent, border, borderSize, gap, theme } = props;
+    const { spacing } = theme;
 
     const { mainColor } = getColorTokens(accent, null, theme);
 
@@ -126,34 +62,33 @@ export const StyledFigure = styled(
     }
 
     return css`
-      ${baseStyles(props)};
       ${styles};
-      display: flex;
-      flex-direction: column;
-      margin: 0;
-      ${marginStyles(props)};
+      ${getStyles(omit(props, 'border', 'size'), { skipBorder: true })};
     `;
   },
 );
 
-export const StyledQuote = styled(
-  'blockquote',
-  getStyledOptions(),
-)<Omit<QuoteProps, 'attribution' | 'children'>>(props => {
-  return css`
-    ${baseStyles(props)};
-    display: block;
-    margin: 0;
-    ${textStyles(props)};
-  `;
-});
+export const StyledQuote = styled('blockquote', getStyledOptions())<
+  Omit<QuoteProps, 'attribution' | 'children'> & WithTheme
+>(
+  {
+    display: 'block',
+    margin: 0,
+  },
+  props => {
+    return css`
+      ${baseStyles(props.theme)};
+      ${textStyles(props)};
+    `;
+  },
+);
 
 const StyledAttribution = styled(
   'cite',
   getStyledOptions(),
-)<{ gap: Spacing; size: TextOptions['size'] }>(props => {
-  const { gap } = props;
-  const { spacing } = getTheme(props);
+)<WithTheme & { gap: Spacing; size: TextOptions['size'] }>(props => {
+  const { gap, theme } = props;
+  const { spacing } = theme;
 
   return css`
     display: flex;
@@ -163,17 +98,14 @@ const StyledAttribution = styled(
 });
 
 export const Quote = forwardRef<HTMLElement, QuoteProps>((props, ref) => {
-  const { attribution, attributionGap, attributionSize, children, ...rest } = mergeProps(
-    defaultProps,
-    props,
-  );
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useQuote(props);
+  const { attribution, attributionGap, attributionSize, children, ...rest } = componentProps;
 
   return (
     <StyledFigure ref={ref} {...getDataAttributes('Quote')} {...rest}>
       <StyledQuote {...rest}>{children}</StyledQuote>
       {attribution && (
-        <StyledAttribution gap={attributionGap} size={attributionSize} theme={props.theme}>
+        <StyledAttribution gap={attributionGap} size={attributionSize} theme={rest.theme}>
           {attribution}
         </StyledAttribution>
       )}
@@ -182,3 +114,5 @@ export const Quote = forwardRef<HTMLElement, QuoteProps>((props, ref) => {
 });
 
 Quote.displayName = 'Quote';
+
+export { defaultProps, type QuoteProps } from './useQuote';

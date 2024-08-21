@@ -1,5 +1,7 @@
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
+import { useComponentProps } from '~/hooks/useComponentProps';
+
 import {
   Spacing,
   StyledProps,
@@ -93,3 +95,32 @@ export const baseDefaultProps = {
   isLoaded: false,
   radius: 'xs',
 } satisfies SkeletonProps;
+
+export const defaultProps = {
+  ...baseDefaultProps,
+  fitContent: false,
+};
+
+export const circleDefaultProps = {
+  ...baseDefaultProps,
+  size: 48,
+} satisfies SkeletonCircleProps;
+
+export const textDefaultProps = {
+  ...baseDefaultProps,
+  gap: 'xs',
+  lines: 3,
+  height: 16,
+} satisfies SkeletonTextProps;
+
+export function useSkeleton(props: SkeletonProps) {
+  return useComponentProps(props, defaultProps);
+}
+
+export function useSkeletonCircle(props: SkeletonCircleProps) {
+  return useComponentProps(props, circleDefaultProps);
+}
+
+export function useSkeletonText(props: SkeletonTextProps) {
+  return useComponentProps(props, textDefaultProps);
+}

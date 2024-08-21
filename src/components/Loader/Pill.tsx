@@ -4,13 +4,12 @@ import { px } from '@gilbarbara/helpers';
 import { fade } from 'colorizr';
 import is from 'is-lite';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
+import { getStyledOptions } from '~/modules/system';
 
-import { LoaderComponentProps, LoaderSize } from './types';
+import { WithTheme } from '~/types';
+
+import { LoaderComponentProps, LoaderSize } from './useLoader';
 
 const animation = keyframes`
   0% {
@@ -30,20 +29,21 @@ export const StyledLoaderPill = styled(
   'div',
   getStyledOptions(),
 )<
-  Omit<LoaderComponentProps, 'size'> & {
-    height: number;
-    width: number;
-  }
+  Omit<LoaderComponentProps, 'size'> &
+    WithTheme & {
+      height: number;
+      width: number;
+    }
 >(props => {
-  const { block, color = 'primary', height, width } = props;
-  const { darkColor, grayScale, lightColor, spacing, ...theme } = getTheme(props);
+  const { block, color = 'primary', height, theme, width } = props;
+  const { darkMode, grayScale, spacing } = theme;
 
   const ratio = 0.16;
   const borderRadius = px(height / 2);
   const { mainColor } = getColorTokens(color, null, theme);
 
   return css`
-    background-color: ${isDarkMode(props) ? grayScale['700'] : grayScale['100']};
+    background-color: ${darkMode ? grayScale['700'] : grayScale['100']};
     border-radius: ${borderRadius};
     display: ${block ? 'flex' : 'inline-flex'};
     height: ${px(height === width ? Math.ceil(height * ratio) : height)};
@@ -81,8 +81,7 @@ export const StyledLoaderPill = styled(
 });
 
 export default function LoaderPill(props: LoaderComponentProps<LoaderSize>) {
-  const { size } = props;
-  const { getDataAttributes } = useTheme();
+  const { getDataAttributes, size } = props;
 
   const [width, height] = is.array(size) ? size : [size, size];
 

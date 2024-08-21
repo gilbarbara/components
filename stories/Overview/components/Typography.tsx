@@ -16,7 +16,7 @@ export default function Typography() {
 
       <H3 color="primary">Headings</H3>
 
-      <Spacer direction="vertical" gap="xl" mb="xl">
+      <Spacer gap="xl" mb="xl" orientation="vertical">
         <Box>
           <Heading>Jumbo - Large ({typography.jumboLarge.fontSize})</Heading>
           <Jumbo large mb={0}>
@@ -62,7 +62,7 @@ export default function Typography() {
 
       <H3 color="primary">Text</H3>
 
-      <Spacer direction="vertical" gap="xl">
+      <Spacer gap="xl" orientation="vertical">
         <Box>
           <Heading>xl ({typography.xl.fontSize})</Heading>
           <Paragraph size="xl">{PANGRAM}</Paragraph>

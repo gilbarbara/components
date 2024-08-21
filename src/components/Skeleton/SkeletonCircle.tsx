@@ -1,19 +1,11 @@
 import { forwardRef } from 'react';
-import { mergeProps } from '@gilbarbara/helpers';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { Skeleton } from './Skeleton';
-import { baseDefaultProps, SkeletonCircleProps } from './utils';
-
-export const defaultProps = {
-  ...baseDefaultProps,
-  size: 48,
-} satisfies SkeletonCircleProps;
+import { SkeletonCircleProps, useSkeletonCircle } from './useSkeleton';
 
 export const SkeletonCircle = forwardRef<HTMLDivElement, SkeletonCircleProps>((props, ref) => {
-  const { size, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useSkeletonCircle(props);
+  const { size, ...rest } = componentProps;
 
   return (
     <Skeleton
@@ -28,3 +20,5 @@ export const SkeletonCircle = forwardRef<HTMLDivElement, SkeletonCircleProps>((p
 });
 
 SkeletonCircle.displayName = 'SkeletonCircle';
+
+export { circleDefaultProps as defaultProps, type SkeletonCircleProps } from './useSkeleton';

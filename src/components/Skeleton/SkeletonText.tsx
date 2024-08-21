@@ -1,21 +1,12 @@
 import { forwardRef } from 'react';
-import { createArray, mergeProps } from '@gilbarbara/helpers';
-
-import { useTheme } from '~/hooks/useTheme';
+import { createArray } from '@gilbarbara/helpers';
 
 import { Skeleton } from './Skeleton';
-import { baseDefaultProps, SkeletonTextProps } from './utils';
-
-export const defaultProps = {
-  ...baseDefaultProps,
-  gap: 'xs',
-  lines: 3,
-  height: 16,
-} satisfies SkeletonTextProps;
+import { SkeletonTextProps, useSkeletonText } from './useSkeleton';
 
 export const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>((props, ref) => {
-  const { children, gap, height, isLoaded, lines, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useSkeletonText(props);
+  const { children, gap, height, isLoaded, lines, ...rest } = componentProps;
 
   const getWidth = (index: number) => {
     if (lines > 1) {
@@ -55,3 +46,5 @@ export const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>((props
 });
 
 SkeletonText.displayName = 'SkeletonText';
+
+export { textDefaultProps as defaultProps, type SkeletonTextProps } from './useSkeleton';

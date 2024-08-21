@@ -2,68 +2,12 @@ import { MouseEvent, useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from '@gilbarbara/hooks';
-import { Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
 
-import { StyledProps, WithChildren } from '~/types';
-
-export interface PortalKnownProps extends StyledProps, WithChildren {
-  /**
-   * Close the portal when the overlay is clicked.
-   * @default false
-   */
-  disableCloseOnClickOverlay?: boolean;
-  /**
-   * Close the portal when the escape key is pressed.
-   * @default false
-   */
-  disableCloseOnEsc?: boolean;
-  /**
-   * Hide the overlay.
-   * @default false
-   */
-  hideOverlay?: boolean;
-  /**
-   * Whether the portal is visible.
-   * @default false
-   */
-  isOpen?: boolean;
-  /**
-   * Callback when the portal is closed.
-   */
-  onClose?: () => void;
-  /**
-   * Callback when the portal is opened.
-   */
-  onOpen?: () => void;
-  /**
-   * Show a close button in the top right corner.
-   * @default false
-   */
-  showCloseButton?: boolean;
-  /**
-   * The z-index of the portal.
-   * @default 1000
-   */
-  zIndex?: number;
-}
-
-export type PortalProps = Simplify<PortalKnownProps>;
-
-export const defaultProps = {
-  disableCloseOnClickOverlay: false,
-  disableCloseOnEsc: false,
-  hideOverlay: false,
-  isOpen: false,
-  showCloseButton: false,
-  zIndex: 1000,
-} satisfies Omit<PortalProps, 'children'>;
+import { PortalProps, usePortal } from './usePortal';
 
 function getPortalElement() {
   return document.querySelector('.__portal');
@@ -153,22 +97,24 @@ const StyledPortal = styled.div<Pick<PortalProps, 'isOpen' | 'zIndex'>>(props =>
 
 export function Portal(props: PortalProps) {
   const {
-    children,
-    disableCloseOnClickOverlay,
-    disableCloseOnEsc,
-    hideOverlay,
-    isOpen,
-    onClose,
-    onOpen,
-    showCloseButton,
-    zIndex,
-  } = mergeProps(defaultProps, props);
+    componentProps: {
+      children,
+      disableCloseOnClickOverlay,
+      disableCloseOnEsc,
+      hideOverlay,
+      isOpen,
+      onClose,
+      onOpen,
+      showCloseButton,
+      theme,
+      zIndex,
+    },
+    getDataAttributes,
+  } = usePortal(props);
+
   const [isReady, setReady] = useState(false);
   const portal = useRef<Element | null>(null);
-  const {
-    getDataAttributes,
-    theme: { darkMode, dataAttributeName },
-  } = useTheme();
+  const { darkMode, dataAttributeName } = theme;
 
   const closePortal = useRef(() => {
     destroyPortal.current();
@@ -291,3 +237,5 @@ export function Portal(props: PortalProps) {
 }
 
 Portal.displayName = 'Portal';
+
+export { defaultProps, type PortalProps } from './usePortal';

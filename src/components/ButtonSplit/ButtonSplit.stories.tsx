@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
-import { Anchor, Box, BoxInline, Grid, Icon, Paragraph, Spacer } from '~';
+import { Anchor, Box, FlexInline, Grid, Icon, Paragraph, Spacer } from '~';
 
 import {
   colorProps,
@@ -81,10 +81,10 @@ function ButtonSplitWrapper(props: ButtonSplitProps) {
       onClick={handleClick}
     >
       <ButtonSplitItem disabled>
-        <BoxInline color="primary">
+        <FlexInline color="primary">
           <Icon mr="xxs" name="plus-o" />
           Add recipient
-        </BoxInline>
+        </FlexInline>
       </ButtonSplitItem>
       <ButtonSplitItem
         data-name="Schedule for later"
@@ -211,9 +211,9 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer gap="lg">
-      {COMPONENT_SIZES.map(d => (
-        <ButtonSplitWrapper key={d} {...props} label={`Send (${d})`} size={d} />
+    <Spacer distribution="center" gap="lg">
+      {COMPONENT_SIZES.map(size => (
+        <ButtonSplitWrapper key={size} {...props} label={`Send (${size})`} size={size} />
       ))}
     </Spacer>
   ),
@@ -224,7 +224,7 @@ export const Colors: Story = {
     bg: disableControl(),
   },
   render: props => (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
+    <Grid gap="lg" templateColumns="repeat(3, 1fr)">
       {VARIANTS.map(d => (
         <ButtonSplitWrapper key={d} {...props} bg={d} label={d} />
       ))}

@@ -1,32 +1,19 @@
-import { CSSProperties, forwardRef, ReactNode, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import SVG from 'react-inlinesvg';
 import innerText from 'react-innertext';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
-import { RequireExactlyOne, SetRequired, Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
+import { omit, px } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 
 import { rotate } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import { iconsCustom } from '~/modules/options';
-import { baseStyles, getStyledOptions, marginStyles } from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { Icons, StyledProps, WithColors, WithMargin } from '~/types';
+import { WithTheme } from '~/types';
 
-export interface IconKnownProps extends StyledProps, Pick<WithColors, 'color'>, WithMargin {
-  name: Icons;
-  /** @default 16 */
-  size?: number;
-  spin?: boolean;
-  style?: CSSProperties;
-  title?: ReactNode;
-  url: string;
-}
-
-export type IconProps = Simplify<RequireExactlyOne<IconKnownProps, 'name' | 'url'>>;
+import { IconProps, useIcon } from './useIcon';
 
 const loadBar = keyframes`
   0%, 100% { transform: translateX(0); width: 4px; }
@@ -47,77 +34,73 @@ const loadBarSound = keyframes`
   100% {transform: scaleY(1) }
 `;
 
-export const defaultProps = {
-  size: 16,
-  spin: false,
-} satisfies Omit<IconProps, 'name' | 'url'>;
+export const StyledIcon = styled('span', getStyledOptions())<
+  SetRequired<Omit<IconProps, 'url'>, 'size'> & WithTheme
+>(
+  {
+    display: 'inline-flex',
+    lineHeight: 1,
+  },
+  props => {
+    const { color, name = '', size, spin, theme } = props;
+    let iconColor = color ?? 'inherit';
 
-export const StyledIcon = styled(
-  'span',
-  getStyledOptions(),
-)<SetRequired<Omit<IconProps, 'url'>, 'size'>>(props => {
-  const { color, name = '', size, spin } = props;
-  const theme = getTheme(props);
-  let iconColor = color ?? 'inherit';
+    if (color) {
+      const { mainColor } = getColorTokens(color, null, theme);
 
-  if (color) {
-    const { mainColor } = getColorTokens(color, null, theme);
-
-    iconColor = mainColor;
-  }
-
-  return css`
-    ${baseStyles(props)};
-    color: ${iconColor};
-    display: inline-flex;
-    line-height: 1;
-    height: ${px(size)};
-    width: ${px(size)};
-    ${marginStyles(props)};
-
-    > * {
-      ${(!!spin || (name as string).startsWith('spinner')) &&
-      css`
-        animation: ${rotate} 1s infinite linear;
-      `};
+      iconColor = mainColor;
     }
 
-    ${['loadbar', 'loadbar-alt'].includes(name as string) &&
-    css`
-      rect:last-of-type {
-        animation: ${loadBar} 2s infinite linear;
+    return css`
+      color: ${iconColor};
+      height: ${px(size)};
+      width: ${px(size)};
+      ${getStyles(omit(props, 'size'))};
+
+      > * {
+        ${(!!spin || (name as string).startsWith('spinner')) &&
+        css`
+          animation: ${rotate} 1s infinite linear;
+        `};
       }
-    `};
 
-    ${name === 'loadbar-doc' &&
-    css`
-      g > rect {
-        animation: ${loadBarDocument} 1s linear infinite alternate;
-      }
-    `};
-
-    ${name === 'loadbar-sound' &&
-    css`
-      g > rect {
-        animation: ${loadBarSound} 1s linear infinite alternate;
-        transform: scaleY(0);
-        transform-origin: bottom;
-
-        &:nth-of-type(2) {
-          animation-delay: 0.2s;
+      ${['loadbar', 'loadbar-alt'].includes(name as string) &&
+      css`
+        rect:last-of-type {
+          animation: ${loadBar} 2s infinite linear;
         }
+      `};
 
-        &:nth-of-type(3) {
-          animation-delay: 0.4s;
+      ${name === 'loadbar-doc' &&
+      css`
+        g > rect {
+          animation: ${loadBarDocument} 1s linear infinite alternate;
         }
-      }
-    `};
-  `;
-});
+      `};
+
+      ${name === 'loadbar-sound' &&
+      css`
+        g > rect {
+          animation: ${loadBarSound} 1s linear infinite alternate;
+          transform: scaleY(0);
+          transform-origin: bottom;
+
+          &:nth-of-type(2) {
+            animation-delay: 0.2s;
+          }
+
+          &:nth-of-type(3) {
+            animation-delay: 0.4s;
+          }
+        }
+      `};
+    `;
+  },
+);
 
 export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
-  const { name, size = 16, title, url, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = useIcon(props);
+  const { name, size = 16, title, url, ...rest } = componentProps;
 
   const iconURL = useMemo(() => {
     if (name) {
@@ -146,10 +129,12 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
   }
 
   return (
-    <StyledIcon ref={ref} {...getDataAttributes('Icon')} name={name} size={size} {...rest}>
+    <StyledIcon ref={ref} name={name} size={size} {...getDataAttributes('Icon')} {...rest}>
       <SVG height={size} src={iconURL} title={titleSVG} width={size} />
     </StyledIcon>
   );
 });
 
 Icon.displayName = 'Icon';
+
+export { defaultProps, type IconProps } from './useIcon';

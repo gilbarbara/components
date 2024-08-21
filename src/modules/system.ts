@@ -1,6 +1,13 @@
 import isPropValid from '@emotion/is-prop-valid';
 import { css, CSSObject } from '@emotion/react';
-import { capitalize, objectEntries, px } from '@gilbarbara/helpers';
+import {
+  capitalize,
+  cleanUpObject,
+  objectEntries,
+  objectKeys,
+  px,
+  sortObjectKeys,
+} from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
 import { fade } from 'colorizr';
 import is from 'is-lite';
@@ -13,11 +20,13 @@ import {
   BorderItemSide,
   HeadingSizes,
   TextSizes,
+  Theme,
   WithAccent,
   WithAlign,
+  WithBlock,
   WithBorder,
   WithBorderless,
-  WithChildrenOptional,
+  WithBusy,
   WithColors,
   WithDimension,
   WithDisabled,
@@ -25,8 +34,12 @@ import {
   WithElementSpacing,
   WithFlexBox,
   WithFlexItem,
+  WithGrid,
   WithHeight,
+  WithInline,
+  WithLabel,
   WithLayout,
+  WithLight,
   WithMargin,
   WithOutline,
   WithPadding,
@@ -38,7 +51,12 @@ import {
   WithVariant,
 } from '~/types';
 
-import { getTheme, responsive as responsiveHelper } from './helpers';
+import { responsive as responsiveHelper } from './helpers';
+
+interface ColorStylesOptions {
+  skipBorder?: boolean;
+  skipShadow?: boolean;
+}
 
 interface GetContainerStylesOptions {
   responsive?: boolean;
@@ -50,9 +68,48 @@ interface GetDisableStylesOptions {
   isButton?: boolean;
 }
 
+interface GetStylesProps
+  extends WithAccent,
+    WithBlock,
+    WithBorder,
+    WithBorderless,
+    WithBusy,
+    WithColors,
+    WithDimension,
+    WithDisabled,
+    WithDisplay,
+    WithFlexBox,
+    WithFlexItem,
+    WithGrid,
+    WithInline,
+    WithLayout,
+    WithLabel,
+    WithLight,
+    WithMargin,
+    WithPadding,
+    WithPositioning,
+    WithRadius,
+    WithShadow,
+    WithTextOptions,
+    WithTheme,
+    WithVariant {}
+
+interface GetStylesOptions extends ColorStylesOptions {
+  lineHeightCustom?: StringOrNumber;
+  skipColor?: boolean;
+  skipSpacing?: boolean;
+  useFontSize?: boolean;
+  useShadowFilter?: boolean;
+}
+
+interface TextStylesOptions {
+  lineHeightCustom?: StringOrNumber;
+  skipFontSizing?: boolean;
+}
+
 export function getContainerStyles(props: WithTheme, options?: GetContainerStylesOptions) {
   const { responsive = true, verticalPadding = false } = options ?? {};
-  const { spacing } = getTheme(props);
+  const { spacing } = props.theme;
 
   return css`
     padding-left: ${spacing.md};
@@ -87,10 +144,9 @@ export function getDisableStyles<T extends WithBorderless & WithTheme & WithVari
   props: T,
   options: GetDisableStylesOptions = {},
 ) {
-  const { borderless, variant } = props;
+  const { borderless, theme, variant } = props;
   const { hasPlaceholder, isButton } = options;
-  const darkMode = isDarkMode(props);
-  const { grayScale } = getTheme(props);
+  const { darkMode, grayScale } = theme;
 
   let backgroundColor;
   let borderColor = darkMode ? grayScale['800'] : grayScale['100'];
@@ -156,6 +212,7 @@ export function getStyledOptions(...exclude: string[]) {
         'loading',
         'margin',
         'opacity',
+        'orientation',
         'overflow',
         'padding',
         'pointerEvents',
@@ -170,12 +227,51 @@ export function getStyledOptions(...exclude: string[]) {
         'wrap',
         ...exclude,
       ].includes(prop) &&
-      !['onClear', 'onCreate', 'onDropdown', 'onOpen', 'onSelect'].some(d => prop.startsWith(d)),
+      !['onApply', 'onClear', 'onCreate', 'onDropdown', 'onOpen', 'onSelect'].some(d =>
+        prop.startsWith(d),
+      ),
   };
 }
 
-export function isDarkMode(props: WithTheme) {
-  return !!props?.theme?.darkMode;
+export function getStyles(props: GetStylesProps, options: GetStylesOptions = {}) {
+  const { busy, display, textAlign, theme } = props;
+  const {
+    lineHeightCustom,
+    skipBorder,
+    skipColor,
+    skipShadow,
+    skipSpacing,
+    useFontSize,
+    useShadowFilter,
+  } = options;
+
+  const { fontFamily } = theme;
+
+  const styles: CSSObject = {
+    ...borderStyles(props),
+    ...(!skipColor ? colorStyles(props, { skipBorder, skipShadow }) : {}),
+    ...dimensionStyles(props),
+    ...flexBoxStyles(props),
+    ...flexItemStyles(props),
+    ...gridStyles(props),
+    ...layoutStyles(props),
+    ...positioningStyles(props),
+    ...radiusStyles(props),
+    ...shadowStyles(props, useShadowFilter),
+    ...textStyles(props, { lineHeightCustom, skipFontSizing: !useFontSize }),
+    ...(!skipSpacing ? marginStyles(props) : {}),
+    ...(!skipSpacing ? paddingStyles(props) : {}),
+    boxSizing: 'border-box',
+    display,
+    fontFamily,
+    textAlign,
+  };
+
+  if (busy) {
+    styles.pointerEvents = 'none';
+  }
+
+  return sortObjectKeys(cleanUpObject(styles)) as CSSObject;
 }
 
 export function alignStyles<T extends WithAlign>(props: T): CSSObject {
@@ -194,18 +290,15 @@ export const appearanceStyles: CSSObject = {
   appearance: 'none',
 };
 
-export function baseStyles<T extends WithTheme>(props: T): CSSObject {
-  const { fontFamily } = getTheme(props);
-
+export function baseStyles(theme: Theme = defaultTheme): CSSObject {
   return {
     boxSizing: 'border-box',
-    fontFamily,
+    fontFamily: theme.fontFamily,
   };
 }
 
 export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObject {
-  const { border } = props;
-  const theme = getTheme(props);
+  const { border, theme } = props;
 
   let { mainColor: borderColor } = getColorTokens('gray.100', null, theme);
   const defaultBorder = `1px solid ${borderColor}`;
@@ -269,47 +362,12 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
   return output;
 }
 
-export function boxStyles<
-  T extends WithBorder &
-    WithChildrenOptional &
-    WithColors &
-    WithFlexBox &
-    WithFlexItem &
-    WithLayout &
-    WithMargin &
-    WithPadding &
-    WithPositioning &
-    WithRadius &
-    WithShadow &
-    WithTheme,
->(props: T) {
-  return css`
-    ${baseStyles(props)};
-    ${colorStyles(props, { withoutBorder: true })};
-    ${borderStyles(props)};
-    ${flexBoxStyles(props)};
-    ${flexItemStyles(props)};
-    ${layoutStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${positioningStyles(props)};
-    ${radiusStyles(props)};
-    ${shadowStyles(props)};
-  `;
-}
-
-interface ColorStylesOptions {
-  skipShadow?: boolean;
-  withoutBorder?: boolean;
-}
-
 export function colorStyles<T extends WithColors & WithTheme & { variant?: string }>(
   props: T,
   options: ColorStylesOptions = {},
 ): CSSObject {
-  const { skipShadow, withoutBorder = false } = options;
-  const theme = getTheme(props);
-  const { bg, color, variant } = props;
+  const { skipBorder = false, skipShadow } = options;
+  const { bg, color, theme, variant } = props;
   const isTransparent = !!variant && ['bordered', 'clean'].includes(variant);
 
   const styles: CSSObject = {};
@@ -324,7 +382,7 @@ export function colorStyles<T extends WithColors & WithTheme & { variant?: strin
       styles.color = textColor;
     }
 
-    if (!withoutBorder) {
+    if (!skipBorder) {
       styles.border = variant === 'clean' ? 0 : `1px solid ${mainColor}`;
     }
 
@@ -346,59 +404,74 @@ export function colorStyles<T extends WithColors & WithTheme & { variant?: strin
   return styles;
 }
 
-export function dimensionStyles<T extends WithDimension>(props: T) {
+export function dimensionStyles<T extends WithDimension>(
+  props: T,
+  defaultOptions: WithDimension = {},
+) {
   const { height, maxHeight, maxWidth, minHeight, minWidth, width } = props;
 
   const output: CSSObject = {};
 
-  if (!is.nullOrUndefined(height)) {
-    output.height = px(height);
+  if (!is.nullOrUndefined(height || defaultOptions.height)) {
+    output.height = px(height ?? defaultOptions.height);
   }
 
-  if (!is.nullOrUndefined(maxHeight)) {
-    output.maxHeight = px(maxHeight);
+  if (!is.nullOrUndefined(maxHeight || defaultOptions.maxHeight)) {
+    output.maxHeight = px(maxHeight ?? defaultOptions.maxHeight);
   }
 
-  if (!is.nullOrUndefined(maxWidth)) {
-    output.maxWidth = px(maxWidth);
+  if (!is.nullOrUndefined(maxWidth || defaultOptions.maxWidth)) {
+    output.maxWidth = px(maxWidth ?? defaultOptions.maxWidth);
   }
 
-  if (!is.nullOrUndefined(minHeight)) {
-    output.minHeight = px(minHeight);
+  if (!is.nullOrUndefined(minHeight || defaultOptions.minHeight)) {
+    output.minHeight = px(minHeight ?? defaultOptions.minHeight);
   }
 
-  if (!is.nullOrUndefined(minWidth)) {
-    output.minWidth = px(minWidth);
+  if (!is.nullOrUndefined(minWidth || defaultOptions.minWidth)) {
+    output.minWidth = px(minWidth ?? defaultOptions.minWidth);
   }
 
-  if (!is.nullOrUndefined(width)) {
-    output.width = px(width);
+  if (!is.nullOrUndefined(width || defaultOptions.width)) {
+    output.width = px(width ?? defaultOptions.width);
   }
 
   return output;
 }
 
-export function displayStyles<T extends WithDisplay>(props: T): CSSObject {
-  const { display } = props;
+export function flexBoxStyles<T extends WithFlexBox & WithTheme>(props: T): CSSObject {
+  const {
+    align,
+    alignContent,
+    direction,
+    gap,
+    justify,
+    justifyItems,
+    placeContent,
+    placeItems,
+    theme,
+    wrap,
+  } = props;
 
-  if (display) {
-    return { display };
+  const spacingKeys = objectKeys(theme.spacing);
+  let gapValue = px(gap);
+
+  /* @ts-expect-error ({} & string) confuses tsc */
+  if (is.string(gap) && spacingKeys.includes(gap)) {
+    /* @ts-expect-error ({} & string) confuses tsc */
+    gapValue = theme.spacing[gap];
   }
-
-  return {};
-}
-
-export function flexBoxStyles<T extends WithFlexBox>(props: T): CSSObject {
-  const { align, alignContent, direction, gap, justify, justifyItems, wrap } = props;
 
   return {
     alignContent,
     alignItems: align,
     flexDirection: direction,
     flexWrap: wrap,
-    gap: px(gap),
+    gap: gapValue,
     justifyContent: justify,
     justifyItems,
+    placeContent,
+    placeItems,
   };
 }
 
@@ -437,11 +510,68 @@ export function flexItemStyles<T extends WithFlexItem>(props: T): CSSObject {
   };
 }
 
-export function hoverStyles<T extends WithColors & WithDisabled & WithVariant>(
+export function gridStyles<T extends WithGrid & WithTheme>(props: T): CSSObject {
+  const {
+    area,
+    autoColumns,
+    autoFlow,
+    autoRows,
+    column,
+    columnEnd,
+    columnGap,
+    columnStart,
+    grid,
+    row,
+    rowEnd,
+    rowGap,
+    rowStart,
+    template,
+    templateAreas,
+    templateColumns,
+    templateRows,
+    theme,
+  } = props;
+  const spacingKeys = objectKeys(theme.spacing);
+  let columnGapValue = px(columnGap);
+  let rowGapValue = px(rowGap);
+
+  /* @ts-expect-error ({} & string) confuses tsc */
+  if (is.string(columnGap) && spacingKeys.includes(columnGap)) {
+    /* @ts-expect-error ({} & string) confuses tsc */
+    columnGapValue = theme.spacing[columnGap];
+  }
+
+  /* @ts-expect-error ({} & string) confuses tsc */
+  if (is.string(rowGap) && spacingKeys.includes(rowGap)) {
+    /* @ts-expect-error ({} & string) confuses tsc */
+    rowGapValue = theme.spacing[rowGap];
+  }
+
+  return {
+    columnGap: columnGapValue,
+    grid,
+    gridArea: area,
+    gridAutoColumns: autoColumns,
+    gridAutoFlow: autoFlow,
+    gridAutoRows: autoRows,
+    gridColumn: column,
+    gridColumnEnd: columnEnd,
+    gridColumnStart: columnStart,
+    gridRow: row,
+    gridRowEnd: rowEnd,
+    gridRowStart: rowStart,
+    gridTemplate: template,
+    gridTemplateAreas: templateAreas,
+    gridTemplateColumns: templateColumns,
+    gridTemplateRows: templateRows,
+    rowGap: rowGapValue,
+  };
+}
+
+export function hoverStyles<T extends WithColors & WithDisabled & WithTheme & WithVariant>(
   props: T,
 ): CSSObject {
-  const theme = getTheme(props);
-  const { bg, color, disabled, variant } = props;
+  const { bg, color, disabled, theme, variant } = props;
   const styles: CSSObject = {};
 
   if (!bg || disabled) {
@@ -477,11 +607,12 @@ export function inputStyles<
     multiple,
     prefixSpacing,
     suffixSpacing,
+    theme,
     width,
   } = props;
-  const darkMode = isDarkMode(props);
   const {
     darkColor,
+    darkMode,
     fontFamily,
     grayScale,
     inputHeight,
@@ -492,8 +623,7 @@ export function inputStyles<
     spacing,
     typography,
     white,
-    ...theme
-  } = getTheme(props);
+  } = theme;
   const { mainColor } = getColorTokens(accent, null, theme);
   const isSelect = is.boolean(multiple);
   const placeholderColor = grayScale['500'];
@@ -604,12 +734,12 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
     output.display = display;
   }
 
-  return { ...output, ...dimensionStyles(props) };
+  return output;
 }
 
 export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObject {
-  const { m, margin, mb, ml, mr, mt, mx, my } = props;
-  const { spacing } = getTheme(props);
+  const { m, margin, mb, ml, mr, mt, mx, my, theme } = props;
+  const { spacing } = theme;
 
   const output: CSSObject = {};
 
@@ -650,8 +780,7 @@ export function marginStyles<T extends WithMargin & WithTheme>(props: T): CSSObj
   return output;
 }
 
-export function outlineStyles<T extends WithTheme>(color: string, props: T) {
-  const theme = getTheme(props);
+export function outlineStyles(color: string, theme: Theme = defaultTheme) {
   const outline = getOutlineStyles(color, theme);
 
   return css`
@@ -667,9 +796,12 @@ export function outlineStyles<T extends WithTheme>(color: string, props: T) {
   `;
 }
 
-export function paddingStyles<T extends WithPadding>(props: T, force = false): CSSObject {
-  const { p, padding, pb, pl, pr, pt, px: paddingX, py } = props;
-  const { spacing } = getTheme(props);
+export function paddingStyles<T extends WithPadding & WithTheme>(
+  props: T,
+  force = false,
+): CSSObject {
+  const { p, padding, pb, pl, pr, pt, px: paddingX, py, theme } = props;
+  const { spacing } = theme;
 
   const output: CSSObject = {};
 
@@ -751,7 +883,7 @@ export function positioningStyles<T extends WithPositioning>(props: T): CSSObjec
 }
 
 export function radiusStyles<T extends WithRadius & WithTheme>(props: T): CSSObject {
-  const { radius } = getTheme(props);
+  const { radius } = props.theme;
   const output: CSSObject = {};
 
   if (is.plainObject(props.radius)) {
@@ -787,21 +919,19 @@ export function shadowStyles<T extends WithShadow & WithTheme>(
   props: T,
   useFilter = false,
 ): CSSObject {
-  const { dropShadow, shadow } = getTheme(props);
+  const { darkMode, dropShadow, shadow } = props.theme;
 
   if (props.shadow) {
     if (useFilter) {
       return {
-        filter: isDarkMode(props)
+        filter: darkMode
           ? dropShadow[props.shadow].replace(/148/g, '222')
           : dropShadow[props.shadow],
       };
     }
 
     return {
-      boxShadow: isDarkMode(props)
-        ? shadow[props.shadow].replace(/148/g, '222')
-        : shadow[props.shadow],
+      boxShadow: darkMode ? shadow[props.shadow].replace(/148/g, '222') : shadow[props.shadow],
     };
   }
 
@@ -810,10 +940,11 @@ export function shadowStyles<T extends WithShadow & WithTheme>(
 
 export function textStyles<T extends WithTextOptions<TextSizes | HeadingSizes> & WithTheme>(
   props: T,
-  lineHeightCustom?: StringOrNumber,
+  options: TextStylesOptions = {},
 ): CSSObject {
-  const { bold = false, italic = false, size } = props;
-  const { fontWeights, typography } = getTheme(props);
+  const { bold = false, italic = false, lineHeight, size, theme } = props;
+  const { fontWeights, typography } = theme;
+  const { lineHeightCustom, skipFontSizing } = options;
 
   const output: CSSObject = {};
 
@@ -835,16 +966,13 @@ export function textStyles<T extends WithTextOptions<TextSizes | HeadingSizes> &
     output.fontStyle = 'italic';
   }
 
-  if (size) {
+  if (size && !skipFontSizing) {
     const { fontSize, lineHeight: typographyLineHeight } = typography[size];
     const fontWeight = bold ? fontWeights.bold : fontWeights.normal;
 
-    return {
-      ...output,
-      fontSize,
-      fontWeight,
-      lineHeight: output.lineHeight ?? lineHeightCustom ?? typographyLineHeight,
-    };
+    output.fontSize = fontSize;
+    output.fontWeight = fontWeight;
+    output.lineHeight = lineHeight ?? lineHeightCustom ?? typographyLineHeight;
   }
 
   return output;

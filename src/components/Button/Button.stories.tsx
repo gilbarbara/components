@@ -1,7 +1,8 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, waitForElementToBeRemoved, within } from '@storybook/test';
 
-import { Grid, Icon, Spacer } from '~';
+import { Flex, Grid, Icon, Spacer } from '~';
 
 import { radius } from '~/modules/theme';
 
@@ -48,7 +49,7 @@ export const Basic: Story = {};
 export const Busy: Story = {
   render: props => (
     <>
-      <Spacer gap="lg">
+      <Flex gap="lg">
         <Button {...props} busy>
           Submit
         </Button>
@@ -56,7 +57,7 @@ export const Busy: Story = {
         <Button {...props} busy spinner={<Icon name="clock" spin />} spinnerPosition="start">
           Save (with custom spinner)
         </Button>
-      </Spacer>
+      </Flex>
       <Description>
         Setting the <Code>busy</Code> prop to true adds a spinner and the button will ignore clicks.
         <br />
@@ -68,7 +69,7 @@ export const Busy: Story = {
 
 export const WithIcon: Story = {
   render: props => (
-    <Spacer gap="lg">
+    <Flex gap="lg">
       <Button {...props} bg="green" endContent={<Icon name="image" />}>
         Take a photo
       </Button>
@@ -76,7 +77,7 @@ export const WithIcon: Story = {
       <Button {...props} bg="red" color="white" startContent={<Icon name="user" />}>
         Delete user
       </Button>
-    </Spacer>
+    </Flex>
   ),
 };
 
@@ -91,7 +92,7 @@ export const IconOnly: Story = {
   },
   render: props => (
     <>
-      <Grid gap={20} templateColumns="repeat(4, 1fr)">
+      <Flex gap="lg">
         <Button {...props} radius="xxs">
           <Icon name="arrow-down" size={18} />
         </Button>
@@ -104,7 +105,7 @@ export const IconOnly: Story = {
         <Button {...props} radius="none">
           <Icon name="trash" size={18} />
         </Button>
-      </Grid>
+      </Flex>
       <Description>
         Setting the <Code>iconOnly</Code> prop removes the padding and center the content.
       </Description>
@@ -117,10 +118,10 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer>
-      {COMPONENT_SIZES.map(d => (
-        <Button key={d} {...props} size={d}>
-          Button ({d})
+    <Spacer distribution="center" gap="lg">
+      {COMPONENT_SIZES.map(size => (
+        <Button key={size} {...props} size={size}>
+          Button ({size})
         </Button>
       ))}
     </Spacer>
@@ -132,7 +133,7 @@ export const Colors: Story = {
     bg: disableControl(),
   },
   render: props => (
-    <Grid gap={30} templateColumns="repeat(3, 1fr)">
+    <Grid gap="lg" templateColumns="repeat(3, 1fr)">
       {VARIANTS.map(d => (
         <Button key={d} {...props} bg={d}>
           Button ({d})
@@ -150,7 +151,7 @@ export const Tones: Story = {
     const [variant] = bg?.split('.') ?? [];
 
     return (
-      <Grid gap={30} templateColumns="repeat(3, 1fr)">
+      <Grid gap="lg" templateColumns="repeat(3, 1fr)">
         {TONES.map(d => (
           <Button key={d} {...props} bg={`${variant}.${d}`}>
             Button ({d})
@@ -167,7 +168,7 @@ export const Variants: Story = {
   },
   render: props => {
     return (
-      <Spacer>
+      <Flex gap="lg">
         <Button {...props} variant="solid">
           solid
         </Button>
@@ -180,7 +181,7 @@ export const Variants: Story = {
         <Button {...props} variant="shadow">
           shadow
         </Button>
-      </Spacer>
+      </Flex>
     );
   },
 };
@@ -192,7 +193,7 @@ export const Radius: Story = {
   render: props => {
     return (
       <>
-        <Grid gap={30} templateColumns="repeat(3, 1fr)">
+        <Grid gap="lg" templateColumns="repeat(3, 1fr)">
           {objectKeys(radius).map(d => (
             <Button key={d} {...props} radius={d}>
               {d}
@@ -204,5 +205,23 @@ export const Radius: Story = {
         </Info>
       </>
     );
+  },
+};
+
+export const Tests: Story = {
+  tags: ['!dev', '!autodocs'],
+  args: {
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('Button');
+
+    await userEvent.click(canvas.getByTestId('Button'));
+    await expect(canvas.getByTestId('Ripple')).toBeInTheDocument();
+
+    await waitForElementToBeRemoved(() => canvas.queryByTestId('Ripple'));
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
   },
 };

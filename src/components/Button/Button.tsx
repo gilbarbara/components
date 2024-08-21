@@ -1,178 +1,75 @@
 import { forwardRef, isValidElement, MouseEvent, ReactNode, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
+import { omit, px } from '@gilbarbara/helpers';
 import { useMergeRefs } from '@gilbarbara/hooks';
-import { PlainObject, SetRequired, Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
+import { PlainObject, SetRequired } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import {
-  appearanceStyles,
-  baseStyles,
-  colorStyles,
-  flexItemStyles,
   getDisableStyles,
   getStyledOptions,
+  getStyles,
   hoverStyles,
   outlineStyles,
-  paddingStyles,
-  radiusStyles,
 } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
 import { Ripple, useRipple } from '~/components/Ripple';
 
-import {
-  ButtonTypes,
-  OmitElementProps,
-  Spacing,
-  StyledProps,
-  WithBlock,
-  WithBusy,
-  WithButtonSize,
-  WithChildren,
-  WithColorsDefaultBg,
-  WithEndContent,
-  WithFlexItem,
-  WithLight,
-  WithPadding,
-  WithRadius,
-  WithStartContent,
-  WithVariant,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface ButtonKnownProps
-  extends StyledProps,
-    WithBlock,
-    WithBusy,
-    WithButtonSize,
-    WithChildren,
-    WithColorsDefaultBg,
-    WithEndContent,
-    WithFlexItem,
-    WithLight,
-    WithPadding,
-    WithRadius,
-    WithStartContent,
-    WithVariant {
-  /**
-   * Disable the button ripple effect on press.
-   * @default false
-   */
-  disableRipple?: boolean;
-  /**
-   * Space between the start and end content
-   * @default xs
-   */
-  gap?: Spacing;
-  /**
-   * Whether the button should have the same width and height.
-   * @default false
-   */
-  iconOnly?: boolean;
-  /**
-   * A custom spinner icon to show when the button is busy.
-   */
-  spinner?: ReactNode;
-  /**
-   * The spinner position
-   * @default end
-   */
-  spinnerPosition?: 'start' | 'end';
-  /**
-   * The button type
-   * @default button
-   */
-  type?: ButtonTypes;
-  /**
-   * Double the horizontal padding
-   * @default false
-   */
-  wide?: boolean;
-}
+import { ButtonProps, defaultProps, useButton } from './useButton';
 
-export type ButtonProps = Simplify<OmitElementProps<HTMLButtonElement, ButtonKnownProps>>;
+export const StyledButton = styled('button', getStyledOptions())<
+  SetRequired<ButtonProps, keyof typeof defaultProps> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    boxShadow: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    position: 'relative',
+    transition: 'background-color 0.6s, border-color 0.6s',
+  },
+  props => {
+    const { bg, block, color, iconOnly, light, size, theme, wide } = props;
+    const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = theme.button[size];
+    let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
 
-export const defaultProps = {
-  bg: 'primary',
-  block: false,
-  busy: false,
-  disabled: false,
-  disableRipple: false,
-  gap: 'xs',
-  iconOnly: false,
-  light: false,
-  size: 'md',
-  spinnerPosition: 'end',
-  type: 'button',
-  variant: 'solid',
-  wide: false,
-} satisfies Omit<ButtonProps, 'children'>;
-
-export const StyledButton = styled(
-  'button',
-  getStyledOptions(),
-)<SetRequired<ButtonProps, keyof typeof defaultProps>>(props => {
-  const { bg, block, busy, color, gap, iconOnly, light, size, wide } = props;
-  const { button, grayScale, radius, spacing, ...theme } = getTheme(props);
-  const { borderRadius, fontSize, fontWeight, height, lineHeight, padding } = button[size];
-  let buttonPadding = `${padding[0]} ${wide ? px(parseInt(padding[1], 10) * 2) : padding[1]}`;
-
-  if (iconOnly) {
-    buttonPadding = '0px';
-  }
-
-  const { mainColor } = getColorTokens(bg, color, theme);
-
-  return css`
-    ${appearanceStyles};
-    ${baseStyles(props)};
-    align-items: center;
-    border-radius: ${borderRadius};
-    box-shadow: none;
-    cursor: pointer;
-    display: inline-flex;
-    font-size: ${fontSize};
-    font-weight: ${light ? 400 : fontWeight};
-    gap: ${spacing[gap]};
-    min-height: ${height};
-    min-width: ${height};
-    justify-content: center;
-    line-height: ${lineHeight};
-    overflow: hidden;
-    padding: ${buttonPadding};
-    position: relative;
-    text-decoration: none;
-    transition:
-      background-color 0.6s,
-      border-color 0.6s;
-    width: ${block ? '100%' : 'auto'};
-    ${colorStyles(props)};
-    ${flexItemStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${outlineStyles(mainColor, props)}
-
-    &:disabled {
-      ${getDisableStyles(props, { isButton: true })};
+    if (iconOnly) {
+      buttonPadding = '0px';
     }
 
-    &:hover {
-      ${hoverStyles(props)};
-    }
+    const { mainColor } = getColorTokens(bg, color, theme);
 
-    ${busy &&
-    css`
-      pointer-events: none;
-    `};
-  `;
-});
+    return css`
+      border-radius: ${borderRadius};
+      font-size: ${fontSize};
+      font-weight: ${light ? 400 : fontWeight};
+      min-height: ${height};
+      min-width: ${height};
+      line-height: ${lineHeight};
+      padding: ${buttonPadding};
+      width: ${block ? '100%' : 'auto'};
+      ${getStyles(props)};
+      ${outlineStyles(mainColor, theme)};
+
+      &:disabled {
+        ${getDisableStyles(props, { isButton: true })};
+      }
+
+      &:hover {
+        ${hoverStyles(props)};
+      }
+    `;
+  },
+);
 
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
-  const { onClick, ...mergedProps } = mergeProps(defaultProps, props);
+  const { componentProps, getDataAttributes } = useButton(props);
   const {
     bg,
     busy,
@@ -180,16 +77,17 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
     disableRipple,
     endContent,
     iconOnly,
+    onClick,
     size,
     spinner,
     spinnerPosition,
     startContent,
-  } = mergedProps;
+    theme,
+  } = componentProps;
 
   const { onClick: onClickRipple, ...rippleProps } = useRipple();
   const localRef = useRef<HTMLButtonElement | null>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
-  const { getDataAttributes, theme } = useTheme();
 
   const { fontSize } = theme.button[size];
 
@@ -234,7 +132,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
       ref={mergedRefs}
       {...getDataAttributes('Button')}
       onClick={handleClick}
-      {...mergedProps}
+      {...omit(componentProps, 'onClick')}
     >
       {content.startContent}
       {spinnerPosition === 'start' && content.spinner}
@@ -247,3 +145,5 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
 });
 
 Button.displayName = 'Button';
+
+export { defaultProps, type ButtonProps } from './useButton';

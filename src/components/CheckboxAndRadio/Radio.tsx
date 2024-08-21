@@ -1,7 +1,4 @@
 import { forwardRef } from 'react';
-import { mergeProps } from '@gilbarbara/helpers';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import {
   getMarginProps,
@@ -11,21 +8,15 @@ import {
   StyledElement,
   StyledLabel,
   StyledText,
-} from './utils';
-
-export const defaultProps = {
-  accent: 'primary',
-  align: 'center',
-  borderless: false,
-  disabled: false,
-  size: 'md',
-} satisfies Omit<RadioProps, 'name' | 'value'>;
+  useCheckboxAndRadio,
+} from './useCheckboxAndRadio';
 
 /**
  * Use the RadioGroup component instead of this.
  * RadioGroup accepts an `items` prop that render this component in a group and is responsible for managing state and interactions.
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useCheckboxAndRadio(props, 'radio');
   const {
     accent,
     align,
@@ -39,8 +30,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     size,
     style,
     ...rest
-  } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  } = componentProps;
 
   return (
     <StyledLabel
@@ -49,7 +39,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       {...getDataAttributes('Radio')}
       disabled={disabled}
       htmlFor={id}
-      {...getMarginProps(props)}
+      {...getMarginProps(componentProps)}
     >
       <StyledCheckboxRadioInput
         ref={ref}
@@ -73,9 +63,10 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
         size={size}
         style={style}
         tabIndex={disabled ? -1 : 0}
+        theme={rest.theme}
       />
       {label && (
-        <StyledText category="radio" size={size}>
+        <StyledText category="radio" size={size} theme={rest.theme}>
           {label}
         </StyledText>
       )}
@@ -85,4 +76,4 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
 
 Radio.displayName = 'Radio';
 
-export type { RadioProps } from './utils';
+export { radioDefaultProps, type RadioProps } from './useCheckboxAndRadio';

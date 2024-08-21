@@ -1,11 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fireEvent, within } from '@storybook/test';
+import { expect, fireEvent, fn, within } from '@storybook/test';
 
 import { Spacer } from '~';
 
+import { sizes } from '~/modules/options';
+
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
-import { defaultProps, Radio } from './Radio';
+import { Radio, radioDefaultProps } from './Radio';
 
 type Story = StoryObj<typeof Radio>;
 
@@ -13,7 +15,7 @@ export default {
   title: 'Inputs/Radio',
   component: Radio,
   args: {
-    ...defaultProps,
+    ...radioDefaultProps,
     label: 'Label',
     name: 'radio',
     value: 'radio',
@@ -23,7 +25,6 @@ export default {
     ...colorProps(['accent']),
     ...marginProps(),
     label: { control: 'text' },
-    onChange: { action: 'onChange' },
     value: { control: 'text' },
   },
 } satisfies Meta<typeof Radio>;
@@ -43,10 +44,10 @@ export const Sizes: Story = {
     value: disableControl(),
   },
   render: props => (
-    <Spacer>
-      <Radio {...props} defaultChecked label="Small" name="sizes" size="sm" value="sm" />
-      <Radio {...props} label="Medium" name="sizes" size="md" value="md" />
-      <Radio {...props} label="Large" name="sizes" size="lg" value="lg" />
+    <Spacer distribution="center" gap="lg">
+      {sizes.map(size => (
+        <Radio key={size} {...props} label={size} name="sizes" size={size} value={size} />
+      ))}
     </Spacer>
   ),
 };
@@ -63,6 +64,9 @@ export const Disabled: Story = {
 
 export const Tests: Story = {
   tags: ['!dev', '!autodocs'],
+  args: {
+    onChange: fn(),
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

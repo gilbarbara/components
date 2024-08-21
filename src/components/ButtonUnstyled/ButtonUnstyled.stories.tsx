@@ -1,9 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Icon } from '~';
+import { Icon, Spacer } from '~';
 
 import {
   colorProps,
+  COMPONENT_SIZES,
   disableControl,
   flexContent,
   flexItemProps,
@@ -48,6 +49,21 @@ export default {
 } satisfies Meta<typeof ButtonUnstyled>;
 
 export const Basic: Story = {};
+
+export const Sizes: Story = {
+  argTypes: {
+    size: disableControl(),
+  },
+  render: props => (
+    <Spacer distribution="center" gap="lg">
+      {COMPONENT_SIZES.map(size => (
+        <ButtonUnstyled key={size} {...props} size={size}>
+          Button ({size})
+        </ButtonUnstyled>
+      ))}
+    </Spacer>
+  ),
+};
 
 export const Customized: Story = {
   args: {

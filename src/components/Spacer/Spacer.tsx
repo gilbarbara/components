@@ -1,108 +1,23 @@
 import { Children, forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
-import { SetRequired, Simplify } from '@gilbarbara/types';
+import { omit } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 import { StandardShorthandProperties } from 'csstype';
 
-import { useTheme } from '~/hooks/useTheme';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { getTheme } from '~/modules/helpers';
-import {
-  baseStyles,
-  borderStyles,
-  flexItemStyles,
-  getStyledOptions,
-  layoutStyles,
-  marginStyles,
-  paddingStyles,
-  radiusStyles,
-  shadowStyles,
-} from '~/modules/system';
+import { WithTheme } from '~/types';
 
-import {
-  Direction,
-  Spacing,
-  StyledProps,
-  WithBorder,
-  WithChildren,
-  WithFlexItem,
-  WithHTMLAttributes,
-  WithLayout,
-  WithMargin,
-  WithPadding,
-  WithRadius,
-  WithShadow,
-} from '~/types';
-
-export interface SpacerKnownProps
-  extends StyledProps,
-    WithBorder,
-    WithChildren,
-    WithFlexItem,
-    WithHTMLAttributes,
-    WithLayout,
-    WithMargin,
-    WithPadding,
-    WithRadius,
-    WithShadow {
-  /**
-   * The spacer direction.
-   * @default horizontal
-   */
-  direction?: Direction;
-  /**
-   * Distribution of the children in the spacer.
-   * @default start
-   */
-  distribution?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
-  /**
-   * The gap between the children.
-   * @default sm
-   */
-  gap?: Spacing | [rowGap: Spacing, columnGap: Spacing];
-  /**
-   * Expand child width (Vertical only)
-   * @default false
-   */
-  grow?: boolean;
-  /**
-   * Reverse the order of the children.
-   * @default false
-   */
-  reverse?: boolean;
-  /**
-   * The vertical alignment of the children.
-   * @default center
-   */
-  verticalAlign?: 'center' | 'end' | 'start' | 'stretch';
-  /**
-   * Wrap the children if they don't fit in the container.
-   * @default true
-   */
-  wrap?: boolean;
-}
-
-export type SpacerProps = Simplify<SpacerKnownProps>;
-
-export const defaultProps = {
-  direction: 'horizontal',
-  distribution: 'start',
-  gap: 'sm',
-  grow: false,
-  reverse: false,
-  shadow: false,
-  verticalAlign: 'center',
-  wrap: true,
-} satisfies Omit<SpacerProps, 'children'>;
+import { SpacerProps, useSpacer } from './useSpacer';
 
 export const StyledSpacer = styled(
   'div',
   getStyledOptions('fill'),
-)<SetRequired<SpacerProps, 'gap'>>(props => {
-  const { direction, distribution, gap, reverse, verticalAlign, wrap } = props;
-  const { spacing } = getTheme(props);
-  const isHorizontal = direction === 'horizontal';
+)<SetRequired<SpacerProps, 'gap'> & WithTheme>(props => {
+  const { distribution, gap, orientation, reverse, theme, verticalAlign, wrap } = props;
+  const { spacing } = theme;
+  const isHorizontal = orientation === 'horizontal';
 
   const flexGap = Array.isArray(gap) ? gap.map(value => spacing[value]).join(' ') : spacing[gap];
 
@@ -115,22 +30,15 @@ export const StyledSpacer = styled(
   }
 
   return css`
-    ${baseStyles(props)};
     align-items: ${isHorizontal ? verticalAlign : distribution};
     display: flex;
-    flex-direction: ${direction === 'vertical'
-      ? `column${reverse ? '-reverse' : ''}`
-      : `row${reverse ? '-reverse' : ''}`};
+    flex-direction: ${isHorizontal
+      ? `row${reverse ? '-reverse' : ''}`
+      : `column${reverse ? '-reverse' : ''}`};
     flex-wrap: ${wrap ? 'wrap' : 'nowrap'};
     gap: ${flexGap};
     ${distributionStyles};
-    ${borderStyles(props)};
-    ${flexItemStyles(props)};
-    ${layoutStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-    ${radiusStyles(props)};
-    ${shadowStyles(props)};
+    ${getStyles(omit(props, 'gap', 'wrap'))};
   `;
 });
 
@@ -138,8 +46,8 @@ const StyledSpacerItem = styled(
   'div',
   getStyledOptions('fill'),
 )<Partial<SpacerProps> & { flex?: StandardShorthandProperties['flex'] }>(props => {
-  const { direction, flex, grow } = props;
-  const isHorizontal = direction === 'horizontal';
+  const { flex, grow, orientation } = props;
+  const isHorizontal = orientation === 'horizontal';
 
   return css`
     display: ${isHorizontal ? 'flex' : 'block'};
@@ -152,8 +60,10 @@ const StyledSpacerItem = styled(
  * You can use a "data-flex" property on the children to grow or shrink to fit the space available.
  */
 export const Spacer = forwardRef<HTMLDivElement, SpacerProps>((props, ref) => {
-  const { children, ...rest } = mergeProps(defaultProps, props);
-  const { getDataAttributes } = useTheme();
+  const {
+    componentProps: { children, ...rest },
+    getDataAttributes,
+  } = useSpacer(props);
 
   const nodes = Children.toArray(children).map((child, index) => {
     const key = `SpacerItem-${index}`;
@@ -174,3 +84,5 @@ export const Spacer = forwardRef<HTMLDivElement, SpacerProps>((props, ref) => {
 });
 
 Spacer.displayName = 'Spacer';
+
+export { defaultProps, type SpacerProps } from './useSpacer';

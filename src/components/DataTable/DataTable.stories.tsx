@@ -3,6 +3,7 @@ import { removeAccents, request } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 import { StringOrNull } from '@gilbarbara/types';
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fireEvent, fn, within } from '@storybook/test';
 
 import {
   Anchor,
@@ -36,7 +37,7 @@ import {
 import { DropdownOption, VariantWithTones } from '~/types';
 
 import { DataTable, defaultProps } from './DataTable';
-import { DataTableColumn, DataTableProps, DataTableRow } from './types';
+import { DataTableColumn, DataTableProps, DataTableRow } from './useDataTable';
 
 type Story = StoryObj<typeof DataTable>;
 
@@ -201,7 +202,7 @@ function DataTableWrapper(props: DataTableProps) {
   const columns = useMemo(() => {
     const items: DataTableColumn<WrapperColumns>[] = [
       { key: 'avatar', title: '', size: 64, disableSort: true },
-      { key: 'email', title: 'Nome / E-mail', size: 250 },
+      { key: 'email', title: 'Name / E-mail', size: 250 },
       { key: 'team', title: 'Team', min: 150 },
       { key: 'status', title: 'Status', min: 180 },
       {
@@ -248,7 +249,7 @@ function DataTableWrapper(props: DataTableProps) {
           status: (
             <Chip
               bg={user.code ? 'blue' : 'green'}
-              endContent={user.code ? 'clock' : 'check'}
+              endContent={user.code ? <Icon name="clock" /> : <Icon name="check" />}
               variant="bordered"
             >
               {user.code ? 'Invite sent' : 'Active'}
@@ -488,4 +489,39 @@ export const External: Story = {
     stickyHeader: true,
   },
   render: props => <DataTableExternal {...props} />,
+};
+
+export const Tests: Story = {
+  tags: ['!dev', '!autodocs'],
+  args: {
+    onClickPage: fn(),
+    onClickSort: fn(),
+  },
+  render: props => <DataTableWrapper {...props} />,
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('DataTable');
+    let [firstRow] = canvas.getAllByTestId('DataTableBodyRow');
+
+    expect(within(firstRow).getByText('Addie Huels')).toBeInTheDocument();
+
+    if (canvas.queryByLabelText('Sort menu')) {
+      await fireEvent.click(canvas.getByLabelText('Open sort'));
+      await fireEvent.click(canvas.getByLabelText('Sort by Name / E-mail - desc'));
+    } else {
+      await fireEvent.click(canvas.getByText('Name / E-mail'));
+    }
+
+    await expect(args.onClickSort).toHaveBeenCalledTimes(1);
+
+    [firstRow] = canvas.getAllByTestId('DataTableBodyRow');
+    expect(within(firstRow).getByText('Zoey Stark')).toBeInTheDocument();
+
+    await fireEvent.click(canvas.getByText('2'));
+    await expect(args.onClickPage).toHaveBeenCalledTimes(1);
+
+    [firstRow] = canvas.getAllByTestId('DataTableBodyRow');
+    expect(within(firstRow).getByText('Ruth Gislason')).toBeInTheDocument();
+  },
 };

@@ -2,19 +2,18 @@ import {
   alignStyles,
   baseStyles,
   borderStyles,
-  boxStyles,
   colorStyles,
   dimensionStyles,
-  displayStyles,
   flexBoxStyles,
   flexItemStyles,
   getContainerStyles,
   getDisableStyles,
   getOutlineStyles,
   getStyledOptions,
+  getStyles,
+  gridStyles,
   hoverStyles,
   inputStyles,
-  isDarkMode,
   layoutStyles,
   marginStyles,
   outlineStyles,
@@ -24,8 +23,11 @@ import {
   shadowStyles,
   textStyles,
 } from '~/modules/system';
+import * as theme from '~/modules/theme';
 
 import { BorderItemSide } from '~/types';
+
+const propsWithTheme = { theme };
 
 describe('alignStyles', () => {
   it('should return properly', () => {
@@ -39,7 +41,7 @@ describe('alignStyles', () => {
 
 describe('baseStyles', () => {
   it('should return properly', () => {
-    expect(baseStyles({})).toMatchSnapshot();
+    expect(baseStyles(theme)).toMatchSnapshot();
   });
 });
 
@@ -53,55 +55,49 @@ describe('borderStyles', () => {
     ['left'],
     ['all'],
   ])(`should return properly for "%p"`, border => {
-    expect(borderStyles({ border })).toMatchSnapshot();
+    expect(borderStyles({ border, theme })).toMatchSnapshot();
   });
 
   it('should return properly with an array', () => {
     expect(
       borderStyles({
         border: [{ side: 'left', size: 4, color: 'primary.100' }, { side: 'top' }],
+        theme,
       }),
     ).toMatchSnapshot();
   });
 
   it('should return an empty object without the "border" prop', () => {
-    expect(borderStyles({})).toEqual({});
-  });
-});
-
-describe('boxStyles', () => {
-  it('should return properly', () => {
-    expect(boxStyles({ bg: 'primary', shadow: 'mid' })).toMatchSnapshot();
+    expect(borderStyles(propsWithTheme)).toEqual({});
   });
 });
 
 describe('colorStyles', () => {
   it('should return properly with "background" and "color"', () => {
-    expect(colorStyles({ bg: 'primary', color: 'green.100' })).toMatchSnapshot();
+    expect(colorStyles({ bg: 'primary', color: 'green.100', theme })).toMatchSnapshot();
   });
 
   it('should return properly with just "color"', () => {
-    expect(colorStyles({ color: 'red.300' })).toMatchSnapshot();
+    expect(colorStyles({ color: 'red.300', theme })).toMatchSnapshot();
   });
 
   it('should return an empty object without "color" props', () => {
-    expect(colorStyles({})).toEqual({});
-  });
-});
-
-describe('displayStyles', () => {
-  it('should return properly', () => {
-    expect(displayStyles({ display: 'flex' })).toMatchSnapshot();
-  });
-
-  it('should return an empty object without the "display" prop', () => {
-    expect(displayStyles({})).toEqual({});
+    expect(colorStyles(propsWithTheme)).toEqual({});
   });
 });
 
 describe('dimensionStyles', () => {
   it('should return properly', () => {
-    expect(dimensionStyles({ height: 200, maxWidth: '100%', width: 480 })).toMatchSnapshot();
+    expect(
+      dimensionStyles({
+        height: 200,
+        maxHeight: 100,
+        maxWidth: '100%',
+        minHeight: 40,
+        minWidth: 290,
+        width: 480,
+      }),
+    ).toMatchSnapshot();
   });
 
   it('should return an empty object', () => {
@@ -112,12 +108,12 @@ describe('dimensionStyles', () => {
 describe('flexBoxStyles', () => {
   it('should return properly', () => {
     expect(
-      flexBoxStyles({ align: 'center', direction: 'column', gap: 20, wrap: 'wrap' }),
+      flexBoxStyles({ align: 'center', direction: 'column', gap: 20, wrap: 'wrap', theme }),
     ).toMatchSnapshot();
   });
 
   it('should return an empty object without "flexBox" props', () => {
-    expect(flexBoxStyles({})).toEqual({});
+    expect(flexBoxStyles(propsWithTheme)).toEqual({});
   });
 });
 
@@ -143,19 +139,19 @@ describe('flexItemStyles', () => {
 
 describe('getContainerStyles', () => {
   it('should return properly', () => {
-    const { styles } = getContainerStyles({});
+    const { styles } = getContainerStyles(propsWithTheme);
 
     expect(styles).toMatchSnapshot();
   });
 
   it('should return properly with "responsive: false"', () => {
-    const { styles } = getContainerStyles({}, { responsive: false });
+    const { styles } = getContainerStyles(propsWithTheme, { responsive: false });
 
     expect(styles).toMatchSnapshot();
   });
 
   it('should return properly with "verticalPadding: true"', () => {
-    const { styles } = getContainerStyles({}, { verticalPadding: true });
+    const { styles } = getContainerStyles(propsWithTheme, { verticalPadding: true });
 
     expect(styles).toMatchSnapshot();
   });
@@ -163,19 +159,25 @@ describe('getContainerStyles', () => {
 
 describe('getDisableStyles', () => {
   it('should return properly', () => {
-    const { styles } = getDisableStyles({});
+    const { styles } = getDisableStyles(propsWithTheme);
+
+    expect(styles).toMatchSnapshot();
+  });
+
+  it('should return properly with "variation: clean"', () => {
+    const { styles } = getDisableStyles({ variant: 'clean', theme }, { isButton: true });
 
     expect(styles).toMatchSnapshot();
   });
 
   it('should return properly with "isButton: true"', () => {
-    const { styles } = getDisableStyles({ variant: 'bordered' }, { isButton: true });
+    const { styles } = getDisableStyles({ variant: 'bordered', theme }, { isButton: true });
 
     expect(styles).toMatchSnapshot();
   });
 
   it('should return properly with "hasPlaceholder: true"', () => {
-    const { styles } = getDisableStyles({}, { hasPlaceholder: true });
+    const { styles } = getDisableStyles(propsWithTheme, { hasPlaceholder: true });
 
     expect(styles).toMatchSnapshot();
   });
@@ -217,47 +219,100 @@ describe('getStyledOptions', () => {
   });
 });
 
+describe('getStyles', () => {
+  it('should return properly', () => {
+    expect(
+      getStyles({
+        bg: 'primary',
+        bold: true,
+        border: true,
+        busy: true,
+        color: 'white',
+        direction: 'column' as const,
+        display: 'flex',
+        flex: true,
+        gap: 'sm',
+        height: 200,
+        lineHeight: 1.2,
+        m: 'md' as const,
+        p: 'sm' as const,
+        radius: 'md' as const,
+        shadow: 'mid' as const,
+        variant: 'solid' as const,
+        width: '100px',
+        zIndex: 10,
+        theme,
+      }),
+    ).toMatchSnapshot();
+  });
+
+  it('should return an object with the basic styles', () => {
+    expect(getStyles({ theme })).toMatchSnapshot();
+  });
+});
+
+describe('gridStyles', () => {
+  it('should return properly', () => {
+    expect(
+      gridStyles({
+        area: '1 / 1 / 2 / 2',
+        autoColumns: 'auto',
+        autoFlow: 'row',
+        autoRows: 'auto',
+        column: '1 / 2',
+        columnEnd: 'auto',
+        columnGap: 'sm',
+        columnStart: 'auto',
+        grid: 'auto-flow / 1fr 1fr 1fr',
+        row: '2 / -1',
+        rowEnd: 'span 3',
+        rowGap: 'md',
+        rowStart: 'auto',
+        template: '"a a a" 40px "b c c" 40px "b c c" 40px / 1fr 1fr 1fr',
+        templateAreas: 'a b c',
+        templateColumns: '1fr 60px',
+        templateRows: '1fr 2fr 1fr',
+        theme,
+      }),
+    ).toMatchSnapshot();
+  });
+
+  it('should return an empty object with any props', () => {
+    expect(gridStyles(propsWithTheme)).toEqual({});
+  });
+});
+
 describe('hoverStyles', () => {
   it('should return "backgroundColor" and "borderColor"', () => {
-    expect(hoverStyles({ bg: 'primary' })).toMatchSnapshot();
+    expect(hoverStyles({ bg: 'primary', theme })).toMatchSnapshot();
   });
 
   it('should return "borderColor" and "color" for variant "bordered', () => {
-    expect(hoverStyles({ bg: 'primary', variant: 'bordered' })).toMatchSnapshot();
+    expect(hoverStyles({ bg: 'primary', variant: 'bordered', theme })).toMatchSnapshot();
   });
 
   it('should return only and "color" for variant "clean', () => {
-    expect(hoverStyles({ bg: 'primary', variant: 'clean' })).toMatchSnapshot();
+    expect(hoverStyles({ bg: 'primary', variant: 'clean', theme })).toMatchSnapshot();
   });
 
   it('should return an empty object with "disabled"', () => {
-    expect(hoverStyles({ bg: 'primary', disabled: true })).toMatchSnapshot();
+    expect(hoverStyles({ bg: 'primary', disabled: true, theme })).toMatchSnapshot();
   });
 });
 
 describe('inputStyles', () => {
   it('should return custom styles for "input"', () => {
     expect(
-      inputStyles({ borderless: true, large: true, prefixSpacing: true }, 'input').styles,
+      inputStyles({ borderless: true, prefixSpacing: true, theme }, 'input').styles,
     ).toMatchSnapshot();
   });
 
   it('should return the default styles for "select"', () => {
-    expect(inputStyles({ multiple: false }, 'select').styles).toMatchSnapshot();
+    expect(inputStyles({ multiple: false, theme }, 'select').styles).toMatchSnapshot();
   });
 
   it('should return the default styles for "textarea"', () => {
-    expect(inputStyles({ suffixSpacing: true }, 'textarea').styles).toMatchSnapshot();
-  });
-});
-
-describe('isDarkMode', () => {
-  it('should return the default', () => {
-    expect(isDarkMode({})).toBe(false);
-  });
-
-  it('should return true', () => {
-    expect(isDarkMode({ theme: { darkMode: true } })).toBe(true);
+    expect(inputStyles({ suffixSpacing: true, theme }, 'textarea').styles).toMatchSnapshot();
   });
 });
 
@@ -291,6 +346,7 @@ describe('marginStyles', () => {
         margin: 'md',
         my: 'xs',
         mx: 'auto',
+        theme,
       }),
     ).toMatchSnapshot();
   });
@@ -302,18 +358,19 @@ describe('marginStyles', () => {
         ml: 'auto',
         mr: 'auto',
         mt: 'xl',
+        theme,
       }),
     ).toMatchSnapshot();
   });
 
   it('should return an empty object without "margin" props', () => {
-    expect(marginStyles({})).toEqual({});
+    expect(marginStyles(propsWithTheme)).toEqual({});
   });
 });
 
 describe('outlineStyles', () => {
   it('should return properly', () => {
-    expect(outlineStyles('#f04', {}).styles).toMatchSnapshot();
+    expect(outlineStyles('#f04', theme).styles).toMatchSnapshot();
   });
 });
 
@@ -324,6 +381,7 @@ describe('paddingStyles', () => {
         padding: 'md',
         py: 'xs',
         px: 'lg',
+        theme,
       }),
     ).toMatchSnapshot();
   });
@@ -336,6 +394,7 @@ describe('paddingStyles', () => {
           pl: 'xs',
           pr: 'sm',
           pt: 'xl',
+          theme,
         },
         true,
       ),
@@ -350,6 +409,7 @@ describe('paddingStyles', () => {
         pl: 0,
         pr: 0,
         pt: 0,
+        theme,
       }),
     ).toMatchSnapshot();
   });
@@ -359,12 +419,13 @@ describe('paddingStyles', () => {
       paddingStyles({
         px: 0,
         py: 0,
+        theme,
       }),
     ).toMatchSnapshot();
   });
 
   it('should return an empty object without "padding" props', () => {
-    expect(paddingStyles({})).toEqual({});
+    expect(paddingStyles(propsWithTheme)).toEqual({});
   });
 });
 
@@ -382,45 +443,54 @@ describe('positioningStyles', () => {
 
 describe('radiusStyles', () => {
   it('should return properly with a string', () => {
-    expect(radiusStyles({ radius: 'xxs' })).toMatchSnapshot();
+    expect(radiusStyles({ radius: 'xxs', theme })).toMatchSnapshot();
   });
 
   it('should return properly with an object', () => {
     expect(
-      radiusStyles({ radius: { bottom: 'xs', left: 'md', right: 'lg', top: 'xl' } }),
+      radiusStyles({ radius: { bottom: 'xs', left: 'md', right: 'lg', top: 'xl' }, theme }),
     ).toMatchSnapshot();
   });
 
   it('should return an empty object without the "border-radius" prop', () => {
-    expect(radiusStyles({})).toEqual({});
+    expect(radiusStyles(propsWithTheme)).toEqual({});
   });
 });
 
 describe('shadowStyles', () => {
-  const theme = { darkMode: true };
-
   it.each([
-    { name: 'box-shadow (light)', props: { shadow: 'low' as const } },
-    { name: 'box-shadow (dark)', props: { theme, shadow: 'mid' as const } },
-    { name: 'filter (light)', props: { theme, shadow: 'low' as const }, useFilter: true },
-    { name: 'filter (dark)', props: { theme, shadow: 'high' as const }, useFilter: true },
+    { name: 'box-shadow (light)', props: { shadow: 'low' as const, theme } },
+    {
+      name: 'box-shadow (dark)',
+      props: { shadow: 'mid' as const, theme: { ...theme, darkMode: true } },
+    },
+    {
+      name: 'filter (light)',
+      props: { shadow: 'low' as const, theme },
+      useFilter: true,
+    },
+    {
+      name: 'filter (dark)',
+      props: { shadow: 'high' as const, theme: { ...theme, darkMode: true } },
+      useFilter: true,
+    },
   ])(`should return properly for "$name"`, ({ props, useFilter }) => {
     expect(shadowStyles(props, useFilter)).toMatchSnapshot();
   });
 
   it('should return an empty object without "shadow" props', () => {
-    expect(shadowStyles({})).toEqual({});
+    expect(shadowStyles(propsWithTheme)).toEqual({});
   });
 });
 
 describe('textStyles', () => {
   it('should return properly', () => {
     expect(
-      textStyles({ bold: true, italic: true, size: 'sm', textTransform: 'uppercase' }),
+      textStyles({ bold: true, italic: true, size: 'sm', textTransform: 'uppercase', theme }),
     ).toMatchSnapshot();
   });
 
   it('should return an empty object without "textStyles" prop', () => {
-    expect(textStyles({})).toEqual({});
+    expect(textStyles(propsWithTheme)).toEqual({});
   });
 });

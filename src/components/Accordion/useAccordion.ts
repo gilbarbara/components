@@ -1,26 +1,156 @@
-import { Children, isValidElement, useCallback, useState } from 'react';
+import {
+  Children,
+  isValidElement,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useState,
+} from 'react';
 import { useDeepCompareEffect } from '@gilbarbara/hooks';
-import { SetRequired } from '@gilbarbara/types';
+import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { AccordionItem } from '~/components/Accordion/AccordionItem';
+import { useComponentProps } from '~/hooks/useComponentProps';
 
-import type { AccordionProps } from './Accordion';
+import { CollapseProps } from '~/components/Collapse/Collapse';
+import { DividerProps } from '~/components/Divider/Divider';
 
-export interface UseAccordionProps
-  extends SetRequired<
-    Pick<
-      AccordionProps,
-      'children' | 'initialSelectedIds' | 'onChange' | 'selectionMode' | 'selectedIds'
-    >,
-    'selectionMode'
-  > {}
+import {
+  StyledProps,
+  WithColors,
+  WithDimension,
+  WithMargin,
+  WithPadding,
+  WithRadius,
+  WithShadow,
+} from '~/types';
 
-export function useAccordion(props: UseAccordionProps) {
-  const { children, initialSelectedIds, onChange, selectedIds, selectionMode } = props;
+export interface AccordionItemKnownProps
+  extends Omit<
+    CollapseProps,
+    | 'bottomToggle'
+    | 'defaultOpen'
+    | 'hideHeaderToggle'
+    | 'initialHeight'
+    | 'maxHeight'
+    | 'showBottomToggle'
+  > {
+  /**
+   * Make the accordion item compact.
+   */
+  compact?: boolean;
+  /**
+   * Disable the accordion item.
+   * @default false
+   */
+  disabled?: boolean;
+  // indicator	IndicatorProps	The accordion item expanded indicator, usually an arrow icon.
+  /**
+   * Hide the toggle.
+   * @default false
+   */
+  hideToggle?: boolean;
+  /**
+   * The accordion item id.
+   */
+  id: string;
+  /**
+   * The accordion item subtitle.
+   */
+  subtitle?: ReactNode;
+  /**
+   * The accordion item title.
+   */
+  title: ReactNode;
+}
+
+export type AccordionItemBaseProps = Simplify<AccordionItemKnownProps>;
+export type AccordionItemProps = Omit<AccordionItemBaseProps, 'compact' | 'open' | 'onToggle' | ''>;
+
+interface AccordionKnownProps
+  extends StyledProps,
+    WithColors,
+    Pick<WithDimension, 'maxWidth' | 'minWidth' | 'width'>,
+    WithMargin,
+    WithPadding,
+    WithRadius,
+    WithShadow,
+    Pick<CollapseProps, 'headerAlign'> {
+  children: ReactElement<AccordionItemProps>[];
+  /**
+   * Make the accordion compact.
+   * @default false
+   */
+  compact?: boolean;
+  /**
+   * Disable the accordion.
+   */
+  disabled?: boolean;
+  /**
+   * Disabled ids (controlled).
+   */
+  disabledIds?: string[];
+  /**
+   * The divider props.
+   */
+  dividerProps?: Partial<DividerProps>;
+  /**
+   * Hide the divider at the bottom of each accordion item.
+   * @default false
+   */
+  hideDivider?: boolean;
+  /**
+   * Hide the items toggle.
+   * @default false
+   */
+  hideToggle?: boolean;
+  /**
+   * The initial selected ids in the collection (uncontrolled).
+   */
+  initialSelectedIds?: 'all' | string[];
+  /**
+   * A callback that is called when the selection changes.
+   */
+  onChange?: (selectedIds: string[]) => void;
+  /**
+   *  The currently selected keys in the collection (controlled).
+   */
+  selectedIds?: 'all' | string[];
+  /**
+   * The type of selection that is allowed in the collection.
+   * @default single
+   */
+  selectionMode?: 'none' | 'single' | 'multiple';
+  /**
+   * Component type
+   * @default clean
+   */
+  variant?: 'bordered' | 'clean' | 'shadow' | 'split';
+}
+
+export type AccordionProps = Simplify<AccordionKnownProps>;
+
+export const defaultProps = {
+  compact: false,
+  disabled: false,
+  headerAlign: 'start',
+  hideDivider: false,
+  hideToggle: false,
+  variant: 'clean',
+  selectionMode: 'single',
+} satisfies Omit<AccordionProps, 'children' | 'initialSelectedIds' | 'selectedIds'>;
+
+export function useAccordion<T = JSXElementConstructor<AccordionProps>>(
+  props: AccordionProps,
+  childType: T,
+) {
+  const { componentProps, getDataAttributes } = useComponentProps(props, defaultProps);
+
+  const { children, initialSelectedIds, onChange, selectedIds, selectionMode } = componentProps;
 
   const items = Children.map(children, child =>
-    !isValidElement(child) || child.type !== AccordionItem ? '' : child.props.id,
+    !isValidElement(child) || child.type !== childType ? '' : child.props.id,
   );
 
   const [activeItems, setActiveItems] = useState<string[]>(() => {
@@ -74,6 +204,12 @@ export function useAccordion(props: UseAccordionProps) {
 
   return {
     activeItems,
+    componentProps,
+    getDataAttributes,
     onToggle,
   };
+}
+
+export function useAccordionItem(props: AccordionItemBaseProps) {
+  return useComponentProps(props);
 }

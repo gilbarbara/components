@@ -6,7 +6,7 @@ import { Spacer } from '~/components/Spacer';
 
 import { RadioItem } from '~/types';
 
-import { FieldRadioProps } from './types';
+import { FieldRadioProps } from './useField';
 
 interface Props extends FieldRadioProps {
   registration: UseFormRegisterReturn;

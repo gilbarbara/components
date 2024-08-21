@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, BoxCenter, Grid, Icon, Paragraph } from '~';
+import { FlexCenter, Grid, Icon, Paragraph, Spacer } from '~';
 
 import { sizes } from '~/modules/options';
 
@@ -76,13 +76,18 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Box align="start" direction="column" flexBox gap={20}>
-      {sizes.map(d => (
-        <Snippet key={d} {...props} size={d}>
-          npm install @gilbarbara/components
-        </Snippet>
+    <Spacer distribution="center" gap="lg" orientation="vertical">
+      {sizes.map(size => (
+        <div key={size}>
+          <Paragraph align="center" mb="xs" size="lg">
+            {size}
+          </Paragraph>
+          <Snippet key={size} {...props} size={size}>
+            npm install @gilbarbara/components
+          </Snippet>
+        </div>
       ))}
-    </Box>
+    </Spacer>
   ),
 };
 
@@ -97,10 +102,10 @@ export const Colors: Story = {
   render: props => (
     <Grid gap={20} templateColumns="repeat(3, 1fr)">
       {VARIANTS.map(d => (
-        <BoxCenter key={d}>
-          <Snippet key={d} {...props} bg={d} />
+        <FlexCenter key={d}>
+          <Snippet key={d} {...props} bg={!['white', 'black'].includes(d) ? `${d}.100` : d} />
           <Paragraph mt="xs">{d}</Paragraph>
-        </BoxCenter>
+        </FlexCenter>
       ))}
     </Grid>
   ),

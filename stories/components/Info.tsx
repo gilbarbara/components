@@ -1,4 +1,4 @@
-import { Box, Icon, type Props, useTheme } from '~';
+import { Flex, Icon, type Props, useTheme } from '~';
 
 import { Icons } from '~/types';
 
@@ -22,13 +22,12 @@ export default function Info(props: InfoProps) {
   }
 
   return (
-    <Box
+    <Flex
       align="center"
       bg={bgColor}
       border={{ side: 'all', color: selectedColor }}
       color={selectedColor}
       data-testid={null}
-      flexBox
       justify="center"
       maxWidth={640}
       mt="sm"
@@ -38,6 +37,6 @@ export default function Info(props: InfoProps) {
     >
       {icon && <Icon mr="xs" name={icon} />}
       <span>{children}</span>
-    </Box>
+    </Flex>
   );
 }

@@ -1,7 +1,7 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, Grid, Icon, Spacer } from '~';
+import { Flex, Grid, Icon, Spacer } from '~';
 
 import { colors } from '~/modules/theme';
 
@@ -32,7 +32,7 @@ export const WithLabelAndIcon: Story = {
     tone: '500',
   },
   render: props => (
-    <Spacer direction="vertical">
+    <Spacer orientation="vertical">
       <StatusIndicator
         {...props}
         color="green.300"
@@ -60,7 +60,7 @@ export const Colors: Story = {
     color: disableControl(),
   },
   render: props => (
-    <Grid alignItems="center" gap={30} templateColumns="repeat(6, 1fr)">
+    <Grid align="center" gap="lg" templateColumns="repeat(6, 1fr)">
       {VARIANTS.map(d => (
         <StatusIndicator key={d} {...props} color={d} label={d} />
       ))}
@@ -79,17 +79,16 @@ export const Customized: Story = {
     tone: '50',
   },
   render: props => (
-    <Box
+    <Flex
       align="center"
       bg="red.500"
       color="white"
-      flexBox
       height={160}
       justify="center"
       radius="xl"
       width={160}
     >
       <StatusIndicator {...props} />
-    </Box>
+    </Flex>
   ),
 };

@@ -1,141 +1,55 @@
-import {
-  AriaAttributes,
-  cloneElement,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-  useId,
-} from 'react';
+import { cloneElement, isValidElement, ReactElement, ReactNode, useId } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px, round } from '@gilbarbara/helpers';
-import { RequireAtLeastOne, Simplify, StringOrNumber } from '@gilbarbara/types';
-import { StandardLonghandProperties } from 'csstype';
+import { px, round } from '@gilbarbara/helpers';
+import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { horizontalScale } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { baseStyles, getStyledOptions, isDarkMode, marginStyles } from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 import { easing } from '~/modules/theme';
 
-import { Box } from '~/components/Box';
+import { Flex } from '~/components/Flex';
 import { Text } from '~/components/Text';
 
-import {
-  Position,
-  StyledProps,
-  TextSizes,
-  VariantWithTones,
-  WithAccent,
-  WithComponentSize,
-  WithHTMLAttributes,
-  WithLabel,
-  WithMargin,
-} from '~/types';
+import { WithTheme } from '~/types';
 
-export interface ProgressBarKnownProps
-  extends StyledProps,
-    AriaAttributes,
-    WithAccent,
-    WithComponentSize,
-    WithHTMLAttributes,
-    WithLabel,
-    WithMargin {
-  /**
-   * Component track color
-   * @default 'gray.200'
-   */
-  backgroundColor?: VariantWithTones;
-  /**
-   * Whether the progress bar is busy.
-   * @default false
-   */
-  busy?: boolean;
-  /**
-   * The locale to use for formatting the value.
-   * @default 'en-US'
-   */
-  formatLocale?: string;
-  /**
-   * The options to use for formatting the value.
-   * @default { style: 'percent' }
-   */
-  formatOptions?: Intl.NumberFormatOptions;
-  headerJustify?: StandardLonghandProperties['justifyContent'];
-  headerPosition?: Extract<Position, 'bottom' | 'top'>;
-  /**
-   * The largest value allowed for the value.
-   * @default 100
-   */
-  maxValue?: number;
-  /**
-   * The smallest value allowed for the value.
-   * @default 0
-   */
-  minValue?: number;
-  /**
-   * Whether to show the value label.
-   * @default false
-   */
-  showValueLabel?: boolean;
-  /**
-   * Text size
-   */
-  textSize?: TextSizes;
-  /**
-   * A number between `minValue` and `maxValue`
-   */
-  value: number;
-  /** @default 100% */
-  width?: StringOrNumber;
-}
+import { ProgressBarProps, useProgressBar } from './useProgressBar';
 
-export type ProgressBarProps = Simplify<RequireAtLeastOne<ProgressBarKnownProps, 'busy' | 'value'>>;
+export const StyledProgressBar = styled('div', getStyledOptions())<
+  Pick<ProgressBarProps, 'headerPosition' | 'width'> & WithTheme
+>(
+  {
+    display: 'inline-flex',
+  },
+  props => {
+    const { headerPosition, theme, width } = props;
 
-export const defaultProps = {
-  accent: 'primary',
-  backgroundColor: 'gray.200',
-  formatLocale: 'en-US',
-  formatOptions: { style: 'percent' },
-  headerJustify: 'space-between',
-  headerPosition: 'top',
-  busy: false,
-  maxValue: 100,
-  minValue: 0,
-  showValueLabel: false,
-  size: 'md',
-  width: '100%',
-} satisfies Omit<ProgressBarProps, 'label' | 'value'>;
+    const { darkMode, grayScale } = theme;
 
-export const StyledProgressBar = styled(
-  'div',
-  getStyledOptions(),
-)<Pick<ProgressBarProps, 'headerPosition' | 'width'>>(props => {
-  const { headerPosition, width } = props;
-
-  const { grayScale } = getTheme(props);
-
-  return css`
-    ${baseStyles(props)};
-    color: ${isDarkMode(props) && grayScale['200']};
-    display: flex;
-    flex-direction: ${headerPosition === 'top' ? 'column' : 'column-reverse'};
-    width: ${px(width)};
-    ${marginStyles(props)};
-  `;
-});
+    return css`
+      color: ${darkMode && grayScale['200']};
+      flex-direction: ${headerPosition === 'top' ? 'column' : 'column-reverse'};
+      width: ${px(width)};
+      ${getStyles(props)};
+    `;
+  },
+);
 
 const StyledProgressTrack = styled(
   'div',
   getStyledOptions(),
-)<Required<Pick<ProgressBarProps, 'accent' | 'backgroundColor' | 'busy' | 'size'>>>(props => {
-  const { accent, backgroundColor, busy, size = defaultProps.size } = props;
-  const theme = getTheme(props);
+)<SetRequired<ProgressBarProps, 'accent' | 'busy' | 'size'> & WithTheme>(props => {
+  const { accent, backgroundColor, busy, size, theme } = props;
+  const { darkMode, grayScale } = theme;
   const { mainColor } = getColorTokens(accent, null, theme);
-  const { mainColor: bgColor } = getColorTokens(backgroundColor, null, theme);
+
+  let trackColor = darkMode ? grayScale['800'] : grayScale['100'];
+
+  if (backgroundColor) {
+    trackColor = getColorTokens(backgroundColor, null, theme).mainColor;
+  }
 
   const heightMap = {
     sm: '6px',
@@ -144,7 +58,7 @@ const StyledProgressTrack = styled(
   };
 
   return css`
-    background-color: ${bgColor};
+    background-color: ${trackColor};
     border-radius: ${heightMap[size]};
     line-height: 1;
     height: ${heightMap[size]};
@@ -171,6 +85,7 @@ const StyledProgressTrack = styled(
  * This is required for accessibility.
  */
 export function ProgressBar(props: ProgressBarProps) {
+  const { componentProps, getDataAttributes } = useProgressBar(props);
   const {
     accent,
     backgroundColor,
@@ -187,9 +102,8 @@ export function ProgressBar(props: ProgressBarProps) {
     textSize,
     value,
     ...rest
-  } = mergeProps(defaultProps, props);
+  } = componentProps;
   const labelId = useId();
-  const { getDataAttributes } = useTheme();
 
   const percentage = is.number(value)
     ? round((value - minValue) / (maxValue - minValue))
@@ -219,22 +133,20 @@ export function ProgressBar(props: ProgressBarProps) {
 
   if (content.label || content.value) {
     content.header = (
-      <Box
+      <Flex
         {...getDataAttributes('ProgressBarHeader')}
-        flexBox
         justify={headerJustify}
         mb={headerPosition === 'top' ? 'xs' : 0}
         mt={headerPosition === 'bottom' ? 'xs' : 0}
       >
         {content.label}
         {content.value}
-      </Box>
+      </Flex>
     );
   }
 
   return (
     <StyledProgressBar
-      {...rest}
       aria-labelledby={label ? labelId : undefined}
       aria-valuemax={maxValue}
       aria-valuemin={minValue}
@@ -244,6 +156,7 @@ export function ProgressBar(props: ProgressBarProps) {
       {...getDataAttributes('ProgressBar')}
       headerPosition={headerPosition}
       role="progressbar"
+      {...rest}
     >
       {content.header}
       <StyledProgressTrack
@@ -251,6 +164,7 @@ export function ProgressBar(props: ProgressBarProps) {
         backgroundColor={backgroundColor}
         busy={busy}
         size={size}
+        theme={rest.theme}
       >
         {percentage ? <div style={{ width: `${percentage * 100}%` }} /> : <div />}
       </StyledProgressTrack>
@@ -259,3 +173,5 @@ export function ProgressBar(props: ProgressBarProps) {
 }
 
 ProgressBar.displayName = 'ProgressBar';
+
+export { defaultProps, type ProgressBarProps } from './useProgressBar';

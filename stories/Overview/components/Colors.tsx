@@ -1,7 +1,7 @@
 import { capitalize, objectEntries } from '@gilbarbara/helpers';
 import { compare, textColor } from 'colorizr';
 
-import { Box, BoxCenter, Grid, H2, H3, H5, Icon, Paragraph, Spacer, Text } from '~';
+import { Box, FlexCenter, Grid, H2, H3, H5, Icon, Paragraph, Spacer, Text } from '~';
 
 import { getColorTokens } from '~/modules/colors';
 import { colors, grayScale, variants as themeVariants } from '~/modules/theme';
@@ -43,7 +43,7 @@ export function Colors() {
     <>
       <H2>Colors</H2>
 
-      <Spacer direction="vertical" gap="xl" grow mb="xxl">
+      <Spacer gap="xl" grow mb="xxl" orientation="vertical">
         {objectEntries(colors).map(([name, value]) => {
           const { contrast, largeAA, largeAAA, normalAA, normalAAA } = compare(
             value,
@@ -55,19 +55,19 @@ export function Colors() {
               <H3 light>
                 {capitalize(name)} ({value})
               </H3>
-              <BoxCenter bg={name} padding="xl" radius={{ top: 'md' }}>
+              <FlexCenter bg={name} padding="xl" radius={{ top: 'md' }}>
                 <H5>{PANGRAM}</H5>
                 <Paragraph>{PANGRAM}</Paragraph>
-              </BoxCenter>
+              </FlexCenter>
               <Grid
                 border={{ color: name }}
                 radius={{ bottom: 'md' }}
                 templateColumns="repeat(5, 1fr)"
               >
-                <BoxCenter border={{ color: name, side: 'right' }} padding="xs">
+                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
                   Contrast: {contrast}
-                </BoxCenter>
-                <BoxCenter border={{ color: name, side: 'right' }} padding="xs">
+                </FlexCenter>
+                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
                   <Spacer gap="xxs">
                     <Text>normal AA:</Text>
                     <Icon
@@ -76,8 +76,8 @@ export function Colors() {
                       size={24}
                     />
                   </Spacer>
-                </BoxCenter>
-                <BoxCenter border={{ color: name, side: 'right' }} padding="xs">
+                </FlexCenter>
+                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
                   <Spacer gap="xxs">
                     <Text>normal AAA:</Text>
                     <Icon
@@ -86,8 +86,8 @@ export function Colors() {
                       size={24}
                     />
                   </Spacer>
-                </BoxCenter>
-                <BoxCenter border={{ color: name, side: 'right' }} padding="xs">
+                </FlexCenter>
+                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
                   <Spacer gap="xxs">
                     <Text>large AA:</Text>
                     <Icon
@@ -96,8 +96,8 @@ export function Colors() {
                       size={24}
                     />
                   </Spacer>
-                </BoxCenter>
-                <BoxCenter padding="xs">
+                </FlexCenter>
+                <FlexCenter padding="xs">
                   <Spacer gap="xxs">
                     <Text>large AAA:</Text>
                     <Icon
@@ -106,7 +106,7 @@ export function Colors() {
                       size={24}
                     />
                   </Spacer>
-                </BoxCenter>
+                </FlexCenter>
               </Grid>
             </Box>
           );
@@ -121,7 +121,7 @@ export function Grayscale() {
     <>
       <H2>Grayscale</H2>
 
-      <Grid gap={32} justifyContent="start" templateColumns="repeat(6, auto)">
+      <Grid gap={32} justify="start" templateColumns="repeat(6, auto)">
         {objectEntries(grayScale).map(([key, color]) => (
           <Swatch key={key} bg={color} color={color} content={key} footer={color} />
         ))}
@@ -135,11 +135,11 @@ export function Tones() {
     <>
       <H2>Tones</H2>
 
-      <Spacer direction="vertical" gap="xl" grow mb="xxl">
+      <Spacer gap="xl" grow mb="xxl" orientation="vertical">
         {TONES.map(tone => (
           <Box key={tone}>
             <H3 light>{tone}</H3>
-            <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+            <Grid gap={32} justify="start" templateColumns="repeat(5, auto)">
               {objectEntries(themeVariants).map(([variant, variantTones]) => {
                 const bg = variantTones[tone];
 
@@ -166,11 +166,11 @@ export function Variants() {
     <>
       <H2>Variants</H2>
 
-      <Spacer direction="vertical" gap="xl" grow mb="xxl">
+      <Spacer gap="xl" grow mb="xxl" orientation="vertical">
         {objectEntries(themeVariants).map(([variant, tonesMap]) => (
           <Box key={variant}>
             <H3 light>{capitalize(variant)}</H3>
-            <Grid gap={32} justifyContent="start" templateColumns="repeat(5, auto)">
+            <Grid gap={32} justify="start" templateColumns="repeat(5, auto)">
               {objectEntries(tonesMap).map(([tone, value]) => {
                 return (
                   <Swatch

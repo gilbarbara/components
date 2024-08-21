@@ -10,7 +10,7 @@ export type { ButtonProps } from '../components/Button/Button';
 export type { ButtonGroupProps } from '../components/ButtonGroup/ButtonGroup';
 export type { ButtonSplitProps } from '../components/ButtonSplit/ButtonSplit';
 export type { ButtonUnstyledProps } from '../components/ButtonUnstyled/ButtonUnstyled';
-export type { CheckboxProps, RadioProps } from '../components/CheckboxAndRadio/utils';
+export type { CheckboxProps, RadioProps } from '../components/CheckboxAndRadio/useCheckboxAndRadio';
 export type { ClickOutsideProps } from '../components/ClickOutside/ClickOutside';
 export type { CollapseProps } from '../components/Collapse/Collapse';
 export type { ContainerProps } from '../components/Container/Container';
@@ -21,31 +21,38 @@ export type {
   DataTableBodyProps,
   DataTableColumn,
   DataTableRow,
-} from '../components/DataTable/types';
+} from '../components/DataTable/useDataTable';
 export type {
   DatePickerSingleProps,
   DatePickerRangeProps,
   DatePickerSelectorProps,
-} from '../components/DatePicker/types';
+} from '../components/DatePicker/useDatePicker';
 export type { DialogProps } from '../components/Dialog/Dialog';
 export type { DividerProps } from '../components/Divider/Divider';
-export type { DropdownProps } from '../components/Dropdown/types';
+export type { DropdownProps } from '../components/Dropdown/useDropdown';
 export type { EmojiProps } from '../components/Emoji/Emoji';
 export type { FieldProps } from '../components/Field/Field';
+export type { FlexProps } from '../components/Flex/Flex';
 export type { FormProps, FormRenderProps, FormSubmitHandler } from '../components/Form/Form';
 export type { FormElementWrapperProps } from '../components/FormElementWrapper/FormElementWrapper';
 export type { FormGroupProps } from '../components/FormGroup/FormGroup';
 export type { GridProps } from '../components/Grid/Grid';
-export type { HeadingProps, HeadingLargeProps } from '../components/Headings/utils';
+export type { HeadingProps, HeadingLargeProps } from '../components/Headings/useHeading';
 export type { IconProps } from '../components/Icon/Icon';
 export type { ImageProps } from '../components/Image/Image';
 export type { InputProps } from '../components/Input/Input';
 export type { InputColorProps } from '../components/InputColor/InputColor';
 export type { InputFileProps } from '../components/InputFile/InputFile';
 export type { LabelProps } from '../components/Label/Label';
-export type { ListProps } from '../components/List/utils';
-export type { LoaderProps } from '../components/Loader/types';
-export type * from '../components/Menu/types';
+export type { ListProps } from '../components/List/useList';
+export type { LoaderProps } from '../components/Loader/useLoader';
+export type {
+  MenuContext,
+  MenuItemProps,
+  MenuProps,
+  MenuSeparatorProps,
+  MenuTitleProps,
+} from '../components/Menu/useMenu';
 export type { ModalProps } from '../components/Modal/Modal';
 export type { NonIdealStateProps } from '../components/NonIdealState/NonIdealState';
 export type { PageProps } from '../components/Page/Page';
@@ -57,9 +64,9 @@ export type { ProgressCircleProps } from '../components/ProgressCircle/ProgressC
 export type { QuoteProps } from '../components/Quote/Quote';
 export type { RadioGroupProps } from '../components/RadioGroup/RadioGroup';
 export type { RippleProps } from '../components/Ripple/Ripple';
-export type { SearchProps } from '../components/Search/types';
+export type { SearchProps } from '../components/Search/useSearch';
 export type { SelectProps } from '../components/Select/Select';
-export type { SkeletonProps } from '../components/Skeleton/utils';
+export type { SkeletonProps } from '../components/Skeleton/useSkeleton';
 export type { SnippetProps } from '../components/Snippet/Snippet';
 export type { SpacerProps } from '../components/Spacer/Spacer';
 export type { StatusIndicatorProps } from '../components/StatusIndicator/StatusIndicator';

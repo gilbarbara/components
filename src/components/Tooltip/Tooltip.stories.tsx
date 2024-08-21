@@ -99,7 +99,7 @@ export const Positions: Story = {
     wrap: disableControl(),
   },
   render: props => (
-    <Spacer direction="vertical" gap="xl" grow minWidth={480}>
+    <Spacer gap="xl" grow minWidth={480} orientation="vertical">
       <Box display="flex" justify="space-between">
         <Tooltip
           {...props}

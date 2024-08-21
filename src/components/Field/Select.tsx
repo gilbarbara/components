@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Select } from '~/components/Select';
 
-import { FieldSelectProps } from './types';
+import { FieldSelectProps } from './useField';
 import { getInputParameters } from './utils';
 
 interface Props extends FieldSelectProps {

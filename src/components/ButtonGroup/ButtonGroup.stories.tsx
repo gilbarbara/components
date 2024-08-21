@@ -2,8 +2,9 @@ import { MouseEvent, useState } from 'react';
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, within } from '@storybook/test';
 
-import { Button } from '~';
+import { Button, Paragraph, Spacer } from '~';
 
 import {
   colorProps,
@@ -86,5 +87,47 @@ export const WithChildren: Story = {
         </Description>
       </>
     );
+  },
+};
+
+export const Sizes: Story = {
+  args: Basic.args,
+  argTypes: {
+    size: disableControl(),
+  },
+  render: props => (
+    <Spacer distribution="center" gap="lg" orientation="vertical">
+      {COMPONENT_SIZES.map(d => (
+        <>
+          <Paragraph align="center" mb="xs" size="xl">
+            {d}
+          </Paragraph>
+          <ButtonGroup key={d} {...props} size={d} />
+        </>
+      ))}
+    </Spacer>
+  ),
+};
+
+export const Tests: Story = {
+  tags: ['!dev', '!autodocs'],
+  args: {
+    items: ['One', { children: 'Two', defaultSelected: true }, 'Three', 'Four'],
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await canvas.findByTestId('ButtonGroup');
+
+    await expect(canvas.getByText('One')).toHaveAttribute('data-selected', 'false');
+    await userEvent.click(canvas.getByText('One'));
+    await expect(canvas.getByText('One')).toHaveAttribute('data-selected', 'true');
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
+
+    await expect(canvas.getByText('Four')).toHaveAttribute('data-selected', 'false');
+    await userEvent.click(canvas.getByText('Four'));
+    await expect(canvas.getByText('Four')).toHaveAttribute('data-selected', 'true');
+    await expect(args.onClick).toHaveBeenCalledTimes(2);
   },
 };

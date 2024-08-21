@@ -1,15 +1,10 @@
 import { css } from '@emotion/react';
+import { omit } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
-import { getTheme } from '~/modules/helpers';
-import {
-  alignStyles,
-  baseStyles,
-  borderStyles,
-  colorStyles,
-  marginStyles,
-  textStyles,
-} from '~/modules/system';
+import { useComponentProps } from '~/hooks/useComponentProps';
+
+import { alignStyles, getStyles } from '~/modules/system';
 
 import {
   OmitElementProps,
@@ -19,9 +14,11 @@ import {
   WithBorder,
   WithChildren,
   WithColors,
+  WithDisplay,
   WithLight,
   WithMargin,
   WithTextOptions,
+  WithTheme,
 } from '~/types';
 
 export interface HeadingKnownProps
@@ -30,6 +27,7 @@ export interface HeadingKnownProps
     WithBorder,
     Pick<WithColors, 'color'>,
     WithChildren,
+    WithDisplay,
     WithLight,
     WithMargin,
     Omit<WithTextOptions, 'bold' | 'size'> {}
@@ -48,13 +46,12 @@ export const jumboDefaultProps = {
   large: false,
 } satisfies Omit<HeadingLargeProps, 'children'>;
 
-export function getStyles(key: Typography, props: HeadingProps) {
-  const { light } = props;
-  const { fontFamily, fontWeights, typography } = getTheme(props);
+export function headingStyle(key: Typography, props: HeadingProps & WithTheme) {
+  const { light, theme } = props;
+  const { fontFamily, fontWeights, typography } = theme;
   const selected = typography[key];
 
   return css`
-    ${baseStyles(props)};
     font-family: ${fontFamily};
     font-size: ${selected.fontSize};
     font-weight: ${light ? fontWeights.normal : fontWeights.bold};
@@ -62,9 +59,10 @@ export function getStyles(key: Typography, props: HeadingProps) {
     margin-bottom: 0.5em;
     margin-top: 0;
     ${alignStyles(props)};
-    ${colorStyles(props)};
-    ${borderStyles(props)};
-    ${marginStyles(props)};
-    ${textStyles(props)};
+    ${getStyles(omit(props, 'align'))};
   `;
+}
+
+export function useHeading(props: HeadingProps, type?: Typography) {
+  return useComponentProps(props, type === 'jumbo' ? jumboDefaultProps : defaultProps);
 }

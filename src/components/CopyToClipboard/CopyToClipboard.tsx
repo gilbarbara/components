@@ -1,143 +1,54 @@
-import {
-  cloneElement,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { cloneElement, isValidElement, ReactElement, useMemo, useRef, useState } from 'react';
 import innerText from 'react-innertext';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps } from '@gilbarbara/helpers';
+import { omit } from '@gilbarbara/helpers';
 import { useIsMounted } from '@gilbarbara/hooks';
-import { Simplify } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { animateIcon } from '~/modules/animations';
-import {
-  baseStyles,
-  colorStyles,
-  getStyledOptions,
-  marginStyles,
-  paddingStyles,
-} from '~/modules/system';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Icon } from '~/components/Icon';
 import { Tooltip } from '~/components/Tooltip';
-import { TooltipProps } from '~/components/Tooltip/Tooltip';
 
-import { WithColors, WithMargin, WithPadding } from '~/types';
+import { WithTheme } from '~/types';
 
-export interface CopyToClipboardKnownProps
-  extends Pick<WithColors, 'color'>,
-    WithMargin,
-    WithPadding {
-  /**
-   * The check icon.
-   * @default <Icon name="check" />
-   */
-  checkIcon?: ReactNode;
-  /**
-   * The copy icon.
-   * @default <Icon name="copy" />
-   */
-  copyIcon?: ReactNode;
-  /**
-   * Disable the animation of the icon.
-   * @default false
-   */
-  disableAnimation?: boolean;
-  /**
-   * Hide the tooltip in the copy button.
-   * @default false
-   */
-  hideTooltip?: boolean;
-  /**
-   * Callback fired when the text is copied.
-   */
-  onCopy?: (value: string) => void;
-  /**
-   * Callback fired when the copy fail
-   */
-  onError?: (error: string) => void;
-  /** @default 16 */
-  size?: number;
-  /**
-   * The time in milliseconds to wait before resetting the icon.
-   * @default 2000
-   */
-  timeout?: number;
-  /**
-   * The text to show in the tooltip after copying.
-   */
-  tooltipCopiedText?: string;
-  /**
-   * The props of the tooltip.
-   */
-  tooltipProps?: Partial<TooltipProps>;
-  /**
-   * The text to show in the tooltip.
-   * @default 'Click to copy'
-   */
-  tooltipText?: string;
-  /**
-   * The text to copy.
-   */
-  value: ReactNode;
-}
+import { CopyToClipboardProps, useCopyToClipboard } from './useCopyToClipboard';
 
-export type CopyToClipboardProps = Simplify<CopyToClipboardKnownProps>;
-
-export const defaultProps = {
-  checkIcon: <Icon name="check" />,
-  copyIcon: <Icon name="copy" />,
-  disableAnimation: false,
-  hideTooltip: false,
-  size: 16,
-  timeout: 2000,
-  tooltipText: 'Click to copy',
-} satisfies Omit<CopyToClipboardProps, 'value'>;
-
-const StyledCopyToClipboard = styled(
-  'span',
-  getStyledOptions(),
-)<Omit<CopyToClipboardProps, 'value'>>(props => {
-  return css`
-    ${baseStyles(props)};
-    cursor: pointer;
-    display: inline-flex;
-    line-height: 1;
-    position: relative;
-    ${colorStyles(props)};
-    ${marginStyles(props)};
-    ${paddingStyles(props)};
-  `;
-});
+const StyledCopyToClipboard = styled('span', getStyledOptions())<
+  Omit<CopyToClipboardProps, 'value'> & WithTheme
+>(
+  {
+    cursor: 'pointer',
+    display: 'inline-flex',
+    lineHeight: 1,
+    position: 'relative',
+  },
+  props => getStyles(omit(props, 'size')),
+);
 
 export function CopyToClipboard(props: CopyToClipboardProps) {
   const {
-    checkIcon,
-    copyIcon,
-    disableAnimation,
-    hideTooltip,
-    onCopy,
-    onError,
-    size,
-    timeout,
-    tooltipCopiedText,
-    tooltipProps,
-    tooltipText,
-    value,
-    ...rest
-  } = mergeProps(defaultProps, props);
+    componentProps: {
+      checkIcon = <Icon name="check" />,
+      copyIcon = <Icon name="copy" />,
+      disableAnimation,
+      hideTooltip,
+      onCopy,
+      onError,
+      size,
+      timeout,
+      tooltipCopiedText,
+      tooltipProps,
+      tooltipText,
+      value,
+      ...rest
+    },
+    getDataAttributes,
+  } = useCopyToClipboard(props);
   const isMounted = useIsMounted();
   const [tooltipContent, setTooltipContent] = useState(tooltipText);
   const [copied, setCopied] = useState(false);
   const iconRef = useRef<HTMLSpanElement>(null);
-  const { getDataAttributes, theme } = useTheme();
 
   const valueText = useMemo(() => {
     let stringValue = '';
@@ -159,7 +70,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 
   const handleClick = async () => {
     if (!disableAnimation && iconRef.current) {
-      animateIcon(iconRef.current, rest.color ?? 'primary', theme);
+      animateIcon(iconRef.current, rest.color ?? 'primary', rest.theme);
     }
 
     try {
@@ -223,3 +134,5 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 }
 
 CopyToClipboard.displayName = 'CopyToClipboard';
+
+export { defaultProps, type CopyToClipboardProps } from './useCopyToClipboard';

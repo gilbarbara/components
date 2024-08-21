@@ -10,7 +10,6 @@ import * as theme from '~/modules/theme';
 import { generatePalette } from './palette';
 
 import {
-  BaseProps,
   MediaQueries,
   RecursiveChildrenEnhancerOptions,
   ResponsiveInput,
@@ -47,10 +46,6 @@ export function getMediaQueries(): MediaQueries {
 
       return acc;
     }, {}) as MediaQueries;
-}
-
-export function getTheme(props: BaseProps): Theme {
-  return mergeTheme(props?.theme ?? {});
 }
 
 export function isCSSUnit(value: unknown): value is string {

@@ -1,31 +1,22 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
-import { getStyledOptions, isDarkMode } from '~/modules/system';
+import { getStyledOptions } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 
-import { WithAccent, WithChildrenOptional } from '~/types';
+import { WithAccent, WithTheme } from '~/types';
 
-interface PaginationButtonProps extends WithAccent, WithChildrenOptional {
-  currentPage: number;
-  disabled: boolean;
-  onClick: (currentPage: number, type?: string) => void;
-  page: number;
-  type?: string;
-}
+import { PaginationButtonProps, usePaginationButton } from './usePagination';
 
 const StyledPaginationButton = styled(
   ButtonUnstyled,
   getStyledOptions(),
-)<WithAccent & { current: boolean; disabled: boolean }>(props => {
-  const { accent = 'primary', current } = props;
-  const { black, opacity, spacing, typography, white, ...theme } = getTheme(props);
-  const color = isDarkMode(props) ? white : black;
+)<WithAccent & WithTheme & { current: boolean; disabled: boolean }>(props => {
+  const { accent = 'primary', current, theme } = props;
+  const { black, darkMode, opacity, spacing, typography, white } = theme;
+  const color = darkMode ? white : black;
   const { mainColor, textColor } = getColorTokens(accent, null, theme);
 
   return css`
@@ -49,8 +40,8 @@ const StyledPaginationButton = styled(
 });
 
 export default function PaginationButton(props: PaginationButtonProps) {
-  const { accent, children, currentPage, disabled, onClick, page, type } = props;
-  const { getDataAttributes } = useTheme();
+  const { componentProps, getDataAttributes } = usePaginationButton(props);
+  const { accent, children, currentPage, disabled, onClick, page, theme, type } = componentProps;
 
   const current = page === currentPage && children === page;
 
@@ -68,6 +59,7 @@ export default function PaginationButton(props: PaginationButtonProps) {
       data-type={type}
       disabled={disabled}
       onClick={handleClick}
+      theme={theme}
     >
       {children ?? page}
     </StyledPaginationButton>

@@ -73,6 +73,17 @@ exports[`useTheme > should return properly 1`] = `
         "12px",
       ],
     },
+    "xl": {
+      "borderRadius": "8px",
+      "fontSize": "24px",
+      "fontWeight": 700,
+      "height": "56px",
+      "lineHeight": 1.4,
+      "padding": [
+        "12px",
+        "24px",
+      ],
+    },
     "xs": {
       "borderRadius": "4px",
       "fontSize": "12px",
@@ -196,6 +207,7 @@ exports[`useTheme > should return properly 1`] = `
     "xxl": "48px",
     "xxs": "4px",
     "xxxl": "64px",
+    "xxxs": "2px",
   },
   "typography": {
     "h1": {

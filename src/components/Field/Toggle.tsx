@@ -5,7 +5,7 @@ import is from 'is-lite';
 
 import { Toggle } from '~/components/Toggle';
 
-import { FieldToggleProps } from './types';
+import { FieldToggleProps } from './useField';
 
 interface Props extends FieldToggleProps {
   setValue: UseFormSetValue<FieldValues>;

@@ -19,7 +19,7 @@ export type BorderItemSide =
   | 'start'
   | 'end'
   | 'all'
-  | Direction;
+  | Orientation;
 
 export interface BorderItem {
   /**
@@ -44,7 +44,7 @@ export type ButtonTypes = 'button' | 'submit' | 'reset';
 
 export type DataAttributes = Record<`data-${string}`, StringOrNumber>;
 
-export type Direction = 'horizontal' | 'vertical';
+export type Orientation = 'horizontal' | 'vertical';
 
 export type HeadingSizes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'jumbo';
 export type TextSizes = (typeof textSizes)[number];

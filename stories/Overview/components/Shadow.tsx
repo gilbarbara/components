@@ -1,4 +1,4 @@
-import { Box, BoxCenter, Grid, H2, H3, Paragraph } from '~';
+import { Box, FlexCenter, Grid, H2, H3, Paragraph } from '~';
 
 import { spacing } from '~/modules/theme';
 
@@ -13,17 +13,17 @@ export default function Shadow() {
       </Paragraph>
 
       <Grid display="inline-grid" gap={spacing.xxxl} mt="xl" templateColumns="repeat(3, 1fr)">
-        <BoxCenter height={128} radius="md" shadow="low" width={128}>
+        <FlexCenter height={128} radius="md" shadow="low" width={128}>
           <H3>low</H3>
-        </BoxCenter>
+        </FlexCenter>
 
-        <BoxCenter height={128} radius="md" shadow="mid" width={128}>
+        <FlexCenter height={128} radius="md" shadow="mid" width={128}>
           <H3>mid</H3>
-        </BoxCenter>
+        </FlexCenter>
 
-        <BoxCenter height={128} radius="md" shadow="high" width={128}>
+        <FlexCenter height={128} radius="md" shadow="high" width={128}>
           <H3>high</H3>
-        </BoxCenter>
+        </FlexCenter>
       </Grid>
     </Box>
   );

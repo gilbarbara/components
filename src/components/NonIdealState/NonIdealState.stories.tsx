@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import { Spacer } from '~';
+
 import {
   colorProps,
   disableControl,
@@ -11,8 +13,6 @@ import {
 } from '~/stories/__helpers__';
 
 import { defaultProps, NonIdealState } from './NonIdealState';
-
-import { Box } from '../..';
 
 type Story = StoryObj<typeof NonIdealState>;
 
@@ -38,7 +38,7 @@ export const Basic: Story = {};
 
 export const Horizontal: Story = {
   args: {
-    direction: 'horizontal',
+    orientation: 'horizontal',
   },
 };
 
@@ -51,30 +51,30 @@ export const Sizes: Story = {
   },
   render: function Render(props) {
     return (
-      <Box>
+      <Spacer distribution="center" gap="lg" orientation="vertical">
         <NonIdealState {...props} description="The smallest size" size="sm" title="sm" />
         <NonIdealState {...props} description="The medium size" size="md" title="md (default)" />
         <NonIdealState {...props} description="The larger size" size="lg" title="lg" />
-      </Box>
+      </Spacer>
     );
   },
 };
 
 export const Types: Story = {
   args: {
-    direction: 'horizontal',
+    orientation: 'horizontal',
   },
   argTypes: {
     type: disableControl(),
   },
   render: function Render(props) {
     return (
-      <Box>
+      <Spacer distribution="start" gap="lg" orientation="vertical">
         <NonIdealState {...props} title="error" type="error" />
         <NonIdealState {...props} title="no-results" type="no-results" />
         <NonIdealState {...props} title="not-found (default)" type="not-found" />
         <NonIdealState {...props} title="offline" type="offline" />
-      </Box>
+      </Spacer>
     );
   },
 };

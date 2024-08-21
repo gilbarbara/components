@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box, BoxCenter, Grid, H3 } from '~';
+import { Box, Flex, FlexCenter, Grid, H3 } from '~';
 
 import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
 import Code from '~/stories/components/Code';
@@ -30,9 +30,9 @@ export const Basic: Story = {
   },
   render: props => (
     <>
-      <BoxCenter height={128}>
+      <FlexCenter height={128}>
         <Loader {...props} />
-      </BoxCenter>
+      </FlexCenter>
       <Description>
         You can change the the <Code>type</Code> props to render a different loader.
       </Description>
@@ -49,11 +49,11 @@ export const Types: Story = {
     type: disableControl(),
   },
   render: ({ size, ...props }) => (
-    <Grid alignItems="center" gap={60} templateColumns="repeat(3, 1fr)">
+    <Grid align="center" gap={60} templateColumns="repeat(3, 1fr)">
       <Box>
-        <Box align="center" flexBox height={128} width={128}>
+        <Flex align="center" height={128} width={128}>
           <Loader {...props} size={128} type="pill" />
-        </Box>
+        </Flex>
         <H3 align="center" mt="xs">
           Pill
         </H3>

@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Box, Paragraph } from '~';
 
 import {
+  colorProps,
   dimensionProps,
   flexBoxProps,
   hideProps,
@@ -24,7 +25,8 @@ export default {
   },
   argTypes: {
     ...hideProps(),
-    ...flexBoxProps('alignContent', 'justifyItems'),
+    ...colorProps(['bg', 'color']),
+    ...flexBoxProps({ exclude: ['alignContent', 'justifyItems'], showCategory: true }),
     ...dimensionProps(),
     ...radiusProps(),
     ...spacingProps(),

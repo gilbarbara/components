@@ -1,13 +1,16 @@
+import { KeyboardEvent, MouseEvent, useState } from 'react';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
-import { Avatar, Box, Icon, Paragraph } from '~';
+import { Avatar, Box, ButtonUnstyled, Icon, Paragraph } from '~';
 
-import { colorProps, disableControl, hideProps } from '~/stories/__helpers__';
+import { colorProps, disableControl, hideProps, VARIANTS } from '~/stories/__helpers__';
 
 import { Menu, MenuItem, MenuSeparator, MenuTitle } from './index';
-import { defaultProps } from './utils';
+import { defaultProps } from './useMenu';
 
 type Story = StoryObj<typeof Menu>;
 
@@ -27,6 +30,72 @@ export default {
   },
 } satisfies Meta<typeof Menu>;
 
+const Toggle = styled.div<{ isOpen: boolean }>`
+  & label {
+    cursor: pointer;
+    display: block;
+    height: 30px;
+    position: relative;
+    width: 35px;
+  }
+
+  & span {
+    border-bottom: 5px solid currentcolor;
+    display: block;
+    padding-top: 10px;
+    transition-delay: 0.125s;
+
+    &:before,
+    &:after {
+      border-top: 5px solid currentcolor;
+      content: '';
+      left: 0;
+      position: absolute;
+      right: 0;
+      transform-origin: center;
+      transition-delay: 0s;
+    }
+
+    &:before {
+      top: 0;
+    }
+
+    &:after {
+      bottom: 4px;
+    }
+  }
+
+  & span,
+  & span:before,
+  & span:after {
+    transition-duration: 0.25s;
+    transition-property: transform, border-color;
+    transition-timing-function: cubic-bezier(0.5, -0.5, 0.5, 1.5);
+  }
+
+  ${props =>
+    props.isOpen &&
+    css`
+      & span {
+        border-color: transparent;
+        transition-delay: 0s;
+
+        &:before,
+        &:after {
+          transition-delay: 0.125s;
+        }
+
+        &:before {
+          transform: translateY(8px) rotate(135deg);
+        }
+
+        &:after {
+          transform: translateY(-13px) rotate(-135deg);
+        }
+      }
+    `};
+`;
+
 export const Basic: Story = {
   args: {
     button: <Avatar image="https://i.pravatar.cc/300?img=68" name="John Smith" size="sm" />,
@@ -44,14 +113,14 @@ export const Basic: Story = {
         <MenuItem onToggle={action('Configuration')}>Configuration</MenuItem>
         <MenuSeparator margin={0} />
         <MenuTitle>Documentation</MenuTitle>
-        <MenuItem bg="purple" onToggle={action('Help')}>
+        <MenuItem accent="purple" onToggle={action('Help')}>
           Help
         </MenuItem>
-        <MenuItem bg="green" onToggle={action('Guide')}>
+        <MenuItem accent="green" onToggle={action('Guide')}>
           Usage Guide
         </MenuItem>
         <MenuSeparator />
-        <MenuItem bg="red" onToggle={action('Logout')}>
+        <MenuItem accent="red" onToggle={action('Logout')}>
           Logout
         </MenuItem>
       </Menu>
@@ -59,8 +128,65 @@ export const Basic: Story = {
   },
 };
 
-export const WithCustomButtonAndHover: Story = {
+export const Horizontal: Story = {
   args: {
+    accent: 'gray.100',
+    bg: 'gray.50',
+    minWidth: 192,
+    orientation: 'horizontal',
+  },
+  render: function Render(props) {
+    const [selectedColor, setColor] = useState('primary');
+
+    const handleToggle = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => {
+      const { color = '' } = event.currentTarget.dataset;
+
+      setColor(color);
+
+      action('onClick')(color);
+    };
+
+    return (
+      <Menu {...props} button={<Icon color={selectedColor} name="palette" size={32} />}>
+        {VARIANTS.map(variant => (
+          <MenuItem
+            key={variant}
+            accent="gray.200"
+            data-color={variant}
+            onToggle={handleToggle}
+            p="xs"
+          >
+            <ButtonUnstyled bg={variant} height={32} width={32} />
+          </MenuItem>
+        ))}
+      </Menu>
+    );
+  },
+};
+
+export const WithAnimatedButton: Story = {
+  args: {
+    button: isOpen => (
+      <Toggle isOpen={isOpen}>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label aria-label="Toggle Menu">
+          <span />
+        </label>
+      </Toggle>
+    ),
+    position: 'bottom-left',
+  },
+  render: Basic.render,
+};
+
+export const WithHover: Story = {
+  args: {
+    button: (
+      <>
+        Create
+        <Icon ml="xxs" name="chevron-right" title={null} />
+      </>
+    ),
     disableKeyboardNavigation: true,
     position: 'right-top',
     trigger: 'hover',
@@ -69,15 +195,7 @@ export const WithCustomButtonAndHover: Story = {
     trigger: disableControl(),
   },
   render: props => (
-    <Menu
-      {...props}
-      button={
-        <>
-          Create
-          <Icon ml="xxs" name="chevron-right" />
-        </>
-      }
-    >
+    <Menu {...props}>
       <MenuItem onToggle={action('file')}>New File</MenuItem>
       <MenuItem onToggle={action('video')}>New Video</MenuItem>
       <MenuItem onToggle={action('audio')}>New Audio</MenuItem>
@@ -98,7 +216,7 @@ export const TestMouseInteractions: Story = {
   args: {
     onToggle: fn(),
   },
-  render: WithCustomButtonAndHover.render,
+  render: WithHover.render,
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -163,7 +281,7 @@ export const TestKeyboardInteractions: Story = {
   args: {
     onToggle: fn(),
   },
-  render: WithCustomButtonAndHover.render,
+  render: WithHover.render,
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -215,7 +333,7 @@ export const TestDisabledKeyboardAndBlur: Story = {
     disableKeyboardNavigation: true,
     onToggle: fn(),
   },
-  render: WithCustomButtonAndHover.render,
+  render: WithHover.render,
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 

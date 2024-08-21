@@ -2,17 +2,17 @@ import { memo, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getStyledOptions } from '~/modules/system';
 
 import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
+import { Flex } from '~/components/Flex';
 import { Icon } from '~/components/Icon';
+import { Menu, MenuItem } from '~/components/Menu';
 
 import type { BoxProps } from '~/types/props';
 
-import type { DataTableHeadProps } from './types';
+import type { DataTableHeadProps } from './useDataTable';
 
 const Title = styled(
   ButtonUnstyled,
@@ -23,6 +23,7 @@ const Title = styled(
   return css`
     align-items: center;
     display: flex;
+    font-weight: 700;
     pointer-events: ${disableSort || isDisabled ? 'none' : 'all'};
   `;
 });
@@ -32,18 +33,65 @@ function DataTableHead(props: DataTableHeadProps) {
     accent,
     clean,
     columns,
-    darkMode,
+    getDataAttributes,
     isDisabled,
     isResponsive,
     onClick,
     sortBy,
     sortDirection,
     stickyHeader,
+    theme: { black, darkMode, white },
   } = props;
-  const { getDataAttributes } = useTheme();
+
+  const color = darkMode ? white : black;
 
   if (isResponsive) {
-    return null;
+    return (
+      <Flex justify="end">
+        <Menu
+          button={<Icon name="sort" size={24} title={null} />}
+          labels={{ close: 'Close sort', name: 'Sort menu', open: 'Open sort' }}
+        >
+          {columns
+            .filter(d => !d.disableSort)
+            .map(({ key, title }) => (
+              <MenuItem key={key} accent="white" disableHover>
+                <Flex flex justify="space-between">
+                  {title}
+
+                  <Flex>
+                    <ButtonUnstyled
+                      aria-label={`Sort by ${title} - asc`}
+                      data-direction="desc"
+                      data-name={key}
+                      onClick={onClick}
+                    >
+                      <Icon
+                        color={key === sortBy && sortDirection === 'asc' ? accent : color}
+                        name="sort-asc"
+                        size={20}
+                      />
+                    </ButtonUnstyled>
+
+                    <ButtonUnstyled
+                      aria-label={`Sort by ${title} - desc`}
+                      data-direction="asc"
+                      data-name={key}
+                      onClick={onClick}
+                    >
+                      <Icon
+                        color={key === sortBy && sortDirection === 'desc' ? accent : color}
+                        name="sort-desc"
+                        size={20}
+                      />
+                    </ButtonUnstyled>
+                  </Flex>
+                </Flex>
+              </MenuItem>
+            ))}
+        </Menu>
+      </Flex>
+    );
   }
 
   const wrapperProps: BoxProps = {

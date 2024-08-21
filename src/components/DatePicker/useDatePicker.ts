@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import { DayPickerBase, DayPickerRangeProps, DayPickerSingleProps } from 'react-day-picker';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
+import { useComponentProps } from '~/hooks/useComponentProps';
+
 import {
   Alignment,
   Color,
@@ -9,6 +11,7 @@ import {
   WithAccent,
   WithBorder,
   WithBorderless,
+  WithDimension,
   WithDisabled,
   WithHeight,
   WithMargin,
@@ -17,11 +20,6 @@ import {
   WithRadius,
   WithShadow,
 } from '~/types';
-
-export type DatePickerRangeParameter = [from?: string, to?: string];
-
-export type DatePickerRangeClickHandler = (range: DatePickerRangeParameter) => void;
-export type DatePickerSingleClickHandler = (isoDate: string) => void;
 
 export interface DatePickerBaseProps extends StyledProps, WithAccent<Color> {
   /**
@@ -38,6 +36,11 @@ export interface DatePickerLayoutProps
     WithPadding,
     WithRadius,
     WithShadow {}
+
+export type DatePickerRangeParameter = [from?: string, to?: string];
+
+export type DatePickerRangeClickHandler = (range: DatePickerRangeParameter) => void;
+export type DatePickerSingleClickHandler = (isoDate: string) => void;
 
 export interface DatePickerRangeKnownProps
   extends DatePickerBaseProps,
@@ -68,30 +71,17 @@ export interface DatePickerRangeKnownProps
 
 export type DatePickerRangeProps = Simplify<DatePickerRangeKnownProps>;
 
-export interface DatePickerSingleKnownProps
-  extends DatePickerBaseProps,
-    DatePickerLayoutProps,
-    Omit<DayPickerSingleProps, 'fromDate' | 'mode' | 'onSelect' | 'selected' | 'toDate'> {
-  onChange?: DatePickerSingleClickHandler;
-  readOnly?: boolean;
-  /**
-   * The initial date.
-   */
-  selected?: string;
-}
-
-export type DatePickerSingleProps = Simplify<DatePickerSingleKnownProps>;
-
 export interface DatePickerSelectorBaseProps
   extends DatePickerBaseProps,
     Omit<DayPickerBase, 'disabled' | 'fromDate' | 'mode' | 'selected' | 'toDate'>,
     WithBorderless,
+    Omit<WithDimension, 'height'>,
     WithDisabled,
     WithHeight,
     WithOpen,
     WithMargin {
   /**
-   * The date format to use when displaying the dates.
+   * The locale code (ISO 639-1 + optional country code) to use for formatting.
    * @default en-US
    */
   formatLocale?: string;
@@ -144,8 +134,62 @@ export type DatePickerSelectorProps = Simplify<
           onChange?: DatePickerRangeClickHandler;
         }
       | {
-          mode: 'single';
+          mode?: 'single';
           onChange?: DatePickerSingleClickHandler;
         }
     )
 >;
+
+export interface DatePickerSingleKnownProps
+  extends DatePickerBaseProps,
+    DatePickerLayoutProps,
+    Omit<DayPickerSingleProps, 'fromDate' | 'mode' | 'onSelect' | 'selected' | 'toDate'> {
+  onChange?: DatePickerSingleClickHandler;
+  readOnly?: boolean;
+  /**
+   * The initial date.
+   */
+  selected?: string;
+}
+
+export type DatePickerSingleProps = Simplify<DatePickerSingleKnownProps>;
+
+export const baseProps = {
+  accent: 'primary',
+  formatLocale: 'en-US',
+  currentMonthLabel: 'Go to today',
+} as const;
+
+export const rangeDefaultProps = {
+  ...baseProps,
+  readOnly: false,
+  showApply: false,
+} satisfies DatePickerRangeProps;
+
+export const selectorDefaultProps = {
+  ...baseProps,
+  borderless: false,
+  disabled: false,
+  height: 'md',
+  mode: 'single',
+  position: 'right',
+  separator: ' — ',
+  showRangeApply: false,
+  width: 'auto',
+} satisfies DatePickerSelectorProps;
+
+export const singleDefaultProps = {
+  ...baseProps,
+  readOnly: false,
+} satisfies DatePickerSingleProps;
+
+export function useDatePicker<T extends DatePickerRangeProps | DatePickerSingleProps>(
+  props: T,
+  type?: 'range' | 'single',
+) {
+  return useComponentProps(props, type === 'single' ? singleDefaultProps : rangeDefaultProps);
+}
+
+export function useDatePickerSelector(props: DatePickerSelectorProps) {
+  return useComponentProps(props, selectorDefaultProps);
+}

@@ -4,6 +4,7 @@ import { H1, Icon, Spacer } from '~';
 
 import {
   colorProps,
+  COMPONENT_SIZES,
   disableControl,
   flexItemProps,
   hideProps,
@@ -35,6 +36,21 @@ export default {
 } satisfies Meta<typeof Anchor>;
 
 export const Basic: Story = {};
+
+export const Sizes: Story = {
+  argTypes: {
+    size: disableControl(),
+  },
+  render: props => (
+    <Spacer distribution="center" gap="lg">
+      {COMPONENT_SIZES.map(size => (
+        <Anchor {...props} size={size}>
+          {props.children} ({size})
+        </Anchor>
+      ))}
+    </Spacer>
+  ),
+};
 
 export const WithIcons: Story = {
   argTypes: {

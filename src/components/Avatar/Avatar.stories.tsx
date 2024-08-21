@@ -1,7 +1,7 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { BoxCenter, Grid, Icon, Paragraph, Spacer } from '~';
+import { FlexCenter, Grid, Icon, Paragraph, Spacer } from '~';
 
 import { avatar, radius } from '~/modules/theme';
 
@@ -69,7 +69,7 @@ export const BorderColors: Story = {
   render: props => (
     <Grid gap={20} templateColumns="repeat(4, 1fr)">
       {VARIANTS.map((d, index) => (
-        <BoxCenter key={d}>
+        <FlexCenter key={d}>
           <Avatar
             key={d}
             {...props}
@@ -78,7 +78,7 @@ export const BorderColors: Story = {
             name={users[index].name}
           />
           <Paragraph mt="xs">{d}</Paragraph>
-        </BoxCenter>
+        </FlexCenter>
       ))}
     </Grid>
   ),
@@ -96,10 +96,10 @@ export const Colors: Story = {
   render: props => (
     <Grid gap={20} templateColumns="repeat(4, 1fr)">
       {VARIANTS.map(d => (
-        <BoxCenter key={d}>
+        <FlexCenter key={d}>
           <Avatar key={d} {...props} bg={d} />
           <Paragraph mt="xs">{d}</Paragraph>
-        </BoxCenter>
+        </FlexCenter>
       ))}
     </Grid>
   ),
@@ -115,7 +115,7 @@ export const Radius: Story = {
   render: props => (
     <Grid gap={20} templateColumns="repeat(4, 1fr)">
       {objectKeys(radius).map((d, index) => (
-        <BoxCenter key={d}>
+        <FlexCenter key={d}>
           <Avatar
             key={d}
             {...props}
@@ -124,7 +124,7 @@ export const Radius: Story = {
             radius={d}
           />
           <Paragraph mt="xs">{d}</Paragraph>
-        </BoxCenter>
+        </FlexCenter>
       ))}
     </Grid>
   ),
@@ -135,18 +135,18 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer gap="xl">
-      {objectKeys(avatar).map((d, index) => (
-        <BoxCenter key={d}>
+    <Spacer distribution="center" gap="xl">
+      {objectKeys(avatar).map((size, index) => (
+        <FlexCenter key={size}>
           <Avatar
-            key={d}
+            key={size}
             {...props}
             image={users[index].avatar}
             name={users[index].name}
-            size={d}
+            size={size}
           />
-          <Paragraph mt="xs">{d}</Paragraph>
-        </BoxCenter>
+          <Paragraph mt="xs">{size}</Paragraph>
+        </FlexCenter>
       ))}
     </Spacer>
   ),

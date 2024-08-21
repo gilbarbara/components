@@ -1,11 +1,18 @@
 import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import innerText from 'react-innertext';
 import { Simplify, StringOrNull, StringOrNumber } from '@gilbarbara/types';
+import is from 'is-lite';
 
-import { LoaderType } from '~/components/Loader/types';
+import { useComponentProps } from '~/hooks/useComponentProps';
+import { UseThemeReturn } from '~/hooks/useTheme';
+
+import { LoaderType } from '~/components/Loader/useLoader';
 
 import {
+  BorderItem,
   SortDirection,
   StyledProps,
+  Theme,
   VariantWithTones,
   WithAccent,
   WithFlexItem,
@@ -57,11 +64,11 @@ export interface DataTableColumn<T = string> {
 
 export type DataTableRowContent = ReactNode | { label: ReactNode; value: string };
 
-export type DataTableRow<T extends string> = Simplify<
-  Record<T, DataTableRowContent> & { id?: StringOrNumber }
+export type DataTableRow<TKeys extends string> = Simplify<
+  Record<TKeys, DataTableRowContent> & { id?: StringOrNumber }
 >;
 
-export interface DataTableKnownProps<T extends string>
+export interface DataTableKnownProps<TKeys extends string>
   extends StyledProps,
     WithAccent,
     WithFlexItem,
@@ -87,15 +94,15 @@ export interface DataTableKnownProps<T extends string>
   /**
    * The columns to display
    */
-  columns: Array<DataTableColumn<T>>;
+  columns: Array<DataTableColumn<TKeys>>;
   /**
    * The data to display
    */
-  data: Array<DataTableRow<T>>;
+  data: Array<DataTableRow<TKeys>>;
   /**
    * The default column to sort by
    */
-  defaultSortColumn?: T;
+  defaultSortColumn?: TKeys;
   /**
    * The default sort direction
    * @default asc
@@ -130,7 +137,7 @@ export interface DataTableKnownProps<T extends string>
    */
   noResults?: ReactNode;
   onClickPage?: (page: number, totalPages: number) => void;
-  onClickSort?: (sortedBy: T, sortDirection: SortDirection) => void;
+  onClickSort?: (sortedBy: TKeys, sortDirection: SortDirection) => void;
   /**
    * Show pagination
    * @default true
@@ -177,19 +184,85 @@ export interface DataTableKnownProps<T extends string>
 export type DataTableProps<T extends string = string> = Simplify<DataTableKnownProps<T>>;
 
 export interface DataTableHeadProps extends WithAccent, Pick<DataTableProps, 'clean' | 'columns'> {
-  darkMode: boolean;
+  getDataAttributes: UseThemeReturn['getDataAttributes'];
   isDisabled: boolean;
   isResponsive: boolean;
   onClick: MouseEventHandler;
   sortBy: StringOrNull;
   sortDirection: SortDirection;
   stickyHeader: boolean;
+  theme: Theme;
 }
 
 export interface DataTableBodyProps
   extends WithAccent,
     Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'loaderSize' | 'loaderType' | 'loading'> {
-  darkMode: boolean;
+  getDataAttributes: UseThemeReturn['getDataAttributes'];
   isResponsive: boolean;
   sortColumn?: string;
+  theme: Theme;
+}
+
+export const defaultProps = {
+  accent: 'primary',
+  breakpoint: 768,
+  clean: false,
+  defaultSortDirection: 'asc',
+  disableScroll: false,
+  loaderSize: 128,
+  loaderType: 'pill',
+  loading: false,
+  maxRows: 10,
+  pagination: true,
+  radius: 'xs',
+  responsive: false,
+  scrollDuration: 400,
+  scrollMargin: 16,
+  stickyHeader: false,
+} satisfies Omit<DataTableProps, 'columns' | 'data'>;
+
+export function getBorder(darkMode: boolean): Array<BorderItem> {
+  return [{ side: 'top', color: darkMode ? 'gray.700' : 'gray.100' }];
+}
+
+export function getRowContent<T extends DataTableRow<string>>(input: T, key: string) {
+  const item = input[key];
+
+  return is.plainObject(item) && 'label' in item ? item.label : item;
+}
+
+export function getRowKey<T extends DataTableRow<string>>(input: T, index: number) {
+  return is.string(input.id) || is.number(input.id) ? input.id : index;
+}
+
+export function sortData<T extends string>(
+  data: Array<DataTableRow<T>>,
+  sortBy: T,
+  sortDirection: SortDirection,
+) {
+  if (!sortBy) {
+    return data;
+  }
+
+  return [...data].sort((a, b) => {
+    const leftValue = a[sortBy];
+    const rightValue = b[sortBy];
+
+    const left =
+      is.plainObject(leftValue) && 'value' in leftValue ? leftValue.value : innerText(leftValue);
+    const right =
+      is.plainObject(rightValue) && 'value' in rightValue
+        ? rightValue.value
+        : innerText(rightValue);
+
+    if (sortDirection === 'desc') {
+      return right.toLowerCase().localeCompare(left.toLowerCase(), undefined, { numeric: true });
+    }
+
+    return left.toLowerCase().localeCompare(right.toLowerCase(), undefined, { numeric: true });
+  });
+}
+
+export function useDataTable<TKeys extends string>(props: DataTableProps<TKeys>) {
+  return useComponentProps(props, defaultProps);
 }

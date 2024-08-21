@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { clearAllMocks, expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
-import { Avatar, Box, Paragraph } from '~';
+import { Avatar, Box, Flex, Paragraph } from '~';
 
 import { colors } from '~/modules/theme';
 
@@ -12,8 +12,7 @@ import users from '~/stories/__fixtures__/users.json';
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 import { Variant } from '~/types';
 
-import { defaultProps, Search } from './Search';
-import { SearchItem } from './types';
+import { defaultProps, Search, SearchItem } from './Search';
 
 type Story = StoryObj<typeof Search>;
 
@@ -63,7 +62,7 @@ const defaultItems: SearchItem[] = users
   .map(d => ({
     accent: getAccent(d.team),
     label: (
-      <Box flexBox>
+      <Flex>
         <Avatar image={d.avatar} name={d.name} />
         <Box ml="xs">
           <Paragraph bold>{d.name}</Paragraph>
@@ -71,7 +70,7 @@ const defaultItems: SearchItem[] = users
             {d.team}
           </Paragraph>
         </Box>
-      </Box>
+      </Flex>
     ),
     value: d.name,
   }))
@@ -82,7 +81,6 @@ export const Basic: Story = {
     icon: 'users',
     items: defaultItems,
   },
-  render: props => <Search {...props} />,
 };
 
 export const ExternalData: Story = {

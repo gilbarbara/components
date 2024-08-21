@@ -3,8 +3,6 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useSetState, useUnmount } from '@gilbarbara/hooks';
 import { PlainObject } from '@gilbarbara/types';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { FormGroup } from '~/components/FormGroup';
 
 import FieldCheckbox from './Checkbox';
@@ -27,24 +25,12 @@ import {
   FieldSelectProps,
   FieldTextareaProps,
   FieldToggleProps,
-} from './types';
+  useField,
+} from './useField';
 import { getDefaultValue, getError, getRegisterOptions } from './utils';
 
-export const defaultProps = {
-  accent: 'primary',
-  borderless: false,
-  debug: false,
-  disabled: false,
-  hideAssistiveText: false,
-  inline: false,
-  label: '',
-  readOnly: false,
-  required: false,
-  skipValidation: false,
-  type: 'text',
-} satisfies Omit<FieldProps, 'name'>;
-
 export function Field<T extends FieldProps>(props: T) {
+  const { componentProps, getDataAttributes } = useField(props);
   const {
     assistiveText,
     hideAssistiveText,
@@ -58,13 +44,12 @@ export function Field<T extends FieldProps>(props: T) {
     type,
     validations,
     value,
-  } = { ...defaultProps, ...props };
+  } = componentProps;
   const [{ isActive, isDirty }, setStatus] = useSetState({
     isActive: false,
     isDirty: false,
   });
   const formContext = useFormContext();
-  const { getDataAttributes } = useTheme();
 
   if (!formContext) {
     throw new Error(
@@ -80,8 +65,8 @@ export function Field<T extends FieldProps>(props: T) {
     unregister,
   } = formContext;
   const registerOptions = useMemo(
-    () => getRegisterOptions({ ...props, getValues }),
-    [getValues, props],
+    () => getRegisterOptions({ ...componentProps, getValues }),
+    [getValues, componentProps],
   );
   const registration = register(name, registerOptions);
 
@@ -111,6 +96,7 @@ export function Field<T extends FieldProps>(props: T) {
 
   if (!skipValidation) {
     groupProps.skipIcon = [
+      'color',
       'checkbox',
       'datePicker',
       'dropdown',
@@ -133,7 +119,7 @@ export function Field<T extends FieldProps>(props: T) {
         <FieldCheckbox
           currentValue={currentValue}
           setValue={setValue}
-          {...(props as FieldCheckboxProps)}
+          {...(componentProps as FieldCheckboxProps)}
         />
       );
 
@@ -145,7 +131,7 @@ export function Field<T extends FieldProps>(props: T) {
           currentValue={currentValue}
           registration={registration}
           setValue={setValue}
-          {...(props as FieldDatePickerProps)}
+          {...(componentProps as FieldDatePickerProps)}
         />
       );
 
@@ -157,7 +143,7 @@ export function Field<T extends FieldProps>(props: T) {
           currentValue={currentValue}
           registration={registration}
           setValue={setValue}
-          {...(props as FieldDropdownProps)}
+          {...(componentProps as FieldDropdownProps)}
         />
       );
 
@@ -170,14 +156,16 @@ export function Field<T extends FieldProps>(props: T) {
           isDirty={!!dirtyFields[name]}
           registration={registration}
           setStatus={setStatus}
-          {...(props as FieldPasswordProps)}
+          {...(componentProps as FieldPasswordProps)}
         />
       );
 
       break;
     }
     case 'radio': {
-      output.content = <FieldRadio registration={registration} {...(props as FieldRadioProps)} />;
+      output.content = (
+        <FieldRadio registration={registration} {...(componentProps as FieldRadioProps)} />
+      );
 
       break;
     }
@@ -187,7 +175,7 @@ export function Field<T extends FieldProps>(props: T) {
           isDirty={!!dirtyFields[name]}
           registration={registration}
           setStatus={setStatus}
-          {...(props as FieldSelectProps)}
+          {...(componentProps as FieldSelectProps)}
         />
       );
 
@@ -199,14 +187,16 @@ export function Field<T extends FieldProps>(props: T) {
           isDirty={!!dirtyFields[name]}
           registration={registration}
           setStatus={setStatus}
-          {...(props as FieldTextareaProps)}
+          {...(componentProps as FieldTextareaProps)}
         />
       );
 
       break;
     }
     case 'toggle': {
-      output.content = <FieldToggle {...(props as FieldToggleProps)} setValue={setValue} />;
+      output.content = (
+        <FieldToggle {...(componentProps as FieldToggleProps)} setValue={setValue} />
+      );
 
       break;
     }
@@ -217,7 +207,7 @@ export function Field<T extends FieldProps>(props: T) {
           isDirty={!!dirtyFields[name]}
           registration={registration}
           setStatus={setStatus}
-          {...(props as FieldInputProps)}
+          {...(componentProps as FieldInputProps)}
         />
       );
     }
@@ -230,11 +220,11 @@ export function Field<T extends FieldProps>(props: T) {
   return (
     <FormGroup {...getDataAttributes('Field')} {...groupProps}>
       {output.content}
-      <FieldDebug {...props} />
+      <FieldDebug {...componentProps} />
     </FormGroup>
   );
 }
 
 Field.displayName = 'Field';
 
-export type { FieldProps } from './types';
+export { defaultProps, type FieldProps } from './useField';

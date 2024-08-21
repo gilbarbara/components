@@ -14,7 +14,7 @@ import {
 } from '~/stories/__helpers__';
 
 import { defaultProps, SkeletonCircle } from './SkeletonCircle';
-import { SkeletonCircleProps } from './utils';
+import { SkeletonCircleProps } from './useSkeleton';
 
 type Story = StoryObj<typeof SkeletonCircle>;
 

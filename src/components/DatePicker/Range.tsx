@@ -1,36 +1,36 @@
 import { ReactNode, useState } from 'react';
 import { DayPicker, DayPickerRangeProps, SelectRangeEventHandler } from 'react-day-picker';
 import styled from '@emotion/styled';
-import { formatDateLocale, mergeProps, omit } from '@gilbarbara/helpers';
+import { formatDateLocale, omit } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { getStyledOptions } from '~/modules/system';
 
-import { BoxCenter } from '~/components/Box';
 import { Button } from '~/components/Button';
+import {
+  getFooter,
+  getNumberOfMonths,
+  getPickerStyles,
+  getRange,
+} from '~/components/DatePicker/utils';
+import { FlexCenter } from '~/components/Flex';
 import { Paragraph } from '~/components/Paragraph';
 import { Spacer } from '~/components/Spacer';
 import { Text } from '~/components/Text';
 
-import { DatePickerRangeParameter, DatePickerRangeProps } from './types';
-import { defaultProps, getFooter, getNumberOfMonths, getRange, getStyles } from './utils';
+import { WithTheme } from '~/types';
 
-export const rangeDefaultProps = {
-  ...defaultProps,
-  readOnly: false,
-  showApply: false,
-} satisfies DatePickerRangeProps;
+import { DatePickerRangeParameter, DatePickerRangeProps, useDatePicker } from './useDatePicker';
 
 const StyledDatePicker = styled(
   'div',
   getStyledOptions('onApply'),
-)<DatePickerRangeProps>(props => {
-  return getStyles(props);
+)<DatePickerRangeProps & WithTheme>(props => {
+  return getPickerStyles(props);
 });
 
 export function DatePickerRange(props: DatePickerRangeProps) {
+  const { componentProps, getDataAttributes } = useDatePicker(props, 'range');
   const {
     accent,
     currentMonthLabel,
@@ -42,16 +42,13 @@ export function DatePickerRange(props: DatePickerRangeProps) {
     readOnly,
     selected,
     showApply,
+    theme: { radius, spacing },
     toDate,
     ...rest
-  } = mergeProps(rangeDefaultProps, props);
+  } = componentProps;
   const [selectedDates, setSelectedDates] = useState<DatePickerRangeParameter | undefined>(
     selected,
   );
-  const {
-    getDataAttributes,
-    theme: { radius, spacing },
-  } = useTheme();
 
   let initialDate: Date | undefined;
   let endDate: Date | undefined;
@@ -144,13 +141,12 @@ export function DatePickerRange(props: DatePickerRangeProps) {
 
   return (
     <StyledDatePicker
-      accent={accent}
       {...getDataAttributes('DatePickerRange')}
-      {...omit(props, 'hidden', 'onChange')}
+      {...omit(componentProps, 'hidden', 'onChange')}
     >
-      <BoxCenter mb="md" minHeight={30}>
+      <FlexCenter mb="md" minHeight={30}>
         {content.header}
-      </BoxCenter>
+      </FlexCenter>
       <DayPicker
         mode={readOnly ? undefined : 'range'}
         modifiers={modifiers}
@@ -168,3 +164,5 @@ export function DatePickerRange(props: DatePickerRangeProps) {
 }
 
 DatePickerRange.displayName = 'DatePickerRange';
+
+export { rangeDefaultProps, type DatePickerRangeProps } from './useDatePicker';

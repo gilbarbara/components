@@ -2,18 +2,19 @@ import { isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
 import { colorStyles, getStyledOptions, textStyles } from '~/modules/system';
 
-import { MenuTitleProps } from './types';
+import { WithTheme } from '~/types';
+
+import { MenuTitleProps, useMenu } from './useMenu';
 
 const StyledMenuTitle = styled(
   'li',
   getStyledOptions(),
-)<Omit<MenuTitleProps, 'children'>>(props => {
-  const { dataAttributeName, grayScale, spacing, typography } = getTheme(props);
+)<Omit<MenuTitleProps, 'children'> & WithTheme>(props => {
+  const {
+    theme: { dataAttributeName, grayScale, spacing, typography },
+  } = props;
 
   return css`
     ${colorStyles(props)};
@@ -31,8 +32,11 @@ const StyledMenuTitle = styled(
   `;
 });
 
-export function MenuTitle({ children, ...rest }: MenuTitleProps) {
-  const { getDataAttributes } = useTheme();
+export function MenuTitle(props: MenuTitleProps) {
+  const {
+    componentProps: { children, ...rest },
+    getDataAttributes,
+  } = useMenu<MenuTitleProps>(props);
 
   const content = isValidElement(children) ? (
     children

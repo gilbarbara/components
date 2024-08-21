@@ -1,34 +1,31 @@
 import { useState } from 'react';
 import { DayPicker, DayPickerSingleProps, SelectSingleEventHandler } from 'react-day-picker';
 import styled from '@emotion/styled';
-import { mergeProps, omit } from '@gilbarbara/helpers';
-
-import { useTheme } from '~/hooks/useTheme';
+import { omit } from '@gilbarbara/helpers';
 
 import { getStyledOptions } from '~/modules/system';
 
-import { DatePickerSingleProps } from './types';
-import { defaultProps, getFooter, getRange, getStyles } from './utils';
+import { getFooter, getPickerStyles, getRange } from '~/components/DatePicker/utils';
+
+import { WithTheme } from '~/types';
+
+import { DatePickerSingleProps, useDatePicker } from './useDatePicker';
 
 const StyledDatePicker = styled(
   'div',
   getStyledOptions(),
-)<DatePickerSingleProps>(props => {
-  return getStyles(props);
+)<DatePickerSingleProps & WithTheme>(props => {
+  return getPickerStyles(props);
 });
 
-export const singleDefaultProps = {
-  ...defaultProps,
-  readOnly: false,
-} satisfies DatePickerSingleProps;
-
 export function DatePicker(props: DatePickerSingleProps) {
+  const { componentProps, getDataAttributes } = useDatePicker(props);
   const { currentMonthLabel, fromDate, month, onChange, readOnly, selected, toDate, ...rest } =
-    mergeProps(defaultProps, props);
+    componentProps;
+
   const [selectedDate, setSelectedDate] = useState<string | undefined>(selected);
   const selectedDateObject = selectedDate ? new Date(selectedDate) : undefined;
   const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(month ?? selectedDateObject);
-  const { getDataAttributes } = useTheme();
 
   const handleSelect: SelectSingleEventHandler = (_day, selectedDay, modifiers) => {
     if (modifiers.disabled || modifiers.outside) {
@@ -49,7 +46,7 @@ export function DatePicker(props: DatePickerSingleProps) {
   return (
     <StyledDatePicker
       {...getDataAttributes('DatePicker')}
-      {...omit(props, 'hidden', 'onDayClick', 'onChange')}
+      {...omit(componentProps, 'hidden', 'onDayClick', 'onChange')}
     >
       <DayPicker
         footer={getFooter(setSelectedMonth, currentMonthLabel)}
@@ -66,3 +63,5 @@ export function DatePicker(props: DatePickerSingleProps) {
 }
 
 DatePicker.displayName = 'DatePicker';
+
+export { singleDefaultProps, type DatePickerSingleProps } from './useDatePicker';

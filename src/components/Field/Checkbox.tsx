@@ -3,9 +3,9 @@ import { FieldValues, SetFieldValue } from 'react-hook-form';
 import { useUpdateEffect } from '@gilbarbara/hooks';
 
 import { Checkbox } from '~/components/CheckboxAndRadio';
-import { Spacer } from '~/components/Spacer';
+import { Flex } from '~/components/Flex';
 
-import { FieldCheckboxProps } from './types';
+import { FieldCheckboxProps } from './useField';
 
 interface Props extends FieldCheckboxProps {
   currentValue: string[];
@@ -49,7 +49,7 @@ function FieldCheckbox(props: Props) {
   };
 
   return (
-    <Spacer gap="xs">
+    <Flex gap="xs">
       {items.map(d => (
         <Checkbox
           key={d.name}
@@ -64,7 +64,7 @@ function FieldCheckbox(props: Props) {
           size="sm"
         />
       ))}
-    </Spacer>
+    </Flex>
   );
 }
 

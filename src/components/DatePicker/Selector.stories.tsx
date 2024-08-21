@@ -11,7 +11,10 @@ export default {
   component: DatePickerSelector,
   args: {
     ...selectorDefaultProps,
+    captionLayout: 'dropdown',
+    fromYear: 1900,
     name: 'date',
+    toYear: new Date().getFullYear(),
   },
   argTypes: {
     ...hideProps(),

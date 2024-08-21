@@ -1,12 +1,10 @@
 import { MouseEvent, useCallback, useMemo, useRef } from 'react';
-import { mergeProps } from '@gilbarbara/helpers';
 import { useMount, useSetState, useUpdateEffect } from '@gilbarbara/hooks';
-
-import { useTheme } from '~/hooks/useTheme';
 
 import { scrollTo } from '~/modules/animations';
 
-import { Box, BoxCenter } from '~/components/Box';
+import { Box } from '~/components/Box';
+import { FlexCenter } from '~/components/Flex';
 import { Pagination } from '~/components/Pagination';
 import { Text } from '~/components/Text';
 
@@ -15,58 +13,44 @@ import type { BoxProps } from '~/types/props';
 
 import Body from './Body';
 import Head from './Head';
-import { DataTableProps } from './types';
-import { getBorder, sortData } from './utils';
+import { DataTableProps, getBorder, sortData, useDataTable } from './useDataTable';
 
-export const defaultProps = {
-  accent: 'primary',
-  breakpoint: 768,
-  clean: false,
-  defaultSortDirection: 'asc',
-  disableScroll: false,
-  loaderSize: 128,
-  loaderType: 'pill',
-  loading: false,
-  maxRows: 10,
-  pagination: true,
-  radius: 'xs',
-  responsive: false,
-  scrollDuration: 400,
-  scrollMargin: 16,
-  stickyHeader: false,
-} satisfies Omit<DataTableProps, 'columns' | 'data'>;
-
-export function DataTable<T extends string = string>(props: DataTableProps<T>) {
+export function DataTable<TKeys extends string = string>(props: DataTableProps<TKeys>) {
   const {
-    accent,
-    bg,
-    breakpoint,
-    clean,
-    columns,
-    data,
-    defaultSortColumn,
-    defaultSortDirection,
-    disableScroll,
-    loaderSize,
-    loaderType,
-    loading,
-    maxRows,
-    noResults,
-    onClickPage,
-    onClickSort,
-    pagination,
-    radius,
-    remote,
-    responsive,
-    scrollDuration,
-    scrollElement,
-    scrollMargin,
-    stickyHeader,
-    width,
-    ...rest
-  } = mergeProps(defaultProps, props);
+    componentProps: {
+      accent,
+      bg,
+      breakpoint,
+      clean,
+      columns,
+      data,
+      defaultSortColumn,
+      defaultSortDirection,
+      disableScroll,
+      loaderSize,
+      loaderType,
+      loading,
+      maxRows,
+      noResults,
+      onClickPage,
+      onClickSort,
+      pagination,
+      radius,
+      remote,
+      responsive,
+      scrollDuration,
+      scrollElement,
+      scrollMargin,
+      stickyHeader,
+      width,
+      ...rest
+    },
+    getDataAttributes,
+  } = useDataTable(props);
   const element = useRef<HTMLDivElement>(null);
   const resizeTimeout = useRef<number | null>(null);
+
+  const { darkMode } = rest.theme;
 
   const [{ currentPage, isResponsive, sortBy, sortDirection }, setState] = useSetState({
     currentPage: 1,
@@ -74,10 +58,6 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     sortBy: defaultSortColumn ?? null,
     sortDirection: defaultSortDirection,
   });
-  const {
-    getDataAttributes,
-    theme: { darkMode },
-  } = useTheme();
 
   useUpdateEffect(() => {
     const minLength = currentPage * maxRows - maxRows;
@@ -130,11 +110,11 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
       const nextDirection = sortBy === name ? reverseDirection : 'asc';
 
       const options = {
-        sortBy: name as T,
+        sortBy: name as TKeys,
         sortDirection: nextDirection,
       };
 
-      onClickSort?.(name as T, nextDirection);
+      onClickSort?.(name as TKeys, nextDirection);
 
       setState(options);
     },
@@ -145,15 +125,15 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
   const rows = useMemo(() => {
     return (remote && !remote?.useInternalSorting) || !sortBy
       ? data
-      : sortData<T>(data, sortBy, sortDirection);
+      : sortData<TKeys>(data, sortBy, sortDirection);
   }, [data, remote, sortBy, sortDirection]);
 
   const body = useMemo(() => {
     if (isEmpty) {
       return (
-        <BoxCenter bg="white" padding="md" radius="sm" width="100%">
+        <FlexCenter bg="white" padding="md" radius="sm" width="100%">
           {noResults ?? <Text bold>Nothing found</Text>}
-        </BoxCenter>
+        </FlexCenter>
       );
     }
 
@@ -162,13 +142,14 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
         accent={accent}
         clean={clean}
         columns={columns}
-        darkMode={darkMode}
         data={rows.slice(maxRows * (currentPage - 1), maxRows * currentPage)}
+        getDataAttributes={getDataAttributes}
         isResponsive={isResponsive}
         loaderSize={loaderSize}
         loaderType={loaderType}
         loading={loading}
         sortColumn={defaultSortColumn}
+        theme={rest.theme}
       />
     );
   }, [
@@ -176,8 +157,8 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     clean,
     columns,
     currentPage,
-    darkMode,
     defaultSortColumn,
+    getDataAttributes,
     isEmpty,
     isResponsive,
     loaderSize,
@@ -185,6 +166,7 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
     loading,
     maxRows,
     noResults,
+    rest.theme,
     rows,
   ]);
 
@@ -219,13 +201,14 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
         accent={accent}
         clean={clean}
         columns={columns}
-        darkMode={darkMode}
+        getDataAttributes={getDataAttributes}
         isDisabled={loading ?? isEmpty}
         isResponsive={isResponsive}
         onClick={handleClickSort}
         sortBy={sortBy}
         sortDirection={sortDirection}
         stickyHeader={stickyHeader}
+        theme={rest.theme}
       />
       {body}
       {pagination && (
@@ -243,3 +226,5 @@ export function DataTable<T extends string = string>(props: DataTableProps<T>) {
 }
 
 DataTable.displayName = 'DataTable';
+
+export { defaultProps, type DataTableProps } from './useDataTable';

@@ -3,9 +3,9 @@ import { FieldValues, SetFieldValue, UseFormRegisterReturn } from 'react-hook-fo
 import is from 'is-lite';
 
 import { DatePickerSelector } from '~/components/DatePicker';
-import { DatePickerRangeParameter } from '~/components/DatePicker/types';
+import { DatePickerRangeParameter } from '~/components/DatePicker/useDatePicker';
 
-import { FieldDatePickerProps } from './types';
+import { FieldDatePickerProps } from './useField';
 import { getInputParameters } from './utils';
 
 interface Props extends FieldDatePickerProps {

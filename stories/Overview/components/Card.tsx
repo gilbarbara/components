@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Avatar, Box, Chip, H3, Image, Paragraph, type Props } from '~';
+import { Avatar, Box, Chip, Flex, H3, Image, Paragraph, type Props } from '~';
 
 interface CardProps extends Omit<Props.BoxProps, 'title'> {
   authorImage?: string;
@@ -28,9 +28,8 @@ export default function Card(props: CardProps) {
   } = props;
 
   return (
-    <Box
+    <Flex
       direction="column"
-      flexBox
       minHeight={480}
       overflow="hidden"
       radius="md"
@@ -38,14 +37,14 @@ export default function Card(props: CardProps) {
       width={300}
       {...rest}
     >
-      <Box as="header" flexBox>
+      <Flex as="header">
         <Image alt={imageAlt} src={imageSrc} />
-      </Box>
-      <Box direction="column" flex flexBox padding="md">
+      </Flex>
+      <Flex direction="column" flex padding="md">
         <H3>{title}</H3>
         <Paragraph>{description}</Paragraph>
         {!!tags && (
-          <Box flexBox gap="8" mt="sm">
+          <Flex gap="8" mt="sm">
             {tags.map(tag => {
               const {
                 bg = 'red',
@@ -59,9 +58,9 @@ export default function Card(props: CardProps) {
                 </Chip>
               );
             })}
-          </Box>
+          </Flex>
         )}
-        <Box as="footer" flexBox mt="auto">
+        <Flex as="footer" mt="auto">
           <Avatar image={authorImage} name={authorName} />
           <Box ml="xs">
             <Paragraph bold>{authorName}</Paragraph>
@@ -69,8 +68,8 @@ export default function Card(props: CardProps) {
               {date}
             </Paragraph>
           </Box>
-        </Box>
-      </Box>
-    </Box>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 }

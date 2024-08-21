@@ -2,13 +2,12 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { LoaderComponentProps } from './types';
+import { WithTheme } from '~/types';
+
+import { LoaderComponentProps } from './useLoader';
 
 const pulse = ({ size = 32 }: LoaderComponentProps) => keyframes`
   0% {
@@ -31,9 +30,9 @@ const pulse = ({ size = 32 }: LoaderComponentProps) => keyframes`
 const StyledLoaderPulse = styled(
   'div',
   getStyledOptions(),
-)<LoaderComponentProps>(props => {
-  const { block, color = 'primary', size = 32 } = props;
-  const { darkColor, lightColor, spacing, ...theme } = getTheme(props);
+)<LoaderComponentProps & WithTheme>(props => {
+  const { block, color = 'primary', size = 32, theme } = props;
+  const { spacing } = theme;
 
   const { mainColor } = getColorTokens(color, null, theme);
 
@@ -64,7 +63,7 @@ const StyledLoaderPulse = styled(
 });
 
 export default function LoaderPulse(props: LoaderComponentProps) {
-  const { getDataAttributes } = useTheme();
+  const { getDataAttributes } = props;
 
   return (
     <StyledLoaderPulse {...getDataAttributes('LoaderPulse')} {...props}>

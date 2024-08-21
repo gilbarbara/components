@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Chip, Paragraph } from '~';
+import { Paragraph, Spacer } from '~';
 
 import { textDefaultOptions, textSizes } from '~/modules/options';
 
@@ -41,15 +41,18 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <div>
+    <Spacer distribution="center" gap="lg" orientation="vertical">
       {textSizes.map(size => (
-        <Paragraph key={size}>
+        <>
+          <Paragraph align="center" size="lg">
+            {size}
+          </Paragraph>
           <Text {...props} size={size}>
-            <Chip size={size}>{size}</Chip> In the mountains far from the countries Vokalia and
-            Consonantia, there live the blind texts.
+            In the mountains far from the countries Vokalia and Consonantia, there live the blind
+            texts.
           </Text>
-        </Paragraph>
+        </>
       ))}
-    </div>
+    </Spacer>
   ),
 };

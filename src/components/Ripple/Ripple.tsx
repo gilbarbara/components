@@ -1,15 +1,16 @@
 import { Key } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
+import { px } from '@gilbarbara/helpers';
 import { lighten } from 'colorizr';
+
+import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { ripple } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { VariantWithTones } from '~/types';
+import { VariantWithTones, WithTheme } from '~/types';
 
 interface RippleType {
   key: Key;
@@ -18,7 +19,6 @@ interface RippleType {
   y: number;
 }
 
-/* eslint-disable react/no-unused-prop-types */
 export interface RippleProps {
   /**
    * The ripple color
@@ -32,7 +32,6 @@ export interface RippleProps {
   onClear: (id: Key) => void;
   ripples: RippleType[];
 }
-/* eslint-enable react/no-unused-prop-types */
 
 export const defaultProps = {
   duration: '0.6s',
@@ -41,9 +40,8 @@ export const defaultProps = {
 export const StyledRipple = styled(
   'span',
   getStyledOptions(),
-)<Required<Pick<RippleProps, 'color' | 'duration'>>>(props => {
-  const { color, duration } = props;
-  const { white, ...theme } = getTheme(props);
+)<Required<Pick<RippleProps, 'color' | 'duration'>> & WithTheme>(props => {
+  const { color, duration, theme } = props;
   const { mainColor } = getColorTokens(color, null, theme);
 
   return css`
@@ -56,7 +54,10 @@ export const StyledRipple = styled(
 });
 
 export function Ripple(props: RippleProps) {
-  const { color, duration, onClear, ripples } = mergeProps(defaultProps, props);
+  const {
+    componentProps: { color, duration, onClear, ripples, theme },
+    getDataAttributes,
+  } = useComponentProps(props, defaultProps);
 
   return (
     <>
@@ -64,6 +65,7 @@ export function Ripple(props: RippleProps) {
         <StyledRipple
           key={key}
           color={color}
+          {...getDataAttributes('Ripple')}
           duration={duration}
           onAnimationEnd={() => onClear(key)}
           style={{
@@ -72,6 +74,7 @@ export function Ripple(props: RippleProps) {
             top: px(y),
             width: px(size),
           }}
+          theme={theme}
         />
       ))}
     </>

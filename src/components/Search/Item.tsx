@@ -2,20 +2,19 @@ import { memo } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
-import { getTheme } from '~/modules/helpers';
 import { getStyledOptions } from '~/modules/system';
 
-import { SearchItemProps } from './types';
+import { WithTheme } from '~/types';
+
+import { SearchItemProps } from './useSearch';
 
 export const StyledSearchItem = styled(
   'div',
   getStyledOptions(),
-)<Pick<SearchItemProps, 'accent' | 'isSelected'>>(props => {
-  const { accent, isSelected } = props;
-  const { darkMode, grayScale, spacing, typography, white, ...theme } = getTheme(props);
+)<Pick<SearchItemProps, 'accent' | 'isSelected'> & WithTheme>(props => {
+  const { accent, isSelected, theme } = props;
+  const { darkMode, grayScale, spacing, typography, white } = theme;
 
   const { mainColor, textColor } = getColorTokens(accent, null, theme);
 
@@ -50,8 +49,8 @@ export const StyledSearchItem = styled(
   `;
 });
 
-function SearchItemComponent({ accent, children, isSelected, onSelect, value }: SearchItemProps) {
-  const { getDataAttributes } = useTheme();
+function SearchItemComponent(props: SearchItemProps) {
+  const { accent, children, getDataAttributes, isSelected, onSelect, theme, value } = props;
 
   return (
     <StyledSearchItem
@@ -63,6 +62,7 @@ function SearchItemComponent({ accent, children, isSelected, onSelect, value }: 
       onKeyDown={onSelect}
       role="listitem"
       tabIndex={0}
+      theme={theme}
     >
       {children}
     </StyledSearchItem>

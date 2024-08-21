@@ -1,9 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { Box, Button, H3, Icon, Paragraph } from '~';
 
-import { disableControl, hideProps, spacingProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  flexItems,
+  hideProps,
+  spacingProps,
+  textOptionsProps,
+} from '~/stories/__helpers__';
 import Code from '~/stories/components/Code';
 import Description from '~/stories/components/Description';
 import Info from '~/stories/components/Info';
@@ -21,8 +28,11 @@ export default {
   },
   argTypes: {
     ...hideProps(),
+    ...colorProps(['bg', 'color']),
+    ...textOptionsProps(),
     ...spacingProps(),
     children: { control: 'text' },
+    headerAlign: { control: 'select', options: ['', ...flexItems] },
     maxHeight: { control: 'number' },
   },
   parameters: {
@@ -91,6 +101,7 @@ export const LoadMoreWithTitle: Story = {
         {isOpen ? 'Close' : 'Open'}
       </Button>
     ),
+    headerAlign: 'center',
     hideHeaderToggle: true,
     showBottomToggle: true,
     title: 'Lorem ipsum dolor sit amet',
@@ -124,6 +135,7 @@ export const Customized: Story = {
     ),
     padding: 'md',
     radius: 'md',
+    startContent: <Icon name="info-o" size={30} />,
     title: (
       <Box>
         <H3 mb={0}>The title</H3>
@@ -149,16 +161,22 @@ export const Tests: Story = {
     title: <p>Lorem ipsum dolor sit amet</p>,
     onToggle: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
     await canvas.findByTestId('Collapse');
+
     await expect(canvas.getByTestId('CollapseHeader')).toHaveAttribute('aria-expanded', 'false');
+    await expect(canvas.getByTestId('CollapseContent')).not.toBeVisible();
 
     await userEvent.click(canvas.getByTestId('CollapseHeader'));
     await expect(canvas.getByTestId('CollapseHeader')).toHaveAttribute('aria-expanded', 'true');
+    await waitFor(() => expect(canvas.getByTestId('CollapseContent')).toBeVisible());
+    await expect(args.onToggle).toHaveBeenCalledWith(true, undefined);
 
     await userEvent.click(canvas.getByTestId('CollapseHeader'));
     await expect(canvas.getByTestId('CollapseHeader')).toHaveAttribute('aria-expanded', 'false');
+    await waitFor(() => expect(canvas.getByTestId('CollapseContent')).not.toBeVisible());
+    await expect(args.onToggle).toHaveBeenCalledWith(false, undefined);
   },
 };

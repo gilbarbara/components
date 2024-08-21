@@ -10,11 +10,10 @@ import {
 } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, px } from '@gilbarbara/helpers';
+import { px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 
 import { useKeyboardNavigation } from '~/hooks/useKeyboardNavigation';
-import { useTheme } from '~/hooks/useTheme';
 
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
@@ -23,39 +22,26 @@ import { FormElementWrapper } from '~/components/FormElementWrapper';
 import { Icon } from '~/components/Icon';
 import { Input } from '~/components/Input';
 
-import Items from './Items';
-import { SearchProps } from './types';
+import { WithTheme } from '~/types';
 
-export const defaultProps = {
-  accent: 'primary',
-  borderless: false,
-  disableCloseOnBlur: false,
-  disableKeyboardNavigation: false,
-  disabled: false,
-  height: 230,
-  hideIcon: false,
-  icon: 'search',
-  loading: false,
-  noResultsLabel: 'Nothing found',
-  onSearchDebounce: 250,
-  placeholder: 'Search for...',
-  showListOnFocus: true,
-} satisfies Omit<SearchProps, 'items' | 'onSelect'>;
+import Items from './Items';
+import { SearchProps, useSearch } from './useSearch';
 
 export const StyledSearch = styled(
   'div',
   getStyledOptions(),
-)<Omit<SearchProps, 'items' | 'onChange' | 'onSelect' | 'onType'>>(props => {
-  const { width } = props;
+)<Omit<SearchProps, 'items' | 'onChange' | 'onSelect' | 'onType'> & WithTheme>(props => {
+  const { width = '100%' } = props;
 
   return css`
     position: relative;
-    width: ${width ? px(width) : '100%'};
+    width: ${px(width)};
     ${marginStyles(props)};
   `;
 });
 
 function SearchComponent(props: SearchProps) {
+  const { componentProps, getDataAttributes } = useSearch(props);
   const {
     accent,
     borderless,
@@ -77,7 +63,8 @@ function SearchComponent(props: SearchProps) {
     remote,
     showListOnFocus,
     ...rest
-  } = mergeProps(defaultProps, props);
+  } = componentProps;
+  const { dataAttributeName } = rest.theme;
   const [{ active, currentItems, cursor, focus, typing, value }, setState] = useSetState({
     active: false,
     currentItems: remote ? [] : items,
@@ -90,10 +77,6 @@ function SearchComponent(props: SearchProps) {
   const itemsRef = useRef<HTMLDivElement>(null);
   const isMounted = useRef(false);
   const timeout = useRef(0);
-  const {
-    getDataAttributes,
-    theme: { dataAttributeName },
-  } = useTheme();
 
   useEffect(() => {
     isMounted.current = true;
@@ -289,6 +272,7 @@ function SearchComponent(props: SearchProps) {
           accent={accent}
           active={active}
           cursor={cursor}
+          getDataAttributes={getDataAttributes}
           height={height}
           isBusy={isBusy}
           items={remote ? items : currentItems}
@@ -303,3 +287,5 @@ function SearchComponent(props: SearchProps) {
 export const Search = memo(SearchComponent);
 
 Search.displayName = 'Search';
+
+export { defaultProps, type SearchItem, type SearchProps } from './useSearch';

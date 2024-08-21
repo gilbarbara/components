@@ -6,7 +6,7 @@ import { Dropdown } from '~/components/Dropdown';
 
 import { DropdownOption } from '~/types';
 
-import { FieldDropdownProps } from './types';
+import { FieldDropdownProps } from './useField';
 import { getInputParameters } from './utils';
 
 interface Props extends FieldDropdownProps {

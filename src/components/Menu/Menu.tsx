@@ -1,79 +1,83 @@
 import { forwardRef, KeyboardEvent, useCallback, useEffect, useId, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mergeProps, omit } from '@gilbarbara/helpers';
+import { omit } from '@gilbarbara/helpers';
 import { useLatest, useMergeRefs, useUpdateEffect } from '@gilbarbara/hooks';
-import { deepmerge } from 'deepmerge-ts';
 import is from 'is-lite';
 
 import { useKeyboardNavigation } from '~/hooks/useKeyboardNavigation';
-import { useTheme } from '~/hooks/useTheme';
-
-import { getTheme } from '~/modules/helpers';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { ClickOutside } from '~/components/ClickOutside';
 
+import { WithTheme } from '~/types';
+
 import { MenuItems } from './Items';
-import { MenuProps } from './types';
-import { defaultProps, MenuProvider } from './utils';
+import { MenuProps, MenuProvider, useMenu } from './useMenu';
 
-const StyledMenu = styled.nav(props => {
-  const { dataAttributeName } = getTheme(props);
+const StyledMenu = styled.nav<WithTheme>(
+  {
+    display: 'inline-flex',
+    position: 'relative',
+    verticalAlign: 'middle',
+  },
+  props => {
+    const {
+      theme: { dataAttributeName },
+    } = props;
 
-  return css`
-    display: inline-flex;
-    position: relative;
-    vertical-align: middle;
+    return css`
+      [data-${dataAttributeName}='ClickOutside'] {
+        width: 100%;
+      }
+    `;
+  },
+);
 
-    [data-${dataAttributeName}='ClickOutside'] {
-      width: 100%;
-    }
-  `;
-});
+const StyledMenuButton = styled(ButtonUnstyled)<WithTheme>(
+  {
+    borderRadius: '2px',
+  },
+  props => {
+    const {
+      theme: { spacing, typography },
+    } = props;
 
-const StyledMenuButton = styled(ButtonUnstyled)(props => {
-  const { opacityDisabled, spacing } = getTheme(props);
-
-  return css`
-    border-radius: 2px;
-    display: flex;
-    min-height: ${spacing.lg};
-    min-width: ${spacing.lg};
-
-    :disabled {
-      cursor: not-allowed;
-      opacity: ${opacityDisabled};
-    }
-  `;
-});
+    return css`
+      font-size: ${typography.md.fontSize};
+      min-height: ${spacing.lg};
+      min-width: ${spacing.lg};
+    `;
+  },
+);
 
 export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
-  const mergedProps = mergeProps(defaultProps, props);
+  const { componentProps, getDataAttributes } = useMenu(props);
   const {
+    bg,
     button,
     children,
     disableCloseOnBlur,
     disabled,
     disableKeyboardNavigation,
+    labels,
     minWidth,
     onToggle,
     open,
+    orientation,
     position,
+    theme,
     trigger,
-  } = mergedProps;
-  const [active, setActive] = useState(open ?? false);
+  } = componentProps;
+  const [isOpen, setIsOpen] = useState(open ?? false);
   const localRef = useRef<HTMLElement>(null);
   const mergedRefs = useMergeRefs(localRef, ref);
   const onToggleRef = useLatest(onToggle);
   const id = useId();
-  const { getDataAttributes, theme } = useTheme();
-
-  const labels = deepmerge(defaultProps.labels, mergedProps.labels);
 
   useEffect(() => {
     if (is.boolean(open)) {
-      setActive(open);
+      setIsOpen(open);
     }
   }, [open]);
 
@@ -82,7 +86,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
       return;
     }
 
-    setActive(false);
+    setIsOpen(false);
   }, [disableCloseOnBlur, open]);
 
   const handleKeyDownButton = useCallback(
@@ -101,7 +105,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
           return;
         }
 
-        setActive(a => force ?? !a);
+        setIsOpen(a => force ?? !a);
       };
     },
     [disabled, open],
@@ -115,18 +119,18 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
   });
 
   useUpdateEffect(() => {
-    if (active) {
+    if (isOpen) {
       addScope();
     }
 
-    onToggleRef.current?.(active);
+    onToggleRef.current?.(isOpen);
 
     return () => {
       if (!is.boolean(open)) {
         removeScope();
       }
     };
-  }, [active, addScope, onToggleRef, open, removeScope]);
+  }, [isOpen, addScope, onToggleRef, open, removeScope]);
 
   return (
     <StyledMenu
@@ -135,28 +139,37 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
       {...getDataAttributes('Menu')}
       onMouseEnter={trigger === 'hover' ? handleToggleMenu(true) : undefined}
       onMouseLeave={trigger === 'hover' ? handleToggleMenu(false) : undefined}
+      theme={theme}
     >
-      <ClickOutside active={active} onClick={handleClickOutside}>
+      <ClickOutside active={isOpen} onClick={handleClickOutside}>
         <MenuProvider
           closeMenu={handleToggleMenu(false)}
-          props={omit(mergedProps, 'button', 'children', 'onToggle')}
+          props={omit(componentProps, 'button', 'children', 'onToggle')}
         >
           <StyledMenuButton
             aria-controls={id}
-            aria-expanded={active}
+            aria-expanded={isOpen}
             aria-haspopup="menu"
-            aria-label={active ? labels.close : labels.open}
+            aria-label={isOpen ? labels.close : labels.open}
             {...getDataAttributes('MenuButton')}
             disabled={disabled}
             onClick={handleToggleMenu()}
             onKeyDown={handleKeyDownButton}
             tabIndex={disableKeyboardNavigation ? -1 : 0}
-            title={active ? labels.close : labels.open}
+            theme={theme}
+            title={isOpen ? labels.close : labels.open}
             type="button"
           >
-            {button}
+            {is.function(button) ? button(isOpen) : button}
           </StyledMenuButton>
-          <MenuItems active={active} id={id} minWidth={minWidth} position={position}>
+          <MenuItems
+            bg={bg}
+            id={id}
+            isOpen={isOpen}
+            minWidth={minWidth}
+            orientation={orientation}
+            position={position}
+          >
             {children}
           </MenuItems>
         </MenuProvider>
