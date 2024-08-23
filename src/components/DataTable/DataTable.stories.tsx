@@ -76,7 +76,6 @@ type WrapperColumns = 'avatar' | 'email' | 'team' | 'status' | 'action';
 type WrapperState = typeof wrapperState;
 
 interface SharedState {
-  // eslint-disable-next-line react/no-unused-prop-types
   search: string;
   status: string;
   team: string;
