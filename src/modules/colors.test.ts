@@ -39,8 +39,8 @@ describe('getColorTokens', () => {
       mainColor: 'primary',
       textColor: null,
       expected: {
-        hoverColor: '#5e5eed',
-        mainColor: '#3030e8',
+        hoverColor: '#3379ff',
+        mainColor: '#0058ff',
         textColor: '#ffffff',
         variant: 'primary',
       },
@@ -49,8 +49,8 @@ describe('getColorTokens', () => {
       mainColor: 'secondary',
       textColor: null,
       expected: {
-        hoverColor: '#397e89',
-        mainColor: '#2a5d65',
+        hoverColor: '#de54a9',
+        mainColor: '#d62993',
         textColor: '#ffffff',
         variant: 'secondary',
       },
@@ -182,8 +182,8 @@ describe('getColorTokens', () => {
   it('should return the default value', () => {
     // @ts-ignore
     expect(getColorTokens()).toEqual({
-      hoverColor: '#5e5eed',
-      mainColor: '#3030e8',
+      hoverColor: '#3379ff',
+      mainColor: '#0058ff',
       textColor: '#ffffff',
       variant: 'primary',
     });

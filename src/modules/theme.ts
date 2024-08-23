@@ -251,10 +251,10 @@ export const grayScale = {
 };
 
 export const colors = {
-  /** @default #3030e8 */
-  primary: '#3030e8',
-  /** @default #2a5d65 */
-  secondary: '#2a5d65',
+  /** @default #0058ff */
+  primary: '#0058ff',
+  /** @default #d62993 */
+  secondary: '#d62993',
   /** @default #999999 */
   gray: '#999999',
   /** @default #ff5e5e */
