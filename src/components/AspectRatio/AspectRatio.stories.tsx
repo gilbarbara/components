@@ -12,7 +12,8 @@ import { AspectRatio } from './AspectRatio';
 type Story = StoryObj<typeof AspectRatio>;
 
 export default {
-  title: 'Media/AspectRatio',
+  title: 'Components/AspectRatio',
+  // category: 'Media',
   component: AspectRatio,
   argTypes: {
     ...hideProps(),

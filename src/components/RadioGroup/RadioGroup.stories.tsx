@@ -10,7 +10,8 @@ import { defaultProps, RadioGroup } from './RadioGroup';
 type Story = StoryObj<typeof RadioGroup>;
 
 export default {
-  title: 'Inputs/RadioGroup',
+  title: 'Components/RadioGroup',
+  // category: 'Inputs',
   component: RadioGroup,
   args: {
     ...defaultProps,

@@ -91,7 +91,8 @@ function getChildren(
 }
 
 export default {
-  title: 'Content/Accordion',
+  title: 'Components/Accordion',
+  // category: 'Content',
   component: Accordion,
   args: {
     ...defaultProps,

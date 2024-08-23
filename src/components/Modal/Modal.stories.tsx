@@ -11,7 +11,8 @@ import { defaultProps, Modal } from './Modal';
 type Story = StoryObj<typeof Modal>;
 
 export default {
-  title: 'Popups/Modal',
+  title: 'Components/Modal',
+  // category: 'Popups',
   component: Modal,
   args: {
     ...defaultProps,

@@ -7,7 +7,8 @@ import { defaultProps, Textarea } from './Textarea';
 type Story = StoryObj<typeof Textarea>;
 
 export default {
-  title: 'Inputs/Textarea',
+  title: 'Components/Textarea',
+  // category: 'Inputs',
   component: Textarea,
   args: {
     ...defaultProps,

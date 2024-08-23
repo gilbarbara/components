@@ -8,7 +8,8 @@ import { jumboDefaultProps } from './useHeading';
 type Story = StoryObj<typeof Jumbo>;
 
 export default {
-  title: 'Content/Headings',
+  title: 'Components/Headings',
+  // category: 'Content',
   component: Jumbo,
   args: {
     ...jumboDefaultProps,

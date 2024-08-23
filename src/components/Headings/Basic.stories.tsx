@@ -6,7 +6,8 @@ import { H1, H2, H3, H4, H5, H6 } from './index';
 import { defaultProps } from './useHeading';
 
 export default {
-  title: 'Content/Headings',
+  title: 'Components/Headings',
+  // category: 'Content',
   component: H1,
   args: {
     ...defaultProps,

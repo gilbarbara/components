@@ -10,7 +10,8 @@ import { defaultProps, Portal } from './Portal';
 type Story = StoryObj<typeof Portal>;
 
 export default {
-  title: 'Popups/Portal',
+  title: 'Components/Portal',
+  // category: 'Popups',
   component: Portal,
   args: defaultProps,
   argTypes: {

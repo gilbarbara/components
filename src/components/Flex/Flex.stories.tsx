@@ -26,7 +26,8 @@ import {
 type Story = StoryObj<typeof Flex>;
 
 export default {
-  title: 'Layout/Flex',
+  title: 'Components/Flex',
+  // category: 'Layout',
   component: Flex,
   args: {
     ...flexDefaultProps,

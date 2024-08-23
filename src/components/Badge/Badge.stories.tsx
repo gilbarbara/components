@@ -21,7 +21,8 @@ import { Badge, defaultProps } from './Badge';
 type Story = StoryObj<typeof Badge>;
 
 export default {
-  title: 'Content/Badge',
+  title: 'Components/Badge',
+  // category: 'Content',
   component: Badge,
   args: {
     ...defaultProps,

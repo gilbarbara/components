@@ -18,7 +18,8 @@ import { Container, defaultProps } from './Container';
 type Story = StoryObj<typeof Container>;
 
 export default {
-  title: 'Layout/Container',
+  title: 'Components/Container',
+  // category: 'Layout',
   component: Container,
   args: defaultProps,
   argTypes: {

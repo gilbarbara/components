@@ -9,7 +9,8 @@ import { defaultProps, FormElementWrapper } from './FormElementWrapper';
 type Story = StoryObj<typeof FormElementWrapper>;
 
 export default {
-  title: 'Forms/FormElementWrapper',
+  title: 'Components/FormElementWrapper',
+  // category: 'Forms',
   component: FormElementWrapper,
   args: defaultProps,
   argTypes: {

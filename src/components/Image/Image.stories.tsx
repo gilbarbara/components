@@ -20,7 +20,8 @@ const width = 400;
 const height = Math.round(width * 0.666);
 
 export default {
-  title: 'Media/Image',
+  title: 'Components/Image',
+  // category: 'Media',
   component: Image,
   args: {
     ...defaultProps,

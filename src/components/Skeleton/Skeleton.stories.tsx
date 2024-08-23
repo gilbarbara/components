@@ -19,7 +19,8 @@ import { SkeletonProps } from './useSkeleton';
 type Story = StoryObj<typeof Skeleton>;
 
 export default {
-  title: 'Feedback/Skeleton',
+  title: 'Components/Skeleton',
+  // category: 'Feedback',
   component: Skeleton,
   args: defaultProps,
   argTypes: {

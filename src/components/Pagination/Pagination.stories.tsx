@@ -9,7 +9,8 @@ import { defaultProps, Pagination } from './Pagination';
 type Story = StoryObj<typeof Pagination>;
 
 export default {
-  title: 'Navigation/Pagination',
+  title: 'Components/Pagination',
+  // category: 'Navigation',
   component: Pagination,
   args: {
     ...defaultProps,

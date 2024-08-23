@@ -19,7 +19,8 @@ import { Form, FormRenderProps } from './Form';
 type Story = StoryObj<typeof Form>;
 
 export default {
-  title: 'Forms/Form',
+  title: 'Components/Form',
+  // category: 'Forms',
   component: Form,
   parameters: {
     controls: hideNoControlsWarning(),

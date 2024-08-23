@@ -20,7 +20,8 @@ import { Grid } from './Grid';
 type Story = StoryObj<typeof Grid>;
 
 export default {
-  title: 'Layout/Grid',
+  title: 'Components/Grid',
+  // category: 'Layout',
   component: Grid,
   args: {
     align: 'center',

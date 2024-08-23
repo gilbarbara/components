@@ -23,7 +23,8 @@ import { defaultProps, Tooltip } from './Tooltip';
 type Story = StoryObj<typeof Tooltip>;
 
 export default {
-  title: 'Popups/Tooltip',
+  title: 'Components/Tooltip',
+  // category: 'Popups',
   component: Tooltip,
   args: defaultProps,
   argTypes: {

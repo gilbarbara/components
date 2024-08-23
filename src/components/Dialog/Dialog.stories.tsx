@@ -17,7 +17,8 @@ import { defaultProps, Dialog } from './Dialog';
 type Story = StoryObj<typeof Dialog>;
 
 export default {
-  title: 'Popups/Dialog',
+  title: 'Components/Dialog',
+  // category: 'Popups',
   component: Dialog,
   args: {
     ...defaultProps,

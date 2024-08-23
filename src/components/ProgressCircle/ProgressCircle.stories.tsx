@@ -20,7 +20,8 @@ import { defaultProps, ProgressCircle } from './ProgressCircle';
 type Story = StoryObj<typeof ProgressCircle>;
 
 export default {
-  title: 'Feedback/ProgressCircle',
+  title: 'Components/ProgressCircle',
+  // category: 'Feedback',
   component: ProgressCircle,
   args: defaultProps,
   argTypes: {

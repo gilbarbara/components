@@ -19,7 +19,8 @@ import { SkeletonCircleProps } from './useSkeleton';
 type Story = StoryObj<typeof SkeletonCircle>;
 
 export default {
-  title: 'Feedback/Skeleton',
+  title: 'Components/Skeleton',
+  // category: 'Feedback',
   component: SkeletonCircle,
   args: defaultProps,
   argTypes: {

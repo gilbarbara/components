@@ -24,7 +24,8 @@ import { Chip, defaultProps } from './Chip';
 type Story = StoryObj<typeof Chip>;
 
 export default {
-  title: 'Feedback/Chip',
+  title: 'Components/Chip',
+  // category: 'Feedback',
   component: Chip,
   args: defaultProps,
   argTypes: {
