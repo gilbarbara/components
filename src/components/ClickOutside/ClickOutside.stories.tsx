@@ -11,7 +11,8 @@ import { ClickOutside, ClickOutsideProps } from './ClickOutside';
 type Story = StoryObj<typeof ClickOutside>;
 
 export default {
-  title: 'Display/ClickOutside',
+  title: 'Components/ClickOutside',
+  // category: 'Display',
   component: ClickOutside,
   args: {
     active: true,

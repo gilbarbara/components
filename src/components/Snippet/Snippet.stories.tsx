@@ -18,7 +18,8 @@ import { defaultProps, Snippet } from './Snippet';
 type Story = StoryObj<typeof Snippet>;
 
 export default {
-  title: 'Content/Snippet',
+  title: 'Components/Snippet',
+  // category: 'Content',
   component: Snippet,
   args: {
     ...defaultProps,

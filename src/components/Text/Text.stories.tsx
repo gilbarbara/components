@@ -17,7 +17,8 @@ import { Text } from './Text';
 type Story = StoryObj<typeof Text>;
 
 export default {
-  title: 'Content/Text',
+  title: 'Components/Text',
+  // category: 'Content',
   component: Text,
   args: {
     ...textDefaultOptions,

@@ -17,7 +17,8 @@ import { defaultProps, Search, SearchItem } from './Search';
 type Story = StoryObj<typeof Search>;
 
 export default {
-  title: 'Navigation/Search',
+  title: 'Components/Search',
+  // category: 'Navigation',
   component: Search,
   args: {
     ...defaultProps,

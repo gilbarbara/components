@@ -15,7 +15,8 @@ import { defaultProps, Divider } from './Divider';
 type Story = StoryObj<typeof Divider>;
 
 export default {
-  title: 'Display/Divider',
+  title: 'Components/Divider',
+  // category: 'Display',
   component: Divider,
   args: defaultProps,
   argTypes: {

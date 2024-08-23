@@ -11,7 +11,8 @@ import { defaultProps, InputFile } from './InputFile';
 type Story = StoryObj<typeof InputFile>;
 
 export default {
-  title: 'Inputs/InputFile',
+  title: 'Components/InputFile',
+  // category: 'Inputs',
   component: InputFile,
   args: {
     ...defaultProps,

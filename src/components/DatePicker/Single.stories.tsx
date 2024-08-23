@@ -7,7 +7,8 @@ import { DatePicker, singleDefaultProps } from './Single';
 type Story = StoryObj<typeof DatePicker>;
 
 export default {
-  title: 'Inputs/DatePicker',
+  title: 'Components/DatePicker',
+  // category: 'Inputs',
   component: DatePicker,
   args: {
     ...singleDefaultProps,

@@ -15,7 +15,8 @@ import { defaultProps } from './useMenu';
 type Story = StoryObj<typeof Menu>;
 
 export default {
-  title: 'Navigation/Menu',
+  title: 'Components/Menu',
+  // category: 'Navigation',
   component: Menu,
   args: defaultProps,
   argTypes: {

@@ -12,7 +12,8 @@ import { Checkbox, checkBoxDefaultProps } from './Checkbox';
 type Story = StoryObj<typeof Checkbox>;
 
 export default {
-  title: 'Inputs/Checkbox',
+  title: 'Components/Checkbox',
+  // category: 'Inputs',
   component: Checkbox,
   args: {
     ...checkBoxDefaultProps,

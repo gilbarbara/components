@@ -12,7 +12,8 @@ import { defaultProps, Field, FieldProps } from './Field';
 type Story = StoryObj<typeof Field>;
 
 export default {
-  title: 'Forms/Field',
+  title: 'Components/Field',
+  // category: 'Forms',
   component: Field,
   args: defaultProps,
   argTypes: {

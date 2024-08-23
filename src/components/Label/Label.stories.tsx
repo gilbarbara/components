@@ -7,7 +7,8 @@ import { defaultProps, Label } from './Label';
 type Story = StoryObj<typeof Label>;
 
 export default {
-  title: 'Inputs/Label',
+  title: 'Components/Label',
+  // category: 'Inputs',
   component: Label,
   args: {
     ...defaultProps,

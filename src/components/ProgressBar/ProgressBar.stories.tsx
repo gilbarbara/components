@@ -21,7 +21,8 @@ import { defaultProps, ProgressBar } from './ProgressBar';
 type Story = StoryObj<typeof ProgressBar>;
 
 export default {
-  title: 'Feedback/ProgressBar',
+  title: 'Components/ProgressBar',
+  // category: 'Feedback',
   component: ProgressBar,
   args: {
     ...defaultProps,

@@ -17,7 +17,8 @@ import { defaultProps, Spacer } from './Spacer';
 type Story = StoryObj<typeof Spacer>;
 
 export default {
-  title: 'Layout/Spacer',
+  title: 'Components/Spacer',
+  // category: 'Layout',
   component: Spacer,
   args: defaultProps,
   argTypes: {

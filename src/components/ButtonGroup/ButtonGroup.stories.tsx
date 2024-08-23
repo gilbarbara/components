@@ -21,7 +21,8 @@ import { ButtonGroup, defaultProps } from './ButtonGroup';
 type Story = StoryObj<typeof ButtonGroup>;
 
 export default {
-  title: 'Buttons/ButtonGroup',
+  title: 'Components/ButtonGroup',
+  // category: 'Buttons',
   component: ButtonGroup,
   args: defaultProps,
   argTypes: {

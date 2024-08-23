@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 
-import { variants } from '../src/modules/theme';
+import { colors } from '../src/modules/theme';
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.mdx', '../src/components/**/*.stories.tsx'],
@@ -31,16 +31,16 @@ const config: StorybookConfig = {
     ${head}
     <style>
       #storybook-explorer-menu [data-nodetype="root"] [data-action="collapse-root"] {
-        color: ${variants.primary['600']};
+        color: ${colors.primary};
         width: 100%;
       }
 
       #storybook-explorer-menu [data-nodetype="root"] [data-action="collapse-root"][aria-expanded="true"] {
-        background-color: ${variants.primary['100']};
+        font-size: 14px;
       }
       
       [data-selected='true'] {
-        background-color: ${variants.primary['400']} !important;
+        background-color: ${colors.primary} !important;
        }
     </style>
   `,

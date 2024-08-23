@@ -20,7 +20,8 @@ import { Avatar, defaultProps } from './Avatar';
 type Story = StoryObj<typeof Avatar>;
 
 export default {
-  title: 'Media/Avatar',
+  title: 'Components/Avatar',
+  // category: 'Media',
   component: Avatar,
   args: {
     ...defaultProps,

@@ -19,7 +19,8 @@ import { Box, defaultProps } from './Box';
 type Story = StoryObj<typeof Box>;
 
 export default {
-  title: 'Layout/Box',
+  title: 'Components/Box',
+  // category: 'Layout',
   component: Box,
   args: {
     ...defaultProps,

@@ -13,7 +13,8 @@ import { DatePickerRange, rangeDefaultProps } from './Range';
 type Story = StoryObj<typeof DatePickerRange>;
 
 export default {
-  title: 'Inputs/DatePicker',
+  title: 'Components/DatePicker',
+  // category: 'Inputs',
   component: DatePickerRange,
   args: rangeDefaultProps,
   argTypes: {

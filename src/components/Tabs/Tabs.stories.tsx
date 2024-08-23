@@ -11,7 +11,8 @@ import { defaultProps, Tabs } from './Tabs';
 type Story = StoryObj<typeof Tabs>;
 
 export default {
-  title: 'Navigation/Tabs',
+  title: 'Components/Tabs',
+  // category: 'Navigation',
   component: Tabs,
   args: {
     ...defaultProps,

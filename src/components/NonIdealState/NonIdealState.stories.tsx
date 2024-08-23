@@ -17,7 +17,8 @@ import { defaultProps, NonIdealState } from './NonIdealState';
 type Story = StoryObj<typeof NonIdealState>;
 
 export default {
-  title: 'Feedback/NonIdealState',
+  title: 'Components/NonIdealState',
+  // category: 'Feedback',
   component: NonIdealState,
   args: defaultProps,
   argTypes: {

@@ -14,7 +14,8 @@ import { defaultProps, Dropdown } from './Dropdown';
 type Story = StoryObj<typeof Dropdown>;
 
 export default {
-  title: 'Inputs/Dropdown',
+  title: 'Components/Dropdown',
+  // category: 'Inputs',
   component: Dropdown,
   args: defaultProps,
   argTypes: {

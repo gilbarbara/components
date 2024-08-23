@@ -21,7 +21,8 @@ import { ButtonUnstyled, defaultProps } from './ButtonUnstyled';
 type Story = StoryObj<typeof ButtonUnstyled>;
 
 export default {
-  title: 'Buttons/ButtonUnstyled',
+  title: 'Components/ButtonUnstyled',
+  // category: 'Buttons',
   component: ButtonUnstyled,
   args: {
     ...defaultProps,
