@@ -59,15 +59,15 @@ exports[`borderStyles > should return properly for "%p" vertical 1`] = `
 
 exports[`borderStyles > should return properly with an array 1`] = `
 {
-  "borderLeft": "4px solid #cdcdfe",
+  "borderLeft": "4px solid #ccdeff",
   "borderTop": "1px solid #e6e6e6",
 }
 `;
 
 exports[`colorStyles > should return properly with "background" and "color" 1`] = `
 {
-  "backgroundColor": "#3030e8",
-  "border": "1px solid #3030e8",
+  "backgroundColor": "#0058ff",
+  "border": "1px solid #0058ff",
   "color": "#d3f8d7",
 }
 `;
@@ -239,8 +239,8 @@ exports[`getStyles > should return an object with the basic styles 1`] = `
 
 exports[`getStyles > should return properly 1`] = `
 {
-  "backgroundColor": "#3030e8",
-  "border": "1px solid #3030e8",
+  "backgroundColor": "#0058ff",
+  "border": "1px solid #0058ff",
   "borderRadius": "16px",
   "boxShadow": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
   "boxSizing": "border-box",
@@ -285,15 +285,15 @@ exports[`gridStyles > should return properly 1`] = `
 
 exports[`hoverStyles > should return "backgroundColor" and "borderColor" 1`] = `
 {
-  "backgroundColor": "#5e5eed",
-  "borderColor": "#5e5eed",
+  "backgroundColor": "#3379ff",
+  "borderColor": "#3379ff",
 }
 `;
 
 exports[`hoverStyles > should return "borderColor" and "color" for variant "bordered 1`] = `
 {
-  "borderColor": "#5e5eed",
-  "color": "#5e5eed",
+  "borderColor": "#3379ff",
+  "color": "#3379ff",
 }
 `;
 
@@ -301,7 +301,7 @@ exports[`hoverStyles > should return an empty object with "disabled" 1`] = `{}`;
 
 exports[`hoverStyles > should return only and "color" for variant "clean 1`] = `
 {
-  "color": "#5e5eed",
+  "color": "#3379ff",
 }
 `;
 
@@ -323,7 +323,7 @@ exports[`inputStyles > should return custom styles for "input" 1`] = `
 
     &:focus {
       
-box-shadow: 0 3px 0 0 rgba(48, 48, 232, 0.996);
+box-shadow: 0 3px 0 0 rgba(0, 88, 255, 0.996);
 outline: none;
 
       
@@ -350,7 +350,7 @@ outline: none;
       }
 
       &:not(:placeholder-shown) {
-        border-color: #3030e8;
+        border-color: #0058ff;
       }
 
       &:read-only {
@@ -389,7 +389,7 @@ exports[`inputStyles > should return the default styles for "select" 1`] = `
 
     &:focus {
       
-      outline:rgba(48, 48, 232, 0.6) solid 3px;outline-offset:1px;z-index:10;
+      outline:rgba(0, 88, 255, 0.6) solid 3px;outline-offset:1px;z-index:10;
     }
 
     &:disabled {
@@ -429,7 +429,7 @@ exports[`inputStyles > should return the default styles for "textarea" 1`] = `
 
     &:focus {
       
-      outline:rgba(48, 48, 232, 0.6) solid 3px;outline-offset:1px;z-index:10;
+      outline:rgba(0, 88, 255, 0.6) solid 3px;outline-offset:1px;z-index:10;
     }
 
     &:disabled {
@@ -453,7 +453,7 @@ exports[`inputStyles > should return the default styles for "textarea" 1`] = `
       }
 
       &:not(:placeholder-shown) {
-        border-color: #3030e8;
+        border-color: #0058ff;
       }
 
       &:read-only {
