@@ -32,6 +32,7 @@ export * from './components/Image';
 export * from './components/Input';
 export * from './components/InputColor';
 export * from './components/InputFile';
+export * from './components/Keyboard';
 export * from './components/Label';
 export * from './components/List';
 export * from './components/Loader';
