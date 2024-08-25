@@ -43,6 +43,7 @@ export type { ImageProps } from '../components/Image/Image';
 export type { InputProps } from '../components/Input/Input';
 export type { InputColorProps } from '../components/InputColor/InputColor';
 export type { InputFileProps } from '../components/InputFile/InputFile';
+export type { KeyboardProps } from '../components/Keyboard/Keyboard';
 export type { LabelProps } from '../components/Label/Label';
 export type { ListProps } from '../components/List/useList';
 export type { LoaderProps } from '../components/Loader/useLoader';
