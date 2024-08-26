@@ -1,9 +1,11 @@
 import { Box, H2, Jumbo, Paragraph } from '~';
 
+import Navigation from './Navigation';
+
 import Code from '../../components/Code';
 import CodeBlock from '../../components/CodeBlock';
 
-function OverviewTheming() {
+export default function ThemeCustomization() {
   return (
     <>
       <Jumbo>Theme Customization</Jumbo>
@@ -67,8 +69,8 @@ if (rootElement) {
           <Code>color</Code> props in components that support them.
         </Paragraph>
       </Box>
+
+      <Navigation next="Composition" previous="Theme" />
     </>
   );
 }
-
-export default OverviewTheming;
