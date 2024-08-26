@@ -7,6 +7,7 @@ import { Box, Dropdown, H2, H3, Icon, Input, Jumbo, Paragraph, Spacer, Text } fr
 import { icons } from '~/modules/options';
 import { avatar, variants } from '~/modules/theme';
 
+import Navigation from '~/stories/Overview/components/Navigation';
 import type { DropdownOption, Icons, Variant } from '~/types';
 
 interface ItemProps {
@@ -43,7 +44,7 @@ function Item({ color, name, size }: ItemProps) {
   );
 }
 
-function Icons() {
+export default function Icons() {
   const [{ category, color, search, size }, setState] = useSetState<State>({
     category: '',
     color: 'black',
@@ -216,8 +217,7 @@ function Icons() {
       </Spacer>
       {content.header}
       {content.icons}
+      <Navigation next="Theme" previous="Colors" />
     </Box>
   );
 }
-
-export default Icons;

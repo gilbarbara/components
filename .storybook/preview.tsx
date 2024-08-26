@@ -46,13 +46,12 @@ export const parameters = {
     storySort: {
       method: 'alphabetical',
       order: [
-        'About',
-        'Exports',
-        'Composition',
+        'Introduction',
         'Colors',
         'Icons',
         'Theme',
-        'Customize Theme',
+        'Theme Customization',
+        'Composition',
         'Components',
       ],
     },

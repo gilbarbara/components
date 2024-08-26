@@ -4,6 +4,7 @@ import { Unstyled } from '@storybook/blocks';
 import { Flex, Jumbo, Paragraph } from "../../src";
 import Card from "./components/Card";
 import CodeBlock from "../components/CodeBlock";
+import Navigation from './components/Navigation';
 
 import users from '../__fixtures__/users.json';
 
@@ -123,4 +124,5 @@ export default function Card(props: CardProps) {
   );
 }
 `}</CodeBlock>
+  <Navigation previous="Theme Customization" />
 </Unstyled>
