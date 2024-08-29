@@ -57,6 +57,13 @@ export function getColorTokens(
           hoverColor: theme.grayScale['100'],
         };
       }
+      case 'transparent': {
+        return {
+          mainColor: 'transparent',
+          textColor: selectedTextColor ?? theme.black,
+          hoverColor: 'transparent',
+        };
+      }
       default: {
         if (variantKeys.some(d => mainColor.startsWith(d))) {
           const [variant, tone] = mainColor.split('.') as [Color, ColorTone];
