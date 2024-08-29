@@ -404,36 +404,33 @@ export function colorStyles<T extends WithColors & WithTheme & { variant?: strin
   return styles;
 }
 
-export function dimensionStyles<T extends WithDimension>(
-  props: T,
-  defaultOptions: WithDimension = {},
-) {
+export function dimensionStyles<T extends WithDimension>(props: T) {
   const { height, maxHeight, maxWidth, minHeight, minWidth, width } = props;
 
   const output: CSSObject = {};
 
-  if (!is.nullOrUndefined(height || defaultOptions.height)) {
-    output.height = px(height ?? defaultOptions.height);
+  if (!is.nullOrUndefined(height)) {
+    output.height = px(height);
   }
 
-  if (!is.nullOrUndefined(maxHeight || defaultOptions.maxHeight)) {
-    output.maxHeight = px(maxHeight ?? defaultOptions.maxHeight);
+  if (!is.nullOrUndefined(maxHeight)) {
+    output.maxHeight = px(maxHeight);
   }
 
-  if (!is.nullOrUndefined(maxWidth || defaultOptions.maxWidth)) {
-    output.maxWidth = px(maxWidth ?? defaultOptions.maxWidth);
+  if (!is.nullOrUndefined(maxWidth)) {
+    output.maxWidth = px(maxWidth);
   }
 
-  if (!is.nullOrUndefined(minHeight || defaultOptions.minHeight)) {
-    output.minHeight = px(minHeight ?? defaultOptions.minHeight);
+  if (!is.nullOrUndefined(minHeight)) {
+    output.minHeight = px(minHeight);
   }
 
-  if (!is.nullOrUndefined(minWidth || defaultOptions.minWidth)) {
-    output.minWidth = px(minWidth ?? defaultOptions.minWidth);
+  if (!is.nullOrUndefined(minWidth)) {
+    output.minWidth = px(minWidth);
   }
 
-  if (!is.nullOrUndefined(width || defaultOptions.width)) {
-    output.width = px(width ?? defaultOptions.width);
+  if (!is.nullOrUndefined(width)) {
+    output.width = px(width);
   }
 
   return output;

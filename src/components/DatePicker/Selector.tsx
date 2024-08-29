@@ -40,17 +40,19 @@ interface State {
   selectedDates?: DatePickerRangeParameter | string;
 }
 
-const StyledSelector = styled(
-  'div',
-  getStyledOptions(),
-)<DatePickerSelectorProps>(props => {
-  return css`
-    display: inline-flex;
-    position: relative;
-    ${dimensionStyles(props, { width: 'auto' })};
-    ${marginStyles(props)};
-  `;
-});
+const StyledSelector = styled('div', getStyledOptions())<DatePickerSelectorProps>(
+  {
+    width: 'auto',
+  },
+  props => {
+    return css`
+      display: inline-flex;
+      position: relative;
+      ${dimensionStyles(props)};
+      ${marginStyles(props)};
+    `;
+  },
+);
 
 const StyledButton = styled('div', getStyledOptions())<
   SetRequired<
