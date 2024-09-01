@@ -1,49 +1,118 @@
-import { MouseEvent, useCallback, useRef, useState } from 'react';
+import {
+  MouseEvent,
+  ReactNode,
+  TransitionEventHandler,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 import { createPortal } from 'react-dom';
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { clamp } from '@gilbarbara/helpers';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from '@gilbarbara/hooks';
+import { SetRequired } from '@gilbarbara/types';
+import { fade } from 'colorizr';
+
+import { getColorTokens } from '~/modules/colors';
+import { formatKebabCaseToCamelCase } from '~/modules/helpers';
+import { positioningStyles } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { Icon } from '~/components/Icon';
 
-import { PortalProps, usePortal } from './usePortal';
+import { WithTheme } from '~/types';
 
-function getPortalElement() {
-  return document.querySelector('.__portal');
-}
+import { createPortalElement, getPortalElement, PortalProps, usePortal } from './usePortal';
 
-function createPortalElement() {
-  const newElement = document.createElement('div');
+const StyledPortal = styled.div<Omit<PortalProps, 'children'> & { isActive: boolean }>(
+  {
+    alignItems: 'center',
+    bottom: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    left: 0,
+    opacity: 0,
+    position: 'fixed',
+    right: 0,
+    top: 0,
+    visibility: 'hidden',
+  },
+  props => {
+    const { isActive } = props;
 
-  newElement.classList.add('__portal');
+    return css`
+      opacity: ${isActive ? 1 : 0};
+      visibility: ${isActive ? 'visible' : 'hidden'};
+      ${positioningStyles(props)};
+    `;
+  },
+);
 
-  return newElement;
-}
+const Overlay = styled.div<
+  SetRequired<
+    Omit<PortalProps, 'children'>,
+    'disableAnimation' | 'overlayBlur' | 'overlayBlurAmount' | 'overlayOpacity'
+  > & { isActive: boolean } & WithTheme
+>(props => {
+  const {
+    animationEnterDuration,
+    animationExitDuration,
+    bg,
+    disableAnimation,
+    isActive,
+    overlayBlur,
+    overlayBlurAmount,
+    overlayOpacity,
+    theme,
+  } = props;
+  const { black, darkMode, grayScale } = theme;
 
-const portalHide = keyframes`
-  0% {
-    opacity: 1;
-    visibility: visible;
+  const opacityDuration = isActive ? animationEnterDuration : animationExitDuration;
+  let selectedBg = darkMode ? grayScale['150'] : black;
+
+  if (bg) {
+    const { mainColor } = getColorTokens(bg, undefined, theme);
+
+    selectedBg = mainColor;
   }
 
-  100% {
-    opacity: 0;
-    visibility: hidden;
-  }
-`;
-
-const portalShow = keyframes`
-  0% {
-    opacity: 0;
-    visibility: hidden;
+  if (selectedBg !== 'transparent') {
+    selectedBg = fade(selectedBg, clamp((1 - overlayOpacity) * 100));
   }
 
-  100% {
-    opacity: 1;
-    visibility: visible;
+  return css`
+    background-color: ${selectedBg};
+    ${overlayBlur && `backdrop-filter: blur(${overlayBlurAmount});`};
+    opacity: ${isActive ? 1 : 0};
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    ${!disableAnimation && `transition: opacity ${opacityDuration}s;`};
+  `;
+});
+
+const Content = styled.div<
+  Pick<PortalProps, 'animationEnterDuration' | 'animationExitDuration'> & {
+    disableAnimation: boolean;
+    isActive: boolean;
   }
-`;
+>(props => {
+  const { animationEnterDuration, animationExitDuration, disableAnimation, isActive } = props;
+
+  const opacityDuration = isActive ? animationEnterDuration : animationExitDuration;
+
+  return css`
+    max-height: 100%;
+    opacity: ${isActive ? 1 : 0};
+    position: relative;
+    ${!disableAnimation && `transition: opacity ${opacityDuration}s;`};
+    width: auto;
+    z-index: 10;
+  `;
+});
 
 const CloseButton = styled(ButtonUnstyled)`
   position: absolute;
@@ -52,91 +121,70 @@ const CloseButton = styled(ButtonUnstyled)`
   z-index: 20;
 `;
 
-const Content = styled.div`
-  max-height: 100%;
-  position: relative;
-  width: auto;
-  z-index: 10;
-`;
-
-const Overlay = styled.div<Pick<PortalProps, 'isOpen'> & { darkMode: boolean }>(props => {
-  const { darkMode, isOpen } = props;
-
-  return css`
-    background-color: ${darkMode ? 'rgba(222, 222, 222, 0.3)' : 'rgba(0, 0, 0, 0.3)'};
-    bottom: 0;
-    left: 0;
-    opacity: ${isOpen ? 1 : 0};
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: opacity 0.5s;
-  `;
-});
-
-const StyledPortal = styled.div<Pick<PortalProps, 'isOpen' | 'zIndex'>>(props => {
-  const { isOpen, zIndex } = props;
-
-  return css`
-    align-items: center;
-    animation-duration: 0.5s;
-    animation-name: ${portalHide};
-    animation-play-state: ${isOpen ? 'running' : 'paused'};
-    animation-name: ${isOpen ? portalShow : portalHide};
-    animation-direction: ${isOpen ? 'normal' : 'reverse'};
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: ${zIndex};
-  `;
-});
-
 export function Portal(props: PortalProps) {
+  const { componentProps, getDataAttributes } = usePortal(props);
   const {
-    componentProps: {
-      children,
-      disableCloseOnClickOverlay,
-      disableCloseOnEsc,
-      hideOverlay,
-      isOpen,
-      onClose,
-      onOpen,
-      showCloseButton,
-      theme,
-      zIndex,
-    },
-    getDataAttributes,
-  } = usePortal(props);
+    animationEnterDuration,
+    animationExitDuration,
+    children,
+    disableAnimation,
+    disableCloseOnClickOverlay,
+    disableCloseOnEsc,
+    hideOverlay,
+    isOpen,
+    onClose,
+    onOpen,
+    showCloseButton,
+    theme,
+    ...rest
+  } = componentProps;
+  const { dataAttributeName } = theme;
 
+  const [isActive, setActive] = useState(isOpen);
   const [isReady, setReady] = useState(false);
+  const [isRendering, setRendering] = useState(false);
   const portal = useRef<Element | null>(null);
-  const { darkMode, dataAttributeName } = theme;
 
-  const closePortal = useRef(() => {
-    destroyPortal.current();
-
-    onClose?.();
-  });
-
-  const destroyPortal = useRef(() => {
-    if (!disableCloseOnEsc) {
-      document.removeEventListener('keydown', handleKeyDown);
-    }
-  });
-
-  const previousIsActive = usePrevious(isOpen);
+  const shouldRender = isOpen || isActive || isRendering;
+  const previousIsOpen = usePrevious(isOpen);
   const previousDisableCloseOnEsc = usePrevious(disableCloseOnEsc);
 
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+  const handleKeyDown = useRef((event: KeyboardEvent) => {
     if (event.code === 'Escape') {
       event.stopPropagation();
-      closePortal.current();
+      closePortal();
     }
-  }, []);
+  });
+
+  const removeListener = useCallback(
+    (listener: (event: KeyboardEvent) => void) => {
+      if (!disableCloseOnEsc) {
+        document.removeEventListener('keydown', listener);
+      }
+    },
+    [disableCloseOnEsc],
+  );
+
+  const openPortal = useCallback(() => {
+    setActive(true);
+    setRendering(true);
+    onOpen?.();
+
+    if (!disableCloseOnEsc) {
+      document.addEventListener('keydown', handleKeyDown.current);
+    }
+  }, [disableCloseOnEsc, onOpen]);
+
+  const closePortal = useCallback(() => {
+    removeListener(handleKeyDown.current);
+
+    setActive(false);
+
+    if (disableAnimation) {
+      setRendering(false);
+      onClose?.();
+    }
+  }, [disableAnimation, onClose, removeListener]);
 
   useMount(() => {
     let element = getPortalElement();
@@ -150,87 +198,130 @@ export function Portal(props: PortalProps) {
     setReady(true);
 
     if (isOpen && !disableCloseOnEsc) {
-      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keydown', handleKeyDown.current);
     }
   });
 
   useUnmount(() => {
-    destroyPortal.current();
+    removeListener(handleKeyDown.current);
   });
 
-  const openPortal = useCallback(() => {
-    onOpen?.();
-
-    if (!disableCloseOnEsc) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
-  }, [disableCloseOnEsc, handleKeyDown, onOpen]);
-
   useUpdateEffect(() => {
-    const hasChanged = previousIsActive !== isOpen;
+    const hasChanged = previousIsOpen !== isOpen;
 
     if (hasChanged && isOpen) {
       openPortal();
-    } else if (hasChanged && !isOpen) {
-      destroyPortal.current();
+    } else if (hasChanged && !isOpen && isActive) {
+      closePortal();
     }
 
     if (previousDisableCloseOnEsc !== disableCloseOnEsc) {
       if (disableCloseOnEsc) {
-        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keydown', handleKeyDown.current);
       } else {
-        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('keydown', handleKeyDown.current);
       }
     }
   }, [
+    closePortal,
     disableCloseOnEsc,
-    destroyPortal,
-    handleKeyDown,
+    isActive,
     isOpen,
     openPortal,
-    previousIsActive,
     previousDisableCloseOnEsc,
+    previousIsOpen,
   ]);
 
   const handleClickClose = useCallback(
     (event: MouseEvent<HTMLElement>) => {
       const { dataset } = event.currentTarget;
 
-      if (dataset[dataAttributeName] === 'PortalOverlay' && disableCloseOnClickOverlay) {
+      if (
+        dataset[formatKebabCaseToCamelCase(dataAttributeName)] === 'PortalOverlay' &&
+        disableCloseOnClickOverlay
+      ) {
         return;
       }
 
-      closePortal.current();
+      closePortal();
     },
-    [dataAttributeName, disableCloseOnClickOverlay],
+    [closePortal, dataAttributeName, disableCloseOnClickOverlay],
   );
 
-  const content = [];
+  const handleTransitionEnd: TransitionEventHandler<HTMLDivElement> = useCallback(
+    event => {
+      const { dataset } = event.currentTarget;
 
-  if (isOpen) {
-    content.push(children);
-  }
+      if (dataset[formatKebabCaseToCamelCase(dataAttributeName)] !== 'PortalContent') {
+        return;
+      }
+
+      const { opacity } = window.getComputedStyle(event.currentTarget);
+
+      if (opacity === '0') {
+        setActive(false);
+        setRendering(false);
+        onClose?.();
+      }
+    },
+    [dataAttributeName, onClose],
+  );
 
   if (!isReady || !portal.current) {
     return null;
   }
 
-  return createPortal(
-    <StyledPortal {...getDataAttributes('Portal')} isOpen={isOpen} zIndex={zIndex}>
-      {!hideOverlay && (
+  const content: Record<string, ReactNode> = {};
+
+  if (shouldRender) {
+    content.main = (
+      <Content
+        {...getDataAttributes('PortalContent')}
+        animationEnterDuration={animationEnterDuration}
+        animationExitDuration={animationExitDuration}
+        disableAnimation={disableAnimation}
+        isActive={isActive}
+        onTransitionEnd={handleTransitionEnd}
+      >
+        {children}
+      </Content>
+    );
+
+    if (!hideOverlay) {
+      content.overlay = (
         <Overlay
-          darkMode={darkMode}
           {...getDataAttributes('PortalOverlay')}
-          isOpen={isOpen}
+          animationEnterDuration={animationEnterDuration}
+          animationExitDuration={animationExitDuration}
+          disableAnimation={disableAnimation}
+          isActive={isActive}
           onClick={handleClickClose}
+          theme={theme}
+          {...rest}
         />
-      )}
-      {showCloseButton && (
-        <CloseButton onClick={handleClickClose} p="xs" radius="round" title="Close">
+      );
+    }
+
+    if (showCloseButton) {
+      content.closeButton = (
+        <CloseButton
+          {...getDataAttributes('PortalCloseButton')}
+          onClick={handleClickClose}
+          p="xs"
+          radius="round"
+          title="Close"
+        >
           <Icon name="close-o" size={24} title="Close" />
         </CloseButton>
-      )}
-      <Content {...getDataAttributes('PortalContent')}>{content}</Content>
+      );
+    }
+  }
+
+  return createPortal(
+    <StyledPortal {...getDataAttributes('Portal')} isActive={shouldRender} {...rest}>
+      {content.overlay}
+      {content.closeButton}
+      {content.main}
     </StyledPortal>,
     portal.current,
   );

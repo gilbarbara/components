@@ -3,6 +3,7 @@ import { Children, isValidElement } from 'react';
 import {
   clearNumber,
   createMediaQuery,
+  formatKebabCaseToCamelCase,
   getMediaQueries,
   isCSSUnit,
   mergeTheme,
@@ -25,6 +26,18 @@ describe('createMediaQuery', () => {
     expect(createMediaQuery('_', mediaQueries)).toBeUndefined();
     expect(createMediaQuery('sm', mediaQueries)).toBe('@media screen and (min-width: 400px)');
     expect(createMediaQuery('600px', mediaQueries)).toBe('@media screen and (min-width: 600px)');
+  });
+});
+
+describe('formatKebabCaseToCamelCase', () => {
+  it.each([
+    { value: 'background-color', expected: 'backgroundColor' },
+    { value: 'border-bottom-left-radius', expected: 'borderBottomLeftRadius' },
+    { value: 'snake_case', expected: 'snake_case' },
+    { value: 'space case', expected: 'space case' },
+    { value: 'camelCase', expected: 'camelCase' },
+  ])(`should return $expected for $value`, ({ expected, value }) => {
+    expect(formatKebabCaseToCamelCase(value)).toBe(expected);
   });
 });
 
