@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
@@ -47,29 +46,23 @@ const StyledModalContent = styled(
 });
 
 export function Modal(props: ModalProps) {
+  const { componentProps, getDataAttributes } = useModal(props);
   const {
-    componentProps: {
-      children,
-      disableCloseOnClickOverlay,
-      disableCloseOnEsc,
-      hideCloseButton,
-      hideOverlay,
-      isOpen,
-      maxHeight,
-      onClose,
-      onOpen,
-      style,
-      title,
-      zIndex,
-      ...rest
-    },
-    getDataAttributes,
-  } = useModal(props);
+    children,
+    disableCloseOnClickOverlay,
+    disableCloseOnEsc,
+    hideCloseButton,
+    hideOverlay,
+    isOpen,
+    maxHeight,
+    onClose,
+    onOpen,
+    style,
+    title,
+    zIndex,
+    ...rest
+  } = componentProps;
   const { black, darkMode, white } = rest.theme;
-
-  const handlePortalClose = useCallback(() => {
-    onClose?.();
-  }, [onClose]);
 
   let header;
 
@@ -92,7 +85,7 @@ export function Modal(props: ModalProps) {
       disableCloseOnEsc={disableCloseOnEsc}
       hideOverlay={hideOverlay}
       isOpen={isOpen}
-      onClose={handlePortalClose}
+      onClose={onClose}
       onOpen={onOpen}
       zIndex={zIndex}
     >

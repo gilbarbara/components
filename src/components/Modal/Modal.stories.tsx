@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { sleep } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, screen, userEvent, waitFor, within } from '@storybook/test';
 
@@ -31,35 +32,41 @@ export default {
 
 export const Basic: Story = {
   render: function Render(props) {
+    const { onClose } = props;
     const [isOpen, setOpen] = useState(false);
 
-    const handleClick = () => {
-      setOpen(previousState => !previousState);
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClickClose = () => {
+      setOpen(false);
+      onClose?.();
     };
 
     return (
-      <div className="flex-center">
-        <Button data-testid="OpenModal" onClick={handleClick} size="sm">
+      <>
+        <Button data-testid="OpenModal" onClick={handleClickOpen} size="sm">
           Open Modal
         </Button>
 
-        <Modal {...props} isOpen={isOpen} onClose={handleClick}>
-          <FormGroup data-testid="Dialog" label="Name" required>
+        <Modal {...props} isOpen={isOpen} onClose={handleClickClose}>
+          <FormGroup data-testid="Form" label="Name" required>
             <Input name="name" placeholder="Name" />
           </FormGroup>
           <FormGroup label="Description">
             <Textarea name="description" placeholder="Tell us about yourself" />
           </FormGroup>
           <Spacer distribution="end">
-            <Button onClick={handleClick} variant="bordered">
+            <Button onClick={handleClickClose} variant="bordered">
               Cancel
             </Button>
-            <Button onClick={handleClick} type="submit">
+            <Button onClick={handleClickClose} type="submit">
               Save
             </Button>
           </Spacer>
         </Modal>
-      </div>
+      </>
     );
   },
 };
@@ -71,25 +78,38 @@ export const Tests: Story = {
     onOpen: fn(),
   },
   render: Basic.render,
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
     await userEvent.click(canvas.getByTestId('OpenModal'));
-
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
+      expect(args.onOpen).toHaveBeenCalledTimes(1);
     });
+
+    await sleep(0.2);
 
     await userEvent.click(screen.getByRole('button', { name: 'Save' }));
-    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(args.onClose).toHaveBeenCalledTimes(1);
+    });
 
     await userEvent.click(canvas.getByTestId('OpenModal'));
+    await waitFor(() => {
+      expect(args.onOpen).toHaveBeenCalledTimes(2);
+    });
+
+    await sleep(0.2);
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
     });
 
+    await sleep(0.2);
+
     await userEvent.keyboard('{Escape}');
-    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(args.onClose).toHaveBeenCalledTimes(2);
+    });
   },
 };

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { sleep } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, screen, userEvent, waitFor, within } from '@storybook/test';
 
@@ -40,23 +41,27 @@ export const Basic: Story = {
   render: function Render(props) {
     const [isOpen, setOpen] = useState(false);
 
-    const handleClicks = () => {
-      setOpen(previousState => !previousState);
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClickClose = () => {
+      setOpen(false);
     };
 
     return (
-      <div className="flex-center">
-        <Button data-testid="OpenDialog" onClick={handleClicks} size="sm">
+      <>
+        <Button data-testid="OpenDialog" onClick={handleClickOpen} size="sm">
           Open Dialog
         </Button>
 
         <Dialog
           {...props}
           isOpen={isOpen}
-          onClickCancel={handleClicks}
-          onClickConfirmation={handleClicks}
+          onClickCancel={handleClickClose}
+          onClickConfirmation={handleClickClose}
         />
-      </div>
+      </>
     );
   },
 };
@@ -72,25 +77,35 @@ export const Tests: Story = {
     onOpen: fn(),
   },
   render: Basic.render,
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
     await userEvent.click(canvas.getByTestId('OpenDialog'));
+
+    await expect(args.onOpen).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
     });
 
     await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
-    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
-
-    await userEvent.click(canvas.getByTestId('OpenDialog'));
 
     await waitFor(() => {
-      expect(screen.getByTestId('Dialog')).toBeInTheDocument();
+      expect(args.onClose).toHaveBeenCalledTimes(1);
     });
 
+    await userEvent.click(canvas.getByTestId('OpenDialog'));
+    await waitFor(() => {
+      expect(args.onOpen).toHaveBeenCalledTimes(2);
+    });
+    await expect(screen.getByTestId('Dialog')).toBeInTheDocument();
+
+    await sleep(0.3);
+
     await userEvent.keyboard('{Escape}');
-    await expect(screen.queryByTestId('Dialog')).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(args.onClose).toHaveBeenCalledTimes(2);
+    });
   },
 };

@@ -1,4 +1,4 @@
-import { isValidElement, useCallback } from 'react';
+import { isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
@@ -37,33 +37,27 @@ const StyledDialog = styled(
 });
 
 export function Dialog(props: DialogProps) {
-  const {
-    componentProps: {
-      accent,
-      buttonCancelText,
-      buttonConfirmText,
-      buttonOrder,
-      content,
-      disableCloseOnClickOverlay,
-      disableCloseOnEsc,
-      hideOverlay,
-      isOpen,
-      onClickCancel,
-      onClickConfirmation,
-      onClose,
-      onOpen,
-      style,
-      title,
-      zIndex,
-      ...rest
-    },
-    getDataAttributes,
-  } = useDialog(props);
+  const { componentProps, getDataAttributes } = useDialog(props);
 
-  const handlePortalClose = useCallback(() => {
-    onClickCancel();
-    onClose?.();
-  }, [onClickCancel, onClose]);
+  const {
+    accent,
+    buttonCancelText,
+    buttonConfirmText,
+    buttonOrder,
+    content,
+    disableCloseOnClickOverlay,
+    disableCloseOnEsc,
+    hideOverlay,
+    isOpen,
+    onClickCancel,
+    onClickConfirmation,
+    onClose,
+    onOpen,
+    style,
+    title,
+    zIndex,
+    ...rest
+  } = componentProps;
 
   const actionButton = (
     <Button bg={accent} onClick={onClickConfirmation}>
@@ -82,7 +76,7 @@ export function Dialog(props: DialogProps) {
       disableCloseOnEsc={disableCloseOnEsc}
       hideOverlay={hideOverlay}
       isOpen={isOpen}
-      onClose={handlePortalClose}
+      onClose={onClose}
       onOpen={onOpen}
       zIndex={zIndex}
     >

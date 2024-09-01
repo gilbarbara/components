@@ -38,6 +38,10 @@ export function createMediaQuery(size: ResponsiveSizes, mediaQueries: MediaQueri
   return mediaQueries[size];
 }
 
+export function formatKebabCaseToCamelCase(value: string) {
+  return value.replace(/-./g, m => m[1].toUpperCase());
+}
+
 export function getMediaQueries(): MediaQueries {
   return objectKeys(breakpoints)
     .filter(d => Number.isNaN(parseInt(d, 10)))
