@@ -1,5 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`formatBreakpoints > should return properly 1`] = `
+{
+  "_": 0,
+  "lg": 1024,
+  "md": 768,
+  "sm": 400,
+  "xl": 1280,
+  "xs": 375,
+  "xxl": 1440,
+  "xxs": 320,
+  "xxxl": 1680,
+}
+`;
+
 exports[`getMediaQueries > should return properly 1`] = `
 {
   "lg": "@media screen and (min-width: 1024px)",
