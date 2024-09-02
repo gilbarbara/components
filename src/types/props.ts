@@ -55,6 +55,7 @@ export type {
   MenuTitleProps,
 } from '../components/Menu/useMenu';
 export type { ModalProps } from '../components/Modal/Modal';
+export type { NavBarProps } from '../components/NavBar/NavBar';
 export type { NonIdealStateProps } from '../components/NonIdealState/NonIdealState';
 export type { PageProps } from '../components/Page/Page';
 export type { PaginationProps } from '../components/Pagination/Pagination';

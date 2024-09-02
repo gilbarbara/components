@@ -1,4 +1,4 @@
-import { CSSProperties, JSXElementConstructor } from 'react';
+import { CSSProperties } from 'react';
 import { SerializedStyles } from '@emotion/react';
 import { validatePassword } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
@@ -75,11 +75,6 @@ export interface MediaQueries {
   sm: string;
   xl: string;
   xs: string;
-}
-
-export interface RecursiveChildrenEnhancerOptions {
-  componentType?: JSXElementConstructor<any>;
-  overrideProps?: boolean;
 }
 
 export type ResponsiveSizes = '_' | Breakpoint | string;

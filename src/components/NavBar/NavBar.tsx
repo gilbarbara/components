@@ -1,0 +1,165 @@
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { clamp, omit, px } from '@gilbarbara/helpers';
+import { useMergeRefs } from '@gilbarbara/hooks';
+import { SetRequired } from '@gilbarbara/types';
+import { fade } from 'colorizr';
+import is from 'is-lite';
+
+import { useScrollPosition } from '~/hooks/useScrollPosition';
+
+import { getColorTokens } from '~/modules/colors';
+import { pickChildren } from '~/modules/helpers';
+import { getStyledOptions } from '~/modules/system';
+
+import { WithTheme } from '~/types';
+
+import { NavBarMenu } from './NavBarMenu';
+import { NavBarProps, NavBarProvider, useNavBar } from './useNavBar';
+
+const StyledNavBar = styled('nav', getStyledOptions())<
+  SetRequired<NavBarProps, 'bordered' | 'blurred' | 'blurredOpacity' | 'height' | 'position'> &
+    WithTheme & { isHidden: boolean }
+>(
+  {
+    width: '100%',
+  },
+  props => {
+    const { bg, blurred, blurredOpacity, bordered, color, height, position, theme } = props;
+    const { black, darkColor, darkMode, grayScale, white } = theme;
+
+    const borderColor = darkMode ? grayScale['700'] : grayScale['200'];
+    let selectedBg = darkMode ? darkColor : white;
+    let selectedColor = darkMode ? white : black;
+
+    if (bg) {
+      const { mainColor, textColor } = getColorTokens(bg, color, theme);
+
+      selectedBg = mainColor;
+      selectedColor = textColor;
+    }
+
+    if (blurred) {
+      selectedBg = fade(selectedBg, clamp(blurredOpacity * 100));
+    }
+
+    return css`
+      background-color: ${selectedBg};
+      color: ${selectedColor};
+      ${bordered && `border-bottom: 1px solid ${borderColor};`};
+      ${blurred && `backdrop-filter: blur(16px);`};
+      height: ${px(height)};
+      position: ${position};
+      transform: translateY(${props.isHidden ? '-100%' : 0});
+      transition: transform 0.3s;
+      top: 0;
+    `;
+  },
+);
+
+const StyledHeader = styled('header', getStyledOptions())<
+  SetRequired<NavBarProps, 'height' | 'maxWidth'> & WithTheme
+>(
+  {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  props => {
+    const { height, maxWidth, theme } = props;
+    const { spacing } = theme;
+
+    return css`
+      height: ${px(height)};
+      max-width: ${px(maxWidth)};
+      padding: 0 ${spacing.md};
+    `;
+  },
+);
+
+export const NavBar = forwardRef<HTMLElement, NavBarProps>((props, ref) => {
+  const { componentProps, getDataAttributes } = useNavBar(props);
+  const {
+    children,
+    disableScrollHandler,
+    hideOnScroll,
+    menuDefaultOpen,
+    menuOpen,
+    onScrollPosition,
+    onToggleMenu,
+    parentRef,
+    ...rest
+  } = componentProps;
+  const [isHidden, setIsHidden] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(is.boolean(menuOpen) ? menuOpen : menuDefaultOpen);
+
+  const localRef = useRef<HTMLButtonElement | null>(null);
+  const mergedRefs = useMergeRefs(localRef, ref);
+  const navHeight = useRef(0);
+
+  useEffect(() => {
+    navHeight.current = localRef.current?.offsetHeight ?? 0;
+  }, []);
+
+  useEffect(() => {
+    if (is.boolean(menuOpen)) {
+      setMenuOpen(menuOpen);
+    }
+  }, [menuOpen]);
+
+  useScrollPosition({
+    elementRef: parentRef,
+    isEnabled: hideOnScroll || !disableScrollHandler,
+    callback: ({ currPos, prevPos }) => {
+      onScrollPosition?.(currPos.y);
+
+      if (hideOnScroll) {
+        setIsHidden(previous => {
+          const next = currPos.y > prevPos.y && currPos.y > navHeight.current;
+
+          return next !== previous ? next : previous;
+        });
+      }
+    },
+  });
+
+  const [childrenWithoutMenu, [menu]] = pickChildren(children, NavBarMenu);
+
+  const handleToggleMenu = useCallback(
+    (isOpen: boolean) => {
+      if (is.boolean(menuOpen)) {
+        return;
+      }
+
+      setMenuOpen(isOpen);
+      onToggleMenu?.(isOpen);
+    },
+    [menuOpen, onToggleMenu],
+  );
+
+  return (
+    <StyledNavBar
+      ref={mergedRefs}
+      {...getDataAttributes('NavBar')}
+      data-hidden={isHidden}
+      isHidden={isHidden}
+      {...rest}
+    >
+      <NavBarProvider
+        props={{ ...omit(componentProps, 'children', 'theme'), isMenuOpen }}
+        toggleMenu={handleToggleMenu}
+      >
+        <StyledHeader {...getDataAttributes('NavBarHeader')} {...rest}>
+          {childrenWithoutMenu}
+        </StyledHeader>
+        {menu}
+      </NavBarProvider>
+    </StyledNavBar>
+  );
+});
+
+NavBar.displayName = 'NavBar';
+
+export { defaultProps, type NavBarProps } from './useNavBar';

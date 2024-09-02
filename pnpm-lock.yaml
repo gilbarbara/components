@@ -41,6 +41,9 @@ importers:
       deepmerge-ts:
         specifier: ^7.1.0
         version: 7.1.0
+      disable-scroll:
+        specifier: ^0.6.0
+        version: 0.6.0
       is-lite:
         specifier: ^1.2.1
         version: 1.2.1
@@ -3922,6 +3925,9 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
+  disable-scroll@0.6.0:
+    resolution: {integrity: sha512-6bTAS16sz+3X7Pib8d5dAO9xo5MvqDZvSlzuhW/2c3NhUvbPNqnsV3JttvnqgNCDEgWUgNWJYM392iUmLETDxA==}
+
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
@@ -7624,7 +7630,7 @@ snapshots:
       eslint-visitor-keys: 2.1.0
       semver: 6.3.1
 
-  '@babel/eslint-plugin@7.25.1(@babel/eslint-parser@7.25.1(@babel/core@7.25.2)(eslint@8.57.0))(eslint@8.57.0)':
+  '@babel/eslint-plugin@7.25.1(@babel/eslint-parser@7.25.1(@babel/core@7.24.7)(eslint@8.57.0))(eslint@8.57.0)':
     dependencies:
       '@babel/eslint-parser': 7.25.1(@babel/core@7.25.2)(eslint@8.57.0)
       eslint: 8.57.0
@@ -9013,7 +9019,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.25.2
       '@babel/eslint-parser': 7.25.1(@babel/core@7.25.2)(eslint@8.57.0)
-      '@babel/eslint-plugin': 7.25.1(@babel/eslint-parser@7.25.1(@babel/core@7.25.2)(eslint@8.57.0))(eslint@8.57.0)
+      '@babel/eslint-plugin': 7.25.1(@babel/eslint-parser@7.25.1(@babel/core@7.24.7)(eslint@8.57.0))(eslint@8.57.0)
       '@babel/preset-react': 7.24.7(@babel/core@7.25.2)
       '@typescript-eslint/eslint-plugin': 8.4.0(@typescript-eslint/parser@8.4.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/parser': 8.4.0(eslint@8.57.0)(typescript@5.5.4)
@@ -11650,6 +11656,8 @@ snapshots:
   dir-glob@3.0.1:
     dependencies:
       path-type: 4.0.0
+
+  disable-scroll@0.6.0: {}
 
   doctrine@2.1.0:
     dependencies:

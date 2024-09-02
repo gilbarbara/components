@@ -1,23 +1,24 @@
-import { Children, cloneElement, isValidElement, ReactNode } from 'react';
+import {
+  Children,
+  cloneElement,
+  ElementType,
+  isValidElement,
+  JSXElementConstructor,
+  ReactNode,
+} from 'react';
 import { css } from '@emotion/react';
 import { objectEntries, objectKeys, omit, px } from '@gilbarbara/helpers';
 import { PartialDeep, PlainObject } from '@gilbarbara/types';
 import { deepmergeCustom } from 'deepmerge-ts';
 import is from 'is-lite';
 
-import * as theme from '~/modules/theme';
+import * as defaultTheme from '~/modules/theme';
 
 import { generatePalette } from './palette';
 
-import {
-  MediaQueries,
-  RecursiveChildrenEnhancerOptions,
-  ResponsiveInput,
-  ResponsiveSizes,
-  Theme,
-} from '../types';
+import { MediaQueries, ResponsiveInput, ResponsiveSizes, Theme } from '../types';
 
-const { breakpoints } = theme;
+const { breakpoints } = defaultTheme;
 
 const deepmerge = deepmergeCustom({
   mergeArrays: false,
@@ -36,6 +37,17 @@ export function createMediaQuery(size: ResponsiveSizes, mediaQueries: MediaQueri
   }
 
   return mediaQueries[size];
+}
+
+export function formatBreakpoints(theme: Theme) {
+  return Object.entries(theme.breakpoints).reduce<Record<string, number>>(
+    (acc, [key, value]) => {
+      acc[key] = parseInt(value, 10);
+
+      return acc;
+    },
+    { _: 0 },
+  );
 }
 
 export function formatKebabCaseToCamelCase(value: string) {
@@ -60,7 +72,7 @@ export function isCSSUnit(value: unknown): value is string {
 }
 
 export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
-  const nextTheme = deepmerge({ ...theme }, customTheme) as Theme;
+  const nextTheme = deepmerge({ ...defaultTheme }, customTheme) as Theme;
 
   const baseVariants = objectEntries(nextTheme.colors).reduce(
     (acc, [key, value]) => {
@@ -75,6 +87,34 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
     ...nextTheme,
     variants: deepmerge(baseVariants, customTheme.variants ?? {}) as Theme['variants'],
   };
+}
+
+export function pickChildren<T = ReactNode>(
+  children: T,
+  targetChild: ElementType,
+): [T | undefined, T[]] {
+  const components: T[] = [];
+
+  const withoutTargetChildren = Children.map(children, item => {
+    if (!isValidElement(item)) {
+      return item;
+    }
+
+    if (item.type === targetChild) {
+      components.push(item as T);
+
+      return null;
+    }
+
+    return item;
+  })?.filter(Boolean) as T;
+
+  return [withoutTargetChildren, components];
+}
+
+export interface RecursiveChildrenEnhancerOptions {
+  componentType?: JSXElementConstructor<any>;
+  overrideProps?: boolean;
 }
 
 export function recursiveChildrenEnhancer(

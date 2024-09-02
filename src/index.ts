@@ -38,6 +38,7 @@ export * from './components/List';
 export * from './components/Loader';
 export * from './components/Modal';
 export * from './components/Menu';
+export * from './components/NavBar';
 export * from './components/NonIdealState';
 export * from './components/Page';
 export * from './components/Pagination';
