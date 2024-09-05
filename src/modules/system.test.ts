@@ -459,23 +459,13 @@ describe('radiusStyles', () => {
 
 describe('shadowStyles', () => {
   it.each([
-    { name: 'box-shadow (light)', props: { shadow: 'low' as const, theme } },
+    { name: 'light', props: { shadow: 'low' as const, theme } },
     {
-      name: 'box-shadow (dark)',
+      name: 'dark',
       props: { shadow: 'mid' as const, theme: { ...theme, darkMode: true } },
     },
-    {
-      name: 'filter (light)',
-      props: { shadow: 'low' as const, theme },
-      useFilter: true,
-    },
-    {
-      name: 'filter (dark)',
-      props: { shadow: 'high' as const, theme: { ...theme, darkMode: true } },
-      useFilter: true,
-    },
-  ])(`should return properly for "$name"`, ({ props, useFilter }) => {
-    expect(shadowStyles(props, useFilter)).toMatchSnapshot();
+  ])(`should return properly for "$name"`, ({ props }) => {
+    expect(shadowStyles(props)).toMatchSnapshot();
   });
 
   it('should return an empty object without "shadow" props', () => {

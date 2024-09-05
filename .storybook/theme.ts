@@ -1,6 +1,6 @@
 import { create } from '@storybook/theming';
 
-import { colors, variants } from '../src/modules/theme';
+import { colors, darkColor, variants } from '../src/modules/theme';
 
 export default create({
   base: 'light',
@@ -9,7 +9,7 @@ export default create({
   barSelectedColor: colors.primary,
 
   colorPrimary: colors.primary,
-  colorSecondary: '#101010',
+  colorSecondary: darkColor,
 
   fontBase: 'Rubik, sans-serif',
   fontCode: 'monospace',

@@ -11,7 +11,7 @@ import { GlobalTypes } from '@storybook/types';
 import { Context, Story } from './Story';
 
 import { mergeTheme } from '../src';
-import { colors as themeColors } from '../src/modules/theme';
+import { black, colors as themeColors, darkColor, lightColor, white } from '../src/modules/theme';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -19,9 +19,9 @@ export const parameters = {
     default: 'white',
     values: [
       { name: 'white', value: '#fff', default: true },
-      { name: 'light', value: '#f0f0f0' },
+      { name: 'light', value: lightColor },
       { name: 'gray', value: '#999' },
-      { name: 'dark', value: '#101010' },
+      { name: 'dark', value: darkColor },
     ],
   },
   controls: {
@@ -93,8 +93,8 @@ const ThemeBlock = styled.div(
     width: '50vw',
   },
   ({ theme }) => ({
-    background: theme.darkMode ? '#101010' : '#fff',
-    color: theme.darkMode ? '#fff' : '#101010',
+    background: theme.darkMode ? darkColor : white,
+    color: theme.darkMode ? white : black,
   }),
   ({ side }: any) =>
     side === 'left'
@@ -132,7 +132,7 @@ function Preview(StoryFn: FC, context: Context) {
   const isDocs = viewMode === 'docs';
   const isDarkMode = appearance === 'dark';
   const isSideBySide = appearance === 'side-by-side';
-  const desiredBackground = isSideBySide || appearance === 'light' ? '#fff' : '#101010';
+  const desiredBackground = isSideBySide || appearance === 'light' ? white : darkColor;
   const requireBackgroundUpdate = backgrounds?.value !== desiredBackground;
 
   useEffect(() => {
@@ -179,7 +179,7 @@ function Preview(StoryFn: FC, context: Context) {
           minHeight={minHeight}
           minWidth={minWidth}
           padding={paddingDocs}
-          style={{ color: isDarkMode ? '#fff' : '#101010' }}
+          style={{ color: isDarkMode ? white : darkColor }}
         >
           <StoryFn />
         </Story>
@@ -240,7 +240,7 @@ function Preview(StoryFn: FC, context: Context) {
         minWidth={minWidth}
         mx="auto"
         padding={padding}
-        style={{ color: isDarkMode ? '#fff' : '#101010' }}
+        style={{ color: isDarkMode ? white : darkColor }}
         width="100%"
       >
         <StoryFn />

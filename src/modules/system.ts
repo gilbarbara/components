@@ -99,7 +99,6 @@ interface GetStylesOptions extends ColorStylesOptions {
   skipColor?: boolean;
   skipSpacing?: boolean;
   useFontSize?: boolean;
-  useShadowFilter?: boolean;
 }
 
 interface TextStylesOptions {
@@ -235,15 +234,7 @@ export function getStyledOptions(...exclude: string[]) {
 
 export function getStyles(props: GetStylesProps, options: GetStylesOptions = {}) {
   const { busy, display, textAlign, theme } = props;
-  const {
-    lineHeightCustom,
-    skipBorder,
-    skipColor,
-    skipShadow,
-    skipSpacing,
-    useFontSize,
-    useShadowFilter,
-  } = options;
+  const { lineHeightCustom, skipBorder, skipColor, skipShadow, skipSpacing, useFontSize } = options;
 
   const { fontFamily } = theme;
 
@@ -257,7 +248,7 @@ export function getStyles(props: GetStylesProps, options: GetStylesOptions = {})
     ...layoutStyles(props),
     ...positioningStyles(props),
     ...radiusStyles(props),
-    ...shadowStyles(props, useShadowFilter),
+    ...shadowStyles(props),
     ...textStyles(props, { lineHeightCustom, skipFontSizing: !useFontSize }),
     ...(!skipSpacing ? marginStyles(props) : {}),
     ...(!skipSpacing ? paddingStyles(props) : {}),
@@ -912,23 +903,12 @@ export function radiusStyles<T extends WithRadius & WithTheme>(props: T): CSSObj
   return output;
 }
 
-export function shadowStyles<T extends WithShadow & WithTheme>(
-  props: T,
-  useFilter = false,
-): CSSObject {
-  const { darkMode, dropShadow, shadow } = props.theme;
+export function shadowStyles<T extends WithShadow & WithTheme>(props: T): CSSObject {
+  const { darkMode, shadow, shadowDark } = props.theme;
 
   if (props.shadow) {
-    if (useFilter) {
-      return {
-        filter: darkMode
-          ? dropShadow[props.shadow].replace(/148/g, '222')
-          : dropShadow[props.shadow],
-      };
-    }
-
     return {
-      boxShadow: darkMode ? shadow[props.shadow].replace(/148/g, '222') : shadow[props.shadow],
+      boxShadow: darkMode ? shadowDark[props.shadow] : shadow[props.shadow],
     };
   }
 

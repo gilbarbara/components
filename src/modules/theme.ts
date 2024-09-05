@@ -74,16 +74,16 @@ export const radius = {
   round: '50%',
 };
 
-export const dropShadow = {
-  low: 'drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))',
-  mid: 'drop-shadow(2px 4px 12px rgba(148, 148, 148, 0.6))',
-  high: 'drop-shadow(2px 4px 18px rgba(148, 148, 148, 0.8))',
-};
-
 export const shadow = {
   low: '2px 4px 16px 2px rgba(148, 148, 148, 0.16)',
   mid: '2px 4px 16px 4px rgba(148, 148, 148, 0.24)',
   high: '2px 4px 16px 8px rgba(148, 148, 148, 0.32)',
+};
+
+export const shadowDark = {
+  low: '2px 4px 16px 2px rgba(32, 32, 32, 0.16)',
+  mid: '2px 4px 16px 4px rgba(32, 32, 32, 0.24)',
+  high: '2px 4px 16px 8px rgba(32, 32, 32, 0.32)',
 };
 
 export const spacing = {
@@ -187,7 +187,7 @@ export const typography = {
  */
 export const black = '#000';
 export const white = '#fff';
-export const darkColor = '#101010';
+export const darkColor = '#262626';
 export const lightColor = '#f5f5f5';
 
 export const grayScale = {
