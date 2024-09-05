@@ -141,11 +141,6 @@ exports[`mergeTheme > should return a modified theme 1`] = `
   "darkColor": "#f04",
   "darkMode": false,
   "dataAttributeName": "component-name",
-  "dropShadow": {
-    "high": "drop-shadow(2px 4px 18px rgba(148, 148, 148, 0.8))",
-    "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
-    "mid": "drop-shadow(2px 4px 12px rgba(148, 148, 148, 0.6))",
-  },
   "easing": "cubic-bezier(0.65, 0.815, 0.735, 0.395)",
   "fontFamily": "inherit",
   "fontMonospace": "Courier, monospace",
@@ -223,6 +218,11 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
     "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
     "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
+  },
+  "shadowDark": {
+    "high": "2px 4px 16px 8px rgba(32, 32, 32, 0.32)",
+    "low": "2px 4px 16px 2px rgba(32, 32, 32, 0.16)",
+    "mid": "2px 4px 16px 4px rgba(32, 32, 32, 0.24)",
   },
   "spacing": {
     "jumbo": "96px",
@@ -567,14 +567,9 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "teal": "#38b2ac",
     "yellow": "#ffe166",
   },
-  "darkColor": "#101010",
+  "darkColor": "#262626",
   "darkMode": false,
   "dataAttributeName": "component-name",
-  "dropShadow": {
-    "high": "drop-shadow(2px 4px 18px rgba(148, 148, 148, 0.8))",
-    "low": "drop-shadow(2px 4px 8px rgba(148, 148, 148, 0.4))",
-    "mid": "drop-shadow(2px 4px 12px rgba(148, 148, 148, 0.6))",
-  },
   "easing": "cubic-bezier(0.65, 0.815, 0.735, 0.395)",
   "fontFamily": "inherit",
   "fontMonospace": "Courier, monospace",
@@ -652,6 +647,11 @@ exports[`mergeTheme > should return the default theme 1`] = `
     "high": "2px 4px 16px 8px rgba(148, 148, 148, 0.32)",
     "low": "2px 4px 16px 2px rgba(148, 148, 148, 0.16)",
     "mid": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
+  },
+  "shadowDark": {
+    "high": "2px 4px 16px 8px rgba(32, 32, 32, 0.32)",
+    "low": "2px 4px 16px 2px rgba(32, 32, 32, 0.16)",
+    "mid": "2px 4px 16px 4px rgba(32, 32, 32, 0.24)",
   },
   "spacing": {
     "jumbo": "96px",
