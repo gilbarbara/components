@@ -4,6 +4,7 @@ import CacheProvider from 'react-inlinesvg/provider';
 import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
 import { objectKeys } from '@gilbarbara/helpers';
+import { useSingleton, useUpdateEffect } from '@gilbarbara/hooks';
 import { DocsContainer } from '@storybook/addon-docs';
 import { useGlobals } from '@storybook/preview-api';
 import { GlobalTypes } from '@storybook/types';
@@ -135,6 +136,14 @@ function Preview(StoryFn: FC, context: Context) {
   const desiredBackground = isSideBySide || appearance === 'light' ? white : darkColor;
   const requireBackgroundUpdate = backgrounds?.value !== desiredBackground;
 
+  useSingleton(() => {
+    if (isDocs) {
+      return;
+    }
+
+    updateGlobals({ backgrounds: { value: isDarkMode ? darkColor : white } });
+  });
+
   useEffect(() => {
     const target = docsRef.current
       ?.closest('.docs-story')
@@ -149,7 +158,7 @@ function Preview(StoryFn: FC, context: Context) {
     }
   }, [desiredBackground, isDocs, requireBackgroundUpdate, updateGlobals]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (isDocs) {
       return;
     }
