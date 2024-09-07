@@ -36,23 +36,44 @@ export const VARIANTS_WITH_TONES = [...objectKeys(themeVariants), 'black', 'whit
   [''],
 ) as VariantWithTones[];
 
-const CHROMATIC_MODE_TITLE = {
-  desktop_light: 'Desktop (light)',
-  desktop_dark: 'Desktop (dark)',
-  mobile_light: 'Mobile (light)',
-  mobile_dark: 'Mobile (dark)',
+const CHROMATIC_MODE = {
+  desktop_light: {
+    appearance: 'light',
+    'backgrounds.value': '!hex(fff)',
+    theme: 'light',
+    title: 'Desktop (light)',
+    viewport: 'responsive',
+  },
+  desktop_dark: {
+    appearance: 'dark',
+    'backgrounds.value': '!hex(262626)',
+    theme: 'dark',
+    title: 'Desktop (dark)',
+    viewport: 'responsive',
+  },
+  mobile_light: {
+    appearance: 'light',
+    'backgrounds.value': '!hex(fff)',
+    theme: 'light',
+    title: 'Mobile (light)',
+    viewport: 'mobile2',
+  },
+  mobile_dark: {
+    appearance: 'dark',
+    'backgrounds.value': '!hex(262626)',
+    theme: 'dark',
+    title: 'Mobile (dark)',
+    viewport: 'mobile2',
+  },
 };
 
-type ChromaticMode = keyof typeof CHROMATIC_MODE_TITLE;
+type ChromaticMode = keyof typeof CHROMATIC_MODE;
 
 export function addChromaticModes(...inputModes: [ChromaticMode, ...ChromaticMode[]]) {
   const modes = inputModes.reduce<PlainObject<any>>((acc, mode) => {
-    const [viewport, appearance] = mode.split('_');
+    const { title, ...rest } = CHROMATIC_MODE[mode];
 
-    acc[CHROMATIC_MODE_TITLE[mode]] = {
-      appearance,
-      viewport: viewport === 'mobile' ? 'mobile2' : 'responsive',
-    };
+    acc[title] = rest;
 
     return acc;
   }, {});
