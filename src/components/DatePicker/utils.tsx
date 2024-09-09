@@ -153,11 +153,11 @@ export function getPickerStyles(
 
       &:focus,
       &:active {
-        background-color: ${colorVariant['50']};
+        background-color: ${darkMode ? colorVariant[300] : colorVariant['50']};
       }
 
       &:hover:not([aria-disabled='true']) {
-        background-color: ${colorVariant[50]};
+        background-color: ${darkMode ? colorVariant[300] : colorVariant[50]};
       }
     }
 
@@ -373,6 +373,12 @@ export function getPickerStyles(
       font-weight: bold;
     }
 
+    .${className}-day_range_middle {
+      border-radius: 0;
+      background-color: ${darkMode ? colorVariant[200] : colorVariant[50]} !important;
+      color: ${variants.gray['900']} !important;
+    }
+
     .${className}-day_selected:not([aria-disabled='true']),
     .${className}-day_selected:focus:not([aria-disabled='true']),
     .${className}-day_selected:active:not([aria-disabled='true']),
@@ -411,12 +417,6 @@ export function getPickerStyles(
 
     .${className}-day_range_end.${className}-day_range_start {
       border-radius: 100%;
-    }
-
-    .${className}-day_range_middle {
-      border-radius: 0;
-      background-color: ${colorVariant[50]} !important;
-      color: ${variants.gray['900']} !important;
     }
   `;
 }

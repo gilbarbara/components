@@ -6,6 +6,8 @@ import { useStableValue } from '@gilbarbara/hooks';
 import { getColorTokens } from '~/modules/colors';
 import { getStyledOptions, getStyles } from '~/modules/system';
 
+import { FlexInline } from '~/components/Flex';
+
 import { WithTheme } from '~/types';
 
 import { keyboardKeysLabelMap, keyboardKeysMap, KeyboardProps, useKeyboard } from './useKeyboard';
@@ -44,12 +46,12 @@ export const Keyboard = forwardRef<HTMLSpanElement, KeyboardProps>((props, ref) 
 
   const keysContent = useMemo(() => {
     return keysValue.map((key, index) => (
-      <>
-        <abbr key={key} title={keyboardKeysLabelMap[key]}>
+      <FlexInline key={key}>
+        <abbr title={keyboardKeysLabelMap[key]}>
           {textOnly ? keyboardKeysLabelMap[key] : keyboardKeysMap[key]}
         </abbr>
         {separator && index < keysValue.length - 1 && separator}
-      </>
+      </FlexInline>
     ));
   }, [keysValue, separator, textOnly]);
 
