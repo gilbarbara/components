@@ -263,3 +263,5 @@ export const decorators = [
     <CacheProvider name="@gilbarbara/components">{Preview(StoryFn, context)}</CacheProvider>
   ),
 ];
+
+export const tags = ['autodocs'];
