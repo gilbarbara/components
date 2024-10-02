@@ -20,9 +20,6 @@ const config: StorybookConfig = {
       },
     },
   ],
-  docs: {
-    autodocs: true,
-  },
   framework: {
     name: '@storybook/react-vite',
     options: {},
