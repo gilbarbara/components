@@ -13,6 +13,9 @@ import {
   WithColors,
   WithComponentSize,
   WithDimension,
+  WithDisplay,
+  WithFlexBox,
+  WithHTMLAttributes,
   WithMargin,
   WithPadding,
   WithRadius,
@@ -36,6 +39,9 @@ export interface SnippetKnownProps
     WithColors,
     WithComponentSize,
     WithDimension,
+    WithDisplay,
+    WithFlexBox,
+    Omit<WithHTMLAttributes, 'tabIndex'>,
     WithMargin,
     WithPadding,
     WithRadius {
@@ -89,8 +95,13 @@ export interface SnippetKnownProps
 export type SnippetProps = Simplify<SnippetKnownProps>;
 
 export const defaultProps = {
+  align: 'center',
+  display: 'inline-flex',
   disableAnimation: false,
   gap: 'xs',
+  hideCopyButton: false,
+  hideSymbol: false,
+  hideTooltip: false,
   preventWrap: false,
   radius: 'xs',
   removeFormatting: false,

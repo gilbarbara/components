@@ -7,6 +7,7 @@ import { sizes } from '~/modules/options';
 import {
   colorProps,
   disableControl,
+  flexBoxProps,
   hideProps,
   radiusProps,
   spacingProps,
@@ -27,6 +28,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
+    ...flexBoxProps({ showCategory: true }),
     ...radiusProps(),
     ...spacingProps(),
     children: { control: 'text' },
@@ -45,19 +47,23 @@ export const Customized: Story = {
     border: { color: 'red' },
     checkIcon: '✅',
     children: 'Check the docs for more info.',
-    copyValue: 'https://components.gilbarbara.dev',
     copyIcon: '📋',
+    copyValue: 'https://components.gilbarbara.dev',
     gap: 'sm',
+    justify: 'space-between',
     radius: 'xl',
     removeFormatting: true,
     size: 'lg',
+    style: {
+      width: '100%',
+    },
+    symbol: <Icon name="info" />,
     tooltipCopiedText: 'Copied!',
-    tooltipText: 'Copy Documentation URL',
     tooltipProps: {
       bg: 'red',
       size: 'md',
     },
-    symbol: <Icon name="info" />,
+    tooltipText: 'Copy Documentation URL',
   },
 };
 
@@ -115,9 +121,9 @@ export const Colors: Story = {
 export const Multilines: Story = {
   args: {
     children: [
-      <div>npm install @gilbarbara/components</div>,
-      <div>yarn add @gilbarbara/components</div>,
-      <div>pnpm add @gilbarbara/components</div>,
+      <div key="npm">npm install @gilbarbara/components</div>,
+      <div key="yarn">yarn add @gilbarbara/components</div>,
+      <div key="pnpm">pnpm add @gilbarbara/components</div>,
     ],
   },
 };
