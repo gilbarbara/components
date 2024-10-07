@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { Fragment, MouseEvent, useState } from 'react';
 import { capitalize } from '@gilbarbara/helpers';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
@@ -99,12 +99,12 @@ export const Sizes: Story = {
   render: props => (
     <Spacer distribution="center" gap="lg" orientation="vertical">
       {COMPONENT_SIZES.map(d => (
-        <>
+        <Fragment key={d}>
           <Paragraph align="center" mb="xs" size="xl">
             {d}
           </Paragraph>
           <ButtonGroup key={d} {...props} size={d} />
-        </>
+        </Fragment>
       ))}
     </Spacer>
   ),

@@ -45,7 +45,7 @@ export const Sizes: Story = {
   render: props => (
     <Spacer distribution="center" gap="lg">
       {COMPONENT_SIZES.map(size => (
-        <Anchor {...props} size={size}>
+        <Anchor key={size} {...props} size={size}>
           {props.children} ({size})
         </Anchor>
       ))}

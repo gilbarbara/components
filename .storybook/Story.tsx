@@ -20,10 +20,10 @@ export interface StoryKnownProps
     Pick<WithFlexBox, 'direction'>,
     Pick<WithPadding, 'padding'>,
     Pick<WithMargin, 'mx'> {
-  align: string;
+  align?: string;
   children?: ReactNode;
-  display: string;
-  justify: string;
+  display?: string;
+  justify?: string;
   maxWidth?: number;
   minHeight?: string;
   minWidth?: number;
@@ -35,13 +35,13 @@ type StoryProps = Simplify<OmitElementProps<HTMLDivElement, StoryKnownProps>>;
 export interface Context {
   args: Record<string, any>;
   globals: {
-    appearance: 'light' | 'dark' | 'side-by-side';
-    backgrounds: { value: string };
-    color: keyof Theme['colors'];
+    appearance?: 'light' | 'dark' | 'side-by-side';
+    backgrounds?: { value: string };
+    color?: keyof Theme['colors'];
   };
   parameters: StoryProps & {
-    layout: string;
-    paddingDocs: SpacingOrZero;
+    layout?: string;
+    paddingDocs?: SpacingOrZero;
   };
   viewMode: string;
 }

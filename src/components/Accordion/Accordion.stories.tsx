@@ -27,13 +27,13 @@ const defaultContent =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
 const defaultSubtitle = 'Click to expand';
 const defaultChildren = [
-  <AccordionItem id="1" title="Accordion Item 1">
+  <AccordionItem key="1" id="1" title="Accordion Item 1">
     {defaultContent}
   </AccordionItem>,
-  <AccordionItem id="2" title="Accordion Item 2">
+  <AccordionItem key="2" id="2" title="Accordion Item 2">
     {defaultContent}
   </AccordionItem>,
-  <AccordionItem id="3" title="Accordion Item 3">
+  <AccordionItem key="3" id="3" title="Accordion Item 3">
     {defaultContent}
   </AccordionItem>,
 ];

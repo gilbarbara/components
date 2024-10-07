@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Paragraph, Spacer } from '~';
@@ -44,7 +45,7 @@ export const Sizes: Story = {
   render: props => (
     <Spacer distribution="center" gap="lg" orientation="vertical">
       {textSizes.map(size => (
-        <>
+        <Fragment key={size}>
           <Paragraph align="center" size="lg">
             {size}
           </Paragraph>
@@ -52,7 +53,7 @@ export const Sizes: Story = {
             In the mountains far from the countries Vokalia and Consonantia, there live the blind
             texts.
           </Text>
-        </>
+        </Fragment>
       ))}
     </Spacer>
   ),

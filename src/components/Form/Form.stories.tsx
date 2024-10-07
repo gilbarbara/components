@@ -269,6 +269,5 @@ function EditForm({ formMethods }: FormRenderProps<FormData>) {
 }
 
 export const Basic: Story = {
-  // eslint-disable-next-line react/jsx-props-no-multi-spaces
   render: () => <Form<FormData> defaultValues={defaultValues}>{EditForm}</Form>,
 };
