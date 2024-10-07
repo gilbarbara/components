@@ -171,7 +171,7 @@ function Preview(StoryFn: FC, context: Context) {
   const customTheme = (darkMode: boolean): any => {
     return mergeTheme({
       dataAttributeName: 'testid',
-      colors: { primary: themeColors[color] },
+      colors: { primary: themeColors[color!] },
       darkMode,
     });
   };

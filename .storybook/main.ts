@@ -19,6 +19,7 @@ const config: StorybookConfig = {
         },
       },
     },
+    '@storybook/experimental-addon-test',
   ],
   framework: {
     name: '@storybook/react-vite',
