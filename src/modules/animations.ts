@@ -1,4 +1,6 @@
 import { keyframes } from '@emotion/react';
+import { px } from '@gilbarbara/helpers';
+import { StringOrNumber } from '@gilbarbara/types';
 import scroll from 'scroll';
 
 import { getColorTokens } from '~/modules/colors';
@@ -42,6 +44,21 @@ export function animateIcon(
       iconClone.parentNode.removeChild(iconClone);
     }
   });
+}
+
+export function getSlideDownAnimation(endHeight: StringOrNumber) {
+  return keyframes`
+  0% {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    height: ${px(endHeight)};
+    opacity: 1;
+    visibility: visible;
+  }
+`;
 }
 
 export const fadeIn = keyframes`
@@ -121,18 +138,13 @@ export function scrollTo(value: number, options: ScrollToOptions = {}): Promise<
     const nextValue = scrollDocument().scrollTop + value;
     const limit = nextValue > scrollTop ? nextValue - scrollTop : scrollTop - nextValue;
 
-    scroll.top(
-      element,
-      nextValue,
-      { duration: limit < 100 ? 50 : scrollDuration },
-      (error: any) => {
-        if (error && error.message !== 'Element already at target scroll position') {
-          return reject(error);
-        }
+    scroll.top(element, nextValue, { duration: limit < 100 ? 50 : scrollDuration }, error => {
+      if (error && error.message !== 'Element already at target scroll position') {
+        return reject(error);
+      }
 
-        return resolve();
-      },
-    );
+      return resolve();
+    });
   });
 }
 /* c8 ignore stop  */

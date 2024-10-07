@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { clamp, px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
-import { SetRequired, StringOrNumber } from '@gilbarbara/types';
+import { SetRequired } from '@gilbarbara/types';
 import { fade } from 'colorizr';
 import disableScroll from 'disable-scroll';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
 
+import { getSlideDownAnimation } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
 import { getStyledOptions } from '~/modules/system';
 
@@ -17,19 +18,6 @@ import { Portal } from '~/components/Portal';
 import { WithTheme } from '~/types';
 
 import { NavBarMenuProps, NavBarProps, useNavBarContext } from './useNavBar';
-
-const getAnimation = (endHeight: StringOrNumber) => keyframes`
-  0% {
-    height: 0;
-    opacity: 0;
-    visibility: hidden;
-  }
-  100% {
-    height: ${px(endHeight)};
-    opacity: 1;
-    visibility: visible;
-  }
-`;
 
 const StyledNavBarMenu = styled('ul', getStyledOptions())<
   SetRequired<NavBarProps, 'blurred' | 'blurredOpacity' | 'disableAnimation' | 'height'> &
@@ -74,7 +62,7 @@ const StyledNavBarMenu = styled('ul', getStyledOptions())<
 
     if (!disableAnimation && shouldAnimate) {
       animation = css`
-        animation: ${getAnimation(totalHeight)} 0.3s ease-in-out forwards
+        animation: ${getSlideDownAnimation(totalHeight)} 0.3s ease-in-out forwards
           ${isMenuOpen ? '' : ' reverse'};
       `;
     }

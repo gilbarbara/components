@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
@@ -10,14 +11,16 @@ import { WithTheme } from '~/types';
 
 import { MenuItemsProps, useMenu } from './useMenu';
 
-const StyledMenuItems = styled('div', getStyledOptions())<Omit<MenuItemsProps, 'id'> & WithTheme>(
+const StyledMenuItems = styled('div', getStyledOptions())<
+  Omit<MenuItemsProps, 'id'> & WithTheme & { isActive: boolean }
+>(
   {
     position: 'absolute',
     transform: 'scaleY(0)',
     zIndex: 10,
   },
   props => {
-    const { bg, isOpen, minWidth, orientation, position, theme } = props;
+    const { bg, isActive, isOpen, minWidth, orientation, position, theme } = props;
     const { darkMode, grayScale, radius, shadow, spacing, white } = theme;
     const [positionMain, positionCross] = position.split('-');
 
@@ -30,7 +33,8 @@ const StyledMenuItems = styled('div', getStyledOptions())<Omit<MenuItemsProps, '
     return css`
       transition: transform 0.3s ${easing};
 
-      ${isOpen &&
+      ${isActive &&
+      isOpen &&
       css`
         transform: scaleY(1);
       `}
@@ -41,45 +45,45 @@ const StyledMenuItems = styled('div', getStyledOptions())<Omit<MenuItemsProps, '
         transform-origin: top;
       `}
 
-    ${positionMain === 'left' &&
+      ${positionMain === 'left' &&
       css`
         right: 100%;
       `}
 
-    ${positionMain === 'right' &&
+      ${positionMain === 'right' &&
       css`
         left: 100%;
       `}
 
-    ${positionMain === 'top' &&
+      ${positionMain === 'top' &&
       css`
         bottom: 100%;
         transform-origin: bottom;
       `}
 
-    ${positionCross === 'bottom' &&
+      ${positionCross === 'bottom' &&
       css`
         bottom: 0;
         transform-origin: bottom;
       `}
-
-    ${positionCross === 'left' &&
+      
+      ${positionCross === 'left' &&
       css`
         left: 0;
       `}
-
-    ${positionCross === 'right' &&
+      
+      ${positionCross === 'right' &&
       css`
         right: 0;
       `}
-
-    ${positionCross === 'top' &&
+      
+      ${positionCross === 'top' &&
       css`
         top: 0;
         transform-origin: top;
       `}
 
-  > ul {
+      > ul {
         background-color: ${bgColor};
         border-radius: ${radius.xxs};
         box-shadow: ${shadow.low};
@@ -102,12 +106,12 @@ const StyledMenuItems = styled('div', getStyledOptions())<Omit<MenuItemsProps, '
           margin-right: ${spacing.xxs};
         `}
 
-      ${positionMain === 'right' &&
+        ${positionMain === 'right' &&
         css`
           margin-left: ${spacing.xxs};
         `}
 
-      ${positionMain === 'top' &&
+        ${positionMain === 'top' &&
         css`
           margin-bottom: ${spacing.xxs};
         `}
@@ -121,18 +125,33 @@ export function MenuItems(props: MenuItemsProps) {
     componentProps: { children, id, isOpen, orientation, ...rest },
     getDataAttributes,
   } = useMenu<MenuItemsProps>(props);
+  const [isActive, setActive] = useState(isOpen);
+
+  useEffect(() => {
+    setActive(s => (isOpen ? true : s));
+  }, [isOpen]);
+
+  const handleTransitionEnd = () => {
+    if (!isOpen) {
+      setActive(false);
+    }
+  };
 
   return (
     <StyledMenuItems
+      isActive={isActive}
       isOpen={isOpen}
       {...getDataAttributes('MenuItems')}
       data-state={isOpen ? 'open' : 'closed'}
+      onTransitionEnd={handleTransitionEnd}
       orientation={orientation}
       {...rest}
     >
-      <ul aria-orientation={orientation} id={id} role="menu">
-        {children}
-      </ul>
+      {(isOpen || isActive) && (
+        <ul aria-orientation={orientation} id={id} role="menu">
+          {children}
+        </ul>
+      )}
     </StyledMenuItems>
   );
 }
