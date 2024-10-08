@@ -143,35 +143,32 @@ export function dimensionProps(): ControlMap {
 
 interface FlexBoxPropsOptions {
   exclude?: Array<keyof WithFlexBox>;
-  showCategory?: boolean;
+  hideCategory?: boolean;
+  include?: Array<keyof WithFlexBox>;
 }
 
 export function flexBoxProps(options: FlexBoxPropsOptions = {}) {
-  const { exclude, showCategory } = options;
-  const category = showCategory ? 'Flex Box' : undefined;
+  const { exclude, hideCategory, include } = options;
+
+  const shared = {
+    control: 'select',
+    table: { category: hideCategory ? undefined : 'Flex Box' },
+  };
 
   const items = {
-    align: { control: 'select', options: ['', ...flexItems], table: { category } },
-    alignContent: {
-      control: 'select',
-      options: ['', ...flexContent],
-      table: { category },
-    },
-    direction: {
-      control: 'select',
-      options: ['row', 'row-reverse', 'column', 'column-reverse'],
-      table: { category },
-    },
-    gap: { control: 'select', options: ['', ...SPACING], table: { category } },
-    justify: { control: 'select', options: ['', ...flexContent], table: { category } },
-    justifyItems: { control: 'select', options: ['', ...flexItems], table: { category } },
-    placeContent: { control: 'select', options: ['', ...flexContent], table: { category } },
-    placeItems: { control: 'select', options: ['', ...flexItems], table: { category } },
-    wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'], table: { category } },
+    align: { options: ['', ...flexItems], ...shared },
+    alignContent: { options: ['', ...flexContent], ...shared },
+    direction: { options: ['row', 'row-reverse', 'column', 'column-reverse'], ...shared },
+    gap: { options: ['', ...SPACING], ...shared },
+    justify: { options: ['', ...flexContent], ...shared },
+    justifyItems: { options: ['', ...flexItems], ...shared },
+    placeContent: { options: ['', ...flexContent], ...shared },
+    placeItems: { options: ['', ...flexItems], ...shared },
+    wrap: { options: ['nowrap', 'wrap', 'wrap-reverse'], ...shared },
   };
 
   return objectEntries(items).reduce<PlainObject>((acc, [key, value]) => {
-    if (exclude?.includes(key)) {
+    if (exclude?.includes(key) || (include && !include?.includes(key))) {
       return acc;
     }
 

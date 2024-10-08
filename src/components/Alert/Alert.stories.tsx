@@ -27,7 +27,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
-    ...flexBoxProps({ exclude: ['alignContent', 'justifyItems'], showCategory: true }),
+    ...flexBoxProps({ exclude: ['alignContent', 'justifyItems'] }),
     ...dimensionProps(),
     ...radiusProps(),
     ...spacingProps(),

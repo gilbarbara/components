@@ -2,7 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Flex, Grid } from '~';
 
-import { colorProps, disableControl, hideProps, radiusProps } from '~/stories/__helpers__';
+import {
+  colorProps,
+  disableControl,
+  flexBoxProps,
+  hideProps,
+  radiusProps,
+} from '~/stories/__helpers__';
 import Code from '~/stories/components/Code';
 import Description from '~/stories/components/Description';
 
@@ -19,6 +25,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
+    ...flexBoxProps({ hideCategory: true, include: ['gap'] }),
     ...radiusProps(),
   },
 } satisfies Meta<typeof Keyboard>;
