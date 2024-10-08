@@ -12,14 +12,12 @@ let storedTheme: Theme;
 export function useTheme() {
   const emotionTheme = useThemeEmotion();
   const needsUpdate = !storedTheme || !deepEqual(storedEmotionTheme, emotionTheme);
-  const nextTheme = useRef<Theme>(emotionTheme);
+  const nextTheme = useRef<Theme>(storedTheme ?? emotionTheme);
 
   if (needsUpdate) {
     storedEmotionTheme = emotionTheme;
     nextTheme.current = mergeTheme(emotionTheme);
     storedTheme = nextTheme.current;
-  } else {
-    nextTheme.current = Object.keys(emotionTheme).length ? mergeTheme(emotionTheme) : storedTheme;
   }
 
   const { dataAttributeName } = nextTheme.current;
