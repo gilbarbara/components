@@ -95,7 +95,7 @@ export function getIconOptions(props: Pick<AlertProps, 'color' | 'light' | 'them
 export const defaultProps = {
   align: 'center',
   direction: 'row',
-  gap: 12,
+  gap: 'sm',
   hideIcon: false,
   iconSize: 20,
   light: false,

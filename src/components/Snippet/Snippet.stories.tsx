@@ -28,7 +28,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
-    ...flexBoxProps({ showCategory: true }),
+    ...flexBoxProps(),
     ...radiusProps(),
     ...spacingProps(),
     children: { control: 'text' },
@@ -54,9 +54,6 @@ export const Customized: Story = {
     radius: 'xl',
     removeFormatting: true,
     size: 'lg',
-    style: {
-      width: '100%',
-    },
     symbol: <Icon name="info" />,
     tooltipCopiedText: 'Copied!',
     tooltipProps: {
@@ -64,6 +61,7 @@ export const Customized: Story = {
       size: 'md',
     },
     tooltipText: 'Copy Documentation URL',
+    width: '100%',
   },
 };
 

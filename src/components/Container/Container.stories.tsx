@@ -25,7 +25,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
-    ...flexBoxProps({ showCategory: true }),
+    ...flexBoxProps(),
     ...flexItemProps(),
     ...layoutProps(),
     ...positioningProps(),
