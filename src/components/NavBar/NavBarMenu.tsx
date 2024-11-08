@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { clamp, px } from '@gilbarbara/helpers';
+import { px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
-import { fade } from 'colorizr';
+import { opacify } from 'colorizr';
 import disableScroll from 'disable-scroll';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
@@ -57,7 +57,7 @@ const StyledNavBarMenu = styled('ul', getStyledOptions())<
     }
 
     if (blurred) {
-      selectedBg = fade(selectedBg, clamp(blurredOpacity * 100));
+      selectedBg = opacify(selectedBg, blurredOpacity);
     }
 
     if (!disableAnimation && shouldAnimate) {

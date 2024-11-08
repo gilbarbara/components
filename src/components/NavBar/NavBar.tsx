@@ -1,10 +1,10 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { clamp, omit, px } from '@gilbarbara/helpers';
+import { omit, px } from '@gilbarbara/helpers';
 import { useMergeRefs } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
-import { fade } from 'colorizr';
+import { opacify } from 'colorizr';
 import is from 'is-lite';
 
 import { useScrollPosition } from '~/hooks/useScrollPosition';
@@ -41,7 +41,7 @@ const StyledNavBar = styled('nav', getStyledOptions())<
     }
 
     if (blurred) {
-      selectedBg = fade(selectedBg, clamp(blurredOpacity * 100));
+      selectedBg = opacify(selectedBg, blurredOpacity);
     }
 
     return css`

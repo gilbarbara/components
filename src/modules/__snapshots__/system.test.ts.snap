@@ -323,7 +323,7 @@ exports[`inputStyles > should return custom styles for "input" 1`] = `
 
     &:focus {
       
-box-shadow: 0 3px 0 0 rgba(0, 88, 255, 0.996);
+box-shadow: 0 3px 0 0 #0058ff99;
 outline: none;
 
       
@@ -389,7 +389,7 @@ exports[`inputStyles > should return the default styles for "select" 1`] = `
 
     &:focus {
       
-      outline:rgba(0, 88, 255, 0.6) solid 3px;outline-offset:1px;z-index:10;
+      outline:#0058ff99 solid 3px;outline-offset:1px;z-index:10;
     }
 
     &:disabled {
@@ -429,7 +429,7 @@ exports[`inputStyles > should return the default styles for "textarea" 1`] = `
 
     &:focus {
       
-      outline:rgba(0, 88, 255, 0.6) solid 3px;outline-offset:1px;z-index:10;
+      outline:#0058ff99 solid 3px;outline-offset:1px;z-index:10;
     }
 
     &:disabled {
@@ -506,12 +506,12 @@ exports[`outlineStyles > should return properly 1`] = `
 "
     @supports not selector(:focus-visible) {
       &:focus {
-        outline:rgba(255, 0, 68, 0.6) solid 3px;outline-offset:1px;z-index:10;
+        outline:#ff004499 solid 3px;outline-offset:1px;z-index:10;
       }
     }
 
     &:focus-visible {
-      outline:rgba(255, 0, 68, 0.6) solid 3px;outline-offset:1px;z-index:10;
+      outline:#ff004499 solid 3px;outline-offset:1px;z-index:10;
     }
   "
 `;

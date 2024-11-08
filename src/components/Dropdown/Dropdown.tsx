@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
 import ReactDropdown, { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 import { SetRequired } from '@gilbarbara/types';
-import { fade } from 'colorizr';
+import { opacify } from 'colorizr';
 
 import { getColorTokens } from '~/modules/colors';
 import {
@@ -66,7 +66,7 @@ export const StyledDropdown = styled(
       &:focus-within {
         ${borderless
           ? css`
-              box-shadow: 0 3px 0 0 ${fade(mainColor, 50)};
+              box-shadow: 0 3px 0 0 ${opacify(mainColor, 0.5)};
             `
           : getOutlineStyles(mainColor, theme)};
 

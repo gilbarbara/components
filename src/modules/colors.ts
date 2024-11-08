@@ -20,7 +20,7 @@ export function getColorComplement(color: string) {
 }
 
 export function getColorWithTone(color: string, tone: ColorTone) {
-  const hsl = hex2hsl(parseCSS(color));
+  const hsl = hex2hsl(parseCSS(color, 'hex'));
   const lightness = 100 - parseInt(tone, 10) / 10;
 
   return hsl2hex({ ...hsl, l: lightness });
