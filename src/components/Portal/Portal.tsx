@@ -9,10 +9,9 @@ import {
 import { createPortal } from 'react-dom';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { clamp } from '@gilbarbara/helpers';
 import { useMount, usePrevious, useUnmount, useUpdateEffect } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
-import { fade } from 'colorizr';
+import { opacify } from 'colorizr';
 
 import { getColorTokens } from '~/modules/colors';
 import { formatKebabCaseToCamelCase } from '~/modules/helpers';
@@ -78,7 +77,7 @@ const Overlay = styled.div<
   }
 
   if (selectedBg !== 'transparent') {
-    selectedBg = fade(selectedBg, clamp((1 - overlayOpacity) * 100));
+    selectedBg = opacify(selectedBg, overlayOpacity);
   }
 
   return css`

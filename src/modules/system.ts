@@ -9,7 +9,7 @@ import {
   sortObjectKeys,
 } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
-import { fade } from 'colorizr';
+import { opacify } from 'colorizr';
 import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';
@@ -54,7 +54,13 @@ import {
 import { responsive as responsiveHelper } from './helpers';
 
 interface ColorStylesOptions {
+  /**
+   * @default false
+   */
   skipBorder?: boolean;
+  /**
+   * @default false
+   */
   skipShadow?: boolean;
 }
 
@@ -191,7 +197,7 @@ export function getOutlineStyles(
   { outlineOffset, outlineOpacity, outlineWidth, outlineZIndex }: WithOutline = defaultTheme,
 ): CSSObject {
   return {
-    outline: `${fade(color, outlineOpacity * 100)} solid ${px(outlineWidth)}`,
+    outline: `${opacify(color, outlineOpacity)} solid ${px(outlineWidth)}`,
     outlineOffset: px(outlineOffset),
     zIndex: outlineZIndex,
   };
@@ -357,7 +363,7 @@ export function colorStyles<T extends WithColors & WithTheme & { variant?: strin
   props: T,
   options: ColorStylesOptions = {},
 ): CSSObject {
-  const { skipBorder = false, skipShadow } = options;
+  const { skipBorder = false, skipShadow = false } = options;
   const { bg, color, theme, variant } = props;
   const isTransparent = !!variant && ['bordered', 'clean'].includes(variant);
 
@@ -378,7 +384,7 @@ export function colorStyles<T extends WithColors & WithTheme & { variant?: strin
     }
 
     if (variant === 'shadow' && !skipShadow) {
-      const shadowColor = fade(mainColor, 50);
+      const shadowColor = opacify(mainColor, 0.5);
 
       styles.boxShadow = `0 6px 12px -3px ${shadowColor},0 4px 6px -4px ${shadowColor}`;
     }
@@ -668,7 +674,7 @@ export function inputStyles<
     &:focus {
       ${!!borderless &&
       `
-box-shadow: 0 3px 0 0 ${fade(mainColor, theme.outlineOpacity)};
+box-shadow: 0 3px 0 0 ${opacify(mainColor, theme.outlineOpacity)};
 outline: none;
 `}
       ${!borderless && getOutlineStyles(mainColor, theme)}

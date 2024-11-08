@@ -9,7 +9,6 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
     '@storybook/addon-storysource',
-    '@storybook/addon-interactions',
     {
       name: '@storybook/addon-coverage',
       options: {

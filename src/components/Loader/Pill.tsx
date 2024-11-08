@@ -1,7 +1,7 @@
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { px } from '@gilbarbara/helpers';
-import { fade } from 'colorizr';
+import { opacify } from 'colorizr';
 import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';
@@ -68,13 +68,13 @@ export const StyledLoaderPill = styled(
 
     div:nth-of-type(2) {
       animation-delay: 0.04s;
-      background-color: ${fade(mainColor, 30)};
+      background-color: ${opacify(mainColor, 0.7)};
       z-index: 5;
     }
 
     div:nth-of-type(3) {
       animation-delay: 0.05s;
-      background-color: ${fade(mainColor, 20)};
+      background-color: ${opacify(mainColor, 0.8)};
       z-index: 4;
     }
   `;

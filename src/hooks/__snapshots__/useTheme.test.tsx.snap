@@ -168,7 +168,7 @@ exports[`useTheme > should return properly 1`] = `
   },
   "opacityDisabled": 0.64,
   "outlineOffset": 1,
-  "outlineOpacity": 0.4,
+  "outlineOpacity": 0.6,
   "outlineWidth": 3,
   "outlineZIndex": 10,
   "radius": {

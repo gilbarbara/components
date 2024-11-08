@@ -149,7 +149,7 @@ interface NavBarContextValue extends Pick<NavBarContextProps, 'toggleMenu'> {
 
 export const defaultProps = {
   blurred: true,
-  blurredOpacity: 0.2,
+  blurredOpacity: 0.8,
   bordered: false,
   disableAnimation: false,
   disableScrollHandler: false,

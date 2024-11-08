@@ -49,7 +49,7 @@ export const opacity = {
 export const opacityDisabled = opacity.intense;
 
 export const outlineOffset: string | number = 1;
-export const outlineOpacity = 0.4;
+export const outlineOpacity = 0.6;
 export const outlineWidth: string | number = 3;
 export const outlineZIndex = 10;
 

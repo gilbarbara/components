@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { formatDateLocale, omit, px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
-import { fade } from 'colorizr';
+import { opacify } from 'colorizr';
 import is from 'is-lite';
 
 import { getColorTokens } from '~/modules/colors';
@@ -112,7 +112,7 @@ const StyledButton = styled('div', getStyledOptions())<
       ${isActive &&
       (borderless
         ? css`
-            box-shadow: 0 ${theme.outlineWidth} 0 0 ${fade(mainColor, theme.outlineOpacity)};
+            box-shadow: 0 ${theme.outlineWidth} 0 0 ${opacify(mainColor, theme.outlineOpacity)};
             outline: none;
           `
         : getOutlineStyles(mainColor, theme))};
