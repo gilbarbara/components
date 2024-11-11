@@ -5,10 +5,11 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { TooltipProps } from '~/components/Tooltip/Tooltip';
 
-import { WithColors, WithMargin, WithPadding } from '~/types';
+import { WithChildrenOptional, WithColors, WithMargin, WithPadding } from '~/types';
 
 export interface CopyToClipboardKnownProps
   extends Pick<WithColors, 'color'>,
+    WithChildrenOptional,
     WithMargin,
     WithPadding {
   /**

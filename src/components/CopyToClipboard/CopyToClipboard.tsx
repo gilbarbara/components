@@ -1,4 +1,12 @@
-import { cloneElement, isValidElement, ReactElement, useMemo, useRef, useState } from 'react';
+import {
+  cloneElement,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import innerText from 'react-innertext';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
@@ -30,6 +38,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
   const {
     componentProps: {
       checkIcon = <Icon name="check" />,
+      children,
       copyIcon = <Icon name="copy" />,
       disableAnimation,
       hideTooltip,
@@ -108,11 +117,18 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
   const checkIconElement =
     checkIcon && !isValidElement(checkIcon) ? <span>{checkIcon}</span> : checkIcon;
 
-  let main = cloneElement((copied ? checkIconElement : copyIconElement) as ReactElement, {
-    ref: iconRef,
-    size,
-    title: null,
-  });
+  let main: ReactNode = cloneElement(
+    (copied ? checkIconElement : copyIconElement) as ReactElement,
+    {
+      ref: iconRef,
+      size,
+      title: null,
+    },
+  );
+
+  if (children) {
+    main = children;
+  }
 
   if (!hideTooltip && (tooltipCopiedText || !copied)) {
     main = (

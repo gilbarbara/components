@@ -2,7 +2,7 @@ import { sleep } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 import { clearAllMocks, expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
-import { Icon } from '~';
+import { Box, Icon } from '~';
 
 import { colorProps, hideProps, spacingProps } from '~/stories/__helpers__';
 
@@ -39,6 +39,19 @@ export const Customized: Story = {
       size: 'md',
     },
     tooltipText: 'Copy email',
+  },
+};
+
+export const WithChildren: Story = {
+  args: {
+    children: <Box bg="primary" height={50} radius="md" width={50} />,
+    tooltipCopiedText: 'Color copied',
+    tooltipProps: {
+      bg: 'primary',
+      size: 'lg',
+    },
+    tooltipText: 'Copy color',
+    value: 'primary',
   },
 };
 
