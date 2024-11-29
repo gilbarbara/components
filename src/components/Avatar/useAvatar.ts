@@ -30,6 +30,10 @@ export interface AvatarKnownProps
    */
   fallback?: ReactNode;
   /**
+   * Override the default font size.
+   */
+  fontSize?: string | number;
+  /**
    * Image URL
    */
   image?: string;
@@ -38,7 +42,7 @@ export interface AvatarKnownProps
    * Avatar size.
    * @default md
    */
-  size?: AvatarSize;
+  size?: AvatarSize | number;
   style?: CSSProperties;
 }
 

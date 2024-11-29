@@ -1,7 +1,7 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { FlexCenter, Grid, Icon, Paragraph, Spacer } from '~';
+import { Flex, FlexCenter, Grid, Icon, Paragraph } from '~';
 
 import { avatar, radius } from '~/modules/theme';
 
@@ -136,7 +136,7 @@ export const Sizes: Story = {
     size: disableControl(),
   },
   render: props => (
-    <Spacer distribution="center" gap="xl">
+    <Flex gap="xl" justify="center" maxWidth={600} wrap="wrap">
       {objectKeys(avatar).map((size, index) => (
         <FlexCenter key={size}>
           <Avatar
@@ -149,6 +149,14 @@ export const Sizes: Story = {
           <Paragraph mt="xs">{size}</Paragraph>
         </FlexCenter>
       ))}
-    </Spacer>
+      <FlexCenter>
+        <Avatar {...props} image={users[9].avatar} name={users[9].name} size={300} />
+        <Paragraph mt="xs">Custom size</Paragraph>
+      </FlexCenter>
+      <FlexCenter>
+        <Avatar {...props} fontSize={120} image={undefined} name={users[13].name} size={200} />
+        <Paragraph mt="xs">Custom font size</Paragraph>
+      </FlexCenter>
+    </Flex>
   ),
 };
