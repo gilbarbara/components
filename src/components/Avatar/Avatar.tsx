@@ -1,7 +1,7 @@
 import { forwardRef, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { getInitials, omit } from '@gilbarbara/helpers';
+import { getInitials, omit, px } from '@gilbarbara/helpers';
 import { SetRequired } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
@@ -12,6 +12,24 @@ import { Icon } from '~/components/Icon';
 import { WithTheme } from '~/types';
 
 import { AvatarProps, useAvatar } from './useAvatar';
+
+function getSize(props: SetRequired<AvatarProps, 'size'> & WithTheme) {
+  const { fontSize, size, theme } = props;
+
+  const selectedSize =
+    typeof size === 'number'
+      ? {
+          size: `${size}px`,
+          fontSize: `${size / 2}px`,
+        }
+      : theme.avatar[size];
+
+  if (fontSize) {
+    selectedSize.fontSize = px(fontSize);
+  }
+
+  return selectedSize;
+}
 
 const StyledAvatar = styled('div', getStyledOptions())<
   SetRequired<Omit<AvatarProps, 'image' | 'name'>, 'borderColor' | 'size'> & WithTheme
@@ -25,16 +43,15 @@ const StyledAvatar = styled('div', getStyledOptions())<
     overflow: 'hidden',
   },
   props => {
-    const { borderColor, bordered, size, theme } = props;
-    const { avatar } = theme;
-    const selectedSize = avatar[size];
+    const { borderColor, bordered, theme } = props;
+    const { size } = getSize(props);
 
     const { mainColor } = getColorTokens(borderColor, null, theme);
 
     return css`
       outline: ${bordered ? `2px solid ${mainColor}` : 'none'};
-      height: ${selectedSize.size};
-      width: ${selectedSize.size};
+      height: ${size};
+      width: ${size};
       ${getStyles(omit(props, 'size'), { skipColor: true })};
     `;
   },
@@ -50,13 +67,12 @@ const Circle = styled('div', getStyledOptions())<
     textAlign: 'center',
   },
   props => {
-    const { size, theme } = props;
-    const selectedSize = theme.avatar[size];
+    const { fontSize, size } = getSize(props);
 
     return css`
-      height: ${selectedSize.size};
-      font-size: ${selectedSize.fontSize};
-      width: ${selectedSize.size};
+      height: ${size};
+      font-size: ${fontSize};
+      width: ${size};
       ${colorStyles(props)};
     `;
   },
@@ -64,33 +80,23 @@ const Circle = styled('div', getStyledOptions())<
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
   const { componentProps, getDataAttributes } = useAvatar(props);
-  const { fallback, image, name, size, ...rest } = componentProps;
-  const selectedSize = rest.theme.avatar[size];
+  const { fallback, image, name, ...rest } = componentProps;
+  const { size } = getSize(componentProps);
 
   let content: ReactNode;
 
   if (image) {
-    content = (
-      <img alt={name ?? 'User'} height={selectedSize.size} src={image} width={selectedSize.size} />
-    );
+    content = <img alt={name ?? 'User'} height={size} src={image} width={size} />;
   } else if (name) {
-    content = (
-      <Circle size={size} {...rest}>
-        {getInitials(name).toUpperCase()}
-      </Circle>
-    );
+    content = <Circle {...rest}>{getInitials(name).toUpperCase()}</Circle>;
   } else if (fallback) {
-    content = (
-      <Circle size={size} {...rest}>
-        {fallback}
-      </Circle>
-    );
+    content = <Circle {...rest}>{fallback}</Circle>;
   } else {
-    const avatarSize = parseInt(selectedSize.size, 10);
+    const avatarSize = parseInt(size, 10);
     const iconSize = avatarSize * 0.7;
 
     content = (
-      <Circle size={size} {...rest}>
+      <Circle {...rest}>
         <Icon name="user" size={iconSize} />
       </Circle>
     );
@@ -101,7 +107,6 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
       ref={ref}
       aria-label={name ?? 'Unknown'}
       {...getDataAttributes('Avatar')}
-      size={size}
       {...rest}
     >
       {content}
