@@ -9,7 +9,7 @@ import { FlexProps, useFlex } from './useFlex';
 
 export const StyledFlex = styled('div', getStyledOptions('fill'))<FlexProps & WithTheme>(
   {},
-  props => getStyles(props),
+  props => getStyles(props, { skipBorder: true }),
 );
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {

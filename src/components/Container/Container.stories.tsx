@@ -52,7 +52,7 @@ export const Basic: Story = {
         </Paragraph>
       </Container>
 
-      <Paragraph color="gray" size="xs">
+      <Paragraph align="center" color="gray" mt="xs" size="xs">
         *The border is just for visualization...
       </Paragraph>
     </Box>
@@ -65,14 +65,19 @@ export const WithParent: Story = {
     justify: 'center',
   },
   render: props => (
-    <Flex bg="primary.100" minHeight={300}>
-      <Container {...props}>
-        <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
-        <Paragraph>
-          I'm a wrapper that holds any type of component with a pre-defined horizontal padding and
-          an optional vertical padding
-        </Paragraph>
-      </Container>
-    </Flex>
+    <>
+      <Flex border minHeight={300}>
+        <Container {...props}>
+          <Jumbo mb="lg">Hello, I'm the Container!</Jumbo>
+          <Paragraph>
+            I'm a wrapper that holds any type of component with a pre-defined horizontal padding and
+            an optional vertical padding
+          </Paragraph>
+        </Container>
+      </Flex>
+      <Paragraph color="gray" mt="xs" size="xs">
+        *The border is just for visualization...
+      </Paragraph>
+    </>
   ),
 };

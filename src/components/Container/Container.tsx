@@ -31,7 +31,7 @@ export const StyledContainer = styled(Box)<SetRequired<ContainerProps, 'align'> 
     return css`
       ${styles};
       ${getContainerStyles(props, { responsive, verticalPadding })};
-      ${getStyles(props)};
+      ${getStyles(props, { skipBorder: true })};
     `;
   },
 );

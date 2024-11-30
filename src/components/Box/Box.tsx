@@ -10,7 +10,7 @@ import { BoxProps, useBox } from './useBox';
 export const StyledBox = styled(
   'div',
   getStyledOptions('fill'),
-)<BoxProps & WithTheme>(props => getStyles(props));
+)<BoxProps & WithTheme>(props => getStyles(props, { skipBorder: true }));
 
 export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
   const { componentProps, getDataAttributes } = useBox(props);
