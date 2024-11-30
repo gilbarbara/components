@@ -28,7 +28,7 @@ export const StyledAlert = styled('div', getStyledOptions('type'))<AlertProps & 
       color: ${textColor};
       flex-direction: ${direction};
       width: 100%;
-      ${getStyles(props)};
+      ${getStyles(props, { skipBorder: true })};
     `;
   },
 );

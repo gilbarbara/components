@@ -55,7 +55,7 @@ export const StyledListItem = styled(
       }
     `};
 
-    ${getStyles(omit(props, 'border'))};
+    ${getStyles(omit(props, 'border'), { skipBorder: true })};
   `;
 });
 

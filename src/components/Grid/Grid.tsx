@@ -11,7 +11,7 @@ export const StyledGrid = styled('div', getStyledOptions())<GridProps & WithThem
   {
     display: 'grid',
   },
-  props => getStyles(props),
+  props => getStyles(props, { skipBorder: true }),
 );
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
