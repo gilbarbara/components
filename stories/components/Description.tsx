@@ -1,9 +1,9 @@
 import { Box, type Props } from '~';
 
-import { VariantWithTones } from '~/types';
+import { ColorVariantTones } from '~/types';
 
 interface DescriptionProps extends Props.BoxProps {
-  borderColor?: VariantWithTones;
+  borderColor?: ColorVariantTones;
   intro?: boolean;
 }
 

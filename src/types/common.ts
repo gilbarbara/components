@@ -6,7 +6,7 @@ import { StandardShorthandProperties } from 'csstype';
 
 import { icons, inputTypes, sizes, textSizes } from '~/modules/options';
 
-import { Breakpoint, VariantWithTones } from './theme';
+import { Breakpoint, ColorVariantTones } from './theme';
 import { Concat } from './utils';
 
 export type Alignment = 'left' | 'center' | 'right';
@@ -25,7 +25,7 @@ export interface BorderItem {
   /**
    * @default gray.100
    */
-  color?: VariantWithTones;
+  color?: ColorVariantTones;
   /**
    * @default all
    */

@@ -4,8 +4,8 @@ import { Simplify } from '@gilbarbara/types';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
+  ColorVariantTones,
   StyledProps,
-  VariantWithTones,
   WithChildren,
   WithColors,
   WithComponentSize,
@@ -26,7 +26,7 @@ export interface BadgeKnownProps
    * The border color of the badge.
    * if not set the badge will have a white border on light mode and a black border on dark mode.
    */
-  borderColor?: VariantWithTones;
+  borderColor?: ColorVariantTones;
   /**
    * The content of the badge. The badge will be rendered relative to its children.
    */

@@ -10,7 +10,7 @@ import { ripple } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
 import { getStyledOptions } from '~/modules/system';
 
-import { VariantWithTones, WithTheme } from '~/types';
+import { ColorVariantTones, WithTheme } from '~/types';
 
 interface RippleType {
   key: Key;
@@ -23,7 +23,7 @@ export interface RippleProps {
   /**
    * The ripple color
    */
-  color: VariantWithTones;
+  color: ColorVariantTones;
   /**
    * Animation duration
    * @default 0.6s

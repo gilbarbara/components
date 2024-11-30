@@ -5,12 +5,12 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 import { textDefaultOptions } from '~/modules/options';
 
 import {
+  ColorVariantTones,
   Orientation,
   Sizes,
   Spacing,
   SpacingOrZero,
   StyledProps,
-  VariantWithTones,
   WithAlign,
   WithChildrenOptional,
   WithHTMLAttributes,
@@ -33,7 +33,7 @@ export interface DividerKnownProps
    * Component color
    * @default gray.200
    */
-  color?: VariantWithTones;
+  color?: ColorVariantTones;
   /**
    * The distance between the text and borders
    *

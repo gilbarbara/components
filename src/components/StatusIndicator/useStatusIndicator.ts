@@ -4,11 +4,11 @@ import { Simplify } from '@gilbarbara/types';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
+  ColorVariant,
   Position,
   Spacing,
   StyledProps,
   Tone,
-  Variant,
   WithHTMLAttributes,
   WithMargin,
 } from '~/types';
@@ -20,7 +20,7 @@ export interface StatusIndicatorKnownProps extends StyledProps, WithHTMLAttribut
    */
   borderRatio?: number;
   /** Component color */
-  color?: Variant | string;
+  color?: ColorVariant | string;
   /**
    * The gap between the component and the label.
    * @default xxs

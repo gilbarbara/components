@@ -5,7 +5,7 @@ import { InputType } from '@storybook/types';
 import { sizes as sizeOptions } from '~/modules/options';
 import { spacing, variants as themeVariants } from '~/modules/theme';
 
-import { VariantWithTones, WithFlexBox } from '~/types';
+import { ColorVariantTones, WithFlexBox } from '~/types';
 
 type ControlMap = Record<string, InputType>;
 
@@ -34,7 +34,7 @@ export const VARIANTS_WITH_TONES = [...objectKeys(themeVariants), 'black', 'whit
     return [...acc, variant, ...TONES.map(tone => `${variant}.${tone}`)];
   },
   [''],
-) as VariantWithTones[];
+) as ColorVariantTones[];
 
 const CHROMATIC_MODE = {
   desktop_light: {

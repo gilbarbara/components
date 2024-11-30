@@ -3,7 +3,7 @@ import { Option } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 
 import { WithDisabled, WithLabel } from './shared';
-import { Theme, VariantWithTones } from './theme';
+import { ColorVariantTones, Theme } from './theme';
 
 export interface BaseProps {
   [hey: string]: any;
@@ -29,6 +29,6 @@ export type OmitElementProps<TElement, TProps, TProperties extends string = neve
   Omit<HTMLProps<TElement>, 'ref' | 'size' | 'wrap' | keyof TProps | TProperties>;
 
 export interface RadioItem extends WithDisabled, WithLabel {
-  accent?: VariantWithTones;
+  accent?: ColorVariantTones;
   value: StringOrNumber;
 }

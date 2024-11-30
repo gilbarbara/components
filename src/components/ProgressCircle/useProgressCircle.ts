@@ -4,12 +4,12 @@ import { RequireAtLeastOne, Simplify } from '@gilbarbara/types';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
+  ColorVariantTones,
   Position,
   Sizes,
   Spacing,
   StyledProps,
   TextSizes,
-  VariantWithTones,
   WithAccent,
   WithComponentSize,
   WithHTMLAttributes,
@@ -29,7 +29,7 @@ export interface ProgressCircleKnownProps
    * Component track color
    * @default 'gray.200'
    */
-  backgroundColor?: VariantWithTones;
+  backgroundColor?: ColorVariantTones;
   /**
    * Whether the progress bar is busy.
    * @default false

@@ -3,9 +3,9 @@ import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
+  ColorVariantTones,
   Spacing,
   StyledProps,
-  VariantWithTones,
   WithChildrenOptional,
   WithHTMLAttributes,
   WithLayout,
@@ -25,7 +25,7 @@ export interface SkeletonKnownProps
    * The accent color of the animation
    * @default white
    */
-  accent?: VariantWithTones;
+  accent?: ColorVariantTones;
   /**
    * The animation delay in seconds
    * @default 0
@@ -46,7 +46,7 @@ export interface SkeletonKnownProps
    * The background color of the animation
    * @default gray.50
    */
-  bg?: VariantWithTones;
+  bg?: ColorVariantTones;
   /**
    *  Take the width of its children
    *  @default false

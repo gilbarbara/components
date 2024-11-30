@@ -4,12 +4,12 @@ import { useTheme } from '~';
 
 import { getColorTokens } from '~/modules/colors';
 
-import { VariantWithTones } from '~/types';
+import { ColorVariantTones } from '~/types';
 
 interface Props {
-  bg?: VariantWithTones;
+  bg?: ColorVariantTones;
   children: ReactNode;
-  color?: VariantWithTones;
+  color?: ColorVariantTones;
 }
 
 export default function Code({ bg, children, color }: Props) {

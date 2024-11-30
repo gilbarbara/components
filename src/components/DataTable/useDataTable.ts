@@ -10,10 +10,10 @@ import { LoaderType } from '~/components/Loader/useLoader';
 
 import {
   BorderItem,
+  ColorVariantTones,
   SortDirection,
   StyledProps,
   Theme,
-  VariantWithTones,
   WithAccent,
   WithFlexItem,
   WithHTMLAttributes,
@@ -81,7 +81,7 @@ export interface DataTableKnownProps<TKeys extends string>
    * Component background color
    * If not set, the component will use 'gray.800' for darkMode otherwise 'gray.50'
    */
-  bg?: VariantWithTones;
+  bg?: ColorVariantTones;
   /**
    * The breakpoint to switch to responsive mode.
    * @default 768 */
