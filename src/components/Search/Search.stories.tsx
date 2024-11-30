@@ -10,7 +10,7 @@ import { colors } from '~/modules/theme';
 
 import users from '~/stories/__fixtures__/users.json';
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
-import { Variant } from '~/types';
+import { ColorVariant } from '~/types';
 
 import { defaultProps, Search, SearchItem } from './Search';
 
@@ -40,7 +40,7 @@ export default {
   },
 } satisfies Meta<typeof Search>;
 
-const accentMap: Record<string, { color: Variant; count: number }> = {};
+const accentMap: Record<string, { color: ColorVariant; count: number }> = {};
 
 function getAccent(team: string) {
   if (!accentMap[team]) {

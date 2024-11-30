@@ -36,10 +36,10 @@ export type Tone = keyof typeof theme.variants.primary;
 
 export type Typography = keyof typeof theme.typography;
 
-export type Variant = Color | 'black' | 'white';
+export type ColorVariant = Color | 'black' | 'white';
 
-export type VariantWithTones = LiteralUnion<
-  | Variant
+export type ColorVariantTones = LiteralUnion<
+  | ColorVariant
   | keyof {
       [key in Color as `${key}.${ColorTone}`]: unknown;
     },

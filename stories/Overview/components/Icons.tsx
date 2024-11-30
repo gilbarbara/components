@@ -8,17 +8,17 @@ import { icons } from '~/modules/options';
 import { avatar, variants } from '~/modules/theme';
 
 import Navigation from '~/stories/Overview/components/Navigation';
-import type { DropdownOption, Icons, Variant } from '~/types';
+import type { ColorVariant, DropdownOption, Icons } from '~/types';
 
 interface ItemProps {
-  color: Variant;
+  color: ColorVariant;
   name: Icons;
   size: number;
 }
 
 interface State {
   category: string;
-  color: Variant;
+  color: ColorVariant;
   search: string;
   size: number;
 }
@@ -76,7 +76,7 @@ export default function Icons() {
   const handleChangeVariants = (values: DropdownOption[]) => {
     const [selected] = values;
 
-    setState({ color: selected.value as Variant });
+    setState({ color: selected.value as ColorVariant });
   };
 
   const sizesOptions = useMemo(
@@ -203,7 +203,7 @@ export default function Icons() {
         <Dropdown
           items={variantsOptions}
           onChange={handleChangeVariants}
-          placeholder="Variant"
+          placeholder="ColorVariant"
           values={variantsOptions.filter(d => d.value === color)}
           width={160}
         />

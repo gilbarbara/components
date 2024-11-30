@@ -4,8 +4,8 @@ import { SetRequired, Simplify } from '@gilbarbara/types';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
+  ColorVariantTones,
   StyledProps,
-  VariantWithTones,
   WithAccent,
   WithComponentSize,
   WithDisabled,
@@ -24,8 +24,8 @@ export interface ToggleKnownProps
     WithLabel {
   /** Status (controlled mode) */
   checked?: boolean;
-  colorButton?: VariantWithTones | [unchecked: VariantWithTones, checked: VariantWithTones];
-  colorTrack?: VariantWithTones;
+  colorButton?: ColorVariantTones | [unchecked: ColorVariantTones, checked: ColorVariantTones];
+  colorTrack?: ColorVariantTones;
   /**
    * Initial status (uncontrolled mode)
    * @default false

@@ -7,7 +7,7 @@ import { getColorTokens } from '~/modules/colors';
 
 import * as baseTheme from './theme';
 
-import { Theme, VariantWithTones } from '../types';
+import { ColorVariantTones, Theme } from '../types';
 
 interface ScrollToOptions {
   element?: HTMLElement;
@@ -16,7 +16,7 @@ interface ScrollToOptions {
 
 export function animateIcon(
   target: HTMLElement | null,
-  color: VariantWithTones,
+  color: ColorVariantTones,
   theme: Theme = baseTheme,
 ) {
   const { mainColor } = getColorTokens(color, null, theme);

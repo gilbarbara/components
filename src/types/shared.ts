@@ -11,12 +11,12 @@ import {
   Sizes,
   TextSizes,
 } from './common';
-import { ButtonSize, Radius, Shadow, Spacing, Theme, VariantWithTones } from './theme';
+import { ButtonSize, ColorVariantTones, Radius, Shadow, Spacing, Theme } from './theme';
 
 export type SpacingOrZero = Spacing | 0;
 export type SpacingAuto = SpacingOrZero | 'auto';
 
-export interface WithAccent<T = VariantWithTones> {
+export interface WithAccent<T = ColorVariantTones> {
   /**
    * Component accent color
    * @default primary
@@ -78,21 +78,21 @@ export interface WithColors {
   /**
    * Component background color
    */
-  bg?: VariantWithTones;
+  bg?: ColorVariantTones;
   /**
    * Component color
    */
-  color?: VariantWithTones;
+  color?: ColorVariantTones;
 }
 
 export interface WithColorsDefaultBg extends WithColors {
   /** @default primary */
-  bg?: VariantWithTones;
+  bg?: ColorVariantTones;
 }
 
 export interface WithColorsDefaultColor extends WithColors {
   /** @default primary */
-  color?: VariantWithTones;
+  color?: ColorVariantTones;
 }
 
 export interface WithComponentSize<T = Sizes> {

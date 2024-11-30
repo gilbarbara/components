@@ -7,9 +7,9 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 import { textDefaultOptions } from '~/modules/options';
 
 import {
+  ColorVariantTones,
   Spacing,
   StyledProps,
-  VariantWithTones,
   WithChildren,
   WithColors,
   WithDimension,
@@ -40,7 +40,7 @@ export interface ChipKnownProps
    * Component background color
    * @default primary
    */
-  bg?: VariantWithTones;
+  bg?: ColorVariantTones;
   endContentOnClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
    * Space between the start and end content

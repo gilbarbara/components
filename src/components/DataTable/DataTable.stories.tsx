@@ -34,7 +34,7 @@ import {
   radiusProps,
   spacingProps,
 } from '~/stories/__helpers__';
-import { DropdownOption, VariantWithTones } from '~/types';
+import { ColorVariantTones, DropdownOption } from '~/types';
 
 import { DataTable, defaultProps } from './DataTable';
 import { DataTableColumn, DataTableProps, DataTableRow } from './useDataTable';
@@ -85,7 +85,7 @@ interface SharedState {
 }
 
 interface Props extends SharedState {
-  accent?: VariantWithTones;
+  accent?: ColorVariantTones;
   setState: (state: Partial<SharedState>) => void;
 }
 

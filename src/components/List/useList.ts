@@ -5,9 +5,9 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 import type { BoxProps } from '~/components/Box/useBox';
 
 import {
+  ColorVariantTones,
   Orientation,
   StyledProps,
-  VariantWithTones,
   WithChildren,
   WithComponentSize,
   WithHTMLAttributes,
@@ -31,7 +31,7 @@ export interface ListKnownProps
    * Component border color.
    * @default gray.100 (light mode) | gray.700 (dark mode)
    */
-  borderColor?: VariantWithTones;
+  borderColor?: ColorVariantTones;
   /**
    * Hide the border of the component.
    * @default false

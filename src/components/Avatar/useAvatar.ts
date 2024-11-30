@@ -5,8 +5,8 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
   AvatarSize,
+  ColorVariantTones,
   StyledProps,
-  VariantWithTones,
   WithColorsDefaultBg,
   WithFlexItem,
   WithRadius,
@@ -20,7 +20,7 @@ export interface AvatarKnownProps
   /**
    * Avatar border
    */
-  borderColor?: VariantWithTones;
+  borderColor?: ColorVariantTones;
   /**
    * Avatar border
    */

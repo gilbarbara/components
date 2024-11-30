@@ -5,10 +5,10 @@ import { StandardLonghandProperties } from 'csstype';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
+  ColorVariantTones,
   Position,
   StyledProps,
   TextSizes,
-  VariantWithTones,
   WithAccent,
   WithComponentSize,
   WithHTMLAttributes,
@@ -28,7 +28,7 @@ export interface ProgressBarKnownProps
    * Component track color
    * @default 'gray.200'
    */
-  backgroundColor?: VariantWithTones;
+  backgroundColor?: ColorVariantTones;
   /**
    * Whether the progress bar is busy.
    * @default false
