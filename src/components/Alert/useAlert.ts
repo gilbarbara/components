@@ -1,4 +1,4 @@
-import { Simplify } from '@gilbarbara/types';
+import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
 
@@ -7,6 +7,7 @@ import { getColorTokens } from '~/modules/colors';
 import {
   Icons,
   StyledProps,
+  Variant,
   WithBorder,
   WithChildren,
   WithColors,
@@ -15,6 +16,7 @@ import {
   WithMargin,
   WithPadding,
   WithRadius,
+  WithVariant,
 } from '~/types';
 
 export interface AlertKnownProps
@@ -26,7 +28,8 @@ export interface AlertKnownProps
     WithDimension,
     WithMargin,
     WithPadding,
-    WithRadius {
+    WithRadius,
+    WithVariant<Exclude<Variant, 'clean' | 'shadow'> | 'light'> {
   hideIcon?: boolean;
   /**
    * Custom icon.
@@ -37,11 +40,6 @@ export interface AlertKnownProps
    * @default 20
    */
   iconSize?: number;
-  /**
-   * Use a light background color.
-   * @default false
-   */
-  light?: boolean;
   /** @default success */
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
 }
@@ -60,31 +58,41 @@ export function getColor(type: AlertProps['type'], light?: boolean) {
   return colors[type];
 }
 
-export function getIconOptions(props: Pick<AlertProps, 'color' | 'light' | 'theme' | 'type'>) {
-  const { color, light, theme, type } = props;
-  const selectedColor = light
-    ? getColor(type, false)
-    : (color ?? getColorTokens(getColor(type, light), null, theme).textColor);
+export function getIconOptions(
+  props: Pick<SetRequired<AlertProps, 'variant'>, 'bg' | 'color' | 'theme' | 'type' | 'variant'>,
+) {
+  const { bg, color, theme, type, variant } = props;
+  const notSolid = ['bordered', 'light'].includes(variant);
+
+  let iconColor = getColorTokens(getColor(type), null, theme)[notSolid ? 'mainColor' : 'textColor'];
+
+  if (bg) {
+    iconColor = getColorTokens(bg, null, theme)[variant === 'bordered' ? 'mainColor' : 'textColor'];
+  }
+
+  if (color) {
+    iconColor = getColorTokens(color, null, theme).mainColor;
+  }
 
   const options = {
     success: {
-      color: selectedColor,
+      color: iconColor,
       icon: 'check-circle',
     },
     warning: {
-      color: selectedColor,
+      color: iconColor,
       icon: 'danger-circle',
     },
     error: {
-      color: selectedColor,
+      color: iconColor,
       icon: 'close-circle',
     },
     info: {
-      color: selectedColor,
+      color: iconColor,
       icon: 'info-circle',
     },
     neutral: {
-      color: selectedColor,
+      color: iconColor,
       icon: 'flash-o',
     },
   } as const;
@@ -98,10 +106,10 @@ export const defaultProps = {
   gap: 'sm',
   hideIcon: false,
   iconSize: 20,
-  light: false,
   padding: 'md',
   radius: 'xs',
   type: 'success',
+  variant: 'solid',
   width: '100%',
 } satisfies Omit<AlertProps, 'children'>;
 
