@@ -1,6 +1,7 @@
 import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { SetRequired } from '@gilbarbara/types';
 
 import { getColorTokens } from '~/modules/colors';
 import { getStyledOptions, getStyles } from '~/modules/system';
@@ -12,20 +13,39 @@ import { WithTheme } from '~/types';
 
 import { AlertProps, getColor, getIconOptions, useAlert } from './useAlert';
 
-export const StyledAlert = styled('div', getStyledOptions('type'))<AlertProps & WithTheme>(
+export const StyledAlert = styled('div', getStyledOptions('type'))<
+  SetRequired<AlertProps, 'variant'> & WithTheme
+>(
   {
     display: 'flex',
     position: 'relative',
     width: '100%',
   },
   props => {
-    const { align, direction, light, theme, type } = props;
-    const { mainColor, textColor } = getColorTokens(getColor(type, light), null, theme);
+    const { align, bg, direction, theme, type, variant } = props;
+    let { mainColor, textColor } = getColorTokens(getColor(type, variant === 'light'), null, theme);
+
+    if (bg) {
+      ({ mainColor, textColor } = getColorTokens(bg, null, theme));
+    }
+
+    let bgColor = mainColor;
+    let border: string | undefined;
+    let selectedColor = textColor;
+
+    if (variant === 'bordered') {
+      border = `1px solid ${mainColor}`;
+      bgColor = 'transparent';
+      selectedColor = mainColor;
+    } else if (variant === 'light') {
+      selectedColor = getColorTokens(getColor(type), null, theme).mainColor;
+    }
 
     return css`
       align-items: ${align};
-      background-color: ${mainColor};
-      color: ${textColor};
+      background-color: ${bgColor};
+      border: ${border};
+      color: ${selectedColor};
       flex-direction: ${direction};
       width: 100%;
       ${getStyles(props, { skipBorder: true })};
@@ -35,7 +55,7 @@ export const StyledAlert = styled('div', getStyledOptions('type'))<AlertProps & 
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   const { componentProps, getDataAttributes } = useAlert(props);
-  const { children, direction, hideIcon, icon, iconSize, light, type, ...rest } = componentProps;
+  const { children, direction, hideIcon, icon, iconSize, type, ...rest } = componentProps;
   const selected = getIconOptions(componentProps);
 
   return (
@@ -43,7 +63,6 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
       ref={ref}
       {...getDataAttributes('Alert')}
       direction={direction}
-      light={light}
       role="alert"
       type={type}
       {...rest}

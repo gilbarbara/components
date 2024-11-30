@@ -40,9 +40,8 @@ const types: AlertProps[] = [
   { children: 'Registration completed!', type: 'success' },
   { children: 'Please fill in all the fields before proceeding.', type: 'warning' },
   {
-    align: 'start',
     children: (
-      <Box ml="xs">
+      <Box>
         <Paragraph bold size="lg">
           Something went wrong!
         </Paragraph>
@@ -90,9 +89,9 @@ export const Tests: Story = {
   tags: ['!dev', '!autodocs'],
   args: {
     hideIcon: true,
-    light: true,
     padding: 'xxl',
     justify: 'center',
+    variant: 'light',
   },
   render: Basic.render,
 };
