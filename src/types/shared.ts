@@ -10,6 +10,7 @@ import {
   Orientation,
   Sizes,
   TextSizes,
+  Variant,
 } from './common';
 import { ButtonSize, ColorVariantTones, Radius, Shadow, Spacing, Theme } from './theme';
 
@@ -381,10 +382,10 @@ export interface WithTheme {
   theme: Theme;
 }
 
-export interface WithVariant {
+export interface WithVariant<T extends string = Variant> {
   /**
    * Component variant
    * @default solid
    */
-  variant?: 'bordered' | 'clean' | 'solid' | 'shadow';
+  variant?: T;
 }

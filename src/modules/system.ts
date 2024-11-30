@@ -97,8 +97,9 @@ interface GetStylesProps
     WithRadius,
     WithShadow,
     WithTextOptions,
-    WithTheme,
-    WithVariant {}
+    WithTheme {
+  variant?: string;
+}
 
 interface GetStylesOptions extends ColorStylesOptions {
   lineHeightCustom?: StringOrNumber;
