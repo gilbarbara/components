@@ -1,4 +1,16 @@
-import { forwardRef, KeyboardEvent, useCallback, useEffect, useId, useRef, useState } from 'react';
+import {
+  Children,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  KeyboardEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
@@ -54,6 +66,7 @@ const StyledMenuButton = styled(ButtonUnstyled)<WithTheme>(
 export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
   const { componentProps, getDataAttributes } = useMenu(props);
   const {
+    accent,
     bg,
     button,
     children,
@@ -132,6 +145,16 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
     };
   }, [isOpen, addScope, onToggleRef, open, removeScope]);
 
+  const content = Children.map(children, child => {
+    if (isValidElement(child)) {
+      return cloneElement(child as ReactElement, {
+        accent: child.props.accent ?? accent,
+      });
+    }
+
+    return child;
+  });
+
   return (
     <StyledMenu
       ref={mergedRefs}
@@ -170,7 +193,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
             orientation={orientation}
             position={position}
           >
-            {children}
+            {content}
           </MenuItems>
         </MenuProvider>
       </ClickOutside>

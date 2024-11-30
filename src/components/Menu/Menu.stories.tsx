@@ -21,7 +21,7 @@ export default {
   args: defaultProps,
   argTypes: {
     ...hideProps(),
-    ...colorProps(['accent']),
+    ...colorProps(['accent', 'bg']),
     button: disableControl(),
     children: disableControl(),
   },
