@@ -18,6 +18,7 @@ import { DividerProps } from '~/components/Divider/Divider';
 
 import {
   StyledProps,
+  Variant,
   WithColors,
   WithDimension,
   WithMargin,
@@ -126,7 +127,7 @@ interface AccordionKnownProps
    * Component type
    * @default clean
    */
-  variant?: 'bordered' | 'clean' | 'shadow' | 'split';
+  variant?: Exclude<Variant, 'solid'> | 'split';
 }
 
 export type AccordionProps = Simplify<AccordionKnownProps>;

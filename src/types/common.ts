@@ -65,6 +65,8 @@ export type Sizes = (typeof sizes)[number];
 
 export type SortDirection = 'asc' | 'desc';
 
+export type Variant = 'bordered' | 'clean' | 'solid' | 'shadow';
+
 // Responsive
 export interface MediaQueries {
   [key: string]: any;

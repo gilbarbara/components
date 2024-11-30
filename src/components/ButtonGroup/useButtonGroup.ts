@@ -8,12 +8,12 @@ import { ButtonProps } from '~/components/Button/Button';
 import {
   DataAttributes,
   StyledProps,
+  Variant,
   WithButtonSize,
   WithColorsDefaultBg,
   WithDisabled,
   WithHTMLAttributes,
   WithMargin,
-  WithVariant,
 } from '~/types';
 
 export interface ButtonGroupKnownProps
@@ -28,7 +28,7 @@ export interface ButtonGroupKnownProps
    * The default variant for the buttons if you are using the `items` prop.
    * @default 'bordered'
    */
-  defaultVariant?: WithVariant['variant'];
+  defaultVariant?: Exclude<Variant, 'split'>;
   items: Array<
     | (ButtonProps &
         DataAttributes & {
@@ -41,7 +41,7 @@ export interface ButtonGroupKnownProps
    * The selected variant for the buttons if you are using the `items` prop.
    * @default 'solid'
    */
-  selectedVariant?: WithVariant['variant'];
+  selectedVariant?: Exclude<Variant, 'split'>;
 }
 
 export type ButtonGroupProps = Simplify<
