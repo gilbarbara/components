@@ -7,7 +7,7 @@ export type { AvatarProps } from '../components/Avatar/Avatar';
 export type { BadgeProps } from '../components/Badge/Badge';
 export type { BoxProps } from '../components/Box/Box';
 export type { ButtonProps } from '../components/Button/Button';
-export type { ButtonGroupProps } from '../components/ButtonGroup/ButtonGroup';
+export type { ButtonGroupProps, ButtonGroupItemProps } from '../components/ButtonGroup/ButtonGroup';
 export type { ButtonSplitProps } from '../components/ButtonSplit/ButtonSplit';
 export type { ButtonUnstyledProps } from '../components/ButtonUnstyled/ButtonUnstyled';
 export type { CheckboxProps, RadioProps } from '../components/CheckboxAndRadio/useCheckboxAndRadio';
