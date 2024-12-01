@@ -24,7 +24,7 @@ export default {
   title: 'Components/ButtonGroup',
   // category: 'Buttons',
   component: ButtonGroup,
-  args: defaultProps,
+  args: { defaultSelected: 'One', ...defaultProps },
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
@@ -36,21 +36,36 @@ export default {
 
 export const Basic: Story = {
   args: {
-    items: ['One', { children: 'Two', defaultSelected: true }, 'Three', 'Four'],
-    onClick: event => action('onClick')(event.currentTarget.textContent),
+    items: [
+      { label: <strong>One</strong> },
+      { label: 'Two' },
+      { label: 'Three', disabled: true },
+      { label: 'Four' },
+    ],
   },
-  render: props => (
-    <>
-      <ButtonGroup {...props} />
-      <Description>
-        Use the <Code>items</Code> prop to define the buttons.
-        <br />
-        It can be an array of strings or an object of <Code>Button</Code> props.
-        <br />
-        To set an initial selected button, use the <Code>defaultSelected</Code> prop.
-      </Description>
-    </>
-  ),
+  render: function Render(props) {
+    const [selected, setSelected] = useState('One');
+
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      const { id, label = '' } = event.currentTarget.dataset;
+
+      setSelected(id ?? label);
+      action('onClick')(id ?? label);
+    };
+
+    return (
+      <>
+        <ButtonGroup {...props} onClick={handleClick} selected={selected} />
+        <Description>
+          Use the <Code>items</Code> prop to define the buttons.
+          <br />
+          It can be an array of strings or an object of <Code>Button</Code> props.
+          <br />
+          To set an initial selected button, use the <Code>defaultSelected</Code> prop.
+        </Description>
+      </>
+    );
+  },
 };
 
 export const WithChildren: Story = {
@@ -113,7 +128,8 @@ export const Sizes: Story = {
 export const Tests: Story = {
   tags: ['!dev', '!autodocs'],
   args: {
-    items: ['One', { children: 'Two', defaultSelected: true }, 'Three', 'Four'],
+    defaultSelected: 'Two',
+    items: [{ label: 'One' }, { label: 'Two' }, { label: 'Three' }, { label: 'Four' }],
     onClick: fn(),
   },
   play: async ({ args, canvasElement }) => {
