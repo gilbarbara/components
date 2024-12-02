@@ -20,7 +20,7 @@ const animation = keyframes`
 `;
 
 export const StyledImageWrapper = styled('div', getStyledOptions())<
-  Omit<ImageProps, 'alt' | 'src'> & WithTheme & { maxWidth: string | number; showSkeleton: boolean }
+  Omit<ImageProps, 'alt' | 'src'> & WithTheme & { showSkeleton: boolean }
 >(
   {
     display: 'inline-flex',
@@ -137,8 +137,9 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
   return (
     <StyledImageWrapper
       {...getDataAttributes('ImageWrapper')}
-      maxWidth={w}
+      height={h}
       showSkeleton={showSkeleton}
+      width={w}
       {...rest}
     >
       {image}
