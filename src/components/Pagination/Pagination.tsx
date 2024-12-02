@@ -37,13 +37,14 @@ export function Pagination(props: PaginationProps) {
     disableEdgeNavigation,
     edgeNavigationLimit = 3,
     onClick,
+    showSinglePage,
     totalPages,
     ...rest
   } = componentProps;
 
   const items: PaginationItem[] = [];
 
-  if (totalPages <= 1) {
+  if (totalPages === 0 || (totalPages === 1 && !showSinglePage)) {
     return null;
   }
 
@@ -134,8 +135,8 @@ export function Pagination(props: PaginationProps) {
             key={`${d.type}-${d.page ?? index}`}
             accent={accent}
             currentPage={currentPage}
-            disabled={d.disabled ?? false}
-            onClick={onClick}
+            disabled={d.disabled ?? d.page === currentPage}
+            onClick={d.page !== currentPage ? onClick : undefined}
             page={d.page}
             type={d.type}
           >
