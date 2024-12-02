@@ -38,6 +38,14 @@ export const Basic: Story = {
   },
 };
 
+export const SinglePage: Story = {
+  args: {
+    totalPages: 1,
+    showSinglePage: true,
+  },
+  render: Basic.render,
+};
+
 function getButtons(filter: string) {
   return screen
     .getAllByTestId('PaginationButton')

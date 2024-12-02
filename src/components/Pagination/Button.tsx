@@ -33,7 +33,7 @@ const StyledPaginationButton = styled(
     width: ${spacing.xl};
 
     &:disabled {
-      opacity: ${opacity.medium};
+      opacity: ${current ? 1 : opacity.medium};
       pointer-events: none;
     }
   `;

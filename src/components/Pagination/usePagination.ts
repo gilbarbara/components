@@ -27,6 +27,11 @@ export interface PaginationKnownProps extends WithAccent, WithBorder, WithMargin
    */
   edgeNavigationLimit?: number;
   onClick: (currentPage: number, type?: string) => void;
+  /**
+   * Show even if there is only one page
+   * @default false
+   */
+  showSinglePage?: boolean;
   style?: CSSProperties;
   totalPages: number;
 }
@@ -42,7 +47,7 @@ export interface PaginationItem extends WithDisabled {
 export interface PaginationButtonProps extends WithAccent, WithChildrenOptional {
   currentPage: number;
   disabled: boolean;
-  onClick: (currentPage: number, type?: string) => void;
+  onClick?: (currentPage: number, type?: string) => void;
   page: number;
   type?: string;
 }
@@ -52,6 +57,7 @@ export const defaultProps = {
   align: 'end',
   disableEdgeNavigation: false,
   edgeNavigationLimit: 3,
+  showSinglePage: false,
 } satisfies Omit<PaginationProps, 'currentPage' | 'onClick' | 'totalPages'>;
 
 export function usePagination(props: PaginationProps) {
