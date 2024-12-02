@@ -45,6 +45,7 @@ export const Loading: Story = {
   args: {
     alt: 'Nebula',
     src: 'https://app.requestly.io/delay/2000/https://plus.unsplash.com/premium_photo-1663047540698-12e93c082dda?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    radius: 'sm',
   },
 
   render: props => (
@@ -68,9 +69,11 @@ export const Loading: Story = {
 
 export const ZoomOnHover: Story = {
   args: {
-    alt: 'Fruits',
-    src: 'https://images.unsplash.com/photo-1533893662125-43c54ffa3b41?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    alt: 'Woman',
+    src: 'https://images.unsplash.com/photo-1551843073-4a9a5b6fcd5f?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     zoomOnHover: true,
+    height: 400,
+    radius: 'full',
   },
   render: props => (
     <FlexCenter>
