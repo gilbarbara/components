@@ -33,11 +33,11 @@ export interface CopyToClipboardKnownProps
    */
   hideTooltip?: boolean;
   /**
-   * Callback fired when the text is copied.
+   * Handler called when when the text is copied.
    */
   onCopy?: (value: string) => void;
   /**
-   * Callback fired when the copy fail
+   * Handler called when when the copy fail
    */
   onError?: (error: string) => void;
   /** @default 16 */

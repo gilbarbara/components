@@ -43,11 +43,11 @@ export interface DialogKnownProps
    */
   content: ReactNode;
   /**
-   * Callback when the cancel button is clicked.
+   * Handler called when the cancel button is clicked.
    */
   onClickCancel: () => void;
   /**
-   * Callback when the confirm button is clicked.
+   * Handler called when the confirm button is clicked.
    */
   onClickConfirmation: () => void;
   style?: CSSProperties;

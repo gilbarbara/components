@@ -14,7 +14,7 @@ export interface UseKeyboardNavigationOptions {
    */
   disabled?: boolean;
   /**
-   * The callback to be called when the escape key is pressed
+   * Handler called when when the escape key is pressed
    */
   escCallback?: () => void;
   /**

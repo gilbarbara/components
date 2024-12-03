@@ -45,11 +45,11 @@ export interface PortalKnownProps
    */
   isOpen?: boolean;
   /**
-   * Callback when the portal is closed.
+   * Handler called when the portal is closed.
    */
   onClose?: () => void;
   /**
-   * Callback when the portal is opened.
+   * Handler called when the portal is opened.
    */
   onOpen?: () => void;
   /**

@@ -6,7 +6,7 @@ export type ScrollValue = { x: number; y: number };
 
 export interface UseScrollPositionOptions {
   /**
-   * The callback function to be called when the scroll position changes.
+   * Handler called when the scroll position changes.
    */
   callback?: ({ currPos, prevPos }: { currPos: ScrollValue; prevPos: ScrollValue }) => void;
   /**
