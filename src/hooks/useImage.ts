@@ -13,11 +13,11 @@ export interface UseImageProps {
    */
   loading?: NativeImageProps['loading'];
   /**
-   * A callback for when there was an error loading the image `src`
+   * Handler called when there was an error loading the image `src`
    */
   onError?: NativeImageProps['onError'];
   /**
-   * A callback for when the image `src` has been loaded
+   * Handler called when the image `src` has been loaded
    */
   onLoad?: NativeImageProps['onLoad'];
   /**

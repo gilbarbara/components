@@ -38,11 +38,11 @@ export interface ToggleKnownProps
    */
   name?: string;
   /**
-   * Callback when the status changes (uncontrolled mode)
+   * Handler called when the status changes (uncontrolled mode)
    */
   onChange?: (value: boolean) => void;
   /**
-   * Callback when clicking/key down the toggle
+   * Handler called when clicking/key down the toggle
    */
   onToggle?: (value: boolean) => void;
   thumbIconChecked?: ReactNode;

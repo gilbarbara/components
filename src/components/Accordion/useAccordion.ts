@@ -111,7 +111,7 @@ interface AccordionKnownProps
    */
   initialSelectedIds?: 'all' | string[];
   /**
-   * A callback that is called when the selection changes.
+   * Handler called when the selection changes.
    */
   onChange?: (selectedIds: string[]) => void;
   /**
