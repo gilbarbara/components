@@ -1,14 +1,15 @@
-import { Simplify } from '@gilbarbara/types';
+import { PlainObject, Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
 
-import { StyledProps, WithChildren, WithColors, WithPositioning } from '~/types';
+import { StyledProps, Target, WithChildren, WithColors, WithPositioning } from '~/types';
 
-export interface PortalKnownProps
-  extends StyledProps,
-    WithChildren,
-    Pick<WithColors, 'bg'>,
-    WithPositioning {
+export interface PortalOwnProps {
+  /**
+   * The easing of the animation.
+   * @default ease-in-out
+   */
+  animationEasing?: string;
   /**
    * The duration of the animation when the content is fading in (in seconds)
    * @default 0.5
@@ -19,6 +20,11 @@ export interface PortalKnownProps
    * @default 0.5
    */
   animationExitDuration?: number;
+  /**
+   * The container where the portal will be rendered.
+   * @default document.body
+   */
+  container?: Target;
   /**
    * Disable the animation when the portal is opening/closing.
    * @default false
@@ -43,13 +49,18 @@ export interface PortalKnownProps
    * Whether the portal is visible.
    * @default false
    */
-  isOpen?: boolean;
+  isOpen: boolean;
   /**
-   * Handler called when the portal is closed.
+   * Handler called after the portal is closed.
    */
   onClose?: () => void;
   /**
-   * Handler called when the portal is opened.
+   * Handler called when the user tries to close it
+   * by clicking the overlay or pressing the escape key.
+   */
+  onDismiss: () => void;
+  /**
+   * Handler called after the portal is opened.
    */
   onOpen?: () => void;
   /**
@@ -59,9 +70,9 @@ export interface PortalKnownProps
   overlayBlur?: boolean;
   /**
    * The amount of blur to apply to the overlay.
-   * @default 8px
+   * @default 8
    */
-  overlayBlurAmount?: `${number}px`;
+  overlayBlurAmount?: number;
   /**
    * The opacity of the overlay (between 0 and 1).
    * @default 0.3
@@ -79,26 +90,53 @@ export interface PortalKnownProps
   zIndex?: number;
 }
 
+export interface PortalKnownProps
+  extends StyledProps,
+    WithChildren,
+    Pick<WithColors, 'bg'>,
+    Omit<WithPositioning, 'zIndex'>,
+    PortalOwnProps {}
+
 export type PortalProps = Simplify<PortalKnownProps>;
 
+export type PortalOwnPropsKeys = keyof typeof portalPropsKeys;
+
 export const defaultProps = {
+  animationEasing: 'ease-in-out',
   animationEnterDuration: 0.5,
   animationExitDuration: 0.5,
+  container: document.body,
   disableAnimation: false,
   disableCloseOnClickOverlay: false,
   disableCloseOnEsc: false,
   hideOverlay: false,
   isOpen: false,
   overlayBlur: false,
-  overlayBlurAmount: '8px',
+  overlayBlurAmount: 8,
   overlayOpacity: 0.3,
   showCloseButton: false,
   zIndex: 1000,
-} satisfies Omit<PortalProps, 'children'>;
+} satisfies Omit<PortalProps, 'children' | 'onDismiss'>;
 
-export function getPortalElement() {
-  return document.querySelector('.__portal');
-}
+export const portalPropsKeys: Record<Exclude<keyof PortalOwnProps, 'children'>, undefined> = {
+  animationEasing: undefined,
+  animationEnterDuration: undefined,
+  animationExitDuration: undefined,
+  container: undefined,
+  disableAnimation: undefined,
+  disableCloseOnClickOverlay: undefined,
+  disableCloseOnEsc: undefined,
+  hideOverlay: undefined,
+  isOpen: undefined,
+  onClose: undefined,
+  onDismiss: undefined,
+  onOpen: undefined,
+  overlayBlur: undefined,
+  overlayBlurAmount: undefined,
+  overlayOpacity: undefined,
+  showCloseButton: undefined,
+  zIndex: undefined,
+} as const;
 
 export function createPortalElement() {
   const newElement = document.createElement('div');
@@ -106,6 +144,33 @@ export function createPortalElement() {
   newElement.classList.add('__portal');
 
   return newElement;
+}
+
+export function getPortalElement() {
+  return document.querySelector('.__portal');
+}
+
+export function splitPortalProps<T extends PlainObject<any>>(
+  props: T,
+): [
+  otherProps: Omit<T, PortalOwnPropsKeys & keyof T>,
+  portalProps: Pick<T, PortalOwnPropsKeys & keyof T>,
+] {
+  const otherProps: Partial<Omit<T, PortalOwnPropsKeys & keyof T>> = {};
+  const portalProps: Partial<Pick<T, PortalOwnPropsKeys & keyof T>> = {};
+
+  (Object.keys(props) as Array<keyof T>).forEach(key => {
+    if (key in portalPropsKeys) {
+      (portalProps as any)[key] = props[key];
+    } else {
+      (otherProps as any)[key] = props[key];
+    }
+  });
+
+  return [
+    otherProps as Omit<T, PortalOwnPropsKeys & keyof T>,
+    portalProps as Pick<T, PortalOwnPropsKeys & keyof T>,
+  ];
 }
 
 export function usePortal(props: PortalProps) {

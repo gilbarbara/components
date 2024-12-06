@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { px } from '@gilbarbara/helpers';
+import { noop, px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
 import { opacify } from 'colorizr';
@@ -112,7 +112,7 @@ export function NavBarMenu(props: NavBarMenuProps) {
   };
 
   return (
-    <Portal disableAnimation hideOverlay isOpen={shouldRender} top={rest.height}>
+    <Portal disableAnimation hideOverlay isOpen={shouldRender} onDismiss={noop} top={rest.height}>
       <StyledNavBarMenu
         {...getDataAttributes('NavBarMenu')}
         isMenuOpen={isMenuOpen}

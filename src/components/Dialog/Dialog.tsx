@@ -20,7 +20,10 @@ const StyledDialog = styled(
   'div',
   getStyledOptions(),
 )<
-  Omit<DialogProps, 'content' | 'isActive' | 'onClickCancel' | 'onClickConfirmation' | 'title'> &
+  Omit<
+    DialogProps,
+    'content' | 'isOpen' | 'onClickCancel' | 'onClickConfirmation' | 'onDismiss' | 'title'
+  > &
     WithTheme
 >(props => {
   const { textAlign, theme, width } = props;
@@ -37,27 +40,19 @@ const StyledDialog = styled(
 });
 
 export function Dialog(props: DialogProps) {
-  const { componentProps, getDataAttributes } = useDialog(props);
-
+  const { dialogProps, getDataAttributes, portalProps } = useDialog(props);
   const {
     accent,
     buttonCancelText,
     buttonConfirmText,
     buttonOrder,
     content,
-    disableCloseOnClickOverlay,
-    disableCloseOnEsc,
-    hideOverlay,
-    isOpen,
     onClickCancel,
     onClickConfirmation,
-    onClose,
-    onOpen,
     style,
     title,
-    zIndex,
     ...rest
-  } = componentProps;
+  } = dialogProps;
 
   const actionButton = (
     <Button bg={accent} onClick={onClickConfirmation}>
@@ -71,16 +66,13 @@ export function Dialog(props: DialogProps) {
   );
 
   return (
-    <Portal
-      disableCloseOnClickOverlay={disableCloseOnClickOverlay}
-      disableCloseOnEsc={disableCloseOnEsc}
-      hideOverlay={hideOverlay}
-      isOpen={isOpen}
-      onClose={onClose}
-      onOpen={onOpen}
-      zIndex={zIndex}
-    >
-      <StyledDialog {...getDataAttributes('Dialog')} style={style} {...rest}>
+    <Portal {...portalProps} showCloseButton={false}>
+      <StyledDialog
+        {...getDataAttributes('Dialog')}
+        data-open={portalProps.isOpen}
+        style={style}
+        {...rest}
+      >
         <Box mb="sm" {...getDataAttributes('DialogTitle')}>
           {title && isValidElement(title) ? title : <H3 mb={0}>{title}</H3>}
         </Box>

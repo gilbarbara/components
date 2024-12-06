@@ -17,7 +17,9 @@ import { ModalProps, useModal } from './useModal';
 const StyledModal = styled(
   'div',
   getStyledOptions(),
-)<Omit<ModalProps, 'content' | 'isActive' | 'onClose' | 'onOpen' | 'title'> & WithTheme>(props => {
+)<
+  Omit<ModalProps, 'content' | 'isOpen' | 'onClose' | 'onDismiss' | 'onOpen' | 'title'> & WithTheme
+>(props => {
   const { maxWidth, theme, width } = props;
   const { darkColor, darkMode, white } = theme;
 
@@ -46,22 +48,8 @@ const StyledModalContent = styled(
 });
 
 export function Modal(props: ModalProps) {
-  const { componentProps, getDataAttributes } = useModal(props);
-  const {
-    children,
-    disableCloseOnClickOverlay,
-    disableCloseOnEsc,
-    hideCloseButton,
-    hideOverlay,
-    isOpen,
-    maxHeight,
-    onClose,
-    onOpen,
-    style,
-    title,
-    zIndex,
-    ...rest
-  } = componentProps;
+  const { getDataAttributes, modalProps, portalProps } = useModal(props);
+  const { children, hideCloseButton, maxHeight, style, title, ...rest } = modalProps;
   const { black, darkMode, white } = rest.theme;
 
   let header;
@@ -71,7 +59,7 @@ export function Modal(props: ModalProps) {
       <Box align="center" display="flex" justify={title ? 'space-between' : 'flex-end'} mb="md">
         {title && <H3 style={{ marginBottom: 0 }}>{title}</H3>}
         {!hideCloseButton && (
-          <ButtonUnstyled onClick={onClose}>
+          <ButtonUnstyled onClick={portalProps.onDismiss}>
             <Icon color={darkMode ? white : black} name="close" size={26} />
           </ButtonUnstyled>
         )}
@@ -80,16 +68,13 @@ export function Modal(props: ModalProps) {
   }
 
   return (
-    <Portal
-      disableCloseOnClickOverlay={disableCloseOnClickOverlay}
-      disableCloseOnEsc={disableCloseOnEsc}
-      hideOverlay={hideOverlay}
-      isOpen={isOpen}
-      onClose={onClose}
-      onOpen={onOpen}
-      zIndex={zIndex}
-    >
-      <StyledModal {...getDataAttributes('Modal')} {...rest} style={style}>
+    <Portal {...portalProps} showCloseButton={false}>
+      <StyledModal
+        {...getDataAttributes('Modal')}
+        {...rest}
+        data-open={portalProps.isOpen}
+        style={style}
+      >
         {header}
         <StyledModalContent maxHeight={maxHeight} padding={rest.padding} theme={rest.theme}>
           {children}

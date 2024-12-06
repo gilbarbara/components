@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { sleep } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, screen, userEvent, waitFor, within } from '@storybook/test';
 
 import { Button, FormGroup, Input, Spacer, Textarea } from '~';
 
-import { disableControl, hideProps, paddingProps, radiusProps } from '~/stories/__helpers__';
+import {
+  disableControl,
+  hideProps,
+  paddingProps,
+  portalProps,
+  radiusProps,
+} from '~/stories/__helpers__';
 
 import { defaultProps, Modal } from './Modal';
 
@@ -23,6 +28,7 @@ export default {
   argTypes: {
     ...hideProps(),
     ...paddingProps(),
+    ...portalProps(),
     ...radiusProps(),
     children: disableControl(),
     isOpen: disableControl(),
@@ -32,16 +38,20 @@ export default {
 
 export const Basic: Story = {
   render: function Render(props) {
-    const { onClose } = props;
+    const { onDismiss } = props;
     const [isOpen, setOpen] = useState(false);
 
     const handleClickOpen = () => {
       setOpen(true);
     };
 
+    const handleDismiss = () => {
+      setOpen(false);
+      onDismiss();
+    };
+
     const handleClickClose = () => {
       setOpen(false);
-      onClose?.();
     };
 
     return (
@@ -50,7 +60,7 @@ export const Basic: Story = {
           Open Modal
         </Button>
 
-        <Modal {...props} isOpen={isOpen} onClose={handleClickClose}>
+        <Modal {...props} isOpen={isOpen} onDismiss={handleDismiss}>
           <FormGroup data-testid="Form" label="Name" required>
             <Input name="name" placeholder="Name" />
           </FormGroup>
@@ -75,6 +85,7 @@ export const Tests: Story = {
   tags: ['!dev', '!autodocs'],
   args: {
     onClose: fn(),
+    onDismiss: fn(),
     onOpen: fn(),
   },
   render: Basic.render,
@@ -82,13 +93,14 @@ export const Tests: Story = {
     const canvas = within(canvasElement);
 
     await userEvent.click(canvas.getByTestId('OpenModal'));
+
     await waitFor(() => {
       expect(args.onOpen).toHaveBeenCalledTimes(1);
     });
-
-    await sleep(0.2);
+    await expect(screen.getByTestId('Modal')).toHaveAttribute('data-open', 'true');
 
     await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+
     await waitFor(() => {
       expect(args.onClose).toHaveBeenCalledTimes(1);
     });
@@ -97,16 +109,10 @@ export const Tests: Story = {
     await waitFor(() => {
       expect(args.onOpen).toHaveBeenCalledTimes(2);
     });
-
-    await sleep(0.2);
-
-    await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
-    });
-
-    await sleep(0.2);
+    await expect(screen.getByTestId('Modal')).toHaveAttribute('data-open', 'true');
 
     await userEvent.keyboard('{Escape}');
+    await expect(args.onDismiss).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {
       expect(args.onClose).toHaveBeenCalledTimes(2);

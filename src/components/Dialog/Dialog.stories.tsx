@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { sleep } from '@gilbarbara/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, screen, userEvent, waitFor, within } from '@storybook/test';
 
@@ -10,6 +9,7 @@ import {
   disableControl,
   hideProps,
   paddingProps,
+  portalProps,
   radiusProps,
 } from '~/stories/__helpers__';
 
@@ -30,6 +30,7 @@ export default {
     ...hideProps(),
     ...colorProps(['accent']),
     ...paddingProps(),
+    ...portalProps(),
     ...radiusProps(),
     isOpen: disableControl(),
     onClickCancel: disableControl(),
@@ -49,6 +50,10 @@ export const Basic: Story = {
       setOpen(false);
     };
 
+    const handleDismiss = () => {
+      setOpen(false);
+    };
+
     return (
       <>
         <Button data-testid="OpenDialog" onClick={handleClickOpen} size="sm">
@@ -60,6 +65,7 @@ export const Basic: Story = {
           isOpen={isOpen}
           onClickCancel={handleClickClose}
           onClickConfirmation={handleClickClose}
+          onDismiss={handleDismiss}
         />
       </>
     );
@@ -74,6 +80,7 @@ export const Tests: Story = {
     onClickCancel: fn(),
     onClickConfirmation: fn(),
     onClose: fn(),
+    onDismiss: fn(),
     onOpen: fn(),
   },
   render: Basic.render,
@@ -82,11 +89,10 @@ export const Tests: Story = {
 
     await userEvent.click(canvas.getByTestId('OpenDialog'));
 
-    await expect(args.onOpen).toHaveBeenCalledTimes(1);
-
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
+      expect(args.onOpen).toHaveBeenCalledTimes(1);
     });
+    await expect(screen.getByTestId('Dialog')).toHaveAttribute('data-open', 'true');
 
     await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
@@ -98,9 +104,7 @@ export const Tests: Story = {
     await waitFor(() => {
       expect(args.onOpen).toHaveBeenCalledTimes(2);
     });
-    await expect(screen.getByTestId('Dialog')).toBeInTheDocument();
-
-    await sleep(0.3);
+    await expect(screen.getByTestId('Dialog')).toHaveAttribute('data-open', 'true');
 
     await userEvent.keyboard('{Escape}');
 
