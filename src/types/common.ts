@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, RefObject } from 'react';
 import { SerializedStyles } from '@emotion/react';
 import { validatePassword } from '@gilbarbara/helpers';
 import { StringOrNumber } from '@gilbarbara/types';
@@ -64,6 +64,8 @@ export type Position = 'bottom' | 'left' | 'right' | 'top';
 export type Sizes = (typeof sizes)[number];
 
 export type SortDirection = 'asc' | 'desc';
+
+export type Target<T extends Element = Element> = RefObject<T> | T | null | string;
 
 export type Variant = 'bordered' | 'clean' | 'solid' | 'shadow';
 

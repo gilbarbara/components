@@ -7,7 +7,7 @@ import {
   ReactNode,
 } from 'react';
 import { css } from '@emotion/react';
-import { objectEntries, objectKeys, omit, px } from '@gilbarbara/helpers';
+import { canUseDOM, objectEntries, objectKeys, omit, px } from '@gilbarbara/helpers';
 import { PartialDeep, PlainObject } from '@gilbarbara/types';
 import { deepmergeCustom } from 'deepmerge-ts';
 import is from 'is-lite';
@@ -16,7 +16,7 @@ import * as defaultTheme from '~/modules/theme';
 
 import { generatePalette } from './palette';
 
-import { MediaQueries, ResponsiveInput, ResponsiveSizes, Theme } from '../types';
+import { MediaQueries, ResponsiveInput, ResponsiveSizes, Target, Theme } from '../types';
 
 const { breakpoints } = defaultTheme;
 
@@ -52,6 +52,22 @@ export function formatBreakpoints(theme: Theme) {
 
 export function formatKebabCaseToCamelCase(value: string) {
   return value.replace(/-./g, m => m[1].toUpperCase());
+}
+
+export function getElement<T extends Element>(target: Target<T>) {
+  if (!canUseDOM()) {
+    return null;
+  }
+
+  let targetEl: Element | null;
+
+  if (typeof target === 'string') {
+    targetEl = document.querySelector(target);
+  } else {
+    targetEl = target && 'current' in target ? target.current : target;
+  }
+
+  return targetEl;
 }
 
 export function getMediaQueries(): MediaQueries {

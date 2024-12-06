@@ -5,6 +5,8 @@ import { InputType } from '@storybook/types';
 import { sizes as sizeOptions } from '~/modules/options';
 import { spacing, variants as themeVariants } from '~/modules/theme';
 
+import { PortalOwnPropsKeys, portalPropsKeys } from '~/components/Portal/usePortal';
+
 import { ColorVariantTones, WithFlexBox } from '~/types';
 
 type ControlMap = Record<string, InputType>;
@@ -229,6 +231,17 @@ export function paddingProps(): ControlMap {
     px: { control: 'select', table: { category: 'Spacing' } },
     py: { control: 'select', table: { category: 'Spacing' } },
   };
+}
+
+export function portalProps(): ControlMap {
+  return objectKeys(portalPropsKeys).reduce<Partial<Record<PortalOwnPropsKeys, InputType>>>(
+    (acc, key) => {
+      acc[key] = { table: { category: 'Portal Props' } };
+
+      return acc;
+    },
+    {},
+  );
 }
 
 export function positioningProps(): ControlMap {

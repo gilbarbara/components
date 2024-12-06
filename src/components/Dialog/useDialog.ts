@@ -3,7 +3,11 @@ import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
 
-import { defaultProps as portalDefaultProps, PortalProps } from '~/components/Portal/Portal';
+import {
+  defaultProps as portalDefaultProps,
+  PortalProps,
+  splitPortalProps,
+} from '~/components/Portal/usePortal';
 
 import {
   Alignment,
@@ -80,8 +84,15 @@ export const defaultProps = {
   shadow: 'high',
   textAlign: 'left',
   width: 380,
-} satisfies Omit<DialogProps, 'content' | 'onClickCancel' | 'onClickConfirmation' | 'title'>;
+} satisfies Omit<
+  DialogProps,
+  'content' | 'onClickCancel' | 'onClickConfirmation' | 'onDismiss' | 'title'
+>;
 
 export function useDialog(props: DialogProps) {
-  return useComponentProps(props, defaultProps);
+  const { componentProps, getDataAttributes } = useComponentProps(props, defaultProps);
+
+  const [dialogProps, portalProps] = splitPortalProps(componentProps);
+
+  return { dialogProps, portalProps, getDataAttributes };
 }

@@ -5,6 +5,7 @@ import { StandardLonghandProperties } from 'csstype';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { defaultProps as portalDefaultProps, type PortalProps } from '~/components/Portal/Portal';
+import { splitPortalProps } from '~/components/Portal/usePortal';
 
 import { StyledProps, WithBorder, WithPadding, WithRadius, WithShadow } from '~/types';
 
@@ -48,8 +49,12 @@ export const defaultProps = {
   padding: 'lg',
   radius: 'lg',
   shadow: 'high',
-} satisfies Omit<ModalProps, 'children'>;
+} satisfies Omit<ModalProps, 'children' | 'onDismiss'>;
 
 export function useModal(props: ModalProps) {
-  return useComponentProps(props, defaultProps);
+  const { componentProps, getDataAttributes } = useComponentProps(props, defaultProps);
+
+  const [modalProps, portalProps] = splitPortalProps(componentProps);
+
+  return { modalProps, portalProps, getDataAttributes };
 }
