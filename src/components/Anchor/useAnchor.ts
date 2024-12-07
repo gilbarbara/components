@@ -20,15 +20,6 @@ import {
   WithTextOptions,
 } from '~/types';
 
-export const defaultProps = {
-  ...omit(textDefaultOptions, 'size'),
-  color: 'primary',
-  display: 'inline-flex',
-  external: false,
-  gap: 'xxs',
-  hideDecoration: false,
-} satisfies Omit<AnchorProps, 'children' | 'href'>;
-
 export interface AnchorKnownProps
   extends StyledProps,
     WithChildren,
@@ -59,6 +50,14 @@ export interface AnchorKnownProps
 }
 
 export type AnchorProps = Simplify<OmitElementProps<HTMLAnchorElement, AnchorKnownProps>>;
+
+export const defaultProps = {
+  ...omit(textDefaultOptions, 'size'),
+  color: 'primary',
+  external: false,
+  gap: 'xxs',
+  hideDecoration: false,
+} satisfies Omit<AnchorProps, 'children' | 'href'>;
 
 export function useAnchor(props: AnchorProps) {
   return useComponentProps(props, defaultProps);

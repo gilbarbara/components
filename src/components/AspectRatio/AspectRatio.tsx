@@ -11,6 +11,7 @@ import { AspectRatioProps, useAspectRatio } from './useAspectRatio';
 
 export const StyledAspectRatio = styled('div', getStyledOptions())<AspectRatioProps & WithTheme>(
   css`
+    display: flex;
     overflow: hidden;
     position: relative;
     width: 100%;

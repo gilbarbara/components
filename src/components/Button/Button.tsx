@@ -28,7 +28,7 @@ export const StyledButton = styled('button', getStyledOptions())<
     alignItems: 'center',
     boxShadow: 'none',
     cursor: 'pointer',
-    display: 'flex',
+    display: 'inline-flex',
     justifyContent: 'center',
     overflow: 'hidden',
     position: 'relative',
