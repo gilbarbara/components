@@ -24,7 +24,7 @@ export const StyledChip = styled('span', getStyledOptions())<
     const { spacing } = theme;
 
     return css`
-      padding: ${spacing.xxs} ${spacing.xs};
+      padding: ${spacing.xxs} ${spacing.sm};
       ${getStyles(props, { lineHeightCustom: 1, useFontSize: true })};
     `;
   },
@@ -35,32 +35,41 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
   const { children, endContent, endContentOnClick, startContent, startContentOnClick, ...rest } =
     componentProps;
 
-  const content: PlainObject<ReactNode> = {
-    startContent,
-    endContent,
-  };
+  const content: PlainObject<ReactNode> = {};
 
-  if (startContentOnClick) {
-    content.startContent = (
-      <ButtonUnstyled onClick={endContentOnClick}>{content.startContent}</ButtonUnstyled>
-    );
+  if (startContent) {
+    content.startContent = startContent;
+
+    if (startContentOnClick) {
+      content.startContent = (
+        <ButtonUnstyled onClick={startContentOnClick}>{content.startContent}</ButtonUnstyled>
+      );
+    } else {
+      content.startContent = isValidElement(startContent) ? (
+        startContent
+      ) : (
+        <span>{startContent}</span>
+      );
+    }
   }
 
-  if (endContentOnClick) {
-    content.endContent = (
-      <ButtonUnstyled onClick={endContentOnClick}>{content.endContent}</ButtonUnstyled>
-    );
+  if (endContent) {
+    content.endContent = endContent;
+
+    if (endContentOnClick) {
+      content.endContent = (
+        <ButtonUnstyled onClick={endContentOnClick}>{content.endContent}</ButtonUnstyled>
+      );
+    } else {
+      content.endContent = isValidElement(endContent) ? endContent : <span>{endContent}</span>;
+    }
   }
 
   return (
     <StyledChip ref={ref} {...getDataAttributes('Chip')} {...rest}>
-      {isValidElement(content.startContent) ? (
-        content.startContent
-      ) : (
-        <span>{content.startContent}</span>
-      )}
+      {content.startContent}
       <span>{children}</span>
-      {isValidElement(content.endContent) ? content.endContent : <span>{content.endContent}</span>}
+      {content.endContent}
     </StyledChip>
   );
 });
