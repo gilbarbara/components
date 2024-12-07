@@ -21,7 +21,7 @@ export const StyledProgressBar = styled('div', getStyledOptions())<
   Pick<ProgressBarProps, 'headerPosition' | 'width'> & WithTheme
 >(
   {
-    display: 'inline-flex',
+    display: 'flex',
   },
   props => {
     const { headerPosition, theme, width } = props;

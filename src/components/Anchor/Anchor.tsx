@@ -20,11 +20,9 @@ export const StyledAnchor = styled('a', getStyledOptions())<
     padding: 0,
   },
   props => {
-    const { gap, hideDecoration, theme } = props;
-    const { spacing } = theme;
+    const { hideDecoration } = props;
 
     return css`
-      gap: ${spacing[gap]};
       text-decoration: ${hideDecoration ? 'none' : 'underline'};
       ${getStyles(props, { lineHeightCustom: 1, useFontSize: true })};
     `;

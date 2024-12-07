@@ -18,7 +18,7 @@ export const StyledButtonGroup = styled('div', getStyledOptions())<
   Partial<ButtonGroupProps> & WithTheme
 >(
   `
-    display: inline-flex;
+    display: flex;
 
     > button {
       + button {

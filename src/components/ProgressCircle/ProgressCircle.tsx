@@ -18,7 +18,7 @@ export const StyledProgressCircle = styled('div', getStyledOptions())<
 >(
   {
     alignItems: 'center',
-    display: 'inline-flex',
+    display: 'flex',
     justifyContent: 'center',
   },
   props => {
