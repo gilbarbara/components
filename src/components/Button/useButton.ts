@@ -17,6 +17,7 @@ import {
   WithFlexItem,
   WithLight,
   WithPadding,
+  WithPositioning,
   WithRadius,
   WithStartContent,
   WithVariant,
@@ -33,6 +34,7 @@ export interface ButtonKnownProps
     WithFlexItem,
     WithLight,
     WithPadding,
+    WithPositioning,
     WithRadius,
     WithStartContent,
     WithVariant {
