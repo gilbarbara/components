@@ -135,6 +135,16 @@ function Preview(StoryFn: FC, context: Context) {
   const isSideBySide = appearance === 'side-by-side';
   const desiredBackground = isSideBySide || appearance === 'light' ? white : darkColor;
   const requireBackgroundUpdate = backgrounds?.value !== desiredBackground;
+  const sharedProps = {
+    align,
+    direction,
+    display,
+    justify,
+    maxWidth,
+    minWidth,
+    minHeight: minHeight ?? (layout === 'fullscreen' ? '100vh' : undefined),
+    padding,
+  };
 
   useSingleton(() => {
     if (isDocs) {
@@ -180,13 +190,7 @@ function Preview(StoryFn: FC, context: Context) {
     return (
       <ThemeProvider theme={customTheme(isDarkMode)}>
         <Story
-          ref={docsRef}
-          align={align}
-          direction={direction}
-          display={display}
-          justify={justify}
-          minHeight={minHeight}
-          minWidth={minWidth}
+          {...sharedProps}
           padding={paddingDocs}
           style={{ color: isDarkMode ? white : darkColor }}
         >
@@ -202,14 +206,10 @@ function Preview(StoryFn: FC, context: Context) {
         <ThemeProvider theme={customTheme(false)}>
           <ThemeBlock data-side="left" side="left">
             <Story
-              align={align}
               data-testid="Story-Left"
-              direction={direction}
-              display={display}
+              {...sharedProps}
               justify={layout === 'centered' ? 'center' : justify}
-              maxWidth={maxWidth}
               minHeight="100vh"
-              padding={padding}
               width="100%"
             >
               <StoryFn />
@@ -219,14 +219,10 @@ function Preview(StoryFn: FC, context: Context) {
         <ThemeProvider theme={customTheme(true)}>
           <ThemeBlock data-side="right" side="right">
             <Story
-              align={align}
               data-testid="Story-Right"
-              direction={direction}
-              display={display}
+              {...sharedProps}
               justify={layout === 'centered' ? 'center' : justify}
-              maxWidth={maxWidth}
               minHeight="100vh"
-              padding={padding}
               width="100%"
             >
               <StoryFn />
@@ -240,15 +236,10 @@ function Preview(StoryFn: FC, context: Context) {
   return (
     <ThemeProvider theme={customTheme(isDarkMode)}>
       <Story
-        align={align}
         data-testid="Story"
-        direction={direction}
-        display={display}
-        justify={justify}
-        maxWidth={maxWidth}
-        minWidth={minWidth}
+        {...sharedProps}
+        justify={layout === 'centered' ? 'center' : justify}
         mx="auto"
-        padding={padding}
         style={{ color: isDarkMode ? white : darkColor }}
         width="100%"
       >
