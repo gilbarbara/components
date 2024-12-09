@@ -40,7 +40,7 @@ export interface Context {
     color?: keyof Theme['colors'];
   };
   parameters: StoryProps & {
-    layout?: string;
+    layout?: 'centered' | 'fullscreen' | 'padded';
     paddingDocs?: SpacingOrZero;
   };
   viewMode: string;
