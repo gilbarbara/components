@@ -18,6 +18,7 @@ import {
   WithLayout,
   WithMargin,
   WithPadding,
+  WithPositioning,
   WithRadius,
   WithTextOptions,
 } from '~/types';
@@ -34,6 +35,7 @@ export interface ButtonUnstyledKnownProps
     WithLayout,
     WithMargin,
     WithPadding,
+    WithPositioning,
     WithRadius,
     WithTextOptions {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
