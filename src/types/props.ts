@@ -69,6 +69,7 @@ export type { RadioGroupProps } from '../components/RadioGroup/RadioGroup';
 export type { RippleProps } from '../components/Ripple/Ripple';
 export type { SearchProps, SearchItem } from '../components/Search/Search';
 export type { SelectProps } from '../components/Select/Select';
+export type { SidebarProps } from '../components/Sidebar/Sidebar';
 export type { SkeletonProps } from '../components/Skeleton/Skeleton';
 export type { SnippetProps } from '../components/Snippet/Snippet';
 export type { SpacerProps } from '../components/Spacer/Spacer';

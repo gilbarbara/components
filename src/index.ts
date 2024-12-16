@@ -52,6 +52,7 @@ export * from './components/RadioGroup';
 export * from './components/Ripple';
 export * from './components/Select';
 export * from './components/Search';
+export * from './components/Sidebar';
 export * from './components/Skeleton';
 export * from './components/Snippet';
 export * from './components/Spacer';
