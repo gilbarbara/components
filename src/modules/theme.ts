@@ -182,6 +182,16 @@ export const typography = {
   },
 };
 
+export const zIndex = {
+  xxs: 10,
+  xs: 20,
+  sm: 50,
+  md: 100,
+  lg: 200,
+  xl: 500,
+  xxl: 1000,
+};
+
 /**
  * Colors
  */

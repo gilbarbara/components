@@ -453,6 +453,15 @@ exports[`mergeTheme > should return a modified theme 1`] = `
     },
   },
   "white": "#fff",
+  "zIndex": {
+    "lg": 200,
+    "md": 100,
+    "sm": 50,
+    "xl": 500,
+    "xs": 20,
+    "xxl": 1000,
+    "xxs": 10,
+  },
 }
 `;
 
@@ -882,6 +891,15 @@ exports[`mergeTheme > should return the default theme 1`] = `
     },
   },
   "white": "#fff",
+  "zIndex": {
+    "lg": 200,
+    "md": 100,
+    "sm": 50,
+    "xl": 500,
+    "xs": 20,
+    "xxl": 1000,
+    "xxs": 10,
+  },
 }
 `;
 

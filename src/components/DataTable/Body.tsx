@@ -21,7 +21,7 @@ function DataTableBody(props: DataTableBodyProps) {
     sortColumn,
     theme,
   } = props;
-  const { darkMode } = theme;
+  const { darkMode, zIndex } = theme;
 
   const isInitialLoad = loading && !data.length;
 
@@ -94,7 +94,7 @@ function DataTableBody(props: DataTableBodyProps) {
           position="absolute"
           right={0}
           top={0}
-          zIndex={10}
+          zIndex={zIndex.xxs}
         >
           <Loader color={accent} size={loaderSize} type={loaderType} />
         </FlexCenter>

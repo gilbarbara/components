@@ -136,11 +136,10 @@ const StyledContent = styled('div', getStyledOptions())<
     top: '100%',
     transformOrigin: 'top',
     transition: 'transform 0.3s',
-    zIndex: 100,
   },
   props => {
     const { isActive, position, theme, wide } = props;
-    const { darkMode, grayScale, radius, shadow, spacing, white } = theme;
+    const { darkMode, grayScale, radius, shadow, spacing, white, zIndex } = theme;
     let left = position === 'left' ? 0 : 'auto';
     let translateX = '';
 
@@ -159,6 +158,7 @@ const StyledContent = styled('div', getStyledOptions())<
       padding: ${spacing.md};
       right: ${position === 'right' ? 0 : 'auto'};
       transform: ${`scaleY(0)${translateX}`};
+      z-index: ${zIndex.md};
 
       ${isActive &&
       css`

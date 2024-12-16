@@ -188,7 +188,7 @@ describe('getOutlineStyles', () => {
     expect(getOutlineStyles('#000')).toEqual({
       outline: '#00000099 solid 3px',
       outlineOffset: '1px',
-      zIndex: 10,
+      zIndex: theme.zIndex.xxs,
     });
   });
 
@@ -197,13 +197,13 @@ describe('getOutlineStyles', () => {
       getOutlineStyles('#000', {
         outlineOpacity: 0.8,
         outlineOffset: 2,
-        outlineZIndex: 20,
+        outlineZIndex: theme.zIndex.xs,
         outlineWidth: '4px',
       }),
     ).toEqual({
       outline: '#000000cc solid 4px',
       outlineOffset: '2px',
-      zIndex: 20,
+      zIndex: theme.zIndex.xs,
     });
   });
 });
@@ -240,7 +240,7 @@ describe('getStyles', () => {
         shadow: 'mid' as const,
         variant: 'solid' as const,
         width: '100px',
-        zIndex: 10,
+        zIndex: theme.zIndex.xxs,
         theme,
       }),
     ).toMatchSnapshot();
