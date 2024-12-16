@@ -40,7 +40,7 @@ function DataTableHead(props: DataTableHeadProps) {
     sortBy,
     sortDirection,
     stickyHeader,
-    theme: { black, darkMode, white },
+    theme: { black, darkMode, white, zIndex },
   } = props;
 
   const color = darkMode ? white : black;
@@ -103,7 +103,7 @@ function DataTableHead(props: DataTableHeadProps) {
   if (stickyHeader) {
     wrapperProps.position = 'sticky';
     wrapperProps.top = 0;
-    wrapperProps.zIndex = 1;
+    wrapperProps.zIndex = zIndex.xxs;
   }
 
   return (

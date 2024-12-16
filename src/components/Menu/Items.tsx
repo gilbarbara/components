@@ -17,11 +17,10 @@ const StyledMenuItems = styled('div', getStyledOptions())<
   {
     position: 'absolute',
     transform: 'scaleY(0)',
-    zIndex: 10,
   },
   props => {
     const { bg, isActive, isOpen, minWidth, orientation, position, theme } = props;
-    const { darkMode, grayScale, radius, shadow, spacing, white } = theme;
+    const { darkMode, grayScale, radius, shadow, spacing, white, zIndex } = theme;
     const [positionMain, positionCross] = position.split('-');
 
     let bgColor = darkMode ? grayScale['800'] : white;
@@ -95,6 +94,7 @@ const StyledMenuItems = styled('div', getStyledOptions())<
         min-width: ${px(minWidth)};
         overflow: hidden;
         padding: 0;
+        z-index: ${zIndex.xxs};
 
         ${positionMain === 'bottom' &&
         css`

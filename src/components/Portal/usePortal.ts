@@ -85,7 +85,7 @@ export interface PortalOwnProps {
   showCloseButton?: boolean;
   /**
    * The z-index of the portal.
-   * @default 1000
+   * @default 100
    */
   zIndex?: number;
 }
@@ -115,7 +115,7 @@ export const defaultProps = {
   overlayBlurAmount: 8,
   overlayOpacity: 0.3,
   showCloseButton: false,
-  zIndex: 1000,
+  zIndex: 100,
 } satisfies Omit<PortalProps, 'children' | 'onDismiss'>;
 
 export const portalPropsKeys: Record<Exclude<keyof PortalOwnProps, 'children'>, undefined> = {
