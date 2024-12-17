@@ -1,11 +1,9 @@
 import { KeyboardEvent, MouseEvent, useState } from 'react';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
-import { Avatar, Box, ButtonUnstyled, Icon, Paragraph } from '~';
+import { Avatar, Box, ButtonUnstyled, Icon, MenuToggle, Paragraph } from '~';
 
 import { colorProps, disableControl, hideProps, VARIANTS } from '~/stories/__helpers__';
 
@@ -30,72 +28,6 @@ export default {
     justify: 'center',
   },
 } satisfies Meta<typeof Menu>;
-
-const Toggle = styled.div<{ isOpen: boolean }>`
-  & label {
-    cursor: pointer;
-    display: block;
-    height: 30px;
-    position: relative;
-    width: 35px;
-  }
-
-  & span {
-    border-bottom: 5px solid currentcolor;
-    display: block;
-    padding-top: 10px;
-    transition-delay: 0.125s;
-
-    &:before,
-    &:after {
-      border-top: 5px solid currentcolor;
-      content: '';
-      left: 0;
-      position: absolute;
-      right: 0;
-      transform-origin: center;
-      transition-delay: 0s;
-    }
-
-    &:before {
-      top: 0;
-    }
-
-    &:after {
-      bottom: 4px;
-    }
-  }
-
-  & span,
-  & span:before,
-  & span:after {
-    transition-duration: 0.25s;
-    transition-property: transform, border-color;
-    transition-timing-function: cubic-bezier(0.5, -0.5, 0.5, 1.5);
-  }
-
-  ${props =>
-    props.isOpen &&
-    css`
-      & span {
-        border-color: transparent;
-        transition-delay: 0s;
-
-        &:before,
-        &:after {
-          transition-delay: 0.125s;
-        }
-
-        &:before {
-          transform: translateY(8px) rotate(135deg);
-        }
-
-        &:after {
-          transform: translateY(-13px) rotate(-135deg);
-        }
-      }
-    `};
-`;
 
 export const Basic: Story = {
   args: {
@@ -165,16 +97,9 @@ export const Horizontal: Story = {
   },
 };
 
-export const WithAnimatedButton: Story = {
+export const WithMenuToggle: Story = {
   args: {
-    button: isOpen => (
-      <Toggle isOpen={isOpen}>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label aria-label="Toggle Menu">
-          <span />
-        </label>
-      </Toggle>
-    ),
+    button: isOpen => <MenuToggle isOpen={isOpen} />,
     position: 'bottom-left',
   },
   render: Basic.render,
