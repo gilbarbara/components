@@ -64,4 +64,4 @@ export function DatePicker(props: DatePickerSingleProps) {
 
 DatePicker.displayName = 'DatePicker';
 
-export { singleDefaultProps, type DatePickerSingleProps } from './useDatePicker';
+export { singleDefaultProps as defaultProps, type DatePickerSingleProps } from './useDatePicker';

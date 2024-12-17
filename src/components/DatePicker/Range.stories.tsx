@@ -8,7 +8,7 @@ import {
   spacingProps,
 } from '~/stories/__helpers__';
 
-import { DatePickerRange, rangeDefaultProps } from './Range';
+import { DatePickerRange, defaultProps } from './Range';
 
 type Story = StoryObj<typeof DatePickerRange>;
 
@@ -16,7 +16,7 @@ export default {
   title: 'Components/DatePicker',
   // category: 'Inputs',
   component: DatePickerRange,
-  args: rangeDefaultProps,
+  args: defaultProps,
   argTypes: {
     ...hideProps(),
     ...radiusProps(),

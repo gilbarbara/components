@@ -172,4 +172,6 @@ export function Snippet(props: SnippetProps) {
   );
 }
 
+Snippet.displayName = 'Snippet';
+
 export { defaultProps, type SnippetProps } from './useSnippet';
