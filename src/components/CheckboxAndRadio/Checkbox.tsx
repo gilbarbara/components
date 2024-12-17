@@ -73,4 +73,4 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
 
 Checkbox.displayName = 'Checkbox';
 
-export { checkBoxDefaultProps, type CheckboxProps } from './useCheckboxAndRadio';
+export { checkBoxDefaultProps as defaultProps, type CheckboxProps } from './useCheckboxAndRadio';

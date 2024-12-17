@@ -7,7 +7,7 @@ import { sizes } from '~/modules/options';
 
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
-import { Radio, radioDefaultProps } from './Radio';
+import { defaultProps, Radio } from './Radio';
 
 type Story = StoryObj<typeof Radio>;
 
@@ -16,7 +16,7 @@ export default {
   // category: 'Inputs',
   component: Radio,
   args: {
-    ...radioDefaultProps,
+    ...defaultProps,
     label: 'Label',
     name: 'radio',
     value: 'radio',

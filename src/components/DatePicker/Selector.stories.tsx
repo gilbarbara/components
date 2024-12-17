@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
-import { DatePickerSelector, selectorDefaultProps } from './Selector';
+import { DatePickerSelector, defaultProps } from './Selector';
 
 type Story = StoryObj<typeof DatePickerSelector>;
 
@@ -11,7 +11,7 @@ export default {
   // category: 'Inputs',
   component: DatePickerSelector,
   args: {
-    ...selectorDefaultProps,
+    ...defaultProps,
     captionLayout: 'dropdown',
     fromYear: 1900,
     name: 'date',

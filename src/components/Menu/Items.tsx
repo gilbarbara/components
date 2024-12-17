@@ -155,3 +155,5 @@ export function MenuItems(props: MenuItemsProps) {
     </StyledMenuItems>
   );
 }
+
+MenuItems.displayName = 'MenuItems';

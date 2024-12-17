@@ -333,4 +333,7 @@ export function DatePickerSelector(props: DatePickerSelectorProps) {
 
 DatePickerSelector.displayName = 'DatePickerSelector';
 
-export { selectorDefaultProps, type DatePickerSelectorProps } from './useDatePicker';
+export {
+  selectorDefaultProps as defaultProps,
+  type DatePickerSelectorProps,
+} from './useDatePicker';

@@ -80,3 +80,5 @@ export function Ripple(props: RippleProps) {
     </>
   );
 }
+
+Ripple.displayName = 'Ripple';

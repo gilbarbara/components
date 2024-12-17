@@ -202,3 +202,5 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
 });
 
 Menu.displayName = 'Menu';
+
+export { defaultProps, type MenuProps } from './useMenu';

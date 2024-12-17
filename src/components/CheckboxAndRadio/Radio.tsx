@@ -76,4 +76,4 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
 
 Radio.displayName = 'Radio';
 
-export { radioDefaultProps, type RadioProps } from './useCheckboxAndRadio';
+export { radioDefaultProps as defaultProps, type RadioProps } from './useCheckboxAndRadio';

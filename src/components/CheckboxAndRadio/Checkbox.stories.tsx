@@ -7,7 +7,7 @@ import { sizes } from '~/modules/options';
 
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
-import { Checkbox, checkBoxDefaultProps } from './Checkbox';
+import { Checkbox, defaultProps } from './Checkbox';
 
 type Story = StoryObj<typeof Checkbox>;
 
@@ -16,7 +16,7 @@ export default {
   // category: 'Inputs',
   component: Checkbox,
   args: {
-    ...checkBoxDefaultProps,
+    ...defaultProps,
     label: 'Label',
     name: 'checkbox',
   },
