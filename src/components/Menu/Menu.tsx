@@ -4,6 +4,7 @@ import {
   forwardRef,
   isValidElement,
   KeyboardEvent,
+  MouseEvent,
   ReactElement,
   useCallback,
   useEffect,
@@ -88,6 +89,8 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
   const onToggleRef = useLatest(onToggle);
   const id = useId();
 
+  const disableToggle = disabled || is.boolean(open);
+
   useEffect(() => {
     if (is.boolean(open)) {
       setIsOpen(open);
@@ -114,14 +117,28 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
   const handleToggleMenu = useCallback(
     (force?: boolean) => {
       return () => {
-        if (disabled || is.boolean(open)) {
+        if (disableToggle) {
           return;
         }
 
-        setIsOpen(a => force ?? !a);
+        setIsOpen(state => force ?? !state);
       };
     },
-    [disabled, open],
+    [disableToggle],
+  );
+
+  const handleClickButton = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (disableToggle) {
+        return;
+      }
+
+      setIsOpen(state => !state);
+    },
+    [disableToggle],
   );
 
   const { addScope, removeScope } = useKeyboardNavigation(localRef, {
@@ -176,7 +193,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
             aria-label={isOpen ? labels.close : labels.open}
             {...getDataAttributes('MenuButton')}
             disabled={disabled}
-            onClick={handleToggleMenu()}
+            onClick={handleClickButton}
             onKeyDown={handleKeyDownButton}
             tabIndex={disableKeyboardNavigation ? -1 : 0}
             theme={theme}

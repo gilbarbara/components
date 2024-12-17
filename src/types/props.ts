@@ -54,6 +54,7 @@ export type {
   MenuSeparatorProps,
   MenuTitleProps,
 } from '../components/Menu/useMenu';
+export type { MenuToggleProps } from '../components/MenuToggle/MenuToggle';
 export type { ModalProps } from '../components/Modal/Modal';
 export type { NavBarProps } from '../components/NavBar/NavBar';
 export type { NonIdealStateProps } from '../components/NonIdealState/NonIdealState';
