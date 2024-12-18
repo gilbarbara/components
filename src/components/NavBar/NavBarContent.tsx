@@ -10,7 +10,7 @@ import { NavBarContentProps } from './useNavBar';
 
 export function NavBarContent(props: NavBarContentProps) {
   const {
-    componentProps: { showBreakpoint, ...rest },
+    componentProps: { hideBreakpoint, showBreakpoint, ...rest },
     getDataAttributes,
   } = useComponentProps(props, {
     gap: 'sm',
@@ -18,15 +18,15 @@ export function NavBarContent(props: NavBarContentProps) {
   });
 
   const breakpoints = formatBreakpoints(rest.theme);
-  const { max } = useResponsive(breakpoints);
+  const { max, min } = useResponsive(breakpoints);
 
-  return (
-    <Flex
-      {...getDataAttributes('NavBarContent')}
-      display={showBreakpoint && max(showBreakpoint) ? 'none' : 'flex'}
-      {...rest}
-    />
-  );
+  let display = 'flex';
+
+  if ((hideBreakpoint && min(hideBreakpoint)) || (showBreakpoint && max(showBreakpoint))) {
+    display = 'none';
+  }
+
+  return <Flex {...getDataAttributes('NavBarContent')} display={display} {...rest} />;
 }
 
 NavBarContent.displayName = 'NavBarContent';

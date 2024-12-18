@@ -19,14 +19,29 @@ import { NavBarMenu } from './NavBarMenu';
 import { NavBarProps, NavBarProvider, useNavBar } from './useNavBar';
 
 const StyledNavBar = styled('nav', getStyledOptions())<
-  SetRequired<NavBarProps, 'bordered' | 'blurred' | 'blurredOpacity' | 'height' | 'position'> &
+  SetRequired<
+    NavBarProps,
+    'bordered' | 'blurred' | 'blurredRadius' | 'height' | 'opacity' | 'placement' | 'position'
+  > &
     WithTheme & { isHidden: boolean }
 >(
   {
     width: '100%',
   },
   props => {
-    const { bg, blurred, blurredOpacity, bordered, color, height, position, theme } = props;
+    const {
+      bg,
+      blurred,
+      blurredRadius,
+      bordered,
+      color,
+      height,
+      opacity,
+      placement,
+      position,
+      theme,
+      zIndex,
+    } = props;
     const { black, darkColor, darkMode, grayScale, white } = theme;
 
     const borderColor = darkMode ? grayScale['700'] : grayScale['200'];
@@ -40,20 +55,22 @@ const StyledNavBar = styled('nav', getStyledOptions())<
       selectedColor = textColor;
     }
 
-    if (blurred) {
-      selectedBg = opacify(selectedBg, blurredOpacity);
+    if (opacity) {
+      selectedBg = opacify(selectedBg, opacity);
     }
 
     return css`
       background-color: ${selectedBg};
+      bottom: ${placement === 'bottom' ? 0 : 'auto'};
       color: ${selectedColor};
       ${bordered && `border-bottom: 1px solid ${borderColor};`};
-      ${blurred && `backdrop-filter: blur(16px);`};
+      ${blurred && `backdrop-filter: blur(${px(blurredRadius)});`};
       height: ${px(height)};
-      position: ${position};
+      position: ${placement === 'top' ? position : 'fixed'};
       transform: translateY(${props.isHidden ? '-100%' : 0});
       transition: transform 0.3s;
-      top: 0;
+      top: ${placement === 'top' ? 0 : 'auto'};
+      z-index: ${zIndex};
     `;
   },
 );
