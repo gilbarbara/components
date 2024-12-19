@@ -1,6 +1,4 @@
-import SVG from 'react-inlinesvg';
-
-import { Box, H2, H3, Jumbo, Paragraph, Spacer } from '~';
+import { Anchor, Box, H2, H3, Jumbo, Paragraph, Spacer, SVG } from '~';
 
 import Navigation from './Navigation';
 
@@ -105,6 +103,7 @@ function App() {
       </Box>
 
       <H2>Hooks</H2>
+
       <Box mb="md">
         <Paragraph bold>useImage</Paragraph>
         <Paragraph mt={0}>Load an image and return the load status and image props</Paragraph>
@@ -189,6 +188,28 @@ function App() {
       <Box mb="md">
         <Paragraph bold>rotate</Paragraph>
         <Paragraph mt={0}>keyframes for a rotate animation</Paragraph>
+      </Box>
+
+      <H2>Libraries</H2>
+
+      <Box mb="md">
+        <Paragraph bold>SVG</Paragraph>
+        <Paragraph mt={0}>
+          The main export from{' '}
+          <Anchor external href="https://github.com/gilbarbara/react-inlinesvg">
+            react-inlinesvg
+          </Anchor>
+        </Paragraph>
+      </Box>
+
+      <Box mb="md">
+        <Paragraph bold>colorizr</Paragraph>
+        <Paragraph mt={0}>
+          All exports from{' '}
+          <Anchor external href="https://github.com/gilbarbara/colorizr">
+            colorizr
+          </Anchor>
+        </Paragraph>
       </Box>
 
       <Navigation next="Colors" />

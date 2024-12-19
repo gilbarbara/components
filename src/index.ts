@@ -90,3 +90,8 @@ export * as Types from './types';
 export * as Props from './types/props';
 export * from './types/props';
 export type { Theme } from './types/theme';
+
+// Libraries
+
+export { default as SVG } from 'react-inlinesvg';
+export * from 'colorizr';
