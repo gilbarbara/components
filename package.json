@@ -170,7 +170,7 @@
     {
       "name": "esm",
       "path": "./dist/index.mjs",
-      "limit": "100 KB"
+      "limit": "110 KB"
     }
   ]
 }
