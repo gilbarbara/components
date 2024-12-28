@@ -1,20 +1,12 @@
-import {
-  Children,
-  cloneElement,
-  ElementType,
-  isValidElement,
-  JSXElementConstructor,
-  ReactNode,
-} from 'react';
+import { CSSProperties } from 'react';
 import { css } from '@emotion/react';
-import { canUseDOM, objectEntries, objectKeys, omit, px } from '@gilbarbara/helpers';
+import { canUseDOM, objectEntries, objectKeys, px } from '@gilbarbara/helpers';
 import { PartialDeep, PlainObject } from '@gilbarbara/types';
+import { swatch } from 'colorizr';
 import { deepmergeCustom } from 'deepmerge-ts';
 import is from 'is-lite';
 
 import * as defaultTheme from '~/modules/theme';
-
-import { generatePalette } from './palette';
 
 import { MediaQueries, ResponsiveInput, ResponsiveSizes, Target, Theme } from '../types';
 
@@ -26,6 +18,14 @@ const deepmerge = deepmergeCustom({
 
 export function clearNumber(value: string) {
   return value.replace(/\D+/g, '');
+}
+
+export function convertCamelCaseToKebabCase(string_: string): string {
+  return string_.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
+}
+
+export function convertKebabCaseToCamelCase(value: string) {
+  return value.replace(/-./g, m => m[1].toUpperCase());
 }
 
 /**
@@ -48,10 +48,6 @@ export function formatBreakpoints(theme: Theme) {
     },
     { _: 0 },
   );
-}
-
-export function formatKebabCaseToCamelCase(value: string) {
-  return value.replace(/-./g, m => m[1].toUpperCase());
 }
 
 export function getElement<T extends Element>(target: Target<T>) {
@@ -92,7 +88,7 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
 
   const baseVariants = objectEntries(nextTheme.colors).reduce(
     (acc, [key, value]) => {
-      acc[key] = generatePalette(value, key === 'gray');
+      acc[key] = swatch(value, nextTheme.swatchOptions);
 
       return acc;
     },
@@ -103,70 +99,6 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
     ...nextTheme,
     variants: deepmerge(baseVariants, customTheme.variants ?? {}) as Theme['variants'],
   };
-}
-
-export function pickChildren<T = ReactNode>(
-  children: T,
-  targetChild: ElementType,
-): [T | undefined, T[]] {
-  const components: T[] = [];
-
-  const withoutTargetChildren = Children.map(children, item => {
-    if (!isValidElement(item)) {
-      return item;
-    }
-
-    if (item.type === targetChild) {
-      components.push(item as T);
-
-      return null;
-    }
-
-    return item;
-  })?.filter(Boolean) as T;
-
-  return [withoutTargetChildren, components];
-}
-
-export interface RecursiveChildrenEnhancerOptions {
-  componentType?: JSXElementConstructor<any>;
-  overrideProps?: boolean;
-}
-
-export function recursiveChildrenEnhancer(
-  children: ReactNode,
-  props: PlainObject,
-  options: RecursiveChildrenEnhancerOptions,
-): ReactNode {
-  const { componentType, overrideProps } = options;
-
-  return Children.map(children, child => {
-    if (!isValidElement(child)) {
-      return child;
-    }
-
-    const nextProps = overrideProps ? props : omit(props, ...Object.keys(child.props));
-
-    if (child.props.children) {
-      let childProps = {
-        children: is.function(child.props.children)
-          ? child.props.children
-          : recursiveChildrenEnhancer(child.props.children, nextProps, options),
-      };
-
-      if (child.type === componentType) {
-        childProps = { ...childProps, ...nextProps };
-      }
-
-      return cloneElement(child, childProps);
-    }
-
-    if (child.type !== componentType) {
-      return child;
-    }
-
-    return cloneElement(child, nextProps);
-  });
 }
 
 /**
@@ -192,4 +124,21 @@ export function responsive(rules: ResponsiveInput) {
   }
 
   return css(entries);
+}
+
+export function stringifyCSSProperties(style?: CSSProperties) {
+  if (!style || !is.plainObject(style)) {
+    return '';
+  }
+
+  return objectKeys(style as CSSProperties).reduce((accumulator, key) => {
+    // transform the key from camelCase to kebab-case
+    const cssKey = convertCamelCaseToKebabCase(key);
+    // remove ' in value
+    const cssValue = is.string(style[key]) ? px(style[key].replace("'", '')) : style[key];
+
+    // build the result
+    // you can break the line, add indent for it if you need
+    return `${accumulator}${cssKey}:${cssValue};`;
+  }, '');
 }

@@ -82,7 +82,6 @@ export {
 } from './modules/animations';
 export { icons } from './modules/options';
 export { mergeTheme, responsive } from './modules/helpers';
-export { generatePalette } from './modules/palette';
 export * as theme from './modules/theme';
 export { getContainerStyles } from './modules/system';
 export { px } from '@gilbarbara/helpers';

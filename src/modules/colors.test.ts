@@ -33,14 +33,14 @@ describe('getColorTokens', () => {
     {
       mainColor: 'white',
       textColor: 'gray.900',
-      expected: { hoverColor: '#e6e6e6', mainColor: '#fff', textColor: '#1a1a1a' },
+      expected: { hoverColor: '#e6e6e6', mainColor: '#fff', textColor: '#313131' },
     },
     {
       mainColor: 'primary',
       textColor: null,
       expected: {
-        hoverColor: '#3379ff',
-        mainColor: '#0058ff',
+        hoverColor: '#0f5fff',
+        mainColor: '#0049DB',
         textColor: '#ffffff',
         variant: 'primary',
       },
@@ -49,8 +49,8 @@ describe('getColorTokens', () => {
       mainColor: 'secondary',
       textColor: null,
       expected: {
-        hoverColor: '#de54a9',
-        mainColor: '#d62993',
+        hoverColor: '#009485',
+        mainColor: '#006157',
         textColor: '#ffffff',
         variant: 'secondary',
       },
@@ -59,8 +59,8 @@ describe('getColorTokens', () => {
       mainColor: 'gray',
       textColor: null,
       expected: {
-        hoverColor: '#b3b3b3',
-        mainColor: '#999999',
+        hoverColor: '#cdcdcd',
+        mainColor: '#b3b3b3',
         textColor: '#000000',
         variant: 'gray',
       },
@@ -96,6 +96,16 @@ describe('getColorTokens', () => {
       },
     },
     {
+      mainColor: 'citrus',
+      textColor: null,
+      expected: {
+        hoverColor: '#c5ff99',
+        mainColor: '#a8ff66',
+        textColor: '#000000',
+        variant: 'citrus',
+      },
+    },
+    {
       mainColor: 'green',
       textColor: null,
       expected: {
@@ -109,8 +119,8 @@ describe('getColorTokens', () => {
       mainColor: 'teal',
       textColor: null,
       expected: {
-        hoverColor: '#54c9c3',
-        mainColor: '#38b2ac',
+        hoverColor: '#7be0d3',
+        mainColor: '#52d6c5',
         textColor: '#000000',
         variant: 'teal',
       },
@@ -173,7 +183,7 @@ describe('getColorTokens', () => {
     {
       mainColor: '#ff0044',
       textColor: 'gray.100',
-      expected: { hoverColor: '#ff3369', mainColor: '#ff0044', textColor: '#e6e6e6' },
+      expected: { hoverColor: '#ff3369', mainColor: '#ff0044', textColor: '#ededed' },
     },
   ])(`should return properly for $mainColor/$textColor`, ({ expected, mainColor, textColor }) => {
     expect(getColorTokens(mainColor, textColor)).toEqual(expected);
@@ -182,8 +192,8 @@ describe('getColorTokens', () => {
   it('should return the default value', () => {
     // @ts-ignore
     expect(getColorTokens()).toEqual({
-      hoverColor: '#3379ff',
-      mainColor: '#0058ff',
+      hoverColor: '#0f5fff',
+      mainColor: '#0049DB',
       textColor: '#ffffff',
       variant: 'primary',
     });

@@ -4,11 +4,11 @@ import { Simplify } from '@gilbarbara/types';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
+  ColorTone,
   ColorVariant,
   Position,
   Spacing,
   StyledProps,
-  Tone,
   WithHTMLAttributes,
   WithMargin,
 } from '~/types';
@@ -45,7 +45,7 @@ export interface StatusIndicatorKnownProps extends StyledProps, WithHTMLAttribut
    * The inner circle color tone.
    * @default 100
    */
-  tone?: Tone;
+  tone?: ColorTone;
 }
 
 export type StatusIndicatorProps = Simplify<StatusIndicatorKnownProps>;

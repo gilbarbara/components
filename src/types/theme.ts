@@ -32,8 +32,6 @@ export type Shadow = keyof typeof theme.shadow;
 
 export type Spacing = keyof typeof theme.spacing;
 
-export type Tone = keyof typeof theme.variants.primary;
-
 export type Typography = keyof typeof theme.typography;
 
 export type ColorVariant = Color | 'black' | 'white';

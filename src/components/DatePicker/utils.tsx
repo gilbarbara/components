@@ -11,7 +11,7 @@ import { Box } from '~/components/Box';
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
 import { DatePickerBaseProps, DatePickerLayoutProps } from '~/components/DatePicker/useDatePicker';
 
-import { Theme } from '~/types';
+import { WithTheme } from '~/types';
 
 export function getNumberOfMonths(fromDate?: Date | string, toDate?: Date | string): number {
   if (fromDate && toDate) {
@@ -89,11 +89,9 @@ export function getRange<T extends DayPickerProps>(
   return additionalProps;
 }
 
-export function getPickerStyles(
-  props: DatePickerBaseProps & DatePickerLayoutProps & { theme: Theme },
-) {
+export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutProps & WithTheme) {
   const { accent = 'primary', theme } = props;
-  const { colors, darkMode, grayScale, spacing, typography, variants } = theme;
+  const { colors, darkMode, grayScale, spacing, textColorOptions, typography, variants } = theme;
 
   const className = 'rdp';
   const colorMain = colors[accent];
@@ -384,7 +382,7 @@ export function getPickerStyles(
     .${className}-day_selected:active:not([aria-disabled='true']),
     .${className}-day_selected:hover:not([aria-disabled='true']) {
       background-color: ${colorMain};
-      color: ${textColor(colorMain)};
+      color: ${textColor(colorMain, textColorOptions)};
     }
 
     .${className}-day_selected:focus:not([aria-disabled='true']) {

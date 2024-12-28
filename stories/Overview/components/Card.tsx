@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
-import { Avatar, Box, Chip, Flex, H3, Image, Paragraph, type Props } from '~';
+import { Avatar, Box, type BoxProps, Chip, Flex, H3, Image, Paragraph } from '~';
 
-interface CardProps extends Omit<Props.BoxProps, 'title'> {
+interface CardProps extends Omit<BoxProps, 'title'> {
   authorImage?: string;
   authorName: string;
   date: string;

@@ -50,9 +50,9 @@ import users from '../__fixtures__/users.json';
   </Flex>
   <CodeBlock>{`import { ReactNode } from 'react';
 
-import { Avatar, Box, Chip, Flex, H3, Image, Paragraph, type Props } from '@gilbarbara/components';
+import { Avatar, Box, type BoxProps, Chip, Flex, H3, Image, Paragraph } from '@gilbarbara/components';
 
-interface CardProps extends Omit<Props.BoxProps, 'title'> {
+interface CardProps extends Omit<BoxProps, 'title'> {
   authorImage?: string;
   authorName: string;
   date: string;

@@ -1,5 +1,4 @@
 import { objectKeys } from '@gilbarbara/helpers';
-import { StringOrNull } from '@gilbarbara/types';
 import {
   darken,
   hex2hsl,
@@ -31,15 +30,17 @@ export function getColorWithTone(color: string, tone: ColorTone) {
  */
 export function getColorTokens(
   mainColor: string,
-  textColor?: StringOrNull,
-  { colors, variants }: Pick<Theme, 'colors' | 'variants'> = theme,
+  textColor: string | null | undefined,
+  currentTheme: Theme = theme,
 ): { hoverColor: string; mainColor: string; textColor: string; variant?: Color } {
+  const { colors, textColorOptions, variants } = currentTheme;
+
   try {
     const variantKeys = objectKeys(variants);
 
     const selectedTextColor =
       textColor && variantKeys.some(d => textColor.startsWith(d))
-        ? getColorTokens(textColor, undefined, { colors, variants })?.mainColor
+        ? getColorTokens(textColor, null, theme)?.mainColor
         : textColor;
 
     switch (mainColor) {
@@ -72,7 +73,7 @@ export function getColorTokens(
 
           return {
             mainColor: selectedMainColor,
-            textColor: selectedTextColor ?? contrastingColor(selectedMainColor),
+            textColor: selectedTextColor ?? contrastingColor(selectedMainColor, textColorOptions),
             hoverColor: getColorComplement(selectedMainColor),
             variant,
           };
@@ -80,7 +81,7 @@ export function getColorTokens(
 
         return {
           mainColor,
-          textColor: selectedTextColor ?? contrastingColor(mainColor),
+          textColor: selectedTextColor ?? contrastingColor(mainColor, textColorOptions),
           hoverColor: getColorComplement(mainColor),
         };
       }
