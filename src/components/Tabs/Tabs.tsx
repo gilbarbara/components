@@ -1,28 +1,29 @@
-import { Children, isValidElement, MouseEvent, ReactNode, useEffect, useRef } from 'react';
+import { MouseEvent, ReactNode, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { omit, px, unique } from '@gilbarbara/helpers';
-import { useMeasure, useSetState } from '@gilbarbara/hooks';
-import { PlainObject, SetOptional, SetRequired } from '@gilbarbara/types';
+import { px, unique } from '@gilbarbara/helpers';
+import { useSetState } from '@gilbarbara/hooks';
+import { PlainObject, SetOptional } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { getColorTokens } from '~/modules/colors';
-import { getStyledOptions, marginStyles } from '~/modules/system';
+import { getMatchingChildren } from '~/modules/react-helpers';
+import { getStyledOptions, getStyles } from '~/modules/system';
 
-import { ButtonUnstyled } from '~/components/ButtonUnstyled';
+import { Flex } from '~/components/Flex';
 import { Loader } from '~/components/Loader';
 import { NonIdealState } from '~/components/NonIdealState';
+import { TabsMenu } from '~/components/Tabs/TabsMenu';
 
 import { WithTheme } from '~/types';
 
-import { Tab, TabProps } from './Tab';
-import { TabsProps, useTabs } from './useTabs';
+import { Tab } from './Tab';
+import { TabProps, TabsProps, useTabs } from './useTabs';
 
 interface State {
   activeId: string;
   error: boolean;
   isReady: boolean;
-  tabs: Omit<TabProps, 'children'>[];
+  tabs: TabProps[];
   width: number | null;
 }
 
@@ -33,105 +34,12 @@ const StyledTabs = styled(
   const { orientation } = props;
 
   return css`
-    display: ${orientation === 'vertical' ? 'block' : 'flex'};
-    ${marginStyles(props)};
+    display: flex;
+    flex-direction: ${orientation === 'vertical' ? 'row' : 'column'};
+    flex-grow: 1;
+    ${getStyles(props, { skipBorder: true })};
   `;
 });
-
-const StyledMenu = styled('div', getStyledOptions())<
-  TabsProps & WithTheme & { width: number | null }
->(
-  {
-    alignItems: 'flex-start',
-    display: 'flex',
-    position: 'relative',
-  },
-  props => {
-    const { orientation, theme, width } = props;
-    const { grayScale, spacing } = theme;
-
-    const isHorizontal = orientation === 'horizontal';
-    const isVertical = orientation === 'vertical';
-
-    return css`
-      flex-direction: ${isVertical ? 'row' : 'column'};
-      margin-bottom: ${isVertical ? spacing.md : undefined};
-      margin-right: ${isHorizontal ? spacing.md : undefined};
-      max-width: ${width ? px(width) : undefined};
-      overflow: ${isVertical ? 'auto hidden' : undefined};
-
-      &:before {
-        border-bottom: ${isVertical ? `1px solid ${grayScale['100']}` : undefined};
-        border-right: ${isHorizontal ? `1px solid ${grayScale['100']}` : undefined};
-        bottom: 0;
-        content: '';
-        left: ${isVertical ? 0 : undefined};
-        position: absolute;
-        right: ${isHorizontal ? '-1px' : 0};
-        top: ${isHorizontal ? 0 : undefined};
-      }
-    `;
-  },
-);
-
-const StyledMenuItem = styled(ButtonUnstyled, getStyledOptions('disabled'))<
-  SetRequired<Pick<TabsProps, 'accent' | 'disableActiveBorderRadius' | 'orientation'>, 'accent'> &
-    WithTheme & {
-      disabled: boolean;
-      isActive: boolean;
-    }
->(
-  {
-    lineHeight: 1,
-    position: 'relative',
-    whiteSpace: 'nowrap',
-  },
-  props => {
-    const { accent, disableActiveBorderRadius, disabled, isActive, orientation, theme } = props;
-    const { darkMode, grayScale, spacing } = theme;
-
-    const { mainColor } = getColorTokens(accent, null, theme);
-    let color = darkMode ? grayScale['200'] : grayScale['800'];
-    const isVertical = orientation === 'vertical';
-    const isHorizontal = orientation === 'horizontal';
-
-    if (disabled) {
-      color = grayScale['500'];
-    } else if (isActive) {
-      color = mainColor;
-    }
-
-    return css`
-      color: ${disabled ? grayScale['500'] : color};
-      cursor: ${disabled ? 'not-allowed' : 'pointer'};
-      padding: ${spacing.xs} ${spacing.md};
-      width: ${isHorizontal ? '100%' : undefined};
-
-      ${isActive &&
-      css`
-        &:before {
-          background-color: ${mainColor};
-          bottom: ${isVertical ? '-1px' : 0};
-          content: '';
-          display: block;
-          height: ${isVertical ? '3px' : undefined};
-          left: ${isVertical ? 0 : undefined};
-          position: absolute;
-          right: ${isHorizontal ? '-1px' : 0};
-          top: ${isHorizontal ? 0 : undefined};
-          width: ${isHorizontal ? '3px' : undefined};
-
-          ${!disableActiveBorderRadius &&
-          css`
-            border-top-left-radius: 3px;
-            border-top-right-radius: ${isVertical ? '3px' : undefined};
-            border-bottom-left-radius: ${isHorizontal ? '3px' : undefined};
-          `};
-        }
-      `}
-    `;
-  },
-);
 
 const StyledContent = styled(
   'div',
@@ -140,6 +48,9 @@ const StyledContent = styled(
   const { maxHeight, minHeight } = props;
 
   return css`
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     max-height: ${maxHeight ? px(maxHeight) : undefined};
     min-height: ${minHeight ? px(minHeight) : undefined};
     overflow-y: auto;
@@ -160,7 +71,7 @@ export function Tabs(props: TabsProps) {
     onClick,
     ...rest
   } = componentProps;
-  const [{ activeId, error, isReady, tabs, width }, setState] = useSetState<State>({
+  const [{ activeId, error, isReady, tabs }, setState] = useSetState<State>({
     activeId: id ?? defaultId,
     error: false,
     isReady: false,
@@ -169,8 +80,6 @@ export function Tabs(props: TabsProps) {
   });
   const isMounted = useRef(false);
   const uniqueId = useRef(unique(6));
-  const ref = useRef<HTMLDivElement>(null);
-  const measurements = useMeasure(ref);
 
   useEffect(() => {
     isMounted.current = true;
@@ -187,36 +96,30 @@ export function Tabs(props: TabsProps) {
       tabs: [],
     };
 
-    Children.forEach(children, (child, index) => {
-      if (!isValidElement(child)) {
-        return;
-      }
+    const { elements, hasInvalidElements } = getMatchingChildren(children, Tab);
 
-      if (child.type === Tab) {
-        nextState.tabs.push(omit(child.props as TabProps, 'children'));
+    elements.forEach((child, index) => {
+      nextState.tabs.push(child.props);
 
-        if (!activeId && index === 0) {
-          nextState.activeId = child.props.id;
-        }
-      } else {
-        nextState.error = true;
-        // eslint-disable-next-line no-console
-        console.warn('Invalid children detected. Only the Tab component is allowed.');
+      if (!activeId && index === 0) {
+        nextState.activeId = child.props.id;
       }
     });
+
+    nextState.error = hasInvalidElements;
 
     setState(nextState);
   }, [activeId, children, setState]);
 
   useEffect(() => {
-    if (measurements.width && measurements.width !== width) {
-      setState({ width: measurements.width });
+    if (id) {
+      setState({ activeId: id });
     }
-  }, [measurements, setState, width]);
-
-  useEffect(() => {
-    setState({ activeId: id });
   }, [id, setState]);
+
+  if (error) {
+    return null;
+  }
 
   const handleClickItem = (event: MouseEvent<HTMLButtonElement>) => {
     const { disabled, tabId = '' } = event.currentTarget.dataset;
@@ -232,46 +135,19 @@ export function Tabs(props: TabsProps) {
     onClick?.(tabId);
   };
 
-  if (error) {
-    return null;
-  }
-
   const content: PlainObject<ReactNode> = {};
 
   if (isReady) {
     if (tabs.length) {
-      if (width || rest.orientation === 'horizontal') {
-        content.menu = (
-          <StyledMenu
-            {...getDataAttributes('TabsMenu')}
-            orientation={rest.orientation}
-            role="tablist"
-            theme={rest.theme}
-            width={width}
-          >
-            {tabs.map(d => (
-              <StyledMenuItem
-                key={d.id}
-                accent={accent}
-                aria-controls={`panel-${uniqueId.current}-${d.id}`}
-                aria-selected={d.id === activeId}
-                {...getDataAttributes('TabsMenuItem')}
-                data-disabled={!!d.disabled}
-                data-tab-id={d.id}
-                disableActiveBorderRadius={rest.disableActiveBorderRadius}
-                disabled={!!d.disabled}
-                isActive={d.id === activeId}
-                onClick={handleClickItem}
-                orientation={rest.orientation}
-                role="tab"
-                theme={rest.theme}
-              >
-                {d.title}
-              </StyledMenuItem>
-            ))}
-          </StyledMenu>
-        );
-      }
+      content.menu = (
+        <TabsMenu
+          {...props}
+          activeId={activeId}
+          onClickItem={handleClickItem}
+          tabs={tabs}
+          uniqueId={uniqueId.current}
+        />
+      );
 
       content.main = (
         <StyledContent
@@ -279,21 +155,21 @@ export function Tabs(props: TabsProps) {
           maxHeight={maxHeight}
           minHeight={minHeight}
         >
-          {Children.toArray(children)
-            .filter(d => isValidElement(d) && d.props.id === activeId)
-            .map(
-              d =>
-                isValidElement(d) && (
-                  <div
-                    key={d.props.id}
-                    {...getDataAttributes('TabsPanel')}
-                    id={`panel-${uniqueId.current}-${d.props.id}`}
-                    role="tabpanel"
-                  >
-                    {d.props.children}
-                  </div>
-                ),
-            )}
+          {tabs
+            .filter(d => d.id === activeId)
+            .map(({ id: tabId, title, ...tabProps }) => {
+              return (
+                <Flex
+                  key={tabId}
+                  {...getDataAttributes('TabsPanel')}
+                  direction="column"
+                  fill
+                  id={`panel-${uniqueId.current}-${tabId}`}
+                  role="tabpanel"
+                  {...tabProps}
+                />
+              );
+            })}
         </StyledContent>
       );
     } else {
@@ -306,8 +182,7 @@ export function Tabs(props: TabsProps) {
   }
 
   return (
-    <StyledTabs {...getDataAttributes('Tabs')} {...rest}>
-      {rest.orientation === 'vertical' && <div ref={ref} />}
+    <StyledTabs {...getDataAttributes('Tabs')} minHeight={minHeight} {...rest}>
       {content.menu}
       {content.main}
     </StyledTabs>
