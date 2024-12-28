@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
 
-import { recursiveChildrenEnhancer } from '~/modules/helpers';
+import { enhanceChildren } from '~/modules/react-helpers';
 import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { WithBorder, WithTheme } from '~/types';
@@ -44,14 +44,10 @@ export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
 
   return (
     <StyledList ref={ref} {...getDataAttributes('List')} {...rest}>
-      {recursiveChildrenEnhancer(
-        children,
-        { ...omit(rest, 'radius', 'shadow'), getDataAttributes },
-        {
-          componentType: ListItem,
-          overrideProps: false,
-        },
-      )}
+      {enhanceChildren(children, ListItem, {
+        ...omit(rest, 'radius', 'shadow'),
+        getDataAttributes,
+      })}
     </StyledList>
   );
 });

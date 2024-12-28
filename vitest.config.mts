@@ -12,6 +12,7 @@ export default defineConfig({
       exclude: [
         ...configDefaults.exclude,
         'src/**/*.stories.tsx',
+        'src/**/*.test.ts?(x)',
         'src/**/*.d.ts',
         'src/tests/**/*',
         'src/types/**/*',

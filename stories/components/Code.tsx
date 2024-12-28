@@ -13,9 +13,9 @@ interface Props {
 }
 
 export default function Code({ bg, children, color }: Props) {
-  const {
-    theme: { darkMode, fontMonospace, grayScale, ...theme },
-  } = useTheme();
+  const { theme } = useTheme();
+
+  const { darkMode, fontMonospace, grayScale } = theme;
 
   const { mainColor, textColor } = getColorTokens(
     bg ?? (darkMode ? grayScale['800'] : grayScale['100']),

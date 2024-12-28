@@ -10,7 +10,7 @@ import is from 'is-lite';
 import { useScrollPosition } from '~/hooks/useScrollPosition';
 
 import { getColorTokens } from '~/modules/colors';
-import { pickChildren } from '~/modules/helpers';
+import { splitReactChildren } from '~/modules/react-helpers';
 import { getStyledOptions } from '~/modules/system';
 
 import { WithTheme } from '~/types';
@@ -142,7 +142,7 @@ export const NavBar = forwardRef<HTMLElement, NavBarProps>((props, ref) => {
     },
   });
 
-  const [childrenWithoutMenu, [menu]] = pickChildren(children, NavBarMenu);
+  const [childrenWithoutMenu, [menu]] = splitReactChildren(children, NavBarMenu);
 
   const handleToggleMenu = useCallback(
     (isOpen: boolean) => {

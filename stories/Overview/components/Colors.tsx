@@ -1,40 +1,50 @@
+import { isValidElement, ReactNode } from 'react';
 import { capitalize, objectEntries } from '@gilbarbara/helpers';
 import { compare, textColor } from 'colorizr';
 
-import { Box, FlexCenter, Grid, H2, H3, H5, Icon, Paragraph, Spacer, Text } from '~';
+import { Box, Chip, Flex, FlexCenter, H2, H3, Paragraph, Spacer } from '~';
 
-import { getColorTokens } from '~/modules/colors';
-import { colors, grayScale, variants as themeVariants } from '~/modules/theme';
+import * as theme from '~/modules/theme';
 
-import { PANGRAM, TONES } from '~/stories/__helpers__';
+import { TONES } from '~/stories/__helpers__';
 
 interface SwatchProps {
   bg: string;
   color: string;
-  content: string;
-  footer?: string;
+  content: ReactNode;
+  footer?: ReactNode;
+  size?: number;
 }
 
-function Swatch({ bg, color, content, footer }: SwatchProps) {
-  const { mainColor } = getColorTokens(bg, null);
+const { colors, grayScale, textColorOptions, variants } = theme;
 
+function getValidationColor(isValid: boolean) {
+  return isValid ? 'green' : 'red';
+}
+
+function Swatch({ bg, color, content, footer, size = 100 }: SwatchProps) {
   return (
-    <div>
-      <div
-        style={{
-          backgroundColor: mainColor,
-          borderRadius: '50%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: 100,
-          width: 100,
-        }}
+    <Box>
+      <FlexCenter
+        bg={bg}
+        color={textColor(color, textColorOptions)}
+        data-component-name="Swatch"
+        height={size}
+        radius="lg"
+        textAlign="center"
+        width={size}
       >
-        <span style={{ color: textColor(color) }}>{content}</span>
-      </div>
-      {footer && <p style={{ marginTop: 12, textAlign: 'center' }}>{footer}</p>}
-    </div>
+        {content}
+      </FlexCenter>
+      {footer &&
+        (isValidElement(footer) ? (
+          footer
+        ) : (
+          <Paragraph align="center" mt="md">
+            {footer}
+          </Paragraph>
+        ))}
+    </Box>
   );
 }
 
@@ -43,75 +53,50 @@ export function Colors() {
     <>
       <H2>Colors</H2>
 
-      <Spacer gap="xl" grow mb="xxl" orientation="vertical">
-        {objectEntries(colors).map(([name, value]) => {
+      <Flex gap={32} justify="start" maxWidth={1024} mb="xxl" wrap="wrap">
+        {objectEntries(colors).map(([key, value]) => {
           const { contrast, largeAA, largeAAA, normalAA, normalAAA } = compare(
             value,
-            textColor(value),
+            textColor(value, textColorOptions),
           );
 
           return (
-            <Box key={name}>
-              <H3 light>
-                {capitalize(name)} ({value})
-              </H3>
-              <FlexCenter bg={name} padding="xl" radius={{ top: 'md' }}>
-                <H5>{PANGRAM}</H5>
-                <Paragraph>{PANGRAM}</Paragraph>
-              </FlexCenter>
-              <Grid
-                border={{ color: name }}
-                radius={{ bottom: 'md' }}
-                templateColumns="repeat(5, 1fr)"
-              >
-                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
-                  Contrast: {contrast}
-                </FlexCenter>
-                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
-                  <Spacer gap="xxs">
-                    <Text>normal AA:</Text>
-                    <Icon
-                      color={normalAA ? colors.green : colors.red}
-                      name={normalAA ? 'check-o' : 'close-o'}
-                      size={24}
-                    />
-                  </Spacer>
-                </FlexCenter>
-                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
-                  <Spacer gap="xxs">
-                    <Text>normal AAA:</Text>
-                    <Icon
-                      color={normalAAA ? colors.green : colors.red}
-                      name={normalAAA ? 'check-o' : 'close-o'}
-                      size={24}
-                    />
-                  </Spacer>
-                </FlexCenter>
-                <FlexCenter border={{ color: name, side: 'right' }} padding="xs">
-                  <Spacer gap="xxs">
-                    <Text>large AA:</Text>
-                    <Icon
-                      color={largeAA ? colors.green : colors.red}
-                      name={largeAA ? 'check-o' : 'close-o'}
-                      size={24}
-                    />
-                  </Spacer>
-                </FlexCenter>
-                <FlexCenter padding="xs">
-                  <Spacer gap="xxs">
-                    <Text>large AAA:</Text>
-                    <Icon
-                      color={largeAAA ? colors.green : colors.red}
-                      name={largeAAA ? 'check-o' : 'close-o'}
-                      size={24}
-                    />
-                  </Spacer>
-                </FlexCenter>
-              </Grid>
-            </Box>
+            <Swatch
+              key={key}
+              bg={value}
+              color={value}
+              content={
+                <Flex direction="column" gap="xxs" justify="center" size="sm" textAlign="center">
+                  <Paragraph size="lg">{key}</Paragraph>
+                  <Paragraph mt={0} style={{ fontWeight: 500 }}>
+                    {value}
+                  </Paragraph>
+                </Flex>
+              }
+              footer={
+                <Flex align="center" direction="column" gap="sm" justify="center" mt="md" size="sm">
+                  <Chip bg="black" bold variant="bordered">
+                    {contrast}
+                  </Chip>
+                  <Flex gap="xs">
+                    <Chip bg={getValidationColor(normalAA)}>AA</Chip>
+                    <Chip bg={getValidationColor(normalAAA)}>AAA</Chip>
+                  </Flex>
+                  <Flex gap="xs">
+                    <Chip bg={getValidationColor(largeAA)} bold size="md">
+                      AA
+                    </Chip>
+                    <Chip bg={getValidationColor(largeAAA)} bold size="md">
+                      AAA
+                    </Chip>
+                  </Flex>
+                </Flex>
+              }
+              size={160}
+            />
           );
         })}
-      </Spacer>
+      </Flex>
     </>
   );
 }
@@ -121,11 +106,22 @@ export function Grayscale() {
     <>
       <H2>Grayscale</H2>
 
-      <Grid gap={32} justify="start" templateColumns="repeat(6, auto)">
+      <Flex gap={32} justify="start" maxWidth={720} wrap="wrap">
         {objectEntries(grayScale).map(([key, color]) => (
-          <Swatch key={key} bg={color} color={color} content={key} footer={color} />
+          <Swatch
+            key={key}
+            bg={color}
+            color={color}
+            content={
+              <>
+                {key}
+                <br />
+                <span style={{ fontWeight: 500 }}>{color}</span>
+              </>
+            }
+          />
         ))}
-      </Grid>
+      </Flex>
     </>
   );
 }
@@ -139,21 +135,26 @@ export function Tones() {
         {TONES.map(tone => (
           <Box key={tone}>
             <H3 light>{tone}</H3>
-            <Grid gap={32} justify="start" templateColumns="repeat(5, auto)">
-              {objectEntries(themeVariants).map(([variant, variantTones]) => {
+            <Flex gap={32} justify="start" maxWidth={720} wrap="wrap">
+              {objectEntries(variants).map(([variant, variantTones]) => {
                 const bg = variantTones[tone];
 
                 return (
                   <Swatch
                     key={variant}
-                    bg={`${variant}.${tone}`}
+                    bg={bg}
                     color={bg}
-                    content={variant}
-                    footer={bg}
+                    content={
+                      <>
+                        {variant}
+                        <br />
+                        <span style={{ fontWeight: 500 }}>{bg}</span>
+                      </>
+                    }
                   />
                 );
               })}
-            </Grid>
+            </Flex>
           </Box>
         ))}
       </Spacer>
@@ -167,22 +168,27 @@ export function Variants() {
       <H2>Variants</H2>
 
       <Spacer gap="xl" grow mb="xxl" orientation="vertical">
-        {objectEntries(themeVariants).map(([variant, tonesMap]) => (
+        {objectEntries(variants).map(([variant, tonesMap]) => (
           <Box key={variant}>
             <H3 light>{capitalize(variant)}</H3>
-            <Grid gap={32} justify="start" templateColumns="repeat(5, auto)">
+            <Flex gap={32} justify="start" maxWidth={720} wrap="wrap">
               {objectEntries(tonesMap).map(([tone, value]) => {
                 return (
                   <Swatch
                     key={tone}
-                    bg={`${variant}.${tone}`}
+                    bg={value}
                     color={value}
-                    content={tone}
-                    footer={value}
+                    content={
+                      <>
+                        {tone}
+                        <br />
+                        <span style={{ fontWeight: 500 }}>{value}</span>
+                      </>
+                    }
                   />
                 );
               })}
-            </Grid>
+            </Flex>
           </Box>
         ))}
       </Spacer>

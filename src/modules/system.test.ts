@@ -54,7 +54,7 @@ describe('borderStyles', () => {
     ['end'],
     ['left'],
     ['all'],
-  ])(`should return properly for "%p"`, border => {
+  ])(`should return properly for "%s"`, border => {
     expect(borderStyles({ border, theme })).toMatchSnapshot();
   });
 

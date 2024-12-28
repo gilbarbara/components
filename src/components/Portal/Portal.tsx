@@ -8,7 +8,7 @@ import { SetRequired } from '@gilbarbara/types';
 import { opacify } from 'colorizr';
 
 import { getColorTokens } from '~/modules/colors';
-import { formatKebabCaseToCamelCase, getElement } from '~/modules/helpers';
+import { convertKebabCaseToCamelCase, getElement } from '~/modules/helpers';
 import { positioningStyles } from '~/modules/system';
 
 import { ButtonUnstyled } from '~/components/ButtonUnstyled';
@@ -234,7 +234,7 @@ export function Portal(props: PortalProps) {
       const { dataset } = event.currentTarget;
 
       if (
-        dataset[formatKebabCaseToCamelCase(dataAttributeName)] === 'PortalOverlay' &&
+        dataset[convertKebabCaseToCamelCase(dataAttributeName)] === 'PortalOverlay' &&
         disableCloseOnClickOverlay
       ) {
         return;

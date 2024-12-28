@@ -13,68 +13,68 @@ exports[`baseStyles > should return properly 1`] = `
 }
 `;
 
-exports[`borderStyles > should return properly for "%p" all 1`] = `
+exports[`borderStyles > should return properly for "all" 1`] = `
 {
-  "border": "1px solid #e6e6e6",
+  "border": "1px solid #ededed",
 }
 `;
 
-exports[`borderStyles > should return properly for "%p" end 1`] = `
+exports[`borderStyles > should return properly for "end" 1`] = `
 {
-  "borderInlineEnd": "1px solid #e6e6e6",
+  "borderInlineEnd": "1px solid #ededed",
 }
 `;
 
-exports[`borderStyles > should return properly for "%p" horizontal 1`] = `
+exports[`borderStyles > should return properly for "horizontal" 1`] = `
 {
-  "borderBottom": "1px solid #e6e6e6",
-  "borderTop": "1px solid #e6e6e6",
+  "borderBottom": "1px solid #ededed",
+  "borderTop": "1px solid #ededed",
 }
 `;
 
-exports[`borderStyles > should return properly for "%p" left 1`] = `
+exports[`borderStyles > should return properly for "left" 1`] = `
 {
-  "borderLeft": "1px solid #e6e6e6",
+  "borderLeft": "1px solid #ededed",
 }
 `;
 
-exports[`borderStyles > should return properly for "%p" start 1`] = `
+exports[`borderStyles > should return properly for "start" 1`] = `
 {
-  "borderInlineStart": "1px solid #e6e6e6",
+  "borderInlineStart": "1px solid #ededed",
 }
 `;
 
-exports[`borderStyles > should return properly for "%p" true 1`] = `
+exports[`borderStyles > should return properly for "true" 1`] = `
 {
-  "border": "1px solid #e6e6e6",
+  "border": "1px solid #ededed",
 }
 `;
 
-exports[`borderStyles > should return properly for "%p" vertical 1`] = `
+exports[`borderStyles > should return properly for "vertical" 1`] = `
 {
-  "borderLeft": "1px solid #e6e6e6",
-  "borderRight": "1px solid #e6e6e6",
+  "borderLeft": "1px solid #ededed",
+  "borderRight": "1px solid #ededed",
 }
 `;
 
 exports[`borderStyles > should return properly with an array 1`] = `
 {
-  "borderLeft": "4px solid #ccdeff",
-  "borderTop": "1px solid #e6e6e6",
+  "borderLeft": "4px solid #dceeff",
+  "borderTop": "1px solid #ededed",
 }
 `;
 
 exports[`colorStyles > should return properly with "background" and "color" 1`] = `
 {
-  "backgroundColor": "#0058ff",
-  "border": "1px solid #0058ff",
-  "color": "#d3f8d7",
+  "backgroundColor": "#0049DB",
+  "border": "1px solid #0049DB",
+  "color": "#def4de",
 }
 `;
 
 exports[`colorStyles > should return properly with just "color" 1`] = `
 {
-  "color": "#ff6666",
+  "color": "#ffb1ab",
 }
 `;
 
@@ -239,8 +239,8 @@ exports[`getStyles > should return an object with the basic styles 1`] = `
 
 exports[`getStyles > should return properly 1`] = `
 {
-  "backgroundColor": "#0058ff",
-  "border": "1px solid #0058ff",
+  "backgroundColor": "#0049DB",
+  "border": "1px solid #0049DB",
   "borderRadius": "16px",
   "boxShadow": "2px 4px 16px 4px rgba(148, 148, 148, 0.24)",
   "boxSizing": "border-box",
@@ -285,15 +285,15 @@ exports[`gridStyles > should return properly 1`] = `
 
 exports[`hoverStyles > should return "backgroundColor" and "borderColor" 1`] = `
 {
-  "backgroundColor": "#3379ff",
-  "borderColor": "#3379ff",
+  "backgroundColor": "#0f5fff",
+  "borderColor": "#0f5fff",
 }
 `;
 
 exports[`hoverStyles > should return "borderColor" and "color" for variant "bordered 1`] = `
 {
-  "borderColor": "#3379ff",
-  "color": "#3379ff",
+  "borderColor": "#0f5fff",
+  "color": "#0f5fff",
 }
 `;
 
@@ -301,7 +301,7 @@ exports[`hoverStyles > should return an empty object with "disabled" 1`] = `{}`;
 
 exports[`hoverStyles > should return only and "color" for variant "clean 1`] = `
 {
-  "color": "#3379ff",
+  "color": "#0f5fff",
 }
 `;
 
@@ -323,7 +323,7 @@ exports[`inputStyles > should return custom styles for "input" 1`] = `
 
     &:focus {
       
-box-shadow: 0 3px 0 0 #0058ff99;
+box-shadow: 0 3px 0 0 #0049db99;
 outline: none;
 
       
@@ -350,7 +350,7 @@ outline: none;
       }
 
       &:not(:placeholder-shown) {
-        border-color: #0058ff;
+        border-color: #0049DB;
       }
 
       &:read-only {
@@ -389,7 +389,7 @@ exports[`inputStyles > should return the default styles for "select" 1`] = `
 
     &:focus {
       
-      outline:#0058ff99 solid 3px;outline-offset:1px;z-index:10;
+      outline:#0049db99 solid 3px;outline-offset:1px;z-index:10;
     }
 
     &:disabled {
@@ -429,7 +429,7 @@ exports[`inputStyles > should return the default styles for "textarea" 1`] = `
 
     &:focus {
       
-      outline:#0058ff99 solid 3px;outline-offset:1px;z-index:10;
+      outline:#0049db99 solid 3px;outline-offset:1px;z-index:10;
     }
 
     &:disabled {
@@ -453,7 +453,7 @@ exports[`inputStyles > should return the default styles for "textarea" 1`] = `
       }
 
       &:not(:placeholder-shown) {
-        border-color: #0058ff;
+        border-color: #0049DB;
       }
 
       &:read-only {

@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getMatchingChildren > should get the matching children 1`] = `"<div data-testid="component-a">One</div><div data-testid="component-a">Two</div>"`;

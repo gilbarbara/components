@@ -59,7 +59,10 @@ export function getColor(type: AlertProps['type'], light?: boolean) {
 }
 
 export function getIconOptions(
-  props: Pick<SetRequired<AlertProps, 'variant'>, 'bg' | 'color' | 'theme' | 'type' | 'variant'>,
+  props: Pick<
+    SetRequired<AlertProps, 'theme' | 'variant'>,
+    'bg' | 'color' | 'theme' | 'type' | 'variant'
+  >,
 ) {
   const { bg, color, theme, type, variant } = props;
   const notSolid = ['bordered', 'light'].includes(variant);

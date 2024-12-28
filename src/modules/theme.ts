@@ -1,4 +1,5 @@
-import { generatePalette } from './palette';
+import { objectEntries } from '@gilbarbara/helpers';
+import { Swatch, swatch, SwatchOptions, TextColorOptions } from 'colorizr';
 
 /**
  * Basics
@@ -195,6 +196,12 @@ export const zIndex = {
 /**
  * Colors
  */
+export const textColorOptions: TextColorOptions = {
+  threshold: 128,
+};
+
+export const swatchOptions: SwatchOptions = {};
+
 export const black = '#000';
 export const white = '#fff';
 export const darkColor = '#262626';
@@ -261,22 +268,26 @@ export const grayScale = {
 };
 
 export const colors = {
-  /** @default #0058ff */
-  primary: '#0058ff',
-  /** @default #d62993 */
-  secondary: '#d62993',
-  /** @default #999999 */
-  gray: '#999999',
+  /** @default #0049DB */
+  primary: '#0049DB',
+  /** @default #006157 */
+  secondary: '#006157',
+  /** @default #b3b3b3 */
+  gray: '#b3b3b3',
   /** @default #ff5e5e */
   red: '#ff5e5e',
   /** @default #ff995d */
   orange: '#ff995d',
   /** @default #ffe166 */
   yellow: '#ffe166',
+  /** @default #d9ff66 */
+  lime: '#d9ff66',
+  /** @default #a8ff66 */
+  citrus: '#a8ff66',
   /** @default #58d063 */
   green: '#58d063',
-  /** @default #38b2ac */
-  teal: '#38b2ac',
+  /** @default #52d6c5 */
+  teal: '#52d6c5',
   /** @default #0bc5ea */
   cyan: '#0bc5ea',
   /** @default #66a5ff */
@@ -289,21 +300,14 @@ export const colors = {
   pink: '#ee63ab',
 };
 
-export const variants = {
-  primary: generatePalette(colors.primary),
-  secondary: generatePalette(colors.secondary),
-  gray: generatePalette(colors.gray, true),
-  red: generatePalette(colors.red),
-  orange: generatePalette(colors.orange),
-  yellow: generatePalette(colors.yellow),
-  green: generatePalette(colors.green),
-  teal: generatePalette(colors.teal),
-  cyan: generatePalette(colors.cyan),
-  blue: generatePalette(colors.blue),
-  indigo: generatePalette(colors.indigo),
-  purple: generatePalette(colors.purple),
-  pink: generatePalette(colors.pink),
-};
+export const variants = objectEntries(colors).reduce(
+  (acc, [key, value]) => {
+    acc[key] = swatch(value, swatchOptions);
+
+    return acc;
+  },
+  {} as Record<keyof typeof colors, Swatch>,
+);
 
 /**
  * Components
