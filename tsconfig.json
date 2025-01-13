@@ -12,5 +12,5 @@
     },
     "target": "ESNext"
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "tests/**/*"]
 }

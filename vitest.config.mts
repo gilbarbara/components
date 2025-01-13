@@ -41,6 +41,6 @@ export default defineConfig({
 
       return shouldLog;
     },
-    setupFiles: ['@testing-library/react/dont-cleanup-after-each', './src/tests/vitest.setup.ts'],
+    setupFiles: ['@testing-library/react/dont-cleanup-after-each', './tests/vitest.setup.ts'],
   },
 });
