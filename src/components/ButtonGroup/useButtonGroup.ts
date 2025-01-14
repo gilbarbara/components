@@ -16,6 +16,10 @@ import {
   WithMargin,
 } from '~/types';
 
+export type ButtonGroupProps = Simplify<
+  RequireAtLeastOne<ButtonGroupKnownProps, 'children' | 'items'>
+>;
+
 export interface ButtonGroupItemProps
   extends Omit<ButtonProps, 'children' | 'id' | 'label'>,
     DataAttributes {
@@ -58,10 +62,6 @@ export interface ButtonGroupKnownProps
    */
   unselectedVariant?: Exclude<Variant, 'split'>;
 }
-
-export type ButtonGroupProps = Simplify<
-  RequireAtLeastOne<ButtonGroupKnownProps, 'children' | 'items'>
->;
 
 export const defaultProps = {
   bg: 'primary',

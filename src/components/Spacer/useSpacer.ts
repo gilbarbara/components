@@ -17,6 +17,8 @@ import {
   WithShadow,
 } from '~/types';
 
+export type SpacerProps = Simplify<SpacerKnownProps>;
+
 export interface SpacerKnownProps
   extends StyledProps,
     WithBorder,
@@ -64,8 +66,6 @@ export interface SpacerKnownProps
    */
   wrap?: boolean;
 }
-
-export type SpacerProps = Simplify<SpacerKnownProps>;
 
 export const defaultProps = {
   orientation: 'horizontal',

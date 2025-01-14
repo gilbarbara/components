@@ -13,6 +13,34 @@ import {
   WithRadius,
 } from '~/types';
 
+export type SkeletonCircleProps = Simplify<
+  Omit<SkeletonProps, 'fitContent'> & {
+    size: StringOrNumber;
+  }
+>;
+
+export type SkeletonProps = Simplify<SkeletonKnownProps>;
+
+export type SkeletonTextProps = Simplify<
+  Omit<SkeletonProps, 'fitContent'> & {
+    /**
+     * The spacing between lines
+     * @default xs
+     */
+    gap?: Spacing;
+    /**
+     * The height of each line
+     * @default 16
+     */
+    height?: StringOrNumber;
+    /**
+     * The number of lines to render
+     * @default 3
+     */
+    lines?: number;
+  }
+>;
+
 export interface SkeletonKnownProps
   extends StyledProps,
     WithChildrenOptional,
@@ -57,34 +85,6 @@ export interface SkeletonKnownProps
    */
   isLoaded?: boolean;
 }
-
-export type SkeletonProps = Simplify<SkeletonKnownProps>;
-
-export type SkeletonTextProps = Simplify<
-  Omit<SkeletonProps, 'fitContent'> & {
-    /**
-     * The spacing between lines
-     * @default xs
-     */
-    gap?: Spacing;
-    /**
-     * The height of each line
-     * @default 16
-     */
-    height?: StringOrNumber;
-    /**
-     * The number of lines to render
-     * @default 3
-     */
-    lines?: number;
-  }
->;
-
-export type SkeletonCircleProps = Simplify<
-  Omit<SkeletonProps, 'fitContent'> & {
-    size: StringOrNumber;
-  }
->;
 
 export const baseDefaultProps = {
   accent: 'white',

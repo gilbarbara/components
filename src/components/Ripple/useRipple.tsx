@@ -8,6 +8,8 @@ export type RippleType = {
   y: number;
 };
 
+export type UseRippleReturn = ReturnType<typeof useRipple>;
+
 export interface UseRippleProps {}
 
 export function useRipple(props: UseRippleProps = {}) {
@@ -36,5 +38,3 @@ export function useRipple(props: UseRippleProps = {}) {
 
   return { ripples, onClick, onClear, ...props };
 }
-
-export type UseRippleReturn = ReturnType<typeof useRipple>;

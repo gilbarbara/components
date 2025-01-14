@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { ImgHTMLAttributes, SyntheticEvent } from 'react';
 
+type ImageEvent = SyntheticEvent<HTMLImageElement, Event>;
+
+type Status = 'loading' | 'failed' | 'pending' | 'loaded';
+
 export type NativeImageProps = ImgHTMLAttributes<HTMLImageElement>;
+export type UseImageReturn = ReturnType<typeof useImage>;
 
 export interface UseImageProps {
   /**
@@ -33,9 +38,6 @@ export interface UseImageProps {
    */
   srcSet?: string;
 }
-
-type ImageEvent = SyntheticEvent<HTMLImageElement, Event>;
-type Status = 'loading' | 'failed' | 'pending' | 'loaded';
 
 /**
  * React hook that loads an image in the browser,
@@ -128,5 +130,3 @@ export function useImage(props: UseImageProps) {
     [crossOrigin, loading, onError, onLoad, sizes, srcSet, status],
   );
 }
-
-export type UseImageReturn = ReturnType<typeof useImage>;

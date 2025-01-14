@@ -1,9 +1,9 @@
 import { Anchor, Box, H2, H3, Jumbo, Paragraph, Spacer, SVG } from '~';
 
-import Navigation from './Navigation';
-
 import packageJson from '../../../package.json';
 import CodeBlock from '../../components/CodeBlock';
+
+import Navigation from './Navigation';
 
 export default function Introduction() {
   return (

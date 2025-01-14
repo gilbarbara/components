@@ -8,7 +8,6 @@ import { opacify } from 'colorizr';
 import is from 'is-lite';
 
 import { useScrollPosition } from '~/hooks/useScrollPosition';
-
 import { getColorTokens } from '~/modules/colors';
 import { splitReactChildren } from '~/modules/react-helpers';
 import { getStyledOptions } from '~/modules/system';

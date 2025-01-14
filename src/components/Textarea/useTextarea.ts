@@ -11,16 +11,16 @@ import {
   WithFormElements,
 } from '~/types';
 
+export type TextareaProps = Simplify<
+  OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'height' | 'name'>
+>;
+
 export interface TextareaKnownProps
   extends StyledProps,
     WithAccent,
     WithBorderless,
     WithElementSpacing,
     WithFormElements {}
-
-export type TextareaProps = Simplify<
-  OmitElementProps<HTMLTextAreaElement, TextareaKnownProps, 'height' | 'name'>
->;
 
 export const defaultProps = {
   accent: 'primary',

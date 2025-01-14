@@ -4,7 +4,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Flex, Grid, Icon, Spacer } from '~';
 
 import { colors } from '~/modules/theme';
-
 import { disableControl, hideProps, marginProps, VARIANTS } from '~/stories/__helpers__';
 
 import { defaultProps, StatusIndicator } from './StatusIndicator';

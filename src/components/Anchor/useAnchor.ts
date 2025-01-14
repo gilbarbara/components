@@ -2,7 +2,6 @@ import { omit } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -19,6 +18,8 @@ import {
   WithStartContent,
   WithTextOptions,
 } from '~/types';
+
+export type AnchorProps = Simplify<OmitElementProps<HTMLAnchorElement, AnchorKnownProps>>;
 
 export interface AnchorKnownProps
   extends StyledProps,
@@ -48,8 +49,6 @@ export interface AnchorKnownProps
   hideDecoration?: boolean;
   href: string;
 }
-
-export type AnchorProps = Simplify<OmitElementProps<HTMLAnchorElement, AnchorKnownProps>>;
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),

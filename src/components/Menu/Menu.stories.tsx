@@ -8,6 +8,7 @@ import { Avatar, Box, ButtonUnstyled, Icon, MenuToggle, Paragraph } from '~';
 import { colorProps, disableControl, hideProps, VARIANTS } from '~/stories/__helpers__';
 
 import { Menu, MenuItem, MenuSeparator, MenuTitle } from './index';
+
 import { defaultProps } from './useMenu';
 
 type Story = StoryObj<typeof Menu>;

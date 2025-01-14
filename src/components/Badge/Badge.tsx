@@ -144,4 +144,4 @@ export function Badge(props: BadgeProps) {
 
 Badge.displayName = 'Badge';
 
-export { defaultProps, type BadgeProps } from './useBadge';
+export { type BadgeProps, defaultProps } from './useBadge';

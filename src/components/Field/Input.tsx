@@ -1,6 +1,6 @@
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { formatMoney, formatPhoneBR, formatPhoneUS } from '@gilbarbara/helpers';
+import { formatMoney, formatPhoneBR, formatPhoneUS, Types } from '@gilbarbara/helpers';
 import { PlainObject } from '@gilbarbara/types';
 
 import { clearNumber } from '~/modules/helpers';
@@ -9,7 +9,7 @@ import { Input } from '~/components/Input';
 import { InputColor } from '~/components/InputColor';
 import { InputFile } from '~/components/InputFile';
 
-import { InputTypes, ValidatePasswordOptions } from '~/types';
+import { InputTypes } from '~/types';
 
 import { FieldInputProps } from './useField';
 import { getInputParameters } from './utils';
@@ -20,7 +20,7 @@ interface Props extends Omit<FieldInputProps, 'type' | 'validationOptions'> {
   registration: UseFormRegisterReturn;
   setStatus: (status: { isActive?: boolean; isDirty?: boolean }) => void;
   type: InputTypes;
-  validationOptions?: ValidatePasswordOptions;
+  validationOptions?: Types.ValidatePasswordOptions;
 }
 
 function FieldInput(props: Props) {

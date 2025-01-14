@@ -14,6 +14,15 @@ import {
   WithTheme,
 } from '~/types';
 
+export type ToggleProps = Simplify<ToggleKnownProps>;
+
+export interface ToggleInnerProps
+  extends SetRequired<Omit<ToggleProps, 'theme'>, 'accent' | 'size'>,
+    Pick<ToggleProps, 'colorButton' | 'colorTrack'>,
+    WithTheme {
+  isChecked: boolean;
+}
+
 export interface ToggleKnownProps
   extends StyledProps,
     AriaAttributes,
@@ -47,15 +56,6 @@ export interface ToggleKnownProps
   onToggle?: (value: boolean) => void;
   thumbIconChecked?: ReactNode;
   thumbIconUnchecked?: ReactNode;
-}
-
-export type ToggleProps = Simplify<ToggleKnownProps>;
-
-export interface ToggleInnerProps
-  extends SetRequired<Omit<ToggleProps, 'theme'>, 'accent' | 'size'>,
-    Pick<ToggleProps, 'colorButton' | 'colorTrack'>,
-    WithTheme {
-  isChecked: boolean;
 }
 
 export const defaultProps = {

@@ -3,7 +3,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Avatar, Box, H3, H6, ListProps, Paragraph, Spacer } from '~';
 
 import { sizes } from '~/modules/options';
-
 import {
   addChromaticModes,
   colorProps,

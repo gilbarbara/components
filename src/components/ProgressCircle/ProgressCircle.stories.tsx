@@ -5,7 +5,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Flex, Grid, Paragraph } from '~';
 
 import { sizes } from '~/modules/options';
-
 import {
   addChromaticModes,
   colorProps,

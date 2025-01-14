@@ -14,7 +14,6 @@ import { px } from '@gilbarbara/helpers';
 import { useSetState } from '@gilbarbara/hooks';
 
 import { useKeyboardNavigation } from '~/hooks/useKeyboardNavigation';
-
 import { getStyledOptions, marginStyles } from '~/modules/system';
 
 import { ClickOutside } from '~/components/ClickOutside';

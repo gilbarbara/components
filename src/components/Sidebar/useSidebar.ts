@@ -23,6 +23,8 @@ import {
   WithShadow,
 } from '~/types';
 
+export type SidebarProps = Simplify<SidebarKnownProps>;
+
 export interface SidebarKnownProps
   extends StyledProps,
     DataAttributes,
@@ -73,8 +75,6 @@ export interface SidebarKnownProps
    */
   side?: 'left' | 'right';
 }
-
-export type SidebarProps = Simplify<SidebarKnownProps>;
 
 export const defaultProps = {
   ...portalDefaultProps,

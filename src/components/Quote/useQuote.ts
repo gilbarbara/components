@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -18,6 +17,8 @@ import {
   WithMargin,
   WithTextOptions,
 } from '~/types';
+
+export type QuoteProps = Simplify<QuoteKnownProps>;
 
 export type TextOptions = WithTextOptions<HeadingSizes | TextSizes>;
 
@@ -60,8 +61,6 @@ export interface QuoteKnownProps
    */
   gap?: Spacing;
 }
-
-export type QuoteProps = Simplify<QuoteKnownProps>;
 
 export const defaultProps = {
   ...textDefaultOptions,

@@ -76,7 +76,7 @@ export const Colors: Story = {
               {...rest}
               bg={d}
               borderColor={d === 'white' ? 'red' : undefined}
-              color={color ?? (!['yellow', 'white'].includes(d) ? 'white' : undefined)}
+              color={color ?? (!['white', 'yellow'].includes(d) ? 'white' : undefined)}
             >
               <Avatar image={users[index].avatar} name={users[index].name} radius="md" size="md" />
             </Badge>

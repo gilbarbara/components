@@ -144,4 +144,4 @@ export function ButtonGroup(props: ButtonGroupProps) {
 
 ButtonGroup.displayName = 'ButtonGroup';
 
-export { defaultProps, type ButtonGroupProps, type ButtonGroupItemProps } from './useButtonGroup';
+export { type ButtonGroupItemProps, type ButtonGroupProps, defaultProps } from './useButtonGroup';

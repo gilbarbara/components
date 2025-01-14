@@ -16,6 +16,8 @@ import {
   WithShadow,
 } from '~/types';
 
+export type CollapseProps = Simplify<CollapseKnownProps>;
+
 export interface CollapseKnownProps
   extends StyledProps,
     AriaAttributes,
@@ -92,8 +94,6 @@ export interface CollapseKnownProps
   startContent?: ReactNode;
   title?: ReactNode;
 }
-
-export type CollapseProps = Simplify<CollapseKnownProps>;
 
 export interface ContentProps
   extends Pick<

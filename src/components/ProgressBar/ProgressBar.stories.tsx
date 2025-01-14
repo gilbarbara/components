@@ -5,7 +5,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Box, H4, Spacer } from '~';
 
 import { sizes } from '~/modules/options';
-
 import {
   addChromaticModes,
   colorProps,

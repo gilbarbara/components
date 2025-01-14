@@ -1,7 +1,9 @@
-import { MutableRefObject, useCallback, useEffect } from 'react';
+import { RefObject, useCallback, useEffect } from 'react';
 import { useLatest } from '@gilbarbara/hooks';
 
 type ArrowNavigation = 'horizontal' | 'vertical' | 'both';
+
+export type UseKeyboardNavigationReturn = ReturnType<typeof useKeyboardNavigation>;
 
 export interface UseKeyboardNavigationOptions {
   /**
@@ -30,7 +32,7 @@ export interface UseKeyboardNavigationOptions {
 }
 
 export function useKeyboardNavigation(
-  elementRef: MutableRefObject<HTMLElement | null>,
+  elementRef: RefObject<HTMLElement | null>,
   options: UseKeyboardNavigationOptions,
 ) {
   const { arrowNavigation, disabled, escCallback, initialFocusedElement, selector, trapFocus } =
@@ -69,7 +71,7 @@ export function useKeyboardNavigation(
         return;
       }
 
-      const isPrevious = ['ArrowUp', 'ArrowLeft'].includes(event.code);
+      const isPrevious = ['ArrowLeft', 'ArrowUp'].includes(event.code);
       const initialIndex = getElementIndex(elements);
       let index = getElementIndex(elements);
 
@@ -144,7 +146,7 @@ export function useKeyboardNavigation(
       ) {
         interceptArrows(event);
       } else if (
-        ['ArrowUp', 'ArrowDown'].includes(code) &&
+        ['ArrowDown', 'ArrowUp'].includes(code) &&
         allowArrowNavigation(['vertical', 'both'])
       ) {
         interceptArrows(event);
@@ -207,5 +209,3 @@ export function useKeyboardNavigation(
     removeScope,
   };
 }
-
-export type UseKeyboardNavigationReturn = ReturnType<typeof useKeyboardNavigation>;

@@ -74,6 +74,13 @@ interface GetDisableStylesOptions {
   isButton?: boolean;
 }
 
+interface GetStylesOptions extends ColorStylesOptions {
+  lineHeightCustom?: StringOrNumber;
+  skipColor?: boolean;
+  skipSpacing?: boolean;
+  useFontSize?: boolean;
+}
+
 interface GetStylesProps
   extends WithAccent,
     WithBlock,
@@ -101,16 +108,21 @@ interface GetStylesProps
   variant?: string;
 }
 
-interface GetStylesOptions extends ColorStylesOptions {
-  lineHeightCustom?: StringOrNumber;
-  skipColor?: boolean;
-  skipSpacing?: boolean;
-  useFontSize?: boolean;
-}
-
 interface TextStylesOptions {
   lineHeightCustom?: StringOrNumber;
   skipFontSizing?: boolean;
+}
+
+export function alignStyles<T extends WithAlign>(props: T): CSSObject {
+  const { align } = props;
+
+  if (align) {
+    return {
+      textAlign: align,
+    };
+  }
+
+  return {};
 }
 
 export function getContainerStyles(props: WithTheme, options?: GetContainerStylesOptions) {
@@ -272,18 +284,6 @@ export function getStyles(props: GetStylesProps, options: GetStylesOptions = {})
   return sortObjectKeys(cleanUpObject(styles)) as CSSObject;
 }
 
-export function alignStyles<T extends WithAlign>(props: T): CSSObject {
-  const { align } = props;
-
-  if (align) {
-    return {
-      textAlign: align,
-    };
-  }
-
-  return {};
-}
-
 export const appearanceStyles: CSSObject = {
   appearance: 'none',
 };
@@ -307,7 +307,7 @@ export function borderStyles<T extends WithBorder & WithTheme>(props: T): CSSObj
 
     if (['bottom', 'left', 'right', 'top'].includes(side)) {
       item[`border${capitalize(side)}`] = value;
-    } else if (['start', 'end'].includes(side)) {
+    } else if (['end', 'start'].includes(side)) {
       item[`borderInline${capitalize(side)}`] = value;
     } else if (side === 'horizontal') {
       item.borderBottom = value;

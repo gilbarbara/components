@@ -227,4 +227,4 @@ export function DataTable<TKeys extends string = string>(props: DataTableProps<T
 
 DataTable.displayName = 'DataTable';
 
-export { defaultProps, type DataTableProps } from './useDataTable';
+export { type DataTableProps, defaultProps } from './useDataTable';

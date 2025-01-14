@@ -96,8 +96,8 @@ export function Field<T extends FieldProps>(props: T) {
 
   if (!skipValidation) {
     groupProps.skipIcon = [
-      'color',
       'checkbox',
+      'color',
       'datePicker',
       'dropdown',
       'radio',

@@ -4,6 +4,17 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { StyledProps, Target, WithChildren, WithColors, WithPositioning } from '~/types';
 
+export type PortalOwnPropsKeys = keyof typeof portalPropsKeys;
+
+export type PortalProps = Simplify<PortalKnownProps>;
+
+export interface PortalKnownProps
+  extends StyledProps,
+    WithChildren,
+    Pick<WithColors, 'bg'>,
+    Omit<WithPositioning, 'zIndex'>,
+    PortalOwnProps {}
+
 export interface PortalOwnProps {
   /**
    * The easing of the animation.
@@ -89,17 +100,6 @@ export interface PortalOwnProps {
    */
   zIndex?: number;
 }
-
-export interface PortalKnownProps
-  extends StyledProps,
-    WithChildren,
-    Pick<WithColors, 'bg'>,
-    Omit<WithPositioning, 'zIndex'>,
-    PortalOwnProps {}
-
-export type PortalProps = Simplify<PortalKnownProps>;
-
-export type PortalOwnPropsKeys = keyof typeof portalPropsKeys;
 
 export const defaultProps = {
   animationEasing: 'ease-in-out',

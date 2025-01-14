@@ -1,7 +1,6 @@
 import { useResponsive } from '@gilbarbara/hooks';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { formatBreakpoints } from '~/modules/helpers';
 
 import { Flex } from '~/components/Flex';

@@ -157,9 +157,9 @@ export function ButtonSplit(props: ButtonSplitProps) {
 
 ButtonSplit.displayName = 'ButtonSplit';
 
-export {
-  MenuSeparator as ButtonSplitSeparator,
-  MenuItem as ButtonSplitItem,
-} from '~/components/Menu';
+export { type ButtonSplitProps, defaultProps } from './useButtonSplit';
 
-export { defaultProps, type ButtonSplitProps } from './useButtonSplit';
+export {
+  MenuItem as ButtonSplitItem,
+  MenuSeparator as ButtonSplitSeparator,
+} from '~/components/Menu';

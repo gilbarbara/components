@@ -7,9 +7,9 @@ import { clearAllMocks, expect, fn, userEvent, waitFor, within } from '@storyboo
 import { Avatar, Box, Flex, Paragraph } from '~';
 
 import { colors } from '~/modules/theme';
-
 import users from '~/stories/__fixtures__/users.json';
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+
 import { ColorVariant } from '~/types';
 
 import { defaultProps, Search, SearchItem } from './Search';

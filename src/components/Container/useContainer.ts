@@ -15,6 +15,8 @@ import {
   WithPadding,
 } from '~/types';
 
+export type ContainerProps = Simplify<ContainerKnownProps>;
+
 export interface ContainerKnownProps
   extends StyledProps,
     WithChildren,
@@ -36,8 +38,6 @@ export interface ContainerKnownProps
   textAlign?: Alignment;
   verticalPadding?: boolean;
 }
-
-export type ContainerProps = Simplify<ContainerKnownProps>;
 
 export const defaultProps = {
   align: 'stretch',

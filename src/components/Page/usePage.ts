@@ -12,6 +12,8 @@ import {
   WithPadding,
 } from '~/types';
 
+export type PageProps = Simplify<PageKnownProps>;
+
 export interface PageKnownProps
   extends StyledProps,
     WithColors,
@@ -43,8 +45,6 @@ export interface PageKnownProps
   style?: CSSProperties;
   textAlign?: Alignment;
 }
-
-export type PageProps = Simplify<PageKnownProps>;
 
 export const defaultProps = {
   centered: false,

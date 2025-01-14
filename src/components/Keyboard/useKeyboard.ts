@@ -14,33 +14,6 @@ import {
   WithTextOptions,
 } from '~/types';
 
-export interface KeyboardKnownProps
-  extends StyledProps,
-    WithBorder,
-    WithChildrenOptional,
-    WithColors,
-    Pick<WithFlexBox, 'gap'>,
-    WithHTMLAttributes<HTMLSpanElement>,
-    WithRadius,
-    WithShadow,
-    WithTextOptions {
-  /**
-   * The key or keys to be displayed.
-   */
-  keys: KeyboardKey | KeyboardKey[];
-  /**
-   * The separator between keys.
-   */
-  separator?: string;
-  /**
-   *  Don't show symbols.
-   *  @default false
-   */
-  textOnly?: boolean;
-}
-
-export type KeyboardProps = Simplify<KeyboardKnownProps>;
-
 export type KeyboardKey =
   | 'command'
   | 'option'
@@ -65,6 +38,33 @@ export type KeyboardKey =
   | 'space';
 
 export type KeyboardKeysLabelType = typeof keyboardKeysLabelMap;
+
+export type KeyboardProps = Simplify<KeyboardKnownProps>;
+
+export interface KeyboardKnownProps
+  extends StyledProps,
+    WithBorder,
+    WithChildrenOptional,
+    WithColors,
+    Pick<WithFlexBox, 'gap'>,
+    WithHTMLAttributes<HTMLSpanElement>,
+    WithRadius,
+    WithShadow,
+    WithTextOptions {
+  /**
+   * The key or keys to be displayed.
+   */
+  keys: KeyboardKey | KeyboardKey[];
+  /**
+   * The separator between keys.
+   */
+  separator?: string;
+  /**
+   *  Don't show symbols.
+   *  @default false
+   */
+  textOnly?: boolean;
+}
 
 export const keyboardKeysMap: Record<KeyboardKey, string> = {
   command: '⌘',

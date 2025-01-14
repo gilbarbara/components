@@ -37,8 +37,8 @@ export const FlexInline = forwardRef<HTMLDivElement, Omit<FlexProps, 'display'>>
 FlexInline.displayName = 'FlexInline';
 
 export {
-  type FlexProps,
+  flexCenterDefaultProps,
   flexDefaultProps,
   flexInlineDefaultProps,
-  flexCenterDefaultProps,
+  type FlexProps,
 } from './useFlex';

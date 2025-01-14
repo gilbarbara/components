@@ -12,6 +12,22 @@ import {
   WithPadding,
 } from '~/types';
 
+export type PaginationProps = Simplify<PaginationKnownProps>;
+
+export interface PaginationButtonProps extends WithAccent, WithChildrenOptional {
+  currentPage: number;
+  disabled: boolean;
+  onClick?: (currentPage: number, type?: string) => void;
+  page: number;
+  type?: string;
+}
+
+export interface PaginationItem extends WithDisabled {
+  content?: ReactNode;
+  page?: number;
+  type: string;
+}
+
 export interface PaginationKnownProps extends WithAccent, WithBorder, WithMargin, WithPadding {
   /** @default end */
   align?: 'start' | 'center' | 'end';
@@ -34,22 +50,6 @@ export interface PaginationKnownProps extends WithAccent, WithBorder, WithMargin
   showSinglePage?: boolean;
   style?: CSSProperties;
   totalPages: number;
-}
-
-export type PaginationProps = Simplify<PaginationKnownProps>;
-
-export interface PaginationItem extends WithDisabled {
-  content?: ReactNode;
-  page?: number;
-  type: string;
-}
-
-export interface PaginationButtonProps extends WithAccent, WithChildrenOptional {
-  currentPage: number;
-  disabled: boolean;
-  onClick?: (currentPage: number, type?: string) => void;
-  page: number;
-  type?: string;
 }
 
 export const defaultProps = {

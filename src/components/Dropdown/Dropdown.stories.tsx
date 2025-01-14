@@ -5,8 +5,8 @@ import { expect, fn, userEvent, within } from '@storybook/test';
 import { Icon, Paragraph, Spacer } from '~';
 
 import { sizes } from '~/modules/options';
-
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
+
 import { DropdownOption } from '~/types';
 
 import { defaultProps, Dropdown } from './Dropdown';

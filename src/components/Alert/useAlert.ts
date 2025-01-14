@@ -1,7 +1,6 @@
 import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { getColorTokens } from '~/modules/colors';
 
 import {
@@ -18,6 +17,8 @@ import {
   WithRadius,
   WithVariant,
 } from '~/types';
+
+export type AlertProps = Simplify<AlertKnownProps>;
 
 export interface AlertKnownProps
   extends StyledProps,
@@ -43,8 +44,6 @@ export interface AlertKnownProps
   /** @default success */
   type: 'success' | 'warning' | 'error' | 'info' | 'neutral';
 }
-
-export type AlertProps = Simplify<AlertKnownProps>;
 
 export function getColor(type: AlertProps['type'], light?: boolean) {
   const colors = {

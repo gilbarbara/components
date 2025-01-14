@@ -90,12 +90,12 @@ const StyledDivider = styled('div', getStyledOptions('type'))<
         }
 
         &:before {
-          flex-grow: ${['right', 'center'].includes(align) ? 1 : 0};
+          flex-grow: ${['center', 'right'].includes(align) ? 1 : 0};
           margin-right: ${spacingTheme[gap]};
         }
 
         &:after {
-          flex-grow: ${['left', 'center'].includes(align) ? 1 : 0};
+          flex-grow: ${['center', 'left'].includes(align) ? 1 : 0};
           margin-left: ${spacingTheme[gap]};
         }
       `;

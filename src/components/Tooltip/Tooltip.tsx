@@ -7,7 +7,6 @@ import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { UseThemeReturn } from '~/hooks/useTheme';
-
 import { fadeIn } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
 import { baseStyles, getStyledOptions, getStyles } from '~/modules/system';

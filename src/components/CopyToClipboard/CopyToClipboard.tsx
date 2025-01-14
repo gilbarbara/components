@@ -151,4 +151,4 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 
 CopyToClipboard.displayName = 'CopyToClipboard';
 
-export { defaultProps, type CopyToClipboardProps } from './useCopyToClipboard';
+export { type CopyToClipboardProps, defaultProps } from './useCopyToClipboard';

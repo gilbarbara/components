@@ -4,6 +4,10 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { OmitElementProps, StyledProps, WithAccent, WithFormElements, WithHeight } from '~/types';
 
+export type InputFileProps = Simplify<
+  OmitElementProps<HTMLInputElement, InputFileKnownProps, 'name' | 'type' | 'width'>
+>;
+
 export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormElements, WithHeight {
   /**
    * Solid color
@@ -12,10 +16,6 @@ export interface InputFileKnownProps extends StyledProps, WithAccent, WithFormEl
   solid?: boolean;
   value?: string;
 }
-
-export type InputFileProps = Simplify<
-  OmitElementProps<HTMLInputElement, InputFileKnownProps, 'name' | 'type' | 'width'>
->;
 
 export const defaultProps = {
   accent: 'primary',

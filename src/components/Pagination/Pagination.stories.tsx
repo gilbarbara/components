@@ -46,12 +46,6 @@ export const SinglePage: Story = {
   render: Basic.render,
 };
 
-function getButtons(filter: string) {
-  return screen
-    .getAllByTestId('PaginationButton')
-    .filter(d => d.getAttribute('data-type') === filter);
-}
-
 function getButton(attribute: number | string, type = 'data-page') {
   const getValue = (d: HTMLElement) => d.getAttribute(type);
 
@@ -62,6 +56,12 @@ function getButton(attribute: number | string, type = 'data-page') {
         d => (type === 'data-page' ? Number(getValue(d)) : getValue(d)) === attribute,
       ) as HTMLElement) || null
   );
+}
+
+function getButtons(filter: string) {
+  return screen
+    .getAllByTestId('PaginationButton')
+    .filter(d => d.getAttribute('data-type') === filter);
 }
 
 export const Tests: Story = {

@@ -45,7 +45,7 @@ export function Page(props: PageProps) {
   if (!textAlign) {
     if (centered) {
       textAlignValue = 'center';
-    } else if (align && (['start', 'center', 'end'].includes(align) || align.startsWith('flex'))) {
+    } else if (align && (['center', 'end', 'start'].includes(align) || align.startsWith('flex'))) {
       textAlignValue = textAlignMap[align];
     }
   }

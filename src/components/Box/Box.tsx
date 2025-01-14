@@ -20,4 +20,4 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
 
 Box.displayName = 'Box';
 
-export { defaultProps, type BoxProps } from './useBox';
+export { type BoxProps, defaultProps } from './useBox';

@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -14,6 +13,8 @@ import {
   WithMargin,
   WithTextOptions,
 } from '~/types';
+
+export type LabelProps = Simplify<LabelKnownProps>;
 
 export interface LabelKnownProps
   extends StyledProps,
@@ -27,8 +28,6 @@ export interface LabelKnownProps
   labelId?: string;
   labelInfo?: ReactNode;
 }
-
-export type LabelProps = Simplify<LabelKnownProps>;
 
 export const defaultProps = {
   ...textDefaultOptions,

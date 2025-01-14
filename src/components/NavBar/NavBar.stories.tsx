@@ -15,11 +15,11 @@ import {
 import { Anchor, Button, Flex, Icon } from '~';
 
 import { scrollTo } from '~/modules/animations';
-
 import { colorProps, hideProps } from '~/stories/__helpers__';
 import Content from '~/stories/components/Content';
 
 import { NavBar, NavBarContent, NavBarMenu, NavBarMenuToggle } from './index';
+
 import { defaultProps } from './useNavBar';
 
 type Story = StoryObj<typeof NavBar>;

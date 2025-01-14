@@ -1,7 +1,6 @@
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -17,6 +16,8 @@ import {
   WithMargin,
   WithTextOptions,
 } from '~/types';
+
+export type DividerProps = Simplify<DividerKnownProps>;
 
 export interface DividerKnownProps
   extends StyledProps,
@@ -63,8 +64,6 @@ export interface DividerKnownProps
    */
   spacing?: SpacingOrZero | [start: SpacingOrZero, end: SpacingOrZero];
 }
-
-export type DividerProps = Simplify<DividerKnownProps>;
 
 export const defaultProps = {
   ...textDefaultOptions,

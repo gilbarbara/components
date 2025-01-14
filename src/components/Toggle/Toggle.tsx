@@ -240,7 +240,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>((props, ref) => 
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLSpanElement>) => {
-    if (disabled || !['Space', 'Enter'].includes(event.code)) {
+    if (disabled || !['Enter', 'Space'].includes(event.code)) {
       return;
     }
 

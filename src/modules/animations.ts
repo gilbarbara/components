@@ -5,9 +5,9 @@ import scroll from 'scroll';
 
 import { getColorTokens } from '~/modules/colors';
 
-import * as baseTheme from './theme';
-
 import { ColorVariantTones, Theme } from '../types';
+
+import * as baseTheme from './theme';
 
 interface ScrollToOptions {
   element?: HTMLElement;

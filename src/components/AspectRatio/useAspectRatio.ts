@@ -4,6 +4,8 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { StyledProps, WithChildren, WithHTMLAttributes, WithMargin } from '~/types';
 
+export type AspectRatioProps = Simplify<AspectRatioKnownProps>;
+
 export interface AspectRatioKnownProps
   extends StyledProps,
     WithChildren,
@@ -12,8 +14,6 @@ export interface AspectRatioKnownProps
   maxWidth?: number;
   ratio: number;
 }
-
-export type AspectRatioProps = Simplify<AspectRatioKnownProps>;
 
 export function useAspectRatio(props: AspectRatioProps) {
   return useComponentProps(props);

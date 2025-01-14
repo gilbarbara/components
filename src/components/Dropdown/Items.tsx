@@ -5,7 +5,6 @@ import { ComponentProps } from '@gilbarbara/react-dropdown';
 import { PlainObject, StringOrNumber } from '@gilbarbara/types';
 
 import { useTheme } from '~/hooks/useTheme';
-
 import { getColorTokens } from '~/modules/colors';
 import { getStyledOptions } from '~/modules/system';
 

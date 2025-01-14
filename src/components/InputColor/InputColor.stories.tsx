@@ -3,7 +3,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Paragraph, Spacer } from '~';
 
 import { sizes } from '~/modules/options';
-
 import { disableControl, hideProps } from '~/stories/__helpers__';
 
 import { defaultProps, InputColor } from './InputColor';

@@ -3,7 +3,6 @@ import { omit } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -19,21 +18,7 @@ import {
   WithTextOptions,
 } from '~/types';
 
-export interface TooltipSharedProps {
-  /**
-   * The placement of the tooltip.
-   * @default bottom-middle
-   */
-  placement: Placement;
-  /**
-   * Optional title for the tooltip.
-   */
-  title?: string;
-  /** Content wrapping */
-  wrap?: Sizes;
-  /** @default 100 */
-  zIndex?: number;
-}
+export type TooltipProps = Simplify<TooltipKnownProps>;
 
 export interface TooltipAnimationProps {
   /**
@@ -98,7 +83,21 @@ export interface TooltipKnownProps
   style?: CSSProperties;
 }
 
-export type TooltipProps = Simplify<TooltipKnownProps>;
+export interface TooltipSharedProps {
+  /**
+   * The placement of the tooltip.
+   * @default bottom-middle
+   */
+  placement: Placement;
+  /**
+   * Optional title for the tooltip.
+   */
+  title?: string;
+  /** Content wrapping */
+  wrap?: Sizes;
+  /** @default 100 */
+  zIndex?: number;
+}
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),

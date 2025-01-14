@@ -18,6 +18,63 @@ import {
   WithPadding,
 } from '~/types';
 
+export type TabProps = Simplify<TabKnownProps>;
+
+export type TabsProps = Simplify<TabsKnownProps>;
+
+export interface TabKnownProps
+  extends StyledProps,
+    WithChildren,
+    WithColors,
+    WithDisabled,
+    WithPadding {
+  id: string;
+  title: ReactNode;
+}
+
+export interface TabsKnownProps
+  extends StyledProps,
+    WithAccent,
+    WithColors,
+    WithChildren,
+    WithDimension,
+    Pick<WithFlexBox, 'gap'>,
+    WithHTMLAttributes,
+    WithMargin {
+  /**
+   * The id of the default active tab.
+   * If not provided, the first tab is active by default.
+   */
+  defaultId?: string;
+  /**
+   * Hide the active tab indicator.
+   * @default false
+   */
+  hideIndicator?: boolean;
+  /**
+   * A loader component to display while content is loading.
+   */
+  loader?: ReactNode;
+  /**
+   * Configuration options for the tabs menu, such as styles and behavior.
+   */
+  menu?: TabsMenuConfig;
+  /**
+   * Content to display when there are no active tabs or content to show.
+   * Typically used as a fallback or empty state.
+   */
+  noContent?: ReactNode;
+  /**
+   * Hnadler called when a tab is clicked.
+   */
+  onClick?: (id: string) => void;
+  /**
+   * The orientation of the tabs.
+   * @default horizontal
+   */
+  orientation?: Orientation;
+}
+
 export interface TabsMenuConfig extends Pick<WithFlexBox, 'gap'> {
   /**
    * The background color of the active tab.
@@ -75,63 +132,6 @@ export interface TabsMenuConfig extends Pick<WithFlexBox, 'gap'> {
    */
   width?: string | number;
 }
-
-export interface TabsKnownProps
-  extends StyledProps,
-    WithAccent,
-    WithColors,
-    WithChildren,
-    WithDimension,
-    Pick<WithFlexBox, 'gap'>,
-    WithHTMLAttributes,
-    WithMargin {
-  /**
-   * The id of the default active tab.
-   * If not provided, the first tab is active by default.
-   */
-  defaultId?: string;
-  /**
-   * Hide the active tab indicator.
-   * @default false
-   */
-  hideIndicator?: boolean;
-  /**
-   * A loader component to display while content is loading.
-   */
-  loader?: ReactNode;
-  /**
-   * Configuration options for the tabs menu, such as styles and behavior.
-   */
-  menu?: TabsMenuConfig;
-  /**
-   * Content to display when there are no active tabs or content to show.
-   * Typically used as a fallback or empty state.
-   */
-  noContent?: ReactNode;
-  /**
-   * Hnadler called when a tab is clicked.
-   */
-  onClick?: (id: string) => void;
-  /**
-   * The orientation of the tabs.
-   * @default horizontal
-   */
-  orientation?: Orientation;
-}
-
-export type TabsProps = Simplify<TabsKnownProps>;
-
-export interface TabKnownProps
-  extends StyledProps,
-    WithChildren,
-    WithColors,
-    WithDisabled,
-    WithPadding {
-  id: string;
-  title: ReactNode;
-}
-
-export type TabProps = Simplify<TabKnownProps>;
 
 export interface TabsMenuProps extends Omit<TabsProps, 'width'> {
   activeId: string;

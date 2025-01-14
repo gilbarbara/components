@@ -116,4 +116,4 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
 
 Avatar.displayName = 'Avatar';
 
-export { defaultProps, type AvatarProps } from './useAvatar';
+export { type AvatarProps, defaultProps } from './useAvatar';

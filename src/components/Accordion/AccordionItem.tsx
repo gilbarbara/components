@@ -6,6 +6,10 @@ import { Text } from '~/components/Text';
 
 import { AccordionItemBaseProps, AccordionItemProps, useAccordionItem } from './useAccordion';
 
+export function AccordionItem(props: AccordionItemProps) {
+  return <AccordionItemBase {...props} />;
+}
+
 export function AccordionItemBase(props: AccordionItemBaseProps) {
   const { componentProps, getDataAttributes } = useAccordionItem(props);
   const { children, compact, headerAlign, hideToggle, subtitle, title, ...rest } = componentProps;
@@ -46,10 +50,6 @@ export function AccordionItemBase(props: AccordionItemBaseProps) {
       {children}
     </Collapse>
   );
-}
-
-export function AccordionItem(props: AccordionItemProps) {
-  return <AccordionItemBase {...props} />;
 }
 
 export { type AccordionItemProps } from './useAccordion';

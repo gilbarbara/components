@@ -52,6 +52,6 @@ export function Form<T extends PlainObject<any> = PlainObject<any>>(props: FormP
 
 Form.displayName = 'Form';
 
-export type { SubmitHandler as FormSubmitHandler } from 'react-hook-form';
-
 export type { FormProps, FormRenderProps } from './useForm';
+
+export type { SubmitHandler as FormSubmitHandler } from 'react-hook-form';

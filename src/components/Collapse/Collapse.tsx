@@ -266,4 +266,4 @@ export function Collapse(props: CollapseProps) {
 
 Collapse.displayName = 'Collapse';
 
-export { defaultProps, type CollapseProps } from './useCollapse';
+export { type CollapseProps, defaultProps } from './useCollapse';

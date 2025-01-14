@@ -71,6 +71,12 @@ const CHROMATIC_MODE = {
 
 type ChromaticMode = keyof typeof CHROMATIC_MODE;
 
+interface FlexBoxPropsOptions {
+  exclude?: Array<keyof WithFlexBox>;
+  hideCategory?: boolean;
+  include?: Array<keyof WithFlexBox>;
+}
+
 export function addChromaticModes(...inputModes: [ChromaticMode, ...ChromaticMode[]]) {
   const modes = inputModes.reduce<PlainObject<any>>((acc, mode) => {
     const { title, ...rest } = CHROMATIC_MODE[mode];
@@ -84,35 +90,6 @@ export function addChromaticModes(...inputModes: [ChromaticMode, ...ChromaticMod
     chromatic: {
       modes,
     },
-  };
-}
-
-export function disableControl(): InputType {
-  return { control: false };
-}
-
-export function hideNoControlsWarning() {
-  return {
-    hideNoControlsWarning: true,
-  };
-}
-
-export function hideProps(...props: string[]) {
-  const fields: PlainObject = {
-    as: hideTable(),
-    theme: hideTable(),
-  };
-
-  props.forEach(d => {
-    fields[d] = hideTable();
-  });
-
-  return fields;
-}
-
-export function hideTable() {
-  return {
-    table: { disable: true },
   };
 }
 
@@ -143,10 +120,8 @@ export function dimensionProps(): ControlMap {
   };
 }
 
-interface FlexBoxPropsOptions {
-  exclude?: Array<keyof WithFlexBox>;
-  hideCategory?: boolean;
-  include?: Array<keyof WithFlexBox>;
+export function disableControl(): InputType {
+  return { control: false };
 }
 
 export function flexBoxProps(options: FlexBoxPropsOptions = {}) {
@@ -188,6 +163,31 @@ export function flexItemProps(): ControlMap {
     flex: { table: { category: 'Flex Item' } },
     justifySelf: { table: { category: 'Flex Item' } },
     order: { table: { category: 'Flex Item' } },
+  };
+}
+
+export function hideNoControlsWarning() {
+  return {
+    hideNoControlsWarning: true,
+  };
+}
+
+export function hideProps(...props: string[]) {
+  const fields: PlainObject = {
+    as: hideTable(),
+    theme: hideTable(),
+  };
+
+  props.forEach(d => {
+    fields[d] = hideTable();
+  });
+
+  return fields;
+}
+
+export function hideTable() {
+  return {
+    table: { disable: true },
   };
 }
 

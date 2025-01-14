@@ -15,21 +15,6 @@ import {
   WithPadding,
 } from '../src/types';
 
-export interface StoryKnownProps
-  extends StyledProps,
-    Pick<WithFlexBox, 'direction'>,
-    Pick<WithPadding, 'padding'>,
-    Pick<WithMargin, 'mx'> {
-  align?: string;
-  children?: ReactNode;
-  display?: string;
-  justify?: string;
-  maxWidth?: number;
-  minHeight?: string;
-  minWidth?: number;
-  style?: CSSProperties;
-}
-
 type StoryProps = Simplify<OmitElementProps<HTMLDivElement, StoryKnownProps>>;
 
 export interface Context {
@@ -44,6 +29,21 @@ export interface Context {
     paddingDocs?: SpacingOrZero;
   };
   viewMode: string;
+}
+
+export interface StoryKnownProps
+  extends StyledProps,
+    Pick<WithFlexBox, 'direction'>,
+    Pick<WithPadding, 'padding'>,
+    Pick<WithMargin, 'mx'> {
+  align?: string;
+  children?: ReactNode;
+  display?: string;
+  justify?: string;
+  maxWidth?: number;
+  minHeight?: string;
+  minWidth?: number;
+  style?: CSSProperties;
 }
 
 const StyledStory = styled(

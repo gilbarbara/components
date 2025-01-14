@@ -23,6 +23,8 @@ import {
   WithVariant,
 } from '~/types';
 
+export type ButtonProps = Simplify<OmitElementProps<HTMLButtonElement, ButtonKnownProps, 'wrap'>>;
+
 export interface ButtonKnownProps
   extends StyledProps,
     WithBlock,
@@ -73,8 +75,6 @@ export interface ButtonKnownProps
    */
   wide?: boolean;
 }
-
-export type ButtonProps = Simplify<OmitElementProps<HTMLButtonElement, ButtonKnownProps, 'wrap'>>;
 
 export const defaultProps = {
   bg: 'primary',

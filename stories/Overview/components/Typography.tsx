@@ -1,9 +1,9 @@
 import { Box, H1, H2, H3, H4, H5, H6, Jumbo, Paragraph, Spacer } from '~';
 
-import Heading from './Heading';
-
 import { typography } from '../../../src/modules/theme';
 import { PANGRAM } from '../../__helpers__';
+
+import Heading from './Heading';
 
 export default function Typography() {
   return (

@@ -1,7 +1,6 @@
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -14,6 +13,8 @@ import {
   WithTextOptions,
 } from '~/types';
 
+export type TextProps = Simplify<TextKnownProps>;
+
 export interface TextKnownProps
   extends StyledProps,
     WithChildren,
@@ -22,8 +23,6 @@ export interface TextKnownProps
     WithFlexItem,
     WithHTMLAttributes,
     WithTextOptions {}
-
-export type TextProps = Simplify<TextKnownProps>;
 
 export function useText(props: TextProps) {
   return useComponentProps(props, textDefaultOptions);

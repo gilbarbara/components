@@ -6,6 +6,8 @@ import { NativeImageProps, useImage as useImageHook, UseImageProps } from '~/hoo
 
 import { OmitElementProps, StyledProps, WithRadius, WithShadow } from '~/types';
 
+export type ImageProps = Simplify<OmitElementProps<HTMLImageElement, ImageKnownProps>>;
+
 export interface ImageKnownProps extends StyledProps, UseImageProps, WithRadius, WithShadow {
   /**
    * The image `alt` attribute.
@@ -47,8 +49,6 @@ export interface ImageKnownProps extends StyledProps, UseImageProps, WithRadius,
    */
   zoomPercentage?: number;
 }
-
-export type ImageProps = Simplify<OmitElementProps<HTMLImageElement, ImageKnownProps>>;
 
 export const defaultProps = {
   disableSkeleton: false,

@@ -9,13 +9,21 @@ import {
   HeadingSizes,
   Orientation,
   Sizes,
+  StringLiteral,
   TextSizes,
   Variant,
 } from './common';
 import { ButtonSize, ColorVariantTones, Radius, Shadow, Spacing, Theme } from './theme';
 
-export type SpacingOrZero = Spacing | 0;
+export type Gap = Spacing | StringLiteral | number;
+
 export type SpacingAuto = SpacingOrZero | 'auto';
+export type SpacingOrZero = Spacing | 0;
+
+export type WithHTMLAttributes<T = HTMLDivElement> = Pick<
+  HTMLAttributes<T>,
+  'className' | 'id' | 'style' | 'tabIndex' | 'title'
+>;
 
 export interface WithAccent<T = ColorVariantTones> {
   /**
@@ -49,20 +57,20 @@ export interface WithBorderless {
   borderless?: boolean;
 }
 
-export interface WithButtonSize {
-  /**
-   * Button size
-   * @default md
-   */
-  size?: ButtonSize;
-}
-
 export interface WithBusy {
   /**
    * Add an animated icon
    * @default false
    */
   busy?: boolean;
+}
+
+export interface WithButtonSize {
+  /**
+   * Button size
+   * @default md
+   */
+  size?: ButtonSize;
 }
 
 export interface WithChildren {
@@ -155,7 +163,7 @@ export interface WithFlexBox {
    * The gap CSS property sets the gaps (gutters) between rows and columns.
    * It is a shorthand for row-gap and column-gap.
    */
-  gap?: Spacing | ({} & string) | number;
+  gap?: Gap;
   /**
    * How to align the contents along the main axis.<br />
    * Any 'justify-content' valid CSS value is accepted.
@@ -214,12 +222,12 @@ export interface WithGrid {
   autoRows?: StandardLonghandProperties['gridAutoRows'];
   column?: StandardShorthandProperties['gridColumn'];
   columnEnd?: StandardLonghandProperties['gridColumnEnd'];
-  columnGap?: Spacing | ({} & string) | number;
+  columnGap?: Gap;
   columnStart?: StandardLonghandProperties['gridColumnStart'];
   grid?: StandardShorthandProperties['grid'];
   row?: StandardShorthandProperties['gridRow'];
   rowEnd?: StandardLonghandProperties['gridRowEnd'];
-  rowGap?: Spacing | ({} & string) | number;
+  rowGap?: Gap;
   rowStart?: StandardLonghandProperties['gridRowStart'];
   template?: StandardShorthandProperties['gridTemplate'];
   templateAreas?: StandardLonghandProperties['gridTemplateAreas'];
@@ -235,17 +243,16 @@ export interface WithHeight {
   height?: Sizes;
 }
 
-export type WithHTMLAttributes<T = HTMLDivElement> = Pick<
-  HTMLAttributes<T>,
-  'className' | 'id' | 'style' | 'tabIndex' | 'title'
->;
-
 export interface WithInline {
   /**
    * Display as an inline element
    * @default false
    */
   inline?: boolean;
+}
+
+export interface WithLabel {
+  label?: ReactNode;
 }
 
 export interface WithLayout extends WithDisplay, WithDimension {
@@ -256,10 +263,6 @@ export interface WithLayout extends WithDisplay, WithDimension {
   transform?: StandardLonghandProperties['transform'];
   transformOrigin?: StandardLonghandProperties['transformOrigin'];
   transition?: StandardShorthandProperties['transition'];
-}
-
-export interface WithLabel {
-  label?: ReactNode;
 }
 
 export interface WithLight {
@@ -352,13 +355,6 @@ export interface WithStartContent {
   startContent?: ReactNode;
 }
 
-export interface WithTextSize<T = TextSizes> {
-  /**
-   * Text size
-   */
-  size?: T;
-}
-
 export interface WithTextOptions<T extends TextSizes | HeadingSizes = TextSizes>
   extends WithTextSize<T> {
   /**
@@ -376,6 +372,13 @@ export interface WithTextOptions<T extends TextSizes | HeadingSizes = TextSizes>
   textDecoration?: StandardShorthandProperties['textDecoration'];
   textTransform?: StandardLonghandProperties['textTransform'];
   wordSpacing?: StandardLonghandProperties['wordSpacing'];
+}
+
+export interface WithTextSize<T = TextSizes> {
+  /**
+   * Text size
+   */
+  size?: T;
 }
 
 export interface WithTheme {
