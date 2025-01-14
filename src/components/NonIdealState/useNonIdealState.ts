@@ -20,6 +20,8 @@ import {
   WithShadow,
 } from '~/types';
 
+export type NonIdealStateProps = Simplify<NonIdealStateKnownProps>;
+
 export interface NonIdealStateKnownProps
   extends StyledProps,
     WithBorder,
@@ -46,8 +48,6 @@ export interface NonIdealStateKnownProps
   /** @default not-found */
   type?: 'error' | 'no-results' | 'not-found' | 'offline' | null;
 }
-
-export type NonIdealStateProps = Simplify<NonIdealStateKnownProps>;
 
 export const defaultProps = {
   hideIcon: false,

@@ -4,7 +4,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Paragraph, Spacer } from '~';
 
 import { textDefaultOptions, textSizes } from '~/modules/options';
-
 import {
   colorProps,
   disableControl,

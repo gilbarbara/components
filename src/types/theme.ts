@@ -1,8 +1,8 @@
 import { LiteralUnion } from '@gilbarbara/types';
 
-import { MapLiteralToPrimitive } from './utils';
-
 import * as theme from '../modules/theme';
+
+import { MapLiteralToPrimitive } from './utils';
 
 export type AvatarSize = keyof typeof theme.avatar;
 
@@ -26,14 +26,6 @@ export type ColorTone =
   | '800'
   | '900';
 
-export type Radius = keyof typeof theme.radius;
-
-export type Shadow = keyof typeof theme.shadow;
-
-export type Spacing = keyof typeof theme.spacing;
-
-export type Typography = keyof typeof theme.typography;
-
 export type ColorVariant = Color | 'black' | 'white';
 
 export type ColorVariantTones = LiteralUnion<
@@ -43,5 +35,13 @@ export type ColorVariantTones = LiteralUnion<
     },
   string
 >;
+
+export type Radius = keyof typeof theme.radius;
+
+export type Shadow = keyof typeof theme.shadow;
+
+export type Spacing = keyof typeof theme.spacing;
+
+export type Typography = keyof typeof theme.typography;
 
 export interface Theme extends BaseTheme {}

@@ -7,6 +7,8 @@ import { TooltipProps } from '~/components/Tooltip/Tooltip';
 
 import { WithChildrenOptional, WithColors, WithMargin, WithPadding } from '~/types';
 
+export type CopyToClipboardProps = Simplify<CopyToClipboardKnownProps>;
+
 export interface CopyToClipboardKnownProps
   extends Pick<WithColors, 'color'>,
     WithChildrenOptional,
@@ -65,8 +67,6 @@ export interface CopyToClipboardKnownProps
    */
   value: ReactNode;
 }
-
-export type CopyToClipboardProps = Simplify<CopyToClipboardKnownProps>;
 
 export const defaultProps = {
   disableAnimation: false,

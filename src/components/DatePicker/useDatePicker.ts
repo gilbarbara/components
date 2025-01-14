@@ -21,6 +21,29 @@ import {
   WithShadow,
 } from '~/types';
 
+export type DatePickerRangeClickHandler = (range: DatePickerRangeParameter) => void;
+
+export type DatePickerRangeParameter = [from?: string, to?: string];
+
+export type DatePickerRangeProps = Simplify<DatePickerRangeKnownProps>;
+
+export type DatePickerSelectorProps = Simplify<
+  DatePickerSelectorBaseProps &
+    (
+      | {
+          mode: 'range';
+          onChange?: DatePickerRangeClickHandler;
+        }
+      | {
+          mode?: 'single';
+          onChange?: DatePickerSingleClickHandler;
+        }
+    )
+>;
+export type DatePickerSingleClickHandler = (isoDate: string) => void;
+
+export type DatePickerSingleProps = Simplify<DatePickerSingleKnownProps>;
+
 export interface DatePickerBaseProps extends StyledProps, WithAccent<Color> {
   /**
    * @default Go to today
@@ -36,11 +59,6 @@ export interface DatePickerLayoutProps
     WithPadding,
     WithRadius,
     WithShadow {}
-
-export type DatePickerRangeParameter = [from?: string, to?: string];
-
-export type DatePickerRangeClickHandler = (range: DatePickerRangeParameter) => void;
-export type DatePickerSingleClickHandler = (isoDate: string) => void;
 
 export interface DatePickerRangeKnownProps
   extends DatePickerBaseProps,
@@ -68,8 +86,6 @@ export interface DatePickerRangeKnownProps
    */
   showApply?: boolean;
 }
-
-export type DatePickerRangeProps = Simplify<DatePickerRangeKnownProps>;
 
 export interface DatePickerSelectorBaseProps
   extends DatePickerBaseProps,
@@ -126,20 +142,6 @@ export interface DatePickerSelectorBaseProps
   width?: StringOrNumber;
 }
 
-export type DatePickerSelectorProps = Simplify<
-  DatePickerSelectorBaseProps &
-    (
-      | {
-          mode: 'range';
-          onChange?: DatePickerRangeClickHandler;
-        }
-      | {
-          mode?: 'single';
-          onChange?: DatePickerSingleClickHandler;
-        }
-    )
->;
-
 export interface DatePickerSingleKnownProps
   extends DatePickerBaseProps,
     DatePickerLayoutProps,
@@ -151,8 +153,6 @@ export interface DatePickerSingleKnownProps
    */
   selected?: string;
 }
-
-export type DatePickerSingleProps = Simplify<DatePickerSingleKnownProps>;
 
 export const baseProps = {
   accent: 'primary',

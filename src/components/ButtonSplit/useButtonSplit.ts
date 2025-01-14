@@ -17,6 +17,8 @@ import {
   WithTextOptions,
 } from '~/types';
 
+export type ButtonSplitProps = Simplify<ButtonSplitKnownProps>;
+
 export interface ButtonSplitKnownProps
   extends Pick<MenuProps, 'disabled' | 'onToggle'>,
     WithBlock,
@@ -35,8 +37,6 @@ export interface ButtonSplitKnownProps
   /** @default bottom-right */
   position?: PositionY;
 }
-
-export type ButtonSplitProps = Simplify<ButtonSplitKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

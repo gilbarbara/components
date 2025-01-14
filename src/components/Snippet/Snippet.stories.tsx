@@ -3,7 +3,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { FlexCenter, Grid, Icon, Paragraph, Spacer } from '~';
 
 import { sizes } from '~/modules/options';
-
 import {
   colorProps,
   disableControl,
@@ -108,7 +107,7 @@ export const Colors: Story = {
     <Grid gap={20} templateColumns="repeat(3, 1fr)">
       {VARIANTS.map(d => (
         <FlexCenter key={d}>
-          <Snippet key={d} {...props} bg={!['white', 'black'].includes(d) ? `${d}.100` : d} />
+          <Snippet key={d} {...props} bg={!['black', 'white'].includes(d) ? `${d}.100` : d} />
           <Paragraph mt="xs">{d}</Paragraph>
         </FlexCenter>
       ))}

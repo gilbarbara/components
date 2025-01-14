@@ -3,7 +3,6 @@ import SVG from 'react-inlinesvg';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { grayScale } from '~/modules/theme';
-
 import { hideProps, hideTable, marginProps } from '~/stories/__helpers__';
 import Info from '~/stories/components/Info';
 

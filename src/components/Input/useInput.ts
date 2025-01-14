@@ -13,6 +13,10 @@ import {
   WithHeight,
 } from '~/types';
 
+export type InputProps = Simplify<
+  OmitElementProps<HTMLInputElement, InputKnownProps, 'name' | 'type' | 'width'>
+>;
+
 export interface InputKnownProps
   extends StyledProps,
     WithAccent,
@@ -24,10 +28,6 @@ export interface InputKnownProps
   /** @default text */
   type?: InputTypes;
 }
-
-export type InputProps = Simplify<
-  OmitElementProps<HTMLInputElement, InputKnownProps, 'name' | 'type' | 'width'>
->;
 
 export const defaultProps = {
   accent: 'primary',

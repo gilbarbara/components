@@ -76,4 +76,4 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
 
 Chip.displayName = 'Chip';
 
-export { defaultProps, type ChipProps } from './useChip';
+export { type ChipProps, defaultProps } from './useChip';

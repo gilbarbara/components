@@ -1,7 +1,6 @@
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -13,6 +12,8 @@ import {
   WithMargin,
   WithTextOptions,
 } from '~/types';
+
+export type ParagraphProps = Simplify<OmitElementProps<HTMLParagraphElement, ParagraphKnownProps>>;
 
 export interface ParagraphKnownProps
   extends StyledProps,
@@ -27,8 +28,6 @@ export interface ParagraphKnownProps
    */
   skipMarginTop?: boolean;
 }
-
-export type ParagraphProps = Simplify<OmitElementProps<HTMLParagraphElement, ParagraphKnownProps>>;
 
 export const defaultProps = {
   skipMarginTop: false,

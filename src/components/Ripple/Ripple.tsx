@@ -5,7 +5,6 @@ import { px } from '@gilbarbara/helpers';
 import { lighten } from 'colorizr';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { ripple } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
 import { getStyledOptions } from '~/modules/system';

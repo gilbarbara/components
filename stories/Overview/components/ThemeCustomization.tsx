@@ -1,9 +1,9 @@
 import { Box, H2, Jumbo, Paragraph } from '~';
 
-import Navigation from './Navigation';
-
 import Code from '../../components/Code';
 import CodeBlock from '../../components/CodeBlock';
+
+import Navigation from './Navigation';
 
 export default function ThemeCustomization() {
   return (

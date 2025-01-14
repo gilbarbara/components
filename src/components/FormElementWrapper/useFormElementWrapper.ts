@@ -5,6 +5,8 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { StyledProps, WithChildren, WithEndContent, WithMargin, WithStartContent } from '~/types';
 
+export type FormElementWrapperProps = Simplify<FormElementWrapperKnownProps>;
+
 export interface FormElementWrapperKnownProps
   extends StyledProps,
     WithChildren,
@@ -20,8 +22,6 @@ export interface FormElementWrapperKnownProps
   /** @default 100% */
   width?: StringOrNumber;
 }
-
-export type FormElementWrapperProps = Simplify<FormElementWrapperKnownProps>;
 
 export const defaultProps = {
   size: 40,

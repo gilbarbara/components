@@ -1,7 +1,6 @@
 import { Box, Grid, H2, Paragraph, Spacer } from '~';
 
 import { spacing } from '~/modules/theme';
-
 import { SPACING } from '~/stories/__helpers__';
 
 export default function Spacing() {

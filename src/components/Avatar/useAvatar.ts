@@ -12,6 +12,8 @@ import {
   WithRadius,
 } from '~/types';
 
+export type AvatarProps = Simplify<AvatarKnownProps>;
+
 export interface AvatarKnownProps
   extends StyledProps,
     WithColorsDefaultBg,
@@ -45,8 +47,6 @@ export interface AvatarKnownProps
   size?: AvatarSize | number;
   style?: CSSProperties;
 }
-
-export type AvatarProps = Simplify<AvatarKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

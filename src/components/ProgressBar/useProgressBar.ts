@@ -16,6 +16,8 @@ import {
   WithMargin,
 } from '~/types';
 
+export type ProgressBarProps = Simplify<RequireAtLeastOne<ProgressBarKnownProps, 'busy' | 'value'>>;
+
 export interface ProgressBarKnownProps
   extends StyledProps,
     AriaAttributes,
@@ -72,8 +74,6 @@ export interface ProgressBarKnownProps
   /** @default 100% */
   width?: StringOrNumber;
 }
-
-export type ProgressBarProps = Simplify<RequireAtLeastOne<ProgressBarKnownProps, 'busy' | 'value'>>;
 
 export const defaultProps = {
   accent: 'primary',

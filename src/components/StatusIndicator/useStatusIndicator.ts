@@ -13,6 +13,8 @@ import {
   WithMargin,
 } from '~/types';
 
+export type StatusIndicatorProps = Simplify<StatusIndicatorKnownProps>;
+
 export interface StatusIndicatorKnownProps extends StyledProps, WithHTMLAttributes, WithMargin {
   /**
    * The size of the inner circle relative to the outer circle.
@@ -47,8 +49,6 @@ export interface StatusIndicatorKnownProps extends StyledProps, WithHTMLAttribut
    */
   tone?: ColorTone;
 }
-
-export type StatusIndicatorProps = Simplify<StatusIndicatorKnownProps>;
 
 export const defaultProps = {
   borderRatio: 0.7,

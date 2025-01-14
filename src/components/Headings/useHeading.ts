@@ -3,7 +3,6 @@ import { omit } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { alignStyles, getStyles } from '~/modules/system';
 
 import {
@@ -21,6 +20,11 @@ import {
   WithTheme,
 } from '~/types';
 
+export type HeadingLargeProps = Simplify<
+  OmitElementProps<HTMLHeadingElement, HeadingKnownProps & { large?: boolean }>
+>;
+
+export type HeadingProps = Simplify<OmitElementProps<HTMLHeadingElement, HeadingKnownProps>>;
 export interface HeadingKnownProps
   extends StyledProps,
     WithAlign,
@@ -31,11 +35,6 @@ export interface HeadingKnownProps
     WithLight,
     WithMargin,
     Omit<WithTextOptions, 'bold' | 'size'> {}
-
-export type HeadingProps = Simplify<OmitElementProps<HTMLHeadingElement, HeadingKnownProps>>;
-export type HeadingLargeProps = Simplify<
-  OmitElementProps<HTMLHeadingElement, HeadingKnownProps & { large?: boolean }>
->;
 
 export const defaultProps = {
   light: false,

@@ -7,7 +7,6 @@ import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
 
 import { useKeyboardNavigation } from '~/hooks/useKeyboardNavigation';
-
 import { getStyledOptions, getStyles } from '~/modules/system';
 
 import { Divider } from '~/components/Divider/Divider';
@@ -157,4 +156,4 @@ export function Accordion(props: AccordionProps) {
 
 Accordion.displayName = 'Accordion';
 
-export { defaultProps, type AccordionProps } from './useAccordion';
+export { type AccordionProps, defaultProps } from './useAccordion';

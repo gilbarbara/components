@@ -1,11 +1,11 @@
 import { objectKeys } from '@gilbarbara/helpers';
 import {
+  textColor as contrastingColor,
   darken,
   hex2hsl,
   hsl2hex,
   lighten,
   parseCSS,
-  textColor as contrastingColor,
 } from 'colorizr';
 
 import * as theme from '~/modules/theme';
@@ -16,13 +16,6 @@ export function getColorComplement(color: string) {
   const { l } = parseCSS(color, 'hsl');
 
   return l >= 90 ? darken(color, 10) : lighten(color, 10);
-}
-
-export function getColorWithTone(color: string, tone: ColorTone) {
-  const hsl = hex2hsl(parseCSS(color, 'hex'));
-  const lightness = 100 - parseInt(tone, 10) / 10;
-
-  return hsl2hex({ ...hsl, l: lightness });
 }
 
 /**
@@ -94,4 +87,11 @@ export function getColorTokens(
       variant: 'primary',
     };
   }
+}
+
+export function getColorWithTone(color: string, tone: ColorTone) {
+  const hsl = hex2hsl(parseCSS(color, 'hex'));
+  const lightness = 100 - parseInt(tone, 10) / 10;
+
+  return hsl2hex({ ...hsl, l: lightness });
 }

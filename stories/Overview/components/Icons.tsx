@@ -6,8 +6,8 @@ import { Box, Dropdown, H2, H3, Icon, Input, Jumbo, Paragraph, Spacer, Text } fr
 
 import { icons } from '~/modules/options';
 import { avatar, variants } from '~/modules/theme';
-
 import Navigation from '~/stories/Overview/components/Navigation';
+
 import type { ColorVariant, DropdownOption, Icons } from '~/types';
 
 interface ItemProps {
@@ -51,7 +51,7 @@ export default function Icons() {
     size: 64,
     search: '',
   });
-  const debounceRef = useRef<number>();
+  const debounceRef = useRef<number>(0);
 
   const handleChangeCategories = (values: DropdownOption[]) => {
     const [selected] = values;

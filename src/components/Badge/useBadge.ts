@@ -14,6 +14,8 @@ import {
   WithRadius,
 } from '~/types';
 
+export type BadgeProps = Simplify<BadgeKnownProps>;
+
 export interface BadgeKnownProps
   extends StyledProps,
     WithChildren,
@@ -67,8 +69,6 @@ export interface BadgeKnownProps
    */
   shape?: 'circle' | 'rectangle';
 }
-
-export type BadgeProps = Simplify<BadgeKnownProps>;
 
 export const defaultProps = {
   bg: 'primary',

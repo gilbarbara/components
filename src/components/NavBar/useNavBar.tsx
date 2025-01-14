@@ -17,6 +17,33 @@ import {
   WithPadding,
 } from '~/types';
 
+type ContextState = SetRequired<Omit<NavBarProps, 'children'>, keyof typeof defaultProps> & {
+  isMenuOpen: boolean;
+};
+
+interface NavBarContextProps {
+  children: ReactNode;
+  props: ContextState;
+  toggleMenu: (isOpen: boolean) => void;
+}
+
+interface NavBarContextValue extends Pick<NavBarContextProps, 'toggleMenu'> {
+  state: ContextState;
+}
+
+export type NavBarProps = Simplify<NavBarKnownProps>;
+
+export interface NavBarContentProps extends StyledProps, WithChildren, WithDimension, WithFlexBox {
+  /**
+   * The breakpoint at which the content should be hidden.
+   */
+  hideBreakpoint?: Breakpoint;
+  /**
+   * The breakpoint at which the content should be visible.
+   */
+  showBreakpoint?: Breakpoint;
+}
+
 export interface NavBarKnownProps extends StyledProps, WithChildren, WithColors {
   /**
    * Add a blur effect to the navbar.
@@ -103,19 +130,6 @@ export interface NavBarKnownProps extends StyledProps, WithChildren, WithColors 
   zIndex?: number;
 }
 
-export type NavBarProps = Simplify<NavBarKnownProps>;
-
-export interface NavBarContentProps extends StyledProps, WithChildren, WithDimension, WithFlexBox {
-  /**
-   * The breakpoint at which the content should be hidden.
-   */
-  hideBreakpoint?: Breakpoint;
-  /**
-   * The breakpoint at which the content should be visible.
-   */
-  showBreakpoint?: Breakpoint;
-}
-
 export interface NavBarMenuProps
   extends WithBorder,
     WithChildren,
@@ -123,20 +137,6 @@ export interface NavBarMenuProps
     WithDimension,
     WithPadding,
     Omit<SidebarProps, 'disableAnimation' | 'isOpen' | 'onDismiss'> {}
-
-type ContextState = SetRequired<Omit<NavBarProps, 'children'>, keyof typeof defaultProps> & {
-  isMenuOpen: boolean;
-};
-
-interface NavBarContextProps {
-  children: ReactNode;
-  props: ContextState;
-  toggleMenu: (isOpen: boolean) => void;
-}
-
-interface NavBarContextValue extends Pick<NavBarContextProps, 'toggleMenu'> {
-  state: ContextState;
-}
 
 export const defaultProps = {
   blurred: true,
@@ -175,6 +175,10 @@ export function NavBarProvider({ children, props, toggleMenu }: NavBarContextPro
   return <NavBarContext.Provider value={value}>{children}</NavBarContext.Provider>;
 }
 
+export function useNavBar(props: NavBarProps) {
+  return useComponentProps(props, defaultProps);
+}
+
 export function useNavBarContext(): NavBarContextValue {
   const context = useContext(NavBarContext);
 
@@ -183,8 +187,4 @@ export function useNavBarContext(): NavBarContextValue {
   }
 
   return context;
-}
-
-export function useNavBar(props: NavBarProps) {
-  return useComponentProps(props, defaultProps);
 }

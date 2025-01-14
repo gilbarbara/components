@@ -9,6 +9,8 @@ import { Theme } from '~/types';
 let storedEmotionTheme: Theme;
 let storedTheme: Theme;
 
+export type UseThemeReturn = ReturnType<typeof useTheme>;
+
 export function useTheme() {
   const emotionTheme = useThemeEmotion();
   const needsUpdate = !storedTheme || !deepEqual(storedEmotionTheme, emotionTheme);
@@ -33,5 +35,3 @@ export function useTheme() {
 
   return { getDataAttributes, theme: nextTheme.current };
 }
-
-export type UseThemeReturn = ReturnType<typeof useTheme>;

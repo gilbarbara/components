@@ -5,7 +5,6 @@ import { compare, textColor } from 'colorizr';
 import { Box, Chip, Flex, FlexCenter, H2, H3, Paragraph, Spacer } from '~';
 
 import * as theme from '~/modules/theme';
-
 import { TONES } from '~/stories/__helpers__';
 
 interface SwatchProps {

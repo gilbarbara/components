@@ -19,6 +19,8 @@ import {
   WithTextOptions,
 } from '~/types';
 
+export type FlexProps<T = HTMLElement> = Simplify<OmitElementProps<T, FlexKnownProps>>;
+
 export interface FlexKnownProps
   extends StyledProps,
     WithBorder,
@@ -33,8 +35,6 @@ export interface FlexKnownProps
     WithRadius,
     WithShadow,
     WithTextOptions {}
-
-export type FlexProps<T = HTMLElement> = Simplify<OmitElementProps<T, FlexKnownProps>>;
 
 export const flexDefaultProps = {
   display: 'flex',

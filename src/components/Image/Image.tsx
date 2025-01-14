@@ -101,7 +101,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
   } = componentProps;
 
   const isLoaded = status === 'loaded' && !isLoadingProp;
-  const isLoading = isLoadingProp ?? ['pending', 'loading'].includes(status);
+  const isLoading = isLoadingProp ?? ['loading', 'pending'].includes(status);
   const hasError = status === 'failed';
 
   const showFallback = (!src || !isLoaded) && !!fallbackSrc;

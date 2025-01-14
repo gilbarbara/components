@@ -18,6 +18,12 @@ import {
   WithTheme,
 } from '~/types';
 
+export type ListProps = Simplify<ListKnownProps>;
+
+export interface ListItemProps
+  extends BoxProps,
+    Pick<ListProps, 'borderColor' | 'hideBorder' | 'hideDivider' | 'orientation' | 'size'> {}
+
 export interface ListKnownProps
   extends StyledProps,
     WithChildren,
@@ -48,12 +54,6 @@ export interface ListKnownProps
    */
   orientation?: Orientation;
 }
-
-export type ListProps = Simplify<ListKnownProps>;
-
-export interface ListItemProps
-  extends BoxProps,
-    Pick<ListProps, 'borderColor' | 'hideBorder' | 'hideDivider' | 'orientation' | 'size'> {}
 
 export const defaultProps = {
   hideBorder: false,

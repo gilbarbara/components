@@ -2,7 +2,6 @@ import { ButtonHTMLAttributes } from 'react';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -23,6 +22,10 @@ import {
   WithTextOptions,
 } from '~/types';
 
+export type ButtonUnstyledProps = Simplify<
+  OmitElementProps<HTMLButtonElement, ButtonUnstyledKnownProps>
+>;
+
 export interface ButtonUnstyledKnownProps
   extends StyledProps,
     WithBorder,
@@ -40,10 +43,6 @@ export interface ButtonUnstyledKnownProps
     WithTextOptions {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
-
-export type ButtonUnstyledProps = Simplify<
-  OmitElementProps<HTMLButtonElement, ButtonUnstyledKnownProps>
->;
 
 export const defaultProps = {
   ...textDefaultOptions,

@@ -10,6 +10,28 @@ interface Props {
   debug?: boolean;
 }
 
+function FieldDebug(props: Props) {
+  const { debug } = props;
+  const { getDataAttributes } = useTheme();
+
+  if (!debug) {
+    return null;
+  }
+
+  return (
+    <Box as="code" bg="gray.50" {...getDataAttributes('FieldDebug')} display="block" padding="md">
+      {objectEntries(props)
+        .filter(([key]) => key !== 'debug')
+        .sort(sortByLocaleCompare('0'))
+        .map(([key, value]) => (
+          <Paragraph key={key} skipMarginTop>
+            <b>{key}</b>: {primitiveToString(value, key)}
+          </Paragraph>
+        ))}
+    </Box>
+  );
+}
+
 /**
  * Convert primitive to string
  */
@@ -35,28 +57,6 @@ function primitiveToString(value: any, key: string): string {
   }
 
   return value.toString();
-}
-
-function FieldDebug(props: Props) {
-  const { debug } = props;
-  const { getDataAttributes } = useTheme();
-
-  if (!debug) {
-    return null;
-  }
-
-  return (
-    <Box as="code" bg="gray.50" {...getDataAttributes('FieldDebug')} display="block" padding="md">
-      {objectEntries(props)
-        .filter(([key]) => key !== 'debug')
-        .sort(sortByLocaleCompare('0'))
-        .map(([key, value]) => (
-          <Paragraph key={key} skipMarginTop>
-            <b>{key}</b>: {primitiveToString(value, key)}
-          </Paragraph>
-        ))}
-    </Box>
-  );
 }
 
 FieldDebug.displayName = 'FieldDebug';

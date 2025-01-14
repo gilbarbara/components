@@ -18,10 +18,6 @@ interface Props extends Omit<UseKeyboardNavigationOptions, 'selector'> {
   selector?: string;
 }
 
-function dispatchKeydownEvent(code: string) {
-  window.dispatchEvent(new KeyboardEvent('keydown', { code }));
-}
-
 function Component(props: Props) {
   const { selector = 'button', ...rest } = props;
   const componentRef = useRef<HTMLDivElement>(null);
@@ -54,6 +50,10 @@ function Component(props: Props) {
       </a>
     </div>
   );
+}
+
+function dispatchKeydownEvent(code: string) {
+  window.dispatchEvent(new KeyboardEvent('keydown', { code }));
 }
 
 describe('hooks/useKeyboardNavigation', () => {

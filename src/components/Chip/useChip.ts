@@ -3,7 +3,6 @@ import { omit } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { textDefaultOptions } from '~/modules/options';
 
 import {
@@ -22,6 +21,8 @@ import {
   WithTextOptions,
   WithVariant,
 } from '~/types';
+
+export type ChipProps = Simplify<ChipKnownProps>;
 
 export interface ChipKnownProps
   extends StyledProps,
@@ -50,8 +51,6 @@ export interface ChipKnownProps
   startContentOnClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   style?: CSSProperties;
 }
-
-export type ChipProps = Simplify<ChipKnownProps>;
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),

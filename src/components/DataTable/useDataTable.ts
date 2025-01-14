@@ -23,6 +23,23 @@ import {
   WithRadius,
 } from '~/types';
 
+export type DataTableProps<T extends string = string> = Simplify<DataTableKnownProps<T>>;
+
+export type DataTableRow<TKeys extends string> = Simplify<
+  Record<TKeys, DataTableRowContent> & { id?: StringOrNumber }
+>;
+
+export type DataTableRowContent = ReactNode | { label: ReactNode; value: string };
+
+export interface DataTableBodyProps
+  extends WithAccent,
+    Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'loaderSize' | 'loaderType' | 'loading'> {
+  getDataAttributes: UseThemeReturn['getDataAttributes'];
+  isResponsive: boolean;
+  sortColumn?: string;
+  theme: Theme;
+}
+
 export interface DataTableColumn<T = string> {
   /**
    * Disable sorting for the column.
@@ -62,11 +79,16 @@ export interface DataTableColumn<T = string> {
   title: ReactNode;
 }
 
-export type DataTableRowContent = ReactNode | { label: ReactNode; value: string };
-
-export type DataTableRow<TKeys extends string> = Simplify<
-  Record<TKeys, DataTableRowContent> & { id?: StringOrNumber }
->;
+export interface DataTableHeadProps extends WithAccent, Pick<DataTableProps, 'clean' | 'columns'> {
+  getDataAttributes: UseThemeReturn['getDataAttributes'];
+  isDisabled: boolean;
+  isResponsive: boolean;
+  onClick: MouseEventHandler;
+  sortBy: StringOrNull;
+  sortDirection: SortDirection;
+  stickyHeader: boolean;
+  theme: Theme;
+}
 
 export interface DataTableKnownProps<TKeys extends string>
   extends StyledProps,
@@ -179,28 +201,6 @@ export interface DataTableKnownProps<TKeys extends string>
    * The width of the table.
    * @default window.innerWidth */
   width?: number;
-}
-
-export type DataTableProps<T extends string = string> = Simplify<DataTableKnownProps<T>>;
-
-export interface DataTableHeadProps extends WithAccent, Pick<DataTableProps, 'clean' | 'columns'> {
-  getDataAttributes: UseThemeReturn['getDataAttributes'];
-  isDisabled: boolean;
-  isResponsive: boolean;
-  onClick: MouseEventHandler;
-  sortBy: StringOrNull;
-  sortDirection: SortDirection;
-  stickyHeader: boolean;
-  theme: Theme;
-}
-
-export interface DataTableBodyProps
-  extends WithAccent,
-    Pick<DataTableProps, 'clean' | 'columns' | 'data' | 'loaderSize' | 'loaderType' | 'loading'> {
-  getDataAttributes: UseThemeReturn['getDataAttributes'];
-  isResponsive: boolean;
-  sortColumn?: string;
-  theme: Theme;
 }
 
 export const defaultProps = {

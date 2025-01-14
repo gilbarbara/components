@@ -4,7 +4,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Flex, FlexCenter, Grid, Icon, Paragraph } from '~';
 
 import { avatar, radius } from '~/modules/theme';
-
 import users from '~/stories/__fixtures__/users.json';
 import {
   colorProps,

@@ -5,7 +5,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Grid, Icon, Spacer } from '~';
 
 import { textSizes } from '~/modules/options';
-
 import {
   colorProps,
   dimensionProps,

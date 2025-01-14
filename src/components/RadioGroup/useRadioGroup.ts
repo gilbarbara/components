@@ -6,6 +6,8 @@ import { RadioProps } from '~/components/CheckboxAndRadio/useCheckboxAndRadio';
 
 import { RadioItem, WithComponentSize } from '~/types';
 
+export type RadioGroupProps = Simplify<RadioGroupKnownProps>;
+
 export interface RadioGroupKnownProps
   extends WithComponentSize,
     Omit<RadioProps, 'align' | 'checked' | 'defaultChecked' | 'label'> {
@@ -13,8 +15,6 @@ export interface RadioGroupKnownProps
   inline?: boolean;
   items: RadioItem[];
 }
-
-export type RadioGroupProps = Simplify<RadioGroupKnownProps>;
 
 export const defaultProps = {
   accent: 'primary',

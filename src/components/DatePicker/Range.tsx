@@ -165,4 +165,4 @@ export function DatePickerRange(props: DatePickerRangeProps) {
 
 DatePickerRange.displayName = 'DatePickerRange';
 
-export { rangeDefaultProps as defaultProps, type DatePickerRangeProps } from './useDatePicker';
+export { type DatePickerRangeProps, rangeDefaultProps as defaultProps } from './useDatePicker';

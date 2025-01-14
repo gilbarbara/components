@@ -17,6 +17,10 @@ import {
   WithMargin,
 } from '~/types';
 
+export type ProgressCircleProps = Simplify<
+  RequireAtLeastOne<ProgressCircleKnownProps, 'busy' | 'value'>
+>;
+
 export interface ProgressCircleKnownProps
   extends StyledProps,
     AriaAttributes,
@@ -80,10 +84,6 @@ export interface ProgressCircleKnownProps
    */
   value: number;
 }
-
-export type ProgressCircleProps = Simplify<
-  RequireAtLeastOne<ProgressCircleKnownProps, 'busy' | 'value'>
->;
 
 export const defaultProps = {
   accent: 'primary',

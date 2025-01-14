@@ -1,5 +1,6 @@
 import { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
+import { Types } from '@gilbarbara/helpers';
 import { Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
@@ -11,7 +12,6 @@ import {
   DropdownOption,
   InputTypes,
   RadioItem,
-  ValidatePasswordOptions,
   WithAccent,
   WithBorderless,
   WithDisabled,
@@ -23,43 +23,6 @@ import type {
   ToggleProps,
 } from '~/types/props';
 
-export type RegisterOptionsProps = Simplify<
-  FieldBaseProps & {
-    getValues: UseFormGetValues<FieldValues>;
-  } & (
-      | {
-          formatter?: FieldInputProps['formatter'];
-          type: Exclude<FieldTypes, 'password'>;
-          validationOptions?: never;
-        }
-      | {
-          formatter?: never;
-          type: 'password';
-          validationOptions?: ValidatePasswordOptions;
-        }
-    )
->;
-
-export type FieldTypes =
-  | InputTypes
-  | 'checkbox'
-  | 'datePicker'
-  | 'dropdown'
-  | 'radio'
-  | 'select'
-  | 'toggle'
-  | 'textarea';
-
-export type FieldValidations = 'email' | `equalsTo:${string}` | 'password' | 'phoneBR' | 'phoneUS';
-
-export interface FieldInputHandlers<
-  T extends HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
-> {
-  onBlur?: FocusEventHandler<T>;
-  onChange?: ChangeEventHandler<T>;
-  onFocus?: FocusEventHandler<T>;
-}
-
 interface FieldExcludedProps {
   children?: never;
   datePickerProps?: never;
@@ -70,29 +33,6 @@ interface FieldExcludedProps {
   onFocus?: never;
   toggleProps?: never;
   validationOptions?: never;
-}
-
-export interface FieldBaseProps
-  extends Pick<
-      FormGroupProps,
-      'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
-    >,
-    WithAccent,
-    WithBorderless,
-    WithDisabled {
-  autoComplete?: string;
-  clearError?: () => void;
-  debug?: boolean;
-  id?: string;
-  maxLength?: number;
-  minLength?: number;
-  name: string;
-  placeholder?: string;
-  readOnly?: boolean;
-  setValueAs?: (value: any) => any;
-  skipValidation?: boolean;
-  validations?: FieldValidations[];
-  value?: any;
 }
 
 export type FieldCheckboxProps = Simplify<
@@ -142,9 +82,20 @@ export type FieldPasswordProps = Simplify<
     Omit<FieldInputHandlers<HTMLInputElement>, 'onChange'> & {
       onChange?: (value: string) => void;
       type: 'password';
-      validationOptions?: ValidatePasswordOptions;
+      validationOptions?: Types.ValidatePasswordOptions;
     }
 >;
+
+export type FieldProps =
+  | FieldCheckboxProps
+  | FieldDatePickerProps
+  | FieldDropdownProps
+  | FieldInputProps
+  | FieldPasswordProps
+  | FieldRadioProps
+  | FieldSelectProps
+  | FieldTextareaProps
+  | FieldToggleProps;
 
 export type FieldRadioProps = Simplify<
   FieldBaseProps &
@@ -184,16 +135,65 @@ export type FieldToggleProps = Simplify<
     }
 >;
 
-export type FieldProps =
-  | FieldCheckboxProps
-  | FieldDatePickerProps
-  | FieldDropdownProps
-  | FieldInputProps
-  | FieldPasswordProps
-  | FieldRadioProps
-  | FieldSelectProps
-  | FieldTextareaProps
-  | FieldToggleProps;
+export type FieldTypes =
+  | InputTypes
+  | 'checkbox'
+  | 'datePicker'
+  | 'dropdown'
+  | 'radio'
+  | 'select'
+  | 'toggle'
+  | 'textarea';
+
+export type FieldValidations = 'email' | `equalsTo:${string}` | 'password' | 'phoneBR' | 'phoneUS';
+
+export type RegisterOptionsProps = Simplify<
+  FieldBaseProps & {
+    getValues: UseFormGetValues<FieldValues>;
+  } & (
+      | {
+          formatter?: FieldInputProps['formatter'];
+          type: Exclude<FieldTypes, 'password'>;
+          validationOptions?: never;
+        }
+      | {
+          formatter?: never;
+          type: 'password';
+          validationOptions?: Types.ValidatePasswordOptions;
+        }
+    )
+>;
+
+export interface FieldBaseProps
+  extends Pick<
+      FormGroupProps,
+      'assistiveText' | 'hideAssistiveText' | 'inline' | 'label' | 'required' | 'style'
+    >,
+    WithAccent,
+    WithBorderless,
+    WithDisabled {
+  autoComplete?: string;
+  clearError?: () => void;
+  debug?: boolean;
+  id?: string;
+  maxLength?: number;
+  minLength?: number;
+  name: string;
+  placeholder?: string;
+  readOnly?: boolean;
+  setValueAs?: (value: any) => any;
+  skipValidation?: boolean;
+  validations?: FieldValidations[];
+  value?: any;
+}
+
+export interface FieldInputHandlers<
+  T extends HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+> {
+  onBlur?: FocusEventHandler<T>;
+  onChange?: ChangeEventHandler<T>;
+  onFocus?: FocusEventHandler<T>;
+}
 
 export const defaultProps = {
   accent: 'primary',

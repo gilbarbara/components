@@ -44,4 +44,4 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>((props, ref)
 
 Container.displayName = 'Container';
 
-export { defaultProps, type ContainerProps } from './useContainer';
+export { type ContainerProps, defaultProps } from './useContainer';

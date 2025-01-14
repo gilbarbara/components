@@ -4,13 +4,13 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { StyledProps, WithChildren } from '~/types';
 
+export type TruncateProps = Simplify<TruncateKnownProps>;
+
 export interface TruncateKnownProps extends StyledProps, WithChildren {
   /** @default 2 */
   lines?: number;
   maxWidth?: StringOrNumber;
 }
-
-export type TruncateProps = Simplify<TruncateKnownProps>;
 
 export const defaultProps = {
   lines: 2,

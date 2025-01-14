@@ -5,6 +5,8 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { Icons, StyledProps, WithColors, WithMargin } from '~/types';
 
+export type IconProps = Simplify<RequireExactlyOne<IconKnownProps, 'name' | 'url'>>;
+
 export interface IconKnownProps extends StyledProps, Pick<WithColors, 'color'>, WithMargin {
   name: Icons;
   /** @default 16 */
@@ -14,8 +16,6 @@ export interface IconKnownProps extends StyledProps, Pick<WithColors, 'color'>, 
   title?: ReactNode;
   url: string;
 }
-
-export type IconProps = Simplify<RequireExactlyOne<IconKnownProps, 'name' | 'url'>>;
 
 export const defaultProps = {
   size: 16,

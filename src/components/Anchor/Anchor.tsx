@@ -65,4 +65,4 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =>
 
 Anchor.displayName = 'Anchor';
 
-export { defaultProps, type AnchorProps } from './useAnchor';
+export { type AnchorProps, defaultProps } from './useAnchor';

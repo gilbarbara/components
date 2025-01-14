@@ -5,7 +5,6 @@ import { pick, px } from '@gilbarbara/helpers';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
-
 import { getColorTokens } from '~/modules/colors';
 import {
   getDisableStyles,
@@ -28,6 +27,20 @@ import {
   WithTheme,
 } from '~/types';
 
+interface InnerProps
+  extends Omit<CheckboxProps, 'name' | 'value' | 'theme'>,
+    Omit<RadioProps, 'name' | 'value' | 'theme'>,
+    WithTheme {
+  category?: 'checkbox' | 'radio';
+}
+
+export type CheckboxProps = Simplify<
+  OmitElementProps<HTMLInputElement, CheckboxAndRadioKnownProps & CheckboxItem>
+>;
+export type RadioProps = Simplify<
+  OmitElementProps<HTMLInputElement, CheckboxAndRadioKnownProps & RadioItem>
+>;
+
 export interface CheckboxAndRadioKnownProps
   extends StyledProps,
     WithAccent,
@@ -38,20 +51,6 @@ export interface CheckboxAndRadioKnownProps
   align?: WithFlexBox['align'];
   name: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
-}
-
-export type CheckboxProps = Simplify<
-  OmitElementProps<HTMLInputElement, CheckboxAndRadioKnownProps & CheckboxItem>
->;
-export type RadioProps = Simplify<
-  OmitElementProps<HTMLInputElement, CheckboxAndRadioKnownProps & RadioItem>
->;
-
-interface InnerProps
-  extends Omit<CheckboxProps, 'name' | 'value' | 'theme'>,
-    Omit<RadioProps, 'name' | 'value' | 'theme'>,
-    WithTheme {
-  category?: 'checkbox' | 'radio';
 }
 
 export const checkBoxDefaultProps = {
@@ -223,7 +222,7 @@ export function handleKeyDown(event: KeyboardEvent<HTMLSpanElement>) {
   const target = event.target as HTMLSpanElement;
   const input = target.previousElementSibling as HTMLInputElement;
 
-  if (!input || input.disabled || !['Space', 'Enter'].includes(event.code)) {
+  if (!input || input.disabled || !['Enter', 'Space'].includes(event.code)) {
     return;
   }
 

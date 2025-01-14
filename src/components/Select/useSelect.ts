@@ -13,6 +13,8 @@ import {
   WithHeight,
 } from '~/types';
 
+export type SelectProps = Simplify<OmitElementProps<HTMLSelectElement, SelectKnownProps>>;
+
 export interface SelectKnownProps
   extends StyledProps,
     WithAccent,
@@ -21,8 +23,6 @@ export interface SelectKnownProps
     WithElementSpacing,
     WithFormElements,
     WithHeight {}
-
-export type SelectProps = Simplify<OmitElementProps<HTMLSelectElement, SelectKnownProps>>;
 
 export const defaultProps = {
   accent: 'primary',

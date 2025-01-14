@@ -34,6 +34,7 @@ import {
   radiusProps,
   spacingProps,
 } from '~/stories/__helpers__';
+
 import { ColorVariantTones, DropdownOption } from '~/types';
 
 import { DataTable, defaultProps } from './DataTable';
@@ -77,16 +78,16 @@ type WrapperColumns = 'avatar' | 'email' | 'team' | 'status' | 'action';
 
 type WrapperState = typeof wrapperState;
 
+interface Props extends SharedState {
+  accent?: ColorVariantTones;
+  setState: (state: Partial<SharedState>) => void;
+}
+
 interface SharedState {
   // eslint-disable-next-line react/no-unused-prop-types
   search: string;
   status: string;
   team: string;
-}
-
-interface Props extends SharedState {
-  accent?: ColorVariantTones;
-  setState: (state: Partial<SharedState>) => void;
 }
 
 const wrapperState = {
@@ -323,6 +324,30 @@ export const Basic: Story = {
   render: props => <DataTableWrapper {...props} />,
 };
 
+type ExternalColumns = 'name' | 'description' | 'keywords' | 'version' | 'links';
+
+interface Entry {
+  package: Package;
+  score: {
+    detail: {
+      maintenance: number;
+      popularity: number;
+      quality: number;
+    };
+    final: number;
+  };
+  searchScore: number;
+}
+
+interface ExternalState {
+  currentPage: number;
+  loading: boolean;
+  results: Array<Package>;
+  selected: StringOrNull;
+  showModal: boolean;
+  totalPages: number;
+}
+
 interface Package {
   author: {
     email: string;
@@ -351,35 +376,11 @@ interface Package {
   version: string;
 }
 
-interface Entry {
-  package: Package;
-  score: {
-    detail: {
-      maintenance: number;
-      popularity: number;
-      quality: number;
-    };
-    final: number;
-  };
-  searchScore: number;
-}
-
 interface Response {
   objects: Entry[];
   time: string;
   total: number;
 }
-
-interface ExternalState {
-  currentPage: number;
-  loading: boolean;
-  results: Array<Package>;
-  selected: StringOrNull;
-  showModal: boolean;
-  totalPages: number;
-}
-
-type ExternalColumns = 'name' | 'description' | 'keywords' | 'version' | 'links';
 
 const externalState: ExternalState = {
   currentPage: 1,

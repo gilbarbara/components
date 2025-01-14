@@ -13,17 +13,6 @@ import { DatePickerBaseProps, DatePickerLayoutProps } from '~/components/DatePic
 
 import { WithTheme } from '~/types';
 
-export function getNumberOfMonths(fromDate?: Date | string, toDate?: Date | string): number {
-  if (fromDate && toDate) {
-    const day1 = is.date(fromDate) ? fromDate : new Date(fromDate);
-    const day2 = is.date(toDate) ? toDate : new Date(toDate);
-
-    return isSameMonth(day1, day2) ? 1 : 2;
-  }
-
-  return 2;
-}
-
 export function getFooter(setter: (date: Date) => void, label: ReactNode, apply?: ReactNode) {
   if (!label && !apply) {
     return null;
@@ -43,50 +32,15 @@ export function getFooter(setter: (date: Date) => void, label: ReactNode, apply?
   );
 }
 
-export function getRange<T extends DayPickerProps>(
-  fromDate?: Date | string,
-  toDate?: Date | string,
-) {
-  const additionalProps: Partial<T> = {};
-  let dateStart;
-  let dateEnd;
+export function getNumberOfMonths(fromDate?: Date | string, toDate?: Date | string): number {
+  if (fromDate && toDate) {
+    const day1 = is.date(fromDate) ? fromDate : new Date(fromDate);
+    const day2 = is.date(toDate) ? toDate : new Date(toDate);
 
-  if (fromDate) {
-    dateStart = is.date(fromDate) ? fromDate : new Date(fromDate);
-
-    additionalProps.fromMonth = new Date(dateStart.getFullYear(), dateStart.getMonth());
-    additionalProps.disabled = [
-      {
-        from: new Date(dateStart.getFullYear(), dateStart.getMonth(), 0),
-        to: new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate()),
-      },
-    ];
+    return isSameMonth(day1, day2) ? 1 : 2;
   }
 
-  if (toDate) {
-    dateEnd = is.date(toDate) ? toDate : new Date(toDate);
-    const disabledDays = [];
-
-    disabledDays.push({
-      from: new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate()),
-      to: new Date(dateEnd.getFullYear(), dateEnd.getMonth() + 1, 1),
-    });
-
-    if (dateStart && dateStart.getMonth() === dateEnd.getMonth()) {
-      disabledDays.push({
-        from: new Date(dateEnd.getFullYear(), dateEnd.getMonth() + 1, 0),
-        to: new Date(dateEnd.getFullYear(), dateEnd.getMonth() + 2, 1),
-      });
-    }
-
-    additionalProps.toMonth = new Date(dateEnd.getFullYear(), dateEnd.getMonth());
-
-    additionalProps.disabled = is.array(additionalProps.disabled)
-      ? [...additionalProps.disabled, ...disabledDays]
-      : disabledDays;
-  }
-
-  return additionalProps;
+  return 2;
 }
 
 export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutProps & WithTheme) {
@@ -417,4 +371,50 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
       border-radius: 100%;
     }
   `;
+}
+
+export function getRange<T extends DayPickerProps>(
+  fromDate?: Date | string,
+  toDate?: Date | string,
+) {
+  const additionalProps: Partial<T> = {};
+  let dateStart;
+  let dateEnd;
+
+  if (fromDate) {
+    dateStart = is.date(fromDate) ? fromDate : new Date(fromDate);
+
+    additionalProps.fromMonth = new Date(dateStart.getFullYear(), dateStart.getMonth());
+    additionalProps.disabled = [
+      {
+        from: new Date(dateStart.getFullYear(), dateStart.getMonth(), 0),
+        to: new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate()),
+      },
+    ];
+  }
+
+  if (toDate) {
+    dateEnd = is.date(toDate) ? toDate : new Date(toDate);
+    const disabledDays = [];
+
+    disabledDays.push({
+      from: new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate()),
+      to: new Date(dateEnd.getFullYear(), dateEnd.getMonth() + 1, 1),
+    });
+
+    if (dateStart && dateStart.getMonth() === dateEnd.getMonth()) {
+      disabledDays.push({
+        from: new Date(dateEnd.getFullYear(), dateEnd.getMonth() + 1, 0),
+        to: new Date(dateEnd.getFullYear(), dateEnd.getMonth() + 2, 1),
+      });
+    }
+
+    additionalProps.toMonth = new Date(dateEnd.getFullYear(), dateEnd.getMonth());
+
+    additionalProps.disabled = is.array(additionalProps.disabled)
+      ? [...additionalProps.disabled, ...disabledDays]
+      : disabledDays;
+  }
+
+  return additionalProps;
 }

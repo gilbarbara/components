@@ -32,6 +32,39 @@ import {
   WithTextSize,
 } from '~/types';
 
+export type MenuProps = Simplify<MenuKnownProps>;
+
+export interface MenuItemProps extends WithAccent, WithColors, WithDisabled, WithPadding {
+  children: ((props: { closeMenu: () => void }) => ReactNode) | ReactNode;
+  /**
+   * Prevents the menu from closing when the item is clicked
+   * @default false
+   */
+  disableAutoClose?: boolean;
+  /**
+   * Remove styling on hover.
+   * @default false
+   */
+  disableHover?: boolean;
+  onToggle?: (
+    event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+    closeMenu: () => void,
+  ) => void;
+  /**
+   * Allows the item to wrap its content
+   * @default false
+   */
+  wrap?: boolean;
+}
+
+export interface MenuItemsProps
+  extends Required<Pick<MenuProps, 'minWidth' | 'orientation' | 'position'>>,
+    Pick<WithColors, 'bg'> {
+  children: ReactNode;
+  id: string;
+  isOpen: boolean;
+}
+
 export interface MenuKnownProps
   extends StyledProps,
     WithAccent,
@@ -76,45 +109,12 @@ export interface MenuKnownProps
   trigger?: 'click' | 'hover';
 }
 
-export type MenuProps = Simplify<MenuKnownProps>;
-
-export interface MenuItemsProps
-  extends Required<Pick<MenuProps, 'minWidth' | 'orientation' | 'position'>>,
-    Pick<WithColors, 'bg'> {
-  children: ReactNode;
-  id: string;
-  isOpen: boolean;
-}
-
-export interface MenuItemProps extends WithAccent, WithColors, WithDisabled, WithPadding {
-  children: ((props: { closeMenu: () => void }) => ReactNode) | ReactNode;
-  /**
-   * Prevents the menu from closing when the item is clicked
-   * @default false
-   */
-  disableAutoClose?: boolean;
-  /**
-   * Remove styling on hover.
-   * @default false
-   */
-  disableHover?: boolean;
-  onToggle?: (
-    event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
-    closeMenu: () => void,
-  ) => void;
-  /**
-   * Allows the item to wrap its content
-   * @default false
-   */
-  wrap?: boolean;
-}
+export interface MenuSeparatorProps extends WithMargin {}
 
 export interface MenuTitleProps extends WithColors, WithTextOptions, WithTextSize {
   children: ReactNode;
   style?: CSSProperties;
 }
-
-export interface MenuSeparatorProps extends WithMargin {}
 
 export const defaultProps = {
   accent: 'primary',
@@ -133,12 +133,6 @@ export const defaultProps = {
   trigger: 'click',
 } satisfies Omit<MenuProps, 'children'>;
 
-interface MenuContextProps {
-  children: ReactNode;
-  closeMenu: () => void;
-  props: ContextState;
-}
-
 type ContextState = Omit<
   SetRequired<
     MenuProps,
@@ -152,6 +146,12 @@ type ContextState = Omit<
   >,
   'button' | 'children'
 >;
+
+interface MenuContextProps {
+  children: ReactNode;
+  closeMenu: () => void;
+  props: ContextState;
+}
 interface MenuContextValue {
   closeMenu: () => void;
   state: ContextState;
@@ -178,6 +178,10 @@ export function MenuProvider({ children, closeMenu, props }: MenuContextProps) {
   return <MenuContext.Provider value={value}>{children}</MenuContext.Provider>;
 }
 
+export function useMenu<T extends PlainObject<any> = MenuProps>(props: T) {
+  return useComponentProps(props, defaultProps);
+}
+
 export function useMenuContext(): MenuContextValue {
   const context = useContext(MenuContext);
 
@@ -186,8 +190,4 @@ export function useMenuContext(): MenuContextValue {
   }
 
   return context;
-}
-
-export function useMenu<T extends PlainObject<any> = MenuProps>(props: T) {
-  return useComponentProps(props, defaultProps);
 }

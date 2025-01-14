@@ -7,7 +7,6 @@ import { clearAllMocks, expect, fireEvent, fn, waitFor, within } from '@storyboo
 import { Flex, Grid, Icon, Paragraph, Tooltip } from '~';
 
 import { sizes } from '~/modules/options';
-
 import { colorProps, disableControl, hideProps, VARIANTS } from '~/stories/__helpers__';
 
 import { defaultProps, Toggle, ToggleProps } from './Toggle';

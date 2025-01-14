@@ -19,6 +19,8 @@ import {
   WithShadow,
 } from '~/types';
 
+export type DialogProps = Simplify<DialogKnownProps>;
+
 export interface DialogKnownProps
   extends StyledProps,
     WithAccent,
@@ -70,8 +72,6 @@ export interface DialogKnownProps
    */
   width?: StringOrNumber;
 }
-
-export type DialogProps = Simplify<DialogKnownProps>;
 
 export const defaultProps = {
   ...portalDefaultProps,

@@ -14,11 +14,19 @@ import {
   WithMargin,
 } from '~/types';
 
+export type SearchOnSelect = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
+
+export type SearchProps = Simplify<SearchKnownProps>;
+
 export interface SearchItem extends WithAccent, WithLabel {
   value: string;
 }
 
-export type SearchOnSelect = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
+export interface SearchItemProps extends Required<WithAccent>, WithChildren, UseThemeReturn {
+  isSelected: boolean;
+  onSelect: SearchOnSelect;
+  value: string;
+}
 
 export interface SearchItemsProps
   extends Required<WithAccent>,
@@ -32,21 +40,15 @@ export interface SearchItemsProps
   onSelect: SearchOnSelect;
 }
 
-export interface SearchItemProps extends Required<WithAccent>, WithChildren, UseThemeReturn {
-  isSelected: boolean;
-  onSelect: SearchOnSelect;
-  value: string;
-}
-
 export interface SearchKnownProps extends StyledProps, WithAccent, WithBorderless, WithMargin {
   /**
    * Disable closing the list when you click outside.
    * @default false
    */
   disableCloseOnBlur?: boolean;
+  disabled?: boolean;
   /** @default false */
   disableKeyboardNavigation?: boolean;
-  disabled?: boolean;
   height?: StringOrNumber;
   /** @default false */
   hideIcon?: boolean;
@@ -89,8 +91,6 @@ export interface SearchKnownProps extends StyledProps, WithAccent, WithBorderles
   /** @default 100% */
   width?: StringOrNumber;
 }
-
-export type SearchProps = Simplify<SearchKnownProps>;
 
 export const defaultProps = {
   accent: 'primary',

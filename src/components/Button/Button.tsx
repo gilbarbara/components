@@ -146,4 +146,4 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
 
 Button.displayName = 'Button';
 
-export { defaultProps, type ButtonProps } from './useButton';
+export { type ButtonProps, defaultProps } from './useButton';

@@ -51,4 +51,4 @@ export const ButtonUnstyled = forwardRef<HTMLButtonElement, ButtonUnstyledProps>
 
 ButtonUnstyled.displayName = 'ButtonUnstyled';
 
-export { defaultProps, type ButtonUnstyledProps } from './useButtonUnstyled';
+export { type ButtonUnstyledProps, defaultProps } from './useButtonUnstyled';

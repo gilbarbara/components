@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { ComponentProps, Option } from '@gilbarbara/react-dropdown';
 
 import { useTheme } from '~/hooks/useTheme';
-
 import { getStyledOptions } from '~/modules/system';
 
 import { FlexInline } from '~/components/Flex';

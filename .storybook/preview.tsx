@@ -9,10 +9,10 @@ import { DocsContainer } from '@storybook/addon-docs';
 import { useGlobals } from '@storybook/preview-api';
 import { GlobalTypes } from '@storybook/types';
 
-import { Context, Story } from './Story';
-
 import { mergeTheme } from '../src';
-import { black, colors as themeColors, darkColor, lightColor, white } from '../src/modules/theme';
+import { black, darkColor, lightColor, colors as themeColors, white } from '../src/modules/theme';
+
+import { Context, Story } from './Story';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

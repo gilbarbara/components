@@ -30,6 +30,8 @@ export type DropdownBaseProps = Omit<
   | 'styles'
 >;
 
+export type DropdownProps = Simplify<DropdownKnownProps>;
+
 export interface DropdownKnownProps
   extends StyledProps,
     WithAccent,
@@ -56,8 +58,6 @@ export interface DropdownKnownProps
   /** @default 260 */
   width?: StringOrNumber;
 }
-
-export type DropdownProps = Simplify<DropdownKnownProps>;
 
 export const defaultProps = {
   accent: 'primary',

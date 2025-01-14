@@ -4,6 +4,8 @@ import { useComponentProps } from '~/hooks/useComponentProps';
 
 import { StyledProps, WithHTMLAttributes, WithLabel } from '~/types';
 
+export type EmojiProps = Simplify<EmojiKnownProps>;
+
 export interface EmojiKnownProps
   extends StyledProps,
     WithHTMLAttributes<HTMLSpanElement>,
@@ -11,8 +13,6 @@ export interface EmojiKnownProps
   size?: number;
   symbol: string;
 }
-
-export type EmojiProps = Simplify<EmojiKnownProps>;
 
 export function useEmoji(props: EmojiProps) {
   return useComponentProps(props);

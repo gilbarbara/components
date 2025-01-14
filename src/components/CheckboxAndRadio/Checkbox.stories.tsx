@@ -4,7 +4,6 @@ import { expect, fireEvent, fn, within } from '@storybook/test';
 import { Spacer } from '~';
 
 import { sizes } from '~/modules/options';
-
 import { colorProps, disableControl, hideProps, marginProps } from '~/stories/__helpers__';
 
 import { Checkbox, defaultProps } from './Checkbox';

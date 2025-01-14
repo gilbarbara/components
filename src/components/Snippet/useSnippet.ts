@@ -21,6 +21,8 @@ import {
   WithRadius,
 } from '~/types';
 
+export type SnippetProps = Simplify<SnippetKnownProps>;
+
 export interface SnippetKnownProps
   extends Pick<
       CopyToClipboardProps,
@@ -91,8 +93,6 @@ export interface SnippetKnownProps
    */
   symbol?: ReactNode;
 }
-
-export type SnippetProps = Simplify<SnippetKnownProps>;
 
 export const defaultProps = {
   align: 'center',

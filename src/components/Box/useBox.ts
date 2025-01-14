@@ -18,6 +18,8 @@ import {
   WithShadow,
 } from '~/types';
 
+export type BoxProps<T = HTMLElement> = Simplify<OmitElementProps<T, BoxKnownProps>>;
+
 export interface BoxKnownProps
   extends StyledProps,
     WithBorder,
@@ -31,8 +33,6 @@ export interface BoxKnownProps
     WithPositioning,
     WithRadius,
     WithShadow {}
-
-export type BoxProps<T = HTMLElement> = Simplify<OmitElementProps<T, BoxKnownProps>>;
 
 export const defaultProps = {
   display: 'block',

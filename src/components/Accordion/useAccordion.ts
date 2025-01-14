@@ -27,48 +27,6 @@ import {
   WithShadow,
 } from '~/types';
 
-export interface AccordionItemKnownProps
-  extends Omit<
-    CollapseProps,
-    | 'bottomToggle'
-    | 'defaultOpen'
-    | 'hideHeaderToggle'
-    | 'initialHeight'
-    | 'maxHeight'
-    | 'showBottomToggle'
-  > {
-  /**
-   * Make the accordion item compact.
-   */
-  compact?: boolean;
-  /**
-   * Disable the accordion item.
-   * @default false
-   */
-  disabled?: boolean;
-  // indicator	IndicatorProps	The accordion item expanded indicator, usually an arrow icon.
-  /**
-   * Hide the toggle.
-   * @default false
-   */
-  hideToggle?: boolean;
-  /**
-   * The accordion item id.
-   */
-  id: string;
-  /**
-   * The accordion item subtitle.
-   */
-  subtitle?: ReactNode;
-  /**
-   * The accordion item title.
-   */
-  title: ReactNode;
-}
-
-export type AccordionItemBaseProps = Simplify<AccordionItemKnownProps>;
-export type AccordionItemProps = Omit<AccordionItemBaseProps, 'compact' | 'open' | 'onToggle' | ''>;
-
 interface AccordionKnownProps
   extends StyledProps,
     WithColors,
@@ -130,7 +88,49 @@ interface AccordionKnownProps
   variant?: Exclude<Variant, 'solid'> | 'split';
 }
 
+export type AccordionItemBaseProps = Simplify<AccordionItemKnownProps>;
+export type AccordionItemProps = Omit<AccordionItemBaseProps, 'compact' | 'open' | 'onToggle' | ''>;
+
 export type AccordionProps = Simplify<AccordionKnownProps>;
+
+export interface AccordionItemKnownProps
+  extends Omit<
+    CollapseProps,
+    | 'bottomToggle'
+    | 'defaultOpen'
+    | 'hideHeaderToggle'
+    | 'initialHeight'
+    | 'maxHeight'
+    | 'showBottomToggle'
+  > {
+  /**
+   * Make the accordion item compact.
+   */
+  compact?: boolean;
+  /**
+   * Disable the accordion item.
+   * @default false
+   */
+  disabled?: boolean;
+  // indicator	IndicatorProps	The accordion item expanded indicator, usually an arrow icon.
+  /**
+   * Hide the toggle.
+   * @default false
+   */
+  hideToggle?: boolean;
+  /**
+   * The accordion item id.
+   */
+  id: string;
+  /**
+   * The accordion item subtitle.
+   */
+  subtitle?: ReactNode;
+  /**
+   * The accordion item title.
+   */
+  title: ReactNode;
+}
 
 export const defaultProps = {
   compact: false,

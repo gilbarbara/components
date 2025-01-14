@@ -16,6 +16,8 @@ import {
   WithRadius,
 } from '~/types';
 
+export type FormGroupProps = Simplify<FormGroupKnownProps>;
+
 export interface FormGroupKnownProps
   extends StyledProps,
     WithBorder,
@@ -37,8 +39,6 @@ export interface FormGroupKnownProps
   skipIcon?: boolean;
   valid?: boolean;
 }
-
-export type FormGroupProps = Simplify<FormGroupKnownProps>;
 
 export const defaultProps = {
   hideAssistiveText: false,

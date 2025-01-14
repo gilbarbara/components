@@ -12,6 +12,10 @@ import {
   WithHeight,
 } from '~/types';
 
+export type InputColorProps = Simplify<
+  OmitElementProps<HTMLInputElement, InputColorKnownProps, 'name' | 'type' | 'width'>
+>;
+
 export interface InputColorKnownProps
   extends StyledProps,
     WithAccent,
@@ -38,10 +42,6 @@ export interface InputColorKnownProps
    */
   value?: string;
 }
-
-export type InputColorProps = Simplify<
-  OmitElementProps<HTMLInputElement, InputColorKnownProps, 'name' | 'type' | 'width'>
->;
 
 export const defaultProps = {
   accent: 'primary',

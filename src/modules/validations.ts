@@ -1,6 +1,8 @@
-import { isValidEmail, validatePassword as validatePasswordHelper } from '@gilbarbara/helpers';
-
-import { ValidatePasswordOptions } from '~/types';
+import {
+  isValidEmail,
+  Types,
+  validatePassword as validatePasswordHelper,
+} from '@gilbarbara/helpers';
 
 import { clearNumber } from './helpers';
 
@@ -16,7 +18,7 @@ export function validateMatchField(
   return compare === value || message;
 }
 
-export function validatePassword(value: string, options?: ValidatePasswordOptions) {
+export function validatePassword(value: string, options?: Types.ValidatePasswordOptions) {
   try {
     validatePasswordHelper(value, options);
 

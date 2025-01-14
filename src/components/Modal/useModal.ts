@@ -9,6 +9,8 @@ import { splitPortalProps } from '~/components/Portal/usePortal';
 
 import { StyledProps, WithBorder, WithPadding, WithRadius, WithShadow } from '~/types';
 
+export type ModalProps = Simplify<ModalKnownProps>;
+
 export interface ModalKnownProps
   extends StyledProps,
     WithBorder,
@@ -38,8 +40,6 @@ export interface ModalKnownProps
    */
   width?: StringOrNumber;
 }
-
-export type ModalProps = Simplify<ModalKnownProps>;
 
 export const defaultProps = {
   ...portalDefaultProps,

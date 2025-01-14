@@ -19,6 +19,8 @@ import {
   WithShadow,
 } from '~/types';
 
+export type GridProps = Simplify<GridKnownProps>;
+
 export interface GridKnownProps
   extends StyledProps,
     WithBorder,
@@ -36,8 +38,6 @@ export interface GridKnownProps
     WithShadow {
   display?: 'grid' | 'inline-grid';
 }
-
-export type GridProps = Simplify<GridKnownProps>;
 
 export function useGrid(props: GridProps) {
   return useComponentProps(props);
