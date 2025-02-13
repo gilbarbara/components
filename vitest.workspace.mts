@@ -5,19 +5,15 @@ export default defineWorkspace([
   'vitest.config.mts',
   {
     extends: 'vite.config.mts',
-    plugins: [
-      // See options at: https://storybook.js.org/docs/writing-tests/vitest-plugin#storybooktest
-      storybookTest(),
-    ],
+    plugins: [storybookTest()],
     test: {
       name: 'components',
       browser: {
         enabled: true,
         headless: true,
-        name: 'chromium',
+        instances: [{ browser: 'chromium', name: 'stories' }],
         provider: 'playwright',
       },
-      include: ['**/*.stories.ts?(x)'],
       setupFiles: ['./.storybook/vitest.setup.ts'],
     },
   },

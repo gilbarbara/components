@@ -1,7 +1,7 @@
 import { forwardRef, isValidElement } from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useIsFirstMount } from '@gilbarbara/hooks';
+import { useIsFirstRender } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
 
 import { fadeIn } from '~/modules/animations';
@@ -81,7 +81,7 @@ const StyledContent = styled('div', getStyledOptions())<{
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
   const { componentProps, getDataAttributes } = useSkeleton(props);
   const { appearDuration, children, isLoaded, ...rest } = componentProps;
-  const isFirstRender = useIsFirstMount();
+  const isFirstRender = useIsFirstRender();
 
   if (isLoaded) {
     return (

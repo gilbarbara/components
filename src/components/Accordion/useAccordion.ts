@@ -7,7 +7,7 @@ import {
   useCallback,
   useState,
 } from 'react';
-import { useDeepCompareEffect } from '@gilbarbara/hooks';
+import { useEffectDeepCompare } from '@gilbarbara/hooks';
 import { Simplify } from '@gilbarbara/types';
 import is from 'is-lite';
 
@@ -172,7 +172,7 @@ export function useAccordion<T = JSXElementConstructor<AccordionProps>>(
   const isSelectable = selectionMode !== 'none';
   const isSingle = selectionMode === 'single';
 
-  useDeepCompareEffect(() => {
+  useEffectDeepCompare(() => {
     if (selectedIds) {
       setActiveItems(selectedIds === 'all' ? items : selectedIds);
     }

@@ -9,7 +9,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useDeepCompareEffect } from '@gilbarbara/hooks';
+import { useEffectDeepCompare } from '@gilbarbara/hooks';
 import { PlainObject, SetRequired, Simplify, StringOrNumber } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
@@ -163,7 +163,7 @@ MenuContext.displayName = 'MenuContext';
 export function MenuProvider({ children, closeMenu, props }: MenuContextProps) {
   const [state, setState] = useState<ContextState>(props);
 
-  useDeepCompareEffect(() => {
+  useEffectDeepCompare(() => {
     setState(props);
   }, [props]);
 

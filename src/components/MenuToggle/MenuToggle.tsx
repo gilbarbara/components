@@ -2,7 +2,7 @@ import { useId, useState } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit, px } from '@gilbarbara/helpers';
-import { usePrevious, useResponsive, useUpdateEffect } from '@gilbarbara/hooks';
+import { useBreakpoint, usePrevious, useUpdateEffect } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
 
 import { formatBreakpoints } from '~/modules/helpers';
@@ -106,7 +106,7 @@ export function MenuToggle(props: MenuToggleProps) {
   const previousIsOpen = usePrevious(isOpen);
 
   const breakpoints = formatBreakpoints(theme);
-  const { min } = useResponsive(breakpoints);
+  const { min } = useBreakpoint(breakpoints);
 
   useUpdateEffect(() => {
     if (previousIsOpen === isOpen) {
