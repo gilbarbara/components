@@ -1,7 +1,7 @@
 import { forwardRef, Fragment, useMemo } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useStableValue } from '@gilbarbara/hooks';
+import { useMemoizedValue } from '@gilbarbara/hooks';
 
 import { getColorTokens } from '~/modules/colors';
 import { getStyledOptions, getStyles } from '~/modules/system';
@@ -40,7 +40,7 @@ export const StyledKeyboard = styled('kbd', getStyledOptions())<
 export const Keyboard = forwardRef<HTMLSpanElement, KeyboardProps>((props, ref) => {
   const { componentProps, getDataAttributes } = useKeyboard(props);
   const { children, keys, separator, textOnly, ...rest } = componentProps;
-  const keysValue = useStableValue(typeof keys === 'string' ? [keys] : keys);
+  const keysValue = useMemoizedValue(typeof keys === 'string' ? [keys] : keys);
 
   const keysContent = useMemo(() => {
     return keysValue.map((key, index) => (

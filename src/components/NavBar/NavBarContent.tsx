@@ -1,4 +1,4 @@
-import { useResponsive } from '@gilbarbara/hooks';
+import { useBreakpoint } from '@gilbarbara/hooks';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
 import { formatBreakpoints } from '~/modules/helpers';
@@ -17,7 +17,7 @@ export function NavBarContent(props: NavBarContentProps) {
   });
 
   const breakpoints = formatBreakpoints(rest.theme);
-  const { max, min } = useResponsive(breakpoints);
+  const { max, min } = useBreakpoint(breakpoints);
 
   let display = 'flex';
 

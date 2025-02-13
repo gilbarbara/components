@@ -2,7 +2,7 @@ import { Children, Fragment, isValidElement, useRef } from 'react';
 import { css, CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit } from '@gilbarbara/helpers';
-import { useLifecycles } from '@gilbarbara/hooks';
+import { useLifecycleHooks } from '@gilbarbara/hooks';
 import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
 
@@ -86,7 +86,7 @@ export function Accordion(props: AccordionProps) {
     onToggle(isOpen, id);
   };
 
-  useLifecycles(
+  useLifecycleHooks(
     () => {
       addScope();
     },

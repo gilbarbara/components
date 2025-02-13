@@ -1,5 +1,5 @@
 import { createContext, ReactNode, RefObject, useContext, useMemo, useState } from 'react';
-import { useDeepCompareEffect } from '@gilbarbara/hooks';
+import { useEffectDeepCompare } from '@gilbarbara/hooks';
 import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
@@ -160,7 +160,7 @@ NavBarContext.displayName = 'NavBarContext';
 export function NavBarProvider({ children, props, toggleMenu }: NavBarContextProps) {
   const [state, setState] = useState<ContextState>(props);
 
-  useDeepCompareEffect(() => {
+  useEffectDeepCompare(() => {
     setState(props);
   }, [props]);
 
