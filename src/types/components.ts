@@ -6,7 +6,10 @@ import { WithDisabled, WithLabel } from './shared';
 import { ColorVariantTones, Theme } from './theme';
 
 export type OmitElementProps<TElement, TProps, TProperties extends string = never> = TProps &
-  Omit<HTMLProps<TElement>, 'ref' | 'size' | 'wrap' | keyof TProps | TProperties>;
+  Omit<
+    HTMLProps<TElement>,
+    'action' | 'formAction' | 'ref' | 'size' | 'wrap' | keyof TProps | TProperties
+  >;
 
 export interface BaseProps {
   [hey: string]: any;
