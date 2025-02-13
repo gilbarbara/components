@@ -1,6 +1,7 @@
 import {
   cloneElement,
   isValidElement,
+  MouseEvent,
   ReactElement,
   ReactNode,
   useMemo,
@@ -77,7 +78,9 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
     return stringValue.trim();
   }, [value]);
 
-  const handleClick = async () => {
+  const handleClick = async (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+
     if (!disableAnimation && iconRef.current) {
       animateIcon(iconRef.current, rest.color ?? 'primary', rest.theme);
     }
