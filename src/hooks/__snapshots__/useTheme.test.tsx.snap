@@ -173,6 +173,7 @@ exports[`useTheme > should return properly 1`] = `
   "outlineOpacity": 0.6,
   "outlineWidth": 3,
   "outlineZIndex": 10,
+  "paragraphMarginBetween": "12px",
   "radius": {
     "full": "9999px",
     "lg": "24px",

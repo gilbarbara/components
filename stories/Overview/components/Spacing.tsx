@@ -12,7 +12,7 @@ export default function Spacing() {
         The <strong>spacing</strong> key is used used for margin, padding and a few other
         attributes.
       </Paragraph>
-      <Paragraph skipMarginTop>
+      <Paragraph mt="xxs">
         Most components supports the margin and/or padding props where you can pass a spacing key.
       </Paragraph>
       <Paragraph mt="md">Additionally, you can use these shortcuts:</Paragraph>

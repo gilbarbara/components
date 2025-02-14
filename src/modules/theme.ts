@@ -405,6 +405,8 @@ export const inputPaddingY = {
   lg: spacing.md,
 };
 
+export const paragraphMarginBetween = spacing.sm;
+
 export const selectPaddingY = {
   sm: spacing.xxs,
   md: spacing.xs,

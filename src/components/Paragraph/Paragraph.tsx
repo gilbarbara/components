@@ -2,6 +2,7 @@ import { forwardRef, isValidElement } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { omit, px } from '@gilbarbara/helpers';
+import is from 'is-lite';
 
 import { alignStyles, getStyledOptions, getStyles } from '~/modules/system';
 
@@ -17,18 +18,23 @@ export const StyledParagraph = styled('p', getStyledOptions())<ParagraphProps & 
     marginTop: 0,
   },
   props => {
-    const { skipMarginTop, theme } = props;
+    const { mt, theme } = props;
+    let marginTop: string | undefined;
+
+    if (mt && mt !== 'auto') {
+      marginTop = px(theme.spacing[mt]);
+    } else if (is.number(mt)) {
+      marginTop = px(mt);
+    }
 
     return css`
-      ${getStyles(omit(props, 'align'), { useFontSize: true })};
+      ${getStyles(omit(props, 'align', 'mt'), { useFontSize: true })};
       ${alignStyles(props)};
+      margin-top: ${marginTop} !important;
 
-      ${!skipMarginTop &&
-      css`
-        & + & {
-          margin-top: ${px(theme.spacing.sm)};
-        }
-      `};
+      & + p {
+        margin-top: ${px(theme.paragraphMarginBetween)};
+      }
     `;
   },
 );
