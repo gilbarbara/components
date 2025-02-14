@@ -80,6 +80,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 
   const handleClick = async (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
+    event.preventDefault();
 
     if (!disableAnimation && iconRef.current) {
       animateIcon(iconRef.current, rest.color ?? 'primary', rest.theme);
