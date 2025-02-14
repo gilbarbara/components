@@ -21,10 +21,10 @@ function FieldDebug(props: Props) {
   return (
     <Box as="code" bg="gray.50" {...getDataAttributes('FieldDebug')} display="block" padding="md">
       {objectEntries(props)
-        .filter(([key]) => key !== 'debug')
+        .filter(([key]) => !['debug', 'theme'].includes(key))
         .sort(sortByLocaleCompare('0'))
         .map(([key, value]) => (
-          <Paragraph key={key} skipMarginTop>
+          <Paragraph key={key} mt="xxs">
             <b>{key}</b>: {primitiveToString(value, key)}
           </Paragraph>
         ))}

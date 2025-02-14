@@ -21,18 +21,11 @@ export interface ParagraphKnownProps
     WithChildren,
     Pick<WithColors, 'color'>,
     WithMargin,
-    WithTextOptions {
-  /**
-   * Skip the top margin for adjacent paragraphs.
-   * @default false
-   */
-  skipMarginTop?: boolean;
-}
+    WithTextOptions {}
 
 export const defaultProps = {
-  skipMarginTop: false,
   ...textDefaultOptions,
-};
+} satisfies Omit<ParagraphProps, 'children'>;
 
 export function useParagraph(props: ParagraphProps) {
   return useComponentProps(props, defaultProps);
