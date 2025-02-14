@@ -43,7 +43,7 @@ export const defaultProps = {
   isOpen: false,
   size: 16,
   srOnlyText: 'Toggle Menu',
-};
+} satisfies Omit<MenuToggleProps, 'onToggle'>;
 
 export function useMenuToggle(props: MenuToggleProps) {
   return useComponentProps(props, defaultProps);

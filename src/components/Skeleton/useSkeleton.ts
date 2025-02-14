@@ -99,7 +99,7 @@ export const baseDefaultProps = {
 export const defaultProps = {
   ...baseDefaultProps,
   fitContent: false,
-};
+} satisfies SkeletonProps;
 
 export const circleDefaultProps = {
   ...baseDefaultProps,
