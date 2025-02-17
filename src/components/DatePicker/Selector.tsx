@@ -22,7 +22,7 @@ import { FlexCenter } from '~/components/Flex';
 import { Icon } from '~/components/Icon';
 import { Text } from '~/components/Text';
 
-import { Alignment, WithTheme } from '~/types';
+import { WithTheme } from '~/types';
 
 import { DatePickerRange } from './Range';
 import { DatePicker } from './Single';
@@ -123,7 +123,7 @@ const StyledButton = styled('div', getStyledOptions())<
 const StyledContent = styled('div', getStyledOptions())<
   WithTheme & {
     isActive: boolean;
-    position: Alignment;
+    position: DatePickerSelectorProps['position'];
     wide: boolean;
   }
 >(
@@ -133,17 +133,15 @@ const StyledContent = styled('div', getStyledOptions())<
     justifyContent: 'center',
     overflowY: 'auto',
     position: 'absolute',
-    top: '100%',
-    transformOrigin: 'top',
     transition: 'transform 0.3s',
   },
   props => {
     const { isActive, position, theme, wide } = props;
     const { darkMode, grayScale, radius, shadow, spacing, white, zIndex } = theme;
-    let left = position === 'left' ? 0 : 'auto';
+    let left = position?.endsWith('left') ? 0 : 'auto';
     let translateX = '';
 
-    if (position === 'center') {
+    if (position?.endsWith('center')) {
       left = '50%';
       translateX = ' translateX(-50%)';
     }
@@ -151,13 +149,17 @@ const StyledContent = styled('div', getStyledOptions())<
     return css`
       background-color: ${darkMode ? grayScale['800'] : white};
       border-radius: ${radius.xxs};
+      bottom: ${position?.startsWith('bottom') ? 'auto' : '100%'};
       box-shadow: ${shadow.mid};
       left: ${left};
-      margin-top: ${spacing.xs};
+      margin-top: ${position?.startsWith('bottom') ? spacing.xs : 0};
+      margin-bottom: ${position?.startsWith('top') ? spacing.xs : 0};
       min-width: ${px(wide ? 600 : 300)};
       padding: ${spacing.md};
-      right: ${position === 'right' ? 0 : 'auto'};
+      right: ${position?.endsWith('right') ? 0 : 'auto'};
+      top: ${position?.startsWith('top') ? 'auto' : '100%'};
       transform: ${`scaleY(0)${translateX}`};
+      transform-origin: ${position?.startsWith('bottom') ? 'top' : 'bottom'};
       z-index: ${zIndex.md};
 
       ${isActive &&

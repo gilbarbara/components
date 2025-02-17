@@ -5,8 +5,8 @@ import { Simplify, StringOrNumber } from '@gilbarbara/types';
 import { useComponentProps } from '~/hooks/useComponentProps';
 
 import {
-  Alignment,
   Color,
+  PositionY,
   StyledProps,
   WithAccent,
   WithBorder,
@@ -118,9 +118,9 @@ export interface DatePickerSelectorBaseProps
   placeholder?: string;
   /**
    * The position of the calendar relative to the input.
-   * @default right
+   * @default bottom-right
    */
-  position?: Alignment;
+  position?: PositionY | 'bottom-center' | 'top-center';
   /**
    * The initial date.
    */
@@ -172,7 +172,7 @@ export const selectorDefaultProps = {
   disabled: false,
   height: 'md',
   mode: 'single',
-  position: 'right',
+  position: 'bottom-right',
   separator: ' — ',
   showRangeApply: false,
   width: 'auto',
