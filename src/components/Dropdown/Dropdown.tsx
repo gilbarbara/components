@@ -195,4 +195,6 @@ export function Dropdown(props: DropdownProps) {
 
 Dropdown.displayName = 'Dropdown';
 
+export type DropdownOption = Option;
+
 export { defaultProps, type DropdownProps } from './useDropdown';

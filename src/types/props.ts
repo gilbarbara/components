@@ -29,7 +29,7 @@ export type {
 } from '../components/DatePicker/useDatePicker';
 export type { DialogProps } from '../components/Dialog/Dialog';
 export type { DividerProps } from '../components/Divider/Divider';
-export type { DropdownProps } from '../components/Dropdown/Dropdown';
+export type { DropdownOption, DropdownProps } from '../components/Dropdown/Dropdown';
 export type { EmojiProps } from '../components/Emoji/Emoji';
 export type { FieldProps } from '../components/Field/Field';
 export type { FlexProps } from '../components/Flex/Flex';
