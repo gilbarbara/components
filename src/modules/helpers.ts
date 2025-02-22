@@ -101,6 +101,16 @@ export function mergeTheme(customTheme: PartialDeep<Theme> = {}): Theme {
   };
 }
 
+export function parseFloatNumber(input: string) {
+  const parsed = parseFloat(input);
+
+  if (Number.isNaN(parsed)) {
+    return 0;
+  }
+
+  return parsed;
+}
+
 /**
  * Helper to generate responsive media queries
  */

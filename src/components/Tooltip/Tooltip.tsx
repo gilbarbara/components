@@ -1,30 +1,28 @@
-import { isValidElement, useEffect, useMemo, useState } from 'react';
+import { forwardRef, isValidElement, useEffect, useMemo, useRef, useState } from 'react';
 import innerText from 'react-innertext';
 import { css } from '@emotion/react';
 import styled, { CSSObject } from '@emotion/styled';
 import { omit, px } from '@gilbarbara/helpers';
-import { SetRequired } from '@gilbarbara/types';
 import is from 'is-lite';
 
-import { UseThemeReturn } from '~/hooks/useTheme';
+import { useResizeScrollHandler } from '~/hooks/useResizeScrollHandler';
 import { fadeIn } from '~/modules/animations';
 import { getColorTokens } from '~/modules/colors';
+import { getComputedPlacement, getFloatingStyles } from '~/modules/positioning';
 import { baseStyles, getStyledOptions, getStyles } from '~/modules/system';
 
 import { Text } from '~/components/Text';
 
-import { WithPadding, WithRadius, WithShadow, WithTextSize, WithTheme } from '~/types';
+import { FloatingAlignment, FloatingPlacement, Position, Sizes, WithTheme } from '~/types';
 
 import {
-  TooltipAnimationProps,
   TooltipArrowProps,
+  TooltipBodyProps,
   TooltipColorProps,
   TooltipProps,
   TooltipSharedProps,
   useTooltip,
 } from './useTooltip';
-
-const arrowSize = 6;
 
 const StyledTooltip = styled(
   'div',
@@ -38,119 +36,112 @@ const StyledTooltip = styled(
   `,
 );
 
-const StyledArrow = styled.span<TooltipSharedProps & TooltipArrowProps & TooltipColorProps>(
-  props => {
-    const { arrowLength, arrowMargin, bg, placement } = props;
-    const [position, align] = placement.split('-');
+const StyledArrow = styled.span<
+  TooltipSharedProps & Required<TooltipArrowProps> & TooltipColorProps
+>(props => {
+  const { arrowBase, arrowLength, arrowMargin, bg, placement } = props;
+  const [position, align] = placement.split('-') as [Position, FloatingAlignment | undefined];
 
-    const arrowStyles: CSSObject = {};
-    const styles: CSSObject = {};
+  const borderSize = arrowBase / 2;
+  const arrowStyles: CSSObject = {};
+  const styles: CSSObject = {};
 
-    switch (position) {
-      case 'bottom': {
-        arrowStyles.borderLeft = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderRight = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderBottom = `${px(arrowLength)} solid ${bg}`;
+  switch (position) {
+    case 'bottom': {
+      arrowStyles.borderLeft = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderRight = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderBottom = `${px(arrowLength)} solid ${bg}`;
 
-        styles.top = `-${px(arrowLength)}`;
-        styles.height = arrowLength;
-        styles.width = arrowSize * 2;
+      styles.top = `-${px(arrowLength)}`;
+      styles.height = arrowLength;
+      styles.width = arrowBase;
 
-        break;
-      }
-      case 'left': {
-        arrowStyles.borderTop = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderBottom = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderLeft = `${px(arrowLength)} solid ${bg}`;
-
-        styles.right = `-${px(arrowLength)}`;
-        styles.height = arrowSize * 2;
-        styles.width = arrowLength;
-
-        break;
-      }
-      case 'right': {
-        arrowStyles.borderTop = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderBottom = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderRight = `${px(arrowLength)} solid ${bg}`;
-
-        styles.left = `-${px(arrowLength)}`;
-        styles.height = arrowSize * 2;
-        styles.width = arrowLength;
-
-        break;
-      }
-      case 'top': {
-        arrowStyles.borderLeft = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderRight = `${px(arrowSize)} solid transparent`;
-        arrowStyles.borderTop = `${px(arrowLength)} solid ${bg}`;
-
-        styles.bottom = `-${px(arrowLength)}`;
-        styles.height = arrowLength;
-        styles.width = arrowSize * 2;
-
-        break;
-      }
-      // No default
+      break;
     }
+    case 'left': {
+      arrowStyles.borderTop = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderBottom = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderLeft = `${px(arrowLength)} solid ${bg}`;
 
-    if (['bottom', 'top'].includes(position)) {
-      if (align === 'start') {
-        styles.left = arrowMargin;
-      } else if (align === 'middle') {
-        styles.left = '50%';
-        styles.transform = 'translateX(-50%)';
-      } else {
-        styles.right = arrowMargin;
-      }
-    } else if (['left', 'right'].includes(position)) {
-      if (align === 'start') {
-        styles.top = arrowMargin;
-      } else if (align === 'middle') {
-        styles.top = '50%';
-        styles.transform = 'translateY(-50%)';
-      } else {
-        styles.bottom = arrowMargin;
-      }
+      styles.right = `-${px(arrowLength)}`;
+      styles.height = arrowBase;
+      styles.width = arrowLength;
+
+      break;
     }
+    case 'right': {
+      arrowStyles.borderTop = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderBottom = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderRight = `${px(arrowLength)} solid ${bg}`;
 
-    return css`
+      styles.left = `-${px(arrowLength)}`;
+      styles.height = arrowBase;
+      styles.width = arrowLength;
+
+      break;
+    }
+    case 'top': {
+      arrowStyles.borderLeft = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderRight = `${px(borderSize)} solid transparent`;
+      arrowStyles.borderTop = `${px(arrowLength)} solid ${bg}`;
+
+      styles.bottom = `-${px(arrowLength)}`;
+      styles.height = arrowLength;
+      styles.width = arrowBase;
+
+      break;
+    }
+    // No default
+  }
+
+  if (['bottom', 'top'].includes(position)) {
+    if (align === 'start') {
+      styles.left = arrowMargin;
+    } else if (align === 'end') {
+      styles.right = arrowMargin;
+    } else {
+      styles.left = '50%';
+      styles.transform = 'translateX(-50%)';
+    }
+  } else if (['left', 'right'].includes(position)) {
+    if (align === 'start') {
+      styles.top = arrowMargin;
+    } else if (align === 'end') {
+      styles.bottom = arrowMargin;
+    } else {
+      styles.top = '50%';
+      styles.transform = 'translateY(-50%)';
+    }
+  }
+
+  return css`
+    display: block;
+    position: absolute;
+    z-index: 5;
+    ${styles};
+
+    &:before {
+      content: '';
       display: block;
-      position: absolute;
-      z-index: 5;
-      ${styles};
-
-      &:before {
-        content: '';
-        display: block;
-        height: 0;
-        width: 0;
-        ${arrowStyles};
-      }
-    `;
-  },
-);
+      height: 0;
+      width: 0;
+      ${arrowStyles};
+    }
+  `;
+});
 
 const StyledBody = styled(
   'span',
   getStyledOptions(),
-)<
-  TooltipSharedProps &
-    TooltipAnimationProps &
-    TooltipArrowProps &
-    TooltipColorProps &
-    WithPadding &
-    WithRadius &
-    WithShadow &
-    WithTextSize &
-    WithTheme
->(props => {
+)<Omit<TooltipBodyProps, 'content' | 'getDataAttributes' | 'setRendering'>>(props => {
   const {
-    arrowDistance,
+    arrowBase,
     arrowLength,
+    arrowMargin,
     bg,
     color,
     delay,
+    distance,
     duration,
     easing,
     placement,
@@ -160,57 +151,15 @@ const StyledBody = styled(
     zIndex,
   } = props;
   const { spacing } = theme;
-  const arrowSpacing = arrowLength + arrowDistance;
-  const [position, align] = placement.split('-');
 
-  const styles: CSSObject = {};
+  const styles = getFloatingStyles(placement, {
+    distance: arrowLength + distance,
+    // 1px is added to compensate for the arrow being 1px inside the tooltip
+    offset: -(arrowMargin - arrowBase / 2 + 1),
+  });
 
-  if (align === 'start') {
-    if (['left', 'right'].includes(position)) {
-      styles.top = arrowDistance;
-    } else {
-      styles.left = 0;
-    }
-  } else if (align === 'middle') {
-    if (['left', 'right'].includes(position)) {
-      styles.top = '50%';
-      styles.transform = 'translateY(-50%)';
-    } else {
-      styles.left = '50%';
-      styles.transform = 'translateX(-50%)';
-    }
-  } else if (['left', 'right'].includes(position)) {
-    styles.bottom = arrowDistance;
-  } else {
-    styles.right = arrowDistance;
-  }
-
-  switch (position) {
-    case 'bottom': {
-      styles.marginTop = arrowSpacing;
-      styles.top = '100%';
-
-      break;
-    }
-    case 'left': {
-      styles.right = '100%';
-      styles.marginRight = arrowSpacing;
-
-      break;
-    }
-    case 'right': {
-      styles.left = '100%';
-      styles.marginLeft = arrowSpacing;
-
-      break;
-    }
-    case 'top': {
-      styles.bottom = '100%';
-      styles.marginBottom = arrowSpacing;
-
-      break;
-    }
-  }
+  const wrapWidths: Record<Sizes, string> = { sm: '100px', md: '200px', lg: '320px' };
+  const width = wrap ? wrapWidths[wrap] : undefined;
 
   switch (size) {
     case 'xs':
@@ -220,23 +169,6 @@ const StyledBody = styled(
     }
     default: {
       styles.padding = `${spacing.xs} ${spacing.sm}`;
-      break;
-    }
-  }
-
-  let width;
-
-  switch (wrap) {
-    case 'sm': {
-      width = '100px';
-      break;
-    }
-    case 'md': {
-      width = '200px';
-      break;
-    }
-    case 'lg': {
-      width = '320px';
       break;
     }
   }
@@ -262,25 +194,21 @@ const StyledContent = styled(Text)`
   z-index: 10;
 `;
 
-function TooltipBody(
-  props: SetRequired<Omit<TooltipProps, 'children' | 'open'>, 'placement'> &
-    TooltipAnimationProps &
-    TooltipArrowProps &
-    TooltipColorProps &
-    UseThemeReturn,
-) {
+const TooltipBody = forwardRef<HTMLDivElement, TooltipBodyProps>((props, ref) => {
   const {
-    arrowDistance,
+    arrowBase,
     arrowLength,
     arrowMargin,
     bg,
     bold,
     color,
     content,
+    distance,
     getDataAttributes,
     italic,
     placement,
     radius,
+    setRendering,
     shadow,
     size,
     style,
@@ -289,13 +217,21 @@ function TooltipBody(
     ...rest
   } = props;
 
+  useEffect(() => {
+    setRendering(true);
+
+    return () => setRendering(false);
+  }, [setRendering]);
+
   return (
     <StyledBody
-      arrowDistance={arrowDistance}
+      ref={ref}
+      arrowBase={arrowBase}
       arrowLength={arrowLength}
       arrowMargin={arrowMargin}
       bg={bg}
       color={color}
+      distance={distance}
       {...getDataAttributes('TooltipBody')}
       placement={placement}
       radius={radius}
@@ -319,18 +255,19 @@ function TooltipBody(
         </StyledContent>
       )}
       <StyledArrow
-        arrowDistance={arrowDistance}
+        arrowBase={arrowBase}
         arrowLength={arrowLength}
         arrowMargin={arrowMargin}
         bg={bg}
         color={color}
+        distance={distance}
         {...getDataAttributes('TooltipArrow')}
         placement={placement}
         theme={theme}
       />
     </StyledBody>
   );
-}
+});
 
 export function Tooltip(props: TooltipProps) {
   const { componentProps, getDataAttributes } = useTooltip(props);
@@ -342,20 +279,60 @@ export function Tooltip(props: TooltipProps) {
     content,
     disabled,
     eventType,
+    onHide,
+    onShow,
     open,
+    placement,
     theme,
     title,
     ...rest
   } = componentProps;
   const [isOpen, setOpen] = useState(open ?? false);
+  const [computedPlacement, setComputedPlacement] = useState<FloatingPlacement | null>(null);
+  const [isRendering, setRendering] = useState(false);
+
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const previousIsOpen = useRef(isOpen);
+  const previousPlacement = useRef<FloatingPlacement | null>(null);
 
   const label = useMemo(() => ariaLabel ?? innerText(content), [ariaLabel, content]);
 
   const { mainColor, textColor } = getColorTokens(bg, color, theme);
 
+  // Handle open prop
   useEffect(() => {
     setOpen(open ?? false);
   }, [open]);
+
+  // Handle callbacks
+  useEffect(() => {
+    if (previousIsOpen.current !== isOpen) {
+      isOpen ? onShow?.() : onHide?.();
+
+      previousIsOpen.current = isOpen;
+    }
+  }, [isOpen, onHide, onShow]);
+
+  // Handle placement
+  useEffect(() => {
+    if (!isRendering) {
+      return;
+    }
+
+    const nextPlacement = getComputedPlacement(placement, triggerRef.current, tooltipRef.current);
+
+    setComputedPlacement(nextPlacement);
+
+    previousPlacement.current = placement;
+  }, [isRendering, placement]);
+
+  // Handle placement for window resize/scroll
+  useResizeScrollHandler(() => {
+    const nextPlacement = getComputedPlacement(placement, triggerRef.current, tooltipRef.current);
+
+    setComputedPlacement(nextPlacement);
+  }, !isRendering);
 
   const handleClick = () => {
     if (eventType === 'click' && !disabled) {
@@ -377,6 +354,7 @@ export function Tooltip(props: TooltipProps) {
 
   return (
     <StyledTooltip
+      ref={triggerRef}
       aria-label={label}
       {...getDataAttributes('Tooltip')}
       onClick={handleClick}
@@ -390,11 +368,15 @@ export function Tooltip(props: TooltipProps) {
       {children}
       {isOpen && (
         <TooltipBody
-          getDataAttributes={getDataAttributes}
-          {...componentProps}
+          ref={tooltipRef}
           bg={mainColor}
           color={textColor}
+          content={content}
+          getDataAttributes={getDataAttributes}
+          placement={computedPlacement ?? placement}
+          setRendering={setRendering}
           theme={theme}
+          {...rest}
         />
       )}
     </StyledTooltip>

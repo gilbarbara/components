@@ -8,6 +8,7 @@ import {
   getMediaQueries,
   isCSSUnit,
   mergeTheme,
+  parseFloatNumber,
   responsive,
   stringifyCSSProperties,
 } from '~/modules/helpers';
@@ -155,6 +156,13 @@ describe('mergeTheme', () => {
 
   it('should return the default theme', () => {
     expect(mergeTheme()).toMatchSnapshot();
+  });
+});
+
+describe('parseFloatNumber', () => {
+  it('should return properly', () => {
+    expect(parseFloatNumber('10px')).toBe(10);
+    expect(parseFloatNumber('')).toBe(0);
   });
 });
 

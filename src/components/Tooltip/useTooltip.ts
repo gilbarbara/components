@@ -1,12 +1,13 @@
 import { CSSProperties, ReactNode } from 'react';
 import { omit } from '@gilbarbara/helpers';
-import { Simplify } from '@gilbarbara/types';
+import { SetRequired, Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
+import { UseThemeReturn } from '~/hooks/useTheme';
 import { textDefaultOptions } from '~/modules/options';
 
 import {
-  Placement,
+  FloatingPlacement,
   Sizes,
   WithChildren,
   WithColors,
@@ -17,6 +18,12 @@ import {
   WithShadow,
   WithTextOptions,
 } from '~/types';
+
+export type TooltipBodyProps = SetRequired<Omit<TooltipProps, 'children' | 'open'>, 'placement'> &
+  TooltipAnimationProps &
+  Required<TooltipArrowProps> &
+  TooltipColorProps &
+  UseThemeReturn & { setRendering: (value: boolean) => void };
 
 export type TooltipProps = Simplify<TooltipKnownProps>;
 
@@ -39,17 +46,25 @@ export interface TooltipAnimationProps {
 }
 
 export interface TooltipArrowProps {
-  /**
-   * The distance between the arrow and the target.
-   * @default 4
+  /*
+   * The base size of the arrow.
+   * @default 12
    */
-  arrowDistance: number;
-  /** @default 8 */
-  arrowLength: number;
+  arrowBase?: number;
+  /**
+   * The length of the arrow.
+   * @default 8
+   */
+  arrowLength?: number;
   /**
    * The margin for the arrow with start/end alignment.
    * @default 4 */
   arrowMargin: number;
+  /**
+   * The distance between the tooltip and the target.
+   * @default 4
+   */
+  distance?: number;
 }
 
 export interface TooltipColorProps {
@@ -74,26 +89,31 @@ export interface TooltipKnownProps
    * @default innerText of the content
    */
   ariaLabel?: string;
+  /*
+   * The content of the tooltip.
+   */
   content: ReactNode;
   /**
    * Trigger type.
    * @default hover
    */
   eventType?: 'click' | 'hover';
+  onHide?: () => void;
+  onShow?: () => void;
   style?: CSSProperties;
 }
 
 export interface TooltipSharedProps {
   /**
    * The placement of the tooltip.
-   * @default bottom-middle
+   * @default bottom
    */
-  placement: Placement;
+  placement: FloatingPlacement;
   /**
    * Optional title for the tooltip.
    */
   title?: string;
-  /** Content wrapping */
+  /** Wrap the content for long text */
   wrap?: Sizes;
   /** @default 100 */
   zIndex?: number;
@@ -101,7 +121,8 @@ export interface TooltipSharedProps {
 
 export const defaultProps = {
   ...omit(textDefaultOptions, 'size'),
-  arrowDistance: 4,
+  arrowBase: 12,
+  distance: 4,
   arrowMargin: 4,
   arrowLength: 8,
   bg: 'gray.700',
@@ -110,7 +131,7 @@ export const defaultProps = {
   duration: 260,
   easing: 'ease-in-out',
   eventType: 'hover',
-  placement: 'bottom-middle',
+  placement: 'bottom',
   radius: 'xxs',
   size: 'sm',
   zIndex: 100,

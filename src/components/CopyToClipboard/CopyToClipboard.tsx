@@ -145,7 +145,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
 
   if (!hideTooltip && (tooltipCopiedText || !copied)) {
     main = (
-      <Tooltip content={tooltipContent} placement="top-middle" size="xs" {...tooltipProps}>
+      <Tooltip content={tooltipContent} placement="top" size="xs" {...tooltipProps}>
         {main}
       </Tooltip>
     );

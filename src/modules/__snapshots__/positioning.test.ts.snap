@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getElementDimenstions > should return the element dimensions from its bounding rect 1`] = `
+{
+  "height": 40,
+  "width": 80,
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for auto placement 1`] = `{}`;
+
+exports[`getFloatingStyles > should return correct styles for bottom placement 1`] = `
+{
+  "left": "50%",
+  "marginTop": 10,
+  "top": "100%",
+  "transform": "translateX(-50%)",
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for bottom-end placement 1`] = `
+{
+  "marginTop": 10,
+  "right": 20,
+  "top": "100%",
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for bottom-start placement 1`] = `
+{
+  "left": 20,
+  "marginTop": 10,
+  "top": "100%",
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for left placement 1`] = `
+{
+  "marginRight": 10,
+  "right": "100%",
+  "top": "50%",
+  "transform": "translateY(-50%)",
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for left-end placement 1`] = `
+{
+  "bottom": 20,
+  "marginRight": 10,
+  "right": "100%",
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for left-start placement 1`] = `
+{
+  "marginRight": 10,
+  "right": "100%",
+  "top": 20,
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for right placement 1`] = `
+{
+  "left": "100%",
+  "marginLeft": 10,
+  "top": "50%",
+  "transform": "translateY(-50%)",
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for right-end placement 1`] = `
+{
+  "bottom": 20,
+  "left": "100%",
+  "marginLeft": 10,
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for right-start placement 1`] = `
+{
+  "left": "100%",
+  "marginLeft": 10,
+  "top": 20,
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for top placement 1`] = `
+{
+  "bottom": "100%",
+  "left": "50%",
+  "marginBottom": 10,
+  "transform": "translateX(-50%)",
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for top-end placement 1`] = `
+{
+  "bottom": "100%",
+  "marginBottom": 10,
+  "right": 20,
+}
+`;
+
+exports[`getFloatingStyles > should return correct styles for top-start placement 1`] = `
+{
+  "bottom": "100%",
+  "left": 20,
+  "marginBottom": 10,
+}
+`;

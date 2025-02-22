@@ -24,20 +24,22 @@ export type ButtonTypes = 'button' | 'submit' | 'reset';
 
 export type DataAttributes = Record<`data-${string}`, StringOrNumber>;
 
+export type FloatingAlignment = 'start' | 'end';
+export type FloatingPlacement = Position | Concat<Position, FloatingAlignment> | 'auto';
+export type FloatingPlacementX = PositionX | Concat<PositionX, FloatingAlignment> | 'auto';
+export type FloatingPlacementY = PositionY | Concat<PositionY, FloatingAlignment> | 'auto';
+
 export type HeadingSizes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'jumbo';
 
 export type Icons = (typeof icons)[number]['name'];
 
 export type InputTypes = (typeof inputTypes)[number];
+
 export type Orientation = 'horizontal' | 'vertical';
 
-export type Placement = Concat<Position, 'start' | 'middle' | 'end'>;
-
-export type Position = 'bottom' | 'left' | 'right' | 'top';
-
-export type PositionX = 'left-bottom' | 'left-top' | 'right-bottom' | 'right-top';
-
-export type PositionY = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
+export type Position = PositionX | PositionY;
+export type PositionX = 'left' | 'right';
+export type PositionY = 'bottom' | 'top';
 
 export type ResponsiveInput = {
   [key: ResponsiveSizes]: CSSProperties | SerializedStyles;

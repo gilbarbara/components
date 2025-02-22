@@ -1,10 +1,10 @@
 /* eslint-disable no-await-in-loop */
-import { useState } from 'react';
-import { sleep } from '@gilbarbara/helpers';
+import { MouseEvent, useState } from 'react';
+import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fireEvent, waitFor, within } from '@storybook/test';
+import { expect, fireEvent, fn, waitFor, within } from '@storybook/test';
 
-import { Box, Button, ButtonUnstyled, Icon, Paragraph, Spacer } from '~';
+import { Box, Button, ButtonUnstyled, Flex, Icon, Paragraph, Spacer } from '~';
 
 import {
   colorProps,
@@ -26,7 +26,11 @@ export default {
   title: 'Components/Tooltip',
   // category: 'Popups',
   component: Tooltip,
-  args: defaultProps,
+  args: {
+    ...defaultProps,
+    onShow: action('onShow'),
+    onHide: action('onHide'),
+  },
   argTypes: {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
@@ -34,10 +38,6 @@ export default {
     ...radiusProps(),
     ...textOptionsProps(),
     content: { control: 'text' },
-  },
-  parameters: {
-    justify: 'center',
-    minHeight: 200,
   },
 } satisfies Meta<typeof Tooltip>;
 
@@ -55,32 +55,45 @@ export const Popconfirm: Story = {
   parameters: {
     controls: hideNoControlsWarning(),
   },
-  render: function Render() {
+  render: function Render(props) {
     const [isOpen, setOpen] = useState(false);
 
-    const handleClick = () => {
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      const { type = '' } = event.currentTarget.dataset;
+
       setOpen(!isOpen);
+
+      if (type) {
+        action('onClick')(type);
+      }
     };
 
     return (
       <Tooltip
+        {...props}
         ariaLabel="Delete"
         bg="white"
         content={
-          <Box open={isOpen} padding="sm">
+          <Box padding="sm">
             <Paragraph mb="md">Are you sure you want to delete this?</Paragraph>
             <Spacer distribution="end" gap="sm">
-              <Button bg="black" onClick={handleClick} size="sm" variant="bordered">
+              <Button
+                bg="black"
+                data-type="cancel"
+                onClick={handleClick}
+                size="sm"
+                variant="bordered"
+              >
                 Cancel
               </Button>
-              <Button bg="red" onClick={handleClick} size="sm">
+              <Button bg="red" data-type="delete" onClick={handleClick} size="sm">
                 Delete
               </Button>
             </Spacer>
           </Box>
         }
         open={isOpen}
-        placement="top-middle"
+        placement="top"
         radius="md"
         shadow="low"
       >
@@ -101,7 +114,7 @@ export const Positions: Story = {
   },
   render: props => (
     <Spacer gap="xl" grow minWidth={480} orientation="vertical">
-      <Box display="flex" justify="space-between">
+      <Flex justify="space-between">
         <Tooltip
           {...props}
           content="placement: top-align — size: xs"
@@ -111,12 +124,7 @@ export const Positions: Story = {
           <Button size="sm">Top Start</Button>
         </Tooltip>
 
-        <Tooltip
-          {...props}
-          content="placement: top-middle — size: regular"
-          placement="top-middle"
-          size="md"
-        >
+        <Tooltip {...props} content="placement: top — size: regular" placement="top" size="md">
           <Button size="sm">Top</Button>
         </Tooltip>
 
@@ -128,8 +136,8 @@ export const Positions: Story = {
         >
           <Button size="sm">Top End</Button>
         </Tooltip>
-      </Box>
-      <Box display="flex" justify="space-between">
+      </Flex>
+      <Flex justify="space-between">
         <Tooltip {...props} content="placement: left-start" placement="left-start">
           <Button size="sm">Left Start</Button>
         </Tooltip>
@@ -142,74 +150,81 @@ export const Positions: Story = {
         >
           <Button size="sm">Right Start</Button>
         </Tooltip>
-      </Box>
-      <Box display="flex" justify="space-between">
+      </Flex>
+      <Flex justify="space-between">
         <Tooltip
           {...props}
-          content={
-            <Paragraph>placement: right-middle — wrap: lg — using a Paragraph component.</Paragraph>
-          }
-          placement="left-middle"
+          content={<Paragraph>placement: left — wrap: lg — using a Paragraph component.</Paragraph>}
+          placement="left"
           wrap="lg"
         >
           <Button size="sm">Left</Button>
         </Tooltip>
         <Tooltip
           {...props}
-          content="placement: right-middle — size: regular — wrap: md"
-          placement="right-middle"
+          content="placement: right — size: regular — wrap: md"
+          placement="right"
           size="md"
           wrap="md"
         >
           <Button size="sm">Right</Button>
         </Tooltip>
-      </Box>
-      <Box display="flex" justify="space-between">
+      </Flex>
+      <Flex justify="space-between">
         <Tooltip {...props} content="placement: left-end" placement="left-end">
           <Button size="sm">Left End</Button>
         </Tooltip>
         <Tooltip {...props} content="placement: right-end" placement="right-end">
           <Button size="sm">Right End</Button>
         </Tooltip>
-      </Box>
-      <Box display="flex" justify="space-between">
+      </Flex>
+      <Flex justify="space-between">
         <Tooltip {...props} content="placement: bottom-start" placement="bottom-start">
           <Button size="sm">Bottom Start</Button>
         </Tooltip>
 
-        <Tooltip {...props} content="placement: bottom-middle" placement="bottom-middle">
+        <Tooltip {...props} content="placement: bottom" placement="bottom">
           <Button size="sm">Bottom</Button>
         </Tooltip>
 
         <Tooltip {...props} content="placement: bottom-end" placement="bottom-end">
           <Button size="sm">Bottom End</Button>
         </Tooltip>
-      </Box>
+      </Flex>
     </Spacer>
   ),
 };
 
 export const Tests: Story = {
   tags: ['!dev', '!autodocs'],
+  args: {
+    onShow: fn(),
+    onHide: fn(),
+  },
   argTypes: Positions.argTypes,
   render: Positions.render,
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
     const tooltips = await canvas.findAllByTestId('Tooltip');
 
-    await sleep(0.5);
+    // Adding a slight delay to prevent the test from running too fast in the UI
+    await new Promise(requestAnimationFrame);
 
-    for (const tooltip of tooltips) {
+    for (const [index, tooltip] of tooltips.entries()) {
       await fireEvent.mouseOver(tooltip);
       await expect(await canvas.findByTestId('TooltipBody')).toHaveTextContent(
         tooltip.getAttribute('aria-label') ?? '',
       );
 
+      await expect(args.onShow).toHaveBeenNthCalledWith(index + 1);
+
       await fireEvent.mouseOut(tooltip);
       await waitFor(() => {
         expect(canvas.queryByTestId('TooltipBody')).not.toBeInTheDocument();
       });
+
+      await expect(args.onHide).toHaveBeenNthCalledWith(index + 1);
     }
   },
 };
