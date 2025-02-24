@@ -66,9 +66,9 @@ const StyledNavBar = styled('nav', getStyledOptions())<
       ${blurred && `backdrop-filter: blur(${px(blurredRadius)});`};
       height: ${px(height)};
       position: ${placement === 'top' ? position : 'fixed'};
+      top: ${placement === 'top' ? 0 : 'auto'};
       transform: translateY(${props.isHidden ? '-100%' : 0});
       transition: transform 0.3s;
-      top: ${placement === 'top' ? 0 : 'auto'};
       z-index: ${zIndex};
     `;
   },

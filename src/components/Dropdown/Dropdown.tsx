@@ -69,7 +69,6 @@ export const StyledDropdown = styled(
               box-shadow: 0 3px 0 0 ${opacify(mainColor, 0.5)};
             `
           : getOutlineStyles(mainColor, theme)};
-
         .react-dropdown-separator {
           background-color: ${mainColor};
         }

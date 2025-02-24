@@ -80,16 +80,16 @@ export const StyledBadge = styled('span', getStyledOptions('shape'))<
     switch (placement) {
       case 'top-right': {
         position = css`
-          top: ${px(offsetY ?? offsetValue)};
           right: ${px(offsetX ?? offsetValue)};
+          top: ${px(offsetY ?? offsetValue)};
           transform: translate(${transformValue}, -${transformValue});
         `;
         break;
       }
       case 'top-left': {
         position = css`
-          top: ${px(offsetY ?? offsetValue)};
           left: ${px(offsetX ?? offsetValue)};
+          top: ${px(offsetY ?? offsetValue)};
           transform: translate(-${transformValue}, -${transformValue});
         `;
         break;
@@ -116,10 +116,10 @@ export const StyledBadge = styled('span', getStyledOptions('shape'))<
       ${!hideBorder ? `border: 2px solid ${borderColorValue};` : undefined};
       font-size: ${sizingMap[size].fontSize};
       height: ${sizingMap[size].size};
+      min-width: ${sizingMap[size].size};
       opacity: ${hideBadge ? 0 : 1};
       padding-left: ${sizingMap[size].padding};
       padding-right: ${sizingMap[size].padding};
-      min-width: ${sizingMap[size].size};
       ${position};
       ${getStyles(props, { skipBorder: true })};
     `;

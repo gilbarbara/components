@@ -45,8 +45,8 @@ export const StyledSelect = styled(
       '#',
       '%23',
     )}" /%3E%3C/svg%3E`}');
-    background-repeat: no-repeat;
     background-position: right ${backgroundPosition} center;
+    background-repeat: no-repeat;
     ${inputStyles(props, 'select')};
     color: ${color};
 

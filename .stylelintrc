@@ -1,0 +1,60 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-css-modules"
+  ],
+  "plugins": [
+    "stylelint-order"
+  ],
+  "rules": {
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["blockless-after-blockless", "first-nested"],
+        "ignore": ["after-comment"],
+        "ignoreAtRules": ["else"]
+      }
+    ],
+    "at-rule-no-unknown": null,
+    "color-named": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-empty-line-before": null,
+    "declaration-property-value-disallowed-list": {
+      "/^border/": ["none"]
+    },
+    "function-url-quotes": "always",
+    "keyframes-name-pattern": null,
+    "max-nesting-depth": 5,
+    "media-query-no-invalid": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": true,
+    "number-max-precision": 4,
+    "property-no-vendor-prefix": true,
+    "selector-class-pattern": null,
+    "selector-max-compound-selectors": 5,
+    "selector-max-specificity": "0,5,4",
+    "selector-no-qualifying-type": [true, { "ignore": ["class"] }],
+    "selector-pseudo-element-colon-notation": "single",
+    "value-keyword-case": null,
+    "order/order": [
+      "custom-properties",
+      "declarations",
+      "at-rules",
+      "rules"
+    ],
+    "order/properties-alphabetical-order": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.js",
+        "**/*.cjs",
+        "**/*.mjs",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "customSyntax": "postcss-styled-syntax"
+    }
+  ]
+}

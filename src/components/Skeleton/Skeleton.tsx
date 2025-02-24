@@ -40,19 +40,29 @@ export const StyledSkeleton = styled('div', getStyledOptions())<
     const { mainColor: bgColor } = getColorTokens(bg, null, theme);
 
     return css`
-    animation: ${bgAnimation} ${animationDuration}s infinite ease-in-out;
-    animation-delay: ${animationDelay}s;
-    background: ${bgColor} linear-gradient(90deg, ${bgColor} 0, ${bgColor} 10%, ${accentColor} 25%, ${bgColor} 40%, ${bgColor} 100%);
-    background-position: 60% 0;
-    background-repeat: no-repeat;
-    background-size: 200% 100%;
-    width: ${fitContent ? 'fit-content' : undefined};
-    ${getStyles(props, { skipColor: true })};
-    
-    &:before, &:after, > * {
-      visibility: hidden;
-    },
-  `;
+      animation: ${bgAnimation} ${animationDuration}s infinite ease-in-out;
+      animation-delay: ${animationDelay}s;
+      background: ${bgColor}
+        linear-gradient(
+          90deg,
+          ${bgColor} 0,
+          ${bgColor} 10%,
+          ${accentColor} 25%,
+          ${bgColor} 40%,
+          ${bgColor} 100%
+        );
+      background-position: 60% 0;
+      background-repeat: no-repeat;
+      background-size: 200% 100%;
+      width: ${fitContent ? 'fit-content' : undefined};
+      ${getStyles(props, { skipColor: true })};
+
+      &:before,
+      &:after,
+      > * {
+        visibility: hidden;
+      }
+    `;
   },
 );
 
@@ -68,11 +78,11 @@ const StyledContent = styled('div', getStyledOptions())<{
     const { appearDuration, isFirstRender } = props;
 
     return css`
-      animation: ${isFirstRender
-        ? 'none'
-        : css`
-            ${fadeIn} ${appearDuration}s ease-in-out forwards
-          `};
+      ${isFirstRender && 'animation: none'};
+      ${!isFirstRender &&
+      css`
+        animation: ${fadeIn} ${appearDuration}s ease-in-out forwards;
+      `};
       opacity: ${isFirstRender ? 1 : 0};
     `;
   },

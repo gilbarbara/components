@@ -41,7 +41,7 @@ export const StyledListItem = styled(
       padding: ${spacerMain} ${hideBorder ? 0 : spacerCross};
 
       &:last-of-type {
-        border-bottom: none;
+        border-bottom: 0;
       }
     `};
 
@@ -51,7 +51,7 @@ export const StyledListItem = styled(
       padding: ${hideBorder ? 0 : spacerMain} ${spacerCross};
 
       &:last-of-type {
-        border-right: none;
+        border-right: 0;
       }
     `};
 

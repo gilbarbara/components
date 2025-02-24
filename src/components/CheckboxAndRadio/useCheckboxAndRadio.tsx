@@ -177,8 +177,8 @@ export const StyledElement = styled('span', getStyledOptions('label'))<InnerProp
       &:after {
         content: '';
         display: none;
-        position: absolute;
         left: 50%;
+        position: absolute;
         top: 50%;
         ${after};
       }

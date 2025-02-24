@@ -60,8 +60,8 @@ const StyledProgressTrack = styled(
   return css`
     background-color: ${trackColor};
     border-radius: ${heightMap[size]};
-    line-height: 1;
     height: ${heightMap[size]};
+    line-height: 1;
     overflow: hidden;
 
     > div {

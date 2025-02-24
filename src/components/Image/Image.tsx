@@ -48,11 +48,11 @@ export const StyledImageWrapper = styled('div', getStyledOptions())<
             ${image.skeletonColor} 25%,
             transparent 40%
           );
+          bottom: 0;
           content: '';
           display: block;
-          position: absolute;
-          bottom: 0;
           left: 0;
+          position: absolute;
           right: 0;
           top: 0;
         }

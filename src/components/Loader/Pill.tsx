@@ -56,8 +56,8 @@ export const StyledLoaderPill = styled(
       animation: ${animation} 2s infinite ease-in-out;
       background-color: ${mainColor};
       border-radius: ${borderRadius};
-      content: '';
       bottom: 0;
+      content: '';
       display: block;
       left: -10%;
       position: absolute;

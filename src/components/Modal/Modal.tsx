@@ -41,9 +41,9 @@ const StyledModalContent = styled(
 
   return css`
     margin: 0 -${padding ? spacing[padding] : padding};
-    padding: 0 ${padding ? spacing[padding] : padding};
     max-height: ${px(maxHeight)};
     overflow-y: auto;
+    padding: 0 ${padding ? spacing[padding] : padding};
   `;
 });
 

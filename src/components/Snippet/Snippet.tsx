@@ -58,8 +58,8 @@ export const StyledWrapper = styled(
 
   return css`
     align-items: center;
-    font-family: ${removeFormatting ? fontFamily : fontMonospace};
     display: flex;
+    font-family: ${removeFormatting ? fontFamily : fontMonospace};
     gap: ${spacing[gap]};
   `;
 });
@@ -76,8 +76,8 @@ export const StyledPre = styled(
   const { fontFamily, fontMonospace } = theme;
 
   return css`
-    font-family: ${removeFormatting ? fontFamily : fontMonospace};
     display: flex;
+    font-family: ${removeFormatting ? fontFamily : fontMonospace};
     margin: 0;
     ${preventWrap && 'white-space: nowrap'};
   `;

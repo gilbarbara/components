@@ -19,15 +19,14 @@ const StyledTruncate = styled(
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-    }
     `;
   }
 
   return css`
-    display: -webkit-box;
-    overflow: hidden;
     -webkit-box-orient: vertical;
+    display: -webkit-box;
     -webkit-line-clamp: ${lines ?? 2};
+    overflow: hidden;
   `;
 });
 

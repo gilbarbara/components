@@ -80,9 +80,9 @@ const Overlay = styled.div<
   return css`
     background-color: ${selectedBg};
     ${overlayBlur && `backdrop-filter: blur(${px(overlayBlurAmount)});`};
-    opacity: ${isActive ? 1 : 0};
     bottom: 0;
     left: 0;
+    opacity: ${isActive ? 1 : 0};
     position: absolute;
     right: 0;
     top: 0;

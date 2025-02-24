@@ -29,9 +29,9 @@ const Item = styled(
 
   if (multi) {
     multiStyles = css`
+      background-color: ${darkMode ? grayScale['700'] : white};
       border: 1px solid ${color};
       border-radius: ${radius.xxs};
-      background-color: ${darkMode ? grayScale['700'] : white};
       margin-bottom: ${spacing.xxs};
       margin-right: ${spacing.xs};
       margin-top: ${spacing.xxs};

@@ -77,9 +77,9 @@ const StyledLabel = styled(
     border: 1px solid ${darkMode ? grayScale['700'] : grayScale['100']};
     border-radius: ${radius.xs};
     height: ${px(size)};
+    margin-right: ${spacing.xs};
     overflow: hidden;
     position: relative;
-    margin-right: ${spacing.xs};
     width: ${px(size)};
 
     input {

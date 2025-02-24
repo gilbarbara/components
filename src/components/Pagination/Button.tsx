@@ -21,14 +21,14 @@ const StyledPaginationButton = styled(
 
   return css`
     align-items: center;
-    border-radius: 50%;
     background-color: ${current ? mainColor : 'transparent'};
+    border-radius: 50%;
     color: ${current ? textColor : color};
     display: flex;
     font-size: ${typography.sm.fontSize};
     font-weight: ${700};
-    justify-content: center;
     height: ${spacing.xl};
+    justify-content: center;
     line-height: 1;
     width: ${spacing.xl};
 

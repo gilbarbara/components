@@ -67,9 +67,9 @@ export const StyledSidebar = styled(
     overflow-y: auto;
     position: fixed;
     right: ${side.startsWith('right') ? 0 : 'auto'};
+    top: 0;
     transform: ${isActive ? 'translate3d(0, 0, 0)' : initialPosition};
     transition: ${disableAnimation ? 'none' : `transform ${animationDuration}s ${animationEasing}`};
-    top: 0;
     width: ${px(width)};
     z-index: 20;
     ${getStyles(omit(props, 'opacity'), { skipColor: true })};

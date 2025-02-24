@@ -49,9 +49,9 @@ export const StyledButton = styled('button', getStyledOptions())<
       border-radius: ${borderRadius};
       font-size: ${fontSize};
       font-weight: ${light ? 400 : fontWeight};
+      line-height: ${lineHeight};
       min-height: ${height};
       min-width: ${height};
-      line-height: ${lineHeight};
       padding: ${buttonPadding};
       width: ${block ? '100%' : 'auto'};
       ${getStyles(props)};

@@ -23,14 +23,14 @@ const StyledSearchItems = styled(
     border-radius: ${radius.xxs};
     box-shadow: ${shadow.mid};
     left: 0;
-    max-height: ${px(height)};
     margin-top: ${spacing.xs};
+    max-height: ${px(height)};
     overflow-y: auto;
     position: absolute;
     right: 0;
     top: 100%;
-    transform-origin: top;
     transform: scaleY(0);
+    transform-origin: top;
     transition: transform 0.3s;
 
     ${active &&

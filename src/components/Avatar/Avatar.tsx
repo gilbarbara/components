@@ -49,8 +49,8 @@ const StyledAvatar = styled('div', getStyledOptions())<
     const { mainColor } = getColorTokens(borderColor, null, theme);
 
     return css`
-      outline: ${bordered ? `2px solid ${mainColor}` : 'none'};
       height: ${size};
+      outline: ${bordered ? `2px solid ${mainColor}` : 'none'};
       width: ${size};
       ${getStyles(omit(props, 'size'), { skipColor: true })};
     `;
@@ -70,8 +70,8 @@ const Circle = styled('div', getStyledOptions())<
     const { fontSize, size } = getSize(props);
 
     return css`
-      height: ${size};
       font-size: ${fontSize};
+      height: ${size};
       width: ${size};
       ${colorStyles(props)};
     `;

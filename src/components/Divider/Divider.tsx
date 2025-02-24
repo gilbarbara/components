@@ -85,8 +85,8 @@ const StyledDivider = styled('div', getStyledOptions('type'))<
           border-top: ${borderSizes[borderSize]} ${borderStyle} ${mainColor};
           content: '';
           display: inline-flex;
-          min-width: ${px(minBorderWidth)};
           flex-grow: 1;
+          min-width: ${px(minBorderWidth)};
         }
 
         &:before {

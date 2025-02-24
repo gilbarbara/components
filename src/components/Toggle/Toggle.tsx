@@ -92,9 +92,9 @@ const StyledTrack = styled(
     bottom: 0;
     left: 0;
     position: absolute;
-    transition: background-color 0.4s;
     right: 0;
     top: 0;
+    transition: background-color 0.4s;
   `;
 });
 
@@ -109,9 +109,9 @@ const StyledTrackIcon = styled('span')<ToggleInnerProps>(props => {
     bottom: 0;
     color: ${isChecked ? textColor : darkColor};
     display: flex;
+    height: ${px(height)};
     justify-content: center;
     left: ${isChecked ? px(space) : undefined};
-    height: ${px(height)};
     position: absolute;
     right: ${isChecked ? undefined : px(space)};
     top: 0;

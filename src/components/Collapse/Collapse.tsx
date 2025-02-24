@@ -34,8 +34,8 @@ const Header = styled.button<
   const { mainColor } = getColorTokens(bg, color, theme);
 
   return css`
-    all: unset;
     align-items: center;
+    all: unset;
     cursor: pointer;
     display: flex;
     gap: ${spacing[gap]};
@@ -115,8 +115,8 @@ const HeaderToggle = styled('span')<{ isOpen: boolean }>(props => {
     align-self: center;
     display: inline-flex;
     transform: rotate(${isOpen ? -90 : 0}deg);
-    transition: transform 0.3s;
     transform-origin: center;
+    transition: transform 0.3s;
   `;
 });
 

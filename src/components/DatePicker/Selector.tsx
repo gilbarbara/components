@@ -152,8 +152,8 @@ const StyledContent = styled('div', getStyledOptions())<
       bottom: ${position?.startsWith('bottom') ? 'auto' : '100%'};
       box-shadow: ${shadow.mid};
       left: ${left};
-      margin-top: ${position?.startsWith('bottom') ? spacing.xs : 0};
       margin-bottom: ${position?.startsWith('top') ? spacing.xs : 0};
+      margin-top: ${position?.startsWith('bottom') ? spacing.xs : 0};
       min-width: ${px(wide ? 600 : 300)};
       padding: ${spacing.md};
       right: ${position?.endsWith('right') ? 0 : 'auto'};

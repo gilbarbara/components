@@ -36,12 +36,12 @@ const StyledMenuToggle = styled(
       border-radius: ${px(radius)};
       display: block;
       height: ${px(border)};
+      left: 0;
       position: absolute;
+      right: 0;
       transition-duration: 0.25s;
       transition-property: transform, border-color;
       transition-timing-function: cubic-bezier(0.5, -0.5, 0.5, 1.5);
-      left: 0;
-      right: 0;
 
       &:nth-of-type(1) {
         top: 0;
@@ -58,8 +58,8 @@ const StyledMenuToggle = styled(
       }
 
       &:nth-of-type(2) {
-        transition-delay: 0.125s;
         top: ${px(transform)};
+        transition-delay: 0.125s;
 
         ${isActive &&
         css`
@@ -68,8 +68,8 @@ const StyledMenuToggle = styled(
       }
 
       &:nth-of-type(3) {
-        top: auto;
         bottom: 0;
+        top: auto;
 
         ${isOpen &&
         css`

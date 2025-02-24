@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react';
-import { css } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
 import styled from '@emotion/styled';
 import { debounce, px } from '@gilbarbara/helpers';
 import { SetRequired } from '@gilbarbara/types';
@@ -68,7 +68,7 @@ const StyledMenu = styled('div', getStyledOptions())<
         z-index: 1;
       }
     `;
-    let after = css``;
+    let after: SerializedStyles | undefined;
 
     if (Object.keys(dimensions).length) {
       const active = dimensions[activeId];
@@ -107,8 +107,8 @@ const StyledMenu = styled('div', getStyledOptions())<
           position: absolute;
           right: ${isVertical ? 0 : undefined};
           top: ${top};
+          transform-origin: bottom;
           transition: ${`${isVertical ? 'top' : 'left'} 0.3s ease-in-out, width 0.2s`};
-          transition-origin: bottom;
           width: ${isHorizontal ? px(lenght) : px(borderSize)};
           z-index: 2;
           ${stringifyCSSProperties(indicatorStyle)};
@@ -183,10 +183,10 @@ const StyledMenuItem = styled(ButtonUnstyled, getStyledOptions('disabled'))<
     return css`
       background-color: ${bgColor};
       color: ${disabled ? grayScale['500'] : color};
-      display: flex;
-      justify-content: center;
-      flex-grow: ${expand ? 1 : 0};
       cursor: ${disabled ? 'not-allowed' : 'pointer'};
+      display: flex;
+      flex-grow: ${expand ? 1 : 0};
+      justify-content: center;
       padding: ${spacing.sm} ${spacing.lg};
       width: ${isVertical ? '100%' : undefined};
       ${stringifyCSSProperties(menu.itemStyle)};
@@ -195,8 +195,8 @@ const StyledMenuItem = styled(ButtonUnstyled, getStyledOptions('disabled'))<
       !disabled &&
       css`
         &:hover {
-          transition: transform 0.2s;
           transform: scale(1.05);
+          transition: transform 0.2s;
         }
       `};
     `;

@@ -59,8 +59,6 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
     /* Hide elements for devices that are not screen readers */
 
     .${className}-vhidden {
-      -moz-appearance: none;
-      -webkit-appearance: none;
       appearance: none;
       background: transparent;
       border: 0;
@@ -78,8 +76,6 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
     /* Buttons */
 
     .${className}-button_reset {
-      -moz-appearance: none;
-      -webkit-appearance: none;
       appearance: none;
       background: none;
       color: inherit;
@@ -221,8 +217,8 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
       .${className}-nav {
         left: 0;
         position: absolute;
-        top: 0;
         right: 0;
+        top: 0;
       }
 
       .${className}-nav_button_next {
@@ -231,9 +227,7 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
       }
     }
 
-    /* ---------- */
     /* Dropdowns  */
-    /* ---------- */
 
     .${className}-dropdown_year, .${className}-dropdown_month {
       align-items: center;
@@ -244,7 +238,7 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
     .${className}-dropdown {
       appearance: none;
       background-color: transparent;
-      border: none;
+      border: 0;
       bottom: 0;
       cursor: inherit;
       font-family: inherit;
@@ -308,8 +302,8 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
 
     .${className}-weeknumber, .${className}-day {
       align-items: center;
-      border-radius: 100%;
       border: 2px solid transparent;
+      border-radius: 100%;
       box-sizing: border-box;
       display: flex;
       height: ${cellSize};
@@ -326,8 +320,8 @@ export function getPickerStyles(props: DatePickerBaseProps & DatePickerLayoutPro
     }
 
     .${className}-day_range_middle {
-      border-radius: 0;
       background-color: ${darkMode ? colorVariant[200] : colorVariant[50]} !important;
+      border-radius: 0;
       color: ${variants.gray['900']} !important;
     }
 
