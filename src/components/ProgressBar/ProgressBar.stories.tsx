@@ -9,7 +9,7 @@ import {
   addChromaticModes,
   colorProps,
   disableControl,
-  flexContent,
+  FLEX_CONTENT,
   hideProps,
   marginProps,
   VARIANTS,
@@ -31,7 +31,7 @@ export default {
     ...hideProps(),
     ...colorProps(['accent', 'backgroundColor']),
     ...marginProps(),
-    headerJustify: { control: 'select', options: ['', ...flexContent] },
+    headerJustify: { control: 'select', options: ['', ...FLEX_CONTENT] },
     size: { control: 'radio', options: sizes },
   },
   parameters: {

@@ -2,7 +2,7 @@ import { ElementType, HTMLProps, ReactNode } from 'react';
 import { Option } from '@gilbarbara/react-dropdown';
 import { StringOrNumber } from '@gilbarbara/types';
 
-import { WithDisabled, WithLabel } from './shared';
+import { WithDisabled, WithLabel } from './system';
 import { ColorVariantTones, Theme } from './theme';
 
 export type OmitElementProps<TElement, TProps, TProperties extends string = never> = TProps &

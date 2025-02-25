@@ -240,6 +240,7 @@ export function getStyledOptions(...exclude: string[]) {
         'textDecoration',
         'textTransform',
         'transform',
+        'visibility',
         'width',
         'wordSpacing',
         'wrap',
@@ -403,28 +404,70 @@ export function colorStyles<T extends WithColors & WithTheme & { variant?: strin
 }
 
 export function dimensionStyles<T extends WithDimension>(props: T) {
-  const { height, maxHeight, maxWidth, minHeight, minWidth, width } = props;
+  const {
+    aspectRatio,
+    h,
+    height,
+    maxH,
+    maxHeight,
+    maxW,
+    maxWidth,
+    minH,
+    minHeight,
+    minW,
+    minWidth,
+    w,
+    width,
+  } = props;
 
   const output: CSSObject = {};
 
+  if (!is.nullOrUndefined(aspectRatio)) {
+    output.aspectRatio = aspectRatio;
+  }
+
+  if (!is.nullOrUndefined(h)) {
+    output.height = px(h);
+  }
+
   if (!is.nullOrUndefined(height)) {
     output.height = px(height);
+  }
+
+  if (!is.nullOrUndefined(maxH)) {
+    output.maxHeight = px(maxH);
   }
 
   if (!is.nullOrUndefined(maxHeight)) {
     output.maxHeight = px(maxHeight);
   }
 
+  if (!is.nullOrUndefined(maxW)) {
+    output.maxWidth = px(maxW);
+  }
+
   if (!is.nullOrUndefined(maxWidth)) {
     output.maxWidth = px(maxWidth);
+  }
+
+  if (!is.nullOrUndefined(minH)) {
+    output.minHeight = px(minH);
   }
 
   if (!is.nullOrUndefined(minHeight)) {
     output.minHeight = px(minHeight);
   }
 
+  if (!is.nullOrUndefined(minW)) {
+    output.minWidth = px(minW);
+  }
+
   if (!is.nullOrUndefined(minWidth)) {
     output.minWidth = px(minWidth);
+  }
+
+  if (!is.nullOrUndefined(w)) {
+    output.width = px(w);
   }
 
   if (!is.nullOrUndefined(width)) {
@@ -716,6 +759,7 @@ export function layoutStyles<T extends WithLayout>(props: T): CSSObject {
       'transition',
       'transform',
       'transformOrigin',
+      'visibility',
     ] as const
   ).forEach(prop => {
     const value = props[prop];

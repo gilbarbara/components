@@ -90,12 +90,25 @@ describe('dimensionStyles', () => {
   it('should return properly', () => {
     expect(
       dimensionStyles({
+        aspectRatio: '16:9',
         height: 200,
         maxHeight: 100,
         maxWidth: '100%',
         minHeight: 40,
         minWidth: 290,
         width: 480,
+      }),
+    ).toMatchSnapshot();
+
+    expect(
+      dimensionStyles({
+        aspectRatio: 0.5,
+        h: 200,
+        maxH: 100,
+        maxW: '100%',
+        minH: 40,
+        minW: 290,
+        w: 480,
       }),
     ).toMatchSnapshot();
   });
@@ -108,7 +121,14 @@ describe('dimensionStyles', () => {
 describe('flexBoxStyles', () => {
   it('should return properly', () => {
     expect(
-      flexBoxStyles({ align: 'center', direction: 'column', gap: 20, wrap: 'wrap', theme }),
+      flexBoxStyles({
+        align: 'center',
+        dir: 'row',
+        direction: 'column',
+        gap: 20,
+        wrap: 'wrap',
+        theme,
+      }),
     ).toMatchSnapshot();
   });
 

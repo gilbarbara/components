@@ -7,16 +7,26 @@ import { spacing, variants as themeVariants } from '~/modules/theme';
 
 import { PortalOwnPropsKeys, portalPropsKeys } from '~/components/Portal/usePortal';
 
-import { ColorVariantTones, WithFlexBox } from '~/types';
+import {
+  ColorVariantTones,
+  WithDimension,
+  WithFlexBox,
+  WithFlexItem,
+  WithLayout,
+  WithMargin,
+  WithPadding,
+  WithPositioning,
+  WithRadius,
+} from '~/types';
 
-type ControlMap = Record<string, InputType>;
+type ControlMap<T extends string = string> = Record<T, InputType>;
 
-const flexBase = ['normal', 'stretch'];
-const flexContentDistribution = ['space-around', 'space-between', 'space-evenly', 'stretch'];
-const flexContentPosition = ['center', 'end', 'flex-end', 'flex-start', 'start'];
+const FLEX_BASE = ['normal', 'stretch'];
+const FLEX_CONTENT_DISTRIBUTION = ['space-around', 'space-between', 'space-evenly', 'stretch'];
+const FLEX_CONTENT_POSITION = ['center', 'end', 'flex-end', 'flex-start', 'start'];
 
-export const flexItems = ['baseline', ...flexBase, ...flexContentPosition];
-export const flexContent = [...flexBase, ...flexContentDistribution, ...flexContentPosition];
+export const FLEX_ITEMS = ['baseline', ...FLEX_BASE, ...FLEX_CONTENT_POSITION];
+export const FLEX_CONTENT = [...FLEX_BASE, ...FLEX_CONTENT_DISTRIBUTION, ...FLEX_CONTENT_POSITION];
 
 export const PANGRAM = 'The quick brown fox jumps over the lazy dog';
 
@@ -109,14 +119,21 @@ export function colorProps(
   }, {});
 }
 
-export function dimensionProps(): ControlMap {
+export function dimensionProps(): ControlMap<keyof WithDimension> {
   return {
-    height: { control: 'text', table: { category: 'Layout' } },
-    maxHeight: { control: 'text', table: { category: 'Layout' } },
-    maxWidth: { control: 'text', table: { category: 'Layout' } },
-    minHeight: { control: 'text', table: { category: 'Layout' } },
-    minWidth: { control: 'text', table: { category: 'Layout' } },
-    width: { control: 'text', table: { category: 'Layout' } },
+    aspectRatio: { control: 'text', table: { category: 'Dimensions' } },
+    h: { control: 'text', table: { category: 'Dimensions' } },
+    height: { control: 'text', table: { category: 'Dimensions' } },
+    maxH: { control: 'text', table: { category: 'Dimensions' } },
+    maxHeight: { control: 'text', table: { category: 'Dimensions' } },
+    maxW: { control: 'text', table: { category: 'Dimensions' } },
+    maxWidth: { control: 'text', table: { category: 'Dimensions' } },
+    minH: { control: 'text', table: { category: 'Dimensions' } },
+    minHeight: { control: 'text', table: { category: 'Dimensions' } },
+    minW: { control: 'text', table: { category: 'Dimensions' } },
+    minWidth: { control: 'text', table: { category: 'Dimensions' } },
+    w: { control: 'text', table: { category: 'Dimensions' } },
+    width: { control: 'text', table: { category: 'Dimensions' } },
   };
 }
 
@@ -127,20 +144,20 @@ export function disableControl(): InputType {
 export function flexBoxProps(options: FlexBoxPropsOptions = {}) {
   const { exclude, hideCategory, include } = options;
 
-  const shared = {
+  const shared: InputType = {
     control: 'select',
     table: { category: hideCategory ? undefined : 'Flex Box' },
   };
 
-  const items = {
-    align: { options: ['', ...flexItems], ...shared },
-    alignContent: { options: ['', ...flexContent], ...shared },
+  const items: ControlMap<keyof WithFlexBox> = {
+    align: { options: ['', ...FLEX_ITEMS], ...shared },
+    alignContent: { options: ['', ...FLEX_CONTENT], ...shared },
     direction: { options: ['row', 'row-reverse', 'column', 'column-reverse'], ...shared },
     gap: { options: ['', ...SPACING], ...shared },
-    justify: { options: ['', ...flexContent], ...shared },
-    justifyItems: { options: ['', ...flexItems], ...shared },
-    placeContent: { options: ['', ...flexContent], ...shared },
-    placeItems: { options: ['', ...flexItems], ...shared },
+    justify: { options: ['', ...FLEX_CONTENT], ...shared },
+    justifyItems: { options: ['', ...FLEX_ITEMS], ...shared },
+    placeContent: { options: ['', ...FLEX_CONTENT], ...shared },
+    placeItems: { options: ['', ...FLEX_ITEMS], ...shared },
     wrap: { options: ['nowrap', 'wrap', 'wrap-reverse'], ...shared },
   };
 
@@ -155,7 +172,7 @@ export function flexBoxProps(options: FlexBoxPropsOptions = {}) {
   }, {});
 }
 
-export function flexItemProps(): ControlMap {
+export function flexItemProps(): ControlMap<keyof WithFlexItem> {
   return {
     alignSelf: { table: { category: 'Flex Item' } },
     basis: { table: { category: 'Flex Item' } },
@@ -191,7 +208,7 @@ export function hideTable() {
   };
 }
 
-export function layoutProps(options?: { display: string }): ControlMap {
+export function layoutProps(options?: { display: string }): ControlMap<keyof WithLayout> {
   const { display } = options ?? {};
 
   return {
@@ -204,10 +221,11 @@ export function layoutProps(options?: { display: string }): ControlMap {
     transform: { control: 'text', table: { category: 'Layout' } },
     transformOrigin: { control: 'text', table: { category: 'Layout' } },
     transition: { control: 'text', table: { category: 'Layout' } },
+    visibility: { control: 'text', table: { category: 'Layout' } },
   };
 }
 
-export function marginProps(): ControlMap {
+export function marginProps(): ControlMap<keyof WithMargin> {
   return {
     margin: { control: 'select', table: { category: 'Spacing' } },
     m: { control: 'select', table: { category: 'Spacing' } },
@@ -220,7 +238,7 @@ export function marginProps(): ControlMap {
   };
 }
 
-export function paddingProps(): ControlMap {
+export function paddingProps(): ControlMap<keyof WithPadding> {
   return {
     padding: { control: 'select', table: { category: 'Spacing' } },
     p: { control: 'select', table: { category: 'Spacing' } },
@@ -244,18 +262,19 @@ export function portalProps(): ControlMap {
   );
 }
 
-export function positioningProps(): ControlMap {
+export function positioningProps(): ControlMap<keyof WithPositioning> {
   return {
     bottom: { control: 'text', table: { category: 'Positioning' } },
     left: { control: 'text', table: { category: 'Positioning' } },
     position: { control: 'select', table: { category: 'Positioning' } },
     right: { control: 'text', table: { category: 'Positioning' } },
     top: { control: 'text', table: { category: 'Positioning' } },
+    transform: { control: 'text', table: { category: 'Positioning' } },
     zIndex: { control: 'number', table: { category: 'Positioning' } },
   };
 }
 
-export function radiusProps(): ControlMap {
+export function radiusProps(): ControlMap<keyof WithRadius> {
   return {
     radius: {
       control: 'select',

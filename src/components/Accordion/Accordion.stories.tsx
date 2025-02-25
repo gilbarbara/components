@@ -8,7 +8,7 @@ import users from '~/stories/__fixtures__/users.json';
 import {
   colorProps,
   disableControl,
-  flexItems,
+  FLEX_ITEMS,
   hideProps,
   layoutProps,
   radiusProps,
@@ -105,7 +105,7 @@ export default {
     ...radiusProps(),
     ...spacingProps(),
     children: disableControl(),
-    headerAlign: { control: 'select', options: ['', ...flexItems] },
+    headerAlign: { control: 'select', options: ['', ...FLEX_ITEMS] },
   },
 } satisfies Meta<typeof Accordion>;
 

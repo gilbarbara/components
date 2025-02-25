@@ -5,8 +5,8 @@ import { Box, Button, H4, Jumbo, Paragraph } from '~';
 import {
   colorProps,
   disableControl,
-  flexContent,
-  flexItems,
+  FLEX_CONTENT,
+  FLEX_ITEMS,
   hideProps,
   paddingProps,
 } from '~/stories/__helpers__';
@@ -29,8 +29,8 @@ export default {
     ...hideProps(),
     ...colorProps(['bg', 'color']),
     ...paddingProps(),
-    align: { control: 'select', options: ['', ...flexItems] },
-    justify: { control: 'select', options: ['', ...flexContent] },
+    align: { control: 'select', options: ['', ...FLEX_ITEMS] },
+    justify: { control: 'select', options: ['', ...FLEX_CONTENT] },
     children: disableControl(),
     textAlign: { control: 'inline-radio' },
   },

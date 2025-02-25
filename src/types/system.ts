@@ -113,11 +113,42 @@ export interface WithComponentSize<T = Sizes> {
 }
 
 export interface WithDimension {
+  aspectRatio?: StandardLonghandProperties['aspectRatio'];
+  /**
+   * Shorthand for `height`.
+   * @note `height` takes precedence over `h` if both are defined.
+   */
+  h?: StandardLonghandProperties['height'] | number;
   height?: StandardLonghandProperties['height'] | number;
+  /**
+   * Shorthand for `maxHeight`.
+   * @note `maxHeight` takes precedence over `maxH` if both are defined.
+   */
+  maxH?: StandardLonghandProperties['maxHeight'] | number;
   maxHeight?: StandardLonghandProperties['maxHeight'] | number;
+  /**
+   * Shorthand for `maxWidth`.
+   * @note `maxWidth` takes precedence over `maxW` if both are defined.
+   */
+  maxW?: StandardLonghandProperties['maxWidth'] | number;
   maxWidth?: StandardLonghandProperties['maxWidth'] | number;
+  /**
+   * Shorthand for `minHeight`.
+   * @note `minHeight` takes precedence over `minH` if both are defined.
+   */
+  minH?: StandardLonghandProperties['minHeight'] | number;
   minHeight?: StandardLonghandProperties['minHeight'] | number;
+  /**
+   * Shorthand for `minWidth`.
+   * @note `minWidth` takes precedence over `minW` if both are defined.
+   */
+  minW?: StandardLonghandProperties['minWidth'] | number;
   minWidth?: StandardLonghandProperties['minWidth'] | number;
+  /**
+   * Shorthand for `width`.
+   * @note `width` takes precedence over `w` if both are defined.
+   */
+  w?: StandardLonghandProperties['width'] | number;
   width?: StandardLonghandProperties['width'] | number;
 }
 
@@ -144,18 +175,18 @@ export interface WithEndContent {
   endContent?: ReactNode;
 }
 
-export interface WithFlexBox {
+export interface WithFlexBox
+  extends Pick<StandardLonghandProperties, 'alignContent' | 'justifyItems'>,
+    Pick<StandardShorthandProperties, 'placeContent' | 'placeItems'> {
   /**
-   * How to align the contents along the cross axis.<br />
+   * How to align the contents along the cross axis.
+   *
    * Any 'align-items' valid CSS value is accepted.
    */
   align?: StandardLonghandProperties['alignItems'];
   /**
-   * How to align the contents when there is extra space in the cross axis.
-   */
-  alignContent?: StandardLonghandProperties['alignContent'];
-  /**
-   * How children are placed in the flex container.<br />
+   * How children are placed in the flex container.
+   *
    * Any 'flex-direction' valid CSS value is accepted.
    */
   direction?: StandardLonghandProperties['flexDirection'];
@@ -165,27 +196,16 @@ export interface WithFlexBox {
    */
   gap?: Gap;
   /**
-   * How to align the contents along the main axis.<br />
+   * How to align the contents along the main axis.
+   *
    * Any 'justify-content' valid CSS value is accepted.
    */
   justify?: StandardLonghandProperties['justifyContent'];
-  /**
-   * How to align the contents when there is extra space in the main axis.
-   */
-  justifyItems?: StandardLonghandProperties['justifyItems'];
-  /**
-   * Sets whether flex items are forced onto one line or can wrap onto multiple lines.
-   */
-  placeContent?: StandardShorthandProperties['placeContent'];
-  placeItems?: StandardShorthandProperties['placeItems'];
   wrap?: StandardLonghandProperties['flexWrap'];
 }
 
-export interface WithFlexItem {
-  /**
-   * How to align along the cross axis when contained in a Box.
-   */
-  alignSelf?: StandardLonghandProperties['alignSelf'];
+export interface WithFlexItem
+  extends Pick<StandardLonghandProperties, 'alignSelf' | 'justifySelf' | 'order'> {
   /**
    * A fixed or relative size along its container's main axis.
    */
@@ -198,14 +218,6 @@ export interface WithFlexItem {
    * Set flex-grow and/or flex-shrink.
    */
   flex?: boolean | 'grow' | 'shrink' | { grow?: number; shrink?: number };
-  /**
-   * Sets how the item is justified inside its container along the appropriate axis.
-   */
-  justifySelf?: StandardLonghandProperties['justifySelf'];
-  /**
-   * Sets the order to lay out an item in a flex container.
-   */
-  order?: StandardLonghandProperties['order'];
 }
 
 export interface WithFormElements extends WithDisabled {
@@ -263,6 +275,7 @@ export interface WithLayout extends WithDisplay, WithDimension {
   transform?: StandardLonghandProperties['transform'];
   transformOrigin?: StandardLonghandProperties['transformOrigin'];
   transition?: StandardShorthandProperties['transition'];
+  visibility?: StandardLonghandProperties['visibility'];
 }
 
 export interface WithLight {
@@ -273,7 +286,10 @@ export interface WithLight {
 }
 
 export interface WithMargin {
-  /** margin */
+  /**
+   * Shorthand for `margin`.
+   * @note `margin` takes precedence over `m` if both are defined.
+   */
   m?: SpacingOrZero;
   /**
    * You can use the shortcuts: m (all sides), mb (bottom), ml (left), mr (right), mt (top), mx (left and right), my (top and bottom)
@@ -304,6 +320,10 @@ export interface WithOutline
   extends Pick<Theme, 'outlineOffset' | 'outlineOpacity' | 'outlineWidth' | 'outlineZIndex'> {}
 
 export interface WithPadding {
+  /**
+   * Shorthand for `padding`.
+   * @note `padding` takes precedence over `p` if both are defined.
+   */
   p?: SpacingOrZero;
   /**
    * You can use the shortcuts: p (all sides), pb (bottom), pl (left), pr (right), pt (top), px (left and right), py (top and bottom)

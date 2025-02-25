@@ -6,7 +6,7 @@ import { Box, Button, H3, Icon, Paragraph } from '~';
 import {
   colorProps,
   disableControl,
-  flexItems,
+  FLEX_ITEMS,
   hideProps,
   spacingProps,
   textOptionsProps,
@@ -33,7 +33,7 @@ export default {
     ...textOptionsProps(),
     ...spacingProps(),
     children: { control: 'text' },
-    headerAlign: { control: 'select', options: ['', ...flexItems] },
+    headerAlign: { control: 'select', options: ['', ...FLEX_ITEMS] },
     maxHeight: { control: 'number' },
   },
   parameters: {

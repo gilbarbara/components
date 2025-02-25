@@ -80,6 +80,19 @@ exports[`colorStyles > should return properly with just "color" 1`] = `
 
 exports[`dimensionStyles > should return properly 1`] = `
 {
+  "aspectRatio": "16:9",
+  "height": "200px",
+  "maxHeight": "100px",
+  "maxWidth": "100%",
+  "minHeight": "40px",
+  "minWidth": "290px",
+  "width": "480px",
+}
+`;
+
+exports[`dimensionStyles > should return properly 2`] = `
+{
+  "aspectRatio": 0.5,
   "height": "200px",
   "maxHeight": "100px",
   "maxWidth": "100%",
