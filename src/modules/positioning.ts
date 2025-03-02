@@ -4,8 +4,18 @@ import { parseFloatNumber } from '~/modules/helpers';
 
 import { FloatingAlignment, FloatingPlacement, Position } from '~/types';
 
+interface ElementDimensions {
+  height: number;
+  width: number;
+}
+
 export interface GetComputedPlacementOptions {
   preferredPlacements?: FloatingPlacement[];
+}
+
+export interface GetElementDimensionsResult {
+  height: number;
+  width: number;
 }
 
 export interface GetFloatingStylesOptions {
@@ -35,7 +45,7 @@ export function getComputedPlacement(
   }
 
   const triggerRect = triggerElement.getBoundingClientRect();
-  const { height: contentHeight, width: contentWidth } = getElementDimenstions(contentElement);
+  const { height: contentHeight, width: contentWidth } = getElementDimensions(contentElement);
 
   const spaces = {
     top: triggerRect.top,
@@ -48,12 +58,26 @@ export function getComputedPlacement(
   let computedAlignment: FloatingAlignment | undefined;
 
   if (placement === 'auto') {
-    const bestFit = Object.entries(spaces)
-      .filter(([_, availableSpace]) => availableSpace >= contentHeight)
-      .sort((a, b) => b[1] - a[1])
-      .map(([pos]) => pos as Position);
+    // Get all positions with sufficient space
+    const positionsWithSpace = Object.entries(spaces).filter(
+      ([_, availableSpace]) => availableSpace >= contentHeight,
+    );
 
-    computedPosition = bestFit[0] || 'bottom';
+    // Check if 'bottom' is among the positions with sufficient space
+    const bottomSpace = positionsWithSpace.find(([pos]) => pos === 'bottom');
+
+    if (bottomSpace) {
+      // If 'bottom' has enough space, use it
+      computedPosition = 'bottom';
+    } else {
+      // Otherwise, sort remaining positions by available space and pick the best one
+      const bestFit = positionsWithSpace
+        .sort((a, b) => b[1] - a[1])
+        .map(([pos]) => pos as Position);
+
+      // Still default to 'bottom' if nothing works
+      computedPosition = bestFit[0] || 'bottom';
+    }
   } else {
     [computedPosition, computedAlignment] = placement.split('-') as [
       Position,
@@ -191,17 +215,29 @@ export function getComputedPlacement(
   return bestPlacement ?? 'bottom';
 }
 
-export function getElementDimenstions(contentElement: HTMLElement) {
+/**
+ * Gets the dimensions of an element with its margins
+ */
+export function getElementDimensions(contentElement: HTMLElement): ElementDimensions {
   const contentStyles = getComputedStyle(contentElement);
 
-  const margin = parseFloatNumber(contentStyles.margin);
-  const marginX =
-    parseFloatNumber(contentStyles.marginLeft) + parseFloatNumber(contentStyles.marginRight);
-  const marginY =
-    parseFloatNumber(contentStyles.marginTop) + parseFloatNumber(contentStyles.marginBottom);
+  const margin = Math.round(parseFloatNumber(contentStyles.margin));
+  const marginX = Math.round(
+    parseFloatNumber(contentStyles.marginLeft) + parseFloatNumber(contentStyles.marginRight),
+  );
+  const marginY = Math.round(
+    parseFloatNumber(contentStyles.marginTop) + parseFloatNumber(contentStyles.marginBottom),
+  );
 
-  const height = parseFloatNumber(contentStyles.height) + (marginY || margin);
-  const width = parseFloatNumber(contentStyles.width) + (marginX || margin);
+  // Get dimensions from computed style and scroll dimensions
+  const styleHeight = Math.round(parseFloatNumber(contentStyles.height));
+  const styleWidth = Math.round(parseFloatNumber(contentStyles.width));
+  const scrollHeight = Math.round(contentElement.scrollHeight);
+  const scrollWidth = Math.round(contentElement.scrollWidth);
+
+  // Use the largest value between style dimensions and scroll dimensions
+  const height = Math.max(styleHeight, scrollHeight) + (marginY || margin);
+  const width = Math.max(styleWidth, scrollWidth) + (marginX || margin);
 
   return { height, width };
 }

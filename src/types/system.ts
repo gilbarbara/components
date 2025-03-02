@@ -40,6 +40,31 @@ export interface WithAlign {
   align?: Alignment;
 }
 
+export interface WithAnimationDuration {
+  /**
+   * The duration of the animation when the content is entering in milliseconds.
+   * @default 300
+   */
+  animationEnterDuration?: number;
+  /**
+   * The duration of the animation when the content is exiting in milliseconds.
+   * @default 300
+   */
+  animationExitDuration?: number;
+}
+
+export interface WithAnimationType extends WithAnimationDuration {
+  /**
+   * The type of animation to use for the transition.
+   * - grow: Content expands from a small size (only works with 'down' and 'right' placements).
+   * - scale: Content scales from a small size.
+   * - slide: Content translates into view.
+   *
+   * @default slide
+   */
+  animationType?: 'grow' | 'scale' | 'slide';
+}
+
 export interface WithBlock {
   /**
    * Use the parent full width

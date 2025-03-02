@@ -1,6 +1,6 @@
 import { FloatingPlacement } from '~/types';
 
-import { getComputedPlacement, getElementDimenstions, getFloatingStyles } from './positioning';
+import { getComputedPlacement, getElementDimensions, getFloatingStyles } from './positioning';
 
 function getElements(
   triggerRect: Partial<DOMRect> = {},
@@ -75,7 +75,7 @@ describe('getComputedPlacement', () => {
   it('should compute an auto placement based on available space', () => {
     const { contentElement, triggerElement } = getElements();
 
-    expect(getComputedPlacement('auto', triggerElement, contentElement)).toBe('right');
+    expect(getComputedPlacement('auto', triggerElement, contentElement)).toBe('bottom');
   });
 
   it('should appends alignment if fallback has no dash but original did', () => {
@@ -200,7 +200,7 @@ describe('getComputedPlacement', () => {
   });
 });
 
-describe('getElementDimenstions', () => {
+describe('getElementDimensions', () => {
   it('should return the element dimensions from its bounding rect', () => {
     const element = document.createElement('div');
 
@@ -226,7 +226,7 @@ describe('getElementDimenstions', () => {
       }),
     });
 
-    expect(getElementDimenstions(element)).toMatchSnapshot();
+    expect(getElementDimensions(element)).toMatchSnapshot();
   });
 });
 

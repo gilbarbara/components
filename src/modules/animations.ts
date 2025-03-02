@@ -1,11 +1,10 @@
 import { keyframes } from '@emotion/react';
 import { px } from '@gilbarbara/helpers';
-import { StringOrNumber } from '@gilbarbara/types';
 import scroll from 'scroll';
 
 import { getColorTokens } from '~/modules/colors';
 
-import { ColorVariantTones, Theme } from '../types';
+import { AnimationDirection, ColorVariantTones, Theme } from '../types';
 
 import * as baseTheme from './theme';
 
@@ -86,19 +85,63 @@ export function animateIcon(
   });
 }
 
-export function getSlideDownAnimation(endHeight: StringOrNumber) {
+export function getGrowAnimation(
+  direction: AnimationDirection,
+  targetSize: number,
+  isEntering: boolean = true,
+  initialSize: number = 0,
+) {
+  const isVertical = direction === 'up' || direction === 'down';
+  const sizeProp = isVertical ? 'height' : 'width';
+
+  // For entering animation: start at initialSize, end at targetSize
+  // For exiting animation: start at targetSize, end at initialSize
+  const startSize = isEntering ? initialSize : targetSize;
+  const endSize = isEntering ? targetSize : initialSize;
+
+  // Set opacity transitions if initialSize is 0 (completely hidden)
+  const startOpacity = isEntering && !initialSize ? 0 : 1;
+  const endOpacity = !isEntering && !initialSize ? 0 : 1;
+
   return keyframes`
-  0% {
-    height: 0;
-    opacity: 0;
-    visibility: hidden;
+    0% {
+      ${sizeProp}: ${px(startSize)};
+      opacity: ${startOpacity};
+    }
+    100% {
+      ${sizeProp}: ${px(endSize)};
+      opacity: ${endOpacity};
+    }
+  `;
+}
+
+export function getSlideAnimation(direction: AnimationDirection, isEntering: boolean) {
+  const start = isEntering ? '0%' : '100%';
+  const end = isEntering ? '100%' : '0%';
+
+  if (direction === 'up' || direction === 'down') {
+    return keyframes`
+      ${start} {
+        transform: translateY(${direction === 'down' ? '-100%' : '100%'});
+        opacity: 0;
+      }
+      ${end} {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    `;
   }
-  100% {
-    height: ${px(endHeight)};
-    opacity: 1;
-    visibility: visible;
-  }
-`;
+
+  return keyframes`
+      ${start} {
+        transform: translateX(${direction === 'left' ? '100%' : '-100%'});
+        opacity: 0;
+      }
+      ${end} {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    `;
 }
 
 export const fadeIn = keyframes`

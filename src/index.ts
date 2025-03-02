@@ -23,6 +23,7 @@ export * from './components/Dropdown';
 export * from './components/Emoji';
 export * from './components/Field';
 export * from './components/Flex';
+export * from './components/Flyout';
 export * from './components/Form';
 export * from './components/FormElementWrapper';
 export * from './components/FormGroup';

@@ -9,6 +9,7 @@ import { Breakpoint, ColorVariantTones } from './theme';
 import { Concat } from './utils';
 
 export type Alignment = 'left' | 'center' | 'right';
+export type AnimationDirection = 'up' | 'down' | 'left' | 'right';
 
 export type BorderItemSide =
   | 'bottom'

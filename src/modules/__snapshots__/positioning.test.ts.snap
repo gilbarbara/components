@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getElementDimenstions > should return the element dimensions from its bounding rect 1`] = `
+exports[`getElementDimensions > should return the element dimensions from its bounding rect 1`] = `
 {
   "height": 40,
   "width": 80,

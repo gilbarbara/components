@@ -81,3 +81,4 @@ export type { ToggleProps } from '../components/Toggle/Toggle';
 export type { TooltipProps } from '../components/Tooltip/Tooltip';
 export type { TruncateProps } from '../components/Truncate/Truncate';
 export type { ChipProps } from '~/components/Chip/Chip';
+export type { FlyoutProps } from '~/components/Flyout/Flyout';
