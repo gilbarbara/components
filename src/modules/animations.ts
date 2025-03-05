@@ -14,35 +14,75 @@ interface ScrollToOptions {
   scrollDuration?: number;
 }
 
+export interface AnimateIconOptions {
+  /**
+   * The duration of the animation in milliseconds.
+   * @default 400
+   */
+  duration?: number;
+  /**
+   * The easing function of the animation.
+   * @default 'ease-in-out'
+   */
+  easing?: string;
+  /**
+   * Handler called when the animation ends.
+   */
+  onEnd?: () => void;
+  /**
+   * The final opacity of the icon.
+   * @default 0
+   */
+  opacity?: number;
+  /**
+   * The final transform of the icon.
+   * @default 'scale(4)'
+   */
+  transform?: string;
+}
+
 export function animateIcon(
   target: HTMLElement | null,
   color: ColorVariantTones,
   theme: Theme = baseTheme,
+  options: AnimateIconOptions = {},
 ) {
-  const { mainColor } = getColorTokens(color, null, theme);
-
   if (!target) {
     return;
   }
 
-  const style = `color: ${mainColor}; position: absolute; top: ${target.offsetTop}px;
-    left: ${target.offsetLeft}px;
-    transition: opacity 0.6s, transform 0.6s;`;
+  const { mainColor } = getColorTokens(color, null, theme);
+  const {
+    duration = 400,
+    easing = 'ease-in-out',
+    onEnd,
+    opacity = 0,
+    transform = 'scale(4)',
+  } = options;
 
   const iconClone = document.createElement('span');
 
   iconClone.innerHTML = target.innerHTML;
-  iconClone.setAttribute('style', style);
+
+  Object.assign(iconClone.style, {
+    color: mainColor,
+    left: px(target.offsetLeft),
+    pointerEvents: 'none',
+    position: 'absolute',
+    top: px(target.offsetTop),
+    transition: `all ${duration - 20}ms ${easing}`,
+  });
+
   target.parentElement?.appendChild(iconClone);
 
-  setTimeout(() => {
-    iconClone.setAttribute('style', `${style}opacity:0;transform: scale(4);`);
-  }, 100);
+  requestAnimationFrame(() => {
+    iconClone.style.opacity = `${opacity}`;
+    iconClone.style.transform = transform;
+  });
 
   iconClone.addEventListener('transitionend', () => {
-    if (iconClone.parentNode !== null) {
-      iconClone.parentNode.removeChild(iconClone);
-    }
+    onEnd?.();
+    iconClone.remove();
   });
 }
 

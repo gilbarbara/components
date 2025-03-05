@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Simplify } from '@gilbarbara/types';
 
 import { useComponentProps } from '~/hooks/useComponentProps';
+import { AnimateIconOptions } from '~/modules/animations';
 
 import { TooltipProps } from '~/components/Tooltip/Tooltip';
 
@@ -35,6 +36,11 @@ export interface CopyToClipboardKnownProps
    */
   hideTooltip?: boolean;
   /**
+   * The duration of the animation in milliseconds.
+   * @default 400
+   */
+  iconAnimation?: AnimateIconOptions;
+  /**
    * Handler called when when the text is copied.
    */
   onCopy?: (value: string) => void;
@@ -42,13 +48,13 @@ export interface CopyToClipboardKnownProps
    * Handler called when when the copy fail
    */
   onError?: (error: string) => void;
-  /** @default 16 */
-  size?: number;
   /**
-   * The time in milliseconds to wait before resetting the icon.
+   * The time in milliseconds to wait before resetting the icon back to the copy icon.
    * @default 2000
    */
-  timeout?: number;
+  resetDelay?: number;
+  /** @default 16 */
+  size?: number;
   /**
    * The text to show in the tooltip after copying.
    */
@@ -71,8 +77,8 @@ export interface CopyToClipboardKnownProps
 export const defaultProps = {
   disableAnimation: false,
   hideTooltip: false,
+  resetDelay: 2000,
   size: 16,
-  timeout: 2000,
   tooltipText: 'Click to copy',
 } satisfies Omit<CopyToClipboardProps, 'value'>;
 

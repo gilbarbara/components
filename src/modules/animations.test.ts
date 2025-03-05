@@ -17,6 +17,16 @@ describe('animateIcon', () => {
     document.body.appendChild(target);
   });
 
+  beforeEach(() => {
+    vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+      return setTimeout(() => callback(performance.now()), 16); // Simulate ~60fps (16ms per frame)
+    });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   afterAll(() => {
     document.body.removeChild(target);
   });
@@ -26,9 +36,12 @@ describe('animateIcon', () => {
 
     const iconClone = target.querySelector('span:nth-child(2)') as HTMLSpanElement;
 
-    expect(iconClone).toHaveStyle('transition: opacity 0.6s, transform 0.6s');
+    expect(iconClone).toHaveStyle('transition: all 380ms ease-in-out;');
 
-    vi.runAllTimers();
+    iconClone.dispatchEvent(new Event('transitionend'));
+
+    vi.advanceTimersByTime(400);
+
     expect(iconClone).toHaveStyle('opacity:0;transform: scale(4);');
 
     iconClone.dispatchEvent(new Event('transitionend'));

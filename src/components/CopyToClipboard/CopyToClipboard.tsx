@@ -43,10 +43,11 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
       copyIcon = <Icon name="copy" />,
       disableAnimation,
       hideTooltip,
+      iconAnimation,
       onCopy,
       onError,
+      resetDelay,
       size,
-      timeout,
       tooltipCopiedText,
       tooltipProps,
       tooltipText,
@@ -58,6 +59,7 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
   const isMounted = useIsMounted();
   const [tooltipContent, setTooltipContent] = useState(tooltipText);
   const [copied, setCopied] = useState(false);
+  const [isAnimating, setAnimating] = useState(false);
   const iconRef = useRef<HTMLSpanElement>(null);
 
   const valueText = useMemo(() => {
@@ -82,8 +84,14 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
     event.stopPropagation();
     event.preventDefault();
 
+    if (isAnimating) {
+      return;
+    }
+
+    setAnimating(true);
+
     if (!disableAnimation && iconRef.current) {
-      animateIcon(iconRef.current, rest.color ?? 'primary', rest.theme);
+      animateIcon(iconRef.current, rest.color ?? 'primary', rest.theme, iconAnimation);
     }
 
     try {
@@ -101,15 +109,16 @@ export function CopyToClipboard(props: CopyToClipboardProps) {
             setCopied(true);
           }
         },
-        disableAnimation ? 0 : 300,
+        disableAnimation ? 0 : (iconAnimation?.duration ?? 400),
       );
 
       setTimeout(() => {
         if (isMounted()) {
           setTooltipContent(tooltipText);
           setCopied(false);
+          setAnimating(false);
         }
-      }, timeout);
+      }, resetDelay);
     } catch (error: any) {
       setTooltipContent(error.message);
       onError?.(error.message);
