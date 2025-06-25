@@ -105,7 +105,7 @@ export const defaultProps = {
   animationEasing: 'ease-in-out',
   animationEnterDuration: 0.5,
   animationExitDuration: 0.5,
-  container: document.body,
+  container: 'body',
   disableAnimation: false,
   disableCloseOnClickOverlay: false,
   disableCloseOnEsc: false,
